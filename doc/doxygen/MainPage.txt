@@ -1,0 +1,57 @@
+/*!
+	\defgroup GEOM_CLASS 几何对象类
+	\defgroup GEOMAPI 几何计算函数
+	\defgroup GRAPH_INTERFACE 图形接口类
+	\defgroup CORE_SHAPE 图形实体类
+	\defgroup CORE_STORAGE 图形序列化类
+	\defgroup CORE_COMMAND 交互命令类
+	\defgroup CORE_VIEW 内核视图类
+	\defgroup GRAPH_WIN 平台适配器(Win32)
+	\defgroup GROUP_WPF 平台适配器(WPF)
+	\defgroup GROUP_IOS 平台适配器(iOS)
+	\defgroup GROUP_ANDROID 平台适配器(Android)
+*/
+
+/*! \mainpage 通用矢量绘图框架 编程文档
+
+	\section sectinoIntro 概述
+
+	欢迎使用通用矢量绘图框架(https://github.com/rhcad/touchvg)的编程文档，欢迎反馈意见。
+
+	通用图形平台库的跨平台部分采用C++实现，包含下列模块：
+	
+	- \ref GEOM_CLASS "几何对象类" \n
+		数学几何库的几何对象类，包含矢量、坐标、变换矩阵、矩形框等类。\n
+		
+	- \ref GEOMAPI "几何计算函数" \n
+		数学几何库的线性代数计算函数。\n
+		
+	- \ref GRAPH_INTERFACE "图形接口类" \n
+		图形接口库的各种显示类、符号类，用于屏幕显示、打印。\n
+		
+	- \ref CORE_SHAPE "图形实体类" \n
+		图形实体库包含跨平台矢量图形类和交互命令类。\n
+		
+	- \ref CORE_STORAGE "图形序列化类" \n
+	    图形存取接口，其中的JSON虚列化模块（json）采用rapidjson框架实现。
+		
+	- \ref CORE_COMMAND "交互命令类" \n
+		图形实体库包含跨平台矢量图形类和交互命令类。\n
+		
+    - \ref CORE_VIEW "内核视图类" \n
+		与各种设备平台衔接的跨平台绘图视图类。
+		
+	通用图形平台库的设备平台适配器包含视图适配器、画布适配器、辅助访问接口。
+		
+	- \ref GRAPH_WIN "Windows平台适配器" \n
+		Windows适配器采用GDI/GDI+实现。\n
+		
+    - \ref GROUP_WPF "WPF平台适配器" \n
+		WPF适配器采用CSharp、WPF实现。\n
+		
+	- \ref GROUP_IOS "iOS平台适配器" \n
+		iOS适配器采用Quartz 2D、UIKit框架和ObjC语言实现。\n
+		
+	- \ref GROUP_ANDROID "Android平台适配器" \n
+		Android适配器（android/core）采用android.graphics、android.view包和Java语言实现。
+*/

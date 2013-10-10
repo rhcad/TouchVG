@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>democmds</ProjectName>
+    <ProjectGuid>{6437BB7B-62DC-49B3-98F9-E22D3978EE9D}</ProjectGuid>
+    <RootNamespace>democmds</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\build\$(Configuration)10\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\build\$(Configuration)10\obj\democmds_csharp\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\build\$(Configuration)10\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\build\$(Configuration)10\obj\democmds_csharp\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\democmds\cmds;..\..\core\democmds\gate</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\democmds\cmds;..\..\core\democmds\gate</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\core\democmds\gate\democmds.i">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Swig generating...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">swig.exe -c++ -csharp -namespace "democmds.core" -module democmds -outdir $(ProjectDir)..\democmdslib\core -o "$(ProjectDir)democmds_csharp_wrap.cpp" -I"$(ProjectDir)..\..\core\pub_inc" -I"$(ProjectDir)..\..\core\pub_inc\cmd" -I"$(ProjectDir)..\..\core\democmds\gate" %(FullPath)</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)democmds_csharp_wrap.cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Swig generating...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">swig.exe -c++ -csharp -namespace "democmds.core" -module democmds -outdir $(ProjectDir)..\democmdslib\core -o "$(ProjectDir)democmds_csharp_wrap.cpp" -I"$(ProjectDir)..\..\core\pub_inc" -I"$(ProjectDir)..\..\core\pub_inc\cmd" -I"$(ProjectDir)..\..\core\democmds\gate" %(FullPath)</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)democmds_csharp_wrap.cpp;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\core\democmds\cmds\cmds.cpp" />
+    <ClCompile Include="..\..\core\democmds\cmds\HitTestCmd.cpp" />
+    <ClCompile Include="..\..\core\democmds\gate\DemoCmds.cpp" />
+    <ClCompile Include="..\..\core\pub_src\cmdbase\mgcmddraw.cpp" />
+    <ClCompile Include="..\..\core\pub_src\cmdbase\mgdrawarc.cpp" />
+    <ClCompile Include="..\..\core\pub_src\cmdbase\mgdrawrect.cpp" />
+    <ClCompile Include="..\..\core\pub_src\cmdbase\mgsplock.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mgcomposite.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mgellipse.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mggrid.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mgline.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mglines.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mgrdrect.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mgrect.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mgshape.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mgshapes.cpp" />
+    <ClCompile Include="..\..\core\pub_src\shape\mgsplines.cpp" />
+    <ClCompile Include=".\democmds_csharp_wrap.cpp" />
+    <ClCompile Include="..\..\core\pub_src\graph\gigraph.cpp" />
+    <ClCompile Include="..\..\core\pub_src\graph\gipath.cpp" />
+    <ClCompile Include="..\..\core\pub_src\graph\gixform.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mgbase.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mgbnd.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mgbox.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mgcurv.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mglnrel.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mgmat.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mgnear.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mgnearbz.cpp" />
+    <ClCompile Include="..\..\core\pub_src\geom\mgvec.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\core\democmds\cmds\cmds.h" />
+    <ClInclude Include="..\..\core\democmds\cmds\HitTestCmd.h" />
+    <ClInclude Include="..\..\core\democmds\gate\DemoCmds.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmdbase\mgcmddraw.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmdbase\mgdrawarc.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmdbase\mgdrawrect.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmdobserver\cmdobserver.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmdobserver\cmdsubject.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmd\mgaction.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmd\mgcmd.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmd\mglockdata.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmd\mgselect.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmd\mgsnap.h" />
+    <ClInclude Include="..\..\core\pub_inc\cmd\mgview.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgbase.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgbnd.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgbox.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgcurv.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgdef.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mglnrel.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgmat.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgnear.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgpnt.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgtol.h" />
+    <ClInclude Include="..\..\core\pub_inc\geom\mgvec.h" />
+    <ClInclude Include="..\..\core\pub_inc\graph\gigraph.h" />
+    <ClInclude Include="..\..\core\pub_inc\graph\gilock.h" />
+    <ClInclude Include="..\..\core\pub_inc\graph\gipath.h" />
+    <ClInclude Include="..\..\core\pub_inc\graph\gixform.h" />
+    <ClInclude Include="..\..\core\pub_inc\mglog.h" />
+    <ClInclude Include="..\..\core\pub_inc\mgvector.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgbasicsp.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgcomposite.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mggrid.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgobject.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgshape.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgshapes.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgshapet.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgshapetype.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgshape_.h" />
+    <ClInclude Include="..\..\core\pub_inc\shape\mgspfactory.h" />
+    <ClInclude Include="..\..\core\pub_inc\storage\mgstorage.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
