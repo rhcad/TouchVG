@@ -6,9 +6,9 @@
 
 TouchVG 的功能
 --------------
-> 支持多点触摸或鼠标的交互绘图方式，可以无级放缩或平移显示矢量图形、图像。
+> 支持多点触摸或鼠标的交互绘图方式，可以无级放缩或平移显示矢量图形、图像、SVG。
 
-> 除了基本的15余种矢量图形类型外，可使用C++或Java等来扩充更多图形类型。
+> 除了基本的15余种矢量图形类型外，可使用C++或Java等来扩充更多的图形类型。
 
 > 除了基本的20余种选择和绘图命令外，还可使用C++、Java等扩充更多的交互命令。
 
@@ -20,6 +20,22 @@ TouchVG 的功能
 
 > 更多说明见本项目的维基文档。
 
+引用的开源框架
+--------------
+> Larva Labs 的SVG解析框架 [svgandroid](https://github.com/japgolly/svg-android) (Apache License 2.0)
+
+> 用于跨语言转换的 [SWIG](https://github.com/swig/swig) (GPL)
+
+> iOS静态库模板 [iOS-Universal-Library-Template](https://github.com/michaeltyson/iOS-Universal-Library-Template)
+
+> JSON 解析和输出框架 [rapidjson](https://github.com/Kanma/rapidjson) (MIT)
+
+> GCC编译脚本 [x3py](https://github.com/rhcad/x3py) (Apache License 2.0)
+
+> 算法：[圆弧和Bezier曲线最近点计算](http://tog.acm.org/resources/GraphicsGems/gems/NearestPoint.c)、
+[三次Bezier范围计算](http://processingjs.nihongoresources.com/bezierinfo/#bounds)、
+[两圆求交点](http://blog.csdn.net/cyg0810/article/details/7765894)、
+[点线位置判断](http://orion.math.iastate.edu/burkardt/c_src/orourke/tri.c)(Computational Geometry in C)。
 
 意见和建议
 ----------
