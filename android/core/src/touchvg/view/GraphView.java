@@ -25,6 +25,7 @@ import android.view.View;
  */
 public class GraphView extends View {
     private static GraphView mActiveView;   // 当前激活视图
+    private ImageCache mImageCache;         // 图像对象缓存
     private CanvasAdapter mCanvasAdapter;   // onDraw用的画布适配器
     private CanvasAdapter mCanvasRegen;     // regen用的画布适配器
     private ViewAdapter mViewAdapter;       // 视图回调适配器
@@ -63,8 +64,9 @@ public class GraphView extends View {
     }
     
     private void createAdapter(Context context) {
-        mCanvasAdapter = new CanvasAdapter(this);
-        mCanvasRegen = new CanvasAdapter(this);
+        mImageCache = new ImageCache();
+        mCanvasAdapter = new CanvasAdapter(this, mImageCache);
+        mCanvasRegen = new CanvasAdapter(this, mImageCache);
         mViewAdapter = new ViewAdapter();
     }
     
@@ -107,6 +109,11 @@ public class GraphView extends View {
     //! 返回视图回调适配器对象
     public GiView viewAdapter() {
         return mViewAdapter;
+    }
+    
+    //! 返回图像对象缓存
+    public ImageCache getImageCache() {
+        return mImageCache;
     }
     
     //! 释放临时缓存

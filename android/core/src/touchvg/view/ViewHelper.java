@@ -6,12 +6,12 @@ package touchvg.view;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import touchvg.core.GiContextBits;
 import touchvg.core.MgView;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Picture;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
@@ -225,7 +225,8 @@ public class ViewHelper {
         synchronized(mView.snapshot()) {
             try {
                 final FileOutputStream os = new FileOutputStream(filename);
-                ret = mView.snapshot().compress(Bitmap.CompressFormat.PNG, 100, os);
+                ret = createFolder(filename)
+                        && mView.snapshot().compress(Bitmap.CompressFormat.PNG, 100, os);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -271,27 +272,31 @@ public class ViewHelper {
         if (getShapeCount() == 0) {
             ret = new File(vgfile).delete();
         } else {
-            ret = createFile(vgfile)
-            && mView.coreView().saveToFile(vgfile);
+            ret = createFolder(vgfile) && mView.coreView().saveToFile(vgfile);
         }
         return ret;
     }
     
-    //! 创建指定的文件和上一级文件夹
-    public static boolean createFile(String filename) {
+    //! 创建指定的文件的上一级文件夹
+    public static boolean createFolder(String filename) {
         final File file = new File(filename);
         final File pf = file.getParentFile();
-        if (!pf.exists()) {
-            pf.mkdirs();
-        }
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-        return true;
+        return pf.exists() || pf.mkdirs();
+    }
+    
+    //! 插入一个图像等可绘制对象
+    public boolean insertPicture(String name, Picture picture, int x, int y) {
+        return (mView.getImageCache().addPicture(picture))
+                && mView.coreView().addImageShape(name, picture.getWidth(), picture.getHeight());
+    }
+    
+    //! 插入一个SVG图像
+    public boolean insertSVGFromResource(int svgId, int x, int y) {
+    	Picture picture = mView.getImageCache().addSVGFromResource(mView.getResources(), svgId);
+    	if (picture != null) {
+    		String name = "svg." + svgId;
+    		return mView.coreView().addImageShape(name, picture.getWidth(), picture.getHeight());
+    	}
+    	return false;
     }
 }
