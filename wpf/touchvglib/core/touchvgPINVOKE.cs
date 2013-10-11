@@ -4039,7 +4039,7 @@ class touchvgPINVOKE {
   public static extern bool MgView_setCurrentShapes(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgView_cancel")]
-  public static extern void MgView_cancel(HandleRef jarg1, HandleRef jarg2);
+  public static extern bool MgView_cancel(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgView_getNewShapeID")]
   public static extern int MgView_getNewShapeID(HandleRef jarg1);
@@ -4219,7 +4219,7 @@ class touchvgPINVOKE {
   public static extern IntPtr MgMotion_cmds(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgMotion_cancel")]
-  public static extern void MgMotion_cancel(HandleRef jarg1);
+  public static extern bool MgMotion_cancel(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgMotion_startCenterM")]
   public static extern IntPtr MgMotion_startCenterM(HandleRef jarg1);
@@ -4730,6 +4730,9 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCommandDraw_getStep")]
   public static extern int MgCommandDraw_getStep(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCommandDraw_setStep")]
+  public static extern void MgCommandDraw_setStep(HandleRef jarg1, int jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCommandDraw_dynshape")]
   public static extern IntPtr MgCommandDraw_dynshape(HandleRef jarg1);

@@ -117,8 +117,8 @@ public:
 
     bool registerCommand(const char* name, MgCommand* (*creator)()) {
         return _cmds->registerCommand(name, creator); }
-    void cancel(const MgMotion* sender) {
-        _cmds->setCommand(sender, "select", NULL); }
+    bool cancel(const MgMotion* sender) {
+        return _cmds->setCommand(sender, "select", NULL); }
     const char* getCommandName() { return _cmds->getCommandName(); }
     MgCommand* getCommand() { return _cmds->getCommand(); }
     MgCommand* findCommand(const char* name) {

@@ -1362,7 +1362,7 @@ public class touchvgJNI {
   public final static native long MgView_getCmdSubject(long jarg1, MgView jarg1_);
   public final static native long MgView_getSelection(long jarg1, MgView jarg1_);
   public final static native boolean MgView_setCurrentShapes(long jarg1, MgView jarg1_, long jarg2, MgShapes jarg2_);
-  public final static native void MgView_cancel(long jarg1, MgView jarg1_, long jarg2, MgMotion jarg2_);
+  public final static native boolean MgView_cancel(long jarg1, MgView jarg1_, long jarg2, MgMotion jarg2_);
   public final static native int MgView_getNewShapeID(long jarg1, MgView jarg1_);
   public final static native void MgView_setNewShapeID(long jarg1, MgView jarg1_, int jarg2);
   public final static native String MgView_getCommandName(long jarg1, MgView jarg1_);
@@ -1422,7 +1422,7 @@ public class touchvgJNI {
   public final static native long new_MgMotion();
   public final static native boolean MgMotion_dragging(long jarg1, MgMotion jarg1_);
   public final static native long MgMotion_cmds(long jarg1, MgMotion jarg1_);
-  public final static native void MgMotion_cancel(long jarg1, MgMotion jarg1_);
+  public final static native boolean MgMotion_cancel(long jarg1, MgMotion jarg1_);
   public final static native long MgMotion_startCenterM(long jarg1, MgMotion jarg1_);
   public final static native long MgMotion_centerM(long jarg1, MgMotion jarg1_);
   public final static native float MgMotion_startDistanceM(long jarg1, MgMotion jarg1_);
@@ -1595,6 +1595,7 @@ public class touchvgJNI {
   public final static native boolean MgCommandDraw_mouseHover(long jarg1, MgCommandDraw jarg1_, long jarg2, MgMotion jarg2_);
   public final static native boolean MgCommandDraw_mouseHoverSwigExplicitMgCommandDraw(long jarg1, MgCommandDraw jarg1_, long jarg2, MgMotion jarg2_);
   public final static native int MgCommandDraw_getStep(long jarg1, MgCommandDraw jarg1_);
+  public final static native void MgCommandDraw_setStep(long jarg1, MgCommandDraw jarg1_, int jarg2);
   public final static native long MgCommandDraw_dynshape(long jarg1, MgCommandDraw jarg1_);
   public final static native long MgCommandDraw_snapPoint__SWIG_0(long jarg1, MgCommandDraw jarg1_, long jarg2, MgMotion jarg2_, boolean jarg3);
   public final static native long MgCommandDraw_snapPoint__SWIG_1(long jarg1, MgCommandDraw jarg1_, long jarg2, MgMotion jarg2_);

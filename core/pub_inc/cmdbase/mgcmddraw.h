@@ -47,6 +47,7 @@ public:
     virtual bool mouseHover(const MgMotion* sender);
 
     int getStep() { return m_needClear ? 0 : m_step; }
+    void setStep(int step) { m_step = step; }
     MgShape* dynshape() { return m_shape; }
     Point2d snapPoint(const MgMotion* sender, bool firstStep = false);
     Point2d snapPoint(const MgMotion* sender, const Point2d& orignPt, bool firstStep = false);

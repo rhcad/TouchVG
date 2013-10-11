@@ -123,8 +123,9 @@ public class MgView : IDisposable {
     return ret;
   }
 
-  public virtual void cancel(MgMotion sender) {
-    touchvgPINVOKE.MgView_cancel(swigCPtr, MgMotion.getCPtr(sender));
+  public virtual bool cancel(MgMotion sender) {
+    bool ret = touchvgPINVOKE.MgView_cancel(swigCPtr, MgMotion.getCPtr(sender));
+    return ret;
   }
 
   public virtual int getNewShapeID() {

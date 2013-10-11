@@ -236,8 +236,9 @@ public class MgMotion : IDisposable {
     return ret;
   }
 
-  public void cancel() {
-    touchvgPINVOKE.MgMotion_cancel(swigCPtr);
+  public bool cancel() {
+    bool ret = touchvgPINVOKE.MgMotion_cancel(swigCPtr);
+    return ret;
   }
 
   public Point2d startCenterM() {

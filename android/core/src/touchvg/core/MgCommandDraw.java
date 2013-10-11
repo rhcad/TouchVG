@@ -147,6 +147,10 @@ public class MgCommandDraw extends MgCommand {
     return touchvgJNI.MgCommandDraw_getStep(swigCPtr, this);
   }
 
+  public void setStep(int step) {
+    touchvgJNI.MgCommandDraw_setStep(swigCPtr, this, step);
+  }
+
   public MgShape dynshape() {
     long cPtr = touchvgJNI.MgCommandDraw_dynshape(swigCPtr, this);
     return (cPtr == 0) ? null : new MgShape(cPtr, false);

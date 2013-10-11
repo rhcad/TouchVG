@@ -37,6 +37,10 @@ public class GraphView extends View {
     private Bitmap mRegenBitmap;            // regen用的缓存位图
     private int mBkColor = Color.TRANSPARENT;
     
+    static {
+        System.loadLibrary("touchvg");
+    }
+    
     //! 普通绘图视图的构造函数
     public GraphView(Context context) {
         super(context);

@@ -103,8 +103,8 @@ public class MgView {
     return touchvgJNI.MgView_setCurrentShapes(swigCPtr, this, MgShapes.getCPtr(shapes), shapes);
   }
 
-  public void cancel(MgMotion sender) {
-    touchvgJNI.MgView_cancel(swigCPtr, this, MgMotion.getCPtr(sender), sender);
+  public boolean cancel(MgMotion sender) {
+    return touchvgJNI.MgView_cancel(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }
 
   public int getNewShapeID() {

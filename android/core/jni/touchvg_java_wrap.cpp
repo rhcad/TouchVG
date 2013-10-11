@@ -31986,9 +31986,11 @@ SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgView_1setCurrentShape
 }
 
 
-SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgView_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgView_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jboolean jresult = 0 ;
   MgView *arg1 = (MgView *) 0 ;
   MgMotion *arg2 = (MgMotion *) 0 ;
+  bool result;
   
   (void)jenv;
   (void)jcls;
@@ -31996,7 +31998,9 @@ SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgView_1cancel(JNIEnv *jenv
   (void)jarg2_;
   arg1 = *(MgView **)&jarg1; 
   arg2 = *(MgMotion **)&jarg2; 
-  (arg1)->cancel((MgMotion const *)arg2);
+  result = (bool)(arg1)->cancel((MgMotion const *)arg2);
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 
@@ -32875,14 +32879,18 @@ SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1cmds(JNIEnv *jen
 }
 
 
-SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
   MgMotion *arg1 = (MgMotion *) 0 ;
+  bool result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgMotion **)&jarg1; 
-  ((MgMotion const *)arg1)->cancel();
+  result = (bool)((MgMotion const *)arg1)->cancel();
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 
@@ -35909,6 +35917,19 @@ SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_MgCommandDraw_1getStep(JNIE
   result = (int)(arg1)->getStep();
   jresult = (jint)result; 
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgCommandDraw_1setStep(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  MgCommandDraw *arg1 = (MgCommandDraw *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCommandDraw **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->setStep(arg2);
 }
 
 

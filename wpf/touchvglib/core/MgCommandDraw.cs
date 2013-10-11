@@ -157,6 +157,10 @@ public class MgCommandDraw : MgCommand {
     return ret;
   }
 
+  public void setStep(int step) {
+    touchvgPINVOKE.MgCommandDraw_setStep(swigCPtr, step);
+  }
+
   public MgShape dynshape() {
     IntPtr cPtr = touchvgPINVOKE.MgCommandDraw_dynshape(swigCPtr);
     MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);

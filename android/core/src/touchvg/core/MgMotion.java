@@ -195,8 +195,8 @@ public class MgMotion {
     return (cPtr == 0) ? null : new MgCmdManager(cPtr, false);
   }
 
-  public void cancel() {
-    touchvgJNI.MgMotion_cancel(swigCPtr, this);
+  public boolean cancel() {
+    return touchvgJNI.MgMotion_cancel(swigCPtr, this);
   }
 
   public Point2d startCenterM() {
