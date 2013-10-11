@@ -33,7 +33,7 @@ import android.widget.LinearLayout;
 
 //! 测试自定义图形类的测试视图类
 public class ViewSinShape extends LinearLayout {
-    private ViewHelper mHelper = new ViewHelper();
+    protected ViewHelper mHelper = new ViewHelper();
     private MyCmdObserver mObserver = new MyCmdObserver();
     private static final int[] HANDLEIDS = { R.drawable.vgdot1,
             R.drawable.vgdot2, R.drawable.vgdot3 };
@@ -53,7 +53,7 @@ public class ViewSinShape extends LinearLayout {
         mHelper.cmdView().getCmdSubject().registerObserver(mObserver);
     }
     
-    private void createButtons(Context context) {
+    protected void createButtons(Context context) {
         final LinearLayout layout = new LinearLayout(context);
         final LayoutParams param = new LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -146,7 +146,7 @@ public class ViewSinShape extends LinearLayout {
     
     private List<MgCommand> mCmdCache = new ArrayList<MgCommand>();
     
-    private class DrawSinShape extends MgCommandDraw {
+    protected class DrawSinShape extends MgCommandDraw {
         public static final String NAME = "sin";
         
         public DrawSinShape() {
