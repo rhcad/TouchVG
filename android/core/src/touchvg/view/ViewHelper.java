@@ -1,4 +1,4 @@
-//! \file ViewHelper.java
+﻿//! \file ViewHelper.java
 //! \brief Android绘图视图辅助类
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
@@ -7,7 +7,9 @@ package touchvg.view;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import touchvg.core.CmdObserver;
 import touchvg.core.GiContextBits;
+import touchvg.core.GiCoreView;
 import touchvg.core.MgView;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -43,12 +45,14 @@ public class ViewHelper {
     
     //! 返回内核视图的句柄, MgView 指针
     public int cmdViewHandle() {
-        return mView.coreView().viewAdapterHandle();
+        final GiCoreView v = mView.coreView();
+        return v != null ? v.viewAdapterHandle() : 0;
     }
     
     //! 返回内核命令视图
     public MgView cmdView() {
-        return mView.coreView().viewAdapter();
+        final GiCoreView v = mView.coreView();
+        return v != null ? v.viewAdapter() : null;
     }
     
     //! 自动创建FrameLayout布局，在其中创建普通绘图视图，并记下此视图
@@ -100,17 +104,20 @@ public class ViewHelper {
     
     //! 得到当前命令名称
     public String getCommand() {
-        return mView.coreView().getCommand();
+        final GiCoreView v = mView.coreView();
+        return v != null ? v.getCommand() : "";
     }
     
     //! 启动指定名称的命令
     public boolean setCommand(String name) {
-        return mView.coreView().setCommand(mView.viewAdapter(), name);
+        final GiCoreView v = mView.coreView();
+        return v != null && v.setCommand(mView.viewAdapter(), name);
     }
     
     //! 启动指定名称的命令，并指定JSON串的命令初始化参数
     public boolean setCommand(String name, String params) {
-        return mView.coreView().setCommand(mView.viewAdapter(), name, params);
+        final GiCoreView v = mView.coreView();
+        return v != null && v.setCommand(mView.viewAdapter(), name, params);
     }
     
     //! 返回线宽，正数表示单位为0.01毫米，零表示1像素宽，负数表示单位为像素
@@ -225,8 +232,8 @@ public class ViewHelper {
         synchronized(mView.snapshot()) {
             try {
                 final FileOutputStream os = new FileOutputStream(filename);
-                ret = createFolder(filename)
-                        && mView.snapshot().compress(Bitmap.CompressFormat.PNG, 100, os);
+                ret = createFolder(filename) && mView.snapshot().compress(
+                        Bitmap.CompressFormat.PNG, 100, os);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -292,11 +299,23 @@ public class ViewHelper {
     
     //! 插入一个SVG图像
     public boolean insertSVGFromResource(int svgId, int x, int y) {
-    	Picture picture = mView.getImageCache().addSVGFromResource(mView.getResources(), svgId);
-    	if (picture != null) {
-    		String name = "svg." + svgId;
-    		return mView.coreView().addImageShape(name, picture.getWidth(), picture.getHeight());
-    	}
-    	return false;
+        Picture picture = mView.getImageCache().addSVGFromResource(mView.getResources(), svgId);
+        if (picture != null) {
+            String name = "svg." + svgId;
+            return mView.coreView().addImageShape(name, picture.getWidth(), picture.getHeight());
+        }
+        return false;
+    }
+    
+    //! 注册命令观察者
+    public void registerCmdObserver(CmdObserver observer) {
+        this.cmdView().getCmdSubject().registerObserver(observer);
+    }
+    
+    //! 注销命令观察者
+    public void unregisterCmdObserver(CmdObserver observer) {
+        if (this.cmdView() != null) {
+            this.cmdView().getCmdSubject().unregisterObserver(observer);
+        }
     }
 }

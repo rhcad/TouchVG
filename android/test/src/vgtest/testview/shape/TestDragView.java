@@ -1,6 +1,5 @@
-package vgtest.testview.shape;
+﻿package vgtest.testview.shape;
 
-import vgtest.testview.shape.ViewSinShape.DrawSinShape;
 import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
@@ -12,13 +11,13 @@ import android.widget.LinearLayout;
 
 public class TestDragView extends ViewSinShape {
 
-	public TestDragView(Context context) {
+    public TestDragView(Context context) {
         super(context);
-	}
-	
-	@Override
-	protected void createButtons(Context context) {
-		final LinearLayout layout = new LinearLayout(context);
+    }
+    
+    @Override
+    protected void createButtons(Context context) {
+        final LinearLayout layout = new LinearLayout(context);
         final LayoutParams param = new LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         
@@ -26,7 +25,7 @@ public class TestDragView extends ViewSinShape {
         this.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         
         final Button sinBtn = new Button(context);
-        sinBtn.setText("Sin");
+        sinBtn.setText("Press me then drag");
         sinBtn.setBackgroundColor(Color.GRAY);
         layout.addView(sinBtn, param);
         sinBtn.setOnClickListener(new OnClickListener() {
@@ -35,37 +34,37 @@ public class TestDragView extends ViewSinShape {
             }
         });
         sinBtn.setOnLongClickListener(new OnLongClickListener() {
-        	public boolean onLongClick(View v) {
-        		ClipData dragData = ClipData.newPlainText("icon", v.getTag() + "");
-        		DragShadowBuilder shadow = new DragShadowBuilder(v);
-        		v.startDrag(dragData, shadow, null, 0);
-        		return true;
+            public boolean onLongClick(View v) {
+                ClipData dragData = ClipData.newPlainText("icon", v.getTag() + "");
+                DragShadowBuilder shadow = new DragShadowBuilder(v);
+                v.startDrag(dragData, shadow, null, 0);
+                return true;
             }
         });
-	}
-	
-	@Override
-	public boolean onDragEvent(DragEvent event) {
-		boolean ret = true;
-		
-		switch (event.getAction()) {
-		case DragEvent.ACTION_DRAG_ENTERED:
-			mHelper.setCommand(DrawSinShape.NAME);
-			ret = mHelper.getView().onTouch(MotionEvent.ACTION_DOWN, event.getX(), event.getY());
-			break;
-			
-		case DragEvent.ACTION_DRAG_LOCATION:
-			ret = mHelper.getView().onTouch(MotionEvent.ACTION_MOVE, event.getX(), event.getY());
-			break;
-			
-		case DragEvent.ACTION_DROP:
-			ret = mHelper.getView().onTouch(MotionEvent.ACTION_UP, event.getX(), event.getY());
-			break;
-			
-		default:
-			break;
-		}
-		
-		return ret;
-	}
+    }
+    
+    @Override
+    public boolean onDragEvent(DragEvent event) {
+        boolean ret = true;
+        
+        switch (event.getAction()) {
+        case DragEvent.ACTION_DRAG_ENTERED:
+            mHelper.setCommand(DrawSinShape.NAME);
+            ret = mHelper.getView().onTouch(MotionEvent.ACTION_DOWN, event.getX(), event.getY());
+            break;
+            
+        case DragEvent.ACTION_DRAG_LOCATION:
+            ret = mHelper.getView().onTouch(MotionEvent.ACTION_MOVE, event.getX(), event.getY());
+            break;
+            
+        case DragEvent.ACTION_DROP:
+            ret = mHelper.getView().onTouch(MotionEvent.ACTION_UP, event.getX(), event.getY());
+            break;
+            
+        default:
+            break;
+        }
+        
+        return ret;
+    }
 }

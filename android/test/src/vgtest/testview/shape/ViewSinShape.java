@@ -50,7 +50,7 @@ public class ViewSinShape extends LinearLayout {
 
         ViewHelper.setContextButtonImages(null, R.array.vg_action_captions,
                 MYIMAGEIDS, HANDLEIDS);
-        mHelper.cmdView().getCmdSubject().registerObserver(mObserver);
+        mHelper.registerCmdObserver(mObserver);
     }
     
     protected void createButtons(Context context) {
@@ -85,7 +85,7 @@ public class ViewSinShape extends LinearLayout {
     @Override
     protected void onDetachedFromWindow() {
         if (mObserver != null) {
-            mHelper.cmdView().getCmdSubject().unregisterObserver(mObserver);
+            mHelper.unregisterCmdObserver(mObserver);
             mObserver.delete();
             mObserver = null;
         }
