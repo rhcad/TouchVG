@@ -272,7 +272,8 @@ public class CanvasAdapter extends GiCanvas {
     @Override
     public void drawBitmap(String name, float xc, float yc, float w, float h,
                            float angle) {
-        final Picture bmp = mCache.getPicture();
+        final Picture bmp = mCache.getPicture(mView, name);
+        
         if (bmp != null && bmp.getWidth() > 0) {
             Matrix mat = new Matrix();
             mat.postTranslate(-0.5f * bmp.getWidth(), -0.5f * bmp.getHeight());

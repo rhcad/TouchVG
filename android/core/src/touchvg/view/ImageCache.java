@@ -10,6 +10,7 @@ import com.larvalabs.svgandroid.SVGParseException;
 
 import android.content.res.Resources;
 import android.graphics.Picture;
+import android.view.View;
 
 //! 图像对象缓存类
 /*! \ingroup GROUP_ANDROID
@@ -26,7 +27,13 @@ public class ImageCache extends Object {
         return true;
     }
     
-    public Picture getPicture() {
+    public Picture getPicture(View view, String name) {
+        if (this.picture == null && view != null) {
+            if (name.indexOf("svg.") == 0) {
+                int resId = Integer.valueOf(name.substring(4));
+                this.picture = addSVGFromResource(view.getResources(), resId);
+            }
+        }
         return this.picture;
     }
     

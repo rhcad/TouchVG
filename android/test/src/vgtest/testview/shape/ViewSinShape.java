@@ -11,6 +11,7 @@ import touchvg.core.GiGraphics;
 import touchvg.core.Ints;
 import touchvg.core.Matrix2d;
 import touchvg.core.MgBaseShape;
+import touchvg.core.MgCmdManager;
 import touchvg.core.MgCommand;
 import touchvg.core.MgCommandDraw;
 import touchvg.core.MgHitResult;
@@ -82,19 +83,17 @@ public class ViewSinShape extends LinearLayout {
         });
     }
     
-    @Override
-    protected void onDetachedFromWindow() {
-        if (mObserver != null) {
-            mHelper.unregisterCmdObserver(mObserver);
-            mObserver.delete();
-            mObserver = null;
-        }
-        mHelper = null;
-        super.onDetachedFromWindow();
-    }
-    
     private class MyCmdObserver extends CmdObserverDefault {
         private static final int ACTION_SWITCH = 40;
+        
+        @Override
+        public void onUnloadCommands(MgCmdManager sender) {
+            if (mObserver != null) {
+                mObserver.delete();
+                mObserver = null;
+            }
+            mHelper = null;
+        }
         
         @Override
         public MgBaseShape createShape(MgMotion sender, int type) {

@@ -12,4 +12,4 @@ if [ ! -f democmds_java_wrap.cpp ]; then # Make JNI classes
         -I../../../core/democmds/gate \
         ../../../core/democmds/gate/democmds.i
 fi
-ndk-build # Make libdemocmds.so
+ndk-build $1 $2

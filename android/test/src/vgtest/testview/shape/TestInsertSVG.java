@@ -35,13 +35,21 @@ public class TestInsertSVG extends LinearLayout {
         layout.setOrientation(LinearLayout.HORIZONTAL);
         this.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         
-        final Button assetsBtn = new Button(context);
-        assetsBtn.setText("Insert from assets");
-        layout.addView(assetsBtn, param);
-        
-        assetsBtn.setOnClickListener(new OnClickListener() {
+        final Button tigerBtn = new Button(context);
+        tigerBtn.setText("Insert tiger.svg");
+        layout.addView(tigerBtn, param);
+        tigerBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mHelper.insertSVGFromResource(R.raw.tiger, v.getWidth() / 2, v.getHeight() / 2);
+            }
+        });
+        
+        final Button fontsBtn = new Button(context);
+        fontsBtn.setText("Insert fonts.svg");
+        layout.addView(fontsBtn, param);
+        fontsBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mHelper.insertSVGFromResource(R.raw.fonts, v.getWidth() / 2, v.getHeight() / 2);
             }
         });
         

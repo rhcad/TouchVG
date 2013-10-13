@@ -300,7 +300,7 @@ public class ViewHelper {
     //! 插入一个SVG图像
     public boolean insertSVGFromResource(int svgId, int x, int y) {
         Picture picture = mView.getImageCache().addSVGFromResource(mView.getResources(), svgId);
-        if (picture != null) {
+        if (picture != null && picture.getWidth() > 0.1f) {
             String name = "svg." + svgId;
             return mView.coreView().addImageShape(name, picture.getWidth(), picture.getHeight());
         }

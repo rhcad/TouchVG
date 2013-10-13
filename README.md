@@ -42,39 +42,44 @@ TouchVG 的功能
 > 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/rhcad/touchvg/issues)。
 
 Android编译说明
---------------
+---------------
 
-> 在 eclipse 中导入此项目下的工程（可以只导入VGTest工程），运行 VGTest 工程可看演示效果。
+> 在 eclipse 中导入此项目下的所有工程，运行 VGTest 工程可看演示效果。
 
 >> 可能需要根据实际安装情况修改工程的SDK版本号。
 
 >> 建议使用较新的 [ADT Bundle](http://developer.android.com/sdk/index.html)，省掉了eclipse和ADT的安装配置麻烦事。
     
-> 可以将 democmds 改为你的应用库工程（例如使用UltraEdit保持大小写全文替换，并替换文件名），该工程包含 democmds.jar 和 libdemocmds.so(本地库)。在此增加自己的图形类和命令类，这样就不需要改动 TouchVG 内核了。
+> 可以将 democmds 改为你的应用库工程（例如使用UltraEdit保持大小写全文替换，并替换文件名），
+该工程包含 democmds.jar 和 libdemocmds.so(本地库)。在此增加自己的图形类和命令类，这样就不需要改动 TouchVG 内核了。
 
 >> 不写C++代码、不要democmds也行，参考 `android/test/src/vgtest/testview/shape`包写自己的图形和命令吧。
 
-> 如需重新生成 libtouchvg.so 和 libdemocmds.so，则进入此项目的 android 目录，运行 `sh build.sh` （需要将[NDK](http://developer.android.com/tools/sdk/ndk/index.html)安装位置加到PATH环境变量）。
+> 如需重新生成 libtouchvg.so 和 libdemocmds.so，则进入此项目的 android 目录，运行 `./build.sh` 或 `./build.sh NDK_DEBUG=1`
+（需要将[NDK](http://developer.android.com/tools/sdk/ndk/index.html)安装位置加到PATH环境变量）。
 
->> 使用NDK-r8c以后的版本如果出现 `build/gmsl/__gmsl:512: *** non-numeric second argument to wordlist function` 错误，则打开 NDK 安装目录下的 `build/gmsl/__gmsl` 文件，将512行改为：
+>> 使用NDK-r8c以后的版本如果出现 `build/gmsl/__gmsl:512: *** non-numeric second argument to wordlist function` 错误，
+则打开 NDK 安装目录下的 `build/gmsl/__gmsl` 文件，将512行改为：
     `int_encode = $(__gmsl_tr1)$(wordlist 1,$(words $1),$(__gmsl_input_int))`
 
 >> 如果是在Windows上编译，推荐使用 MSYS（Unix模拟环境工具）、TDM-GCC（一种MinGW发行版）。
 
->> 如需重新生成内核JNI类（democmds.jar中的core包），则先删除 `democmds_java_wrap.cpp`，再运行`sh build.sh`（需要安装[SWIG](http://sourceforge.net/projects/swig/files/)，并将SWIG位置加到 PATH 环境变量）。
+>> 如需重新生成内核JNI类（democmds.jar中的core包），则先删除 `democmds_java_wrap.cpp`，再运行`./build.sh`
+（需要安装[SWIG](http://sourceforge.net/projects/swig/files/)，并将SWIG位置加到 PATH 环境变量）。
 
 iOS编译说明
 ----------
 
 > 在 Xcode 中打开 ios/TestVG.xcworkspace 文件，运行 TestView 演示程序。
 
->> libTouchVG.a太大，需要自己编译：进入此项目的 ios 目录，运行`sh build.sh`（需要配置Xcode命令行环境）。
+>> libTouchVG.a太大，需要自己编译：进入此项目的 ios 目录，运行`./build.sh`（需要配置Xcode命令行环境）。
 
 >> 在真机上调试时需要修改主程序的Bundle Identifier，例如“com.yourcompany.TestView”，并选择自己的开发证书（Code Signing）。
 
-> 可以将 DemoCmds 改为你的应用库工程（例如使用UltraEdit保持大小写全文替换，并替换文件名），增加自己的图形类和命令类，这样就不需要改动 TouchVG 内核了。
+> 可以将 DemoCmds 改为你的应用库工程（例如使用UltraEdit保持大小写全文替换，并替换文件名），
+增加自己的图形类和命令类，这样就不需要改动 TouchVG 内核了。
 
-> 如需重新生成 ios/output下的 libDemoCmds.a，则进入此项目的 ios 目录，运行`sh build.sh`（需要配置Xcode命令行环境）。
+> 如需重新生成 ios/output下的 libDemoCmds.a，则进入此项目的 ios 目录，运行`./build.sh`（需要配置Xcode命令行环境）。
 
 WPF编译说明
 ----------
