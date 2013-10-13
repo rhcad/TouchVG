@@ -36,20 +36,38 @@ public class TestInsertSVG extends LinearLayout {
         this.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         
         final Button tigerBtn = new Button(context);
-        tigerBtn.setText("Insert tiger.svg");
+        tigerBtn.setText("tiger");
         layout.addView(tigerBtn, param);
         tigerBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVGFromResource(R.raw.tiger, v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertSVG(R.raw.tiger, "tiger", v.getWidth() / 2, v.getHeight() / 2);
+            }
+        });
+        
+        final Button mapBtn = new Button(context);
+        mapBtn.setText("map");
+        layout.addView(mapBtn, param);
+        mapBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mHelper.insertSVG(R.raw.map, "map", v.getWidth() / 2, v.getHeight() / 2);
             }
         });
         
         final Button fontsBtn = new Button(context);
-        fontsBtn.setText("Insert fonts.svg");
+        fontsBtn.setText("fonts");
         layout.addView(fontsBtn, param);
         fontsBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVGFromResource(R.raw.fonts, v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertSVG(R.raw.fonts, "fonts", v.getWidth() / 2, v.getHeight() / 2);
+            }
+        });
+        
+        final Button picBtn = new Button(context);
+        picBtn.setText("bitmap");
+        layout.addView(picBtn, param);
+        picBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mHelper.insertBitmap(R.drawable.vg_lock, "vg_lock", v.getWidth() / 2, v.getHeight() / 2);
             }
         });
         
@@ -62,12 +80,12 @@ public class TestInsertSVG extends LinearLayout {
             }
         });
         
-        final Button lineBtn = new Button(context);
-        lineBtn.setText("Line");
-        layout.addView(lineBtn, param);
-        lineBtn.setOnClickListener(new OnClickListener() {
+        final Button splinesBtn = new Button(context);
+        splinesBtn.setText("Splines");
+        layout.addView(splinesBtn, param);
+        splinesBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.setCommand("line");
+                mHelper.setCommand("splines");
             }
         });
     }

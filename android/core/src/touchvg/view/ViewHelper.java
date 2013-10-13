@@ -13,7 +13,7 @@ import touchvg.core.GiCoreView;
 import touchvg.core.MgView;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Picture;
+import android.graphics.drawable.Drawable;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
@@ -291,20 +291,22 @@ public class ViewHelper {
         return pf.exists() || pf.mkdirs();
     }
     
-    //! 插入一个图像等可绘制对象
-    public boolean insertPicture(String name, Picture picture, int x, int y) {
-        return (mView.getImageCache().addPicture(picture))
-                && mView.coreView().addImageShape(name, picture.getWidth(), picture.getHeight());
+    //! 插入一个程序资源中的SVG图像(id=R.raw.name)
+    public boolean insertSVG(int id, String name, int x, int y) {
+        name = ImageCache.SVG_PREFIX + name;
+        final Drawable d = mView.getImageCache().addSVG(
+                mView.getResources(), id, name);
+        return d != null && mView.coreView().addImageShape(
+                name, ImageCache.getWidth(d), ImageCache.getHeight(d));
     }
     
-    //! 插入一个SVG图像
-    public boolean insertSVGFromResource(int svgId, int x, int y) {
-        Picture picture = mView.getImageCache().addSVGFromResource(mView.getResources(), svgId);
-        if (picture != null && picture.getWidth() > 0.1f) {
-            String name = "svg." + svgId;
-            return mView.coreView().addImageShape(name, picture.getWidth(), picture.getHeight());
-        }
-        return false;
+    //! 插入一个程序资源中的位图图像(id=R.drawable.name)
+    public boolean insertBitmap(int id, String name, int x, int y) {
+        name = ImageCache.BITMAP_PREFIX + name;
+        final Drawable d = mView.getImageCache().addBitmap(
+                mView.getResources(), id, name);
+        return d != null && mView.coreView().addImageShape(
+                name, ImageCache.getWidth(d), ImageCache.getHeight(d));
     }
     
     //! 注册命令观察者

@@ -7,5 +7,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="lib" path="/touchvg/bin/touchvg.jar" sourcepath="/touchvg"/>
 	<classpathentry exported="true" kind="lib" path="/democmds/bin/democmds.jar" sourcepath="/democmds"/>
+	<classpathentry exported="true" kind="lib" path="/touchvg/libs/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

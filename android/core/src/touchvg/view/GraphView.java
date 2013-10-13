@@ -278,6 +278,10 @@ public class GraphView extends View {
             mCachedBitmap.recycle();
             mCachedBitmap = null;
         }
+        if (mImageCache != null) {
+            mImageCache.clear();
+            mImageCache = null;
+        }
         mGestureDetector = null;
         
         super.onDetachedFromWindow();
