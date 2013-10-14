@@ -36,8 +36,6 @@ import android.widget.LinearLayout;
 public class ViewSinShape extends LinearLayout {
     protected ViewHelper mHelper = new ViewHelper();
     private MyCmdObserver mObserver = new MyCmdObserver();
-    private static final int[] HANDLEIDS = { R.drawable.vgdot1,
-            R.drawable.vgdot2, R.drawable.vgdot3 };
     private static final int[] MYIMAGEIDS = { R.drawable.demo_switch };
 
     public ViewSinShape(Context context) {
@@ -49,8 +47,7 @@ public class ViewSinShape extends LinearLayout {
         addView(mHelper.createGraphView(context), 
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        ViewHelper.setContextButtonImages(null, R.array.vg_action_captions,
-                MYIMAGEIDS, HANDLEIDS);
+        ViewHelper.setExtraContextImages(context, MYIMAGEIDS);
         mHelper.registerCmdObserver(mObserver);
     }
     

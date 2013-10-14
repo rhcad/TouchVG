@@ -3,7 +3,6 @@
 package vgtest.testview.shape;
 
 import touchvg.view.ViewHelper;
-import vgtest.app.R;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +11,6 @@ import android.widget.LinearLayout;
 //! 测试插入SVG图形的视图类
 public class TestInsertSVG extends LinearLayout {
     private ViewHelper mHelper = new ViewHelper();
-    private static final int[] HANDLEIDS = { R.drawable.vgdot1,
-            R.drawable.vgdot2, R.drawable.vgdot3 };
 
     public TestInsertSVG(Context context) {
         super(context);
@@ -23,8 +20,6 @@ public class TestInsertSVG extends LinearLayout {
         
         addView(mHelper.createGraphView(context), 
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
-        ViewHelper.setContextButtonImages(null, R.array.vg_action_captions, null, HANDLEIDS);
     }
     
     private void createButtons(Context context) {
@@ -40,7 +35,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(tigerBtn, param);
         tigerBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVG(R.raw.tiger, "tiger", v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertSVGFromResource("tiger", v.getWidth() / 2, v.getHeight() / 2);
             }
         });
         
@@ -49,7 +44,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(mapBtn, param);
         mapBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVG(R.raw.map, "map", v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertSVGFromResource("map", v.getWidth() / 2, v.getHeight() / 2);
             }
         });
         
@@ -58,7 +53,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(fontsBtn, param);
         fontsBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVG(R.raw.fonts, "fonts", v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertSVGFromResource("fonts", v.getWidth() / 2, v.getHeight() / 2);
             }
         });
         
@@ -67,7 +62,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(picBtn, param);
         picBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertBitmap(R.drawable.vg_lock, "vg_lock", v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertBitmapFromResource("vg_lock", v.getWidth() / 2, v.getHeight() / 2);
             }
         });
         

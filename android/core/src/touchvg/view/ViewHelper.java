@@ -78,28 +78,9 @@ public class ViewHelper {
         return layout;
     }
     
-    /**
-     * @brief 设置上下文按钮的图像ID数组
-     * @param imageIDs 基本操作按钮的图像ID数组, 32x32
-     * @param captionsID 基本操作按钮的文字数组ID，例如 R.array.vg_action_captions
-     * @param extraImageIDs 行业特定操作按钮的图像ID数组, 32x32
-     * @param handleImageIDs 控制点的图像ID数组
-     * 使用示例:
-     * @code
-     * private static final int[] IMAGEIDS = { 0, R.drawable.vg_selall, 0, R.drawable.vg_draw,
-     *     R.drawable.vg_back, R.drawable.vg_delete, R.drawable.vg_clone, R.drawable.vg_fixlen,
-     *     R.drawable.vg_freelen, R.drawable.vg_lock, R.drawable.vg_unlock, R.drawable.vg_edit,
-     *     R.drawable.vg_endedit, 0, 0, R.drawable.vg_addvertex, R.drawable.vg_delvertex,
-     *     R.drawable.vg_group, R.drawable.vg_ungroup, R.drawable.vg_overturn };
-     * private static final int[] HANDLEIDS = { R.drawable.vgdot1, R.drawable.vgdot2,
-     *     R.drawable.vgdot3, R.drawable.vg_lock, 
-     *     R.drawable.vg_unlock, R.drawable.vg_back, R.drawable.vg_endedit };
-     * ViewHelper.setContextButtonImages(IMAGEIDS, R.array.vg_action_captions, null, HANDLEIDS);
-     * @endcode
-     */
-    public static void setContextButtonImages(int[] imageIDs, int captionsID, 
-            int[] extraImageIDs, int[] handleImageIDs) {
-        GraphView.setContextButtonImages(imageIDs, captionsID, extraImageIDs, handleImageIDs);
+    //! 设置额外的上下文操作按钮的图像ID数组，其动作序号从40起
+    public static void setExtraContextImages(Context context, int[] ids) {
+        GraphView.setExtraContextImages(context, ids);
     }
     
     //! 得到当前命令名称
@@ -292,7 +273,8 @@ public class ViewHelper {
     }
     
     //! 插入一个程序资源中的SVG图像(id=R.raw.name)
-    public boolean insertSVG(int id, String name, int x, int y) {
+    public boolean insertSVGFromResource(String name, int x, int y) {
+        int id = GraphView.getResIDFromName(mView.getContext(), "raw", name);
         name = ImageCache.SVG_PREFIX + name;
         final Drawable d = mView.getImageCache().addSVG(
                 mView.getResources(), id, name);
@@ -301,7 +283,8 @@ public class ViewHelper {
     }
     
     //! 插入一个程序资源中的位图图像(id=R.drawable.name)
-    public boolean insertBitmap(int id, String name, int x, int y) {
+    public boolean insertBitmapFromResource(String name, int x, int y) {
+        int id = GraphView.getDrawableIDFromName(mView.getContext(), name);
         name = ImageCache.BITMAP_PREFIX + name;
         final Drawable d = mView.getImageCache().addBitmap(
                 mView.getResources(), id, name);

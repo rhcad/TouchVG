@@ -22,8 +22,8 @@ import com.larvalabs.svgandroid.SVGParseException;
 /*! \ingroup GROUP_ANDROID
  */
 public class ImageCache extends Object {
-    public static final String BITMAP_PREFIX = "bmp.";
-    public static final String SVG_PREFIX = "svg.";
+    public static final String BITMAP_PREFIX = "bmp:";
+    public static final String SVG_PREFIX = "svg:";
     private static final int CACHE_SIZE = 2 * 1024 * 1024;    // 2MB
     private LruCache<String, Drawable> mCache;
     
