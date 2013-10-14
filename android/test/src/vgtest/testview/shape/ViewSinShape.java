@@ -191,7 +191,7 @@ public class ViewSinShape extends LinearLayout {
         public boolean touchEnded(MgMotion sender) {
             dynshape().shape().setHandlePoint(0, snapPoint(sender), 0);
             addShape(sender);
-            return sender.cancel();     // 画完一个就退出
+            return sender.toSelectCommand();     // 画完一个就退出
         }
     }
 
