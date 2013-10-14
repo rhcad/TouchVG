@@ -81,6 +81,7 @@ private:
     UILongPressGestureRecognizer *_pressRecognizer;     //!< 单指长按手势识别器
     UIPinchGestureRecognizer *_pinchRecognizer;         //!< 双指放缩手势识别器
     UIRotationGestureRecognizer *_rotationRecognizer;   //!< 双指旋转手势识别器
+    BOOL                    _gestureEnabled;
     
     std::vector<CGPoint>    _points;        //!< 手势生效前的轨迹
     CGPoint                 _startPt;       //!< 开始位置

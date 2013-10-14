@@ -38,7 +38,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 @synthesize pressRecognizer = _pressRecognizer;
 @synthesize pinchRecognizer = _pinchRecognizer;
 @synthesize rotationRecognizer = _rotationRecognizer;
-@synthesize gestureEnabled;
+@synthesize gestureEnabled = _gestureEnabled;
 
 - (void)dealloc {
     if (_activeGraphView == self)
@@ -175,10 +175,6 @@ GiColor CGColorToGiColor(CGColorRef color);
     _adapter->clearCachedData();
 }
 
-- (BOOL)gestureEnabled {
-    return self.userInteractionEnabled;
-}
-
 - (void)setGestureEnabled:(BOOL)enabled {
     UIGestureRecognizer *recognizers[] = {
         _pinchRecognizer, _rotationRecognizer, _panRecognizer, 
@@ -187,6 +183,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     for (int i = 0; recognizers[i]; i++) {
         recognizers[i].enabled = enabled;
     }
+    _gestureEnabled = enabled;
     self.userInteractionEnabled = enabled;
 }
 
@@ -219,8 +216,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     _adapter->hideContextActions();
 }
 
-- (IBAction)onContextAction:(id)sender
-{
+- (IBAction)onContextAction:(id)sender {
     UIView *btn = (UIView *)sender;
     int action = btn ? btn.tag : 0;
     
@@ -230,6 +226,12 @@ GiColor CGColorToGiColor(CGColorRef color);
     [self coreView]->doContextAction(action);
 }
 
+- (void)removeFromSuperview {
+    self.gestureEnabled = NO;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [super removeFromSuperview];
+}
+
 @end
 
 @implementation GiGraphView(GestureRecognizer)
@@ -237,6 +239,10 @@ GiColor CGColorToGiColor(CGColorRef color);
 - (void)setupGestureRecognizers {
     UIGestureRecognizer *recognizers[7];
     int i = 0;
+    
+    _gestureEnabled = self.userInteractionEnabled;
+    if (!_gestureEnabled)
+        return;
     
     recognizers[i++] = _pinchRecognizer =
     [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
@@ -288,9 +294,9 @@ GiColor CGColorToGiColor(CGColorRef color);
 // 某个手指在屏幕上移动，在拖动手势生效前会触发本事件
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
-    CGPoint pt = [touch locationInView:touch.view];
     
     if (!_gestureRecognized && !_points.empty()) {          // 已经记录了轨迹
+        CGPoint pt = [touch locationInView:touch.view];
         _points.push_back(pt);                              // 继续记录轨迹
     }
     
@@ -300,9 +306,8 @@ GiColor CGColorToGiColor(CGColorRef color);
 // 手势没有生效、手指松开时会触发本事件
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
-    CGPoint pt = [touch locationInView:touch.view];
     
-    if (!_gestureRecognized) {
+    if (!_gestureRecognized && _gestureEnabled) {
         _touchCount -= [touches count];                     // 累计触点
         
         if (!_points.empty()) {                             // 手势未生效，模拟分发手势
@@ -312,6 +317,7 @@ GiColor CGColorToGiColor(CGColorRef color);
                 for (int i = 1; i < _points.size(); i++) {
                     _adapter->dispatchPan(kGiGestureMoved, _points[i]);
                 }
+                CGPoint pt = [touch locationInView:touch.view];
                 _adapter->dispatchPan(kGiGestureEnded, pt);
             }
             _points.clear();
@@ -374,7 +380,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 - (BOOL)gestureCheck:(UIGestureRecognizer*)sender {
     _gestureRecognized = (sender.state == UIGestureRecognizerStateBegan
                           || sender.state == UIGestureRecognizerStateChanged);
-    return YES;
+    return _gestureEnabled;
 }
 
 - (BOOL)gesturePost:(UIGestureRecognizer*)sender {
@@ -490,7 +496,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     }
     
     _tapCount = 0;          // 双击时忽略单击
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayTap) object:nil]; 
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayTap) object:nil];
     
     return ([self gesturePost:sender] 
             && _adapter->dispatchGesture(kGiGestureDblTap, kGiGestureEnded, 
