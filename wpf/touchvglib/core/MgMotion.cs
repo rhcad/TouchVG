@@ -236,8 +236,8 @@ public class MgMotion : IDisposable {
     return ret;
   }
 
-  public bool cancel() {
-    bool ret = touchvgPINVOKE.MgMotion_cancel(swigCPtr);
+  public bool toSelectCommand() {
+    bool ret = touchvgPINVOKE.MgMotion_toSelectCommand(swigCPtr);
     return ret;
   }
 

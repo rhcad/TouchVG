@@ -23582,7 +23582,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgView_setCurrentShapes(void * jarg1,
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgView_cancel(void * jarg1, void * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgView_toSelectCommand(void * jarg1, void * jarg2) {
   unsigned int jresult ;
   MgView *arg1 = (MgView *) 0 ;
   MgMotion *arg2 = (MgMotion *) 0 ;
@@ -23590,7 +23590,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgView_cancel(void * jarg1, void * ja
   
   arg1 = (MgView *)jarg1; 
   arg2 = (MgMotion *)jarg2; 
-  result = (bool)(arg1)->cancel((MgMotion const *)arg2);
+  result = (bool)(arg1)->toSelectCommand((MgMotion const *)arg2);
   jresult = result; 
   return jresult;
 }
@@ -24264,13 +24264,13 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_MgMotion_cmds(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgMotion_cancel(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgMotion_toSelectCommand(void * jarg1) {
   unsigned int jresult ;
   MgMotion *arg1 = (MgMotion *) 0 ;
   bool result;
   
   arg1 = (MgMotion *)jarg1; 
-  result = (bool)((MgMotion const *)arg1)->cancel();
+  result = (bool)((MgMotion const *)arg1)->toSelectCommand();
   jresult = result; 
   return jresult;
 }

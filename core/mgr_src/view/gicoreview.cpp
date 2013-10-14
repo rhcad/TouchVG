@@ -117,7 +117,7 @@ public:
 
     bool registerCommand(const char* name, MgCommand* (*creator)()) {
         return _cmds->registerCommand(name, creator); }
-    bool cancel(const MgMotion* sender) {
+    bool toSelectCommand(const MgMotion* sender) {
         return _cmds->setCommand(sender, "select", NULL); }
     const char* getCommandName() { return _cmds->getCommandName(); }
     MgCommand* getCommand() { return _cmds->getCommand(); }
@@ -769,7 +769,9 @@ bool GiCoreView::loadShapes(MgStorage* s)
 {
     bool ret = true;
 
-    impl->setCommand(&impl->motion, impl->_cmds->getCommandName());
+    impl->setCommand(&impl->motion, impl->getCommandName());
+    MgCommand* cmd = impl->getCommand();
+    if (cmd) cmd->cancel(&impl->motion);
 
     if (s) {
         MgShapesLock locker(MgShapesLock::Load, impl);

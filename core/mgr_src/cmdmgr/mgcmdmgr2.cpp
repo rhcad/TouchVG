@@ -36,7 +36,7 @@ MgShape* MgCmdManagerImpl::addImageShape(const MgMotion* sender,
         sender->view->shapeAdded(newsp);
         
         sender->view->setNewShapeID(newsp->getID());
-        sender->view->cancel(sender);
+        sender->toSelectCommand();
         
         return newsp;
     }

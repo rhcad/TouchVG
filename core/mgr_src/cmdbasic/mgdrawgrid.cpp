@@ -50,7 +50,7 @@ bool MgCmdDrawGrid::touchEnded(const MgMotion* sender)
         dynshape()->context()->setNoFillColor();
         addShape(sender);
         delayClear();
-        sender->cancel();
+        sender->toSelectCommand();
     }
     else {
         dynshape()->shape()->setHandlePoint(8, dynshape()->shape()->getPoint(3), 0);

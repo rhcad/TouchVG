@@ -56,7 +56,7 @@ public:
     virtual MgSelection* getSelection() = 0;        //!< 返回选择集对象，可能为NULL
 
     virtual bool setCurrentShapes(MgShapes* shapes) = 0; //!< 设置当前图形列表
-    virtual bool cancel(const MgMotion* sender) = 0; //!< 取消当前命令
+    virtual bool toSelectCommand(const MgMotion* sender) = 0; //!< 取消当前命令
     virtual int getNewShapeID() = 0;                //!< 返回新绘图形的ID
     virtual void setNewShapeID(int sid) = 0;        //!< 设置新绘图形的ID
     virtual const char* getCommandName() = 0;       //!< 得到当前命令名称
@@ -122,7 +122,7 @@ public:
     }
     
     MgCmdManager* cmds() const { return view->cmds(); } //!< 返回命令管理器对象
-    bool cancel() const { return view->cancel(this); }  //!< 取消当前命令
+    bool toSelectCommand() const { return view->toSelectCommand(this); }  //!< 取消当前命令
 
     Point2d startCenterM() const { return (startPtM + startPt2M) / 2; }
     Point2d centerM() const { return (pointM + point2M) / 2; }

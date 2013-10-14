@@ -123,8 +123,8 @@ public class MgView : IDisposable {
     return ret;
   }
 
-  public virtual bool cancel(MgMotion sender) {
-    bool ret = touchvgPINVOKE.MgView_cancel(swigCPtr, MgMotion.getCPtr(sender));
+  public virtual bool toSelectCommand(MgMotion sender) {
+    bool ret = touchvgPINVOKE.MgView_toSelectCommand(swigCPtr, MgMotion.getCPtr(sender));
     return ret;
   }
 

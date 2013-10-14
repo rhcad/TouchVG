@@ -4038,8 +4038,8 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgView_setCurrentShapes")]
   public static extern bool MgView_setCurrentShapes(HandleRef jarg1, HandleRef jarg2);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgView_cancel")]
-  public static extern bool MgView_cancel(HandleRef jarg1, HandleRef jarg2);
+  [DllImport("touchvg", EntryPoint="CSharp_MgView_toSelectCommand")]
+  public static extern bool MgView_toSelectCommand(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgView_getNewShapeID")]
   public static extern int MgView_getNewShapeID(HandleRef jarg1);
@@ -4218,8 +4218,8 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgMotion_cmds")]
   public static extern IntPtr MgMotion_cmds(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgMotion_cancel")]
-  public static extern bool MgMotion_cancel(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgMotion_toSelectCommand")]
+  public static extern bool MgMotion_toSelectCommand(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgMotion_startCenterM")]
   public static extern IntPtr MgMotion_startCenterM(HandleRef jarg1);

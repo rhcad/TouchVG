@@ -291,6 +291,16 @@ public class GraphView extends View {
         if (mActiveView == this) {
             mActiveView = null;
         }
+        if (mImageCache != null) {
+        	synchronized(mImageCache) {}
+            mImageCache.clear();
+            mImageCache = null;
+        }
+        if (mCachedBitmap != null) {
+        	synchronized(mCachedBitmap) {}
+            mCachedBitmap.recycle();
+            mCachedBitmap = null;
+        }
         if (mViewAdapter != null) {
             mCoreView.destoryView(mViewAdapter);
             mViewAdapter.delete();
@@ -311,14 +321,6 @@ public class GraphView extends View {
         if (mGestureListener != null) {
             mGestureListener.release();
             mGestureListener = null;
-        }
-        if (mCachedBitmap != null) {
-            mCachedBitmap.recycle();
-            mCachedBitmap = null;
-        }
-        if (mImageCache != null) {
-            mImageCache.clear();
-            mImageCache = null;
         }
         mGestureDetector = null;
         

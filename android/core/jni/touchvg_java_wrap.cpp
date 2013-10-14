@@ -31986,7 +31986,7 @@ SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgView_1setCurrentShape
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgView_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgView_1toSelectCommand(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jboolean jresult = 0 ;
   MgView *arg1 = (MgView *) 0 ;
   MgMotion *arg2 = (MgMotion *) 0 ;
@@ -31998,7 +31998,7 @@ SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgView_1cancel(JNIEnv *
   (void)jarg2_;
   arg1 = *(MgView **)&jarg1; 
   arg2 = *(MgMotion **)&jarg2; 
-  result = (bool)(arg1)->cancel((MgMotion const *)arg2);
+  result = (bool)(arg1)->toSelectCommand((MgMotion const *)arg2);
   jresult = (jboolean)result; 
   return jresult;
 }
@@ -32879,7 +32879,7 @@ SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1cmds(JNIEnv *jen
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1toSelectCommand(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jboolean jresult = 0 ;
   MgMotion *arg1 = (MgMotion *) 0 ;
   bool result;
@@ -32888,7 +32888,7 @@ SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1cancel(JNIEnv
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgMotion **)&jarg1; 
-  result = (bool)((MgMotion const *)arg1)->cancel();
+  result = (bool)((MgMotion const *)arg1)->toSelectCommand();
   jresult = (jboolean)result; 
   return jresult;
 }

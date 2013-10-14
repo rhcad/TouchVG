@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 //! 测试插入SVG图形的视图类
 public class TestInsertSVG extends LinearLayout {
     private ViewHelper mHelper = new ViewHelper();
+    private static final String PATH = "mnt/sdcard/TouchVG/";
 
     public TestInsertSVG(Context context) {
         super(context);
@@ -66,21 +67,31 @@ public class TestInsertSVG extends LinearLayout {
             }
         });
         
-        final Button saveBtn = new Button(context);
-        saveBtn.setText("Save PNG");
-        layout.addView(saveBtn, param);
-        saveBtn.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                mHelper.savePng("mnt/sdcard/TouchVG/testsvg.png");
-            }
-        });
-        
         final Button splinesBtn = new Button(context);
         splinesBtn.setText("Splines");
         layout.addView(splinesBtn, param);
         splinesBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mHelper.setCommand("splines");
+            }
+        });
+        
+        final Button saveBtn = new Button(context);
+        saveBtn.setText("Save");
+        layout.addView(saveBtn, param);
+        saveBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mHelper.savePng(PATH + "testsvg.png");
+                mHelper.saveToFile(PATH + "testsvg.vg");
+            }
+        });
+        
+        final Button loadBtn = new Button(context);
+        loadBtn.setText("Load");
+        layout.addView(loadBtn, param);
+        loadBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mHelper.loadFromFile(PATH + "testsvg.vg");
             }
         });
     }
