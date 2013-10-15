@@ -339,7 +339,7 @@ bool MgCmdManagerImpl::drawSnap(const MgMotion* sender, GiGraphics* gs)
             bool isnear = (_snapType[0] >= kMgSnapNearPt);
             GiContext ctx(-2, GiColor(0, 255, 0, 200), kGiLineDash, GiColor(0, 255, 0, 64));
             ret = gs->drawEllipse(&ctx, _ptSnap, displayMmToModel(isnear ? 3.f : 6.f, gs));
-            gs->drawHandle(_ptSnap, 0);
+            gs->drawHandle(_ptSnap, kGiHandleVertex);
         }
         else {
             GiContext ctx(0, GiColor(0, 255, 0, 200), kGiLineDash, GiColor(0, 255, 0, 64));

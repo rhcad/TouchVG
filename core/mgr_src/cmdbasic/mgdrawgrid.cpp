@@ -14,7 +14,7 @@ bool MgCmdDrawGrid::initialize(const MgMotion* sender, MgStorage*)
 bool MgCmdDrawGrid::draw(const MgMotion* sender, GiGraphics* gs)
 {
     if (getStep() == 2) {
-        gs->drawHandle(dynshape()->shape()->getHandlePoint(8), 0);
+        gs->drawHandle(dynshape()->shape()->getHandlePoint(8), kGiHandleVertex);
     }
     return MgCmdDrawRect::draw(sender, gs);
 }

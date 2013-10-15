@@ -98,7 +98,7 @@ public:
     /*!
         \param x 符号中心位置X
         \param y 符号中心位置Y
-        \param type 符号类型，0-顶点或控制点，1-活动点，2-左旋，3-旋转，4-锁定，5-解锁
+        \param type 符号类型，GiHandleTypes
      */
     virtual void drawHandle(float x, float y, int type) = 0;
     
