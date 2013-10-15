@@ -16,7 +16,7 @@ bool MgCmdArc3P::initialize(const MgMotion* sender, MgStorage*)
 void MgCmdArc3P::drawArcHandle(const MgMotion*, GiGraphics* gs)
 {
     if (m_step > 0 && m_step < 3) {
-        gs->drawHandle(_points[m_step], 1);
+        gs->drawHandle(_points[m_step], kGiHandleHotVertex);
     }
 }
 

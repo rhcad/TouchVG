@@ -32,7 +32,7 @@ bool MgCmdDrawLines::backStep(const MgMotion* sender)
 bool MgCmdDrawLines::draw(const MgMotion* sender, GiGraphics* gs)
 {
     if (m_step > (needEnded() ? 3 : 2) && !sender->dragging()) {
-        gs->drawHandle(dynshape()->shapec()->getExtent().center(), 6);
+        gs->drawHandle(dynshape()->shapec()->getExtent().center(), kGiHandleAccept);
     }
     return MgCommandDraw::draw(sender, gs);
 }
@@ -148,11 +148,13 @@ bool MgCmdDrawLines::touchEnded(const MgMotion* sender)
 bool MgCmdDrawLines::checkClosed(const MgMotion* sender, const Point2d& pnt)
 {
     bool closed = false;
+    MgBaseLines* lines = (MgBaseLines*)dynshape()->shape();
     
-    if (m_index == m_step && needCheckClosed()) {
+    if ((m_index == 0 || m_index == m_step) && needCheckClosed()) {
         float distmin = sender->displayMmToModel(2.f);
-        closed = m_step > 2 && pnt.distanceTo(dynshape()->shape()->getPoint(0)) < distmin;
-        ((MgBaseLines*)dynshape()->shape())->setClosed(closed);
+        closed = m_step > 2 && pnt.distanceTo(m_index == 0 ? lines->endPoint()
+                                              : lines->getPoint(0)) < distmin;
+        lines->setClosed(closed);
     }
     
     return closed;

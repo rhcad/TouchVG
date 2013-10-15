@@ -41,8 +41,8 @@ public class ViewFactory {
         addItem("vgtest.testview.view.GraphView1", 3<<1, "GraphView lines");
         addItem("vgtest.testview.view.GraphView1", 32|(4<<1), "GraphView hittest in democmds");
         addItem("vgtest.testview.view.GraphView1", 32|1, "GraphView select");
-        addItem("vgtest.testview.view.TestMagnifier1", 1, "TestMagnifier");
-        addItem("vgtest.testview.view.TestMagnifier1", 16|1, "TestMagnifier, 2 views");
+        addItem("vgtest.testview.view.TestMagnifier1", 1<<1, "TestMagnifier");
+        addItem("vgtest.testview.view.TestMagnifier1", 16|(1<<1), "TestMagnifier, 2 views");
         addItem("vgtest.testview.view.LargeView1", 1<<1, "Scroll GraphView splines");
         addItem("vgtest.testview.view.LargeView1", 2<<1, "Scroll GraphView line");
         addItem("vgtest.testview.view.LargeView1", 32|1, "Scroll GraphView select");
