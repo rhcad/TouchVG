@@ -7,20 +7,31 @@
 #include <mgbasicsp.h>
 #include "mgcmdselect.h"
 #include <string.h>
+#include <mglog.h>
 
 MgShape* MgCmdManagerImpl::addImageShape(const MgMotion* sender, 
                                          const char* name, float width, float height)
 {
-    if (!name || *name == 0 || width < 1 || height < 1)
+    Box2d rect(sender->view->xform()->getWndRectW());
+    rect *= sender->view->xform()->worldToDisplay();
+    return addImageShape(sender, name, rect.center().x, rect.center().y, width, height);
+}
+
+MgShape* MgCmdManagerImpl::addImageShape(const MgMotion* sender, const char* name,
+                                         float xc, float yc, float w, float h)
+{
+    if (!name || *name == 0 || w < 1 || h < 1)
         return NULL;
     
-    Vector2d size(Vector2d(width, height) * sender->view->xform()->displayToWorld());
+    Vector2d size(Vector2d(w, h) * sender->view->xform()->displayToWorld());
     while (fabsf(size.x) > 200.f || fabsf(size.y) > 200.f) {
         size *= 0.95f;
     }
-    Box2d rect(sender->view->xform()->getWndRectW() + Vector2d(10.f, -10.f));
-    rect = Box2d(rect.leftTop(), rect.leftTop() + size);
-    rect *= sender->view->xform()->worldToModel();
+    size *= sender->view->xform()->worldToDisplay();
+    
+    Box2d rect(xc - size.x / 2, yc - size.y / 2, xc + size.x / 2, yc + size.y / 2);
+    LOGD("addImageShape %.0f  %.0f  %.0f  %.0f", rect.xmin, rect.ymin, rect.xmax, rect.ymax);
+    rect *= sender->view->xform()->displayToModel();
     
     MgShapeT<MgImageShape> shape;
     MgImageShape* imagesp = (MgImageShape*)shape.shape();

@@ -292,12 +292,12 @@ public class GraphView extends View {
             mActiveView = null;
         }
         if (mImageCache != null) {
-        	synchronized(mImageCache) {}
+            synchronized(mImageCache) {}
             mImageCache.clear();
             mImageCache = null;
         }
         if (mCachedBitmap != null) {
-        	synchronized(mCachedBitmap) {}
+            synchronized(mCachedBitmap) {}
             mCachedBitmap.recycle();
             mCachedBitmap = null;
         }

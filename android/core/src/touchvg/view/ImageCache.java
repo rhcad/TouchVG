@@ -4,6 +4,12 @@
 
 package touchvg.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +32,7 @@ public class ImageCache extends Object {
     public static final String SVG_PREFIX = "svg:";
     private static final int CACHE_SIZE = 2 * 1024 * 1024;    // 2MB
     private LruCache<String, Drawable> mCache;
+    private String mPath;
     
     public ImageCache() {
         mCache = new LruCache<String, Drawable>(CACHE_SIZE) {
@@ -38,6 +45,11 @@ public class ImageCache extends Object {
                 return size;
             }
         };
+    }
+    
+    //! 设置图像文件的默认路径，自动加载时用
+    public void setImagePath(String path) {
+        this.mPath = path;
     }
     
     public static int getWidth(Drawable drawable) {
@@ -75,16 +87,25 @@ public class ImageCache extends Object {
         
         if (drawable == null && view != null) {
             if (name.indexOf(BITMAP_PREFIX) == 0) { // R.drawable.resName
-                String resName = name.substring(BITMAP_PREFIX.length());
+                final String resName = name.substring(BITMAP_PREFIX.length());
                 int id = view.getResources().getIdentifier(resName,
                         "drawable", view.getContext().getPackageName());
                 drawable = this.addBitmap(view.getResources(), id, name);
             }
             else if (name.indexOf(SVG_PREFIX) == 0) { // R.raw.resName
-                String resName = name.substring(SVG_PREFIX.length());
+                final String resName = name.substring(SVG_PREFIX.length());
                 int id = view.getResources().getIdentifier(resName,
                         "raw", view.getContext().getPackageName());
                 drawable = this.addSVG(view.getResources(), id, name);
+            }
+            else if (name.endsWith(".svg")) {
+                if (mPath != null && !mPath.isEmpty()) {
+                    drawable = this.addSVGFile(new File(mPath, name).getPath(), name);
+                }
+            }
+            else if (mPath != null && !mPath.isEmpty()) {
+                drawable = this.addBitmapFile(view.getResources(),
+                        new File(mPath, name).getPath(), name);
             }
         }
         
@@ -96,15 +117,11 @@ public class ImageCache extends Object {
         Drawable drawable = mCache.get(name);
 
         if (drawable == null && id != 0) {
-            try {
-                Bitmap bitmap = BitmapFactory.decodeResource(res, id);
-                
-                if (bitmap != null && bitmap.getWidth() > 0) {
-                    drawable = new BitmapDrawable(res, bitmap);
-                    mCache.put(name, drawable);
-                }
-            } catch (SVGParseException e) {
-                e.printStackTrace();
+            final Bitmap bitmap = BitmapFactory.decodeResource(res, id);
+            
+            if (bitmap != null && bitmap.getWidth() > 0) {
+                drawable = new BitmapDrawable(res, bitmap);
+                mCache.put(name, drawable);
             }
         }
         
@@ -117,7 +134,58 @@ public class ImageCache extends Object {
 
         if (drawable == null && id != 0) {
             try {
-                SVG svg = new SVGBuilder().readFromResource(res, id).build();
+                final SVG svg = new SVGBuilder().readFromResource(res, id).build();
+                final Picture picture = svg.getPicture();
+                
+                if (picture != null && picture.getWidth() > 0) {
+                    drawable = svg.getDrawable();
+                    mCache.put(name, drawable);
+                }
+            } catch (SVGParseException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return drawable;
+    }
+    
+    //! 插入一个PNG等图像文件
+    public Drawable addBitmapFile(Resources res, String filename, String name) {
+        Drawable drawable = mCache.get(name);
+
+        if (drawable == null && new File(filename).exists()) {
+            final BitmapFactory.Options opts = new BitmapFactory.Options();
+            
+            opts.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(filename, opts);
+            opts.inJustDecodeBounds = false;
+            
+            if (opts.outWidth > 1600 || opts.outHeight > 1600) {
+                opts.inSampleSize = 4;
+            } else if (opts.outWidth > 600 || opts.outHeight > 600) {
+                opts.inSampleSize = 2;
+            }
+            
+            final Bitmap bitmap = BitmapFactory.decodeFile(filename, opts);
+            
+            if (bitmap != null && bitmap.getWidth() > 0) {
+                drawable = new BitmapDrawable(res, bitmap);
+                mCache.put(name, drawable);
+            }
+        }
+        
+        return drawable;
+    }
+    
+    //! 插入一个SVG文件的图像
+    public Drawable addSVGFile(String filename, String name) {
+        Drawable drawable = mCache.get(name);
+
+        if (drawable == null && name.endsWith(".svg")) {
+            try {
+                InputStream data = new FileInputStream(new File(filename));
+                SVG svg = new SVGBuilder().readFromInputStream(data).build();
+                data.close();
                 Picture picture = svg.getPicture();
                 
                 if (picture != null && picture.getWidth() > 0) {
@@ -125,6 +193,10 @@ public class ImageCache extends Object {
                     mCache.put(name, drawable);
                 }
             } catch (SVGParseException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

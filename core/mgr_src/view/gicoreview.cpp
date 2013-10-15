@@ -950,9 +950,16 @@ void GiCoreView::setContext(const GiContext& ctx, int mask, int apply)
     }
 }
 
-bool GiCoreView::addImageShape(const char* name, float width, float height)
+int GiCoreView::addImageShape(const char* name, float width, float height)
 {
-    return !!impl->_cmds->addImageShape(&impl->motion, name, width, height);
+    MgShape* shape = impl->_cmds->addImageShape(&impl->motion, name, width, height);
+    return shape ? shape->getID() : 0;
+}
+
+int GiCoreView::addImageShape(const char* name, float xc, float yc, float w, float h)
+{
+    MgShape* shape = impl->_cmds->addImageShape(&impl->motion, name, xc, yc, w, h);
+    return shape ? shape->getID() : 0;
 }
 
 bool GiCoreView::getBoundingBox(mgvector<float>& box)
@@ -960,6 +967,20 @@ bool GiCoreView::getBoundingBox(mgvector<float>& box)
     bool ret = box.count() == 4 && impl->curview;
     if (ret) {
         Box2d rect;
+        impl->_cmds->getBoundingBox(rect, &impl->motion);
+        box.set(0, rect.xmin, rect.ymin);
+        box.set(2, rect.xmax, rect.ymax);
+    }
+    return ret;
+}
+
+bool GiCoreView::getBoundingBox(mgvector<float>& box, int shapeId)
+{
+    const MgShape* shape = impl->shapes()->findShape(shapeId);
+    bool ret = box.count() == 4 && shape;
+    
+    if (ret) {
+        Box2d rect(shape->shapec()->getExtent());
         impl->_cmds->getBoundingBox(rect, &impl->motion);
         box.set(0, rect.xmin, rect.ymin);
         box.set(2, rect.xmax, rect.ymax);

@@ -272,24 +272,63 @@ public class ViewHelper {
         return pf.exists() || pf.mkdirs();
     }
     
-    //! 插入一个程序资源中的SVG图像(id=R.raw.name)
-    public boolean insertSVGFromResource(String name, int x, int y) {
+    //! 在默认位置插入一个程序资源中的SVG图像(id=R.raw.name)
+    public int insertSVGFromResource(String name) {
         int id = GraphView.getResIDFromName(mView.getContext(), "raw", name);
         name = ImageCache.SVG_PREFIX + name;
         final Drawable d = mView.getImageCache().addSVG(
                 mView.getResources(), id, name);
-        return d != null && mView.coreView().addImageShape(
+        return d == null ? 0 : mView.coreView().addImageShape(
                 name, ImageCache.getWidth(d), ImageCache.getHeight(d));
     }
     
-    //! 插入一个程序资源中的位图图像(id=R.drawable.name)
-    public boolean insertBitmapFromResource(String name, int x, int y) {
+    //! 插入一个程序资源中的SVG图像(id=R.raw.name)，并指定图像的中心位置
+    public int insertSVGFromResource(String name, int xc, int yc) {
+        int id = GraphView.getResIDFromName(mView.getContext(), "raw", name);
+        name = ImageCache.SVG_PREFIX + name;
+        final Drawable d = mView.getImageCache().addSVG(
+                mView.getResources(), id, name);
+        return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
+                ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 在默认位置插入一个程序资源中的位图图像(id=R.drawable.name)
+    public int insertBitmapFromResource(String name) {
         int id = GraphView.getDrawableIDFromName(mView.getContext(), name);
         name = ImageCache.BITMAP_PREFIX + name;
         final Drawable d = mView.getImageCache().addBitmap(
                 mView.getResources(), id, name);
-        return d != null && mView.coreView().addImageShape(
+        return d == null ? 0 : mView.coreView().addImageShape(
                 name, ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 插入一个程序资源中的位图图像(id=R.drawable.name)，并指定图像的中心位置
+    public int insertBitmapFromResource(String name, int xc, int yc) {
+        int id = GraphView.getDrawableIDFromName(mView.getContext(), name);
+        name = ImageCache.BITMAP_PREFIX + name;
+        final Drawable d = mView.getImageCache().addBitmap(
+                mView.getResources(), id, name);
+        return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
+                ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 在默认位置插入一个PNG、JPEG或SVG等文件的图像
+    public int insertImageFromFile(String filename) {
+        String name = filename.substring(filename.lastIndexOf('/') + 1).toLowerCase();
+        Drawable d;
+        
+        if (name.endsWith(".svg")) {
+            d = mView.getImageCache().addSVGFile(filename, name);
+        } else {
+            d = mView.getImageCache().addBitmapFile(mView.getResources(), filename, name);
+        }
+        return d == null ? 0 : mView.coreView().addImageShape(name,
+                ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
+    public void setImagePath(String path) {
+        mView.getImageCache().setImagePath(path);
     }
     
     //! 注册命令观察者

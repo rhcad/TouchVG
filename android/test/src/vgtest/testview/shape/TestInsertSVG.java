@@ -21,6 +21,7 @@ public class TestInsertSVG extends LinearLayout {
         
         addView(mHelper.createGraphView(context), 
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        mHelper.setImagePath(PATH);
     }
     
     private void createButtons(Context context) {
@@ -36,16 +37,17 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(tigerBtn, param);
         tigerBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVGFromResource("tiger", v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertSVGFromResource("tiger", 
+                        mHelper.getView().getWidth() / 2, mHelper.getView().getHeight() / 2);
             }
         });
         
         final Button mapBtn = new Button(context);
-        mapBtn.setText("map");
+        mapBtn.setText("map file");
         layout.addView(mapBtn, param);
         mapBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVGFromResource("map", v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertImageFromFile(PATH + "map.svg");
             }
         });
         
@@ -54,7 +56,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(fontsBtn, param);
         fontsBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVGFromResource("fonts", v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertSVGFromResource("fonts");
             }
         });
         
@@ -63,7 +65,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(picBtn, param);
         picBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertBitmapFromResource("vg_lock", v.getWidth() / 2, v.getHeight() / 2);
+                mHelper.insertBitmapFromResource("vg_lock", 200, 100);
             }
         });
         

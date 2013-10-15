@@ -1661,7 +1661,8 @@ public class touchvgJNI {
   public final static native boolean MgCmdManager_doContextAction(long jarg1, MgCmdManager jarg1_, long jarg2, MgMotion jarg2_, int jarg3);
   public final static native long MgCmdManager_getSnap(long jarg1, MgCmdManager jarg1_);
   public final static native long MgCmdManager_getCmdSubject(long jarg1, MgCmdManager jarg1_);
-  public final static native long MgCmdManager_addImageShape(long jarg1, MgCmdManager jarg1_, long jarg2, MgMotion jarg2_, String jarg3, float jarg4, float jarg5);
+  public final static native long MgCmdManager_addImageShape__SWIG_0(long jarg1, MgCmdManager jarg1_, long jarg2, MgMotion jarg2_, String jarg3, float jarg4, float jarg5);
+  public final static native long MgCmdManager_addImageShape__SWIG_1(long jarg1, MgCmdManager jarg1_, long jarg2, MgMotion jarg2_, String jarg3, float jarg4, float jarg5, float jarg6, float jarg7);
   public final static native void MgCmdManager_getBoundingBox(long jarg1, MgCmdManager jarg1_, long jarg2, Box2d jarg2_, long jarg3, MgMotion jarg3_);
   public final static native void delete_MgCmdManager(long jarg1);
   public final static native long MgCmdManagerFactory_create();
@@ -1769,8 +1770,10 @@ public class touchvgJNI {
   public final static native void GiCoreView_setContext__SWIG_0(long jarg1, GiCoreView jarg1_, long jarg2, GiContext jarg2_, int jarg3, int jarg4);
   public final static native void GiCoreView_setContext__SWIG_1(long jarg1, GiCoreView jarg1_, int jarg2);
   public final static native void GiCoreView_setContextEditing(long jarg1, GiCoreView jarg1_, boolean jarg2);
-  public final static native boolean GiCoreView_addImageShape(long jarg1, GiCoreView jarg1_, String jarg2, float jarg3, float jarg4);
-  public final static native boolean GiCoreView_getBoundingBox(long jarg1, GiCoreView jarg1_, long jarg2, Floats jarg2_);
+  public final static native int GiCoreView_addImageShape__SWIG_0(long jarg1, GiCoreView jarg1_, String jarg2, float jarg3, float jarg4);
+  public final static native int GiCoreView_addImageShape__SWIG_1(long jarg1, GiCoreView jarg1_, String jarg2, float jarg3, float jarg4, float jarg5, float jarg6);
+  public final static native boolean GiCoreView_getBoundingBox__SWIG_0(long jarg1, GiCoreView jarg1_, long jarg2, Floats jarg2_);
+  public final static native boolean GiCoreView_getBoundingBox__SWIG_1(long jarg1, GiCoreView jarg1_, long jarg2, Floats jarg2_, int jarg3);
   public final static native int GiCoreView_viewAdapterHandle(long jarg1, GiCoreView jarg1_);
   public final static native long GiCoreView_viewAdapter(long jarg1, GiCoreView jarg1_);
   public final static native void TestCanvas_initRand();
