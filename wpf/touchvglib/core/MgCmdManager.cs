@@ -130,7 +130,13 @@ public class MgCmdManager : IDisposable {
   }
 
   public virtual MgShape addImageShape(MgMotion sender, string name, float width, float height) {
-    IntPtr cPtr = touchvgPINVOKE.MgCmdManager_addImageShape(swigCPtr, MgMotion.getCPtr(sender), name, width, height);
+    IntPtr cPtr = touchvgPINVOKE.MgCmdManager_addImageShape__SWIG_0(swigCPtr, MgMotion.getCPtr(sender), name, width, height);
+    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
+    return ret;
+  }
+
+  public virtual MgShape addImageShape(MgMotion sender, string name, float xc, float yc, float w, float h) {
+    IntPtr cPtr = touchvgPINVOKE.MgCmdManager_addImageShape__SWIG_1(swigCPtr, MgMotion.getCPtr(sender), name, xc, yc, w, h);
     MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
     return ret;
   }

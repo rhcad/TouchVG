@@ -240,13 +240,24 @@ public class GiCoreView : IDisposable {
     touchvgPINVOKE.GiCoreView_setContextEditing(swigCPtr, editing);
   }
 
-  public bool addImageShape(string name, float width, float height) {
-    bool ret = touchvgPINVOKE.GiCoreView_addImageShape(swigCPtr, name, width, height);
+  public int addImageShape(string name, float width, float height) {
+    int ret = touchvgPINVOKE.GiCoreView_addImageShape__SWIG_0(swigCPtr, name, width, height);
+    return ret;
+  }
+
+  public int addImageShape(string name, float xc, float yc, float w, float h) {
+    int ret = touchvgPINVOKE.GiCoreView_addImageShape__SWIG_1(swigCPtr, name, xc, yc, w, h);
     return ret;
   }
 
   public bool getBoundingBox(Floats box) {
-    bool ret = touchvgPINVOKE.GiCoreView_getBoundingBox(swigCPtr, Floats.getCPtr(box));
+    bool ret = touchvgPINVOKE.GiCoreView_getBoundingBox__SWIG_0(swigCPtr, Floats.getCPtr(box));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool getBoundingBox(Floats box, int shapeId) {
+    bool ret = touchvgPINVOKE.GiCoreView_getBoundingBox__SWIG_1(swigCPtr, Floats.getCPtr(box), shapeId);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

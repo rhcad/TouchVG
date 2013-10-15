@@ -11,6 +11,7 @@ import touchvg.core.GiGraphics;
 import touchvg.core.Ints;
 import touchvg.core.Matrix2d;
 import touchvg.core.MgBaseShape;
+import touchvg.core.MgCmdManager;
 import touchvg.core.MgCommand;
 import touchvg.core.MgCommandDraw;
 import touchvg.core.MgHitResult;
@@ -23,43 +24,73 @@ import touchvg.core.MgSplines;
 import touchvg.core.MgStorage;
 import touchvg.core.Point2d;
 import touchvg.core.Shapes;
-import touchvg.view.GraphView;
 import touchvg.view.ViewHelper;
 import vgtest.app.R;
 import android.content.Context;
+import android.graphics.Color;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 //! 测试自定义图形类的测试视图类
-public class ViewSinShape extends GraphView {
+public class ViewSinShape extends LinearLayout {
+    protected ViewHelper mHelper = new ViewHelper();
     private MyCmdObserver mObserver = new MyCmdObserver();
-    private static final int[] HANDLEIDS = { R.drawable.vgdot1,
-            R.drawable.vgdot2, R.drawable.vgdot3 };
     private static final int[] MYIMAGEIDS = { R.drawable.demo_switch };
 
     public ViewSinShape(Context context) {
         super(context);
+        
+        this.setOrientation(LinearLayout.VERTICAL);
+        createButtons(context);
+        
+        addView(mHelper.createGraphView(context), 
+                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        final ViewHelper helper = new ViewHelper(this);
-
-        ViewHelper.setContextButtonImages(null, R.array.vg_action_captions,
-                MYIMAGEIDS, HANDLEIDS);
-
-        helper.cmdView().getCmdSubject().registerObserver(mObserver);
-        helper.setCommand(DrawSinShape.NAME); // may be called by a button
+        ViewHelper.setExtraContextImages(context, MYIMAGEIDS);
+        mHelper.registerCmdObserver(mObserver);
     }
     
-    @Override
-    protected void onDetachedFromWindow() {
-        if (mObserver != null) {
-            final ViewHelper helper = new ViewHelper(this);
-            helper.cmdView().getCmdSubject().unregisterObserver(mObserver);
-            mObserver.delete();
-            mObserver = null;
-        }
-        super.onDetachedFromWindow();
+    protected void createButtons(Context context) {
+        final LinearLayout layout = new LinearLayout(context);
+        final LayoutParams param = new LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        this.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        
+        final Button sinBtn = new Button(context);
+        sinBtn.setText("Sin");
+        sinBtn.setBackgroundColor(Color.GRAY);
+        layout.addView(sinBtn, param);
+        sinBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mHelper.setCommand(DrawSinShape.NAME);
+            }
+        });
+        
+        final Button selectBtn = new Button(context);
+        selectBtn.setText("Select");
+        selectBtn.setBackgroundColor(Color.GRAY);
+        layout.addView(selectBtn, param);
+        selectBtn.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mHelper.setCommand("select");
+            }
+        });
     }
     
     private class MyCmdObserver extends CmdObserverDefault {
         private static final int ACTION_SWITCH = 40;
+        
+        @Override
+        public void onUnloadCommands(MgCmdManager sender) {
+            if (mObserver != null) {
+                mObserver.delete();
+                mObserver = null;
+            }
+            mHelper = null;
+        }
         
         @Override
         public MgBaseShape createShape(MgMotion sender, int type) {
@@ -111,7 +142,7 @@ public class ViewSinShape extends GraphView {
     
     private List<MgCommand> mCmdCache = new ArrayList<MgCommand>();
     
-    private class DrawSinShape extends MgCommandDraw {
+    protected class DrawSinShape extends MgCommandDraw {
         public static final String NAME = "sin";
         
         public DrawSinShape() {
@@ -136,12 +167,31 @@ public class ViewSinShape extends GraphView {
         
         @Override
         public boolean click(MgMotion sender) {
-            super.click(sender);
-            if (sender.getView().getCommandName().equals(NAME)) { // not cancel
+            super.click(sender);            // 看能否点中已有图形
+            if (sender.getView().getCommandName().equals(NAME)) { // 没退出命令
                 dynshape().shape().setHandlePoint(0, snapPoint(sender), 0);
                 addShape(sender);
             }
             return true;
+        }
+        
+        @Override
+        public boolean touchBegan(MgMotion sender) {
+            setStep(1);
+            return super.touchBegan(sender);
+        }
+        
+        @Override
+        public boolean touchMoved(MgMotion sender) {
+            dynshape().shape().setHandlePoint(0, snapPoint(sender), 0);
+            return super.touchMoved(sender);
+        }
+        
+        @Override
+        public boolean touchEnded(MgMotion sender) {
+            dynshape().shape().setHandlePoint(0, snapPoint(sender), 0);
+            addShape(sender);
+            return sender.toSelectCommand();     // 画完一个就退出
         }
     }
 

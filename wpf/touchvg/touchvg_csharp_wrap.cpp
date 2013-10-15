@@ -23582,13 +23582,17 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgView_setCurrentShapes(void * jarg1,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MgView_cancel(void * jarg1, void * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgView_toSelectCommand(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
   MgView *arg1 = (MgView *) 0 ;
   MgMotion *arg2 = (MgMotion *) 0 ;
+  bool result;
   
   arg1 = (MgView *)jarg1; 
   arg2 = (MgMotion *)jarg2; 
-  (arg1)->cancel((MgMotion const *)arg2);
+  result = (bool)(arg1)->toSelectCommand((MgMotion const *)arg2);
+  jresult = result; 
+  return jresult;
 }
 
 
@@ -24260,11 +24264,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_MgMotion_cmds(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MgMotion_cancel(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgMotion_toSelectCommand(void * jarg1) {
+  unsigned int jresult ;
   MgMotion *arg1 = (MgMotion *) 0 ;
+  bool result;
   
   arg1 = (MgMotion *)jarg1; 
-  ((MgMotion const *)arg1)->cancel();
+  result = (bool)((MgMotion const *)arg1)->toSelectCommand();
+  jresult = result; 
+  return jresult;
 }
 
 
@@ -26590,6 +26598,16 @@ SWIGEXPORT int SWIGSTDCALL CSharp_MgCommandDraw_getStep(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_MgCommandDraw_setStep(void * jarg1, int jarg2) {
+  MgCommandDraw *arg1 = (MgCommandDraw *) 0 ;
+  int arg2 ;
+  
+  arg1 = (MgCommandDraw *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->setStep(arg2);
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_MgCommandDraw_dynshape(void * jarg1) {
   void * jresult ;
   MgCommandDraw *arg1 = (MgCommandDraw *) 0 ;
@@ -27368,7 +27386,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_MgCmdManager_getCmdSubject(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_MgCmdManager_addImageShape(void * jarg1, void * jarg2, char * jarg3, float jarg4, float jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_MgCmdManager_addImageShape__SWIG_0(void * jarg1, void * jarg2, char * jarg3, float jarg4, float jarg5) {
   void * jresult ;
   MgCmdManager *arg1 = (MgCmdManager *) 0 ;
   MgMotion *arg2 = (MgMotion *) 0 ;
@@ -27383,6 +27401,30 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_MgCmdManager_addImageShape(void * jarg1, vo
   arg4 = (float)jarg4; 
   arg5 = (float)jarg5; 
   result = (MgShape *)(arg1)->addImageShape((MgMotion const *)arg2,(char const *)arg3,arg4,arg5);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_MgCmdManager_addImageShape__SWIG_1(void * jarg1, void * jarg2, char * jarg3, float jarg4, float jarg5, float jarg6, float jarg7) {
+  void * jresult ;
+  MgCmdManager *arg1 = (MgCmdManager *) 0 ;
+  MgMotion *arg2 = (MgMotion *) 0 ;
+  char *arg3 = (char *) 0 ;
+  float arg4 ;
+  float arg5 ;
+  float arg6 ;
+  float arg7 ;
+  MgShape *result = 0 ;
+  
+  arg1 = (MgCmdManager *)jarg1; 
+  arg2 = (MgMotion *)jarg2; 
+  arg3 = (char *)jarg3; 
+  arg4 = (float)jarg4; 
+  arg5 = (float)jarg5; 
+  arg6 = (float)jarg6; 
+  arg7 = (float)jarg7; 
+  result = (MgShape *)(arg1)->addImageShape((MgMotion const *)arg2,(char const *)arg3,arg4,arg5,arg6,arg7);
   jresult = (void *)result; 
   return jresult;
 }
@@ -28745,25 +28787,47 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreView_setContextEditing(void * jarg1, un
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_addImageShape(void * jarg1, char * jarg2, float jarg3, float jarg4) {
-  unsigned int jresult ;
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_addImageShape__SWIG_0(void * jarg1, char * jarg2, float jarg3, float jarg4) {
+  int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
   char *arg2 = (char *) 0 ;
   float arg3 ;
   float arg4 ;
-  bool result;
+  int result;
   
   arg1 = (GiCoreView *)jarg1; 
   arg2 = (char *)jarg2; 
   arg3 = (float)jarg3; 
   arg4 = (float)jarg4; 
-  result = (bool)(arg1)->addImageShape((char const *)arg2,arg3,arg4);
+  result = (int)(arg1)->addImageShape((char const *)arg2,arg3,arg4);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_getBoundingBox(void * jarg1, void * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_addImageShape__SWIG_1(void * jarg1, char * jarg2, float jarg3, float jarg4, float jarg5, float jarg6) {
+  int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  char *arg2 = (char *) 0 ;
+  float arg3 ;
+  float arg4 ;
+  float arg5 ;
+  float arg6 ;
+  int result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (char *)jarg2; 
+  arg3 = (float)jarg3; 
+  arg4 = (float)jarg4; 
+  arg5 = (float)jarg5; 
+  arg6 = (float)jarg6; 
+  result = (int)(arg1)->addImageShape((char const *)arg2,arg3,arg4,arg5,arg6);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_getBoundingBox__SWIG_0(void * jarg1, void * jarg2) {
   unsigned int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
   mgvector< float > *arg2 = 0 ;
@@ -28776,6 +28840,26 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_getBoundingBox(void * jarg
     return 0;
   } 
   result = (bool)(arg1)->getBoundingBox(*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_getBoundingBox__SWIG_1(void * jarg1, void * jarg2, int jarg3) {
+  unsigned int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  mgvector< float > *arg2 = 0 ;
+  int arg3 ;
+  bool result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (mgvector< float > *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "mgvector< float > & type is null", 0);
+    return 0;
+  } 
+  arg3 = (int)jarg3; 
+  result = (bool)(arg1)->getBoundingBox(*arg2,arg3);
   jresult = result; 
   return jresult;
 }

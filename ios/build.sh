@@ -1,5 +1,5 @@
 #!/bin/sh
-# Type 'sh build.sh' to make iOS libraries.
+# Type './build.sh' to make iOS libraries.
 
 iphoneos61=`xcodebuild -showsdks | grep -i iphoneos6.1`
 iphoneos51=`xcodebuild -showsdks | grep -i iphoneos5.1`

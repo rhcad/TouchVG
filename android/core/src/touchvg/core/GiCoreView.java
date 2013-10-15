@@ -207,12 +207,20 @@ public class GiCoreView {
     touchvgJNI.GiCoreView_setContextEditing(swigCPtr, this, editing);
   }
 
-  public boolean addImageShape(String name, float width, float height) {
-    return touchvgJNI.GiCoreView_addImageShape(swigCPtr, this, name, width, height);
+  public int addImageShape(String name, float width, float height) {
+    return touchvgJNI.GiCoreView_addImageShape__SWIG_0(swigCPtr, this, name, width, height);
+  }
+
+  public int addImageShape(String name, float xc, float yc, float w, float h) {
+    return touchvgJNI.GiCoreView_addImageShape__SWIG_1(swigCPtr, this, name, xc, yc, w, h);
   }
 
   public boolean getBoundingBox(Floats box) {
-    return touchvgJNI.GiCoreView_getBoundingBox(swigCPtr, this, Floats.getCPtr(box), box);
+    return touchvgJNI.GiCoreView_getBoundingBox__SWIG_0(swigCPtr, this, Floats.getCPtr(box), box);
+  }
+
+  public boolean getBoundingBox(Floats box, int shapeId) {
+    return touchvgJNI.GiCoreView_getBoundingBox__SWIG_1(swigCPtr, this, Floats.getCPtr(box), box, shapeId);
   }
 
   public int viewAdapterHandle() {

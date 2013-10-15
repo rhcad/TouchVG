@@ -110,7 +110,12 @@ public class MgCmdManager {
   }
 
   public MgShape addImageShape(MgMotion sender, String name, float width, float height) {
-    long cPtr = touchvgJNI.MgCmdManager_addImageShape(swigCPtr, this, MgMotion.getCPtr(sender), sender, name, width, height);
+    long cPtr = touchvgJNI.MgCmdManager_addImageShape__SWIG_0(swigCPtr, this, MgMotion.getCPtr(sender), sender, name, width, height);
+    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  }
+
+  public MgShape addImageShape(MgMotion sender, String name, float xc, float yc, float w, float h) {
+    long cPtr = touchvgJNI.MgCmdManager_addImageShape__SWIG_1(swigCPtr, this, MgMotion.getCPtr(sender), sender, name, xc, yc, w, h);
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 

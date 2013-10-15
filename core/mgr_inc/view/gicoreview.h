@@ -140,14 +140,28 @@ public:
     //! 添加一个容纳图像的矩形图形
     /*!
         \param name 图像的标识名称，例如可用无路径的文件名
-        \param width 图像矩形的宽度，单位为点
-        \param height 图像矩形的高度，单位为点
-        \return 是否添加成功
+        \param width 图像矩形的宽度，正数，单位为点
+        \param height 图像矩形的高度，正数，单位为点
+        \return 新图形的ID，0表示失败
      */
-    bool addImageShape(const char* name, float width, float height);
+    int addImageShape(const char* name, float width, float height);
+    
+    //! 添加一个容纳图像的矩形图形
+    /*!
+        \param name 图像的标识名称，例如可用无路径的文件名
+        \param xc 图像矩形中心X，单位为点
+        \param yc 图像矩形中心Y，单位为点
+        \param w 图像矩形的宽度，正数，单位为点
+        \param h 图像矩形的高度，正数，单位为点
+        \return 新图形的ID，0表示失败
+     */
+    int addImageShape(const char* name, float xc, float yc, float w, float h);
 
     //! 返回选择包络框，四个点坐标(left, top, right, bottom)
     bool getBoundingBox(mgvector<float>& box);
+    
+    //! 返回指定ID的图形的包络框，四个点坐标(left, top, right, bottom)
+    bool getBoundingBox(mgvector<float>& box, int shapeId);
     
     //! 命令视图回调适配器的句柄, 可转换为 MgView 指针
     long viewAdapterHandle();

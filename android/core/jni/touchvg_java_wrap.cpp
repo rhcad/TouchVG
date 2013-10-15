@@ -31986,9 +31986,11 @@ SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgView_1setCurrentShape
 }
 
 
-SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgView_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgView_1toSelectCommand(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jboolean jresult = 0 ;
   MgView *arg1 = (MgView *) 0 ;
   MgMotion *arg2 = (MgMotion *) 0 ;
+  bool result;
   
   (void)jenv;
   (void)jcls;
@@ -31996,7 +31998,9 @@ SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgView_1cancel(JNIEnv *jenv
   (void)jarg2_;
   arg1 = *(MgView **)&jarg1; 
   arg2 = *(MgMotion **)&jarg2; 
-  (arg1)->cancel((MgMotion const *)arg2);
+  result = (bool)(arg1)->toSelectCommand((MgMotion const *)arg2);
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 
@@ -32875,14 +32879,18 @@ SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1cmds(JNIEnv *jen
 }
 
 
-SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgMotion_1toSelectCommand(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
   MgMotion *arg1 = (MgMotion *) 0 ;
+  bool result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgMotion **)&jarg1; 
-  ((MgMotion const *)arg1)->cancel();
+  result = (bool)((MgMotion const *)arg1)->toSelectCommand();
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 
@@ -35912,6 +35920,19 @@ SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_MgCommandDraw_1getStep(JNIE
 }
 
 
+SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgCommandDraw_1setStep(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  MgCommandDraw *arg1 = (MgCommandDraw *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCommandDraw **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->setStep(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgCommandDraw_1dynshape(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   MgCommandDraw *arg1 = (MgCommandDraw *) 0 ;
@@ -36927,7 +36948,7 @@ SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgCmdManager_1getCmdSubjec
 }
 
 
-SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgCmdManager_1addImageShape(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3, jfloat jarg4, jfloat jarg5) {
+SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgCmdManager_1addImageShape_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3, jfloat jarg4, jfloat jarg5) {
   jlong jresult = 0 ;
   MgCmdManager *arg1 = (MgCmdManager *) 0 ;
   MgMotion *arg2 = (MgMotion *) 0 ;
@@ -36950,6 +36971,39 @@ SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgCmdManager_1addImageShap
   arg4 = (float)jarg4; 
   arg5 = (float)jarg5; 
   result = (MgShape *)(arg1)->addImageShape((MgMotion const *)arg2,(char const *)arg3,arg4,arg5);
+  *(MgShape **)&jresult = result; 
+  if (arg3) jenv->ReleaseStringUTFChars(jarg3, (const char *)arg3);
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgCmdManager_1addImageShape_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3, jfloat jarg4, jfloat jarg5, jfloat jarg6, jfloat jarg7) {
+  jlong jresult = 0 ;
+  MgCmdManager *arg1 = (MgCmdManager *) 0 ;
+  MgMotion *arg2 = (MgMotion *) 0 ;
+  char *arg3 = (char *) 0 ;
+  float arg4 ;
+  float arg5 ;
+  float arg6 ;
+  float arg7 ;
+  MgShape *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(MgCmdManager **)&jarg1; 
+  arg2 = *(MgMotion **)&jarg2; 
+  arg3 = 0;
+  if (jarg3) {
+    arg3 = (char *)jenv->GetStringUTFChars(jarg3, 0);
+    if (!arg3) return 0;
+  }
+  arg4 = (float)jarg4; 
+  arg5 = (float)jarg5; 
+  arg6 = (float)jarg6; 
+  arg7 = (float)jarg7; 
+  result = (MgShape *)(arg1)->addImageShape((MgMotion const *)arg2,(char const *)arg3,arg4,arg5,arg6,arg7);
   *(MgShape **)&jresult = result; 
   if (arg3) jenv->ReleaseStringUTFChars(jarg3, (const char *)arg3);
   return jresult;
@@ -38701,13 +38755,13 @@ SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1setContextEditi
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1addImageShape(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jfloat jarg3, jfloat jarg4) {
-  jboolean jresult = 0 ;
+SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1addImageShape_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jfloat jarg3, jfloat jarg4) {
+  jint jresult = 0 ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
   char *arg2 = (char *) 0 ;
   float arg3 ;
   float arg4 ;
-  bool result;
+  int result;
   
   (void)jenv;
   (void)jcls;
@@ -38720,14 +38774,44 @@ SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1addImageSha
   }
   arg3 = (float)jarg3; 
   arg4 = (float)jarg4; 
-  result = (bool)(arg1)->addImageShape((char const *)arg2,arg3,arg4);
-  jresult = (jboolean)result; 
+  result = (int)(arg1)->addImageShape((char const *)arg2,arg3,arg4);
+  jresult = (jint)result; 
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
   return jresult;
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1getBoundingBox(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1addImageShape_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jfloat jarg3, jfloat jarg4, jfloat jarg5, jfloat jarg6) {
+  jint jresult = 0 ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  char *arg2 = (char *) 0 ;
+  float arg3 ;
+  float arg4 ;
+  float arg5 ;
+  float arg6 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiCoreView **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
+    if (!arg2) return 0;
+  }
+  arg3 = (float)jarg3; 
+  arg4 = (float)jarg4; 
+  arg5 = (float)jarg5; 
+  arg6 = (float)jarg6; 
+  result = (int)(arg1)->addImageShape((char const *)arg2,arg3,arg4,arg5,arg6);
+  jresult = (jint)result; 
+  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1getBoundingBox_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jboolean jresult = 0 ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
   mgvector< float > *arg2 = 0 ;
@@ -38744,6 +38828,30 @@ SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1getBounding
     return 0;
   } 
   result = (bool)(arg1)->getBoundingBox(*arg2);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1getBoundingBox_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jint jarg3) {
+  jboolean jresult = 0 ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  mgvector< float > *arg2 = 0 ;
+  int arg3 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(GiCoreView **)&jarg1; 
+  arg2 = *(mgvector< float > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "mgvector< float > & reference is null");
+    return 0;
+  } 
+  arg3 = (int)jarg3; 
+  result = (bool)(arg1)->getBoundingBox(*arg2,arg3);
   jresult = (jboolean)result; 
   return jresult;
 }

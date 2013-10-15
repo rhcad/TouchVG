@@ -37,7 +37,9 @@ private:
         }
     }
     virtual void onUnloadCommands(MgCmdManager* sender) {
-        for (Iterator it = _arr.begin(); it != _arr.end(); ++it) {
+    	Observers arr(_arr);
+    	_arr.clear();
+        for (Iterator it = arr.begin(); it != arr.end(); ++it) {
             (*it)->onUnloadCommands(sender);
         }
     }

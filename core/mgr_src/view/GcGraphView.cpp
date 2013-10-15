@@ -39,7 +39,6 @@ void GcBaseView::onSize(int dpi, int w, int h)
 
 bool GcBaseView::onGesture(const MgMotion& motion)
 {
-    LOGD("GcShapeView::onGesture %d, %d", motion.gestureType, motion.gestureState);
     if (motion.gestureType != kGiGesturePan){
         return false;
     }
@@ -59,7 +58,6 @@ bool GcBaseView::onGesture(const MgMotion& motion)
 
 bool GcBaseView::twoFingersMove(const MgMotion& motion)
 {
-    LOGD("GcShapeView::twoFingersMove %d, %d", motion.gestureType, motion.gestureState);
     if (motion.gestureState == kMgGestureBegan) {
         _lastScale = xform()->getZoomValue(_lastCenter);
     }

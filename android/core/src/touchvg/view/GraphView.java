@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +25,9 @@ import android.view.View;
  *  建议使用FrameLayout作为容器创建绘图视图，使用LinearLayout将无法显示上下文操作按钮。
  */
 public class GraphView extends View {
+    private static final String TAG = "GraphView";
     private static GraphView mActiveView;   // 当前激活视图
+    private ImageCache mImageCache;         // 图像对象缓存
     private CanvasAdapter mCanvasAdapter;   // onDraw用的画布适配器
     private CanvasAdapter mCanvasRegen;     // regen用的画布适配器
     private ViewAdapter mViewAdapter;       // 视图回调适配器
@@ -36,6 +39,10 @@ public class GraphView extends View {
     private Bitmap mCachedBitmap;           // 缓存快照
     private Bitmap mRegenBitmap;            // regen用的缓存位图
     private int mBkColor = Color.TRANSPARENT;
+    
+    static {
+        System.loadLibrary("touchvg");
+    }
     
     //! 普通绘图视图的构造函数
     public GraphView(Context context) {
@@ -59,14 +66,16 @@ public class GraphView extends View {
     }
     
     private void createAdapter(Context context) {
-        mCanvasAdapter = new CanvasAdapter(this);
-        mCanvasRegen = new CanvasAdapter(this);
+        mImageCache = new ImageCache();
+        mCanvasAdapter = new CanvasAdapter(this, mImageCache);
+        mCanvasRegen = new CanvasAdapter(this, mImageCache);
         mViewAdapter = new ViewAdapter();
     }
     
     private void initView(Context context) {
         mGestureListener = new GestureListener(mCoreView, mViewAdapter);
         mGestureDetector = new GestureDetector(context, mGestureListener);
+        setContextImages(context);
         
         final DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
         GiCoreView.setScreenDpi(dm.densityDpi);         // 应用API
@@ -81,6 +90,11 @@ public class GraphView extends View {
                                           || mGestureDetector.onTouchEvent(event));
             }
         });
+    }
+    
+    //! 传递单指触摸事件，可用于拖放操作
+    public boolean onTouch(int action, float x, float y) {
+        return mGestureListener.onTouch(this, action, x, y);
     }
     
     private void activateView() {
@@ -105,6 +119,11 @@ public class GraphView extends View {
         return mViewAdapter;
     }
     
+    //! 返回图像对象缓存
+    public ImageCache getImageCache() {
+        return mImageCache;
+    }
+    
     //! 释放临时缓存
     public void clearCachedData() {
         mCoreView.clearCachedData();
@@ -121,12 +140,47 @@ public class GraphView extends View {
         regen(false);
     }
     
-    //! 设置上下文按钮的图像ID数组
-    public static void setContextButtonImages(int[] imageIDs, int captionsID, 
-            int[] extraImageIDs, int[] handleImageIDs) {
-        ContextAction.setButtonImages(imageIDs, extraImageIDs);
-        ContextAction.setButtonCaptionsID(captionsID);
-        CanvasAdapter.setHandleImageIDs(handleImageIDs);
+    public static int getResIDFromName(Context ctx, String type, String name) {
+        int id = name != null ? ctx.getResources().getIdentifier(name,
+                type, ctx.getPackageName()) : 0;
+        if (id == 0 && name != null) {
+            Log.i(TAG, "Need resource R." + type + "." + name);
+        }
+        return id;
+    }
+    
+    public static int getDrawableIDFromName(Context context, String name) {
+        return getResIDFromName(context, "drawable", name);
+    }
+    
+    private void setContextImages(Context context) {
+        if (ContextAction.getButtonImages() == null) {
+            final String[] imageNames = new String[] { null, "vg_selall", null, "vg_draw",
+                    "vg_back", "vg_delete", "vg_clone", "vg_fixlen", "vg_freelen",
+                    "vg_lock", "vg_unlock", "vg_edit", "vg_endedit", null, null,
+                    "vg_addvertex", "vg_delvertex", "vg_group", "vg_ungroup", "vg_overturn" };
+            final String[] handleNames = new String[] { "vgdot1", "vgdot2", "vgdot3",
+                    "vg_lock", "vg_unlock", "vg_back", "vg_endedit" };
+            int captionsID = getResIDFromName(context, "array", "vg_action_captions");
+            int[] imageIDs = new int[(imageNames.length)];
+            int[] handleImageIDs = new int[(handleNames.length)];
+            
+            for (int i = 0; i < imageNames.length; i++) {
+                imageIDs[i] = getDrawableIDFromName(context, imageNames[i]);
+            }
+            for (int j = 0; j < handleNames.length; j++) {
+                handleImageIDs[j] = getDrawableIDFromName(context, handleNames[j]);
+            }
+        
+            ContextAction.setButtonImages(imageIDs);
+            ContextAction.setButtonCaptionsID(captionsID);
+            CanvasAdapter.setHandleImageIDs(handleImageIDs);
+        }
+    }
+    
+    //! 设置额外的上下文操作按钮的图像ID数组，其动作序号从40起
+    public static void setExtraContextImages(Context context, int[] extraImageIDs) {
+        ContextAction.setExtraButtonImages(extraImageIDs);
     }
     
     //! 设置是否允许触摸交互
@@ -237,6 +291,16 @@ public class GraphView extends View {
         if (mActiveView == this) {
             mActiveView = null;
         }
+        if (mImageCache != null) {
+            synchronized(mImageCache) {}
+            mImageCache.clear();
+            mImageCache = null;
+        }
+        if (mCachedBitmap != null) {
+            synchronized(mCachedBitmap) {}
+            mCachedBitmap.recycle();
+            mCachedBitmap = null;
+        }
         if (mViewAdapter != null) {
             mCoreView.destoryView(mViewAdapter);
             mViewAdapter.delete();
@@ -257,10 +321,6 @@ public class GraphView extends View {
         if (mGestureListener != null) {
             mGestureListener.release();
             mGestureListener = null;
-        }
-        if (mCachedBitmap != null) {
-            mCachedBitmap.recycle();
-            mCachedBitmap = null;
         }
         mGestureDetector = null;
         

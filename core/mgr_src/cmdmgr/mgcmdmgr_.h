@@ -48,6 +48,8 @@ private:
     virtual MgSnap* getSnap();
     virtual CmdSubject* getCmdSubject();
     virtual MgShape* addImageShape(const MgMotion* sender, const char* name, float width, float height);
+    virtual MgShape* addImageShape(const MgMotion* sender, const char* name,
+                                   float xc, float yc, float w, float h);
     virtual void getBoundingBox(Box2d& box, const MgMotion* sender);
     
 private:

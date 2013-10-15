@@ -111,7 +111,7 @@ bool MgCommandDraw::_click(const MgMotion* sender)
     
     if (shape) {
         sender->view->setNewShapeID(shape->getID());
-        sender->cancel();
+        sender->toSelectCommand();
         LOGD("Command (%s) cancelled after the shape #%d clicked.", getName(), shape->getID());
     }
     

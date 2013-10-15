@@ -1,4 +1,4 @@
-//! \file ViewHelper.java
+﻿//! \file ViewHelper.java
 //! \brief Android绘图视图辅助类
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
@@ -6,12 +6,14 @@ package touchvg.view;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
+import touchvg.core.CmdObserver;
 import touchvg.core.GiContextBits;
+import touchvg.core.GiCoreView;
 import touchvg.core.MgView;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
@@ -43,12 +45,14 @@ public class ViewHelper {
     
     //! 返回内核视图的句柄, MgView 指针
     public int cmdViewHandle() {
-        return mView.coreView().viewAdapterHandle();
+        final GiCoreView v = mView.coreView();
+        return v != null ? v.viewAdapterHandle() : 0;
     }
     
     //! 返回内核命令视图
     public MgView cmdView() {
-        return mView.coreView().viewAdapter();
+        final GiCoreView v = mView.coreView();
+        return v != null ? v.viewAdapter() : null;
     }
     
     //! 自动创建FrameLayout布局，在其中创建普通绘图视图，并记下此视图
@@ -74,38 +78,27 @@ public class ViewHelper {
         return layout;
     }
     
-    /**
-     * @brief 设置上下文按钮的图像ID数组
-     * @param imageIDs 基本操作按钮的图像ID数组, 32x32
-     * @param captionsID 基本操作按钮的文字数组ID，例如 R.array.vg_action_captions
-     * @param extraImageIDs 行业特定操作按钮的图像ID数组, 32x32
-     * @param handleImageIDs 控制点的图像ID数组
-     * 使用示例:
-     * @code
-     * private static final int[] IMAGEIDS = { 0, R.drawable.vg_selall, 0, R.drawable.vg_draw,
-     *     R.drawable.vg_back, R.drawable.vg_delete, R.drawable.vg_clone, R.drawable.vg_fixlen,
-     *     R.drawable.vg_freelen, R.drawable.vg_lock, R.drawable.vg_unlock, R.drawable.vg_edit,
-     *     R.drawable.vg_endedit, 0, 0, R.drawable.vg_addvertex, R.drawable.vg_delvertex,
-     *     R.drawable.vg_group, R.drawable.vg_ungroup, R.drawable.vg_overturn };
-     * private static final int[] HANDLEIDS = { R.drawable.vgdot1, R.drawable.vgdot2,
-     *     R.drawable.vgdot3, R.drawable.vg_lock, 
-     *     R.drawable.vg_unlock, R.drawable.vg_back, R.drawable.vg_endedit };
-     * ViewHelper.setContextButtonImages(IMAGEIDS, R.array.vg_action_captions, null, HANDLEIDS);
-     * @endcode
-     */
-    public static void setContextButtonImages(int[] imageIDs, int captionsID, 
-            int[] extraImageIDs, int[] handleImageIDs) {
-        GraphView.setContextButtonImages(imageIDs, captionsID, extraImageIDs, handleImageIDs);
+    //! 设置额外的上下文操作按钮的图像ID数组，其动作序号从40起
+    public static void setExtraContextImages(Context context, int[] ids) {
+        GraphView.setExtraContextImages(context, ids);
     }
     
     //! 得到当前命令名称
     public String getCommand() {
-        return mView.coreView().getCommand();
+        final GiCoreView v = mView.coreView();
+        return v != null ? v.getCommand() : "";
     }
     
     //! 启动指定名称的命令
     public boolean setCommand(String name) {
-        return mView.coreView().setCommand(mView.viewAdapter(), name);
+        final GiCoreView v = mView.coreView();
+        return v != null && v.setCommand(mView.viewAdapter(), name);
+    }
+    
+    //! 启动指定名称的命令，并指定JSON串的命令初始化参数
+    public boolean setCommand(String name, String params) {
+        final GiCoreView v = mView.coreView();
+        return v != null && v.setCommand(mView.viewAdapter(), name, params);
     }
     
     //! 返回线宽，正数表示单位为0.01毫米，零表示1像素宽，负数表示单位为像素
@@ -220,7 +213,8 @@ public class ViewHelper {
         synchronized(mView.snapshot()) {
             try {
                 final FileOutputStream os = new FileOutputStream(filename);
-                ret = mView.snapshot().compress(Bitmap.CompressFormat.PNG, 100, os);
+                ret = createFolder(filename) && mView.snapshot().compress(
+                        Bitmap.CompressFormat.PNG, 100, os);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -266,27 +260,86 @@ public class ViewHelper {
         if (getShapeCount() == 0) {
             ret = new File(vgfile).delete();
         } else {
-            ret = createFile(vgfile)
-            && mView.coreView().saveToFile(vgfile);
+            ret = createFolder(vgfile) && mView.coreView().saveToFile(vgfile);
         }
         return ret;
     }
     
-    //! 创建指定的文件和上一级文件夹
-    public static boolean createFile(String filename) {
+    //! 创建指定的文件的上一级文件夹
+    public static boolean createFolder(String filename) {
         final File file = new File(filename);
         final File pf = file.getParentFile();
-        if (!pf.exists()) {
-            pf.mkdirs();
+        return pf.exists() || pf.mkdirs();
+    }
+    
+    //! 在默认位置插入一个程序资源中的SVG图像(id=R.raw.name)
+    public int insertSVGFromResource(String name) {
+        int id = GraphView.getResIDFromName(mView.getContext(), "raw", name);
+        name = ImageCache.SVG_PREFIX + name;
+        final Drawable d = mView.getImageCache().addSVG(
+                mView.getResources(), id, name);
+        return d == null ? 0 : mView.coreView().addImageShape(
+                name, ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 插入一个程序资源中的SVG图像(id=R.raw.name)，并指定图像的中心位置
+    public int insertSVGFromResource(String name, int xc, int yc) {
+        int id = GraphView.getResIDFromName(mView.getContext(), "raw", name);
+        name = ImageCache.SVG_PREFIX + name;
+        final Drawable d = mView.getImageCache().addSVG(
+                mView.getResources(), id, name);
+        return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
+                ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 在默认位置插入一个程序资源中的位图图像(id=R.drawable.name)
+    public int insertBitmapFromResource(String name) {
+        int id = GraphView.getDrawableIDFromName(mView.getContext(), name);
+        name = ImageCache.BITMAP_PREFIX + name;
+        final Drawable d = mView.getImageCache().addBitmap(
+                mView.getResources(), id, name);
+        return d == null ? 0 : mView.coreView().addImageShape(
+                name, ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 插入一个程序资源中的位图图像(id=R.drawable.name)，并指定图像的中心位置
+    public int insertBitmapFromResource(String name, int xc, int yc) {
+        int id = GraphView.getDrawableIDFromName(mView.getContext(), name);
+        name = ImageCache.BITMAP_PREFIX + name;
+        final Drawable d = mView.getImageCache().addBitmap(
+                mView.getResources(), id, name);
+        return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
+                ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 在默认位置插入一个PNG、JPEG或SVG等文件的图像
+    public int insertImageFromFile(String filename) {
+        String name = filename.substring(filename.lastIndexOf('/') + 1).toLowerCase();
+        Drawable d;
+        
+        if (name.endsWith(".svg")) {
+            d = mView.getImageCache().addSVGFile(filename, name);
+        } else {
+            d = mView.getImageCache().addBitmapFile(mView.getResources(), filename, name);
         }
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
+        return d == null ? 0 : mView.coreView().addImageShape(name,
+                ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
+    public void setImagePath(String path) {
+        mView.getImageCache().setImagePath(path);
+    }
+    
+    //! 注册命令观察者
+    public void registerCmdObserver(CmdObserver observer) {
+        this.cmdView().getCmdSubject().registerObserver(observer);
+    }
+    
+    //! 注销命令观察者
+    public void unregisterCmdObserver(CmdObserver observer) {
+        if (this.cmdView() != null) {
+            this.cmdView().getCmdSubject().unregisterObserver(observer);
         }
-        return true;
     }
 }

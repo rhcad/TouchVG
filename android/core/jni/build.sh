@@ -24,4 +24,4 @@ if [ ! -f touchvg_java_wrap.cpp ]; then # Make JNI classes
         -I../../../core/mgr_inc/cmdmgr \
         ../../../core/mgr_src/view/touchvg.i
 fi
-ndk-build # Make libtouchvg.so
+ndk-build $1 $2
