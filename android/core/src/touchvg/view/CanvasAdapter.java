@@ -4,6 +4,7 @@
 
 package touchvg.view;
 
+import touchvg.core.GiCanvas;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -15,8 +16,10 @@ import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.view.View;
-import touchvg.core.GiCanvas;
 
 //! Android画布适配器类
 /*! \ingroup GROUP_ANDROID
@@ -27,8 +30,9 @@ public class CanvasAdapter extends GiCanvas {
     private Paint mBrush = new Paint();
     private Canvas mCanvas;
     private View mView;
+    private ImageCache mCache;
     private int mBkColor = Color.TRANSPARENT;
-    private PathEffect mEffects;        // solid line
+    private PathEffect mEffects;
     private static final float[] DASH = { 5, 5 };
     private static final float[] DOT = { 1, 2 };
     private static final float[] DASH_DOT = { 10, 2, 2, 2 };
@@ -43,9 +47,15 @@ public class CanvasAdapter extends GiCanvas {
         this.mView = view;
     }
     
+    public CanvasAdapter(View view, ImageCache cache) {
+        this.mView = view;
+        this.mCache = cache;
+    }
+    
     @Override
     public synchronized void delete() {
         mView = null;
+        mCache = null;
         mHandleIDs = null;
         super.delete();
     }
@@ -264,15 +274,30 @@ public class CanvasAdapter extends GiCanvas {
     @Override
     public void drawBitmap(String name, float xc, float yc, float w, float h,
                            float angle) {
-        final Bitmap bmp = getHandleBitmap(4);
-        if (bmp != null && bmp.getWidth() > 0) {
+        final Drawable drawable = mCache.getImage(mView, name);
+        
+        if (drawable != null) {
             Matrix mat = new Matrix();
-            mat.postTranslate(-0.5f * bmp.getWidth(), -0.5f * bmp.getHeight());
+            int width = ImageCache.getWidth(drawable);
+            int height = ImageCache.getHeight(drawable);
+            
+            mat.postTranslate(-0.5f * width, -0.5f * height);
             mat.postRotate(-angle * 180.f / 3.1415926f); // degree to radian
-            mat.postScale(w / bmp.getWidth(), h / bmp.getHeight());
+            mat.postScale(w / width, h / height);
             mat.postTranslate(xc, yc);
-            mCanvas.drawBitmap(bmp, mat, null);
-            mat = null;
+            
+            try {
+                BitmapDrawable b = (BitmapDrawable)drawable;
+                mCanvas.drawBitmap(b.getBitmap(), mat, null);
+            } catch (ClassCastException e) {
+                try {
+                    PictureDrawable p = (PictureDrawable)drawable;
+                    mCanvas.concat(mat);
+                    mCanvas.drawPicture(p.getPicture());
+                    mat.invert(mat);
+                    mCanvas.concat(mat);
+                } catch (ClassCastException e2) {}
+            }
         }
     }
     

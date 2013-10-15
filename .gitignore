@@ -21,5 +21,8 @@ xcuserdata
 bin
 gen
 obj
-assets
+gdb.setup
+gdbserver
+android/core/libs/armeabi
+android/democmds/libs/armeabi
 *.db

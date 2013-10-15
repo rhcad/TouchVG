@@ -2,18 +2,14 @@
 
 package vgtest.testview.view;
 
-import democmds.core.DemoCmdsGate;
+import touchvg.view.GraphView;
+import touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import touchvg.view.GraphView;
-import touchvg.view.ViewHelper;
-import vgtest.app.R;
+import democmds.core.DemoCmdsGate;
 
 public class GraphView1 extends GraphView {
-    private static final int[] HANDLEIDS = {
-        R.drawable.vgdot1, R.drawable.vgdot2, R.drawable.vgdot3,
-        R.drawable.vg_lock, R.drawable.vg_unlock, 0 };
     
     static {
         System.loadLibrary("democmds");
@@ -24,8 +20,6 @@ public class GraphView1 extends GraphView {
         
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");
         final ViewHelper helper = new ViewHelper(this);
-        
-        ViewHelper.setContextButtonImages(null, R.array.vg_action_captions, null, HANDLEIDS);
         
         if ((flags & 32) != 0) {
             helper.addShapesForTest();

@@ -85,12 +85,29 @@ public class GestureListener extends SimpleOnGestureListener {
     }
     
     public boolean onTouch(View v, MotionEvent e) {
-        final int action = e.getActionMasked();
-        final float x1 = e.getPointerCount() > 0 ? e.getX(0) : 0;
-        final float y1 = e.getPointerCount() > 0 ? e.getY(0) : 0;
-        final float x2 = e.getPointerCount() > 1 ? e.getX(1) : x1;
-        final float y2 = e.getPointerCount() > 1 ? e.getY(1) : y1;
-        
+        float x1 = e.getPointerCount() > 0 ? e.getX(0) : 0;
+        float y1 = e.getPointerCount() > 0 ? e.getY(0) : 0;
+        float x2 = e.getPointerCount() > 1 ? e.getX(1) : x1;
+        float y2 = e.getPointerCount() > 1 ? e.getY(1) : y1;
+
+        return onTouch(v, e.getActionMasked(), e.getPointerCount(), x1, y1, x2, y2);
+    }
+    
+    public boolean onTouch(View v, int action, float x, float y) {
+        if (action == MotionEvent.ACTION_DOWN) {
+            mMoving = READY_MOVE;
+            mPointCount = 0;
+            mLastX = x;
+            mLastY = y;
+            mPoints[mPointCount++] = mLastX;
+            mPoints[mPointCount++] = mLastY;
+            mLastX2 = mLastX;
+            mLastY2 = mLastY;
+        }
+        return onTouch(v, action, 1, x, y, x, y);
+    }
+    
+    public boolean onTouch(View v, int action, int count, float x1, float y1, float x2, float y2) {
         // 按下后不允许父视图拦截触摸事件，松开后允许
         if (action == MotionEvent.ACTION_UP
             || action == MotionEvent.ACTION_CANCEL) {
@@ -102,12 +119,12 @@ public class GestureListener extends SimpleOnGestureListener {
         
         switch (action) {
             case MotionEvent.ACTION_MOVE:
-                onTouchMoved(e.getPointerCount(), x1, y1, x2, y2);
+                onTouchMoved(count, x1, y1, x2, y2);
                 break;
                 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                onTouchEnded(e.getAction() == MotionEvent.ACTION_UP, x1, y1, x2, y2);
+                onTouchEnded(action == MotionEvent.ACTION_UP, x1, y1, x2, y2);
                 break;
         }
         

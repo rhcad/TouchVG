@@ -31,8 +31,10 @@ public class ViewFactory {
     public static List<DummyItem> ITEMS = new ArrayList<DummyItem>();
     
     static {
-    	addItem("vgtest.testview.shape.ViewSinShape", 0, "ViewSinShape");
-    	
+        addItem("vgtest.testview.shape.ViewSinShape", 0, "ViewSinShape");
+        addItem("vgtest.testview.shape.TestDragView", 0, "TestDragView");
+        addItem("vgtest.testview.shape.TestInsertSVG", 0, "TestInsertSVG");
+        
         addItem("vgtest.testview.view.GraphView1", 1<<1, "GraphView splines");
         addItem("vgtest.testview.view.GraphView1", 32|(1<<1), "GraphView draw");
         addItem("vgtest.testview.view.GraphView1", 2<<1, "GraphView line");

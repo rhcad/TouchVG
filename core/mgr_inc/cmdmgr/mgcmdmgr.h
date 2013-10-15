@@ -72,6 +72,10 @@ struct MgCmdManager {
 
     //! 添加一个容纳图像的矩形图形，供 GiCoreView 使用
     virtual MgShape* addImageShape(const MgMotion* sender, const char* name, float width, float height) = 0;
+    
+    //! 添加一个容纳图像的矩形图形，供 GiCoreView 使用
+    virtual MgShape* addImageShape(const MgMotion* sender, const char* name,
+                                   float xc, float yc, float w, float h) = 0;
 
     //! 返回选择包络框，显示坐标，供 GiCoreView 使用
     virtual void getBoundingBox(Box2d& box, const MgMotion* sender) = 0;

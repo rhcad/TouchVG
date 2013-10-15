@@ -204,6 +204,7 @@ bool MgCmdManagerImpl::doAction(const MgMotion* sender, int action)
             break;
         }
     }
+    LOGD("doAction(%d) %s", action, ret ? "ok" : "fail");
     
     return ret;
 }

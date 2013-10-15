@@ -130,9 +130,16 @@ public class ContextAction {
         return false;
     }
     
-    public static void setButtonImages(int[] imageIDs, int[] extraImageIDs) {
-        mImageIDs = imageIDs;
-        mExtImageIDs = extraImageIDs;
+    public static int[] getButtonImages() {
+        return mImageIDs;
+    }
+    
+    public static void setButtonImages(int[] ids) {
+        mImageIDs = ids;
+    }
+    
+    public static void setExtraButtonImages(int[] ids) {
+        mExtImageIDs = ids;
     }
     
     public static void setButtonCaptionsID(int captionsID) {
