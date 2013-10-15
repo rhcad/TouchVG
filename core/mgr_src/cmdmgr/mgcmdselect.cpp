@@ -238,13 +238,13 @@ bool MgCmdSelect::draw(const MgMotion* sender, GiGraphics* gs)
         }
         else if (!selbox.isEmpty()) {   // 正在拖动临时图形
             if (rorate) {               // 旋转提示的参考线
-                if (!gs->drawHandle(selbox.center(), 0))
+                if (!gs->drawHandle(selbox.center(), kGiHandleVertex))
                     gs->drawEllipse(&ctxhd, selbox.center(), radius);
                 GiContext ctxshap(0, GiColor(0, 0, 255, 128), kGiLineDash);
                 gs->drawLine(&ctxshap, selbox.center(), m_ptSnap);
             }
             else {
-                if (!gs->drawHandle(m_ptSnap, 0))
+                if (!gs->drawHandle(m_ptSnap, kGiHandleVertex))
                     gs->drawEllipse(&ctxhd, m_ptSnap, radius);
             }
         }
@@ -263,7 +263,7 @@ bool MgCmdSelect::draw(const MgMotion* sender, GiGraphics* gs)
                 continue;
             }
             pnt = shape->shapec()->getHandlePoint(i);
-            if (sender->dragging() || !gs->drawHandle(pnt, 0))
+            if (sender->dragging() || !gs->drawHandle(pnt, kGiHandleVertex))
                 gs->drawEllipse(&ctxhd, pnt, radius);
         }
         
@@ -272,14 +272,14 @@ bool MgCmdSelect::draw(const MgMotion* sender, GiGraphics* gs)
             && (!m_clones.empty() || !m_insertPt)) {
             int t = m_rotateHandle > 0 ? m_rotateHandle - 1 : m_handleIndex - 1;
             pnt = shape->shapec()->getHandlePoint(t);
-            if (!gs->drawHandle(pnt, m_rotateHandle > 0 ? 2 : 1))
+            if (!gs->drawHandle(pnt, m_rotateHandle > 0 ? kGiHandleRotate : kGiHandleHotVertex))
                 gs->drawEllipse(&ctxhd, pnt, r2x);
         }
         if (m_insertPt && !m_clones.empty()) {  // 在临时图形上显示新插入顶点
             GiContext insertctx(ctxhd);
             insertctx.setFillColor(GiColor(255, 0, 0, 64));
             gs->drawEllipse(&insertctx, m_hit.nearpt, r2x);
-            gs->drawHandle(m_hit.nearpt, 1);
+            gs->drawHandle(m_hit.nearpt, kGiHandleHotVertex);
         }
     }
     if (shapes.size() == 1 && m_clones.empty()

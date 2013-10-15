@@ -15,6 +15,16 @@ class GiGraphicsImpl;
 class GiCanvas;
 #endif
 
+enum GiHandleTypes {        //!< 符号类型
+    kGiHandleVertex,        //!< 顶点或控制点
+    kGiHandleHotVertex,     //!< 活动点
+    kGiHandleRotate,        //!< 旋转
+    kGiHandleLock,          //!< 锁定
+    kGiHandleUnlock,        //!< 解锁
+    kGiHandleCancel,        //!< 放弃
+    kGiHandleAccept,        //!< 完成
+};
+
 //! 图形系统类
 /*! 本类用于显示各种图形，图元显示原语由外部的 GiCanvas 实现类来实现。
     显示图形所用的坐标计算和坐标系转换是在 GiTransform 中定义的。
@@ -304,7 +314,7 @@ public:
     //! 在给定中心位置显示特殊符号
     /*!
         \param pnt 符号中心位置
-        \param type 符号类型，0-顶点或控制点，1-活动点，2-旋转，3-锁定，4-解锁，5-放弃，6-完成
+        \param type 符号类型, GiHandleTypes 枚举值
         \param modelUnit 指定的坐标尺寸是模型坐标(true)还是世界坐标(false)
         \return 是否显示成功
      */

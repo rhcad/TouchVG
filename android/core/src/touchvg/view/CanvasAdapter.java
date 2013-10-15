@@ -274,7 +274,8 @@ public class CanvasAdapter extends GiCanvas {
     @Override
     public void drawBitmap(String name, float xc, float yc, float w, float h,
                            float angle) {
-        final Drawable drawable = mCache.getImage(mView, name);
+        final Drawable drawable = mCache != null ? mCache.getImage(mView, name)
+                : name == null ? new BitmapDrawable(mView.getResources(), getHandleBitmap(3)) : null;
         
         if (drawable != null) {
             Matrix mat = new Matrix();
