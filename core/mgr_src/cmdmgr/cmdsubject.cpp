@@ -1,4 +1,4 @@
-// cmdsubject.cpp
+﻿// cmdsubject.cpp
 // Copyright (c) 2004-2013, Zhang Yungui
 // License: LGPL, https://github.com/rhcad/touchvg
 
@@ -6,6 +6,7 @@
 #include <cmdsubject.h>
 #include <vector>
 
+//! 命令扩展目标接口的实现类
 class CmdSubjectImpl : public CmdSubject
 {
 public:
@@ -37,8 +38,8 @@ private:
         }
     }
     virtual void onUnloadCommands(MgCmdManager* sender) {
-    	Observers arr(_arr);
-    	_arr.clear();
+        Observers arr(_arr);
+        _arr.clear();
         for (Iterator it = arr.begin(); it != arr.end(); ++it) {
             (*it)->onUnloadCommands(sender);
         }

@@ -58,6 +58,7 @@ public:
     }
 };
 
+//! GiCoreView实现类
 class GiCoreViewImpl
     : public MgView
     , private MgLockData

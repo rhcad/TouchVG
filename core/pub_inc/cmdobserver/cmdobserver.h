@@ -69,6 +69,9 @@ struct CmdObserver {
     virtual MgCommand* createCommand(const MgMotion* sender, const char* name) = 0; //!< 创建命令
 };
 
+//! 命令扩展观察者接口的默认实现
+/*! \ingroup CORE_COMMAND
+ */
 class CmdObserverDefault : public CmdObserver
 {
 public:
