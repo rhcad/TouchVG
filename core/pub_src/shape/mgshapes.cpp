@@ -360,7 +360,7 @@ bool MgShapes::load(MgShapeFactory* factory, MgStorage* s, bool addOnly)
             
             s->readFloatArray("extent", &rect.xmin, 4);
             if (shape) {
-                shape->setParent(this, id);
+                shape->setParent(this, im->getNewID(id));
                 ret = shape->load(factory, s);
                 if (ret) {
                     shape->shape()->setFlag(kMgClosed, shape->shape()->isClosed());

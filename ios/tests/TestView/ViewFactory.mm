@@ -49,6 +49,21 @@ static void testGraphView(GiGraphView *v, int type)
         DemoCmdsGate::registerCmds([hlp cmdViewHandle]);
         hlp.command = @"hittest";
     }
+    else if (type == 7) {
+        [hlp insertPNGFromResource:@"app72"];
+        [hlp insertPNGFromResource:@"app57" center:CGPointMake(200, 100)];
+        
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+        [hlp insertImageFromFile:[path stringByAppendingPathComponent:@"page0.png"]];
+    }
+    else if (type == 8) {
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+        [hlp setImagePath:path];
+        [hlp loadFromFile:[GiGraphView2 lastFileName]];
+        hlp.command = @"select";
+    }
 }
 
 static void addLargeView1(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
@@ -118,6 +133,8 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addGraphView(arr, i, index, @"GiGraphView line", frame, 4);
     addGraphView(arr, i, index, @"GiGraphView lines", frame, 5);
     addGraphView(arr, i, index, @"GiGraphView hittest in democmds", frame, 6|32);
+    addGraphView(arr, i, index, @"GiGraphView add images", frame, 7);
+    addGraphView(arr, i, index, @"GiGraphView load images", frame, 8);
     addGraphView(arr, i, index, @"GiGraphView select randShapes", frame, 2|32);
     addGraphView(arr, i, index, @"GiGraphView select loadShapes", frame, 3);
     addLargeView1(arr, i, index, @"GiGraphView in large view", frame, 1);

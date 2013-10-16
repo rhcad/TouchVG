@@ -5,13 +5,15 @@
 #include <CoreGraphics/CoreGraphics.h>
 #include "gicanvas.h"
 
+@class ImageCache;
+
 //! 使用 Quartz 2D 实现的画布适配器类
 /*! \ingroup GROUP_IOS
  */
 class GiCanvasAdapter : public GiCanvas
 {
 public:
-    GiCanvasAdapter();
+    GiCanvasAdapter(ImageCache *cache = nil);
     virtual ~GiCanvasAdapter();
     
     //! 在给定上下文上开始绘制
@@ -51,4 +53,5 @@ public:
 private:
     CGContextRef    _ctx;
     bool            _fill;
+    ImageCache      *_cache;
 };

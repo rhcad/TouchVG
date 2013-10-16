@@ -426,9 +426,9 @@ public class GraphView extends View {
                 return true;
             }
             if (mContextAction == null) {
-                mContextAction = new ContextAction(getContext(), mCoreView, GraphView.this);
+                mContextAction = new ContextAction(mCoreView, GraphView.this);
             }
-            return mContextAction.showActions(actions, buttonXY);
+            return mContextAction.showActions(getContext(), actions, buttonXY);
         }
         
         @Override

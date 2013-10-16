@@ -769,14 +769,13 @@ bool GiCoreView::loadShapes(MgStorage* s)
 {
     bool ret = true;
 
-    impl->setCommand(&impl->motion, impl->getCommandName());
     MgCommand* cmd = impl->getCommand();
     if (cmd) cmd->cancel(&impl->motion);
 
     if (s) {
         MgShapesLock locker(MgShapesLock::Load, impl);
         ret = impl->doc()->load(impl->getShapeFactory(), s);
-        LOGD("Load %d shapes", impl->doc()->getShapeCount());
+        LOGD("Load %d shapes and %d layers", impl->doc()->getShapeCount(), impl->doc()->getLayerCount());
     }
     else {
         MgShapesLock locker(MgShapesLock::Remove, impl);

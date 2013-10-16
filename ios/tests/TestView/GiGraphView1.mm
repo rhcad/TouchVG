@@ -223,8 +223,13 @@ static char _lastVgFile[256] = { 0 };
 
 + (NSString *)lastFileName
 {
-    NSString *file = [NSString stringWithUTF8String:_lastVgFile];
-    return file;
+    if (_lastVgFile[0] == 0) {
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+        return [path stringByAppendingPathComponent:@"page0.png"];
+    }
+    
+    return [NSString stringWithUTF8String:_lastVgFile];
 }
 
 @end

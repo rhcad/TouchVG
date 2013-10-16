@@ -23,6 +23,8 @@ class MgView;
 
 @end
 
+@class ImageCache;
+
 //! iOS绘图视图类
 /*! \ingroup GROUP_IOS
     \see GiGraphViewDelegate
@@ -36,6 +38,7 @@ class MgView;
 @property(nonatomic, readonly) UIPinchGestureRecognizer *pinchRecognizer;       //!< 双指放缩手势识别器
 @property(nonatomic, readonly) UIRotationGestureRecognizer *rotationRecognizer; //!< 双指旋转手势识别器
 @property(nonatomic)           BOOL gestureEnabled;     //!< 是否允许触摸交互
+@property(nonatomic, readonly) ImageCache           *imageCache;                //!< 图像对象缓存
 
 //! 创建普通图形视图，并添加到父视图、设置为当前视图，不需要额外释放
 + (GiGraphView *)createGraphView:(CGRect)frame :(UIView *)parentView;

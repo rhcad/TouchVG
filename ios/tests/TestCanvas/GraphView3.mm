@@ -294,8 +294,7 @@ static int machToMs(uint64_t start)
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, 
                                                           NSUserDomainMask, YES) objectAtIndex:0];
     static int order = 0;
-    NSString *fmt = image.scale > 1 ? @"%@/page%d@2x.png" : @"%@/page%d.png";
-    NSString *filename = [NSString stringWithFormat:fmt, path, order++ % 10];
+    NSString *filename = [NSString stringWithFormat:@"%@/page%d.png", path, order++ % 10];
     
     NSData* imageData = UIImagePNGRepresentation(image);
     if (imageData) {

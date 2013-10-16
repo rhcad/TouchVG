@@ -4,6 +4,7 @@
 
 #import "GiViewHelper.h"
 #import "GiGraphView.h"
+#import "ImageCache.h"
 #include "gicoreview.h"
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -187,6 +188,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile {
+    if ([vgfile hasSuffix:@".png"]) {
+        vgfile = [[vgfile stringByDeletingPathExtension]
+                  stringByAppendingPathExtension:@"vg"];
+    }
     return [_view coreView]->loadFromFile([vgfile UTF8String]);
 }
 
@@ -225,6 +230,32 @@ GiColor CGColorToGiColor(CGColorRef color) {
 
 - (int)addShapesForTest {
     return [_view coreView]->addShapesForTest();
+}
+
+- (void)clearCachedData {
+    [_view clearCachedData];
+}
+
+- (int)insertPNGFromResource:(NSString *)name {
+    UIImage *m = [_view.imageCache addPNGFromResource:name];
+    return m ? [_view coreView]->addImageShape([[_view.imageCache getName:m] UTF8String],
+                                               m.size.width, m.size.height) : 0;
+}
+
+- (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt {
+    UIImage *m = [_view.imageCache addPNGFromResource:name];
+    return m ? [_view coreView]->addImageShape([[_view.imageCache getName:m] UTF8String],
+                                               pt.x, pt.y, m.size.width, m.size.height) : 0;
+}
+
+- (int)insertImageFromFile:(NSString *)filename {
+    UIImage *m = [_view.imageCache addImageFromFile:filename];
+    return m ? [_view coreView]->addImageShape([[_view.imageCache getName:m] UTF8String],
+                                               m.size.width, m.size.height) : 0;
+}
+
+- (void)setImagePath:(NSString *)path {
+    [_view.imageCache setImagePath:path];
 }
 
 @end

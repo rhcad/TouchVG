@@ -2,6 +2,7 @@
 //! \brief 实现画布适配器类 GiCanvasAdapter
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
+#import "ImageCache.h"
 #include "GiCanvasAdapter.h"
 #include <sys/sysctl.h>
 
@@ -24,7 +25,7 @@ int GiCanvasAdapter::getScreenDpi()
     return (iPad && !iPadMini) ? 132 : 163;
 }
 
-GiCanvasAdapter::GiCanvasAdapter() : _ctx(NULL)
+GiCanvasAdapter::GiCanvasAdapter(ImageCache *cache) : _ctx(NULL), _cache(cache)
 {
 }
 
@@ -227,10 +228,11 @@ void GiCanvasAdapter::drawHandle(float x, float y, int type)
     }
 }
 
-void GiCanvasAdapter::drawBitmap(const char* name, float xc, float yc, 
+void GiCanvasAdapter::drawBitmap(const char* name, float xc, float yc,
                                   float w, float h, float angle)
 {
-    UIImage *image = [UIImage imageNamed:@"app57.png"];
+    UIImage *image = (name && _cache ? [_cache loadImage:[NSString stringWithUTF8String:name]]
+                      : [UIImage imageNamed:@"app57.png"]);
     if (image) {
         CGImageRef img = [image CGImage];
         CGAffineTransform af = CGAffineTransformMake(1, 0, 0, -1, xc, yc);

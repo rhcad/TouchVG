@@ -3,6 +3,7 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import "GiGraphViewImpl.h"
+#import "ImageCache.h"
 #import <QuartzCore/CALayer.h>
 
 static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"取消",
@@ -41,6 +42,7 @@ GiViewAdapter::GiViewAdapter(UIView *mainView, GiCoreView *coreView)
 , _buttons(nil), _buttonImages(nil) {
     _coreView = new GiCoreView(coreView);
     memset(&respondsTo, 0, sizeof(respondsTo));
+    _imageCache = [[ImageCache alloc]init];
 }
 
 GiViewAdapter::~GiViewAdapter() {
@@ -49,6 +51,7 @@ GiViewAdapter::~GiViewAdapter() {
     _coreView->destoryView(this);
     delete _coreView;
     [_tmpshot release];
+    [_imageCache release];
 }
 
 UIImage * GiViewAdapter::snapshot(bool autoDraw) {

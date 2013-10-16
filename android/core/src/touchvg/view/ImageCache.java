@@ -133,17 +133,7 @@ public class ImageCache extends Object {
         Drawable drawable = mCache.get(name);
 
         if (drawable == null && id != 0) {
-            try {
-                final SVG svg = new SVGBuilder().readFromResource(res, id).build();
-                final Picture picture = svg.getPicture();
-                
-                if (picture != null && picture.getWidth() > 0) {
-                    drawable = svg.getDrawable();
-                    mCache.put(name, drawable);
-                }
-            } catch (SVGParseException e) {
-                e.printStackTrace();
-            }
+            drawable = addSVG(new SVGBuilder().readFromResource(res, id), name);
         }
         
         return drawable;
@@ -183,22 +173,32 @@ public class ImageCache extends Object {
 
         if (drawable == null && name.endsWith(".svg")) {
             try {
-                InputStream data = new FileInputStream(new File(filename));
-                SVG svg = new SVGBuilder().readFromInputStream(data).build();
+                final InputStream data = new FileInputStream(new File(filename));
+                drawable = addSVG(new SVGBuilder().readFromInputStream(data), name);
                 data.close();
-                Picture picture = svg.getPicture();
-                
-                if (picture != null && picture.getWidth() > 0) {
-                    drawable = svg.getDrawable();
-                    mCache.put(name, drawable);
-                }
-            } catch (SVGParseException e) {
-                e.printStackTrace();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        
+        return drawable;
+    }
+    
+    private Drawable addSVG(SVGBuilder builder, String name) {
+        Drawable drawable  = null;
+        
+        try {
+            final SVG svg = builder.build();
+            final Picture picture = svg.getPicture();
+            
+            if (picture != null && picture.getWidth() > 0) {
+                drawable = svg.getDrawable();
+                mCache.put(name, drawable);
+            }
+        } catch (SVGParseException e) {
+            e.printStackTrace();
         }
         
         return drawable;

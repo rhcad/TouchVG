@@ -3,6 +3,7 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import "GiGraphViewImpl.h"
+#import "ImageCache.h"
 
 @implementation IosTempView
 
@@ -17,7 +18,7 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    GiCanvasAdapter canvas;
+    GiCanvasAdapter canvas(_adapter->imageCache());
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
         _adapter->coreView()->dynDraw(_adapter, &canvas);
@@ -39,6 +40,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 @synthesize pinchRecognizer = _pinchRecognizer;
 @synthesize rotationRecognizer = _rotationRecognizer;
 @synthesize gestureEnabled = _gestureEnabled;
+@synthesize imageCache;
 
 - (void)dealloc {
     if (_activeGraphView == self)
@@ -116,6 +118,10 @@ GiColor CGColorToGiColor(CGColorRef color);
     return _adapter->coreView();
 }
 
+- (ImageCache *)imageCache {
+    return _adapter->imageCache();
+}
+
 - (int)cmdViewHandle {
     return _adapter->coreView()->viewAdapterHandle();
 }
@@ -155,7 +161,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 - (void)drawRect:(CGRect)rect {
     GiCoreView *coreView = _adapter->coreView();
-    GiCanvasAdapter canvas;
+    GiCanvasAdapter canvas(_adapter->imageCache());
     
     coreView->onSize(_adapter, self.bounds.size.width, self.bounds.size.height);
     
@@ -173,6 +179,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 - (void)clearCachedData {
     _adapter->clearCachedData();
+    [self.imageCache clearCachedData];
 }
 
 - (void)setGestureEnabled:(BOOL)enabled {
