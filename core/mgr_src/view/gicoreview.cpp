@@ -1051,8 +1051,10 @@ bool GiCoreViewImpl::gestureToCommand(const MgMotion& motion)
     }
 
     if (!ret) {
-        LOGD("The current command (%s) don't support #%d gesture (state=%d)",
-            cmd->getName(), motion.gestureType, motion.gestureState);
+        const char* const typeNames[] = { "?", "pan", "tap", "dbltap", "press", "twoFingersMove" };
+        const char* const stateNames[] = { "possible", "began", "moved", "ended", "cancel" };
+        LOGD("Gesture %s (%s) not supported (%s)",
+             typeNames[motion.gestureType], stateNames[motion.gestureState], cmd->getName());
     }
     return ret;
 }

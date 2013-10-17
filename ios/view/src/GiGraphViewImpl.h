@@ -46,6 +46,7 @@ public:
     
     GiCoreView *coreView() { return _coreView; }
     ImageCache *imageCache() { return _imageCache; }
+    UIView *getDynView();
     UIImage *snapshot(bool autoDraw);
     bool drawAppend(GiCanvas* canvas);
     void clearCachedData();

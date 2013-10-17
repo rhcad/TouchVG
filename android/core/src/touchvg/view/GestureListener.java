@@ -109,27 +109,27 @@ public class GestureListener extends SimpleOnGestureListener {
     }
     
     private boolean onTouch_(View v, int action, int count, 
-    		float x1, float y1, float x2, float y2) {
+            float x1, float y1, float x2, float y2) {
         if (action == MotionEvent.ACTION_UP
             || action == MotionEvent.ACTION_CANCEL) {
             v.getParent().requestDisallowInterceptTouchEvent(false);
         }
-        else {	// 按下后不允许父视图拦截触摸事件
+        else {  // 按下后不允许父视图拦截触摸事件
             v.getParent().requestDisallowInterceptTouchEvent(true);
         }
         
         boolean ret = false;
         
         switch (action) {
-        	case MotionEvent.ACTION_DOWN:
-        		ret = true;
-        		break;
+            case MotionEvent.ACTION_DOWN:
+                ret = true;
+                break;
             case MotionEvent.ACTION_MOVE:
-            	ret = onTouchMoved(count, x1, y1, x2, y2);
+                ret = onTouchMoved(count, x1, y1, x2, y2);
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-            	ret = onTouchEnded(action == MotionEvent.ACTION_UP, x1, y1, x2, y2);
+                ret = onTouchEnded(action == MotionEvent.ACTION_UP, x1, y1, x2, y2);
                 break;
         }
         
@@ -137,7 +137,7 @@ public class GestureListener extends SimpleOnGestureListener {
     }
     
     private boolean onTouchMoved(int fingerCount, float x1, float y1, float x2, float y2) {
-    	if (fingerCount == 1 && Math.abs(mLastX - x1) < 1 && Math.abs(mLastY - y1) < 1) {
+        if (fingerCount == 1 && Math.abs(mLastX - x1) < 1 && Math.abs(mLastY - y1) < 1) {
             return false;
         }
         if (fingerCount == 2 && Math.abs(mLastX - x1) < 1 && Math.abs(mLastY - y1) < 1
@@ -181,12 +181,12 @@ public class GestureListener extends SimpleOnGestureListener {
         if (mFingerCount != fingerCount) {
             if (onMoved(GiGestureState.kGiGesturePossible, fingerCount, x1, y1, x2, y2, true)) {
                 if (mFingerCount == 1) {        // 单指变为双指
-                	ret = onMoved(GiGestureState.kGiGestureEnded,
-                			mFingerCount, mLastX, mLastY, 0, 0, true);
+                    ret = onMoved(GiGestureState.kGiGestureEnded,
+                            mFingerCount, mLastX, mLastY, 0, 0, true);
                 }
                 else {
-                	ret = onMoved(GiGestureState.kGiGestureEnded,
-                			mFingerCount, x1, y1, x2, y2, true);
+                    ret = onMoved(GiGestureState.kGiGestureEnded,
+                            mFingerCount, x1, y1, x2, y2, true);
                 }
                 mFingerCount = fingerCount;
                 ret = onMoved(GiGestureState.kGiGestureBegan, mFingerCount, x1, y1, x2, y2, true);
@@ -207,11 +207,11 @@ public class GestureListener extends SimpleOnGestureListener {
         }
         boolean ret = false;
         if (mMoving == MOVING) {
-        	ret = onMoved(submit ? GiGestureState.kGiGestureEnded
+            ret = onMoved(submit ? GiGestureState.kGiGestureEnded
                     : GiGestureState.kGiGestureCancel, mFingerCount, x1, y1, x2, y2, false);
         }
         else if (mMoving == PRESS_MOVING) {
-        	ret = mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePress,
+            ret = mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePress,
                                 submit ? GiGestureState.kGiGestureEnded : GiGestureState.kGiGestureCancel, 0, 0);
         }
         mMoving = STOPPED;

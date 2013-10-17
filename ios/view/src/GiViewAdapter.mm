@@ -115,14 +115,18 @@ void GiViewAdapter::regenAppend() {
     [_dynview setNeedsDisplay];
 }
 
-void GiViewAdapter::redraw() {
-    if (!_dynview && _view && _view.window) {    // 自动创建动态图形视图
+UIView *GiViewAdapter::getDynView() {
+    if (!_dynview && _view && _view.window) {
         _dynview = [[IosTempView alloc]initView:_view.frame :this];
         _dynview.autoresizingMask = _view.autoresizingMask;
         [_view.superview addSubview:_dynview];
         [_dynview release];
     }
-    if (_dynview) {
+    return _dynview;
+}
+
+void GiViewAdapter::redraw() {
+    if (getDynView()) {
         [_dynview setNeedsDisplay];
     }
     else {
@@ -172,7 +176,7 @@ bool GiViewAdapter::showContextActions(const mgvector<int>& actions,
                                        const mgvector<float>& buttonXY,
                                        float x, float y, float w, float h) {
     int n = actions.count();
-    UIView *btnParent = _view;
+    UIView *btnParent = getDynView();   // 不能为_view，避免snapshot得到按钮图
     
     if (n == 0) {
         hideContextActions();

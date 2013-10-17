@@ -26,7 +26,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
 
 @implementation GiViewHelper
 
-@synthesize command, shapeCount, selectedCount, selectedType, content;
+@synthesize command, shapeCount, selectedCount, selectedType, content, changeCount;
 @synthesize lineWidth, strokeWidth, lineColor, lineAlpha;
 @synthesize lineStyle, fillColor, fillAlpha;
 
@@ -185,6 +185,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
 
 - (int)selectedType {
     return [_view coreView]->getSelectedShapeType();
+}
+
+- (int)changeCount {
+    return [_view coreView]->getChangeCount();
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile {

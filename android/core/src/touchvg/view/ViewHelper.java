@@ -237,6 +237,11 @@ public class ViewHelper {
         return mView.coreView().getSelectedShapeType();
     }
     
+    //! 返回图形改变次数，可用于检查是否需要保存
+    public int getChangeCount() {
+        return mView.coreView().getChangeCount();
+    }
+    
     //! 得到图形的JSON内容
     public String getContent() {
         final String str = mView.coreView().getContent();
