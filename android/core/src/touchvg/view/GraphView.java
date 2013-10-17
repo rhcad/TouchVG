@@ -97,6 +97,11 @@ public class GraphView extends View {
         return mGestureListener.onTouch(this, action, x, y);
     }
     
+    //! 传递单指轻击事件，可用于拖放操作
+    public boolean onTap(float x, float y) {
+        return mGestureListener.onTap(x, y);
+    }
+    
     private void activateView() {
         mViewAdapter.removeContextButtons();
         if (mActiveView != this) {
