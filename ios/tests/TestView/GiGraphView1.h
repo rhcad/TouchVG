@@ -7,9 +7,7 @@
 class ViewAdapter1;
 class GiCoreView;
 
-//! iOS绘图视图类
-/*! \ingroup GROUP_IOS
- */
+//! iOS测试绘图视图类
 @interface GiGraphView1 : UIView {
     ViewAdapter1    *_viewAdapter;
 }
@@ -20,6 +18,7 @@ class GiCoreView;
 
 @end
 
+//! iOS测试绘图视图类
 @interface GiGraphView2 : GiGraphView
 
 - (BOOL)savePng:(NSString *)filename;

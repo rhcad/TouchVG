@@ -241,21 +241,29 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (int)insertPNGFromResource:(NSString *)name {
-    UIImage *m = [_view.imageCache addPNGFromResource:name];
-    return m ? [_view coreView]->addImageShape([[_view.imageCache getName:m] UTF8String],
-                                               m.size.width, m.size.height) : 0;
+    CGSize size = [_view.imageCache addPNGFromResource:name :&name];
+    return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
 }
 
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt {
-    UIImage *m = [_view.imageCache addPNGFromResource:name];
-    return m ? [_view coreView]->addImageShape([[_view.imageCache getName:m] UTF8String],
-                                               pt.x, pt.y, m.size.width, m.size.height) : 0;
+    CGSize size = [_view.imageCache addPNGFromResource:name :&name];
+    return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
+}
+
+- (int)insertSVGFromResource:(NSString *)name {
+    CGSize size = [_view.imageCache addSVGFromResource:name :&name];
+    return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
+}
+
+- (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt {
+    CGSize size = [_view.imageCache addSVGFromResource:name :&name];
+    return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
 }
 
 - (int)insertImageFromFile:(NSString *)filename {
-    UIImage *m = [_view.imageCache addImageFromFile:filename];
-    return m ? [_view coreView]->addImageShape([[_view.imageCache getName:m] UTF8String],
-                                               m.size.width, m.size.height) : 0;
+    NSString *name = nil;
+    CGSize size = [_view.imageCache addImageFromFile:filename :&name];
+    return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
 }
 
 - (void)setImagePath:(NSString *)path {

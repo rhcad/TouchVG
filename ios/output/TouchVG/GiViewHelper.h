@@ -47,11 +47,17 @@
 - (int)addShapesForTest;                    //!< 添加测试图形
 - (void)clearCachedData;                    //!< 释放临时数据内存
 
-//! 在默认位置插入一个程序资源中的图片(name.png)
+//! 在默认位置插入一个程序资源中的PNG图片(name.png)
 - (int)insertPNGFromResource:(NSString *)name;
 
-//! 插入一个程序资源中的图片(name.png)，并指定图片的中心位置
+//! 插入一个程序资源中的PNG图片(name.png)，并指定图片的中心位置
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt;
+
+//! 在默认位置插入一个程序资源中的SVG图片(name.png)
+- (int)insertSVGFromResource:(NSString *)name;
+
+//! 插入一个程序资源中的SVG图片(name.svg)，并指定图片的中心位置
+- (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt;
 
 //! 在默认位置插入一个PNG、JPEG或SVG等文件的图像
 - (int)insertImageFromFile:(NSString *)filename;
