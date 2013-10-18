@@ -61,6 +61,8 @@ UIImage * GiViewAdapter::snapshot(bool autoDraw) {
     long oldCount = _drawCount;
     UIImage *image = nil;
     
+    hideContextActions();
+    
     UIGraphicsBeginImageContextWithOptions(_view.bounds.size, _view.opaque, 0);
     [_view.layer renderInContext:UIGraphicsGetCurrentContext()];
     
@@ -176,7 +178,7 @@ bool GiViewAdapter::showContextActions(const mgvector<int>& actions,
                                        const mgvector<float>& buttonXY,
                                        float x, float y, float w, float h) {
     int n = actions.count();
-    UIView *btnParent = getDynView();   // 不能为_view，避免snapshot得到按钮图
+    UIView *btnParent = _view;
     
     if (n == 0) {
         hideContextActions();
