@@ -271,7 +271,7 @@ bool MgShape::save(MgStorage* s) const
 
 bool MgShape::load(MgShapeFactory* factory, MgStorage* s)
 {
-    setParent(getParent(), s->readUInt32("tag", getTag()));
+    setTag(s->readUInt32("tag", getTag()));
 
     context()->setLineStyle((GiLineStyle)s->readUInt8("lineStyle", 0));
     context()->setLineWidth(s->readFloat("lineWidth", 0), true);

@@ -22,7 +22,10 @@ TouchVG 的功能
 
 引用的开源框架
 --------------
-> Larva Labs 的SVG解析框架 [svgandroid](https://github.com/japgolly/svg-android) (Apache License 2.0)。
+> Larva Labs 的 Android SVG 解析框架 [svgandroid](https://github.com/japgolly/svg-android) (Apache License 2.0)。
+
+> iOS SVG 解析框架 [SVGKit](https://github.com/SVGKit/SVGKit) (MIT)。
+
 
 > 用于跨语言转换的 [SWIG](https://github.com/swig/swig)，用此工具生成粘合代码。
 
@@ -73,7 +76,10 @@ iOS编译说明
 > 在 Xcode 中打开 ios/TestVG.xcworkspace 文件，运行 TestView 演示程序。
 
 >> libTouchVG.a 和 libDemoCmds.a 太大，没上传到源码库，需要自己编译：
-进入此项目的 ios 目录，运行`./build.sh`（需要配置Xcode命令行环境，以便使用 xcodebuild）。
+
+>>> 进入此项目的 ios 目录，运行`./build.sh`（需要配置Xcode命令行环境，以便使用 xcodebuild）。
+
+>>> 本项目对 SVGKit 做了[少量修改](https://github.com/rhcad/SVGKit)，可下载预编译的 [libSVGKit-iOS.a](http://sourceforge.net/projects/touchvg/files/libSVGKit-iOS.a/download)到 `ios/output` 目录下。
 
 >> 在真机上调试时需要修改主程序的Bundle Identifier，例如“com.yourcompany.TestView”，并选择自己的开发证书（Code Signing）。
 

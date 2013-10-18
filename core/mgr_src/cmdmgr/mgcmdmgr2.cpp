@@ -30,7 +30,8 @@ MgShape* MgCmdManagerImpl::addImageShape(const MgMotion* sender, const char* nam
     size *= sender->view->xform()->worldToDisplay();
     
     Box2d rect(xc - size.x / 2, yc - size.y / 2, xc + size.x / 2, yc + size.y / 2);
-    LOGD("addImageShape %.0f  %.0f  %.0f  %.0f", rect.xmin, rect.ymin, rect.xmax, rect.ymax);
+    LOGD("addImageShape %s x:%.0f y:%.0f w:%.0f h:%.0f", 
+         name, rect.xmin, rect.ymin, rect.width(), rect.height());
     rect *= sender->view->xform()->displayToModel();
     
     MgShapeT<MgImageShape> shape;

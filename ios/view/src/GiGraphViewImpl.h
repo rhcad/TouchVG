@@ -31,6 +31,7 @@ private:
     long        _drawCount;     //!< 用于增量绘图的计数
     NSMutableArray *_buttons;           //!< 上下文按钮的数组
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
+    ImageCache  *_imageCache;           //!< 图像对象缓存
     
 public:
     std::vector<id> delegates;  //!< GiGraphViewDelegate 观察者数组
@@ -44,6 +45,8 @@ public:
     virtual ~GiViewAdapter();
     
     GiCoreView *coreView() { return _coreView; }
+    ImageCache *imageCache() { return _imageCache; }
+    UIView *getDynView();
     UIImage *snapshot(bool autoDraw);
     bool drawAppend(GiCanvas* canvas);
     void clearCachedData();

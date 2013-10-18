@@ -20,22 +20,19 @@ import android.widget.RelativeLayout.LayoutParams;
 public class ContextAction {
     
     private GiCoreView mCoreView;
-    private GraphView mView;
-    private Context mContext;
+    private View mView;
     private RelativeLayout mButtonLayout;
     private static int[] mImageIDs;
     private static int[] mExtImageIDs;
     private static int mCaptionsID;
     private static String[] mCaptions;
     
-    public ContextAction(Context context, GiCoreView core, GraphView view) {
-        this.mContext = context;
+    public ContextAction(GiCoreView core, View view) {
         this.mCoreView = core;
         this.mView = view;
     }
     
     public void release() {
-        this.mContext = null;
         this.mCoreView = null;
         this.mView = null;
     }
@@ -44,7 +41,7 @@ public class ContextAction {
         return mButtonLayout != null;
     }
     
-    public boolean showActions(Ints actions, Floats buttonXY) {
+    public boolean showActions(Context context, Ints actions, Floats buttonXY) {
         removeButtonLayout();
         
         int n = actions.count();
@@ -52,12 +49,12 @@ public class ContextAction {
             return true;
         }
         
-        mButtonLayout = new RelativeLayout(mContext);
+        mButtonLayout = new RelativeLayout(context);
         
         for (int i = 0; i < n; i++) {
             int xc = (int)buttonXY.get(2 * i);
             int yc = (int)buttonXY.get(2 * i + 1);
-            addContextAction(n, i, actions.get(i), xc, yc, mButtonLayout);
+            addContextAction(n, i, actions.get(i), xc, yc, context, mButtonLayout);
         }
         
         final ViewGroup f = (ViewGroup) mView.getParent();
@@ -68,10 +65,10 @@ public class ContextAction {
         return isVisible();
     }
     
-    private boolean addContextAction(int n, int index, int action,
-                                     int xc, int yc, final RelativeLayout layout) {
-        final Button btn = new Button(mContext);
-        boolean hasImage = setButtonBackground(btn, action);
+    private boolean addContextAction(int n, int index, int action, int xc, int yc,
+                                     Context context, RelativeLayout layout) {
+        final Button btn = new Button(context);
+        boolean hasImage = setButtonBackground(context, btn, action);
         
         btn.setId(action);
         btn.setOnClickListener(new OnClickListener() {
@@ -110,7 +107,7 @@ public class ContextAction {
         }
     }
     
-    private boolean setButtonBackground(Button button, int action) {
+    private boolean setButtonBackground(Context context, Button button, int action) {
         if (mImageIDs != null && action < mImageIDs.length
             && action > 0 && mImageIDs[action] != 0) {
             button.setBackgroundResource(mImageIDs[action]);
@@ -122,7 +119,7 @@ public class ContextAction {
             return true;
         }
         if (mCaptions == null && mCaptionsID != 0) {
-            mCaptions = mContext.getResources().getStringArray(mCaptionsID);
+            mCaptions = context.getResources().getStringArray(mCaptionsID);
         }
         if (mCaptions != null && action > 0 && action < mCaptions.length) {
             button.setText(mCaptions[action]);

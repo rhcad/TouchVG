@@ -3,6 +3,7 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import "GiGraphViewImpl.h"
+#import "ImageCache.h"
 #import <QuartzCore/CALayer.h>
 
 static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"取消",
@@ -41,6 +42,7 @@ GiViewAdapter::GiViewAdapter(UIView *mainView, GiCoreView *coreView)
 , _buttons(nil), _buttonImages(nil) {
     _coreView = new GiCoreView(coreView);
     memset(&respondsTo, 0, sizeof(respondsTo));
+    _imageCache = [[ImageCache alloc]init];
 }
 
 GiViewAdapter::~GiViewAdapter() {
@@ -49,6 +51,7 @@ GiViewAdapter::~GiViewAdapter() {
     _coreView->destoryView(this);
     delete _coreView;
     [_tmpshot release];
+    [_imageCache release];
 }
 
 UIImage * GiViewAdapter::snapshot(bool autoDraw) {
@@ -112,14 +115,18 @@ void GiViewAdapter::regenAppend() {
     [_dynview setNeedsDisplay];
 }
 
-void GiViewAdapter::redraw() {
-    if (!_dynview && _view && _view.window) {    // 自动创建动态图形视图
+UIView *GiViewAdapter::getDynView() {
+    if (!_dynview && _view && _view.window) {
         _dynview = [[IosTempView alloc]initView:_view.frame :this];
         _dynview.autoresizingMask = _view.autoresizingMask;
         [_view.superview addSubview:_dynview];
         [_dynview release];
     }
-    if (_dynview) {
+    return _dynview;
+}
+
+void GiViewAdapter::redraw() {
+    if (getDynView()) {
         [_dynview setNeedsDisplay];
     }
     else {
@@ -169,7 +176,7 @@ bool GiViewAdapter::showContextActions(const mgvector<int>& actions,
                                        const mgvector<float>& buttonXY,
                                        float x, float y, float w, float h) {
     int n = actions.count();
-    UIView *btnParent = _view;
+    UIView *btnParent = getDynView();   // 不能为_view，避免snapshot得到按钮图
     
     if (n == 0) {
         hideContextActions();

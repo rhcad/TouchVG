@@ -161,6 +161,24 @@ namespace touchvg.view
             get { return CoreView.getShapeCount(); }
         }
 
+        //! 选中的图形个数
+        public int SelectedCount
+        {
+            get { return CoreView.getSelectedShapeCount(); }
+        }
+
+        //! 选中的图形的类型, MgShapeType
+        public int SelectedType
+        {
+            get { return CoreView.getSelectedShapeType(); }
+        }
+
+        //! 图形改变次数，可用于检查是否需要保存
+        public int ChangeCount
+        {
+            get { return CoreView.getChangeCount(); }
+        }
+
         //! 所有图形的JSON内容
         public string Content
         {

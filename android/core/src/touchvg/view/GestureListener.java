@@ -90,7 +90,8 @@ public class GestureListener extends SimpleOnGestureListener {
         float x2 = e.getPointerCount() > 1 ? e.getX(1) : x1;
         float y2 = e.getPointerCount() > 1 ? e.getY(1) : y1;
 
-        return onTouch(v, e.getActionMasked(), e.getPointerCount(), x1, y1, x2, y2);
+        onTouch_(v, e.getActionMasked(), e.getPointerCount(), x1, y1, x2, y2);
+        return false;   // to call GestureDetector.onTouchEvent
     }
     
     public boolean onTouch(View v, int action, float x, float y) {
@@ -104,40 +105,44 @@ public class GestureListener extends SimpleOnGestureListener {
             mLastX2 = mLastX;
             mLastY2 = mLastY;
         }
-        return onTouch(v, action, 1, x, y, x, y);
+        return onTouch_(v, action, 1, x, y, x, y);
     }
     
-    public boolean onTouch(View v, int action, int count, float x1, float y1, float x2, float y2) {
-        // 按下后不允许父视图拦截触摸事件，松开后允许
+    private boolean onTouch_(View v, int action, int count, 
+            float x1, float y1, float x2, float y2) {
         if (action == MotionEvent.ACTION_UP
             || action == MotionEvent.ACTION_CANCEL) {
             v.getParent().requestDisallowInterceptTouchEvent(false);
         }
-        else {
+        else {  // 按下后不允许父视图拦截触摸事件
             v.getParent().requestDisallowInterceptTouchEvent(true);
         }
         
+        boolean ret = false;
+        
         switch (action) {
-            case MotionEvent.ACTION_MOVE:
-                onTouchMoved(count, x1, y1, x2, y2);
+            case MotionEvent.ACTION_DOWN:
+                ret = true;
                 break;
-                
+            case MotionEvent.ACTION_MOVE:
+                ret = onTouchMoved(count, x1, y1, x2, y2);
+                break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                onTouchEnded(action == MotionEvent.ACTION_UP, x1, y1, x2, y2);
+                ret = onTouchEnded(action == MotionEvent.ACTION_UP, x1, y1, x2, y2);
                 break;
         }
         
-        return false;   // to call GestureDetector.onTouchEvent
+        return ret;
     }
     
-    private void onTouchMoved(int fingerCount, float x1, float y1, float x2, float y2) {
+    private boolean onTouchMoved(int fingerCount, float x1, float y1, float x2, float y2) {
         if (fingerCount == 1 && Math.abs(mLastX - x1) < 1 && Math.abs(mLastY - y1) < 1) {
-            return;
+            return false;
         }
         if (fingerCount == 2 && Math.abs(mLastX - x1) < 1 && Math.abs(mLastY - y1) < 1
             && Math.abs(mLastX2 - x2) < 1 && Math.abs(mLastY2 - y2) < 1) {
-            return;
+            return false;
         }
         if (mMoving == READY_MOVE || (mMoving == STOPPED && fingerCount == 2)) {
             mFingerCount = fingerCount;
@@ -168,42 +173,51 @@ public class GestureListener extends SimpleOnGestureListener {
                                 GiGestureState.kGiGestureMoved, x1, y1);
         }
         if (mMoving != MOVING) {
-            return;
+            return false;
         }
+        
+        boolean ret = false;
         
         if (mFingerCount != fingerCount) {
             if (onMoved(GiGestureState.kGiGesturePossible, fingerCount, x1, y1, x2, y2, true)) {
                 if (mFingerCount == 1) {        // 单指变为双指
-                    onMoved(GiGestureState.kGiGestureEnded, mFingerCount, mLastX, mLastY, 0, 0, true);
+                    ret = onMoved(GiGestureState.kGiGestureEnded,
+                            mFingerCount, mLastX, mLastY, 0, 0, true);
                 }
                 else {
-                    onMoved(GiGestureState.kGiGestureEnded, mFingerCount, x1, y1, x2, y2, true);
+                    ret = onMoved(GiGestureState.kGiGestureEnded,
+                            mFingerCount, x1, y1, x2, y2, true);
                 }
                 mFingerCount = fingerCount;
-                onMoved(GiGestureState.kGiGestureBegan, mFingerCount, x1, y1, x2, y2, true);
+                ret = onMoved(GiGestureState.kGiGestureBegan, mFingerCount, x1, y1, x2, y2, true);
             }
         }
         else {
-            onMoved(GiGestureState.kGiGestureMoved, mFingerCount, x1, y1, x2, y2, false);
+            ret = onMoved(GiGestureState.kGiGestureMoved, mFingerCount, x1, y1, x2, y2, false);
             mLastX = x1;
             mLastY = y1;
         }
+        
+        return ret;
     }
     
-    private void onTouchEnded(boolean submit, float x1, float y1, float x2, float y2) {
+    private boolean onTouchEnded(boolean submit, float x1, float y1, float x2, float y2) {
         if (submit && mPointCount > 2 && applyPendingPoints()) {
             mMoving = MOVING;
         }
+        boolean ret = false;
         if (mMoving == MOVING) {
-            onMoved(submit ? GiGestureState.kGiGestureEnded
+            ret = onMoved(submit ? GiGestureState.kGiGestureEnded
                     : GiGestureState.kGiGestureCancel, mFingerCount, x1, y1, x2, y2, false);
         }
         else if (mMoving == PRESS_MOVING) {
-            mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePress,
+            ret = mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePress,
                                 submit ? GiGestureState.kGiGestureEnded : GiGestureState.kGiGestureCancel, 0, 0);
         }
         mMoving = STOPPED;
         mFingerCount = 0;
+        
+        return ret;
     }
     
     private boolean applyPendingPoints() {
@@ -219,7 +233,7 @@ public class GestureListener extends SimpleOnGestureListener {
     private boolean onMoved(GiGestureState state, int fingerCount,
                             float x1, float y1, float x2, float y2, boolean s) {
         return fingerCount > 1 ? mCoreView.twoFingersMove(mAdapter, state, x1, y1, x2, y2, s)
-        : mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePan, state, x1, y1, s);
+            : mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePan, state, x1, y1, s);
     }
     
     @Override
@@ -236,15 +250,13 @@ public class GestureListener extends SimpleOnGestureListener {
     
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
-        boolean ret = mPointCount > 1;
-        if (ret) {
-            ret = mCoreView.onGesture(mAdapter, GiGestureType.kGiGestureTap,
-                                      GiGestureState.kGiGesturePossible, mPoints[0], mPoints[1])
-            && mCoreView.onGesture(mAdapter, GiGestureType.kGiGestureTap,
-                                   GiGestureState.kGiGestureEnded, e.getX(), e.getY());
-            mPointCount = 0;
-        }
-        return ret;
+        return mPointCount > 1 && onTap(mPoints[0], mPoints[1]);
+    }
+    
+    //! 传递单指轻击事件，可用于拖放操作
+    public boolean onTap(float x, float y) {
+        return mCoreView.onGesture(mAdapter, GiGestureType.kGiGestureTap, GiGestureState.kGiGestureEnded, x, y)
+                && mCoreView.onGesture(mAdapter, GiGestureType.kGiGestureTap, GiGestureState.kGiGestureEnded, x, y);
     }
     
     @Override
