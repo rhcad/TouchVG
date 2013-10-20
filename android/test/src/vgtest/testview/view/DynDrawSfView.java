@@ -16,8 +16,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 //! 基于SurfaceView的动态绘图视图类
-/*! \ingroup GROUP_ANDROID
- */
 public class DynDrawSfView extends SurfaceView implements DynDrawView {
     private CanvasAdapter mCanvasAdapter;
     private GiView mViewAdapter;

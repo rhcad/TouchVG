@@ -12,8 +12,6 @@ import android.graphics.Canvas;
 import android.view.View;
 
 //! 基于View的动态绘图视图类
-/*! \ingroup GROUP_ANDROID
- */
 public class DynDrawStdView extends View implements DynDrawView {
     private CanvasAdapter mCanvasAdapter;
     private GiView mViewAdapter;

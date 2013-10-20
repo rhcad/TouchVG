@@ -22,7 +22,7 @@ import android.view.SurfaceView;
 import android.view.View;
 
 //! Android绘图视图类
-/** \ingroup GROUP_ANDROID
+/**
  * 默认是底部媒体窗口类型，调用 setBackgroundColor(TRANSPARENT) 后将设置为顶部面板窗口类型
  */
 public class GraphSfView extends SurfaceView {

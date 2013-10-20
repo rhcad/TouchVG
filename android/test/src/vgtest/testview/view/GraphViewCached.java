@@ -18,8 +18,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 //! Android绘图视图类，使用缓存位图
-/*! \ingroup GROUP_ANDROID
- */
 public class GraphViewCached extends View {
     private CanvasAdapter mCanvasAdapter;
     private ViewAdapter mViewAdapter;

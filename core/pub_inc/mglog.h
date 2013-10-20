@@ -43,6 +43,7 @@ inline void LOGE(const char * fmt, ...) {
 }
 
 #else
+#define NO_LOGD
 #define LOGD(...)
 #define LOGE(...)
 #endif

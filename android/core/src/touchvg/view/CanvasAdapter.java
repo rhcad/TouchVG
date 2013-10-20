@@ -22,8 +22,6 @@ import android.graphics.drawable.PictureDrawable;
 import android.view.View;
 
 //! Android画布适配器类
-/*! \ingroup GROUP_ANDROID
- */
 public class CanvasAdapter extends GiCanvas {
     private Path mPath;
     private Paint mPen = new Paint();
