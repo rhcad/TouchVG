@@ -1,4 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
+ï»¿#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 static ATOM MyRegisterClass(HINSTANCE);
@@ -30,12 +30,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     memset(&wcex, 0, sizeof(wcex));
     wcex.cbSize = sizeof(wcex);
 
-    wcex.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
-    wcex.lpfnWndProc	= WndProc;
-    wcex.hInstance		= hInstance;
-    wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
-    wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszClassName	= L"Test";
+    wcex.style          = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
+    wcex.lpfnWndProc    = WndProc;
+    wcex.hInstance      = hInstance;
+    wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);
+    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+    wcex.lpszClassName  = L"Test";
 
     return RegisterClassEx(&wcex);
 }
@@ -66,26 +66,26 @@ GiGdipCanvas    _canvas;
 int             _tests = 0x400;
 POINTS          _pt = { 0, 0 };
 
-// Ö÷´°¿ÚµÄÏûÏ¢´¦Àíº¯Êı
+// ä¸»çª—å£çš„æ¶ˆæ¯å¤„ç†å‡½æ•°
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
     switch (message)
     {
-    case WM_ERASEBKGND:     // ²»Çå³ı±³¾°£¬±ÜÃâÉÁË¸
+    case WM_ERASEBKGND:         // ä¸æ¸…é™¤èƒŒæ™¯ï¼Œé¿å…é—ªçƒ
         break;
-    case WM_PAINT:              // ÖØ»æÖ÷´°¿Ú
+    case WM_PAINT:              // é‡ç»˜ä¸»çª—å£
         ondraw(hwnd);
         break;
-    case WM_SIZE:               // ¸Ä±ä´°¿Ú´óĞ¡
+    case WM_SIZE:               // æ”¹å˜çª—å£å¤§å°
         regen(hwnd);
         break;
-    case WM_DESTROY:            // ÍË³ö
+    case WM_DESTROY:            // é€€å‡º
         PostQuitMessage(0);
         break;
-    case WM_LBUTTONDBLCLK:      // Ë«»÷ÇĞ»»²âÊÔÍ¼ĞÎ
+    case WM_LBUTTONDBLCLK:      // åŒå‡»åˆ‡æ¢æµ‹è¯•å›¾å½¢
         switchTest(hwnd);
         break;
-    case WM_MOUSEMOVE:          // Êó±êÒÆ¶¯
+    case WM_MOUSEMOVE:          // é¼ æ ‡ç§»åŠ¨
         _pt = MAKEPOINTS(lparam);
         InvalidateRect(hwnd, NULL, FALSE);
         break;
@@ -101,19 +101,19 @@ void ondraw(HWND hwnd)
     DWORD tick = GetTickCount();
 
     PAINTSTRUCT ps;
-    HDC hdc = BeginPaint(hwnd, &ps);            // »ñÈ¡ÖØ»æÏûÏ¢µÄ¾ä±úÊı¾İ
+    HDC hdc = BeginPaint(hwnd, &ps);            // è·å–é‡ç»˜æ¶ˆæ¯çš„å¥æŸ„æ•°æ®
 
-    SetBkColor(hdc, GetSysColor(COLOR_WINDOW)); // ÉèÖÃ±³¾°É«ÒÔ±ã´«µ½»­²¼
+    SetBkColor(hdc, GetSysColor(COLOR_WINDOW)); // è®¾ç½®èƒŒæ™¯è‰²ä»¥ä¾¿ä¼ åˆ°ç”»å¸ƒ
 
-    if (_canvas.beginPaint(hwnd, hdc)) {        // ¿ªÊ¼ÔÚ»­²¼ÉÏ»æÖÆ
-        if (!_canvas.drawCachedBitmap()) {      // ÏÔÊ¾ÉÏ´Î±£´æµÄÄÚÈİ
-            _canvas.clearWindow();              // Ê¹ÓÃ±³¾°É«Çå³ıÏÔÊ¾
-            TestCanvas::test(&_canvas, _tests); // »æÖÆ²âÊÔÍ¼ĞÎ
+    if (_canvas.beginPaint(hwnd, hdc)) {        // å¼€å§‹åœ¨ç”»å¸ƒä¸Šç»˜åˆ¶
+        if (!_canvas.drawCachedBitmap()) {      // æ˜¾ç¤ºä¸Šæ¬¡ä¿å­˜çš„å†…å®¹
+            _canvas.clearWindow();              // ä½¿ç”¨èƒŒæ™¯è‰²æ¸…é™¤æ˜¾ç¤º
+            TestCanvas::test(&_canvas, _tests); // ç»˜åˆ¶æµ‹è¯•å›¾å½¢
             if ((_tests & 0x400) == 0)          // not testDynCurves
-                _canvas.saveCachedBitmap();     // »º´æÏÔÊ¾µÄÄÚÈİ
+                _canvas.saveCachedBitmap();     // ç¼“å­˜æ˜¾ç¤ºçš„å†…å®¹
         }
-        dyndraw(&_canvas);                      // »æÖÆ¶¯Ì¬Í¼ĞÎ
-        _canvas.endPaint();                     // ½áÊø»æÖÆ
+        dyndraw(&_canvas);                      // ç»˜åˆ¶åŠ¨æ€å›¾å½¢
+        _canvas.endPaint();                     // ç»“æŸç»˜åˆ¶
     }
     EndPaint(hwnd, &ps);
     tick = GetTickCount() - tick;
@@ -130,8 +130,8 @@ void dyndraw(GiCanvas* canvas)
 
 void regen(HWND hwnd)
 {
-    _canvas.clearCachedBitmap();            // ĞèÒªÖØĞÂ¹¹½¨ÏÔÊ¾
-    InvalidateRect(hwnd, NULL, FALSE);      // ´¥·¢ÖØ»æÏûÏ¢
+    _canvas.clearCachedBitmap();            // éœ€è¦é‡æ–°æ„å»ºæ˜¾ç¤º
+    InvalidateRect(hwnd, NULL, FALSE);      // è§¦å‘é‡ç»˜æ¶ˆæ¯
 }
 
 void switchTest(HWND hwnd)

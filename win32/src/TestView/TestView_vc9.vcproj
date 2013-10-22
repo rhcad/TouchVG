@@ -433,6 +433,22 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="export"
+			>
+			<File
+				RelativePath="..\..\..\core\mgr_src\json\simple_svg.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\mgr_src\json\svgcanvas.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\core\mgr_inc\json\svgcanvas.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

@@ -1,4 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
+ï»¿#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 static ATOM MyRegisterClass(HINSTANCE);
@@ -59,7 +59,25 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 static ViewAdapter* _adapter = NULL;
 
-// Ö÷´°¿ÚµÄÏûÏ¢´¦Àíº¯Êý
+#include <svgcanvas.h>
+
+void exportSVG(HWND hwnd)
+{
+    char filename[MAX_PATH];
+    GetModuleFileNameA(NULL, filename, MAX_PATH);
+    strcpy_s(strchr(filename, '.'), 5, ".svg");
+
+    RECT rc;
+    GetWindowRect(hwnd, &rc);
+
+    GiSvgCanvas canvas;
+
+    if (canvas.open(filename, rc.right - rc.left, rc.bottom - rc.top)) {
+        _adapter->drawTo(&canvas);
+    }
+}
+
+// ä¸»çª—å£çš„æ¶ˆæ¯å¤„ç†å‡½æ•°
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
     bool handled = false;
@@ -71,16 +89,16 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
         _adapter->setWnd(hwnd);
         _adapter->setCommand("splines");
         break;
-    case WM_DESTROY:            // ÍË³ö
+    case WM_DESTROY:            // é€€å‡º
         PostQuitMessage(0);
         handled = true;
         delete _adapter;
         _adapter = NULL;
         break;
-    case WM_ERASEBKGND:         // ²»Çå³ý±³¾°£¬±ÜÃâÉÁË¸
+    case WM_ERASEBKGND:         // ä¸æ¸…é™¤èƒŒæ™¯ï¼Œé¿å…é—ªçƒ
         handled = true;
         break;
-    case WM_PAINT:              // ÖØ»æÖ÷´°¿Ú
+    case WM_PAINT:              // é‡ç»˜ä¸»çª—å£
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hwnd, &ps);
@@ -91,11 +109,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
             handled = true;
         }
         break;
-    case WM_SIZE:               // ¸Ä±ä´°¿Ú´óÐ¡
+    case WM_SIZE:               // æ”¹å˜çª—å£å¤§å°
         _adapter->onSize(LOWORD(lparam), HIWORD(lparam));
         handled = true;
         break;
-    case WM_LBUTTONDBLCLK:      // Ë«»÷ÇÐ»»²âÊÔÍ¼ÐÎ
+    case WM_LBUTTONDBLCLK:      // åŒå‡»åˆ‡æ¢æµ‹è¯•å›¾å½¢
         {
             LPCSTR names[] = { "splines", "line", "select", "triangle" };
             static int index = -1;
@@ -103,19 +121,20 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
             handled = _adapter->setCommand(names[index]);
         }
         break;
-    case WM_LBUTTONDOWN:        // Êó±ê°´ÏÂ
+    case WM_LBUTTONDOWN:        // é¼ æ ‡æŒ‰ä¸‹
         handled = _adapter->onLButtonDown(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam), wparam);
         break;
-    case WM_LBUTTONUP:          // Êó±êÌ§Æð
+    case WM_LBUTTONUP:          // é¼ æ ‡æŠ¬èµ·
         handled = _adapter->onLButtonUp(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
+        exportSVG(hwnd);
         break;
-    case WM_MOUSEMOVE:          // Êó±êÒÆ¶¯
+    case WM_MOUSEMOVE:          // é¼ æ ‡ç§»åŠ¨
         handled = _adapter->onMouseMove(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam), wparam);
         break;
-    case WM_RBUTTONDOWN:            // ÓÒ¼ü°´ÏÂ
+    case WM_RBUTTONDOWN:        // å³é”®æŒ‰ä¸‹
         handled = _adapter->onRButtonDown(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
         break;
-    case WM_RBUTTONUP:          // ÓÒ¼üÌ§Æð
+    case WM_RBUTTONUP:          // å³é”®æŠ¬èµ·
         handled = _adapter->onRButtonUp(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
         break;
     }

@@ -1,4 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
+ï»¿#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include "ViewAdapter.h"
 #include <gimousehelper.h>
@@ -43,15 +43,21 @@ void ViewAdapter::onDraw(HDC hdc)
 {
     onSize(0, 0, GetDeviceCaps(hdc,LOGPIXELSY));
 
-    if (_canvas.beginPaint(_hwnd, hdc)) {       // ¿ªÊ¼ÔÚ»­²¼ÉÏ»æÖÆ
-        if (!_canvas.drawCachedBitmap()) {      // ÏÔÊ¾ÉÏ´Î±£´æµÄÄÚÈİ
-            _canvas.clearWindow();              // Ê¹ÓÃ±³¾°É«Çå³ıÏÔÊ¾
-            _coreView->drawAll(this, &_canvas); // ÏÔÊ¾ËùÓĞÍ¼ĞÎ
-            _canvas.saveCachedBitmap();         // »º´æÏÔÊ¾µÄÄÚÈİ
+    if (_canvas.beginPaint(_hwnd, hdc)) {       // å¼€å§‹åœ¨ç”»å¸ƒä¸Šç»˜åˆ¶
+        if (!_canvas.drawCachedBitmap()) {      // æ˜¾ç¤ºä¸Šæ¬¡ä¿å­˜çš„å†…å®¹
+            _canvas.clearWindow();              // ä½¿ç”¨èƒŒæ™¯è‰²æ¸…é™¤æ˜¾ç¤º
+            _coreView->drawAll(this, &_canvas); // æ˜¾ç¤ºæ‰€æœ‰å›¾å½¢
+            _canvas.saveCachedBitmap();         // ç¼“å­˜æ˜¾ç¤ºçš„å†…å®¹
         }
-        _coreView->dynDraw(this, &_canvas);     // »æÖÆ¶¯Ì¬Í¼ĞÎ
-        _canvas.endPaint();                     // ½áÊø»æÖÆ
+        _coreView->dynDraw(this, &_canvas);     // ç»˜åˆ¶åŠ¨æ€å›¾å½¢
+        _canvas.endPaint();                     // ç»“æŸç»˜åˆ¶
     }
+}
+
+void ViewAdapter::drawTo(GiCanvas* canvas)
+{
+    _coreView->drawAll(this, canvas);           // æ˜¾ç¤ºæ‰€æœ‰å›¾å½¢
+    _coreView->dynDraw(this, canvas);           // ç»˜åˆ¶åŠ¨æ€å›¾å½¢
 }
 
 bool ViewAdapter::onLButtonDown(int x, int y, WPARAM wparam)

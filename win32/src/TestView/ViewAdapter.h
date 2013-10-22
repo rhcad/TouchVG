@@ -1,4 +1,4 @@
-#ifndef TEST_VIEW_ADAPTER_H
+﻿#ifndef TEST_VIEW_ADAPTER_H
 #define TEST_VIEW_ADAPTER_H
 
 #include <giview.h>
@@ -6,6 +6,7 @@
 
 class GiCoreView;
 class GiMouseHelper;
+class GiCanvas;
 
 class ViewAdapter : public GiView
 {
@@ -17,6 +18,7 @@ public:
 
     void onSize(int w, int h, int dpi = 0);
     void onDraw(HDC hdc);
+    void drawTo(GiCanvas* canvas);
     bool onLButtonDown(int x, int y, WPARAM wparam);
     bool onLButtonUp(int x, int y);
     bool onMouseMove(int x, int y, WPARAM wparam);

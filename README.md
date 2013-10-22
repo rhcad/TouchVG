@@ -26,6 +26,7 @@ TouchVG 的功能
 
 > iOS SVG 解析框架 [SVGKit](https://github.com/SVGKit/SVGKit) (MIT)。
 
+> 用于输出 SVG 的简易框架 [simple-svg](http://code.google.com/p/simple-svg) (BSD-3)。
 
 > 用于跨语言转换的 [SWIG](https://github.com/swig/swig)，用此工具生成粘合代码。
 
