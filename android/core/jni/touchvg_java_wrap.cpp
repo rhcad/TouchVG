@@ -22501,7 +22501,22 @@ SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_delete_1MgShapeIterator(JNI
 }
 
 
-SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgShapeIterator_1getFirstShape(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_MgShapeIterator_1hasNext(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  MgShapeIterator *arg1 = (MgShapeIterator *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgShapeIterator **)&jarg1; 
+  result = (bool)(arg1)->hasNext();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgShapeIterator_1getNext(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   MgShapeIterator *arg1 = (MgShapeIterator *) 0 ;
   MgShape *result = 0 ;
@@ -22510,35 +22525,9 @@ SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgShapeIterator_1getFirstS
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgShapeIterator **)&jarg1; 
-  result = (MgShape *)(arg1)->getFirstShape();
+  result = (MgShape *)(arg1)->getNext();
   *(MgShape **)&jresult = result; 
   return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgShapeIterator_1getNextShape(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  MgShapeIterator *arg1 = (MgShapeIterator *) 0 ;
-  MgShape *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgShapeIterator **)&jarg1; 
-  result = (MgShape *)(arg1)->getNextShape();
-  *(MgShape **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_MgShapeIterator_1freeIterator(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  MgShapeIterator *arg1 = (MgShapeIterator *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgShapeIterator **)&jarg1; 
-  (arg1)->freeIterator();
 }
 
 

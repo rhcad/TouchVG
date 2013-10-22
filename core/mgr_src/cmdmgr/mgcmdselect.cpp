@@ -842,20 +842,18 @@ bool MgCmdSelect::touchMoved(const MgMotion* sender)
     
     if (m_clones.empty() && m_boxsel) {    // 没有选中图形时就滑动多选
         Box2d snap(sender->startPtM, sender->pointM);
-        void *it = NULL;
-        MgShape* shape = sender->view->shapes()->getFirstShape(it);
+        MgShapeIterator it(sender->view->shapes());
         
         m_selIds.clear();
         m_id = 0;
         m_hit.segment = -1;
-        for (; shape; shape = sender->view->shapes()->getNextShape(it)) {
+        while (MgShape* shape = it.getNext()) {
             if (isIntersectMode(sender) ? shape->shape()->hitTestBox(snap)
                 : snap.contains(shape->shape()->getExtent())) {
                 m_selIds.push_back(shape->getID());
                 m_id = shape->getID();
             }
         }
-        sender->view->shapes()->freeIterator(it);
         sender->view->redraw();
     }
     
@@ -1039,7 +1037,7 @@ bool MgCmdSelect::selectAll(const MgMotion* sender)
 {
     MgShapesLock locker(MgShapesLock::ReadOnly, sender->view);
     size_t oldn = m_selIds.size();
-    void* it = NULL;
+    MgShapeIterator it(sender->view->shapes());
     
     m_selIds.clear();
     m_handleIndex = 0;
@@ -1048,12 +1046,10 @@ bool MgCmdSelect::selectAll(const MgMotion* sender)
     m_boxsel = false;
     m_hit.segment = -1;
     
-    for (MgShape* shape = sender->view->shapes()->getFirstShape(it);
-         shape; shape = sender->view->shapes()->getNextShape(it)) {
+    while (MgShape* shape = it.getNext()) {
         m_selIds.push_back(shape->getID());
         m_id = shape->getID();
     }
-    sender->view->shapes()->freeIterator(it);
     sender->view->redraw();
 
     if (oldn != m_selIds.size() || !m_selIds.empty()) {

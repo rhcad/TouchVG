@@ -75,15 +75,14 @@ void MgCmdManagerImpl::eraseWnd(const MgMotion* sender)
 {
     Box2d snap(sender->view->xform()->getWndRectM());
     std::vector<int> delIds;
-    void *it = NULL;
     MgShapes* s = sender->view->shapes();
+    MgShapeIterator it(s);
     
-    for (MgShape* shape = s->getFirstShape(it); shape; shape = s->getNextShape(it)) {
+    while (MgShape* shape = it.getNext()) {
         if (shape->shape()->hitTestBox(snap)) {
             delIds.push_back(shape->getID());
         }
     }
-    s->freeIterator(it);
     
     if (!delIds.empty()
         && sender->view->shapeWillDeleted(s->findShape(delIds.front()))) {

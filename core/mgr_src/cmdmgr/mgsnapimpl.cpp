@@ -212,11 +212,9 @@ static void snapPoints(const MgMotion* sender, const Point2d& orignPt,
     Box2d snapbox(orignPt, 2 * arr[0].dist, 0);         // 捕捉容差框
     GiTransform* xf = sender->view->xform();
     Box2d wndbox(xf->getWndRectM());
-    void* it = NULL;
+    MgShapeIterator it(sender->view->shapes());
     
-    for (const MgShape* sp = sender->view->shapes()->getFirstShape(it);
-         sp; sp = sender->view->shapes()->getNextShape(it)) {
-        
+    while (const MgShape* sp = it.getNext()) {
         if (skipShape(ignoreids, sp)) {
             continue;
         }
@@ -235,7 +233,6 @@ static void snapPoints(const MgMotion* sender, const Point2d& orignPt,
             snapGrid(sender, orignPt, shape, ignoreHandle, sp, arr, matchpt);
         }
     }
-    sender->view->shapes()->freeIterator(it);
 }
 
 // hotHandle: 绘新图时，起始步骤为-1，后续步骤>0；拖动一个或多个整体图形时为-1，拖动顶点时>=0

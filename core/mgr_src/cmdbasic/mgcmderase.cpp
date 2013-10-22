@@ -123,17 +123,15 @@ bool MgCmdErase::isIntersectMode(const MgMotion*)
 bool MgCmdErase::touchMoved(const MgMotion* sender)
 {
     Box2d snap(sender->startPtM, sender->pointM);
-    void *it = NULL;
-    MgShape* shape = m_boxsel ? sender->view->shapes()->getFirstShape(it) : NULL;
+    MgShapeIterator it(m_boxsel ? sender->view->shapes() : NULL);
     
     m_delIds.clear();
-    for (; shape; shape = sender->view->shapes()->getNextShape(it)) {
+    while (MgShape* shape = it.getNext()) {
         if (isIntersectMode(sender) ? shape->shape()->hitTestBox(snap)
             : snap.contains(shape->shape()->getExtent())) {
             m_delIds.push_back(shape->getID());
         }
     }
-    sender->view->shapes()->freeIterator(it);
     sender->view->redraw();
     
     return true;

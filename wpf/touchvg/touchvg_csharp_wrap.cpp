@@ -16395,35 +16395,27 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_MgShapeIterator(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_MgShapeIterator_getFirstShape(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgShapeIterator_hasNext(void * jarg1) {
+  unsigned int jresult ;
+  MgShapeIterator *arg1 = (MgShapeIterator *) 0 ;
+  bool result;
+  
+  arg1 = (MgShapeIterator *)jarg1; 
+  result = (bool)(arg1)->hasNext();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_MgShapeIterator_getNext(void * jarg1) {
   void * jresult ;
   MgShapeIterator *arg1 = (MgShapeIterator *) 0 ;
   MgShape *result = 0 ;
   
   arg1 = (MgShapeIterator *)jarg1; 
-  result = (MgShape *)(arg1)->getFirstShape();
+  result = (MgShape *)(arg1)->getNext();
   jresult = (void *)result; 
   return jresult;
-}
-
-
-SWIGEXPORT void * SWIGSTDCALL CSharp_MgShapeIterator_getNextShape(void * jarg1) {
-  void * jresult ;
-  MgShapeIterator *arg1 = (MgShapeIterator *) 0 ;
-  MgShape *result = 0 ;
-  
-  arg1 = (MgShapeIterator *)jarg1; 
-  result = (MgShape *)(arg1)->getNextShape();
-  jresult = (void *)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_MgShapeIterator_freeIterator(void * jarg1) {
-  MgShapeIterator *arg1 = (MgShapeIterator *) 0 ;
-  
-  arg1 = (MgShapeIterator *)jarg1; 
-  (arg1)->freeIterator();
 }
 
 

@@ -792,9 +792,8 @@ public class touchvgJNI {
   public final static native boolean MgShapes_isKindOf(long jarg1, MgShapes jarg1_, int jarg2);
   public final static native long new_MgShapeIterator(long jarg1, MgShapes jarg1_);
   public final static native void delete_MgShapeIterator(long jarg1);
-  public final static native long MgShapeIterator_getFirstShape(long jarg1, MgShapeIterator jarg1_);
-  public final static native long MgShapeIterator_getNextShape(long jarg1, MgShapeIterator jarg1_);
-  public final static native void MgShapeIterator_freeIterator(long jarg1, MgShapeIterator jarg1_);
+  public final static native boolean MgShapeIterator_hasNext(long jarg1, MgShapeIterator jarg1_);
+  public final static native long MgShapeIterator_getNext(long jarg1, MgShapeIterator jarg1_);
   public final static native long new_MgLine();
   public final static native void delete_MgLine(long jarg1);
   public final static native long MgLine_create();

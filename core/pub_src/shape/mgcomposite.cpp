@@ -37,25 +37,67 @@ void MgComposite::_setPoint(int, const Point2d&)
 
 int MgComposite::_getHandleCount() const
 {
-    MgShape* sp = _shapes->getHeadShape();
-    return sp ? sp->shapec()->getHandleCount() : 0;
-}
-
-int MgComposite::_getHandleType(int index) const
-{
-    MgShape* sp = _shapes->getHeadShape();
-    return sp ? sp->shapec()->getHandleType(index) : kMgHandleOutside;
+    int n = 0;
+    MgShapeIterator it(_shapes);
+    
+    while (MgShape* sp = it.getNext()) {
+        n += sp->shapec()->getHandleCount();
+    }
+    
+    return n;
 }
 
 Point2d MgComposite::_getHandlePoint(int index) const
 {
-    MgShape* sp = _shapes->getHeadShape();
-    return sp ? sp->shapec()->getHandlePoint(index) : Point2d();
+    int n = 0;
+    MgShapeIterator it(_shapes);
+    
+    while (MgShape* sp = it.getNext()) {
+        int c = sp->shapec()->getHandleCount();
+        if (index < n + c) {
+            return sp->shapec()->getHandlePoint(index - n);
+        }
+        n += c;
+    }
+    
+    return getExtent().center();
 }
 
 bool MgComposite::_setHandlePoint(int index, const Point2d& pt, float)
 {
     return _offset(pt - _getHandlePoint(index), -1);
+}
+
+int MgComposite::_getHandleType(int index) const
+{
+    int n = 0;
+    MgShapeIterator it(_shapes);
+    
+    while (MgShape* sp = it.getNext()) {
+        int c = sp->shapec()->getHandleCount();
+        if (index < n + c) {
+            return sp->shapec()->getHandleType(index - n);
+        }
+        n += c;
+    }
+    
+    return kMgHandleOutside;
+}
+
+bool MgComposite::_isHandleFixed(int index) const
+{
+    int n = 0;
+    MgShapeIterator it(_shapes);
+    
+    while (MgShape* sp = it.getNext()) {
+        int c = sp->shapec()->getHandleCount();
+        if (index < n + c) {
+            return sp->shapec()->isHandleFixed(index - n);
+        }
+        n += c;
+    }
+    
+    return true;
 }
 
 int MgComposite::getShapeCount() const
@@ -71,25 +113,21 @@ void MgComposite::_clearCachedData()
 
 void MgComposite::_update()
 {
-    void* it;
+    MgShapeIterator it(_shapes);
     _extent.empty();
 
-    for (MgShape* sp = _shapes->getFirstShape(it); sp;
-        sp = _shapes->getNextShape(it)) {
+    while (MgShape* sp = it.getNext()) {
         sp->shape()->update();
         _extent.unionWith(sp->shapec()->getExtent());
     }
-    _shapes->freeIterator(it);
 }
 
 void MgComposite::_transform(const Matrix2d& mat)
 {
-    void* it;
-    for (MgShape* sp = _shapes->getFirstShape(it); sp;
-        sp = _shapes->getNextShape(it)) {
+    MgShapeIterator it(_shapes);
+    while (MgShape* sp = it.getNext()) {
         sp->shape()->transform(mat);
     }
-    _shapes->freeIterator(it);
 }
 
 void MgComposite::_clear()
@@ -111,16 +149,14 @@ bool MgComposite::_equals(const MgComposite& src) const
 
 float MgComposite::_hitTest(const Point2d& pt, float tol, MgHitResult& res) const
 {
-    void* it;
+    MgShapeIterator it(_shapes);
     MgHitResult tmpRes;
     Box2d limits(pt, 2 * tol, 0);
 
     res.segment = 0;
     res.dist = _FLT_MAX;
 
-    for (MgShape* sp = _shapes->getFirstShape(it); sp;
-        sp = _shapes->getNextShape(it))
-    {
+    while (MgShape* sp = it.getNext()) {
         if (limits.isIntersect(sp->shapec()->getExtent())) {
             float d = sp->shapec()->hitTest(pt, tol, tmpRes);
             if (res.dist > d - _MGZERO)
@@ -131,35 +167,30 @@ float MgComposite::_hitTest(const Point2d& pt, float tol, MgHitResult& res) cons
             }
         }
     }
-    _shapes->freeIterator(it);
 
     return res.segment != 0;
 }
 
 bool MgComposite::_offset(const Vector2d& vec, int)
 {
-    void* it;
+    MgShapeIterator it(_shapes);
     int n = 0;
 
-    for (MgShape* sp = _shapes->getFirstShape(it); sp;
-        sp = _shapes->getNextShape(it)) {
+    while (MgShape* sp = it.getNext()) {
         n += sp->shape()->offset(vec, -1) ? 1 : 0;
     }
-    _shapes->freeIterator(it);
 
     return n > 0;
 }
 
 bool MgComposite::_draw(int mode, GiGraphics& gs, const GiContext& ctx, int) const
 {
-    void* it;
+    MgShapeIterator it(_shapes);
     int n = 0;
 
-    for (MgShape* sp = _shapes->getFirstShape(it); sp;
-        sp = _shapes->getNextShape(it)) {
+    while (MgShape* sp = it.getNext()) {
         n += sp->draw(mode, gs, ctx.isNullLine() ? NULL : &ctx, -1) ? 1 : 0;
     }
-    _shapes->freeIterator(it);
 
     return n > 0;
 }

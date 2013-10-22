@@ -58,12 +58,10 @@ void MgShapes::copy(const MgObject&)
 void MgShapes::copyShapes(const MgShapes* src)
 {
     clear();
-    void* it;
-    for (MgShape* sp = src->getFirstShape(it); sp;
-         sp = src->getNextShape(it)) {
+    MgShapeIterator it(src);
+    while (MgShape* sp = it.getNext()) {
         addShape(*sp);
     }
-    freeIterator(it);
 }
 
 bool MgShapes::equals(const MgObject& src) const
@@ -181,10 +179,12 @@ int MgShapes::getShapeCount() const
     return this ? (int)im->shapes.size() : 0;
 }
 
-void MgShapes::freeIterator(void*& it)
+void MgShapes::freeIterator(void*& it) const
 {
-    delete (I::citerator*)it;
-    it = NULL;
+    if (it) {
+        delete (I::citerator*)it;
+        it = NULL;
+    }
 }
 
 MgShape* MgShapes::getFirstShape(void*& it) const

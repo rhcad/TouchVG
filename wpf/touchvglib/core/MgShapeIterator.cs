@@ -44,20 +44,15 @@ public class MgShapeIterator : IDisposable {
   public MgShapeIterator(MgShapes shapes) : this(touchvgPINVOKE.new_MgShapeIterator(MgShapes.getCPtr(shapes)), true) {
   }
 
-  public MgShape getFirstShape() {
-    IntPtr cPtr = touchvgPINVOKE.MgShapeIterator_getFirstShape(swigCPtr);
-    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
+  public bool hasNext() {
+    bool ret = touchvgPINVOKE.MgShapeIterator_hasNext(swigCPtr);
     return ret;
   }
 
-  public MgShape getNextShape() {
-    IntPtr cPtr = touchvgPINVOKE.MgShapeIterator_getNextShape(swigCPtr);
+  public MgShape getNext() {
+    IntPtr cPtr = touchvgPINVOKE.MgShapeIterator_getNext(swigCPtr);
     MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
     return ret;
-  }
-
-  public void freeIterator() {
-    touchvgPINVOKE.MgShapeIterator_freeIterator(swigCPtr);
   }
 
 }

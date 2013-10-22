@@ -39,18 +39,13 @@ public class MgShapeIterator {
     this(touchvgJNI.new_MgShapeIterator(MgShapes.getCPtr(shapes), shapes), true);
   }
 
-  public MgShape getFirstShape() {
-    long cPtr = touchvgJNI.MgShapeIterator_getFirstShape(swigCPtr, this);
-    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  public boolean hasNext() {
+    return touchvgJNI.MgShapeIterator_hasNext(swigCPtr, this);
   }
 
-  public MgShape getNextShape() {
-    long cPtr = touchvgJNI.MgShapeIterator_getNextShape(swigCPtr, this);
+  public MgShape getNext() {
+    long cPtr = touchvgJNI.MgShapeIterator_getNext(swigCPtr, this);
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
-  }
-
-  public void freeIterator() {
-    touchvgJNI.MgShapeIterator_freeIterator(swigCPtr, this);
   }
 
 }

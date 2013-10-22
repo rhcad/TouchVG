@@ -2466,14 +2466,11 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_delete_MgShapeIterator")]
   public static extern void delete_MgShapeIterator(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgShapeIterator_getFirstShape")]
-  public static extern IntPtr MgShapeIterator_getFirstShape(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgShapeIterator_hasNext")]
+  public static extern bool MgShapeIterator_hasNext(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgShapeIterator_getNextShape")]
-  public static extern IntPtr MgShapeIterator_getNextShape(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgShapeIterator_freeIterator")]
-  public static extern void MgShapeIterator_freeIterator(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgShapeIterator_getNext")]
+  public static extern IntPtr MgShapeIterator_getNext(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_new_MgLine")]
   public static extern IntPtr new_MgLine();
