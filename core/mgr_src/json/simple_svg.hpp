@@ -181,9 +181,9 @@ namespace svg
         enum Defaults { Transparent = -1, Aqua, Black, Blue, Brown, Cyan, Fuchsia,
             Green, Lime, Magenta, Orange, Purple, Red, Silver, White, Yellow };
 
-        Color(int r, int g, int b) : transparent(false), red(r), green(g), blue(b) { }
+        Color(int r, int g, int b, int a = 255) : alpha(a), red(r), green(g), blue(b) { }
         Color(Defaults color)
-            : transparent(false), red(0), green(0), blue(0)
+            : alpha(255), red(0), green(0), blue(0)
         {
             switch (color)
             {
@@ -202,21 +202,23 @@ namespace svg
                 case Silver: assign(192, 192, 192); break;
                 case White: assign(255, 255, 255); break;
                 case Yellow: assign(255, 255, 0); break;
-                default: transparent = true; break;
+                default: alpha = 0; break;
             }
         }
         virtual ~Color() { }
         std::string toString(Layout const &) const
         {
             std::stringstream ss;
-            if (transparent)
+            if (transparent())
                 ss << "transparent";
             else
                 ss << "rgb(" << red << "," << green << "," << blue << ")";
             return ss.str();
         }
+        bool transparent() const { return alpha == 0; }
+        int getAlpha() const { return alpha; }
     private:
-            bool transparent;
+            int alpha;
             int red;
             int green;
             int blue;
@@ -239,6 +241,9 @@ namespace svg
         {
             std::stringstream ss;
             ss << attribute("fill", color.toString(layout));
+            if (color.getAlpha() < 255) {
+                ss << attribute("fill-opacity", color.getAlpha() / 255.f);
+            }
             return ss.str();
         }
     private:
@@ -249,7 +254,7 @@ namespace svg
     {
     public:
         Stroke(double width = -1, Color color = Color::Transparent)
-            : width(width), color(color) { }
+            : dashoffset(0), width(width), color(color) { }
         std::string toString(Layout const & layout) const
         {
             // If stroke width is invalid.
@@ -258,8 +263,22 @@ namespace svg
 
             std::stringstream ss;
             ss << attribute("stroke-width", translateScale(width, layout)) << attribute("stroke", color.toString(layout));
+            if (color.getAlpha() < 255) {
+                ss << attribute("stroke-opacity", color.getAlpha() / 255.f);
+            }
+            if (!dasharray.empty()) {
+                ss << attribute("stroke-dasharray", dasharray);
+                if (dashoffset < -0.1f || dashoffset > 0.1f)
+                    ss << attribute("stroke-dashoffset", dashoffset);
+            }
+            if (!linecap.empty()) {
+                ss << attribute("stroke-linecap", linecap);
+            }
             return ss.str();
         }
+        std::string dasharray;
+        float dashoffset;
+        std::string linecap;
     private:
         double width;
         Color color;

@@ -61,6 +61,12 @@ bool GiSvgCanvas::close()
     return ret;
 }
 
+static const float patDash[]      = { 5, 5, 0 };
+static const float patDot[]       = { 1, 2, 0 };
+static const float patDashDot[]   = { 10, 2, 2, 2, 0 };
+static const float dashDotdot[]   = { 20, 2, 2, 2, 2, 2, 0 };
+static const float* const lpats[] = { NULL, patDash, patDot, patDashDot, dashDotdot };
+
 void GiSvgCanvas::setPen(int argb, float width, int style, float phase)
 {
     if (width > 0 && style >= 0) {
@@ -70,7 +76,18 @@ void GiSvgCanvas::setPen(int argb, float width, int style, float phase)
         int b = argb & 0xFF;
 
         delete im->pen;
-        im->pen = new Stroke(width, a == 0 ? Color::Transparent : Color(r, g, b));
+        im->pen = new Stroke(width, Color(r, g, b, a));
+        if (style > 0 && style < 5) {
+            std::stringstream dasharray;
+            
+            for (int i = 0; lpats[style][i] > 0.1f; i++) {
+                if (i > 0) dasharray << ", ";
+                dasharray << (lpats[style][i] * (width < 1.f ? 1.f : width));
+            }
+            im->pen->dasharray = dasharray.str();
+            im->pen->dashoffset = phase;
+        }
+        im->pen->linecap = (style > 0 && style < 5) ? "butt" : "round";
     }
 }
 
@@ -83,7 +100,7 @@ void GiSvgCanvas::setBrush(int argb, int style)
         int b = argb & 0xFF;
 
         delete im->brush;
-        im->brush = new Fill(a == 0 ? Color::Transparent : Color(r, g, b));
+        im->brush = new Fill(Color(r, g, b, a));
     }
 }
 

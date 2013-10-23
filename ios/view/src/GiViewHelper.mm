@@ -6,6 +6,7 @@
 #import "GiGraphView.h"
 #import "ImageCache.h"
 #include "gicoreview.h"
+#include "svgcanvas.h"
 
 GiColor CGColorToGiColor(CGColorRef color) {
     int num = CGColorGetNumberOfComponents(color);
@@ -192,14 +193,15 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile {
-    if ([vgfile hasSuffix:@".png"]) {
-        vgfile = [[vgfile stringByDeletingPathExtension]
-                  stringByAppendingPathExtension:@"vg"];
-    }
+    vgfile = [[vgfile stringByDeletingPathExtension]
+              stringByAppendingPathExtension:@"vg"];
     return [_view coreView]->loadFromFile([vgfile UTF8String]);
 }
 
 - (BOOL)saveToFile:(NSString *)vgfile {
+    vgfile = [[vgfile stringByDeletingPathExtension]
+              stringByAppendingPathExtension:@"vg"];
+    
     BOOL ret = NO;
     NSFileManager *fm = [NSFileManager defaultManager];
     
@@ -221,6 +223,18 @@ GiColor CGColorToGiColor(CGColorRef color) {
 
 - (BOOL)savePng:(NSString *)filename {
     return [_view savePng:filename];
+}
+
+- (BOOL)saveSvg:(NSString *)filename {
+    GiSvgCanvas canvas;
+    
+    filename = [[filename stringByDeletingPathExtension]
+                stringByAppendingPathExtension:@"svg"];
+    if (canvas.open([filename UTF8String], _view.bounds.size.width, _view.bounds.size.height)) {
+        [_view coreView]->drawAll([_view viewAdapter], &canvas);
+    }
+    
+    return canvas.close();
 }
 
 - (BOOL)zoomToExtent {
@@ -258,6 +272,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
 - (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt {
     CGSize size = [_view.imageCache addSVGFromResource:name :&name];
     return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
+}
+
++ (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size {
+    return [ImageCache getImageFromSVGFile:filename maxSize:size];
 }
 
 - (int)insertImageFromFile:(NSString *)filename {

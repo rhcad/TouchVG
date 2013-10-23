@@ -5,6 +5,7 @@
 #import "GiGraphViewImpl.h"
 #import "ImageCache.h"
 
+#pragma mark - IosTempView
 @implementation IosTempView
 
 - (id)initView:(CGRect)frame :(GiViewAdapter *)adapter {
@@ -41,6 +42,19 @@ GiColor CGColorToGiColor(CGColorRef color);
 @synthesize rotationRecognizer = _rotationRecognizer;
 @synthesize gestureEnabled = _gestureEnabled;
 @synthesize imageCache;
+
+#pragma mark - Respond to low-memory warnings
++ (void)initialize {
+	if (self == [GiGraphView class]) {  // Have to protect against subclasses calling this
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarningNotification:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+	}
+}
+
++ (void)didReceiveMemoryWarningNotification:(NSNotification*)notification {
+	[_activeGraphView clearCachedData];
+}
+
+#pragma mark - createGraphView
 
 - (void)dealloc {
     if (_activeGraphView == self)
@@ -106,6 +120,8 @@ GiColor CGColorToGiColor(CGColorRef color);
     return v;
 }
 
+#pragma mark - GiGraphView drawRect
+
 + (GiGraphView *)activeView {
     return _activeGraphView;
 }
@@ -135,14 +151,9 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (BOOL)savePng:(NSString *)filename {
-    BOOL ret = NO;
-    NSData* imageData = UIImagePNGRepresentation([self snapshot]);
-    
-    if (imageData) {
-        ret = [imageData writeToFile:filename atomically:NO];
-    }
-    
-    return ret;
+    filename = [[filename stringByDeletingPathExtension]
+                stringByAppendingPathExtension:@"png"];
+    return [UIImagePNGRepresentation([self snapshot]) writeToFile:filename atomically:NO];
 }
 
 - (void)setBackgroundColor:(UIColor *)color {
@@ -241,6 +252,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 @end
 
+#pragma mark - GestureRecognizer
 @implementation GiGraphView(GestureRecognizer)
 
 - (void)setupGestureRecognizers {

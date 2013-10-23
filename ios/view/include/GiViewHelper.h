@@ -37,10 +37,11 @@
 @property(nonatomic, readonly) int changeCount;     //!< 图形改变次数，可用于检查是否需要保存
 @property(nonatomic, assign) NSString *content;     //!< 图形的JSON内容
 
-- (BOOL)loadFromFile:(NSString *)vgfile;    //!< 从JSON文件中加载图形
-- (BOOL)saveToFile:(NSString *)vgfile;      //!< 保存图形到JSON文件
+- (BOOL)loadFromFile:(NSString *)vgfile;    //!< 从JSON文件中加载图形，自动改后缀名为.vg
+- (BOOL)saveToFile:(NSString *)vgfile;      //!< 保存图形到JSON文件，自动改后缀名为.vg
 - (UIImage *)snapshot;                      //!< 得到静态图形的快照，自动释放
-- (BOOL)savePng:(NSString *)filename;       //!< 保存静态图形的快照到PNG文件
+- (BOOL)savePng:(NSString *)filename;       //!< 保存静态图形的快照到PNG文件，自动改后缀名为.png
+- (BOOL)saveSvg:(NSString *)filename;       //!< 导出静态图形到SVG文件，自动改后缀名为.svg
 
 - (BOOL)zoomToExtent;                       //!< 放缩显示全部内容
 - (BOOL)zoomToModel:(CGRect)rect;           //!< 放缩显示指定范围到视图区域
@@ -58,6 +59,9 @@
 
 //! 插入一个程序资源中的SVG图片(name.svg)，并指定图片的中心位置
 - (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt;
+
+//! 得到SVG文件的图像
++ (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size;
 
 //! 在默认位置插入一个PNG、JPEG或SVG等文件的图像
 - (int)insertImageFromFile:(NSString *)filename;
