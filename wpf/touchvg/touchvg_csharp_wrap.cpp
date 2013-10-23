@@ -28681,6 +28681,20 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_setContent(void * jarg1, c
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_exportSVG(void * jarg1, char * jarg2) {
+  unsigned int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (char *)jarg2; 
+  result = (bool)(arg1)->exportSVG((char const *)arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_zoomToExtent(void * jarg1) {
   unsigned int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;

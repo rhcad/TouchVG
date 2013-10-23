@@ -1762,6 +1762,7 @@ public class touchvgJNI {
   public final static native String GiCoreView_getContent(long jarg1, GiCoreView jarg1_);
   public final static native void GiCoreView_freeContent(long jarg1, GiCoreView jarg1_);
   public final static native boolean GiCoreView_setContent(long jarg1, GiCoreView jarg1_, String jarg2);
+  public final static native boolean GiCoreView_exportSVG(long jarg1, GiCoreView jarg1_, String jarg2);
   public final static native boolean GiCoreView_zoomToExtent(long jarg1, GiCoreView jarg1_);
   public final static native boolean GiCoreView_zoomToModel(long jarg1, GiCoreView jarg1_, float jarg2, float jarg3, float jarg4, float jarg5);
   public final static native float GiCoreView_calcPenWidth(long jarg1, GiCoreView jarg1_, float jarg2);

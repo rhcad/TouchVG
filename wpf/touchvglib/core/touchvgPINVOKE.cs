@@ -5223,6 +5223,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_setContent")]
   public static extern bool GiCoreView_setContent(HandleRef jarg1, string jarg2);
 
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_exportSVG")]
+  public static extern bool GiCoreView_exportSVG(HandleRef jarg1, string jarg2);
+
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_zoomToExtent")]
   public static extern bool GiCoreView_zoomToExtent(HandleRef jarg1);
 

@@ -222,6 +222,11 @@ public class ViewHelper {
         return ret;
     }
     
+    //! 导出静态图形到SVG文件
+    public boolean exportSVG(String filename) {
+        return mView.coreView().exportSVG(filename);
+    }
+    
     //! 返回图形总数
     public int getShapeCount() {
         return mView.coreView().getShapeCount();

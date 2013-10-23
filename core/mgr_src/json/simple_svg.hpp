@@ -77,9 +77,10 @@ namespace svg
         T * operator->()
         {
             // If we try to access an invalid value, an exception is thrown.
+#ifndef __ANDROID__
             if (!valid)
                 throw std::exception();
-
+#endif
             return &type;
         }
         // Test for validity.

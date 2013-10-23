@@ -8,7 +8,7 @@ MGRSRC     := ../../../core/mgr_src
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := touchvg
+LOCAL_MODULE           := touchvg
 LOCAL_LDLIBS           := -L$(SYSROOT)/usr/lib -llog
 LOCAL_PRELINK_MODULE   := false
 LOCAL_CFLAGS           := -frtti -Wall -Wextra
@@ -85,6 +85,7 @@ LOCAL_SRC_FILES  := $(PUBSRC)/geom/mgmat.cpp \
                     $(MGRSRC)/shapedoc/mglayer.cpp \
                     $(MGRSRC)/shapedoc/mglockrw.cpp \
                     $(MGRSRC)/json/mgjsonstorage.cpp \
+                    $(MGRSRC)/json/svgcanvas.cpp \
                     $(MGRSRC)/view/gicoreview.cpp \
                     $(MGRSRC)/view/GcShapeDoc.cpp \
                     $(MGRSRC)/view/GcGraphView.cpp \

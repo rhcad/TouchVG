@@ -6,7 +6,6 @@
 #import "GiGraphView.h"
 #import "ImageCache.h"
 #include "gicoreview.h"
-#include "svgcanvas.h"
 
 GiColor CGColorToGiColor(CGColorRef color) {
     int num = CGColorGetNumberOfComponents(color);
@@ -225,16 +224,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
     return [_view savePng:filename];
 }
 
-- (BOOL)saveSvg:(NSString *)filename {
-    GiSvgCanvas canvas;
-    
+- (BOOL)exportSVG:(NSString *)filename {
     filename = [[filename stringByDeletingPathExtension]
                 stringByAppendingPathExtension:@"svg"];
-    if (canvas.open([filename UTF8String], _view.bounds.size.width, _view.bounds.size.height)) {
-        [_view coreView]->drawAll([_view viewAdapter], &canvas);
-    }
-    
-    return canvas.close();
+    return [_view coreView]->exportSVG([filename UTF8String]);
 }
 
 - (BOOL)zoomToExtent {

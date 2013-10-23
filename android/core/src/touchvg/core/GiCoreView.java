@@ -179,6 +179,10 @@ public class GiCoreView {
     return touchvgJNI.GiCoreView_setContent(swigCPtr, this, content);
   }
 
+  public boolean exportSVG(String filename) {
+    return touchvgJNI.GiCoreView_exportSVG(swigCPtr, this, filename);
+  }
+
   public boolean zoomToExtent() {
     return touchvgJNI.GiCoreView_zoomToExtent(swigCPtr, this);
   }

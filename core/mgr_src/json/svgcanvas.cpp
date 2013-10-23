@@ -169,26 +169,27 @@ void GiSvgCanvas::restoreClip()
 {
 }
 
-bool GiSvgCanvas::clipRect(float x, float y, float w, float h)
+bool GiSvgCanvas::clipRect(float, float, float, float)
 {
-    return true;
+    return false;
 }
 
 bool GiSvgCanvas::clipPath()
 {
-    return true;
+    return false;
 }
 
-void GiSvgCanvas::drawHandle(float x, float y, int type)
+void GiSvgCanvas::drawHandle(float, float, int)
 {
 }
 
-void GiSvgCanvas::drawBitmap(const char* name, float xc, float yc, 
-                             float w, float h, float angle)
+void GiSvgCanvas::drawBitmap(const char*, float, float, 
+                             float, float, float)
 {
 }
 
-float GiSvgCanvas::drawTextAt(const char* text, float x, float y, float h, int align)
+float GiSvgCanvas::drawTextAt(const char* text, float x, float y, float, int)
 {
+    *im->doc << Text(Point(x, y), text, im->getBrush(true));
     return 0;
 }
