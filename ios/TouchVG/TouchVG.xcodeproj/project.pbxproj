@@ -161,9 +161,9 @@
 		AE34CF7A17F903B4004BC88B /* mgsplines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE34CEE917F903B4004BC88B /* mgsplines.cpp */; };
 		AE3A618117EE7CC600B23F69 /* GiViewAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE3A618017EE7CC600B23F69 /* GiViewAdapter.mm */; };
 		AE3B0111181104F60004AAC7 /* SVGKImage.h in Headers */ = {isa = PBXBuildFile; fileRef = AE3B0110181104F60004AAC7 /* SVGKImage.h */; };
-		AEB009F91817528800FB3B01 /* svgcanvas.h in Headers */ = {isa = PBXBuildFile; fileRef = AEB009F81817528800FB3B01 /* svgcanvas.h */; };
-		AEB009FD181752A100FB3B01 /* simple_svg.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AEB009FB181752A100FB3B01 /* simple_svg.hpp */; };
-		AEB009FE181752A100FB3B01 /* svgcanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AEB009FC181752A100FB3B01 /* svgcanvas.cpp */; };
+		AE3D40F51818A3EF003C432D /* svgcanvas.h in Headers */ = {isa = PBXBuildFile; fileRef = AE3D40F41818A3EF003C432D /* svgcanvas.h */; };
+		AE3D40FE1818A42A003C432D /* simple_svg.hpp in Headers */ = {isa = PBXBuildFile; fileRef = AE3D40FA1818A42A003C432D /* simple_svg.hpp */; };
+		AE3D40FF1818A42A003C432D /* svgcanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE3D40FB1818A42A003C432D /* svgcanvas.cpp */; };
 		AEC33820180E28520029D7B3 /* ImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = AEC3381E180E28520029D7B3 /* ImageCache.h */; };
 		AEC33821180E28520029D7B3 /* ImageCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEC3381F180E28520029D7B3 /* ImageCache.mm */; };
 		AEE5C71017E17D1100AFF74D /* GiGraphViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE5C70E17E17D1100AFF74D /* GiGraphViewImpl.h */; };
@@ -328,9 +328,9 @@
 		AE34CEE917F903B4004BC88B /* mgsplines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mgsplines.cpp; sourceTree = "<group>"; };
 		AE3A618017EE7CC600B23F69 /* GiViewAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiViewAdapter.mm; path = ../../view/src/GiViewAdapter.mm; sourceTree = "<group>"; };
 		AE3B0110181104F60004AAC7 /* SVGKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVGKImage.h; path = ../../view/src/SVGKImage.h; sourceTree = "<group>"; };
-		AEB009F81817528800FB3B01 /* svgcanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgcanvas.h; sourceTree = "<group>"; };
-		AEB009FB181752A100FB3B01 /* simple_svg.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_svg.hpp; sourceTree = "<group>"; };
-		AEB009FC181752A100FB3B01 /* svgcanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svgcanvas.cpp; sourceTree = "<group>"; };
+		AE3D40F41818A3EF003C432D /* svgcanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgcanvas.h; sourceTree = "<group>"; };
+		AE3D40FA1818A42A003C432D /* simple_svg.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_svg.hpp; sourceTree = "<group>"; };
+		AE3D40FB1818A42A003C432D /* svgcanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = svgcanvas.cpp; sourceTree = "<group>"; };
 		AEC3381E180E28520029D7B3 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageCache.h; path = ../../view/src/ImageCache.h; sourceTree = "<group>"; };
 		AEC3381F180E28520029D7B3 /* ImageCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageCache.mm; path = ../../view/src/ImageCache.mm; sourceTree = "<group>"; };
 		AEE5C70E17E17D1100AFF74D /* GiGraphViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiGraphViewImpl.h; path = ../../view/src/GiGraphViewImpl.h; sourceTree = "<group>"; };
@@ -423,6 +423,7 @@
 			children = (
 				AE34CE3B17F903B4004BC88B /* cmdbasic */,
 				AE34CE4A17F903B4004BC88B /* cmdmgr */,
+				AE3D40F31818A3EF003C432D /* export */,
 				AE34CE4D17F903B4004BC88B /* json */,
 				AE34CE4F17F903B4004BC88B /* shapedoc */,
 				AE34CE5217F903B4004BC88B /* test */,
@@ -465,7 +466,6 @@
 		AE34CE4D17F903B4004BC88B /* json */ = {
 			isa = PBXGroup;
 			children = (
-				AEB009F81817528800FB3B01 /* svgcanvas.h */,
 				AE34CE4E17F903B4004BC88B /* mgjsonstorage.h */,
 			);
 			path = json;
@@ -504,6 +504,7 @@
 			children = (
 				AE34CE5A17F903B4004BC88B /* cmdbasic */,
 				AE34CE6A17F903B4004BC88B /* cmdmgr */,
+				AE3D40F61818A42A003C432D /* export */,
 				AE34CE7317F903B4004BC88B /* json */,
 				AE34CE8117F903B4004BC88B /* shapedoc */,
 				AE34CE8517F903B4004BC88B /* test */,
@@ -553,8 +554,6 @@
 		AE34CE7317F903B4004BC88B /* json */ = {
 			isa = PBXGroup;
 			children = (
-				AEB009FB181752A100FB3B01 /* simple_svg.hpp */,
-				AEB009FC181752A100FB3B01 /* svgcanvas.cpp */,
 				AE34CE7417F903B4004BC88B /* mgjsonstorage.cpp */,
 				AE34CE7517F903B4004BC88B /* rapidjson */,
 			);
@@ -810,6 +809,23 @@
 			path = shape;
 			sourceTree = "<group>";
 		};
+		AE3D40F31818A3EF003C432D /* export */ = {
+			isa = PBXGroup;
+			children = (
+				AE3D40F41818A3EF003C432D /* svgcanvas.h */,
+			);
+			path = export;
+			sourceTree = "<group>";
+		};
+		AE3D40F61818A42A003C432D /* export */ = {
+			isa = PBXGroup;
+			children = (
+				AE3D40FA1818A42A003C432D /* simple_svg.hpp */,
+				AE3D40FB1818A42A003C432D /* svgcanvas.cpp */,
+			);
+			path = export;
+			sourceTree = "<group>";
+		};
 		AEF1B1DB17E29D76005B5132 /* include */ = {
 			isa = PBXGroup;
 			children = (
@@ -936,8 +952,8 @@
 				AE2B802D1803F80B00E50A6E /* mgbasicspreg.h in Headers */,
 				AEC33820180E28520029D7B3 /* ImageCache.h in Headers */,
 				AE3B0111181104F60004AAC7 /* SVGKImage.h in Headers */,
-				AEB009F91817528800FB3B01 /* svgcanvas.h in Headers */,
-				AEB009FD181752A100FB3B01 /* simple_svg.hpp in Headers */,
+				AE3D40F51818A3EF003C432D /* svgcanvas.h in Headers */,
+				AE3D40FE1818A42A003C432D /* simple_svg.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1085,7 +1101,7 @@
 				AE34CF7A17F903B4004BC88B /* mgsplines.cpp in Sources */,
 				AE2B802B1803F7FC00E50A6E /* mgbasicspreg.cpp in Sources */,
 				AEC33821180E28520029D7B3 /* ImageCache.mm in Sources */,
-				AEB009FE181752A100FB3B01 /* svgcanvas.cpp in Sources */,
+				AE3D40FF1818A42A003C432D /* svgcanvas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

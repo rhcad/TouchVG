@@ -241,7 +241,7 @@ bool MgShapeDoc::save(MgStorage* s, int startIndex) const
         return false;
 
     s->writeFloatArray("transform", &im->xf.m11, 6);
-    s->writeFloatArray("zoomExtent", &im->rectW.xmin, 4);
+    s->writeFloatArray("pageExtent", &im->rectW.xmin, 4);
     s->writeFloat("viewScale", im->viewScale);
     rect = getExtent();
     s->writeFloatArray("extent", &rect.xmin, 4);
@@ -267,7 +267,8 @@ bool MgShapeDoc::load(MgShapeFactory* factory, MgStorage* s, bool addOnly)
     }
 
     s->readFloatArray("transform", &im->xf.m11, 6);
-    s->readFloatArray("zoomExtent", &im->rectW.xmin, 4);
+    if (s->readFloatArray("pageExtent", &im->rectW.xmin, 4) != 4)
+        s->readFloatArray("zoomExtent", &im->rectW.xmin, 4);
     im->viewScale = s->readFloat("viewScale", im->viewScale);
     s->readFloatArray("extent", &rect.xmin, 4);
     s->readUInt32("count", 0);

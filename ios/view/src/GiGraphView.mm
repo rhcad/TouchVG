@@ -151,8 +151,6 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (BOOL)savePng:(NSString *)filename {
-    filename = [[filename stringByDeletingPathExtension]
-                stringByAppendingPathExtension:@"png"];
     return [UIImagePNGRepresentation([self snapshot]) writeToFile:filename atomically:NO];
 }
 

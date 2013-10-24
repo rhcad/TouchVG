@@ -711,8 +711,8 @@ RECURSIVE              = YES
 
 EXCLUDE                = ../all.tmp/touchvg/json_src/rapidjson \
                          ../all.tmp/touchvg/json/rapidjson \
-                         ../all.tmp/touchvg/json_src/simple_svg.hpp \
-                         ../all.tmp/touchvg/json/simple_svg.hpp \
+                         ../all.tmp/touchvg/export/simple_svg.hpp \
+                         ../all.tmp/touchvg/export_src/simple_svg.hpp \
                          ../all.tmp/touchvg/iosview_src/SVGKImage.h \
                          ../all.tmp/touchvg/iosview/SVGKImage.h \
                          ../all.tmp/touchvg/test

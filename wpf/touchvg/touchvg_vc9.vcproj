@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\test"
+				AdditionalIncludeDirectories="..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\export;..\..\core\mgr_inc\test"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -124,7 +124,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\test"
+				AdditionalIncludeDirectories="..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\export;..\..\core\mgr_inc\test"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -841,15 +841,15 @@
 				Name="export"
 				>
 				<File
-					RelativePath="..\..\core\mgr_src\json\simple_svg.hpp"
+					RelativePath="..\..\core\mgr_src\export\simple_svg.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\core\mgr_src\json\svgcanvas.cpp"
+					RelativePath="..\..\core\mgr_src\export\svgcanvas.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\core\mgr_inc\json\svgcanvas.h"
+					RelativePath="..\..\core\mgr_inc\export\svgcanvas.h"
 					>
 				</File>
 			</Filter>

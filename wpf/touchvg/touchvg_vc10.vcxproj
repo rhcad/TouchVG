@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\test</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\export;..\..\core\mgr_inc\test</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\test</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\export;..\..\core\mgr_inc\test</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -142,6 +142,7 @@
     <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgcmdmgr_.cpp" />
     <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgcmdselect.cpp" />
     <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgsnapimpl.cpp" />
+    <ClCompile Include="..\..\core\mgr_src\export\svgcanvas.cpp" />
     <ClCompile Include="..\..\core\mgr_src\shapedoc\mglayer.cpp" />
     <ClCompile Include="..\..\core\mgr_src\shapedoc\mglockrw.cpp" />
     <ClCompile Include="..\..\core\mgr_src\shapedoc\mgshapedoc.cpp" />
@@ -183,10 +184,12 @@
     <ClCompile Include="..\..\core\pub_src\geom\mgvec.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\core\mgr_inc\export\svgcanvas.h" />
     <ClInclude Include="..\..\core\mgr_inc\view\gimousehelper.h" />
     <ClInclude Include="..\..\core\mgr_src\cmdbasic\mgcmderase.h" />
     <ClInclude Include="..\..\core\mgr_src\cmdmgr\mgcmdmgr_.h" />
     <ClInclude Include="..\..\core\mgr_src\cmdmgr\mgcmdselect.h" />
+    <ClInclude Include="..\..\core\mgr_src\export\simple_svg.hpp" />
     <ClInclude Include="..\..\core\pub_inc\cmdbase\mgcmddraw.h" />
     <ClInclude Include="..\..\core\pub_inc\cmdbase\mgdrawarc.h" />
     <ClInclude Include="..\..\core\pub_inc\cmdbase\mgdrawrect.h" />

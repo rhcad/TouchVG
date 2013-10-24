@@ -7,12 +7,14 @@
             <RowDefinition Height="31"></RowDefinition>
             <RowDefinition Height="531*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ComboBox HorizontalAlignment="Left" Name="comboBox1" Width="153" SelectionChanged="comboBox1_SelectionChanged" Margin="0,0,0,8">
+        <ComboBox HorizontalAlignment="Left" Name="cboCmd" Width="153" SelectionChanged="cboCmd_SelectionChanged" Margin="0,0,0,8">
         </ComboBox>
-        <Canvas Grid.Row="1" Name="canvas1" ClipToBounds="True" />
+        <Canvas Grid.Row="1" Name="canvas1" ClipToBounds="True"></Canvas>
         <Button HorizontalAlignment="Left" Margin="165,0,0,8" Name="redBtn" Width="75" Click="redBtn_Click" Foreground="Red">红笔</Button>
         <Button HorizontalAlignment="Left" Margin="249,0,0,8" Name="blueBtn" Width="75" Click="blueBtn_Click" Foreground="Blue">蓝笔</Button>
         <Slider Margin="333,2,348,8" Name="alphaSlider" ToolTip="透明度" Maximum="255" ValueChanged="alphaSlider_ValueChanged" />
         <Slider HorizontalAlignment="Right" Margin="0,2,242,8" Name="widthSlider" Width="100" Maximum="50" ToolTip="线宽" ValueChanged="widthSlider_ValueChanged" />
+        <Button Foreground="Black" HorizontalAlignment="Right" Margin="0,0,60,8" Name="saveBtn" Width="75" Click="saveBtn_Click">保存</Button>
+        <ComboBox Name="cboLineStyle" Width="94" HorizontalAlignment="Left" Margin="542,2,0,6" SelectionChanged="cboLineStyle_SelectionChanged" />
     </Grid>
 </Window>

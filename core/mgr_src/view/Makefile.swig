@@ -15,6 +15,7 @@ INCLUDES += -I$(ROOTDIR)/core/pub_inc \
             -I$(ROOTDIR)/core/mgr_inc/cmdbasic \
             -I$(ROOTDIR)/core/mgr_inc/shapedoc \
             -I$(ROOTDIR)/core/mgr_inc/json \
+            -I$(ROOTDIR)/core/mgr_inc/export \
             -I$(ROOTDIR)/core/mgr_inc/cmdmgr \
             -I$(ROOTDIR)/core/mgr_inc/view \
             -I$(ROOTDIR)/core/mgr_inc/test
@@ -28,6 +29,7 @@ SOURCES   =$(wildcard *.cpp) \
            $(wildcard ../cmdbasic/*.cpp) \
            $(wildcard ../cmdmgr/*.cpp) \
            $(wildcard ../json/*.cpp) \
+           $(wildcard ../export/*.cpp) \
            $(wildcard ../test/*.cpp)
 
 include $(ROOTDIR)/core/mk/config.mk

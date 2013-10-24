@@ -114,7 +114,8 @@ namespace touchvg.view
 
         public ImageSource HandleImageSource(int type)
         {
-            if (type >= 0 && type < _handleImages.Length)
+            if (type >= 0 && type < _handleImages.Length
+                && _handleImages[type] != null)
             {
                 return _handleImages[type].Clone();
             }

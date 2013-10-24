@@ -9,7 +9,7 @@
 #include "gicanvas.h"
 
 //! 输出SVG文件的画布适配器类
-/*! \ingroup CORE_EXPORT
+/*! \ingroup CORE_STORAGE
  */
 class GiSvgCanvas : public GiCanvas
 {

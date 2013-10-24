@@ -191,19 +191,23 @@ GiColor CGColorToGiColor(CGColorRef color) {
     return [_view coreView]->getChangeCount();
 }
 
+- (NSString *)addExtension:(NSString *)filename :(NSString *)ext {
+    if (filename && ![filename hasSuffix:ext]) {
+        filename = [[filename stringByDeletingPathExtension]
+                    stringByAppendingPathExtension:ext];
+    }
+    return filename;
+}
+
 - (BOOL)loadFromFile:(NSString *)vgfile {
-    vgfile = [[vgfile stringByDeletingPathExtension]
-              stringByAppendingPathExtension:@"vg"];
-    return [_view coreView]->loadFromFile([vgfile UTF8String]);
+    return [_view coreView]->loadFromFile([[self addExtension:vgfile :@".vg"] UTF8String]);
 }
 
 - (BOOL)saveToFile:(NSString *)vgfile {
-    vgfile = [[vgfile stringByDeletingPathExtension]
-              stringByAppendingPathExtension:@"vg"];
-    
     BOOL ret = NO;
     NSFileManager *fm = [NSFileManager defaultManager];
     
+    vgfile = [self addExtension:vgfile :@".vg"];
     if ([_view coreView]->getShapeCount() > 0) {
         if (![fm fileExistsAtPath:vgfile]) {
             [fm createFileAtPath:vgfile contents:[NSData data] attributes:nil];
@@ -221,13 +225,11 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (BOOL)savePng:(NSString *)filename {
-    return [_view savePng:filename];
+    return [_view savePng:[self addExtension:filename :@".png"]];
 }
 
 - (BOOL)exportSVG:(NSString *)filename {
-    filename = [[filename stringByDeletingPathExtension]
-                stringByAppendingPathExtension:@"svg"];
-    return [_view coreView]->exportSVG([filename UTF8String]);
+    return [_view coreView]->exportSVG([[self addExtension:filename :@".svg"] UTF8String]);
 }
 
 - (BOOL)zoomToExtent {

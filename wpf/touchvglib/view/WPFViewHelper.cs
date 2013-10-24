@@ -192,7 +192,7 @@ namespace touchvg.view
         }
 
         //! 导出静态图形到SVG文件
-        public bool exportSVG(string filename)
+        public bool ExportSVG(string filename)
         {
             return CoreView.exportSVG(filename);
         }

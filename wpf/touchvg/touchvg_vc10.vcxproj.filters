@@ -64,6 +64,9 @@
     <Filter Include="Source Files\command_src\cmdmgr">
       <UniqueIdentifier>{a1354678-f279-4a13-9e1d-75d893ee97a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\export">
+      <UniqueIdentifier>{4de5d542-b984-43c1-a54c-a20a2acb651b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include=".\touchvg_csharp_wrap.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgsnapimpl.cpp">
       <Filter>Source Files\command_src\cmdmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\mgr_src\export\svgcanvas.cpp">
+      <Filter>Source Files\export</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,6 +481,12 @@
     </ClInclude>
     <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgbasicspreg.h">
       <Filter>Source Files\command\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\mgr_inc\export\svgcanvas.h">
+      <Filter>Source Files\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\mgr_src\export\simple_svg.hpp">
+      <Filter>Source Files\export</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
