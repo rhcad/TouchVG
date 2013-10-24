@@ -8,8 +8,6 @@ using touchvg.core;
 namespace touchvg.view
 {
     //! WPF画布接口适配器类
-    /*! \ingroup GROUP_WPF
-     */
     public class WPFCanvasAdapter : GiCanvas
     {
         private Pen _pen;

@@ -41,6 +41,13 @@ namespace WpfDemo
             "切线圆弧",  "arc_tan",
             "点击测试(in DemoCmds)",  "hittest"
         };
+        string[] _lineStyles = new string[] {
+            "实线",     "0",
+            "虚线",     "1",
+            "点线",     "2",
+            "点划线",   "3",
+            "双点划线", "4",
+        };
 
         private WPFGraphView _view;
         private WPFViewHelper _helper;
@@ -49,7 +56,6 @@ namespace WpfDemo
         void Window1_Loaded(object sender, RoutedEventArgs e)
         {
             _view = new WPFGraphView(canvas1);
-            _helper = new WPFViewHelper(_view);
             _view.OnCommandChanged += new CommandChangedEventHandler(View_OnCommandChanged);
             _view.OnSelectionChanged +=new touchvg.view.SelectionChangedEventHandler(View_OnSelectionChanged);
 
@@ -58,12 +64,25 @@ namespace WpfDemo
             {
                 commandSource.Add(new KeyValuePair<string, string>(_commands[i], _commands[i + 1]));
             }
-            this.comboBox1.DisplayMemberPath = "Key";
-            this.comboBox1.SelectedValuePath = "Value";
-            this.comboBox1.ItemsSource = commandSource;
-            this.comboBox1.SelectedIndex = 0;
+            this.cboCmd.DisplayMemberPath = "Key";
+            this.cboCmd.SelectedValuePath = "Value";
+            this.cboCmd.ItemsSource = commandSource;
+            this.cboCmd.SelectedIndex = 0;
 
+            List<KeyValuePair<string, string>> lineStyleSource = new List<KeyValuePair<string, string>>();
+            for (int i = 0; i < _lineStyles.Length; i += 2)
+            {
+                lineStyleSource.Add(new KeyValuePair<string, string>(_lineStyles[i], _lineStyles[i + 1]));
+            }
+            this.cboLineStyle.DisplayMemberPath = "Key";
+            this.cboLineStyle.SelectedValuePath = "Value";
+            this.cboLineStyle.ItemsSource = lineStyleSource;
+            this.cboLineStyle.SelectedIndex = 0;
+
+            _helper = new WPFViewHelper(_view);
             DemoCmds.registerCmds(_helper.cmdViewHandle());
+            _helper.Load("C:\\Test\\page.vg");
+            _helper.Command = "select";
         }
 
         void Window1_Unloaded(object sender, RoutedEventArgs e)
@@ -71,23 +90,31 @@ namespace WpfDemo
             _helper.Dispose();
         }
 
-        private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cboCmd_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_helper != null && !_updateLocked)
             {
-                _helper.Command = comboBox1.SelectedValue.ToString();
-                View_OnSelectionChanged(sender, e);
+                _helper.Command = cboCmd.SelectedValue.ToString();
             }
         }
 
         void View_OnCommandChanged(object sender, EventArgs e)
         {
-            string cmdname = comboBox1.SelectedValue.ToString();
+            string cmdname = cboCmd.SelectedValue.ToString();
             if (!_helper.Command.Equals(cmdname))
             {
                 _updateLocked = true;
-                comboBox1.SelectedValue = _helper.Command;
+                cboCmd.SelectedValue = _helper.Command;
                 _updateLocked = false;
+            }
+            View_OnSelectionChanged(sender, e);
+        }
+
+        private void cboLineStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_helper != null && !_updateLocked)
+            {
+                _helper.LineStyle = int.Parse(cboLineStyle.SelectedValue.ToString());
             }
         }
 
@@ -98,6 +125,7 @@ namespace WpfDemo
                 _updateLocked = true;
                 alphaSlider.Value = (double)_helper.LineAlpha;
                 widthSlider.Value = (double)_helper.LineWidth;
+                cboLineStyle.SelectedValue = _helper.LineStyle.ToString();
                 _updateLocked = false;
             }
         }
@@ -122,6 +150,12 @@ namespace WpfDemo
         private void blueBtn_Click(object sender, RoutedEventArgs e)
         {
             _helper.LineColor = Colors.Blue;
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _helper.Save("C:\\Test\\page.vg");
+            _helper.ExportSVG("C:\\Test\\page.svg");
         }
     }
 }

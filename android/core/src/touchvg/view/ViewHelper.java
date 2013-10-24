@@ -207,11 +207,12 @@ public class ViewHelper {
         return mView.snapshot();
     }
     
-    //! 保存静态图形的快照到PNG文件
+    //! 保存静态图形的快照到PNG文件，自动添加后缀名.png
     public boolean savePng(String filename) {
         boolean ret = false;
         synchronized(mView.snapshot()) {
             try {
+                filename = addExtension(filename, ".png");
                 final FileOutputStream os = new FileOutputStream(filename);
                 ret = createFolder(filename) && mView.snapshot().compress(
                         Bitmap.CompressFormat.PNG, 100, os);
@@ -220,6 +221,11 @@ public class ViewHelper {
             }
         }
         return ret;
+    }
+    
+    //! 导出静态图形到SVG文件，自动添加后缀名.svg
+    public boolean exportSVG(String filename) {
+        return mView.coreView().exportSVG(addExtension(filename, ".svg"));
     }
     
     //! 返回图形总数
@@ -254,20 +260,29 @@ public class ViewHelper {
         return mView.coreView().setContent(content);
     }
     
-    //! 从JSON文件中加载图形
+    //! 从JSON文件中加载图形，自动添加后缀名.vg
     public boolean loadFromFile(String vgfile) {
-        return mView.coreView().loadFromFile(vgfile);
+        return mView.coreView().loadFromFile(addExtension(vgfile, ".vg"));
     }
     
-    //! 保存图形到JSON文件
+    //! 保存图形到JSON文件，自动添加后缀名.vg
     public boolean saveToFile(String vgfile) {
         boolean ret;
+        vgfile = addExtension(vgfile, ".vg");
         if (getShapeCount() == 0) {
             ret = new File(vgfile).delete();
         } else {
             ret = createFolder(vgfile) && mView.coreView().saveToFile(vgfile);
         }
         return ret;
+    }
+    
+    //! 返回指定后缀名的文件名
+    public static String addExtension(String filename, String ext) {
+        if (!filename.endsWith(ext)) {
+            filename = filename.substring(0, filename.lastIndexOf('.')) + ext;
+        }
+        return filename;
     }
     
     //! 创建指定的文件的上一级文件夹

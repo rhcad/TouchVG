@@ -191,6 +191,12 @@ namespace touchvg.view
             set { CoreView.setContent(value); }
         }
 
+        //! 导出静态图形到SVG文件
+        public bool ExportSVG(string filename)
+        {
+            return CoreView.exportSVG(filename);
+        }
+
         //! 放缩显示全部内容到视图区域
         public bool ZoomToExtent()
         {

@@ -16,6 +16,7 @@ CPPFLAGS    += -Wall \
                -I$(ROOTDIR)/core/pub_inc/cmdbase \
                -I$(ROOTDIR)/core/mgr_inc/shapedoc \
                -I$(ROOTDIR)/core/mgr_inc/json \
+               -I$(ROOTDIR)/core/mgr_inc/export \
                -I$(ROOTDIR)/core/mgr_inc/cmdbasic \
                -I$(ROOTDIR)/core/mgr_inc/cmdmgr \
                -I$(ROOTDIR)/core/mgr_inc/view \

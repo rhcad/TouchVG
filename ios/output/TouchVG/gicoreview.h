@@ -110,6 +110,9 @@ public:
 
     //! 从JSON内容中加载图形
     bool setContent(const char* content);
+
+    //! 保存图形到SVG文件
+    bool exportSVG(const char* filename);
     
     //! 放缩显示全部内容到视图区域
     bool zoomToExtent();

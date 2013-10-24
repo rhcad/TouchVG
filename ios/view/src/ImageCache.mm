@@ -88,6 +88,22 @@
     return size;
 }
 
++ (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size {
+    SVGKImage* svgimg = [SVGKImage imageWithContentsOfFile:filename];
+    UIImage *image = [svgimg UIImage];
+    
+    if (image && (svgimg.size.width > size.width || svgimg.size.height > size.height)) {
+        [svgimg scaleToFitInside:size];
+        
+        UIGraphicsBeginImageContextWithOptions(svgimg.size, NO, image.scale);
+        [image drawInRect:CGRectMake(0, 0, svgimg.size.width, svgimg.size.height)];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    
+    return image;
+}
+
 // TODO: 暂时直接从SVGKImage得到UIImage，应当在GiCanvasAdapter中从SVGKImage获取CALayer渲染
 - (CGSize)addImageFromFile:(NSString *)filename :(NSString**)name {
     *name = [[filename lastPathComponent]lowercaseString]; // 无路径的小写文件名

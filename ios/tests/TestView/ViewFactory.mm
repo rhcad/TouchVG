@@ -5,6 +5,7 @@
 #import "LargeView1.h"
 #import "GiViewHelper.h"
 #include "DemoCmds.h"
+#import <QuartzCore/CALayer.h>
 
 static UIViewController *_tmpController = nil;
 
@@ -43,9 +44,12 @@ static void testGraphView(GiGraphView *v, int type)
     }
     else if (type == 4) {
         hlp.command = @"line";
+        hlp.lineStyle = 1;
     }
     else if (type == 5) {
         hlp.command = @"lines";
+        hlp.lineStyle = 2;
+        hlp.strokeWidth = 5;
     }
     else if (type == 6) {
         DemoCmdsGate::registerCmds([hlp cmdViewHandle]);
@@ -66,6 +70,30 @@ static void testGraphView(GiGraphView *v, int type)
         [hlp insertSVGFromResource:@"fonts" center:CGPointMake(200, 100)];
         [hlp insertImageFromFile:[path stringByAppendingPathComponent:@"test.svg"]];
         [hlp setImagePath:path];
+    }
+    else if (type == 10) {
+        NSString *files[] = { @"page0.svg", @"page1.svg", @"page2.svg", @"page3.svg", nil };
+        float x = 10;
+        for (int i = 0, index = 0; files[i]; i++) {
+            NSString *filename = [path stringByAppendingPathComponent:files[i]];
+            UIImage *image = [GiViewHelper getImageFromSVGFile:filename maxSize:CGSizeMake(200, 200)];
+            if (image) {
+                UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
+                imageView.center = CGPointMake(x + imageView.center.x, 10 + imageView.center.y);
+                imageView.layer.borderColor = [UIColor redColor].CGColor;
+                imageView.layer.borderWidth = 2;
+                [v addSubview:imageView];
+                [imageView release];
+                
+                [hlp createGraphView:CGRectMake(10 + 200 * index, 310, 200, 300) :v];
+                if ([hlp loadFromFile:filename]) {
+                    [GiViewHelper activeView].layer.borderColor = [UIColor blueColor].CGColor;
+                    [GiViewHelper activeView].layer.borderWidth = 2;
+                }
+                x += image.size.width + 5;
+                index++;
+            }
+        }
     }
 }
 
@@ -139,10 +167,12 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addGraphView(arr, i, index, @"GiGraphView add images", frame, 7);
     addGraphView(arr, i, index, @"GiGraphView load images", frame, 8);
     addGraphView(arr, i, index, @"GiGraphView SVG images", frame, 9);
+    addGraphView(arr, i, index, @"GiGraphView SVG pages", frame, 10);
     addGraphView(arr, i, index, @"GiGraphView select randShapes", frame, 2|32);
     addGraphView(arr, i, index, @"GiGraphView select loadShapes", frame, 3);
     addLargeView1(arr, i, index, @"GiGraphView in large view", frame, 1);
     addLargeView1(arr, i, index, @"GiGraphView draw in large view", frame, 4|32);
+    addLargeView1(arr, i, index, @"GiGraphView SVG pages in large view", frame, 10);
     testMagnifierView(arr, i, index, @"MagnifierView", frame, 1);
 }
 

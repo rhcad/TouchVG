@@ -25,8 +25,6 @@ import com.larvalabs.svgandroid.SVGBuilder;
 import com.larvalabs.svgandroid.SVGParseException;
 
 //! 图像对象缓存类
-/*! \ingroup GROUP_ANDROID
- */
 public class ImageCache extends Object {
     public static final String BITMAP_PREFIX = "bmp:";
     public static final String SVG_PREFIX = "svg:";

@@ -64,6 +64,9 @@ public class DummyActivity extends Activity {
         if (helper.getView() != null && helper.saveToFile(filename)) {
             outState.putString("file", filename);
             outState.putString("cmd", helper.getCommand());
+            
+            helper.exportSVG(filename); // test export
+            helper.savePng(filename);
         }
     }
     

@@ -11,6 +11,7 @@
 #include <mglockdata.h>
 #include <RandomShape.h>
 #include <mgjsonstorage.h>
+#include <svgcanvas.h>
 #include <cmdsubject.h>
 #include <mgselect.h>
 #include <mglog.h>
@@ -865,6 +866,22 @@ bool GiCoreView::saveToFile(const char* vgfile, bool pretty)
     return ret;
 }
 
+bool GiCoreView::exportSVG(const char* filename)
+{
+    MgShapesLock locker(MgShapesLock::ReadOnly, impl);
+    GiSvgCanvas canvas;
+    
+    if (impl->curview && locker.locked()
+        && canvas.open(filename,
+        impl->curview->xform()->getWidth(),
+        impl->curview->xform()->getHeight()))
+    {
+        drawAll(impl->curview->deviceView(), &canvas);
+    }
+    
+    return canvas.close();
+}
+
 bool GiCoreView::zoomToExtent()
 {
     Box2d rect(impl->doc()->getExtent() * impl->xform()->modelToWorld());
@@ -1051,10 +1068,12 @@ bool GiCoreViewImpl::gestureToCommand(const MgMotion& motion)
     }
 
     if (!ret) {
+#ifndef NO_LOGD
         const char* const typeNames[] = { "?", "pan", "tap", "dbltap", "press", "twoFingersMove" };
         const char* const stateNames[] = { "possible", "began", "moved", "ended", "cancel" };
         LOGD("Gesture %s (%s) not supported (%s)",
              typeNames[motion.gestureType], stateNames[motion.gestureState], cmd->getName());
+#endif
     }
     return ret;
 }

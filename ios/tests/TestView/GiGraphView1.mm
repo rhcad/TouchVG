@@ -217,6 +217,7 @@ static char _lastVgFile[256] = { 0 };
     NSString *vgfile = [[filename stringByDeletingPathExtension]
                         stringByAppendingPathExtension:@"vg"];
     [[GiViewHelper instance:self] saveToFile:vgfile];
+    [[GiViewHelper instance:self] exportSVG:vgfile];
     strncpy(_lastVgFile, [vgfile UTF8String], sizeof(_lastVgFile));
     return [super savePng:filename];
 }

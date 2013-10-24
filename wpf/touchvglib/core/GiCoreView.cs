@@ -207,6 +207,11 @@ public class GiCoreView : IDisposable {
     return ret;
   }
 
+  public bool exportSVG(string filename) {
+    bool ret = touchvgPINVOKE.GiCoreView_exportSVG(swigCPtr, filename);
+    return ret;
+  }
+
   public bool zoomToExtent() {
     bool ret = touchvgPINVOKE.GiCoreView_zoomToExtent(swigCPtr);
     return ret;

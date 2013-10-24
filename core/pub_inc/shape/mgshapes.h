@@ -30,7 +30,7 @@ public:
 #ifndef SWIG
     MgShape* getFirstShape(void*& it) const;
     MgShape* getNextShape(void*& it) const;
-    void freeIterator(void*& it);
+    void freeIterator(void*& it) const;
     typedef bool (*Filter)(const MgShape*);
 #endif
 
@@ -103,21 +103,42 @@ protected:
 
 //! 遍历图形的辅助类
 /*! \ingroup CORE_SHAPE
+    遍历过程中要避免增删图形。
 */
 class MgShapeIterator
 {
 public:
-    MgShapeIterator(const MgShapes* shapes) : _s(shapes), _it(NULL) {}
-    ~MgShapeIterator() { freeIterator(); }
-
-    MgShape* getFirstShape() { return _s->getFirstShape(_it); }
-    MgShape* getNextShape() { return _s->getNextShape(_it); }
-    void freeIterator() { _s->getNextShape(_it); }
+    //! 给定图形列表(可为空)构造迭代器
+    MgShapeIterator(const MgShapes* shapes) : _s(shapes), _it(NULL), _sp(NULL) {}
+    ~MgShapeIterator() { if (_it && _s) _s->freeIterator(_it); }
+    
+    //! 检查是否还有图形可遍历
+    bool hasNext() {
+        if (!_it && _s) {
+            _sp = _s->getFirstShape(_it);
+        }
+        return !!_sp;
+    }
+    
+    //! 得到当前遍历位置的图形
+    /*! 可使用 while (MgShape* sp = it.getNext()) {...} 遍历。
+     */
+    MgShape* getNext() {
+        if (!_it && _s) {
+            _sp = _s->getFirstShape(_it);
+        }
+        MgShape* sp = _sp;
+        if (_sp && _s) {
+            _sp = _s->getNextShape(_it);
+        }
+        return sp;
+    }
 
 private:
     MgShapeIterator();
     const MgShapes* _s;
     void* _it;
+    MgShape* _sp;
 };
 
 #endif // TOUCHVG_MGSHAPES_H_

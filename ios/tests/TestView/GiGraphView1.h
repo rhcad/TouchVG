@@ -21,7 +21,6 @@ class GiCoreView;
 //! iOS测试绘图视图类
 @interface GiGraphView2 : GiGraphView
 
-- (BOOL)savePng:(NSString *)filename;
 + (NSString *)lastFileName;
 
 @end

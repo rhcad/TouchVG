@@ -792,9 +792,8 @@ public class touchvgJNI {
   public final static native boolean MgShapes_isKindOf(long jarg1, MgShapes jarg1_, int jarg2);
   public final static native long new_MgShapeIterator(long jarg1, MgShapes jarg1_);
   public final static native void delete_MgShapeIterator(long jarg1);
-  public final static native long MgShapeIterator_getFirstShape(long jarg1, MgShapeIterator jarg1_);
-  public final static native long MgShapeIterator_getNextShape(long jarg1, MgShapeIterator jarg1_);
-  public final static native void MgShapeIterator_freeIterator(long jarg1, MgShapeIterator jarg1_);
+  public final static native boolean MgShapeIterator_hasNext(long jarg1, MgShapeIterator jarg1_);
+  public final static native long MgShapeIterator_getNext(long jarg1, MgShapeIterator jarg1_);
   public final static native long new_MgLine();
   public final static native void delete_MgLine(long jarg1);
   public final static native long MgLine_create();
@@ -1763,6 +1762,7 @@ public class touchvgJNI {
   public final static native String GiCoreView_getContent(long jarg1, GiCoreView jarg1_);
   public final static native void GiCoreView_freeContent(long jarg1, GiCoreView jarg1_);
   public final static native boolean GiCoreView_setContent(long jarg1, GiCoreView jarg1_, String jarg2);
+  public final static native boolean GiCoreView_exportSVG(long jarg1, GiCoreView jarg1_, String jarg2);
   public final static native boolean GiCoreView_zoomToExtent(long jarg1, GiCoreView jarg1_);
   public final static native boolean GiCoreView_zoomToModel(long jarg1, GiCoreView jarg1_, float jarg2, float jarg3, float jarg4, float jarg5);
   public final static native float GiCoreView_calcPenWidth(long jarg1, GiCoreView jarg1_, float jarg2);
