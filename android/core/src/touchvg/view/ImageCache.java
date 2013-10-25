@@ -18,6 +18,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.support.v4.util.LruCache;
+import android.util.Log;
 import android.view.View;
 
 import com.larvalabs.svgandroid.SVG;
@@ -26,6 +27,7 @@ import com.larvalabs.svgandroid.SVGParseException;
 
 //! 图像对象缓存类
 public class ImageCache extends Object {
+    private static final String TAG = "touchvg";
     public static final String BITMAP_PREFIX = "bmp:";
     public static final String SVG_PREFIX = "svg:";
     private static final int CACHE_SIZE = 2 * 1024 * 1024;    // 2MB
@@ -33,16 +35,31 @@ public class ImageCache extends Object {
     private String mPath;
     
     public ImageCache() {
-        mCache = new LruCache<String, Drawable>(CACHE_SIZE) {
-            @Override
-            protected int sizeOf(String key, Drawable d) {
-                int size = 1; // TODO: SVG size?
-                if (d.getClass().isInstance(BitmapDrawable.class)) {
-                    size = ((BitmapDrawable)d).getBitmap().getByteCount();
+    }
+    
+    private boolean createCache() {
+        try {
+            mCache = new LruCache<String, Drawable>(CACHE_SIZE) {
+                @Override
+                protected int sizeOf(String key, Drawable d) {
+                    int size = 1; // TODO: SVG size?
+                    if (d.getClass().isInstance(BitmapDrawable.class)) {
+                        size = ((BitmapDrawable)d).getBitmap().getByteCount();
+                    }
+                    return size;
                 }
-                return size;
-            }
-        };
+            };
+        }
+        catch (Exception e) {
+            Log.e(TAG, "Need android-support-v4.jar in application");
+        }
+        return mCache != null;
+    }
+    
+    private void addToCache(String name, Drawable drawable) {
+        if (mCache != null || createCache()) {
+            mCache.put(name, drawable);
+        }
     }
     
     //! 设置图像文件的默认路径，自动加载时用
@@ -76,12 +93,13 @@ public class ImageCache extends Object {
     
     //! 清除所有资源
     public void clear() {
-        mCache.evictAll();
+        if (mCache != null)
+            mCache.evictAll();
     }
     
     //! 查找图像对象
     public Drawable getImage(View view, String name) {
-        Drawable drawable = mCache.get(name);
+        Drawable drawable = mCache != null ? mCache.get(name) : null;
         
         if (drawable == null && view != null) {
             if (name.indexOf(BITMAP_PREFIX) == 0) { // R.drawable.resName
@@ -112,14 +130,14 @@ public class ImageCache extends Object {
     
     //! 插入一个程序资源中的位图图像
     public Drawable addBitmap(Resources res, int id, String name) {
-        Drawable drawable = mCache.get(name);
+        Drawable drawable = mCache != null ? mCache.get(name) : null;
 
         if (drawable == null && id != 0) {
             final Bitmap bitmap = BitmapFactory.decodeResource(res, id);
             
             if (bitmap != null && bitmap.getWidth() > 0) {
                 drawable = new BitmapDrawable(res, bitmap);
-                mCache.put(name, drawable);
+                addToCache(name, drawable);
             }
         }
         
@@ -128,7 +146,7 @@ public class ImageCache extends Object {
     
     //! 插入一个程序资源中的SVG图像
     public Drawable addSVG(Resources res, int id, String name) {
-        Drawable drawable = mCache.get(name);
+        Drawable drawable = mCache != null ? mCache.get(name) : null;
 
         if (drawable == null && id != 0) {
             drawable = addSVG(new SVGBuilder().readFromResource(res, id), name);
@@ -139,7 +157,7 @@ public class ImageCache extends Object {
     
     //! 插入一个PNG等图像文件
     public Drawable addBitmapFile(Resources res, String filename, String name) {
-        Drawable drawable = mCache.get(name);
+        Drawable drawable = mCache != null ? mCache.get(name) : null;
 
         if (drawable == null && new File(filename).exists()) {
             final BitmapFactory.Options opts = new BitmapFactory.Options();
@@ -158,7 +176,7 @@ public class ImageCache extends Object {
             
             if (bitmap != null && bitmap.getWidth() > 0) {
                 drawable = new BitmapDrawable(res, bitmap);
-                mCache.put(name, drawable);
+                addToCache(name, drawable);
             }
         }
         
@@ -167,7 +185,7 @@ public class ImageCache extends Object {
     
     //! 插入一个SVG文件的图像
     public Drawable addSVGFile(String filename, String name) {
-        Drawable drawable = mCache.get(name);
+        Drawable drawable = mCache != null ? mCache.get(name) : null;
 
         if (drawable == null && name.endsWith(".svg")) {
             try {
@@ -193,7 +211,7 @@ public class ImageCache extends Object {
             
             if (picture != null && picture.getWidth() > 0) {
                 drawable = svg.getDrawable();
-                mCache.put(name, drawable);
+                addToCache(name, drawable);
             }
         } catch (SVGParseException e) {
             e.printStackTrace();

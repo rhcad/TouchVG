@@ -98,7 +98,7 @@ public class ViewHelper {
         return v != null ? v.getCommand() : "";
     }
     
-    //! 启动指定名称的命令
+    //! 启动指定名称的命令(可用的命令名在LogCat中会打印出来，例如“registerCommand 11:lines”中的“lines”)
     public boolean setCommand(String name) {
         final GiCoreView v = mView.coreView();
         return v != null && v.setCommand(mView.viewAdapter(), name);
@@ -137,7 +137,7 @@ public class ViewHelper {
     
     //! 返回线型, 0-5(MAX_LINESTYLE):实线,虚线,点线,点划线,双点划线,空线
     public int getLineStyle() {
-    	return mView.coreView().getContext(false).getLineStyle();
+        return mView.coreView().getContext(false).getLineStyle();
     }
     
     //! 设置线型, 0-5:实线,虚线,点线,点划线,双点划线,空线

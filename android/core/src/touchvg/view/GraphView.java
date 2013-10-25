@@ -25,7 +25,7 @@ import android.view.View;
  *  建议使用FrameLayout作为容器创建绘图视图，使用LinearLayout将无法显示上下文操作按钮。
  */
 public class GraphView extends View {
-    private static final String TAG = "GraphView";
+    private static final String TAG = "touchvg";
     private static GraphView mActiveView;   // 当前激活视图
     private ImageCache mImageCache;         // 图像对象缓存
     private CanvasAdapter mCanvasAdapter;   // onDraw用的画布适配器

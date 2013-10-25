@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
         super.onRestoreInstanceState(savedInstanceState);
 
         final String filename = savedInstanceState.getString("file");
-        if (mHelper.loadFromFile(filename)) {
+        if (filename != null && mHelper.loadFromFile(filename)) {
             mHelper.setCommand(savedInstanceState.getString("cmd"));
         }
     }
