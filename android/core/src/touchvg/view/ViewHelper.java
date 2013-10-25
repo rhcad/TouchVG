@@ -14,6 +14,7 @@ import touchvg.core.MgView;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
@@ -64,6 +65,14 @@ public class ViewHelper {
         return layout;
     }
     
+    //! 在指定的布局（建议为FrameLayout）中创建普通绘图视图，并记下此视图
+    public ViewGroup createGraphViewInLayout(Context context, ViewGroup layout) {
+        mView = new GraphView(context);
+        layout.addView(mView, new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        return layout;
+    }
+    
     /**
      * @brief 自动创建FrameLayout布局，在其中创建放大镜视图，并记下此视图
      * @param context 视图上下文对象
@@ -89,7 +98,7 @@ public class ViewHelper {
         return v != null ? v.getCommand() : "";
     }
     
-    //! 启动指定名称的命令
+    //! 启动指定名称的命令(可用的命令名在LogCat中会打印出来，例如“registerCommand 11:lines”中的“lines”)
     public boolean setCommand(String name) {
         final GiCoreView v = mView.coreView();
         return v != null && v.setCommand(mView.viewAdapter(), name);
@@ -124,10 +133,11 @@ public class ViewHelper {
         mView.coreView().setContext(GiContextBits.kContextLineWidth.swigValue());
     }
     
-    //! 返回线型, 0-5:实线,虚线,点线,点划线,双点划线,空线
+    public static final int MAX_LINESTYLE = 5;  //!< 线型最大值, 0-5:实线,虚线,点线,点划线,双点划线,空线
+    
+    //! 返回线型, 0-5(MAX_LINESTYLE):实线,虚线,点线,点划线,双点划线,空线
     public int getLineStyle() {
-        float w = mView.coreView().getContext(false).getLineStyle();
-        return Math.round(mView.coreView().calcPenWidth(w));
+        return mView.coreView().getContext(false).getLineStyle();
     }
     
     //! 设置线型, 0-5:实线,虚线,点线,点划线,双点划线,空线

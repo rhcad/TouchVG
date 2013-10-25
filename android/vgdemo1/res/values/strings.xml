@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">vgdemo1</string>
+    <string name="selectBtn">选择</string>
+    <string name="splinesBtn">曲线</string>
+    <string name="lineBtn">线段</string>
+    <string name="redPen">红笔</string>
+    <string name="bluePen">蓝笔</string>
+    <string name="lineStyleBtn">线型</string>
+    <string name="saveBtn">保存</string>
+    <string name="loadBtn">加载</string>
+
+</resources>
