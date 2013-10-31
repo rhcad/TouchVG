@@ -5,14 +5,6 @@
 #include <mgshapet.h>
 #include <mgbasicsp.h>
 
-MgCmdDrawTriangle::MgCmdDrawTriangle()
-{
-}
-
-MgCmdDrawTriangle::~MgCmdDrawTriangle()
-{
-}
-
 bool MgCmdDrawTriangle::initialize(const MgMotion* sender, MgStorage*)
 {
     return _initialize(MgShapeT<MgLines>::create, sender);

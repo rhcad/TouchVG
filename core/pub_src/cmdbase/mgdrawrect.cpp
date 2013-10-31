@@ -6,14 +6,6 @@
 #include <mgshapet.h>
 #include <mgbasicsp.h>
 
-MgCmdDrawRect::MgCmdDrawRect()
-{
-}
-
-MgCmdDrawRect::~MgCmdDrawRect()
-{
-}
-
 bool MgCmdDrawRect::initialize(const MgMotion* sender, MgStorage*)
 {
     return _initialize(MgShapeT<MgRect>::create, sender);

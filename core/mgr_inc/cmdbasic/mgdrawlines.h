@@ -14,11 +14,8 @@
 */
 class MgCmdDrawLines : public MgCommandDraw
 {
-protected:
-    MgCmdDrawLines();
-    virtual ~MgCmdDrawLines();
-    
 public:
+    MgCmdDrawLines(const char* name = Name()) : MgCommandDraw(name) {}
     static const char* Name() { return "lines"; }
     static MgCommand* Create() { return new MgCmdDrawLines; }
     
@@ -26,9 +23,7 @@ private:
     virtual bool needCheckClosed() { return true; }
     virtual bool needEnded() { return false; }
     
-    virtual const char* getName() const { return Name(); }
     virtual void release() { delete this; }
-    
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool backStep(const MgMotion* sender);
     virtual bool draw(const MgMotion* sender, GiGraphics* gs);

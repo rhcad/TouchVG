@@ -48,10 +48,6 @@ public class MgImageShape extends MgBaseRect {
     return touchvgJNI.MgImageShape_Type();
   }
 
-  public String getTypeName() {
-    return touchvgJNI.MgImageShape_getTypeName(swigCPtr, this);
-  }
-
   public MgObject clone() {
     long cPtr = touchvgJNI.MgImageShape_clone(swigCPtr, this);
     return (cPtr == 0) ? null : new MgObject(cPtr, false);

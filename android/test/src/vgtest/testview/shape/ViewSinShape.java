@@ -146,12 +146,8 @@ public class ViewSinShape extends LinearLayout {
         public static final String NAME = "sin";
         
         public DrawSinShape() {
+            super(NAME);
             mCmdCache.add(this);
-        }
-        
-        @Override
-        public String getName() {
-            return NAME;
         }
         
         @Override
@@ -161,8 +157,8 @@ public class ViewSinShape extends LinearLayout {
         }
         
         @Override
-        public MgShape createShape(MgShapeFactory factory) {
-            return factory.createShape(SinShape.TYPE);
+        public int getShapeType() {
+            return SinShape.TYPE;
         }
         
         @Override
@@ -247,11 +243,6 @@ public class ViewSinShape extends LinearLayout {
         @Override
         public boolean isKindOf(int type) {
             return type == TYPE || super.isKindOf(type);
-        }
-
-        @Override
-        public String getTypeName() {
-            return this.getClass().getSimpleName();
         }
         
         @Override

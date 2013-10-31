@@ -120,6 +120,7 @@ void MgComposite::_update()
         sp->shape()->update();
         _extent.unionWith(sp->shapec()->getExtent());
     }
+    __super::_update();
 }
 
 void MgComposite::_transform(const Matrix2d& mat)

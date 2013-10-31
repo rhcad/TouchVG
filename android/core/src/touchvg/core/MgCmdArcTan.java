@@ -35,6 +35,14 @@ public class MgCmdArcTan extends MgCmdArc3P {
     super.delete();
   }
 
+  public MgCmdArcTan(String name) {
+    this(touchvgJNI.new_MgCmdArcTan__SWIG_0(name), true);
+  }
+
+  public MgCmdArcTan() {
+    this(touchvgJNI.new_MgCmdArcTan__SWIG_1(), true);
+  }
+
   public static String Name() {
     return touchvgJNI.MgCmdArcTan_Name();
   }
@@ -42,10 +50,6 @@ public class MgCmdArcTan extends MgCmdArc3P {
   public static MgCommand Create() {
     long cPtr = touchvgJNI.MgCmdArcTan_Create();
     return (cPtr == 0) ? null : new MgCommand(cPtr, false);
-  }
-
-  public String getName() {
-    return touchvgJNI.MgCmdArcTan_getName(swigCPtr, this);
   }
 
   public void release() {

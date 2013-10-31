@@ -10,7 +10,7 @@
 
 //! 图形列表类
 /*! \ingroup CORE_SHAPE
-    \see MgShapeIterator, MgShape::createShape()
+    \see MgShapeIterator
 */
 class MgShapes : public MgObject
 {

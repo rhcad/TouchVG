@@ -9,17 +9,15 @@
 
 //! 三点圆弧绘图命令类
 /*! \ingroup CORE_COMMAND
- \see MgArc
+    \see MgArc
  */
 class MgCmdArc3P : public MgCommandDraw
 {
-protected:
-    MgCmdArc3P() {}
 public:
+    MgCmdArc3P(const char* name = Name()) : MgCommandDraw(name) {}
     static const char* Name() { return "arc3p"; }
     static MgCommand* Create() { return new MgCmdArc3P; }
 
-    virtual const char* getName() const { return Name(); }
     virtual void release() { delete this; }
     virtual bool touchBegan(const MgMotion* sender) { return touchBeganStep(sender); }
     virtual bool touchMoved(const MgMotion* sender) { return touchMovedStep(sender); }
@@ -37,19 +35,17 @@ protected:
 
 //! 圆心+起点+终点圆弧绘图命令类
 /*! \ingroup CORE_COMMAND
- \see MgArc
+    \see MgArc
  */
 class MgCmdArcCSE : public MgCmdArc3P
 {
-protected:
-    MgCmdArcCSE() {}
 public:
+    MgCmdArcCSE(const char* name = Name()) : MgCmdArc3P(name) {}
     static const char* Name() { return "arc_cse"; }
     static MgCommand* Create() { return new MgCmdArcCSE; }
-    virtual const char* getName() const { return Name(); }
     virtual void release() { delete this; }
-protected:
     virtual bool draw(const MgMotion* sender, GiGraphics* gs);
+protected:
     virtual void setStepPoint(int step, const Point2d& pt);
 };
 
@@ -59,12 +55,10 @@ protected:
  */
 class MgCmdArcTan : public MgCmdArc3P
 {
-protected:
-    MgCmdArcTan() {}
 public:
+    MgCmdArcTan(const char* name = Name()) : MgCmdArc3P(name) {}
     static const char* Name() { return "arc_tan"; }
     static MgCommand* Create() { return new MgCmdArcTan; }
-    virtual const char* getName() const { return Name(); }
     virtual void release() { delete this; }
 protected:
     virtual void setStepPoint(int step, const Point2d& pt);

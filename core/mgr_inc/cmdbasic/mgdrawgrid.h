@@ -19,7 +19,7 @@ public:
     static MgCommand* Create() { return new MgCmdDrawGrid; }
     
 private:
-    virtual const char* getName() const { return Name(); }
+    MgCmdDrawGrid() : MgCmdDrawRect(Name()) {}
     virtual void release() { delete this; }
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool draw(const MgMotion* sender, GiGraphics* gs);

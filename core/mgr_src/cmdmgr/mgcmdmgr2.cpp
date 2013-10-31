@@ -43,7 +43,7 @@ MgShape* MgCmdManagerImpl::addImageShape(const MgMotion* sender, const char* nam
     imagesp->setRect2P(rect.leftTop(), rect.rightBottom());
     
     MgShapesLock locker(MgShapesLock::Add, sender->view);
-    if (sender->view->shapeWillAdded(&shape)) {
+    if (locker.locked() && sender->view->shapeWillAdded(&shape)) {
         MgShape* newsp = sender->view->shapes()->addShape(shape);
         sender->view->shapeAdded(newsp);
         
@@ -87,14 +87,18 @@ void MgCmdManagerImpl::eraseWnd(const MgMotion* sender)
     if (!delIds.empty()
         && sender->view->shapeWillDeleted(s->findShape(delIds.front()))) {
         MgShapesLock locker(MgShapesLock::Remove, sender->view);
+        std::vector<int>::iterator i = locker.locked() ? delIds.begin() : delIds.end();
+        int n = 0;
         
-        for (std::vector<int>::iterator i = delIds.begin(); i != delIds.end(); ++i) {
+        for (; i != delIds.end(); ++i) {
             MgShape* shape = s->findShape(*i);
             if (shape && sender->view->removeShape(shape)) {
                 shape->release();
+                n++;
             }
         }
-        sender->view->regenAll();
+        if (n > 0)
+            sender->view->regenAll();
     }
 }
 

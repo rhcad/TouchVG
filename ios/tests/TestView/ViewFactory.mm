@@ -3,9 +3,9 @@
 
 #import "GiGraphView1.h"
 #import "LargeView1.h"
+#import "AnimatedPathView1.h"
 #import "GiViewHelper.h"
 #include "DemoCmds.h"
-#import <QuartzCore/CALayer.h>
 
 static UIViewController *_tmpController = nil;
 
@@ -153,6 +153,30 @@ static void testMagnifierView(NSMutableArray *arr, NSUInteger &i, NSUInteger ind
     }
 }
 
+static void addAnimatedPathView1(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
+                                 NSString* title, CGRect frame, int type)
+{
+    AnimatedPathView1 *view = nil;
+    
+    if (!arr && index == i++) {
+        view = [[AnimatedPathView1 alloc]initWithFrame:frame];
+        
+        GiGraphView *v = [[[GiGraphView alloc]initWithFrame:frame]autorelease];
+        GiViewHelper *hlp = [GiViewHelper instance:v];
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+        [hlp setImagePath:path];
+        if (![hlp loadFromFile:[GiGraphView2 lastFileName]]) {
+            [hlp addShapesForTest];
+        }
+        
+        [view setupDrawingLayer:[hlp exportLayerTree:YES]];
+        [view startAnimation];
+    }
+    addView(arr, title, view);
+    [view release];
+}
+
 static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
 {
     NSUInteger i = 0;
@@ -174,6 +198,7 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addLargeView1(arr, i, index, @"GiGraphView draw in large view", frame, 4|32);
     addLargeView1(arr, i, index, @"GiGraphView SVG pages in large view", frame, 10);
     testMagnifierView(arr, i, index, @"MagnifierView", frame, 1);
+    addAnimatedPathView1(arr, i, index, @"AnimatedPathView1", frame, 0);
 }
 
 void getTestViewTitles(NSMutableArray *arr)

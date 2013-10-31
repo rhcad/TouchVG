@@ -31,6 +31,9 @@ static void fitBezier(const Point2d* pts, float t, Point2d& fitpt);
 */
 static void splitBezier(const Point2d* pts, float t, Point2d* pts1, Point2d* pts2);
 
+//! 返回三次贝塞尔曲线段的长度
+static float lengthOfBezier(const Point2d* pts, float tol);
+    
 //! 用线上四点构成三次贝塞尔曲线段
 /*! 该贝塞尔曲线段的起点和终点为给定点，中间经过另外两个给定点，
     t=1/3过pt2, t=2/3过pt3。

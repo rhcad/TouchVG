@@ -88,10 +88,9 @@ void MgLine::_clear()
     __super::_clear();
 }
 
-float MgLine::_hitTest(const Point2d& pt, float tol, MgHitResult& res) const
+float MgLine::_hitTest(const Point2d& pt, float, MgHitResult& res) const
 {
-    return mgnear::linesHit(2, _points, false, pt, tol, 
-        res.nearpt, res.segment);
+    return mglnrel::ptToLine(_points[0], _points[1], pt, res.nearpt);
 }
 
 bool MgLine::_hitTestBox(const Box2d& rect) const

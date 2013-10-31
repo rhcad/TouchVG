@@ -11,6 +11,9 @@ import touchvg.core.CmdObserver;
 import touchvg.core.GiContextBits;
 import touchvg.core.GiCoreView;
 import touchvg.core.MgView;
+
+import touchvg.view.internal.ImageCache;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -68,6 +71,14 @@ public class ViewHelper {
     //! 在指定的布局（建议为FrameLayout）中创建普通绘图视图，并记下此视图
     public ViewGroup createGraphViewInLayout(Context context, ViewGroup layout) {
         mView = new GraphView(context);
+        layout.addView(mView, new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        return layout;
+    }
+    
+    //! 在指定的布局（建议为FrameLayout）中创建 ShapeView 绘图视图，并记下此视图
+    public ViewGroup createShapeViewInLayout(Context context, ViewGroup layout) {
+        mView = new ShapeView(context);
         layout.addView(mView, new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         return layout;
@@ -253,6 +264,11 @@ public class ViewHelper {
         return mView.coreView().getSelectedShapeType();
     }
     
+    //! 返回当前选中的图形的ID，选中多个时只取第一个
+    public int getSelectedShapeID() {
+        return mView.coreView().getSelectedShapeID();
+    }
+    
     //! 返回图形改变次数，可用于检查是否需要保存
     public int getChangeCount() {
         return mView.coreView().getChangeCount();
@@ -273,6 +289,11 @@ public class ViewHelper {
     //! 从JSON文件中加载图形，自动添加后缀名.vg
     public boolean loadFromFile(String vgfile) {
         return mView.coreView().loadFromFile(addExtension(vgfile, ".vg"));
+    }
+    
+    //! 从JSON文件中以只读方式加载图形，自动添加后缀名.vg
+    public boolean loadFromFile(String vgfile, boolean readOnly) {
+        return mView.coreView().loadFromFile(addExtension(vgfile, ".vg"), readOnly);
     }
     
     //! 保存图形到JSON文件，自动添加后缀名.vg
@@ -312,6 +333,11 @@ public class ViewHelper {
                 name, ImageCache.getWidth(d), ImageCache.getHeight(d));
     }
     
+    //! 在默认位置插入一个程序资源中的SVG图像(id=R.raw.name)
+    public int insertSVGFromResource(int id) {
+        return insertSVGFromResource(GraphView.getResName(mView.getContext(), id));
+    }
+    
     //! 插入一个程序资源中的SVG图像(id=R.raw.name)，并指定图像的中心位置
     public int insertSVGFromResource(String name, int xc, int yc) {
         int id = GraphView.getResIDFromName(mView.getContext(), "raw", name);
@@ -320,6 +346,11 @@ public class ViewHelper {
                 mView.getResources(), id, name);
         return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
                 ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 插入一个程序资源中的SVG图像(id=R.raw.name)，并指定图像的中心位置
+    public int insertSVGFromResource(int id, int xc, int yc) {
+        return insertSVGFromResource(GraphView.getResName(mView.getContext(), id), xc, yc);
     }
     
     //! 在默认位置插入一个程序资源中的位图图像(id=R.drawable.name)
@@ -332,6 +363,11 @@ public class ViewHelper {
                 name, ImageCache.getWidth(d), ImageCache.getHeight(d));
     }
     
+    //! 在默认位置插入一个程序资源中的位图图像(id=R.drawable.name)
+    public int insertBitmapFromResource(int id) {
+        return insertBitmapFromResource(GraphView.getResName(mView.getContext(), id));
+    }
+    
     //! 插入一个程序资源中的位图图像(id=R.drawable.name)，并指定图像的中心位置
     public int insertBitmapFromResource(String name, int xc, int yc) {
         int id = GraphView.getDrawableIDFromName(mView.getContext(), name);
@@ -340,6 +376,11 @@ public class ViewHelper {
                 mView.getResources(), id, name);
         return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
                 ImageCache.getWidth(d), ImageCache.getHeight(d));
+    }
+    
+    //! 插入一个程序资源中的位图图像(id=R.drawable.name)，并指定图像的中心位置
+    public int insertBitmapFromResource(int id, int xc, int yc) {
+        return insertBitmapFromResource(GraphView.getResName(mView.getContext(), id), xc, yc);
     }
     
     //! 在默认位置插入一个PNG、JPEG或SVG等文件的图像

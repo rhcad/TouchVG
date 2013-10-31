@@ -15,11 +15,11 @@
 class MgCmdDrawEllipse : public MgCmdDrawRect
 {
 public:
+    MgCmdDrawEllipse(const char* name = Name()) : MgCmdDrawRect(name) {}
     static const char* Name() { return "ellipse"; }
     static MgCommand* Create() { return new MgCmdDrawEllipse; }
     
 private:
-    virtual const char* getName() const { return Name(); }
     virtual void release() { delete this; }
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool draw(const MgMotion* sender, GiGraphics* gs);

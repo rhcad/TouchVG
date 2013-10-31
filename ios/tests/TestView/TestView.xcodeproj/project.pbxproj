@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE03795E181FB31E0049931F /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03795D181FB31E0049931F /* pencil.png */; };
+		AE252D2B181FC93300884B5C /* AnimatedPathView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */; };
+		AE252D30181FCB0700884B5C /* pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE252D2F181FCB0700884B5C /* pencil@2x.png */; };
 		AE3341B516ECBDBE00F0E517 /* CalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3341B416ECBDBE00F0E517 /* CalloutView.m */; };
 		AE34D03717F91762004BC88B /* TouchVG.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE34D03617F91762004BC88B /* TouchVG.bundle */; };
 		AE34D03D17F917E2004BC88B /* libTouchVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE34D03B17F917E2004BC88B /* libTouchVG.a */; };
@@ -31,6 +34,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE03795D181FB31E0049931F /* pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil.png; sourceTree = "<group>"; };
+		AE252D29181FC93300884B5C /* AnimatedPathView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedPathView1.h; sourceTree = "<group>"; };
+		AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnimatedPathView1.mm; sourceTree = "<group>"; };
+		AE252D2F181FCB0700884B5C /* pencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pencil@2x.png"; sourceTree = "<group>"; };
 		AE3341B316ECBDBE00F0E517 /* CalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutView.h; sourceTree = "<group>"; };
 		AE3341B416ECBDBE00F0E517 /* CalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutView.m; sourceTree = "<group>"; };
 		AE34D03617F91762004BC88B /* TouchVG.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TouchVG.bundle; path = ../../output/TouchVG.bundle; sourceTree = "<group>"; };
@@ -97,6 +104,8 @@
 		AE0762FD160AAE3A00518207 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				AE252D29181FC93300884B5C /* AnimatedPathView1.h */,
+				AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */,
 				AE53750C177D26980050CC4F /* GiGraphView1.h */,
 				AE53750D177D26980050CC4F /* GiGraphView1.mm */,
 				AEADC21D16EB570800484962 /* LargeView1.h */,
@@ -189,6 +198,8 @@
 		AEF2D56C1609B67200DDB7F2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AE252D2F181FCB0700884B5C /* pencil@2x.png */,
+				AE03795D181FB31E0049931F /* pencil.png */,
 				AE3B01141811064D0004AAC7 /* fonts.svg */,
 				AE34D03617F91762004BC88B /* TouchVG.bundle */,
 				AEF2D56D1609B67200DDB7F2 /* app57.png */,
@@ -270,6 +281,8 @@
 				AEF2D5701609B67200DDB7F2 /* app72.png in Resources */,
 				AE34D03717F91762004BC88B /* TouchVG.bundle in Resources */,
 				AE3B01151811064D0004AAC7 /* fonts.svg in Resources */,
+				AE03795E181FB31E0049931F /* pencil.png in Resources */,
+				AE252D30181FCB0700884B5C /* pencil@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +301,7 @@
 				AEADC21F16EB570800484962 /* LargeView1.mm in Sources */,
 				AE3341B516ECBDBE00F0E517 /* CalloutView.m in Sources */,
 				AE53750E177D26980050CC4F /* GiGraphView1.mm in Sources */,
+				AE252D2B181FC93300884B5C /* AnimatedPathView1.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

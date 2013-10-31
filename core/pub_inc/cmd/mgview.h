@@ -9,7 +9,7 @@
 
 class MgMotion;
 struct MgCmdManager;
-struct MgCommand;
+class MgCommand;
 struct MgSnap;
 struct MgActionDispatcher;
 struct MgLockData;
@@ -63,6 +63,7 @@ public:
     virtual MgCommand* getCommand() = 0;                    //!< 得到当前命令
     virtual MgCommand* findCommand(const char* name) = 0;   //!< 查找命令
     virtual bool setCommand(const MgMotion* sender, const char* name) = 0;  //!< 启动命令
+    virtual bool isReadOnly() const = 0;            //! 返回文档是否只读
 
     virtual void regenAll() = 0;                //!< 标记视图待重新构建显示
     virtual void regenAppend() = 0;             //!< 标记视图待追加显示新图形

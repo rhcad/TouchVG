@@ -5,6 +5,8 @@
 package touchvg.view;
 
 import touchvg.core.GiCanvas;
+import touchvg.view.internal.ImageCache;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -31,7 +33,7 @@ public class CanvasAdapter extends GiCanvas {
     private ImageCache mCache;
     private int mBkColor = Color.TRANSPARENT;
     private PathEffect mEffects;
-    private static final float[] DASH = { 5, 5 };
+    private static final float[] DASH = { 4, 2 };
     private static final float[] DOT = { 1, 2 };
     private static final float[] DASH_DOT = { 10, 2, 2, 2 };
     private static final float[] DASH_DOTDOT = { 20, 2, 2, 2, 2, 2 };
@@ -295,7 +297,13 @@ public class CanvasAdapter extends GiCanvas {
                     mCanvas.drawPicture(p.getPicture());
                     mat.invert(mat);
                     mCanvas.concat(mat);
-                } catch (ClassCastException e2) {}
+                } catch (ClassCastException e2) {
+                } catch (UnsupportedOperationException e3) { // GLES20Canvas, >=api11
+                    e.printStackTrace();
+                    if (mView != null) {                    // 改为软实现后下次绘制才生效
+                        mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                    }
+                }
             }
         }
     }

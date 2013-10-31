@@ -39,8 +39,6 @@ void MgEllipse::setRadius(float rx, float ry)
 
 void MgEllipse::_update()
 {
-    __super::_update();
-
     mgcurv::ellipseToBezier(_bzpts, getCenter(), getWidth() / 2, getHeight() / 2);
 
     Matrix2d mat(Matrix2d::rotation(getAngle(), getCenter()));
@@ -48,6 +46,7 @@ void MgEllipse::_update()
         _bzpts[i] *= mat;
 
     mgnear::beziersBox(_extent, 13, _bzpts, true);
+    __super::_update();
 }
 
 int MgEllipse::_getHandleCount() const
@@ -325,6 +324,7 @@ void MgArc::_update()
     int n = mgcurv::arcToBezier(points, getCenter(), getRadius(), 0, getStartAngle(), getSweepAngle());
 
     mgnear::beziersBox(_extent, n, points);
+    __super::_update();
 }
 
 bool MgArc::_reverse()

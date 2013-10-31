@@ -8,8 +8,10 @@
 #include <cmdsubject.h>
 #include <string.h>
 #include <mglog.h>
+#include <mgspfactory.h>
 
-MgCommandDraw::MgCommandDraw() : m_step(0), m_shape(NULL), m_needClear(false)
+MgCommandDraw::MgCommandDraw(const char* name)
+    : MgCommand(name), m_step(0), m_shape(NULL), m_needClear(false)
 {
 }
 
@@ -36,7 +38,7 @@ bool MgCommandDraw::cancel(const MgMotion* sender)
 bool MgCommandDraw::_initialize(MgShape* (*creator)(), const MgMotion* sender)
 {
     if (!m_shape) {
-        m_shape = creator ? creator() : createShape(sender->view->getShapeFactory());
+        m_shape = creator ? creator() : sender->view->getShapeFactory()->createShape(getShapeType());
         if (!m_shape || !m_shape->shape())
             return false;
         m_shape->setParent(sender->view->shapes(), 0);

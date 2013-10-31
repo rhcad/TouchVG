@@ -6,14 +6,6 @@
 #include <mgshapet.h>
 #include <mgbasicsp.h>
 
-MgCmdDrawFreeLines::MgCmdDrawFreeLines()
-{
-}
-
-MgCmdDrawFreeLines::~MgCmdDrawFreeLines()
-{
-}
-
 bool MgCmdDrawFreeLines::initialize(const MgMotion* sender, MgStorage*)
 {
     return _initialize(MgShapeT<MgLines>::create, sender);

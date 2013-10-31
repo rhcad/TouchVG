@@ -48,10 +48,6 @@ public class MgGroup extends MgComposite {
     return touchvgJNI.MgGroup_Type();
   }
 
-  public String getTypeName() {
-    return touchvgJNI.MgGroup_getTypeName(swigCPtr, this);
-  }
-
   public MgObject clone() {
     long cPtr = touchvgJNI.MgGroup_clone(swigCPtr, this);
     return (cPtr == 0) ? null : new MgObject(cPtr, false);

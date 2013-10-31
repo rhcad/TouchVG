@@ -129,6 +129,7 @@ public:
         return _cmds->setCommand(sender, name, NULL); }
     bool setCurrentShapes(MgShapes* shapes) {
         return doc()->setCurrentShapes(shapes); }
+    bool isReadOnly() const { return doc()->isReadOnly(); }
 
     bool shapeWillAdded(MgShape* shape) {
         return getCmdSubject()->onShapeWillAdded(&motion, shape); }
@@ -255,6 +256,8 @@ private:
     void unregisterDocObserver(DocLocked func, void* obj) {
         doc()->unregisterObserver(func, obj); }
     bool lockData(int flags, int timeout) {
+        if (flags && flags != MgShapesLock::Load && doc()->isReadOnly())
+            return false;
         return doc()->lockData(flags, timeout); }
     long unlockData(bool forWrite) {
         return doc()->unlockData(forWrite); }
@@ -761,13 +764,20 @@ int GiCoreView::getSelectedShapeCount()
     return impl->cmds()->getSelection(impl, 0, NULL);
 }
 
+int GiCoreView::getSelectedShapeID()
+{
+    MgShape* shape = NULL;
+    impl->cmds()->getSelection(impl, 1, &shape);
+    return shape ? shape->getID() : 0;
+}
+
 int GiCoreView::getSelectedShapeType()
 {
     MgSelection* sel = impl->cmds()->getSelection();
     return sel ? sel->getSelectType(impl) : 0;
 }
 
-bool GiCoreView::loadShapes(MgStorage* s)
+bool GiCoreView::loadShapes(MgStorage* s, bool readOnly)
 {
     bool ret = true;
 
@@ -777,6 +787,7 @@ bool GiCoreView::loadShapes(MgStorage* s)
     if (s) {
         MgShapesLock locker(MgShapesLock::Load, impl);
         ret = impl->doc()->load(impl->getShapeFactory(), s);
+        impl->doc()->setReadOnly(readOnly);
         LOGD("Load %d shapes and %d layers", impl->doc()->getShapeCount(), impl->doc()->getLayerCount());
     }
     else {
@@ -823,7 +834,7 @@ bool GiCoreView::setContent(const char* content)
     return ret;
 }
 
-bool GiCoreView::loadFromFile(const char* vgfile)
+bool GiCoreView::loadFromFile(const char* vgfile, bool readOnly)
 {
 #if defined(_MSC_VER) && _MSC_VER >= 1400 // VC8
     FILE *fp = NULL;
@@ -833,7 +844,7 @@ bool GiCoreView::loadFromFile(const char* vgfile)
 #endif
     DrawLocker locker(impl);
     MgJsonStorage s;
-    bool ret = loadShapes(s.storageForRead(fp));
+    bool ret = loadShapes(s.storageForRead(fp), readOnly);
 
     if (fp) {
         fclose(fp);

@@ -6,6 +6,12 @@
 #include "GiCanvasAdapter.h"
 #include <sys/sysctl.h>
 
+static const CGFloat patDash[]      = { 4, 2, 0 };
+static const CGFloat patDot[]       = { 1, 2, 0 };
+static const CGFloat patDashDot[]   = { 10, 2, 2, 2, 0 };
+static const CGFloat dashDotdot[]   = { 20, 2, 2, 2, 2, 2, 0 };
+const CGFloat* const GiCanvasAdapter::LINEDASH[] = { NULL, patDash, patDot, patDashDot, dashDotdot };
+
 int GiCanvasAdapter::getScreenDpi()
 {
     size_t size = 15;
@@ -64,32 +70,26 @@ void GiCanvasAdapter::endPaint()
     _ctx = NULL;
 }
 
-static inline float colorPart(int argb, int bit)
+float GiCanvasAdapter::colorPart(int argb, int byteOrder)
 {
-    return (float)((argb >> bit) & 0xFF) / 255.f;
+    return (float)((argb >> (byteOrder * 8)) & 0xFF) / 255.f;
 }
 
 void GiCanvasAdapter::setPen(int argb, float width, int style, float phase)
 {
-    const CGFloat patDash[]      = { 5, 5, 0 };
-    const CGFloat patDot[]       = { 1, 2, 0 };
-    const CGFloat patDashDot[]   = { 10, 2, 2, 2, 0 };
-    const CGFloat dashDotdot[]   = { 20, 2, 2, 2, 2, 2, 0 };
-    const CGFloat* const lpats[] = { NULL, patDash, patDot, patDashDot, dashDotdot };
-    
     if (argb != 0) {
-        CGContextSetRGBStrokeColor(_ctx, colorPart(argb, 16), colorPart(argb, 8),
-                                   colorPart(argb, 0), colorPart(argb, 24));
+        CGContextSetRGBStrokeColor(_ctx, colorPart(argb, 2), colorPart(argb, 1),
+                                   colorPart(argb, 0), colorPart(argb, 3));
     }
     if (width > 0) {
         CGContextSetLineWidth(_ctx, width);
     }
     
-    if (style > 0 && style < sizeof(lpats)/sizeof(lpats[0])) {
+    if (style > 0 && style < 5) {
         CGFloat pattern[6];
         int n = 0;
-        for (; lpats[style][n] > 0.1f; n++) {
-            pattern[n] = lpats[style][n] * (width < 1.f ? 1.f : width);
+        for (; LINEDASH[style][n] > 0.1f; n++) {
+            pattern[n] = LINEDASH[style][n] * (width < 1.f ? 1.f : width);
         }
         CGContextSetLineDash(_ctx, phase, pattern, n);
         CGContextSetLineCap(_ctx, kCGLineCapButt);
@@ -103,9 +103,9 @@ void GiCanvasAdapter::setPen(int argb, float width, int style, float phase)
 void GiCanvasAdapter::setBrush(int argb, int style)
 {
     if (0 == style) {
-        float alpha = colorPart(argb, 24);
+        float alpha = colorPart(argb, 3);
         _fill = alpha > 1e-2f;
-        CGContextSetRGBFillColor(_ctx, colorPart(argb, 16), colorPart(argb, 8),
+        CGContextSetRGBFillColor(_ctx, colorPart(argb, 2), colorPart(argb, 1),
                                  colorPart(argb, 0), alpha);
     }
 }

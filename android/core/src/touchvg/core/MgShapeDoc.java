@@ -127,6 +127,14 @@ public class MgShapeDoc extends MgObject {
     return touchvgJNI.MgShapeDoc_getChangeCount(swigCPtr, this);
   }
 
+  public boolean isReadOnly() {
+    return touchvgJNI.MgShapeDoc_isReadOnly(swigCPtr, this);
+  }
+
+  public void setReadOnly(boolean readOnly) {
+    touchvgJNI.MgShapeDoc_setReadOnly(swigCPtr, this, readOnly);
+  }
+
   public MgObject clone() {
     long cPtr = touchvgJNI.MgShapeDoc_clone(swigCPtr, this);
     return (cPtr == 0) ? null : new MgObject(cPtr, false);

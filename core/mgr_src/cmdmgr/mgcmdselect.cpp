@@ -61,13 +61,9 @@ bool MgCmdSelect::dynamicChangeEnded(MgView* view, bool apply)
     return applyCloneShapes(view, apply);
 }
 
-MgCmdSelect::MgCmdSelect()
+MgCmdSelect::MgCmdSelect() : MgCommand(Name())
 {
     m_editMode = true;
-}
-
-MgCmdSelect::~MgCmdSelect()
-{
 }
 
 bool MgCmdSelect::cancel(const MgMotion* sender)
@@ -538,7 +534,8 @@ bool MgCmdSelect::touchBegan(const MgMotion* sender)
         }
     }
     
-    cloneShapes(sender->view);
+    if (!sender->view->isReadOnly())
+        cloneShapes(sender->view);
     MgShape* shape = m_clones.empty() ? NULL : m_clones.front();
     
     if (!m_showSel) {
@@ -1067,7 +1064,7 @@ bool MgCmdSelect::deleteSelection(const MgMotion* sender)
                       : sender->view->shapes()->findShape(m_selIds.front()));
     int count = 0;
     
-    if (shape && sender->view->shapeWillDeleted(shape)) {        
+    if (shape && locker.locked() && sender->view->shapeWillDeleted(shape)) {        
         applyCloneShapes(sender->view, false);
 
         for (sel_iterator it = m_selIds.begin(); it != m_selIds.end(); ++it) {
@@ -1099,7 +1096,7 @@ bool MgCmdSelect::groupSelection(const MgMotion* sender)
                       : sender->view->shapes()->findShape(m_selIds.front()));
     int count = 0;
     
-    if (shape && m_selIds.size() > 1
+    if (shape && m_selIds.size() > 1 && locker.locked()
         && sender->view->shapeWillDeleted(shape)) {        
         applyCloneShapes(sender->view, false);
 
@@ -1138,7 +1135,7 @@ bool MgCmdSelect::ungroupSelection(const MgMotion* sender)
                       : sender->view->shapes()->findShape(m_selIds.front()));
     int count = 0;
     
-    if (shape && sender->view->shapeWillDeleted(shape)) {
+    if (shape && locker.locked() && sender->view->shapeWillDeleted(shape)) {
         applyCloneShapes(sender->view, false);
 
         for (sel_iterator it = m_selIds.begin(); it != m_selIds.end(); ++it) {
@@ -1222,7 +1219,7 @@ bool MgCmdSelect::deleteVertext(const MgMotion* sender)
     MgShape* shape = getSelectedShape(sender);
     bool ret = false;
     
-    if (shape && m_handleIndex > 0
+    if (shape && m_handleIndex > 0 && locker.locked()
         && shape->shape()->isKindOf(MgBaseLines::Type()))
     {
         MgBaseLines *lines = (MgBaseLines *)shape->shape();
@@ -1246,7 +1243,7 @@ bool MgCmdSelect::insertVertext(const MgMotion* sender)
     MgShape* shape = getSelectedShape(sender);
     bool ret = false;
     
-    if (shape && isEditMode(sender->view)
+    if (locker.locked() && shape && isEditMode(sender->view)
         && shape->shape()->isKindOf(MgBaseLines::Type()))
     {
         MgBaseLines *lines = (MgBaseLines *)shape->shape();
@@ -1272,7 +1269,8 @@ bool MgCmdSelect::switchClosed(const MgMotion* sender)
     MgShape* shape = sender->view->shapes()->findShape(m_id);
     bool ret = false;
     
-    if (shape && shape->shape()->isKindOf(MgBaseLines::Type()))
+    if (locker.locked() && shape
+        && shape->shape()->isKindOf(MgBaseLines::Type()))
     {
         MgBaseLines *lines = (MgBaseLines *)shape->shape();
         
@@ -1297,8 +1295,9 @@ bool MgCmdSelect::setFixedLength(const MgMotion* sender, bool fixed)
 {
     MgShapesLock locker(MgShapesLock::Edit, sender->view);
     int count = 0;
+    sel_iterator it = locker.locked() ? m_selIds.begin() : m_selIds.end();
     
-    for (sel_iterator it = m_selIds.begin(); it != m_selIds.end(); ++it) {
+    for (; it != m_selIds.end(); ++it) {
         MgShape* shape = sender->view->shapes()->findShape(*it);
         if (shape && shape->shape()->getFlag(kMgFixedLength) != fixed) {
             shape->shape()->setFlag(kMgFixedLength, fixed);
@@ -1323,9 +1322,10 @@ bool MgCmdSelect::isLocked(MgView* view)
 bool MgCmdSelect::setLocked(const MgMotion* sender, bool locked)
 {
     MgShapesLock locker(MgShapesLock::Edit, sender->view);
+    sel_iterator it = locker.locked() ? m_selIds.begin() : m_selIds.end();
     int count = 0;
     
-    for (sel_iterator it = m_selIds.begin(); it != m_selIds.end(); ++it) {
+    for (; it != m_selIds.end(); ++it) {
         MgShape* shape = sender->view->shapes()->findShape(*it);
         if (shape && shape->shape()->getFlag(kMgShapeLocked) != locked) {
             if (locked || sender->view->shapeCanUnlock(shape)) {
@@ -1401,7 +1401,7 @@ bool MgCmdSelect::twoFingersMove(const MgMotion* sender)
         return !m_selIds.empty() && !mgIsZero(sender->distanceM());  // 选择了图形，且双指未重合
     }
     if (sender->gestureState == kMgGestureBegan) {
-        if (m_selIds.empty()) {                     // 没有选择图形
+        if (m_selIds.empty() || sender->view->isReadOnly()) {                     // 没有选择图形
             return false;
         }
         cloneShapes(sender->view);

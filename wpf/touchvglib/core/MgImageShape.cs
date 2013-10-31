@@ -54,11 +54,6 @@ public class MgImageShape : MgBaseRect {
     return ret;
   }
 
-  public override string getTypeName() {
-    string ret = touchvgPINVOKE.MgImageShape_getTypeName(swigCPtr);
-    return ret;
-  }
-
   public override MgObject clone() {
     IntPtr cPtr = touchvgPINVOKE.MgImageShape_clone(swigCPtr);
     MgObject ret = (cPtr == IntPtr.Zero) ? null : new MgObject(cPtr, false);

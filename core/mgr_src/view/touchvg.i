@@ -147,6 +147,7 @@ struct TmpJOBJ {
     jobject* jo;
     template <class T>
     TmpJOBJ(JNIEnv* e, T* v) : env(e), jo((jobject*)v) { }
+    TmpJOBJ(JNIEnv* e, jobject& v) : env(e), jo(&v) { }
     ~TmpJOBJ() { if (*jo) { env->DeleteLocalRef(*jo); *jo = 0; } }
 };
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* /*ajvm*/, void* /*reserved*/) {

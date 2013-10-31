@@ -11,5 +11,6 @@ if [ ! -f democmds_java_wrap.cpp ]; then # Make JNI classes
         -I../../../core/pub_inc/cmd \
         -I../../../core/democmds/gate \
         ../../../core/democmds/gate/democmds.i
+    python replacejstr.py
 fi
-ndk-build $1 $2
+ndk-build

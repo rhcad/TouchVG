@@ -9,7 +9,6 @@
 #include "mgstorage.h"
 
 #define MG_IMPLEMENT_CREATE(Cls)                                \
-    const char* Cls::getTypeName() const{ return #Cls; }        \
     Cls* Cls::create() { return new Cls(); }                    \
     MgObject* Cls::clone() const                                \
         { Cls* p = create(); p->_copy(*this); return p; }       \
@@ -45,7 +44,7 @@
     Point2d Cls::getHandlePoint(int index) const                \
         { return _getHandlePoint(index); }                      \
     bool Cls::setHandlePoint2(int index, const Point2d& pt, float tol, int& data)   \
-        { return _setHandlePoint2(index, pt, tol, data); } \
+        { return _setHandlePoint2(index, pt, tol, data); }      \
     bool Cls::setHandlePoint(int index, const Point2d& pt, float tol)   \
         { return _rotateHandlePoint(index, pt) || _setHandlePoint(index, pt, tol); } \
     bool Cls::isHandleFixed(int index) const { return _isHandleFixed(index); } \

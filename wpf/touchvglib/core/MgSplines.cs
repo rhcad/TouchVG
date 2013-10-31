@@ -54,11 +54,6 @@ public class MgSplines : MgBaseLines {
     return ret;
   }
 
-  public override string getTypeName() {
-    string ret = touchvgPINVOKE.MgSplines_getTypeName(swigCPtr);
-    return ret;
-  }
-
   public override MgObject clone() {
     IntPtr cPtr = touchvgPINVOKE.MgSplines_clone(swigCPtr);
     MgObject ret = (cPtr == IntPtr.Zero) ? null : new MgObject(cPtr, false);

@@ -22,12 +22,16 @@ public class MgCmdDrawRect : MgCommandDraw {
     return (obj == null) ? new HandleRef(null, IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~MgCmdDrawRect() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new MethodAccessException("C++ destructor does not have public access");
+          touchvgPINVOKE.delete_MgCmdDrawRect(swigCPtr);
         }
         swigCPtr = new HandleRef(null, IntPtr.Zero);
       }
@@ -36,7 +40,11 @@ public class MgCmdDrawRect : MgCommandDraw {
     }
   }
 
-  protected MgCmdDrawRect() : this(touchvgPINVOKE.new_MgCmdDrawRect(), true) {
+  public MgCmdDrawRect(string name) : this(touchvgPINVOKE.new_MgCmdDrawRect__SWIG_0(name), true) {
+    SwigDirectorConnect();
+  }
+
+  public MgCmdDrawRect() : this(touchvgPINVOKE.new_MgCmdDrawRect__SWIG_1(), true) {
     SwigDirectorConnect();
   }
 
@@ -51,100 +59,89 @@ public class MgCmdDrawRect : MgCommandDraw {
     return ret;
   }
 
-  public override string getName() {
-    string ret = (SwigDerivedClassHasMethod("getName", swigMethodTypes0) ? touchvgPINVOKE.MgCmdDrawRect_getNameSwigExplicitMgCmdDrawRect(swigCPtr) : touchvgPINVOKE.MgCmdDrawRect_getName(swigCPtr));
-    return ret;
-  }
-
   public override void release() {
-    if (SwigDerivedClassHasMethod("release", swigMethodTypes1)) touchvgPINVOKE.MgCmdDrawRect_releaseSwigExplicitMgCmdDrawRect(swigCPtr); else touchvgPINVOKE.MgCmdDrawRect_release(swigCPtr);
+    if (SwigDerivedClassHasMethod("release", swigMethodTypes0)) touchvgPINVOKE.MgCmdDrawRect_releaseSwigExplicitMgCmdDrawRect(swigCPtr); else touchvgPINVOKE.MgCmdDrawRect_release(swigCPtr);
   }
 
   public override bool initialize(MgMotion sender, MgStorage s) {
-    bool ret = (SwigDerivedClassHasMethod("initialize", swigMethodTypes3) ? touchvgPINVOKE.MgCmdDrawRect_initializeSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender), MgStorage.getCPtr(s)) : touchvgPINVOKE.MgCmdDrawRect_initialize(swigCPtr, MgMotion.getCPtr(sender), MgStorage.getCPtr(s)));
+    bool ret = (SwigDerivedClassHasMethod("initialize", swigMethodTypes2) ? touchvgPINVOKE.MgCmdDrawRect_initializeSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender), MgStorage.getCPtr(s)) : touchvgPINVOKE.MgCmdDrawRect_initialize(swigCPtr, MgMotion.getCPtr(sender), MgStorage.getCPtr(s)));
     return ret;
   }
 
   public override bool backStep(MgMotion sender) {
-    bool ret = (SwigDerivedClassHasMethod("backStep", swigMethodTypes4) ? touchvgPINVOKE.MgCmdDrawRect_backStepSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCmdDrawRect_backStep(swigCPtr, MgMotion.getCPtr(sender)));
+    bool ret = (SwigDerivedClassHasMethod("backStep", swigMethodTypes3) ? touchvgPINVOKE.MgCmdDrawRect_backStepSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCmdDrawRect_backStep(swigCPtr, MgMotion.getCPtr(sender)));
     return ret;
   }
 
   public override bool touchBegan(MgMotion sender) {
-    bool ret = (SwigDerivedClassHasMethod("touchBegan", swigMethodTypes10) ? touchvgPINVOKE.MgCmdDrawRect_touchBeganSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCmdDrawRect_touchBegan(swigCPtr, MgMotion.getCPtr(sender)));
+    bool ret = (SwigDerivedClassHasMethod("touchBegan", swigMethodTypes9) ? touchvgPINVOKE.MgCmdDrawRect_touchBeganSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCmdDrawRect_touchBegan(swigCPtr, MgMotion.getCPtr(sender)));
     return ret;
   }
 
   public override bool touchMoved(MgMotion sender) {
-    bool ret = (SwigDerivedClassHasMethod("touchMoved", swigMethodTypes11) ? touchvgPINVOKE.MgCmdDrawRect_touchMovedSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCmdDrawRect_touchMoved(swigCPtr, MgMotion.getCPtr(sender)));
+    bool ret = (SwigDerivedClassHasMethod("touchMoved", swigMethodTypes10) ? touchvgPINVOKE.MgCmdDrawRect_touchMovedSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCmdDrawRect_touchMoved(swigCPtr, MgMotion.getCPtr(sender)));
     return ret;
   }
 
   public override bool touchEnded(MgMotion sender) {
-    bool ret = (SwigDerivedClassHasMethod("touchEnded", swigMethodTypes12) ? touchvgPINVOKE.MgCmdDrawRect_touchEndedSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCmdDrawRect_touchEnded(swigCPtr, MgMotion.getCPtr(sender)));
+    bool ret = (SwigDerivedClassHasMethod("touchEnded", swigMethodTypes11) ? touchvgPINVOKE.MgCmdDrawRect_touchEndedSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCmdDrawRect_touchEnded(swigCPtr, MgMotion.getCPtr(sender)));
     return ret;
   }
 
   protected virtual void addRectShape(MgMotion sender) {
-    if (SwigDerivedClassHasMethod("addRectShape", swigMethodTypes21)) touchvgPINVOKE.MgCmdDrawRect_addRectShapeSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)); else touchvgPINVOKE.MgCmdDrawRect_addRectShape(swigCPtr, MgMotion.getCPtr(sender));
+    if (SwigDerivedClassHasMethod("addRectShape", swigMethodTypes20)) touchvgPINVOKE.MgCmdDrawRect_addRectShapeSwigExplicitMgCmdDrawRect(swigCPtr, MgMotion.getCPtr(sender)); else touchvgPINVOKE.MgCmdDrawRect_addRectShape(swigCPtr, MgMotion.getCPtr(sender));
   }
 
   private void SwigDirectorConnect() {
-    if (SwigDerivedClassHasMethod("getName", swigMethodTypes0))
-      swigDelegate0 = new SwigDelegateMgCmdDrawRect_0(SwigDirectorgetName);
-    if (SwigDerivedClassHasMethod("release", swigMethodTypes1))
-      swigDelegate1 = new SwigDelegateMgCmdDrawRect_1(SwigDirectorrelease);
-    if (SwigDerivedClassHasMethod("cancel", swigMethodTypes2))
-      swigDelegate2 = new SwigDelegateMgCmdDrawRect_2(SwigDirectorcancel);
-    if (SwigDerivedClassHasMethod("initialize", swigMethodTypes3))
-      swigDelegate3 = new SwigDelegateMgCmdDrawRect_3(SwigDirectorinitialize);
-    if (SwigDerivedClassHasMethod("backStep", swigMethodTypes4))
-      swigDelegate4 = new SwigDelegateMgCmdDrawRect_4(SwigDirectorbackStep);
-    if (SwigDerivedClassHasMethod("draw", swigMethodTypes5))
-      swigDelegate5 = new SwigDelegateMgCmdDrawRect_5(SwigDirectordraw);
-    if (SwigDerivedClassHasMethod("gatherShapes", swigMethodTypes6))
-      swigDelegate6 = new SwigDelegateMgCmdDrawRect_6(SwigDirectorgatherShapes);
-    if (SwigDerivedClassHasMethod("click", swigMethodTypes7))
-      swigDelegate7 = new SwigDelegateMgCmdDrawRect_7(SwigDirectorclick);
-    if (SwigDerivedClassHasMethod("doubleClick", swigMethodTypes8))
-      swigDelegate8 = new SwigDelegateMgCmdDrawRect_8(SwigDirectordoubleClick);
-    if (SwigDerivedClassHasMethod("longPress", swigMethodTypes9))
-      swigDelegate9 = new SwigDelegateMgCmdDrawRect_9(SwigDirectorlongPress);
-    if (SwigDerivedClassHasMethod("touchBegan", swigMethodTypes10))
-      swigDelegate10 = new SwigDelegateMgCmdDrawRect_10(SwigDirectortouchBegan);
-    if (SwigDerivedClassHasMethod("touchMoved", swigMethodTypes11))
-      swigDelegate11 = new SwigDelegateMgCmdDrawRect_11(SwigDirectortouchMoved);
-    if (SwigDerivedClassHasMethod("touchEnded", swigMethodTypes12))
-      swigDelegate12 = new SwigDelegateMgCmdDrawRect_12(SwigDirectortouchEnded);
-    if (SwigDerivedClassHasMethod("mouseHover", swigMethodTypes13))
-      swigDelegate13 = new SwigDelegateMgCmdDrawRect_13(SwigDirectormouseHover);
-    if (SwigDerivedClassHasMethod("twoFingersMove", swigMethodTypes14))
-      swigDelegate14 = new SwigDelegateMgCmdDrawRect_14(SwigDirectortwoFingersMove);
-    if (SwigDerivedClassHasMethod("isDrawingCommand", swigMethodTypes15))
-      swigDelegate15 = new SwigDelegateMgCmdDrawRect_15(SwigDirectorisDrawingCommand);
-    if (SwigDerivedClassHasMethod("isFloatingCommand", swigMethodTypes16))
-      swigDelegate16 = new SwigDelegateMgCmdDrawRect_16(SwigDirectorisFloatingCommand);
-    if (SwigDerivedClassHasMethod("doContextAction", swigMethodTypes17))
-      swigDelegate17 = new SwigDelegateMgCmdDrawRect_17(SwigDirectordoContextAction);
-    if (SwigDerivedClassHasMethod("createShape", swigMethodTypes18))
-      swigDelegate18 = new SwigDelegateMgCmdDrawRect_18(SwigDirectorcreateShape);
-    if (SwigDerivedClassHasMethod("getMaxStep", swigMethodTypes19))
-      swigDelegate19 = new SwigDelegateMgCmdDrawRect_19(SwigDirectorgetMaxStep);
-    if (SwigDerivedClassHasMethod("setStepPoint", swigMethodTypes20))
-      swigDelegate20 = new SwigDelegateMgCmdDrawRect_20(SwigDirectorsetStepPoint);
-    if (SwigDerivedClassHasMethod("addRectShape", swigMethodTypes21))
-      swigDelegate21 = new SwigDelegateMgCmdDrawRect_21(SwigDirectoraddRectShape);
-    touchvgPINVOKE.MgCmdDrawRect_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17, swigDelegate18, swigDelegate19, swigDelegate20, swigDelegate21);
+    if (SwigDerivedClassHasMethod("release", swigMethodTypes0))
+      swigDelegate0 = new SwigDelegateMgCmdDrawRect_0(SwigDirectorrelease);
+    if (SwigDerivedClassHasMethod("cancel", swigMethodTypes1))
+      swigDelegate1 = new SwigDelegateMgCmdDrawRect_1(SwigDirectorcancel);
+    if (SwigDerivedClassHasMethod("initialize", swigMethodTypes2))
+      swigDelegate2 = new SwigDelegateMgCmdDrawRect_2(SwigDirectorinitialize);
+    if (SwigDerivedClassHasMethod("backStep", swigMethodTypes3))
+      swigDelegate3 = new SwigDelegateMgCmdDrawRect_3(SwigDirectorbackStep);
+    if (SwigDerivedClassHasMethod("draw", swigMethodTypes4))
+      swigDelegate4 = new SwigDelegateMgCmdDrawRect_4(SwigDirectordraw);
+    if (SwigDerivedClassHasMethod("gatherShapes", swigMethodTypes5))
+      swigDelegate5 = new SwigDelegateMgCmdDrawRect_5(SwigDirectorgatherShapes);
+    if (SwigDerivedClassHasMethod("click", swigMethodTypes6))
+      swigDelegate6 = new SwigDelegateMgCmdDrawRect_6(SwigDirectorclick);
+    if (SwigDerivedClassHasMethod("doubleClick", swigMethodTypes7))
+      swigDelegate7 = new SwigDelegateMgCmdDrawRect_7(SwigDirectordoubleClick);
+    if (SwigDerivedClassHasMethod("longPress", swigMethodTypes8))
+      swigDelegate8 = new SwigDelegateMgCmdDrawRect_8(SwigDirectorlongPress);
+    if (SwigDerivedClassHasMethod("touchBegan", swigMethodTypes9))
+      swigDelegate9 = new SwigDelegateMgCmdDrawRect_9(SwigDirectortouchBegan);
+    if (SwigDerivedClassHasMethod("touchMoved", swigMethodTypes10))
+      swigDelegate10 = new SwigDelegateMgCmdDrawRect_10(SwigDirectortouchMoved);
+    if (SwigDerivedClassHasMethod("touchEnded", swigMethodTypes11))
+      swigDelegate11 = new SwigDelegateMgCmdDrawRect_11(SwigDirectortouchEnded);
+    if (SwigDerivedClassHasMethod("mouseHover", swigMethodTypes12))
+      swigDelegate12 = new SwigDelegateMgCmdDrawRect_12(SwigDirectormouseHover);
+    if (SwigDerivedClassHasMethod("twoFingersMove", swigMethodTypes13))
+      swigDelegate13 = new SwigDelegateMgCmdDrawRect_13(SwigDirectortwoFingersMove);
+    if (SwigDerivedClassHasMethod("isDrawingCommand", swigMethodTypes14))
+      swigDelegate14 = new SwigDelegateMgCmdDrawRect_14(SwigDirectorisDrawingCommand);
+    if (SwigDerivedClassHasMethod("isFloatingCommand", swigMethodTypes15))
+      swigDelegate15 = new SwigDelegateMgCmdDrawRect_15(SwigDirectorisFloatingCommand);
+    if (SwigDerivedClassHasMethod("doContextAction", swigMethodTypes16))
+      swigDelegate16 = new SwigDelegateMgCmdDrawRect_16(SwigDirectordoContextAction);
+    if (SwigDerivedClassHasMethod("getShapeType", swigMethodTypes17))
+      swigDelegate17 = new SwigDelegateMgCmdDrawRect_17(SwigDirectorgetShapeType);
+    if (SwigDerivedClassHasMethod("getMaxStep", swigMethodTypes18))
+      swigDelegate18 = new SwigDelegateMgCmdDrawRect_18(SwigDirectorgetMaxStep);
+    if (SwigDerivedClassHasMethod("setStepPoint", swigMethodTypes19))
+      swigDelegate19 = new SwigDelegateMgCmdDrawRect_19(SwigDirectorsetStepPoint);
+    if (SwigDerivedClassHasMethod("addRectShape", swigMethodTypes20))
+      swigDelegate20 = new SwigDelegateMgCmdDrawRect_20(SwigDirectoraddRectShape);
+    touchvgPINVOKE.MgCmdDrawRect_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17, swigDelegate18, swigDelegate19, swigDelegate20);
   }
 
   private bool SwigDerivedClassHasMethod(string methodName, Type[] methodTypes) {
     System.Reflection.MethodInfo methodInfo = this.GetType().GetMethod(methodName, System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance, null, methodTypes, null);
     bool hasDerivedMethod = methodInfo.DeclaringType.IsSubclassOf(typeof(MgCmdDrawRect));
     return hasDerivedMethod;
-  }
-
-  private string SwigDirectorgetName() {
-    return getName();
   }
 
   private void SwigDirectorrelease() {
@@ -215,8 +212,8 @@ public class MgCmdDrawRect : MgCommandDraw {
     return doContextAction((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), action);
   }
 
-  private IntPtr SwigDirectorcreateShape(IntPtr arg0) {
-    return MgShape.getCPtr(createShape((arg0 == IntPtr.Zero) ? null : new MgShapeFactory(arg0, false))).Handle;
+  private int SwigDirectorgetShapeType() {
+    return getShapeType();
   }
 
   private int SwigDirectorgetMaxStep() {
@@ -231,13 +228,13 @@ public class MgCmdDrawRect : MgCommandDraw {
     addRectShape((sender == IntPtr.Zero) ? null : new MgMotion(sender, false));
   }
 
-  public delegate string SwigDelegateMgCmdDrawRect_0();
-  public delegate void SwigDelegateMgCmdDrawRect_1();
-  public delegate bool SwigDelegateMgCmdDrawRect_2(IntPtr sender);
-  public delegate bool SwigDelegateMgCmdDrawRect_3(IntPtr sender, IntPtr s);
-  public delegate bool SwigDelegateMgCmdDrawRect_4(IntPtr sender);
-  public delegate bool SwigDelegateMgCmdDrawRect_5(IntPtr sender, IntPtr gs);
-  public delegate int SwigDelegateMgCmdDrawRect_6(IntPtr sender, IntPtr shapes);
+  public delegate void SwigDelegateMgCmdDrawRect_0();
+  public delegate bool SwigDelegateMgCmdDrawRect_1(IntPtr sender);
+  public delegate bool SwigDelegateMgCmdDrawRect_2(IntPtr sender, IntPtr s);
+  public delegate bool SwigDelegateMgCmdDrawRect_3(IntPtr sender);
+  public delegate bool SwigDelegateMgCmdDrawRect_4(IntPtr sender, IntPtr gs);
+  public delegate int SwigDelegateMgCmdDrawRect_5(IntPtr sender, IntPtr shapes);
+  public delegate bool SwigDelegateMgCmdDrawRect_6(IntPtr sender);
   public delegate bool SwigDelegateMgCmdDrawRect_7(IntPtr sender);
   public delegate bool SwigDelegateMgCmdDrawRect_8(IntPtr sender);
   public delegate bool SwigDelegateMgCmdDrawRect_9(IntPtr sender);
@@ -245,14 +242,13 @@ public class MgCmdDrawRect : MgCommandDraw {
   public delegate bool SwigDelegateMgCmdDrawRect_11(IntPtr sender);
   public delegate bool SwigDelegateMgCmdDrawRect_12(IntPtr sender);
   public delegate bool SwigDelegateMgCmdDrawRect_13(IntPtr sender);
-  public delegate bool SwigDelegateMgCmdDrawRect_14(IntPtr sender);
+  public delegate bool SwigDelegateMgCmdDrawRect_14();
   public delegate bool SwigDelegateMgCmdDrawRect_15();
-  public delegate bool SwigDelegateMgCmdDrawRect_16();
-  public delegate bool SwigDelegateMgCmdDrawRect_17(IntPtr sender, int action);
-  public delegate IntPtr SwigDelegateMgCmdDrawRect_18(IntPtr arg0);
-  public delegate int SwigDelegateMgCmdDrawRect_19();
-  public delegate void SwigDelegateMgCmdDrawRect_20(int step, IntPtr pt);
-  public delegate void SwigDelegateMgCmdDrawRect_21(IntPtr sender);
+  public delegate bool SwigDelegateMgCmdDrawRect_16(IntPtr sender, int action);
+  public delegate int SwigDelegateMgCmdDrawRect_17();
+  public delegate int SwigDelegateMgCmdDrawRect_18();
+  public delegate void SwigDelegateMgCmdDrawRect_19(int step, IntPtr pt);
+  public delegate void SwigDelegateMgCmdDrawRect_20(IntPtr sender);
 
   private SwigDelegateMgCmdDrawRect_0 swigDelegate0;
   private SwigDelegateMgCmdDrawRect_1 swigDelegate1;
@@ -275,15 +271,14 @@ public class MgCmdDrawRect : MgCommandDraw {
   private SwigDelegateMgCmdDrawRect_18 swigDelegate18;
   private SwigDelegateMgCmdDrawRect_19 swigDelegate19;
   private SwigDelegateMgCmdDrawRect_20 swigDelegate20;
-  private SwigDelegateMgCmdDrawRect_21 swigDelegate21;
 
   private static Type[] swigMethodTypes0 = new Type[] {  };
-  private static Type[] swigMethodTypes1 = new Type[] {  };
-  private static Type[] swigMethodTypes2 = new Type[] { typeof(MgMotion) };
-  private static Type[] swigMethodTypes3 = new Type[] { typeof(MgMotion), typeof(MgStorage) };
-  private static Type[] swigMethodTypes4 = new Type[] { typeof(MgMotion) };
-  private static Type[] swigMethodTypes5 = new Type[] { typeof(MgMotion), typeof(GiGraphics) };
-  private static Type[] swigMethodTypes6 = new Type[] { typeof(MgMotion), typeof(MgShapes) };
+  private static Type[] swigMethodTypes1 = new Type[] { typeof(MgMotion) };
+  private static Type[] swigMethodTypes2 = new Type[] { typeof(MgMotion), typeof(MgStorage) };
+  private static Type[] swigMethodTypes3 = new Type[] { typeof(MgMotion) };
+  private static Type[] swigMethodTypes4 = new Type[] { typeof(MgMotion), typeof(GiGraphics) };
+  private static Type[] swigMethodTypes5 = new Type[] { typeof(MgMotion), typeof(MgShapes) };
+  private static Type[] swigMethodTypes6 = new Type[] { typeof(MgMotion) };
   private static Type[] swigMethodTypes7 = new Type[] { typeof(MgMotion) };
   private static Type[] swigMethodTypes8 = new Type[] { typeof(MgMotion) };
   private static Type[] swigMethodTypes9 = new Type[] { typeof(MgMotion) };
@@ -291,14 +286,13 @@ public class MgCmdDrawRect : MgCommandDraw {
   private static Type[] swigMethodTypes11 = new Type[] { typeof(MgMotion) };
   private static Type[] swigMethodTypes12 = new Type[] { typeof(MgMotion) };
   private static Type[] swigMethodTypes13 = new Type[] { typeof(MgMotion) };
-  private static Type[] swigMethodTypes14 = new Type[] { typeof(MgMotion) };
+  private static Type[] swigMethodTypes14 = new Type[] {  };
   private static Type[] swigMethodTypes15 = new Type[] {  };
-  private static Type[] swigMethodTypes16 = new Type[] {  };
-  private static Type[] swigMethodTypes17 = new Type[] { typeof(MgMotion), typeof(int) };
-  private static Type[] swigMethodTypes18 = new Type[] { typeof(MgShapeFactory) };
-  private static Type[] swigMethodTypes19 = new Type[] {  };
-  private static Type[] swigMethodTypes20 = new Type[] { typeof(int), typeof(Point2d) };
-  private static Type[] swigMethodTypes21 = new Type[] { typeof(MgMotion) };
+  private static Type[] swigMethodTypes16 = new Type[] { typeof(MgMotion), typeof(int) };
+  private static Type[] swigMethodTypes17 = new Type[] {  };
+  private static Type[] swigMethodTypes18 = new Type[] {  };
+  private static Type[] swigMethodTypes19 = new Type[] { typeof(int), typeof(Point2d) };
+  private static Type[] swigMethodTypes20 = new Type[] { typeof(MgMotion) };
 }
 
 }

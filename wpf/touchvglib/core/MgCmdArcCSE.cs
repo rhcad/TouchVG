@@ -40,6 +40,12 @@ public class MgCmdArcCSE : MgCmdArc3P {
     }
   }
 
+  public MgCmdArcCSE(string name) : this(touchvgPINVOKE.new_MgCmdArcCSE__SWIG_0(name), true) {
+  }
+
+  public MgCmdArcCSE() : this(touchvgPINVOKE.new_MgCmdArcCSE__SWIG_1(), true) {
+  }
+
   public new static string Name() {
     string ret = touchvgPINVOKE.MgCmdArcCSE_Name();
     return ret;
@@ -51,13 +57,13 @@ public class MgCmdArcCSE : MgCmdArc3P {
     return ret;
   }
 
-  public override string getName() {
-    string ret = touchvgPINVOKE.MgCmdArcCSE_getName(swigCPtr);
-    return ret;
-  }
-
   public override void release() {
     touchvgPINVOKE.MgCmdArcCSE_release(swigCPtr);
+  }
+
+  public override bool draw(MgMotion sender, GiGraphics gs) {
+    bool ret = touchvgPINVOKE.MgCmdArcCSE_draw(swigCPtr, MgMotion.getCPtr(sender), GiGraphics.getCPtr(gs));
+    return ret;
   }
 
 }

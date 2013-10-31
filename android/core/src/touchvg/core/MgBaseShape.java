@@ -76,6 +76,10 @@ public class MgBaseShape extends MgObject {
     return new Box2d((getClass() == MgBaseShape.class) ? touchvgJNI.MgBaseShape_getExtent(swigCPtr, this) : touchvgJNI.MgBaseShape_getExtentSwigExplicitMgBaseShape(swigCPtr, this), true);
   }
 
+  public int getChangeCount() {
+    return (getClass() == MgBaseShape.class) ? touchvgJNI.MgBaseShape_getChangeCount(swigCPtr, this) : touchvgJNI.MgBaseShape_getChangeCountSwigExplicitMgBaseShape(swigCPtr, this);
+  }
+
   public void update() {
     if (getClass() == MgBaseShape.class) touchvgJNI.MgBaseShape_update(swigCPtr, this); else touchvgJNI.MgBaseShape_updateSwigExplicitMgBaseShape(swigCPtr, this);
   }
@@ -166,10 +170,6 @@ public class MgBaseShape extends MgObject {
 
   public void setFlag(MgShapeBit bit, boolean on) {
     if (getClass() == MgBaseShape.class) touchvgJNI.MgBaseShape_setFlag(swigCPtr, this, bit.swigValue(), on); else touchvgJNI.MgBaseShape_setFlagSwigExplicitMgBaseShape(swigCPtr, this, bit.swigValue(), on);
-  }
-
-  public String getTypeName() {
-    return touchvgJNI.MgBaseShape_getTypeName(swigCPtr, this);
   }
 
   public void copy(MgObject src) {

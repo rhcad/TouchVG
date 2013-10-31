@@ -14,16 +14,12 @@
 */
 class MgCmdDrawFreeLines : public MgCommandDraw
 {
-protected:
-    MgCmdDrawFreeLines();
-    virtual ~MgCmdDrawFreeLines();
-    
 public:
     static const char* Name() { return "freelines"; }
     static MgCommand* Create() { return new MgCmdDrawFreeLines; }
     
 private:
-    virtual const char* getName() const { return Name(); }
+    MgCmdDrawFreeLines() : MgCommandDraw(Name()) {}
     virtual void release() { delete this; }
     
     virtual bool initialize(const MgMotion* sender, MgStorage* s);

@@ -151,12 +151,20 @@ public class GiCoreView {
     return touchvgJNI.GiCoreView_getSelectedShapeType(swigCPtr, this);
   }
 
+  public int getSelectedShapeID() {
+    return touchvgJNI.GiCoreView_getSelectedShapeID(swigCPtr, this);
+  }
+
   public void clear() {
     touchvgJNI.GiCoreView_clear(swigCPtr, this);
   }
 
+  public boolean loadFromFile(String vgfile, boolean readOnly) {
+    return touchvgJNI.GiCoreView_loadFromFile__SWIG_0(swigCPtr, this, vgfile, readOnly);
+  }
+
   public boolean loadFromFile(String vgfile) {
-    return touchvgJNI.GiCoreView_loadFromFile(swigCPtr, this, vgfile);
+    return touchvgJNI.GiCoreView_loadFromFile__SWIG_1(swigCPtr, this, vgfile);
   }
 
   public boolean saveToFile(String vgfile, boolean pretty) {

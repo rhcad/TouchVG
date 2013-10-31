@@ -4,7 +4,7 @@
 
 #import "GiGraphView1.h"
 #import "GiViewHelper.h"
-#import <QuartzCore/CALayer.h>
+#import <QuartzCore/QuartzCore.h>
 #include "GiCanvasAdapter.h"
 #include "gicoreview.h"
 

@@ -13,15 +13,12 @@
 */
 class MgCmdParallel : public MgCommandDraw
 {
-protected:
-    MgCmdParallel() {}
 public:
     static const char* Name() { return "parallel"; }
     static MgCommand* Create() { return new MgCmdParallel; }
 private:
-    virtual const char* getName() const { return Name(); }
+    MgCmdParallel() : MgCommandDraw(Name()) {}
     virtual void release() { delete this; }
-
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool touchBegan(const MgMotion* sender) { return touchBeganStep(sender); }
     virtual bool touchMoved(const MgMotion* sender) { return touchMovedStep(sender); }

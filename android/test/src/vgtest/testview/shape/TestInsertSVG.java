@@ -3,6 +3,7 @@
 package vgtest.testview.shape;
 
 import touchvg.view.ViewHelper;
+import vgtest.app.R;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(tigerBtn, param);
         tigerBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVGFromResource("tiger", 
+                mHelper.insertSVGFromResource(R.raw.tiger, 
                         mHelper.getView().getWidth() / 2, mHelper.getView().getHeight() / 2);
             }
         });
@@ -56,7 +57,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(fontsBtn, param);
         fontsBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVGFromResource("fonts");
+                mHelper.insertSVGFromResource(R.raw.fonts);
             }
         });
         
@@ -65,7 +66,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(picBtn, param);
         picBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertBitmapFromResource("vg_lock", 200, 100);
+                mHelper.insertBitmapFromResource(R.drawable.vg_lock, 200, 100);
             }
         });
         

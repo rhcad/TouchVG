@@ -48,10 +48,6 @@ public class MgRoundRect extends MgBaseRect {
     return touchvgJNI.MgRoundRect_Type();
   }
 
-  public String getTypeName() {
-    return touchvgJNI.MgRoundRect_getTypeName(swigCPtr, this);
-  }
-
   public MgObject clone() {
     long cPtr = touchvgJNI.MgRoundRect_clone(swigCPtr, this);
     return (cPtr == 0) ? null : new MgObject(cPtr, false);

@@ -6,14 +6,6 @@
 #include <mgshapet.h>
 #include <mgbasicsp.h>
 
-MgCmdDrawLines::MgCmdDrawLines()
-{
-}
-
-MgCmdDrawLines::~MgCmdDrawLines()
-{
-}
-
 bool MgCmdDrawLines::initialize(const MgMotion* sender, MgStorage*)
 {
     return _initialize(MgShapeT<MgLines>::create, sender);

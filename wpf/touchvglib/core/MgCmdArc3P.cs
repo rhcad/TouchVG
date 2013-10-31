@@ -40,6 +40,12 @@ public class MgCmdArc3P : MgCommandDraw {
     }
   }
 
+  public MgCmdArc3P(string name) : this(touchvgPINVOKE.new_MgCmdArc3P__SWIG_0(name), true) {
+  }
+
+  public MgCmdArc3P() : this(touchvgPINVOKE.new_MgCmdArc3P__SWIG_1(), true) {
+  }
+
   public static string Name() {
     string ret = touchvgPINVOKE.MgCmdArc3P_Name();
     return ret;
@@ -48,11 +54,6 @@ public class MgCmdArc3P : MgCommandDraw {
   public static MgCommand Create() {
     IntPtr cPtr = touchvgPINVOKE.MgCmdArc3P_Create();
     MgCommand ret = (cPtr == IntPtr.Zero) ? null : new MgCommand(cPtr, false);
-    return ret;
-  }
-
-  public override string getName() {
-    string ret = touchvgPINVOKE.MgCmdArc3P_getName(swigCPtr);
     return ret;
   }
 

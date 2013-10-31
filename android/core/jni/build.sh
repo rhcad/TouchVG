@@ -23,5 +23,6 @@ if [ ! -f touchvg_java_wrap.cpp ]; then # Make JNI classes
         -I../../../core/mgr_inc/json \
         -I../../../core/mgr_inc/cmdmgr \
         ../../../core/mgr_src/view/touchvg.i
+    python replacejstr.py
 fi
-ndk-build $1 $2
+ndk-build

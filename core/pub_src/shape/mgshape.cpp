@@ -4,6 +4,7 @@
 
 #include "mgshape.h"
 #include <mgstorage.h>
+#include <gicanvas.h>
 
 void MgBaseShape::copy(const MgObject& src) {
     if (src.isKindOf(Type()))
@@ -16,6 +17,7 @@ bool MgBaseShape::isKindOf(int type) const {
     return type == Type();
 }
 Box2d MgBaseShape::getExtent() const { return _getExtent(); }
+int MgBaseShape::getChangeCount() const { return _changeCount; }
 void MgBaseShape::update() { _update(); }
 void MgBaseShape::transform(const Matrix2d& mat) { _transform(mat); }
 void MgBaseShape::clear() { _clear(); }
@@ -60,6 +62,7 @@ void MgBaseShape::_copy(const MgBaseShape& src)
 {
     _extent = src._extent;
     _flags = src._flags;
+    _changeCount = src._changeCount;
 }
 
 bool MgBaseShape::_equals(const MgBaseShape& src) const
@@ -75,6 +78,7 @@ void MgBaseShape::_update()
     if (_extent.height() < minTol().equalPoint()) {
         _extent.inflate(0, minTol().equalPoint());
     }
+    _changeCount++;
 }
 
 void MgBaseShape::_transform(const Matrix2d& mat)
@@ -185,35 +189,45 @@ bool MgShape::hasFillColor() const
 
 bool MgShape::draw(int mode, GiGraphics& gs, const GiContext *ctx, int segment) const
 {
-    if (shapec()->isKindOf(6)) { // MgComposite
-        GiContext ctxnull(0, GiColor(), kGiLineNull);
-        return shapec()->draw(mode, gs, ctx ? *ctx : ctxnull, segment);
-    }
-
     GiContext tmpctx(*contextc());
 
-    if (ctx) {
-        float addw  = ctx->getLineWidth();
-        float width = tmpctx.getLineWidth();
+    if (shapec()->isKindOf(6)) { // MgComposite
+        tmpctx = ctx ? *ctx : GiContext(0, GiColor(), kGiLineNull);
+    }
+    else {
+        if (ctx) {
+            float addw  = ctx->getLineWidth();
+            float width = tmpctx.getLineWidth();
 
-        width = -gs.calcPenWidth(width, tmpctx.isAutoScale());  // 像素宽度，负数
-        if (addw <= 0)
-            tmpctx.setLineWidth(width + addw, false);           // 像素宽度加宽
-        else                                                    // 传入正数表示像素宽度
-            tmpctx.setLineWidth(-addw, ctx->isAutoScale());     // 换成新的像素宽度
+            width = -gs.calcPenWidth(width, tmpctx.isAutoScale());  // 像素宽度，负数
+            if (addw <= 0)
+                tmpctx.setLineWidth(width + addw, false);           // 像素宽度加宽
+            else                                                    // 传入正数表示像素宽度
+                tmpctx.setLineWidth(-addw, ctx->isAutoScale());     // 换成新的像素宽度
+        }
+
+        if (ctx && ctx->getLineColor().a > 0) {
+            tmpctx.setLineColor(ctx->getLineColor());
+        }
+        if (ctx && !ctx->isNullLine()) {
+            tmpctx.setLineStyle(ctx->getLineStyle());
+        }
+        if (ctx && ctx->hasFillColor()) {
+            tmpctx.setFillColor(ctx->getFillColor());
+        }
     }
 
-    if (ctx && ctx->getLineColor().a > 0) {
-        tmpctx.setLineColor(ctx->getLineColor());
-    }
-    if (ctx && !ctx->isNullLine()) {
-        tmpctx.setLineStyle(ctx->getLineStyle());
-    }
-    if (ctx && ctx->hasFillColor()) {
-        tmpctx.setFillColor(ctx->getFillColor());
-    }
+    bool ret = false;
+    Box2d rect(shapec()->getExtent() * gs.xf().modelToDisplay());
 
-    return shapec()->draw(mode, gs, tmpctx, segment);
+    rect.inflate(1 + gs.calcPenWidth(tmpctx.getLineWidth(), tmpctx.isAutoScale()) / 2);
+
+    if (gs.getCanvas()->beginShape(getID(), rect.xmin, 
+        rect.ymin, rect.width(), rect.height())) {
+        ret = shapec()->draw(mode, gs, tmpctx, segment);
+        gs.getCanvas()->endShape(getID(), rect.xmin, rect.ymin);
+    }
+    return ret;
 }
 
 void MgShape::copy(const MgObject& src)

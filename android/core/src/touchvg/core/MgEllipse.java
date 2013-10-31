@@ -48,10 +48,6 @@ public class MgEllipse extends MgBaseRect {
     return touchvgJNI.MgEllipse_Type();
   }
 
-  public String getTypeName() {
-    return touchvgJNI.MgEllipse_getTypeName(swigCPtr, this);
-  }
-
   public MgObject clone() {
     long cPtr = touchvgJNI.MgEllipse_clone(swigCPtr, this);
     return (cPtr == 0) ? null : new MgObject(cPtr, false);

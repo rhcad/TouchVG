@@ -16,10 +16,10 @@ class MgCmdDrawCircle : public MgCmdDrawEllipse
 {
 public:
     static const char* Name() { return "circle"; }
-    static MgCommand* Create() { return new MgCmdDrawCircle; }
+    static MgCommand* Create() { return new MgCmdDrawCircle(); }
     
 private:
-    virtual const char* getName() const { return Name(); }
+    MgCmdDrawCircle() : MgCmdDrawEllipse(Name()) {}
     virtual void release() { delete this; }
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
 };

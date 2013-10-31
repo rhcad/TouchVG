@@ -47,6 +47,29 @@ void mgcurv::splitBezier(const Point2d* pts, float t, Point2d* pts1, Point2d* pt
     p10 = (1 - t) * p8 + t * p9;
 }
 
+float mgcurv::lengthOfBezier(const Point2d* pts, float tol)
+{
+    float   polyLen = 0.0f;
+    float   chordLen = pts[0].distanceTo(pts[3]);
+    float   retLen, errLen;
+    unsigned n;
+    
+    for (n = 0; n < 3; ++n)
+        polyLen += pts[n].distanceTo(pts[n + 1]);
+    
+    errLen = polyLen - chordLen;
+    
+    if (errLen > tol) {
+        Point2d left[4], right[4];
+        splitBezier (pts, 0.5f, left, right);
+        retLen = lengthOfBezier(left, tol) + lengthOfBezier(right, tol);
+    } else {
+        retLen = 0.5f * (polyLen + chordLen);
+    }
+    
+    return retLen;
+}
+
 void mgcurv::ellipse90ToBezier(
     const Point2d& frompt, const Point2d& topt, Point2d& ctrpt1, Point2d& ctrpt2)
 {

@@ -15,7 +15,8 @@
 class MgCmdDrawPolygon : public MgCmdDrawLines
 {
 protected:
-    MgCmdDrawPolygon(int maxEdges = 20) : _maxEdges(maxEdges) {}
+    MgCmdDrawPolygon(const char* name = Name(), int maxEdges = 20)
+        : MgCmdDrawLines(name), _maxEdges(maxEdges) {}
     
 public:
     static const char* Name() { return "polygon"; }
@@ -25,7 +26,6 @@ private:
     virtual bool needCheckClosed() { return false; }
     virtual bool needEnded() { return (int)m_step >= _maxEdges - 1; }
     
-    virtual const char* getName() const { return Name(); }
     virtual void release() { delete this; }
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     

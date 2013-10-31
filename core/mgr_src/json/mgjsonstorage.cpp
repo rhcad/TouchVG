@@ -126,11 +126,10 @@ MgStorage* MgJsonStorage::storageForRead(FILE* fp)
             LOGE("parse error: %s", _impl->getError());
         }
     }
-    return fp ? _impl : NULL;
 #else
     fp;
-    return NULL;
 #endif
+    return _impl;
 }
 
 void MgJsonStorage::clear()

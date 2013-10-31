@@ -118,7 +118,7 @@ struct MgHitResult {
 class MgBaseShape : public MgObject
 {
 public:
-    MgBaseShape() : _flags(0) {}
+    MgBaseShape() : _flags(0), _changeCount(0) {}
     virtual ~MgBaseShape() {}
 
     //! 返回本对象的类型
@@ -139,6 +139,9 @@ public:
 
     //! 返回图形模型坐标范围
     virtual Box2d getExtent() const;
+
+    //! 返回改变计数
+    virtual int getChangeCount() const;
 
     //! 参数改变后重新计算坐标
     virtual void update();
@@ -236,9 +239,6 @@ public:
     //! 设置图形特征标志位
     virtual void setFlag(MgShapeBit bit, bool on);
 
-    //! 返回图形类名称
-    virtual const char* getTypeName() const = 0;
-
     virtual void copy(const MgObject& src);
     virtual bool equals(const MgObject& src) const;
     virtual bool isKindOf(int type) const;
@@ -259,6 +259,7 @@ protected:
             int _flagShapeLocked:1;
         } _bits;
     };
+    long _changeCount;
 
 protected:
     bool _isClosed() const { return getFlag(kMgClosed); }
@@ -301,8 +302,7 @@ public:                                                         \
 protected:                                                      \
     bool _isKindOf(int type) const;                             \
     bool _draw(int mode, GiGraphics& gs, const GiContext& ctx, int segment) const; \
-public:                                                      \
-    virtual const char* getTypeName() const;                    \
+public:                                                         \
     virtual MgObject* clone() const;                            \
     virtual void copy(const MgObject& src);                     \
     virtual void release();                                     \
@@ -313,7 +313,7 @@ public:                                                      \
     virtual void update();                                      \
     virtual void transform(const Matrix2d& mat);                \
     virtual void clear();                                       \
-    virtual void clearCachedData();                              \
+    virtual void clearCachedData();                             \
     virtual int getPointCount() const;                          \
     virtual Point2d getPoint(int index) const;                  \
     virtual void setPoint(int index, const Point2d& pt);        \

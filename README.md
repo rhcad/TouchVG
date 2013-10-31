@@ -48,7 +48,7 @@ TouchVG 的功能
 Android编译说明
 ---------------
 
-> 在 eclipse 中导入此项目下的所有工程，运行 VGTest 工程可看演示效果。
+> 在 eclipse 中导入此项目下的所有工程，运行 VGTest 或 vgdemo1 工程可看演示效果。
 
 >> 可能需要根据实际安装情况修改工程的SDK版本号。
 
@@ -59,7 +59,7 @@ Android编译说明
 
 >> 不写C++代码、不要democmds也行，参考 `android/test/src/vgtest/testview/shape`包写自己的图形和命令吧。
 
-> 如需重新生成 libtouchvg.so 和 libdemocmds.so，则进入此项目的 android 目录，运行 `./build.sh` 或 `./build.sh NDK_DEBUG=1`
+> 如需重新生成 libtouchvg.so 和 libdemocmds.so，则进入此项目的 android 目录，运行 `./build.sh`
 （需要将[NDK](http://developer.android.com/tools/sdk/ndk/index.html)安装位置加到PATH环境变量，以便使用 ndk-build）。
 
 >> 使用NDK-r8c以后的版本如果出现 `build/gmsl/__gmsl:512: *** non-numeric second argument to wordlist function` 错误，
@@ -68,7 +68,7 @@ Android编译说明
 
 >> 如果是在Windows上编译，推荐使用 MSYS（Unix模拟环境工具）、TDM-GCC（一种MinGW发行版）。
 
->> 如需重新生成内核JNI类（democmds.jar中的core包），则先删除 `democmds_java_wrap.cpp`，再运行`./build.sh`
+>> 如需重新生成内核JNI类，则先删除 android 目录下的 `*_java_wrap.cpp`，再运行 `./build.sh`
 （需要安装[SWIG](http://sourceforge.net/projects/swig/files/)，并将SWIG位置加到 PATH 环境变量）。
 
 iOS编译说明

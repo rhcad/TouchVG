@@ -12,18 +12,13 @@
 */
 class MgCmdDrawTriangle : public MgCommandDraw
 {
-protected:
-    MgCmdDrawTriangle();
-    virtual ~MgCmdDrawTriangle();
-    
 public:
     static const char* Name() { return "triangle"; }
     static MgCommand* Create() { return new MgCmdDrawTriangle; }
 
 private:
-    virtual const char* getName() const { return Name(); }
+    MgCmdDrawTriangle(const char* name = Name()) : MgCommandDraw(name) {}
     virtual void release() { delete this; }
-
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool touchBegan(const MgMotion* sender);
     virtual bool touchMoved(const MgMotion* sender);

@@ -93,11 +93,14 @@ public:
     //! 返回选中的图形的类型, MgShapeType
     int getSelectedShapeType();
 
+    //! 返回当前选中的图形的ID，选中多个时只取第一个
+    int getSelectedShapeID();
+
     //! 删除所有图形，包括锁定的图形
     void clear();
 
     //! 从JSON文件中加载图形
-    bool loadFromFile(const char* vgfile);
+    bool loadFromFile(const char* vgfile, bool readOnly = false);
     
     //! 保存图形到JSON文件
     bool saveToFile(const char* vgfile, bool pretty = true);
@@ -173,7 +176,7 @@ public:
     MgView* viewAdapter();
 
 private:
-    bool loadShapes(MgStorage* s);
+    bool loadShapes(MgStorage* s, bool readOnly = false);
     bool saveShapes(MgStorage* s);
 
     GiCoreViewImpl* impl;

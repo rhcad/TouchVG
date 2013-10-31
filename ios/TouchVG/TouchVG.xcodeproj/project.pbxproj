@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE037956181FA29B0049931F /* GiShapeAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE037955181FA29B0049931F /* GiShapeAdapter.h */; };
+		AE037959181FA2CD0049931F /* GiShapeAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE037958181FA2CD0049931F /* GiShapeAdapter.mm */; };
 		AE2A3A4D178FC511000194AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3A4C178FC511000194AE /* Foundation.framework */; };
 		AE2A3A67178FC608000194AE /* GiGraphView.h in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A65178FC608000194AE /* GiGraphView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE2A3A68178FC608000194AE /* GiCanvasAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A66178FC608000194AE /* GiCanvasAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -172,6 +174,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AE037955181FA29B0049931F /* GiShapeAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiShapeAdapter.h; path = ../../view/include/GiShapeAdapter.h; sourceTree = "<group>"; };
+		AE037958181FA2CD0049931F /* GiShapeAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiShapeAdapter.mm; path = ../../view/src/GiShapeAdapter.mm; sourceTree = "<group>"; };
 		AE2A3A49178FC511000194AE /* libTouchVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2A3A4C178FC511000194AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE2A3A50178FC511000194AE /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
@@ -832,6 +836,7 @@
 				AEF1B1D717E29D2C005B5132 /* GiViewHelper.h */,
 				AE2A3A65178FC608000194AE /* GiGraphView.h */,
 				AE2A3A66178FC608000194AE /* GiCanvasAdapter.h */,
+				AE037955181FA29B0049931F /* GiShapeAdapter.h */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -847,6 +852,7 @@
 				AEE5C70E17E17D1100AFF74D /* GiGraphViewImpl.h */,
 				AE2A3A6A178FC617000194AE /* GiGraphView.mm */,
 				AE2A3A6B178FC617000194AE /* GiCanvasAdapter.mm */,
+				AE037958181FA2CD0049931F /* GiShapeAdapter.mm */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -954,6 +960,7 @@
 				AE3B0111181104F60004AAC7 /* SVGKImage.h in Headers */,
 				AE3D40F51818A3EF003C432D /* svgcanvas.h in Headers */,
 				AE3D40FE1818A42A003C432D /* simple_svg.hpp in Headers */,
+				AE037956181FA29B0049931F /* GiShapeAdapter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1102,6 +1109,7 @@
 				AE2B802B1803F7FC00E50A6E /* mgbasicspreg.cpp in Sources */,
 				AEC33821180E28520029D7B3 /* ImageCache.mm in Sources */,
 				AE3D40FF1818A42A003C432D /* svgcanvas.cpp in Sources */,
+				AE037959181FA2CD0049931F /* GiShapeAdapter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

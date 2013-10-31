@@ -14,18 +14,13 @@
 */
 class MgCmdErase : public MgCommand
 {
-protected:
-    MgCmdErase();
-    virtual ~MgCmdErase();
-
 public:
     static const char* Name() { return "erase"; }
     static MgCommand* Create() { return new MgCmdErase; }
     
 private:
-    virtual const char* getName() const { return Name(); }
+    MgCmdErase() : MgCommand(Name()) {}
     virtual void release() { delete this; }
-
     virtual bool cancel(const MgMotion* sender);
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool backStep(const MgMotion* sender);

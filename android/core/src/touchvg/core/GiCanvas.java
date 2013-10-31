@@ -130,6 +130,14 @@ public class GiCanvas {
     return touchvgJNI.GiCanvas_drawTextAt(swigCPtr, this, text, x, y, h, align);
   }
 
+  public boolean beginShape(int sid, float x, float y, float w, float h) {
+    return (getClass() == GiCanvas.class) ? touchvgJNI.GiCanvas_beginShape(swigCPtr, this, sid, x, y, w, h) : touchvgJNI.GiCanvas_beginShapeSwigExplicitGiCanvas(swigCPtr, this, sid, x, y, w, h);
+  }
+
+  public void endShape(int sid, float x, float y) {
+    if (getClass() == GiCanvas.class) touchvgJNI.GiCanvas_endShape(swigCPtr, this, sid, x, y); else touchvgJNI.GiCanvas_endShapeSwigExplicitGiCanvas(swigCPtr, this, sid, x, y);
+  }
+
   public GiCanvas() {
     this(touchvgJNI.new_GiCanvas(), true);
     touchvgJNI.GiCanvas_director_connect(this, swigCPtr, swigCMemOwn, true);

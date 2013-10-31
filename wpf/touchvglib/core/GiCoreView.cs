@@ -174,12 +174,22 @@ public class GiCoreView : IDisposable {
     return ret;
   }
 
+  public int getSelectedShapeID() {
+    int ret = touchvgPINVOKE.GiCoreView_getSelectedShapeID(swigCPtr);
+    return ret;
+  }
+
   public void clear() {
     touchvgPINVOKE.GiCoreView_clear(swigCPtr);
   }
 
+  public bool loadFromFile(string vgfile, bool readOnly) {
+    bool ret = touchvgPINVOKE.GiCoreView_loadFromFile__SWIG_0(swigCPtr, vgfile, readOnly);
+    return ret;
+  }
+
   public bool loadFromFile(string vgfile) {
-    bool ret = touchvgPINVOKE.GiCoreView_loadFromFile(swigCPtr, vgfile);
+    bool ret = touchvgPINVOKE.GiCoreView_loadFromFile__SWIG_1(swigCPtr, vgfile);
     return ret;
   }
 

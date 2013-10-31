@@ -2,6 +2,10 @@
 <resources>
 
     <string name="app_name">vgdemo1</string>
+    <string name="title_activity_main">vgdemo1 views</string>
+    <string name="title_activity_example1">TouchVG example1</string>
+    <string name="title_activity_animation1">TouchVG animation1</string>
+    
     <string name="selectBtn">选择</string>
     <string name="splinesBtn">曲线</string>
     <string name="lineBtn">线段</string>
@@ -10,5 +14,6 @@
     <string name="lineStyleBtn">线型</string>
     <string name="saveBtn">保存</string>
     <string name="loadBtn">加载</string>
+    <string name="addSVGFile">SVG</string>
 
 </resources>

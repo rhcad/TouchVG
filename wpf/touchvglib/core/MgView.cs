@@ -159,6 +159,11 @@ public class MgView : IDisposable {
     return ret;
   }
 
+  public virtual bool isReadOnly() {
+    bool ret = touchvgPINVOKE.MgView_isReadOnly(swigCPtr);
+    return ret;
+  }
+
   public virtual void regenAll() {
     touchvgPINVOKE.MgView_regenAll(swigCPtr);
   }

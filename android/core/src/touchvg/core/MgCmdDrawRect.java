@@ -20,11 +20,15 @@ public class MgCmdDrawRect extends MgCommandDraw {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
+  protected void finalize() {
+    delete();
+  }
+
   public synchronized void delete() {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        throw new UnsupportedOperationException("C++ destructor does not have public access");
+        touchvgJNI.delete_MgCmdDrawRect(swigCPtr);
       }
       swigCPtr = 0;
     }
@@ -46,8 +50,13 @@ public class MgCmdDrawRect extends MgCommandDraw {
     touchvgJNI.MgCmdDrawRect_change_ownership(this, swigCPtr, true);
   }
 
-  protected MgCmdDrawRect() {
-    this(touchvgJNI.new_MgCmdDrawRect(), true);
+  public MgCmdDrawRect(String name) {
+    this(touchvgJNI.new_MgCmdDrawRect__SWIG_0(name), true);
+    touchvgJNI.MgCmdDrawRect_director_connect(this, swigCPtr, swigCMemOwn, true);
+  }
+
+  public MgCmdDrawRect() {
+    this(touchvgJNI.new_MgCmdDrawRect__SWIG_1(), true);
     touchvgJNI.MgCmdDrawRect_director_connect(this, swigCPtr, swigCMemOwn, true);
   }
 
@@ -58,10 +67,6 @@ public class MgCmdDrawRect extends MgCommandDraw {
   public static MgCommand Create() {
     long cPtr = touchvgJNI.MgCmdDrawRect_Create();
     return (cPtr == 0) ? null : new MgCommand(cPtr, false);
-  }
-
-  public String getName() {
-    return (getClass() == MgCmdDrawRect.class) ? touchvgJNI.MgCmdDrawRect_getName(swigCPtr, this) : touchvgJNI.MgCmdDrawRect_getNameSwigExplicitMgCmdDrawRect(swigCPtr, this);
   }
 
   public void release() {

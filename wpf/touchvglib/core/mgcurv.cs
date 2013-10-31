@@ -50,6 +50,11 @@ public class mgcurv : IDisposable {
     touchvgPINVOKE.mgcurv_splitBezier(Point2d.getCPtr(pts), t, Point2d.getCPtr(pts1), Point2d.getCPtr(pts2));
   }
 
+  public static float lengthOfBezier(Point2d pts, float tol) {
+    float ret = touchvgPINVOKE.mgcurv_lengthOfBezier(Point2d.getCPtr(pts), tol);
+    return ret;
+  }
+
   public static void bezier4P(Point2d pt1, Point2d pt2, Point2d pt3, Point2d pt4, Point2d ctrpt1, Point2d ctrpt2) {
     touchvgPINVOKE.mgcurv_bezier4P(Point2d.getCPtr(pt1), Point2d.getCPtr(pt2), Point2d.getCPtr(pt3), Point2d.getCPtr(pt4), Point2d.getCPtr(ctrpt1), Point2d.getCPtr(ctrpt2));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();

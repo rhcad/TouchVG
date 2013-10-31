@@ -15,10 +15,6 @@
 */
 class MgCmdSelect : public MgCommand, public MgSelection
 {
-protected:
-    MgCmdSelect();
-    virtual ~MgCmdSelect();
-
 public:
     static const char* Name() { return "select"; }
     static MgCommand* Create() { return new MgCmdSelect; }
@@ -49,9 +45,8 @@ public:
     virtual bool isSelectedByType(MgView* view, int type);
     
 private:
-    virtual const char* getName() const { return Name(); }
+    MgCmdSelect();
     virtual void release() { delete this; }
-
     virtual bool cancel(const MgMotion* sender);
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool backStep(const MgMotion* sender);

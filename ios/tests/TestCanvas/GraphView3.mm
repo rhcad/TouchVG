@@ -3,7 +3,7 @@
 
 #import "GraphView3.h"
 #import "CalloutView.h"
-#import <QuartzCore/CALayer.h>  // renderInContext
+#import <QuartzCore/QuartzCore.h>  // renderInContext
 #include "GiCanvasAdapter.h"
 #include "testcanvas.h"
 #include <mach/mach_time.h>

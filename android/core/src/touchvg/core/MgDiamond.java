@@ -48,10 +48,6 @@ public class MgDiamond extends MgBaseRect {
     return touchvgJNI.MgDiamond_Type();
   }
 
-  public String getTypeName() {
-    return touchvgJNI.MgDiamond_getTypeName(swigCPtr, this);
-  }
-
   public MgObject clone() {
     long cPtr = touchvgJNI.MgDiamond_clone(swigCPtr, this);
     return (cPtr == 0) ? null : new MgObject(cPtr, false);

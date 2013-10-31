@@ -11,7 +11,7 @@ class MgShape;
 class MgBaseShape;
 class MgMotion;
 class GiGraphics;
-struct MgCommand;
+class MgCommand;
 struct MgCmdManager;
 
 //! 命令扩展观察者接口

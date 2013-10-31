@@ -167,6 +167,12 @@ namespace touchvg.view
             get { return CoreView.getSelectedShapeCount(); }
         }
 
+        //! 当前选中的图形的ID，选中多个时只取第一个
+        public int SelectedShapeID
+        {
+            get { return CoreView.getSelectedShapeID(); }
+        }
+
         //! 选中的图形的类型, MgShapeType
         public int SelectedType
         {

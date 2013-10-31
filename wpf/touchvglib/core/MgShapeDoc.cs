@@ -153,6 +153,15 @@ public class MgShapeDoc : MgObject {
     return ret;
   }
 
+  public bool isReadOnly() {
+    bool ret = touchvgPINVOKE.MgShapeDoc_isReadOnly(swigCPtr);
+    return ret;
+  }
+
+  public void setReadOnly(bool readOnly) {
+    touchvgPINVOKE.MgShapeDoc_setReadOnly(swigCPtr, readOnly);
+  }
+
   public override MgObject clone() {
     IntPtr cPtr = touchvgPINVOKE.MgShapeDoc_clone(swigCPtr);
     MgObject ret = (cPtr == IntPtr.Zero) ? null : new MgObject(cPtr, false);

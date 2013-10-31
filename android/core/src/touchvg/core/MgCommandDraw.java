@@ -50,8 +50,8 @@ public class MgCommandDraw extends MgCommand {
     touchvgJNI.MgCommandDraw_change_ownership(this, swigCPtr, true);
   }
 
-  public MgCommandDraw() {
-    this(touchvgJNI.new_MgCommandDraw(), true);
+  public MgCommandDraw(String name) {
+    this(touchvgJNI.new_MgCommandDraw(name), true);
     touchvgJNI.MgCommandDraw_director_connect(this, swigCPtr, swigCMemOwn, true);
   }
 
@@ -86,9 +86,8 @@ public class MgCommandDraw extends MgCommand {
     return touchvgJNI.MgCommandDraw_touchEndedStep(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }
 
-  protected MgShape createShape(MgShapeFactory arg0) {
-    long cPtr = (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_createShape(swigCPtr, this, MgShapeFactory.getCPtr(arg0), arg0) : touchvgJNI.MgCommandDraw_createShapeSwigExplicitMgCommandDraw(swigCPtr, this, MgShapeFactory.getCPtr(arg0), arg0);
-    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  public int getShapeType() {
+    return (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_getShapeType(swigCPtr, this) : touchvgJNI.MgCommandDraw_getShapeTypeSwigExplicitMgCommandDraw(swigCPtr, this);
   }
 
   protected int getMaxStep() {

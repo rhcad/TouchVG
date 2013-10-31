@@ -14,7 +14,7 @@
 class MgCommandDraw : public MgCommand
 {
 public:
-    MgCommandDraw();
+    MgCommandDraw(const char* name);
     virtual ~MgCommandDraw();
     
     MgShape* addShape(const MgMotion* sender, MgShape* shape = NULL, bool autolock = true);
@@ -23,8 +23,10 @@ public:
     bool touchMovedStep(const MgMotion* sender);
     bool touchEndedStep(const MgMotion* sender);
 
+    //! 返回新图形的类型，供其他语言重装使用
+    virtual int getShapeType() { return m_shape ? m_shape->shapec()->getType() : 0; }
+    
 protected:
-    virtual MgShape* createShape(MgShapeFactory*) { return (MgShape*)0; }
     bool _initialize(MgShape* (*creator)(), const MgMotion* sender);
     bool _click(const MgMotion* sender);
     virtual int getMaxStep() { return 3; }

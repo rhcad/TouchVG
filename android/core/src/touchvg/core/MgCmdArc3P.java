@@ -35,6 +35,14 @@ public class MgCmdArc3P extends MgCommandDraw {
     super.delete();
   }
 
+  public MgCmdArc3P(String name) {
+    this(touchvgJNI.new_MgCmdArc3P__SWIG_0(name), true);
+  }
+
+  public MgCmdArc3P() {
+    this(touchvgJNI.new_MgCmdArc3P__SWIG_1(), true);
+  }
+
   public static String Name() {
     return touchvgJNI.MgCmdArc3P_Name();
   }
@@ -42,10 +50,6 @@ public class MgCmdArc3P extends MgCommandDraw {
   public static MgCommand Create() {
     long cPtr = touchvgJNI.MgCmdArc3P_Create();
     return (cPtr == 0) ? null : new MgCommand(cPtr, false);
-  }
-
-  public String getName() {
-    return touchvgJNI.MgCmdArc3P_getName(swigCPtr, this);
   }
 
   public void release() {

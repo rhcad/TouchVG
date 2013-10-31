@@ -13,9 +13,14 @@
     \interface MgCommand
     \see mgRegisterCommand
 */
-struct MgCommand {
+class MgCommand {
+public:
+    //! 构造函数，名称最长为30个字符
+    MgCommand(const char* name) {
+        unsigned i=0; for(;name[i] && i<sizeof(_name)-1;i++) {_name[i]=name[i];} _name[i]=0; }
     virtual ~MgCommand() {}
-    virtual const char* getName() const = 0;                    //!< 返回命令名称
+    
+    const char* getName() const { return _name; }               //!< 返回命令名称
     virtual void release() = 0;                                 //!< 销毁对象
     
     virtual bool cancel(const MgMotion* sender) { return !sender; } //!< 取消命令
@@ -38,7 +43,11 @@ struct MgCommand {
     
     virtual bool isDrawingCommand() { return false; }       //!< 是否为绘图命令
     virtual bool isFloatingCommand() { return false; }      //!< 是否可嵌套在其他命令中
-    virtual bool doContextAction(const MgMotion* sender, int action) { return !sender && !action; } //!< 执行上下文动作
+    virtual bool doContextAction(const MgMotion* sender, int action) {
+        return !sender && !action; }                        //!< 执行上下文动作
+private:
+    char _name[31];
+    MgCommand();
 };
 
 //! 图形列表锁定辅助类

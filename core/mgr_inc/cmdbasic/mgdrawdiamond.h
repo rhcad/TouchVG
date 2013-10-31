@@ -19,7 +19,7 @@ public:
     static MgCommand* Create() { return new MgCmdDrawDiamond; }
     
 private:
-    virtual const char* getName() const { return Name(); }
+    MgCmdDrawDiamond() : MgCmdDrawEllipse(Name()) {}
     virtual void release() { delete this; }
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
 };

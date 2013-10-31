@@ -61,7 +61,20 @@ bool GiSvgCanvas::close()
     return ret;
 }
 
-static const float patDash[]      = { 5, 5, 0 };
+bool GiSvgCanvas::beginShape(int sid, float, float, float, float)
+{
+    std::stringstream ss;
+    ss << "s" << sid;
+    im->doc->pushGroup(ss.str());
+    return true;
+}
+
+void GiSvgCanvas::endShape(int, float, float)
+{
+    im->doc->popGroup();
+}
+
+static const float patDash[]      = { 4, 2, 0 };
 static const float patDot[]       = { 1, 2, 0 };
 static const float patDashDot[]   = { 10, 2, 2, 2, 0 };
 static const float dashDotdot[]   = { 20, 2, 2, 2, 2, 2, 0 };

@@ -2,9 +2,11 @@
 //! \brief 实现iOS绘图视图辅助类 GiViewHelper
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
+#import <QuartzCore/QuartzCore.h>
 #import "GiViewHelper.h"
 #import "GiGraphView.h"
 #import "ImageCache.h"
+#include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -26,8 +28,8 @@ GiColor CGColorToGiColor(CGColorRef color) {
 
 @implementation GiViewHelper
 
-@synthesize command, shapeCount, selectedCount, selectedType, content, changeCount;
-@synthesize lineWidth, strokeWidth, lineColor, lineAlpha;
+@synthesize shapeCount, selectedCount, selectedType, selectedShapeID, content, changeCount;
+@synthesize command, lineWidth, strokeWidth, lineColor, lineAlpha;
 @synthesize lineStyle, fillColor, fillAlpha;
 
 - (id)init:(GiGraphView *)view {
@@ -187,6 +189,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
     return [_view coreView]->getSelectedShapeType();
 }
 
+- (int)selectedShapeID {
+    return [_view coreView]->getSelectedShapeID();
+}
+
 - (int)changeCount {
     return [_view coreView]->getChangeCount();
 }
@@ -199,15 +205,19 @@ GiColor CGColorToGiColor(CGColorRef color) {
     return filename;
 }
 
+- (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r {
+    return [_view coreView]->loadFromFile([[self addExtension:vgfile :@"vg"] UTF8String], r); 
+}
+
 - (BOOL)loadFromFile:(NSString *)vgfile {
-    return [_view coreView]->loadFromFile([[self addExtension:vgfile :@".vg"] UTF8String]);
+    return [_view coreView]->loadFromFile([[self addExtension:vgfile :@"vg"] UTF8String]);
 }
 
 - (BOOL)saveToFile:(NSString *)vgfile {
     BOOL ret = NO;
     NSFileManager *fm = [NSFileManager defaultManager];
     
-    vgfile = [self addExtension:vgfile :@".vg"];
+    vgfile = [self addExtension:vgfile :@"vg"];
     if ([_view coreView]->getShapeCount() > 0) {
         if (![fm fileExistsAtPath:vgfile]) {
             [fm createFileAtPath:vgfile contents:[NSData data] attributes:nil];
@@ -281,6 +291,18 @@ GiColor CGColorToGiColor(CGColorRef color) {
 
 - (void)setImagePath:(NSString *)path {
     [_view.imageCache setImagePath:path];
+}
+
+- (CALayer *)exportLayerTree:(BOOL)hidden {
+    CALayer *rootLayer = [CALayer layer];
+    rootLayer.frame = _view.bounds;
+    
+    GiShapeCallback shapeCallback(rootLayer, hidden);
+    GiShapeAdapter adapter(&shapeCallback);
+    
+    [_view coreView]->drawAll([_view viewAdapter], &adapter);
+    
+    return rootLayer;
 }
 
 @end

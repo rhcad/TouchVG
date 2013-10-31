@@ -129,6 +129,13 @@ public:
     //! 清除后备缓冲位图，以便重新绘图
     virtual void clearCachedBitmap(bool clearAll = false) { clearAll = !clearAll; }
 #endif
+
+    //! 开始绘制一个图形
+    virtual bool beginShape(int sid, float x, float y, float w, float h) {
+        return sid||x||y||w||h; }
+    
+    //! 结束绘制一个图形
+    virtual void endShape(int sid, float x, float y) { if (sid) x += y; }
 };
 
 #endif // TOUCHVG_CORE_GICANVAS_H

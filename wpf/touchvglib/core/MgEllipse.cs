@@ -54,11 +54,6 @@ public class MgEllipse : MgBaseRect {
     return ret;
   }
 
-  public override string getTypeName() {
-    string ret = touchvgPINVOKE.MgEllipse_getTypeName(swigCPtr);
-    return ret;
-  }
-
   public override MgObject clone() {
     IntPtr cPtr = touchvgPINVOKE.MgEllipse_clone(swigCPtr);
     MgObject ret = (cPtr == IntPtr.Zero) ? null : new MgObject(cPtr, false);

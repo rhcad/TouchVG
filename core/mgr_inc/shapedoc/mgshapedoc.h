@@ -106,6 +106,12 @@ public:
     //! 返回改变计数
     int getChangeCount() const;
 
+    //! 返回文档是否只读
+    bool isReadOnly() const;
+
+    //! 设置文档是否只读
+    void setReadOnly(bool readOnly);
+
 #ifndef SWIG
     typedef void (*ShapesLocked)(MgShapeDoc* doc, void* obj, bool locked);
     void registerObserver(ShapesLocked func, void* obj);

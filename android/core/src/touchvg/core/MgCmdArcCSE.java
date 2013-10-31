@@ -35,6 +35,14 @@ public class MgCmdArcCSE extends MgCmdArc3P {
     super.delete();
   }
 
+  public MgCmdArcCSE(String name) {
+    this(touchvgJNI.new_MgCmdArcCSE__SWIG_0(name), true);
+  }
+
+  public MgCmdArcCSE() {
+    this(touchvgJNI.new_MgCmdArcCSE__SWIG_1(), true);
+  }
+
   public static String Name() {
     return touchvgJNI.MgCmdArcCSE_Name();
   }
@@ -44,12 +52,12 @@ public class MgCmdArcCSE extends MgCmdArc3P {
     return (cPtr == 0) ? null : new MgCommand(cPtr, false);
   }
 
-  public String getName() {
-    return touchvgJNI.MgCmdArcCSE_getName(swigCPtr, this);
-  }
-
   public void release() {
     touchvgJNI.MgCmdArcCSE_release(swigCPtr, this);
+  }
+
+  public boolean draw(MgMotion sender, GiGraphics gs) {
+    return touchvgJNI.MgCmdArcCSE_draw(swigCPtr, this, MgMotion.getCPtr(sender), sender, GiGraphics.getCPtr(gs), gs);
   }
 
 }

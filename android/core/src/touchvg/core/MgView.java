@@ -133,6 +133,10 @@ public class MgView {
     return touchvgJNI.MgView_setCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender, name);
   }
 
+  public boolean isReadOnly() {
+    return touchvgJNI.MgView_isReadOnly(swigCPtr, this);
+  }
+
   public void regenAll() {
     touchvgJNI.MgView_regenAll(swigCPtr, this);
   }

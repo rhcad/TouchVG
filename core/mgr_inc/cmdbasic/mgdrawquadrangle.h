@@ -19,8 +19,7 @@ public:
     static MgCommand* Create() { return new MgCmdDrawQuadrangle; }
     
 private:
-    MgCmdDrawQuadrangle() : MgCmdDrawPolygon(4) {}
-    virtual const char* getName() const { return Name(); }
+    MgCmdDrawQuadrangle() : MgCmdDrawPolygon(Name(), 4) {}
     virtual void release() { delete this; }
 };
 

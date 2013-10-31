@@ -10,6 +10,11 @@ import touchvg.core.Floats;
 import touchvg.core.GiCoreView;
 import touchvg.core.GiView;
 import touchvg.core.Ints;
+
+import touchvg.view.internal.ContextAction;
+import touchvg.view.internal.GestureListener;
+import touchvg.view.internal.ImageCache;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -25,16 +30,17 @@ import android.view.View;
  *  建议使用FrameLayout作为容器创建绘图视图，使用LinearLayout将无法显示上下文操作按钮。
  */
 public class GraphView extends View {
-    private static final String TAG = "touchvg";
-    private static GraphView mActiveView;   // 当前激活视图
-    private ImageCache mImageCache;         // 图像对象缓存
-    private CanvasAdapter mCanvasAdapter;   // onDraw用的画布适配器
-    private CanvasAdapter mCanvasRegen;     // regen用的画布适配器
-    private ViewAdapter mViewAdapter;       // 视图回调适配器
-    private GiCoreView mCoreView;           // 内核视图分发器
-    private GestureDetector mGestureDetector; // 手势识别器
-    private GestureListener mGestureListener; // 手势识别实现
-    private boolean mGestureEnable = true;  // 是否允许交互
+    protected static final String TAG = "touchvg";
+    protected static GraphView mActiveView;   // 当前激活视图
+    protected ImageCache mImageCache;         // 图像对象缓存
+    protected CanvasAdapter mCanvasAdapter;   // onDraw用的画布适配器
+    protected CanvasAdapter mCanvasRegen;     // regen用的画布适配器
+    protected ViewAdapter mViewAdapter;       // 视图回调适配器
+    protected GiCoreView mCoreView;           // 内核视图分发器
+    protected GestureDetector mGestureDetector; // 手势识别器
+    protected GestureListener mGestureListener; // 手势识别实现
+    protected boolean mGestureEnable = true;  // 是否允许交互
+    protected boolean mContextActionEnabled = true; // 是否允许上下文操作
     private boolean mRegenning = false;     // 是否正在regenAll
     private Bitmap mCachedBitmap;           // 缓存快照
     private Bitmap mRegenBitmap;            // regen用的缓存位图
@@ -65,21 +71,23 @@ public class GraphView extends View {
         initView(context);
     }
     
-    private void createAdapter(Context context) {
+    protected void createAdapter(Context context) {
         mImageCache = new ImageCache();
         mCanvasAdapter = new CanvasAdapter(this, mImageCache);
         mCanvasRegen = new CanvasAdapter(this, mImageCache);
         mViewAdapter = new ViewAdapter();
     }
     
-    private void initView(Context context) {
+    protected void initView(Context context) {
         mGestureListener = new GestureListener(mCoreView, mViewAdapter);
         mGestureDetector = new GestureDetector(context, mGestureListener);
         setContextImages(context);
         
         final DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
-        GiCoreView.setScreenDpi(dm.densityDpi);         // 应用API
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);   // 避免路径太大不能渲染
+        GiCoreView.setScreenDpi(dm.densityDpi);             // 应用DPI
+        if (mCanvasRegen != null) {
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);   // 避免路径太大不能渲染
+        }
         
         this.setOnTouchListener(new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -102,7 +110,7 @@ public class GraphView extends View {
         return mGestureListener.onTap(x, y);
     }
     
-    private void activateView() {
+    protected void activateView() {
         mViewAdapter.removeContextButtons();
         if (mActiveView != this) {
             mActiveView = this;
@@ -145,6 +153,11 @@ public class GraphView extends View {
         regen(false);
     }
     
+    //! 是否允许上下文操作
+    public void setContextActionEnabled(boolean enabled) {
+        mContextActionEnabled = enabled; 
+    }
+    
     public static int getResIDFromName(Context ctx, String type, String name) {
         int id = name != null ? ctx.getResources().getIdentifier(name,
                 type, ctx.getPackageName()) : 0;
@@ -154,11 +167,19 @@ public class GraphView extends View {
         return id;
     }
     
+    public static String getResName(Context ctx, int id) {
+        try {
+            return ctx.getResources().getResourceEntryName(id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
     public static int getDrawableIDFromName(Context context, String name) {
         return getResIDFromName(context, "drawable", name);
     }
     
-    private void setContextImages(Context context) {
+    protected void setContextImages(Context context) {
         if (ContextAction.getButtonImages() == null) {
             final String[] imageNames = new String[] { null, "vg_selall", null, "vg_draw",
                     "vg_back", "vg_delete", "vg_clone", "vg_fixlen", "vg_freelen",
@@ -373,7 +394,7 @@ public class GraphView extends View {
     }
     
     //! 视图回调适配器
-    private class ViewAdapter extends GiView {
+    protected class ViewAdapter extends GiView {
         private ContextAction mContextAction;
         
         public synchronized void delete() {
@@ -429,6 +450,9 @@ public class GraphView extends View {
                                           float x, float y, float w, float h) {
             if (actions.count() == 0 && mContextAction == null) {
                 return true;
+            }
+            if (!mContextActionEnabled) {
+                return false;
             }
             if (mContextAction == null) {
                 mContextAction = new ContextAction(mCoreView, GraphView.this);

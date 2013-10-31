@@ -48,10 +48,6 @@ public class MgLines extends MgBaseLines {
     return touchvgJNI.MgLines_Type();
   }
 
-  public String getTypeName() {
-    return touchvgJNI.MgLines_getTypeName(swigCPtr, this);
-  }
-
   public MgObject clone() {
     long cPtr = touchvgJNI.MgLines_clone(swigCPtr, this);
     return (cPtr == 0) ? null : new MgObject(cPtr, false);

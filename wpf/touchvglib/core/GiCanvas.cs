@@ -124,6 +124,15 @@ public class GiCanvas : IDisposable {
     return ret;
   }
 
+  public virtual bool beginShape(int sid, float x, float y, float w, float h) {
+    bool ret = (SwigDerivedClassHasMethod("beginShape", swigMethodTypes20) ? touchvgPINVOKE.GiCanvas_beginShapeSwigExplicitGiCanvas(swigCPtr, sid, x, y, w, h) : touchvgPINVOKE.GiCanvas_beginShape(swigCPtr, sid, x, y, w, h));
+    return ret;
+  }
+
+  public virtual void endShape(int sid, float x, float y) {
+    if (SwigDerivedClassHasMethod("endShape", swigMethodTypes21)) touchvgPINVOKE.GiCanvas_endShapeSwigExplicitGiCanvas(swigCPtr, sid, x, y); else touchvgPINVOKE.GiCanvas_endShape(swigCPtr, sid, x, y);
+  }
+
   public GiCanvas() : this(touchvgPINVOKE.new_GiCanvas(), true) {
     SwigDirectorConnect();
   }
@@ -169,7 +178,11 @@ public class GiCanvas : IDisposable {
       swigDelegate18 = new SwigDelegateGiCanvas_18(SwigDirectordrawBitmap);
     if (SwigDerivedClassHasMethod("drawTextAt", swigMethodTypes19))
       swigDelegate19 = new SwigDelegateGiCanvas_19(SwigDirectordrawTextAt);
-    touchvgPINVOKE.GiCanvas_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17, swigDelegate18, swigDelegate19);
+    if (SwigDerivedClassHasMethod("beginShape", swigMethodTypes20))
+      swigDelegate20 = new SwigDelegateGiCanvas_20(SwigDirectorbeginShape);
+    if (SwigDerivedClassHasMethod("endShape", swigMethodTypes21))
+      swigDelegate21 = new SwigDelegateGiCanvas_21(SwigDirectorendShape);
+    touchvgPINVOKE.GiCanvas_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17, swigDelegate18, swigDelegate19, swigDelegate20, swigDelegate21);
   }
 
   private bool SwigDerivedClassHasMethod(string methodName, Type[] methodTypes) {
@@ -258,6 +271,14 @@ public class GiCanvas : IDisposable {
     return drawTextAt(text, x, y, h, align);
   }
 
+  private bool SwigDirectorbeginShape(int sid, float x, float y, float w, float h) {
+    return beginShape(sid, x, y, w, h);
+  }
+
+  private void SwigDirectorendShape(int sid, float x, float y) {
+    endShape(sid, x, y);
+  }
+
   public delegate void SwigDelegateGiCanvas_0(int argb, float width, int style, float phase);
   public delegate void SwigDelegateGiCanvas_1(int argb, int style);
   public delegate void SwigDelegateGiCanvas_2(float x, float y, float w, float h);
@@ -278,6 +299,8 @@ public class GiCanvas : IDisposable {
   public delegate void SwigDelegateGiCanvas_17(float x, float y, int type);
   public delegate void SwigDelegateGiCanvas_18(string name, float xc, float yc, float w, float h, float angle);
   public delegate float SwigDelegateGiCanvas_19(string text, float x, float y, float h, int align);
+  public delegate bool SwigDelegateGiCanvas_20(int sid, float x, float y, float w, float h);
+  public delegate void SwigDelegateGiCanvas_21(int sid, float x, float y);
 
   private SwigDelegateGiCanvas_0 swigDelegate0;
   private SwigDelegateGiCanvas_1 swigDelegate1;
@@ -299,6 +322,8 @@ public class GiCanvas : IDisposable {
   private SwigDelegateGiCanvas_17 swigDelegate17;
   private SwigDelegateGiCanvas_18 swigDelegate18;
   private SwigDelegateGiCanvas_19 swigDelegate19;
+  private SwigDelegateGiCanvas_20 swigDelegate20;
+  private SwigDelegateGiCanvas_21 swigDelegate21;
 
   private static Type[] swigMethodTypes0 = new Type[] { typeof(int), typeof(float), typeof(int), typeof(float) };
   private static Type[] swigMethodTypes1 = new Type[] { typeof(int), typeof(int) };
@@ -320,6 +345,8 @@ public class GiCanvas : IDisposable {
   private static Type[] swigMethodTypes17 = new Type[] { typeof(float), typeof(float), typeof(int) };
   private static Type[] swigMethodTypes18 = new Type[] { typeof(string), typeof(float), typeof(float), typeof(float), typeof(float), typeof(float) };
   private static Type[] swigMethodTypes19 = new Type[] { typeof(string), typeof(float), typeof(float), typeof(float), typeof(int) };
+  private static Type[] swigMethodTypes20 = new Type[] { typeof(int), typeof(float), typeof(float), typeof(float), typeof(float) };
+  private static Type[] swigMethodTypes21 = new Type[] { typeof(int), typeof(float), typeof(float) };
 }
 
 }

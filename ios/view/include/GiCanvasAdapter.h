@@ -28,6 +28,9 @@ public:
     //! 返回屏幕点密度
     static int getScreenDpi();
     
+    static const CGFloat* const LINEDASH[];     //!< 虚线定义, 0..4
+    static float colorPart(int argb, int byteOrder);
+    
 public:
     void setPen(int argb, float width, int style, float phase);
     void setBrush(int argb, int style);

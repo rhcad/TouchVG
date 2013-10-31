@@ -6,11 +6,8 @@
 #include <mgshapet.h>
 #include <mgbasicsp.h>
 
-MgCmdDrawSplines::MgCmdDrawSplines(bool freehand) : m_freehand(freehand)
-{
-}
-
-MgCmdDrawSplines::~MgCmdDrawSplines()
+MgCmdDrawSplines::MgCmdDrawSplines(const char* name, bool freehand)
+    : MgCommandDraw(name), m_freehand(freehand)
 {
 }
 

@@ -9,17 +9,12 @@
 
 class HitTestCmd : public MgCommand
 {
-protected:
-    HitTestCmd() : _tol(0), _curid(0) { _cur.dist = 1e10f; }
-    virtual ~HitTestCmd() {}
-
 public:
     static const char* Name() { return "hittest"; }
     static MgCommand* Create() { return new HitTestCmd; }
 private:
-    virtual const char* getName() const { return Name(); }
+    HitTestCmd() : MgCommand(Name()), _tol(0), _curid(0) { _cur.dist = 1e10f; }
     virtual void release() { delete this; }
-
     virtual bool draw(const MgMotion* sender, GiGraphics* gs);
     virtual bool touchBegan(const MgMotion* sender);
     virtual bool touchMoved(const MgMotion* sender);

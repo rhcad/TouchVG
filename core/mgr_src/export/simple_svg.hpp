@@ -645,7 +645,21 @@ namespace svg
 
         Document & operator<<(Shape const & shape)
         {
-            body_nodes_str += shape.toString(layout);
+            if (groups.empty())
+                body_nodes_str += shape.toString(layout);
+            else
+                groups.back() += shape.toString(layout);
+            return *this;
+        }
+        Document & pushGroup(const std::string& gid)
+        {
+            groups.push_back(elemStart("g") + attribute("id", gid) + ">\n");
+            return *this;
+        }
+        Document & popGroup()
+        {
+            body_nodes_str += groups.back() + "\t" + elemEnd("g");
+            groups.pop_back();
             return *this;
         }
         std::string toString() const
@@ -675,6 +689,7 @@ namespace svg
         Layout layout;
 
         std::string body_nodes_str;
+        std::vector<std::string> groups;
     };
 }
 

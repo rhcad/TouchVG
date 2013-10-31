@@ -6,14 +6,6 @@
 #include <mgshapet.h>
 #include <mgbasicsp.h>
 
-MgCmdDrawLine::MgCmdDrawLine()
-{
-}
-
-MgCmdDrawLine::~MgCmdDrawLine()
-{
-}
-
 bool MgCmdDrawLine::initialize(const MgMotion* sender, MgStorage*)
 {
     return _initialize(MgShapeT<MgLine>::create, sender);
@@ -55,13 +47,4 @@ bool MgCmdDrawLine::touchEnded(const MgMotion* sender)
     delayClear();
 
     return MgCommandDraw::touchEnded(sender);
-}
-
-bool MgCmdDrawFixedLine::initialize(const MgMotion* sender, MgStorage*)
-{
-    bool ret = _initialize(MgShapeT<MgLine>::create, sender);
-    if (ret) {
-        dynshape()->shape()->setFlag(kMgFixedLength, true);
-    }
-    return ret;
 }

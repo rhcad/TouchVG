@@ -9,14 +9,6 @@
 #include <mgbasicsp.h>
 #include <mgaction.h>
 
-MgCmdErase::MgCmdErase()
-{
-}
-
-MgCmdErase::~MgCmdErase()
-{
-}
-
 bool MgCmdErase::cancel(const MgMotion* sender)
 {
     m_boxsel = false;
@@ -91,7 +83,7 @@ bool MgCmdErase::click(const MgMotion* sender)
     MgShape* shape = hitTest(sender);
     if (shape && sender->view->shapeWillDeleted(shape)) {
         MgShapesLock locker(MgShapesLock::Remove, sender->view);
-        if (sender->view->removeShape(shape)) {
+        if (locker.locked() && sender->view->removeShape(shape)) {
             shape->release();
             sender->view->regenAll();
         }
@@ -145,8 +137,10 @@ bool MgCmdErase::touchEnded(const MgMotion* sender)
         && sender->view->shapeWillDeleted(s->findShape(m_delIds.front()))) {
         MgShapesLock locker(MgShapesLock::Remove, sender->view);
         int count = 0;
+        std::vector<int>::iterator it;
         
-        for (std::vector<int>::iterator it = m_delIds.begin(); it != m_delIds.end(); ++it) {
+        it = locker.locked() ? m_delIds.begin() : m_delIds.end();
+        for (; it != m_delIds.end(); ++it) {
             MgShape* shape = s->findShape(*it);
             if (shape && sender->view->removeShape(shape)) {
                 shape->release();

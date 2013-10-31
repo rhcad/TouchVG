@@ -16,6 +16,7 @@ struct MgShapeDoc::Impl {
     Box2d       rectW;
     float       viewScale;
     long        changeCount;
+    bool        readOnly;
     volatile long   refcount;
 
     MgLockRW    lock;
@@ -31,6 +32,7 @@ MgShapeDoc::MgShapeDoc()
     im->curShapes = im->layers[0];
     im->viewScale = 0;
     im->changeCount = 0;
+    im->readOnly = false;
     im->refcount = 1;
 }
 
@@ -103,6 +105,8 @@ Matrix2d& MgShapeDoc::modelTransform() { return im->xf; }
 Box2d MgShapeDoc::getPageRectW() const { return im->rectW; }
 float MgShapeDoc::getViewScale() const { return im->viewScale; }
 int MgShapeDoc::getChangeCount() const { return im->changeCount; }
+bool MgShapeDoc::isReadOnly() const { return im->readOnly; }
+void MgShapeDoc::setReadOnly(bool readOnly) { im->readOnly = readOnly; }
 MgLockRW* MgShapeDoc::getLockData() const { return &im->lock; }
 MgLockRW* MgShapeDoc::getDynLockData() const { return &im->dynlock; }
 
@@ -215,7 +219,7 @@ bool MgShapeDoc::lockData(int flags, int timeout)
 long MgShapeDoc::unlockData(bool forWrite)
 {
     MgBaseShape* owner = (MgBaseShape *)getCurrentShapes()->getOwner();
-    if (owner->isKindOf(MgBaseShape::Type())) {
+    if (forWrite && owner->isKindOf(MgBaseShape::Type())) {
         owner->update();
     }
     return im->lock.unlockData(forWrite);

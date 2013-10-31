@@ -86,6 +86,7 @@ GiColor CGColorToGiColor(CGColorRef color);
         self.autoresizingMask = 0xFF;               // 自动适应大小
         _activeGraphView = self;                    // 设置为当前绘图视图
         [self initView:NULL :NULL];
+        [self coreView]->onSize(_adapter, frame.size.width, frame.size.height);
     }
     return self;
 }
@@ -100,8 +101,10 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 + (GiGraphView *)createGraphView:(CGRect)frame :(UIView *)parentView {
     GiGraphView *v = [[GiGraphView alloc]initWithFrame:frame];
-    [parentView addSubview:v];
-    [v release];
+    if (parentView) {
+        [parentView addSubview:v];
+        [v release];
+    }
     return v;
 }
 
@@ -114,8 +117,10 @@ GiColor CGColorToGiColor(CGColorRef color);
         return nil;
     
     GiGraphView *v = [[GiGraphView alloc]initWithFrame:frame :refView];
-    [parentView addSubview:v];
-    [v release];
+    if (parentView) {
+        [parentView addSubview:v];
+        [v release];
+    }
     
     return v;
 }

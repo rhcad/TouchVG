@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 
 @class GiGraphView;
+@class CALayer;
 
 //! iOS绘图视图辅助类
 /*! \ingroup GROUP_IOS
@@ -34,14 +35,17 @@
 @property(nonatomic, readonly) int shapeCount;      //!< 图形总数
 @property(nonatomic, readonly) int selectedCount;   //!< 选中的图形个数
 @property(nonatomic, readonly) int selectedType;    //!< 选中的图形的类型, MgShapeType
+@property(nonatomic, readonly) int selectedShapeID; //!< 当前选中的图形的ID，选中多个时只取第一个
 @property(nonatomic, readonly) int changeCount;     //!< 图形改变次数，可用于检查是否需要保存
 @property(nonatomic, assign) NSString *content;     //!< 图形的JSON内容
 
+- (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r;   //!< 从JSON文件中加载图形，自动改后缀名为.vg
 - (BOOL)loadFromFile:(NSString *)vgfile;    //!< 从JSON文件中加载图形，自动改后缀名为.vg
 - (BOOL)saveToFile:(NSString *)vgfile;      //!< 保存图形到JSON文件，自动改后缀名为.vg
 - (UIImage *)snapshot;                      //!< 得到静态图形的快照，自动释放
 - (BOOL)savePng:(NSString *)filename;       //!< 保存静态图形的快照到PNG文件，自动改后缀名为.png
 - (BOOL)exportSVG:(NSString *)filename;     //!< 导出静态图形到SVG文件，自动改后缀名为.svg
+- (CALayer *)exportLayerTree:(BOOL)hidden;  //!< 将静态图形转换到三级图层，第二级为每个图形的层，其下有CAShapeLayer
 
 - (BOOL)zoomToExtent;                       //!< 放缩显示全部内容
 - (BOOL)zoomToModel:(CGRect)rect;           //!< 放缩显示指定范围到视图区域

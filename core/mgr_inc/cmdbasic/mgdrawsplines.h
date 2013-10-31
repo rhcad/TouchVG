@@ -15,17 +15,13 @@
 class MgCmdDrawSplines : public MgCommandDraw
 {
 protected:
-    MgCmdDrawSplines(bool freehand = true);
-    virtual ~MgCmdDrawSplines();
-
+    MgCmdDrawSplines(const char* name = Name(), bool freehand = true);
 public:
     static const char* Name() { return "splines"; }
     static MgCommand* Create() { return new MgCmdDrawSplines; }
     
 private:
-    virtual const char* getName() const { return Name(); }
     virtual void release() { delete this; }
-    
     virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool backStep(const MgMotion* sender);
     virtual bool draw(const MgMotion* sender, GiGraphics* gs);
@@ -50,7 +46,7 @@ private:
 class MgCmdDrawSplineMouse : public MgCmdDrawSplines
 {
 protected:
-    MgCmdDrawSplineMouse() : MgCmdDrawSplines(false) {}
+    MgCmdDrawSplineMouse() : MgCmdDrawSplines(Name(), false) {}
     virtual ~MgCmdDrawSplineMouse() {}
 
 public:
