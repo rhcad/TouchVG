@@ -1,4 +1,8 @@
-﻿using System;
+﻿//! \file WPFMainCanvas.cs
+//! \brief 定义WPF静态图形画布视图类
+// Copyright (c) 2013, https://github.com/rhcad/touchvg
+
+using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;

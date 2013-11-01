@@ -80,6 +80,7 @@ public class ShapeView extends GraphView {
         return mShapeLayout != null ? mShapeLayout.findViewById(id) : null;
     }
 
+    //! 视图回调适配器
     protected class ShapeViewAdapter extends ViewAdapter {
         @Override
         public void regenAll() {

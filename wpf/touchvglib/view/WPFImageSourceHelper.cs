@@ -1,4 +1,8 @@
-﻿using System;
+﻿//! \file WPFImageSourceHelper.cs
+//! \brief 定义WPF绘图图像源的缓存类
+// Copyright (c) 2013, https://github.com/rhcad/touchvg
+
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows;

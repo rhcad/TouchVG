@@ -1,4 +1,8 @@
-﻿using System;
+﻿//! \file WPFCanvasAdapter.cs
+//! \brief 定义WPF画布接口适配器类
+// Copyright (c) 2013, https://github.com/rhcad/touchvg
+
+using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;

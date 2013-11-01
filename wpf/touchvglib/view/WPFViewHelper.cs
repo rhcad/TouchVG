@@ -1,4 +1,8 @@
-﻿using System;
+﻿//! \file WPFViewHelper.cs
+//! \brief 定义WPF绘图视图辅助类
+// Copyright (c) 2013, https://github.com/rhcad/touchvg
+
+using System;
 using System.Windows.Media;
 using touchvg.core;
 using System.Text;
