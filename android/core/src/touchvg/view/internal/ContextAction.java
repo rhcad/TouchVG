@@ -45,7 +45,7 @@ public class ContextAction {
     public boolean showActions(Context context, Ints actions, Floats buttonXY) {
         removeButtonLayout();
         
-        int n = actions.count();
+        int n = actions != null ? actions.count() : 0;
         if (n == 0) {
             return true;
         }

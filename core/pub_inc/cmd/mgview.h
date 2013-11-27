@@ -36,10 +36,13 @@ class MgView
 {
 public:
     virtual ~MgView() {}
+    static MgView* fromHandle(long h) { MgView* p; *(long*)&p = h; return p; } //!< 句柄转为对象
+    long toHandle() { long h; *(MgView**)&h = this; return h; }       //!< 得到句柄，用于跨库转换
     
 #ifndef SWIG
     virtual GcShapeDoc* document() const = 0;
 #endif
+    virtual MgMotion* motion() = 0;                 //!< 返回当前动作参数
     virtual MgCmdManager* cmds() const = 0;         //!< 返回命令管理器对象
     virtual GiTransform* xform() const = 0;         //!< 得到坐标系对象
     virtual GiGraphics* graph() const = 0;          //!< 得到图形显示对象
@@ -72,6 +75,7 @@ public:
     virtual bool useFinger() = 0;               //!< 使用手指或鼠标交互
     virtual void commandChanged() = 0;          //!< 命令改变
     virtual void selectionChanged() = 0;        //!< 选择集改变的通知
+    virtual void dynamicChanged() = 0;          //!< 图形动态改变的通知
     
     virtual bool shapeWillAdded(MgShape* shape) = 0;    //!< 通知将添加图形
     virtual void shapeAdded(MgShape* shape) = 0;        //!< 通知已添加图形，由视图重新构建显示

@@ -15,6 +15,7 @@ namespace touchvg.view
     public delegate void CommandChangedEventHandler(object sender, EventArgs e);
     public delegate void SelectionChangedEventHandler(object sender, EventArgs e);
     public delegate void ContentChangedEventHandler(object sender, EventArgs e);
+    public delegate void DynamicChangedEventHandler(object sender, EventArgs e);
 
     //! WPF绘图视图类
     /*! \ingroup GROUP_WPF
@@ -29,6 +30,7 @@ namespace touchvg.view
         public event CommandChangedEventHandler OnCommandChanged;
         public event SelectionChangedEventHandler OnSelectionChanged;
         public event ContentChangedEventHandler OnContentChanged;
+        public event DynamicChangedEventHandler OnDynamicChanged;
 
         public WPFGraphView(Panel container)
         {
@@ -139,6 +141,12 @@ namespace touchvg.view
                     _owner.OnContentChanged.Invoke(_owner, null);
             }
 
+            public override void dynamicChanged()
+            {
+                if (_owner.OnDynamicChanged != null)
+                    _owner.OnDynamicChanged.Invoke(_owner, null);
+            }
+
             public override bool useFinger()
             {
                 return false;
@@ -158,7 +166,7 @@ namespace touchvg.view
                 float x, float y, float w, float h)
             {
                 ClearActions();
-                if (!createActionImages(actions, buttonXY))
+                if (actions != null && !createActionImages(actions, buttonXY))
                     createActionButtons(actions, buttonXY);
                 return isContextActionsVisible();
             }

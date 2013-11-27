@@ -297,27 +297,18 @@ protected:
     bool _isHandleFixed(int index) const;
 };
 
-//! 三次参数样条曲线类
+//! 二次样条曲线类
 /*! \ingroup CORE_SHAPE
 */
 class MgSplines : public MgBaseLines
 {
     MG_INHERIT_CREATE(MgSplines, MgBaseLines, 16)
 public:
-    //! 去掉多余点，同时仍然光滑
-    void smooth(float tol);
-    
     virtual bool isCurve() const { return true; }
 
 protected:
-    void _update();
-    void _clearCachedData();
     float _hitTest(const Point2d& pt, float tol, MgHitResult& res) const;
     bool _hitTestBox(const Box2d& rect) const;
-
-protected:
-    Vector2d*   _knotvs;
-    int      _bzcount;
 };
 
 //! 平行四边形图形基类

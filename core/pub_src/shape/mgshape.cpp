@@ -4,7 +4,6 @@
 
 #include "mgshape.h"
 #include <mgstorage.h>
-#include <gicanvas.h>
 
 void MgBaseShape::copy(const MgObject& src) {
     if (src.isKindOf(Type()))
@@ -17,7 +16,8 @@ bool MgBaseShape::isKindOf(int type) const {
     return type == Type();
 }
 Box2d MgBaseShape::getExtent() const { return _getExtent(); }
-int MgBaseShape::getChangeCount() const { return _changeCount; }
+long MgBaseShape::getChangeCount() const { return _changeCount; }
+void MgBaseShape::afterChanged() { _changeCount++; }
 void MgBaseShape::update() { _update(); }
 void MgBaseShape::transform(const Matrix2d& mat) { _transform(mat); }
 void MgBaseShape::clear() { _clear(); }
@@ -78,7 +78,7 @@ void MgBaseShape::_update()
     if (_extent.height() < minTol().equalPoint()) {
         _extent.inflate(0, minTol().equalPoint());
     }
-    _changeCount++;
+    afterChanged();
 }
 
 void MgBaseShape::_transform(const Matrix2d& mat)
@@ -159,13 +159,13 @@ bool MgBaseShape::_hitTestBox(const Box2d& rect) const
 
 bool MgBaseShape::_save(MgStorage* s) const
 {
-    s->writeUInt32("flags", _flags);
+    s->writeUInt("flags", _flags);
     return true;
 }
 
 bool MgBaseShape::_load(MgShapeFactory*, MgStorage* s)
 {
-    _flags = s->readUInt32("flags", _flags);
+    _flags = s->readInt("flags", _flags);
     return true;
 }
 
@@ -222,10 +222,10 @@ bool MgShape::draw(int mode, GiGraphics& gs, const GiContext *ctx, int segment) 
 
     rect.inflate(1 + gs.calcPenWidth(tmpctx.getLineWidth(), tmpctx.isAutoScale()) / 2);
 
-    if (gs.getCanvas()->beginShape(getID(), rect.xmin, 
+    if (gs.beginShape(shapec()->getType(), getID(), rect.xmin,
         rect.ymin, rect.width(), rect.height())) {
         ret = shapec()->draw(mode, gs, tmpctx, segment);
-        gs.getCanvas()->endShape(getID(), rect.xmin, rect.ymin);
+        gs.endShape(shapec()->getType(), getID(), rect.xmin, rect.ymin);
     }
     return ret;
 }
@@ -270,14 +270,14 @@ bool MgShape::save(MgStorage* s) const
 {
     GiColor c;
 
-    s->writeUInt32("tag", getTag());
-    s->writeUInt8("lineStyle", (unsigned char)contextc()->getLineStyle());
+    s->writeUInt("tag", getTag());
+    s->writeUInt("lineStyle", (unsigned char)contextc()->getLineStyle());
     s->writeFloat("lineWidth", contextc()->getLineWidth());
 
     c = contextc()->getLineColor();
-    s->writeUInt32("lineColor", c.b | (c.g << 8) | (c.r << 16) | (c.a << 24));
+    s->writeUInt("lineColor", c.b | (c.g << 8) | (c.r << 16) | (c.a << 24));
     c = contextc()->getFillColor();
-    s->writeUInt32("fillColor", c.b | (c.g << 8) | (c.r << 16) | (c.a << 24));
+    s->writeUInt("fillColor", c.b | (c.g << 8) | (c.r << 16) | (c.a << 24));
     s->writeBool("autoFillColor", contextc()->isAutoFillColor());
 
     return shapec()->save(s);
@@ -285,13 +285,13 @@ bool MgShape::save(MgStorage* s) const
 
 bool MgShape::load(MgShapeFactory* factory, MgStorage* s)
 {
-    setTag(s->readUInt32("tag", getTag()));
+    setTag(s->readInt("tag", getTag()));
 
-    context()->setLineStyle((GiLineStyle)s->readUInt8("lineStyle", 0));
+    context()->setLineStyle((GiLineStyle)s->readInt("lineStyle", 0));
     context()->setLineWidth(s->readFloat("lineWidth", 0), true);
 
-    context()->setLineColor(GiColor(s->readUInt32("lineColor", 0xFF000000), true));
-    context()->setFillColor(GiColor(s->readUInt32("fillColor", 0), true));
+    context()->setLineColor(GiColor(s->readInt("lineColor", 0xFF000000), true));
+    context()->setFillColor(GiColor(s->readInt("fillColor", 0), true));
     context()->setAutoFillColor(s->readBool("autoFillColor", context()->isAutoFillColor()));
 
     bool ret = shape()->load(factory, s);

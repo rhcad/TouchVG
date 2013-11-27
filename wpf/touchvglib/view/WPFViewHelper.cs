@@ -236,5 +236,10 @@ namespace touchvg.view
         {
             return CoreView.saveToFile(vgfile);
         }
+        
+        //! 清除所有图形
+        public void clearShapes() {
+            CoreView.clear();
+        }
     }
 }

@@ -308,6 +308,11 @@ public class ViewHelper {
         return ret;
     }
     
+    //! 清除所有图形
+    public void clearShapes() {
+        mView.coreView().clear();
+    }
+    
     //! 返回指定后缀名的文件名
     public static String addExtension(String filename, String ext) {
         if (!filename.endsWith(ext)) {

@@ -58,6 +58,10 @@ public class MgShapesLock : IDisposable {
     return ret;
   }
 
+  public void unlock() {
+    touchvgPINVOKE.MgShapesLock_unlock(swigCPtr);
+  }
+
   public static bool lockedForRead(MgView view) {
     bool ret = touchvgPINVOKE.MgShapesLock_lockedForRead(MgView.getCPtr(view));
     return ret;

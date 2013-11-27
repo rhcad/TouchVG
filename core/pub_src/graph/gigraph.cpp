@@ -16,6 +16,12 @@ GiGraphics::GiGraphics(GiTransform* xform)
     m_impl = new GiGraphicsImpl(xform);
 }
 
+GiGraphics::GiGraphics(const GiGraphics& src)
+{
+    m_impl = new GiGraphicsImpl(src.m_impl->xform);
+    copy(src);
+}
+
 GiGraphics::~GiGraphics()
 {
     delete m_impl;
@@ -23,8 +29,8 @@ GiGraphics::~GiGraphics()
 
 void GiGraphics::copy(const GiGraphics& src)
 {
-    if (this != &src)
-    {
+    if (this != &src) {
+        m_impl->bkcolor = src.m_impl->bkcolor;
         m_impl->maxPenWidth = src.m_impl->maxPenWidth;
         m_impl->drawColors = src.m_impl->drawColors;
     }
@@ -48,6 +54,7 @@ bool GiGraphics::beginPaint(GiCanvas* canvas, const RECT_2D& clipBox)
     
     m_impl->canvas = canvas;
     m_impl->ctxused = 0;
+    m_impl->stopping = 0;
     giInterlockedIncrement(&m_impl->drawRefcnt);
     
     if (m_impl->lastZoomTimes != xf().getZoomTimes()) {
@@ -84,6 +91,16 @@ bool GiGraphics::isDrawing() const
 bool GiGraphics::isPrint() const
 {
     return m_impl->isPrint;
+}
+
+bool GiGraphics::isStopping() const
+{
+    return m_impl->stopping > 0;
+}
+
+void GiGraphics::stopDrawing()
+{
+    giInterlockedIncrement(&m_impl->stopping);
 }
 
 GiCanvas* GiGraphics::getCanvas()
@@ -1012,6 +1029,47 @@ bool GiGraphics::drawClosedBSplines(const GiContext* ctx,
     return ret;
 }
 
+bool GiGraphics::drawQuadSplines(const GiContext* ctx, int count,
+                                 const Point2d* ctlpts, bool modelUnit)
+{
+    if (m_impl->drawRefcnt == 0 || count < 3 || ctlpts == NULL)
+        return false;
+    
+    GiLock lock (&m_impl->drawRefcnt);
+    const Box2d wndrect (DRAW_RECT(m_impl, modelUnit));
+    const Matrix2d matD(S2D(xf(), modelUnit));
+    Point2d mid1, mid2, pt, pt2;
+    int n = 0;
+    
+    rawBeginPath();
+    
+    for (int i = 0; i + 2 < count; i++) {
+        if (Box2d(3, ctlpts + i).isIntersect(wndrect)) {
+            pt2 = ctlpts[i+2];
+            mid1 = (ctlpts[i] + ctlpts[i+1]) / 2 * matD;
+            mid2 = (ctlpts[i+1] + pt2) / 2 * matD;
+            if (n++ == 0) {
+                pt = ctlpts[i] * matD;
+                rawMoveTo(pt.x, pt.y);
+                rawLineTo(mid1.x, mid1.y);
+            }
+            pt = ctlpts[i+1] * matD;
+            rawQuadTo(pt.x, pt.y, mid2.x, mid2.y);
+        }
+        else if (n > 0) {
+            pt = pt2 * matD;
+            rawLineTo(pt.x, pt.y);
+            n = 0;
+        }
+    }
+    if (n > 0) {
+        pt = pt2 * matD;
+        rawLineTo(pt.x, pt.y);
+    }
+    
+    return rawEndPath(ctx, false);
+}
+
 bool GiGraphics::drawPath(const GiContext* ctx, const GiPath& path, 
                           bool fill, bool modelUnit)
 {
@@ -1111,7 +1169,7 @@ bool GiGraphics::setBrush(const GiContext* ctx)
 
 bool GiGraphics::rawLine(const GiContext* ctx, float x1, float y1, float x2, float y2)
 {
-    if (m_impl->canvas && setPen(ctx)) {
+    if (m_impl->canvas && !m_impl->stopping && setPen(ctx)) {
         m_impl->canvas->drawLine(x1, y1, x2, y2);
         return true;
     }
@@ -1123,7 +1181,7 @@ bool GiGraphics::rawLines(const GiContext* ctx, const Point2d* pxs, int count)
     if (m_impl->canvas && setPen(ctx) && pxs && count > 0) {
         m_impl->canvas->beginPath();
         m_impl->canvas->moveTo(pxs[0].x, pxs[0].y);
-        for (int i = 1; i < count; i++) {
+        for (int i = 1; i < count && !m_impl->stopping; i++) {
             m_impl->canvas->lineTo(pxs[i].x, pxs[i].y);
         }
         m_impl->canvas->drawPath(true, false);
@@ -1137,7 +1195,7 @@ bool GiGraphics::rawBeziers(const GiContext* ctx, const Point2d* pxs, int count)
     if (m_impl->canvas && setPen(ctx) && pxs && count > 0) {
         m_impl->canvas->beginPath();
         m_impl->canvas->moveTo(pxs[0].x, pxs[0].y);
-        for (int i = 1; i + 2 < count; i += 3) {
+        for (int i = 1; i + 2 < count && !m_impl->stopping; i += 3) {
             m_impl->canvas->bezierTo(pxs[i].x, pxs[i].y, pxs[i+1].x, pxs[i+1].y,
                                      pxs[i+2].x, pxs[i+2].y);
         }
@@ -1155,7 +1213,7 @@ bool GiGraphics::rawPolygon(const GiContext* ctx, const Point2d* pxs, int count)
     if (m_impl->canvas && (usePen || useBrush) && pxs && count > 0) {
         m_impl->canvas->beginPath();
         m_impl->canvas->moveTo(pxs[0].x, pxs[0].y);
-        for (int i = 1; i < count; i++) {
+        for (int i = 1; i < count && !m_impl->stopping; i++) {
             m_impl->canvas->lineTo(pxs[i].x, pxs[i].y);
         }
         m_impl->canvas->closePath();
@@ -1170,7 +1228,7 @@ bool GiGraphics::rawRect(const GiContext* ctx, float x, float y, float w, float 
     bool usePen = setPen(ctx);
     bool useBrush = setBrush(ctx);
     
-    if (m_impl->canvas && (usePen || useBrush)) {
+    if (m_impl->canvas && !m_impl->stopping && (usePen || useBrush)) {
         m_impl->canvas->drawRect(x, y, w, h, usePen, useBrush);
         return true;
     }
@@ -1182,7 +1240,7 @@ bool GiGraphics::rawEllipse(const GiContext* ctx, float x, float y, float w, flo
     bool usePen = setPen(ctx);
     bool useBrush = setBrush(ctx);
     
-    if (m_impl->canvas && (usePen || useBrush)) {
+    if (m_impl->canvas && !m_impl->stopping && (usePen || useBrush)) {
         m_impl->canvas->drawEllipse(x, y, w, h, usePen, useBrush);
         return true;
     }
@@ -1219,7 +1277,7 @@ bool GiGraphics::rawMoveTo(float x, float y)
 
 bool GiGraphics::rawLineTo(float x, float y)
 {
-    if (m_impl->canvas) {
+    if (m_impl->canvas && !m_impl->stopping) {
         m_impl->canvas->lineTo(x, y);
     }
     return !!m_impl->canvas;
@@ -1228,8 +1286,16 @@ bool GiGraphics::rawLineTo(float x, float y)
 bool GiGraphics::rawBezierTo(float c1x, float c1y, float c2x, 
                              float c2y, float x, float y)
 {
-    if (m_impl->canvas) {
+    if (m_impl->canvas && !m_impl->stopping) {
         m_impl->canvas->bezierTo(c1x, c1y, c2x, c2y, x, y);
+    }
+    return !!m_impl->canvas;
+}
+
+bool GiGraphics::rawQuadTo(float cpx, float cpy, float x, float y)
+{
+    if (m_impl->canvas && !m_impl->stopping) {
+        m_impl->canvas->quadTo(cpx, cpy, x, y);
     }
     return !!m_impl->canvas;
 }
@@ -1244,7 +1310,7 @@ bool GiGraphics::rawClosePath()
 
 bool GiGraphics::rawText(const char* text, float x, float y, float h, int align)
 {
-    if (m_impl->canvas && text) {
+    if (m_impl->canvas && text && !m_impl->stopping) {
         m_impl->canvas->drawTextAt(text, x, y, h, align);
         return true;
     }
@@ -1254,7 +1320,7 @@ bool GiGraphics::rawText(const char* text, float x, float y, float h, int align)
 bool GiGraphics::rawImage(const char* name, float xc, float yc, 
                           float w, float h, float angle)
 {
-    if (m_impl->canvas && name) {
+    if (m_impl->canvas && name && !m_impl->stopping) {
         m_impl->canvas->drawBitmap(name, xc, yc, w, h, angle);
         return true;
     }
@@ -1263,10 +1329,20 @@ bool GiGraphics::rawImage(const char* name, float xc, float yc,
 
 bool GiGraphics::drawHandle(const Point2d& pnt, int type, bool modelUnit)
 {
-    if (m_impl->canvas && type >= 0) {
+    if (m_impl->canvas && type >= 0 && !m_impl->stopping) {
         Point2d ptd(pnt * S2D(xf(), modelUnit));
         m_impl->canvas->drawHandle(ptd.x, ptd.y, type);
         return true;
     }
     return false;
+}
+
+bool GiGraphics::beginShape(int type, int sid, float x, float y, float w, float h)
+{
+    return m_impl->canvas && m_impl->canvas->beginShape(type, sid, x, y, w, h);
+}
+
+void GiGraphics::endShape(int type, int sid, float x, float y)
+{
+    m_impl->canvas->endShape(type, sid, x, y);
 }

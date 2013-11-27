@@ -31,7 +31,5 @@ class GiCanvasAdapter;
 @end
 
 //! 通过线程不断重绘的测试视图类
-@interface GraphView4 : GraphView3 {
-    NSThread    *_thread;
-}
+@interface GraphView4 : GraphView3
 @end

@@ -11,6 +11,8 @@
     #include <libkern/OSAtomic.h>
     inline long giInterlockedIncrement(volatile long *p) { return OSAtomicIncrement32((volatile int32_t *)p); }
     inline long giInterlockedDecrement(volatile long *p) { return OSAtomicDecrement32((volatile int32_t *)p); }
+    typedef struct dispatch_queue_s *dispatch_queue_t;
+    extern dispatch_queue_t vg_rwlock_queue;
 #elif defined(__WINDOWS__) || defined(WIN32)
     #ifndef _WINDOWS_
         #define WIN32_LEAN_AND_MEAN

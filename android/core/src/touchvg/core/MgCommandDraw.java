@@ -70,8 +70,8 @@ public class MgCommandDraw extends MgCommand {
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
-  public void delayClear() {
-    touchvgJNI.MgCommandDraw_delayClear(swigCPtr, this);
+  public void delayClear(MgMotion sender) {
+    touchvgJNI.MgCommandDraw_delayClear(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }
 
   public boolean touchBeganStep(MgMotion sender) {
@@ -142,17 +142,22 @@ public class MgCommandDraw extends MgCommand {
     return (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_mouseHover(swigCPtr, this, MgMotion.getCPtr(sender), sender) : touchvgJNI.MgCommandDraw_mouseHoverSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }
 
-  public int getStep() {
-    return touchvgJNI.MgCommandDraw_getStep(swigCPtr, this);
+  public MgShape getShape(MgMotion arg0) {
+    long cPtr = (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_getShape(swigCPtr, this, MgMotion.getCPtr(arg0), arg0) : touchvgJNI.MgCommandDraw_getShapeSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(arg0), arg0);
+    return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
-  public void setStep(int step) {
-    touchvgJNI.MgCommandDraw_setStep(swigCPtr, this, step);
+  public int getStep() {
+    return touchvgJNI.MgCommandDraw_getStep(swigCPtr, this);
   }
 
   public MgShape dynshape() {
     long cPtr = touchvgJNI.MgCommandDraw_dynshape(swigCPtr, this);
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  }
+
+  public void setStep(int step) {
+    touchvgJNI.MgCommandDraw_setStep(swigCPtr, this, step);
   }
 
   public Point2d snapPoint(MgMotion sender, boolean firstStep) {

@@ -7,6 +7,7 @@
 #define TOUCHVG_CMD_H_
 
 #include "mgview.h"
+#include "mgshapeslock.h"
 
 //! 命令接口
 /*! \ingroup CORE_COMMAND
@@ -45,47 +46,11 @@ public:
     virtual bool isFloatingCommand() { return false; }      //!< 是否可嵌套在其他命令中
     virtual bool doContextAction(const MgMotion* sender, int action) {
         return !sender && !action; }                        //!< 执行上下文动作
+    virtual MgShape* getShape(const MgMotion* sender) { return (MgShape*)0; }   //!< 当前临时图形
+    
 private:
     char _name[31];
     MgCommand();
-};
-
-//! 图形列表锁定辅助类
-/*! \ingroup CORE_COMMAND
-*/
-class MgShapesLock
-{
-    MgLockData* locker;
-    int         mode;
-public:
-    enum { NotNotify = 0x100, ReadOnly = 0,
-        Add = 0x1, Remove = 0x2, Edit = 0x4, Load = 0x8 };
-    MgShapesLock(int flags, MgView* view, int timeout = 200);
-    MgShapesLock(MgView* view, int timeout = 200);
-    ~MgShapesLock();
-
-    bool locked() const;
-    static bool lockedForRead(MgView* view);
-    static bool lockedForWrite(MgView* view);
-
-    int getEditFlags() const;
-    void resetEditFlags();
-};
-
-//! 动态图形锁定辅助类
-/*! \ingroup CORE_COMMAND
-*/
-class MgDynShapeLock
-{
-    MgLockData* locker;
-    int         mode;
-public:
-    MgDynShapeLock(bool forWrite, MgView* view, int timeout = 200);
-    ~MgDynShapeLock();
-
-    bool locked() const;
-    static bool lockedForRead(MgView* view);
-    static bool lockedForWrite(MgView* view);
 };
 
 #endif // TOUCHVG_CMD_H_

@@ -6,32 +6,40 @@
 #include "GiCanvasAdapter.h"
 #include <sys/sysctl.h>
 
-static const CGFloat patDash[]      = { 4, 2, 0 };
-static const CGFloat patDot[]       = { 1, 2, 0 };
-static const CGFloat patDashDot[]   = { 10, 2, 2, 2, 0 };
-static const CGFloat dashDotdot[]   = { 20, 2, 2, 2, 2, 2, 0 };
-const CGFloat* const GiCanvasAdapter::LINEDASH[] = { NULL, patDash, patDot, patDashDot, dashDotdot };
+static const float patDash[]      = { 4, 2, 0 };
+static const float patDot[]       = { 1, 2, 0 };
+static const float patDashDot[]   = { 10, 2, 2, 2, 0 };
+static const float dashDotdot[]   = { 20, 2, 2, 2, 2, 2, 0 };
+const float* const GiCanvasAdapter::LINEDASH[] = { NULL, patDash, patDot, patDashDot, dashDotdot };
 
 int GiCanvasAdapter::getScreenDpi()
 {
-    size_t size = 15;
-    char machine[15 + 1] = "";
+    static int dpi = 0;
     
-    sysctlbyname("hw.machine", machine, &size, NULL, 0);
-    
-    if (strcmp(machine, "i386") == 0) {     // 模拟器
-        return 72;
+    if (dpi == 0) {
+        size_t size = 15;
+        char machine[15 + 1] = "";
+        
+        sysctlbyname("hw.machine", machine, &size, NULL, 0);
+        
+        if (strcmp(machine, "i386") == 0) {     // 模拟器
+            dpi = 72;
+        } else {    // Identifier: http://theiphonewiki.com/wiki/Models
+            bool iPadMini = (strcmp(machine, "iPad2,5") == 0 ||
+                             strcmp(machine, "iPad2,6") == 0 ||
+                             strcmp(machine, "iPad2,7") == 0 ||
+                             strcmp(machine, "iPad4,4") == 0 ||
+                             strcmp(machine, "iPad4,5") == 0);
+            BOOL iPad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+            
+            dpi = (iPad && !iPadMini) ? 132 : 163;
+        }
     }
     
-    bool iPadMini = (strcmp(machine, "iPad2,5") == 0 ||
-                     strcmp(machine, "iPad2,6") == 0 ||
-                     strcmp(machine, "iPad2,7") == 0);
-    BOOL iPad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
-    
-    return (iPad && !iPadMini) ? 132 : 163;
+    return dpi;
 }
 
-GiCanvasAdapter::GiCanvasAdapter(ImageCache *cache) : _ctx(NULL), _cache(cache)
+GiCanvasAdapter::GiCanvasAdapter(ImageCache *cache) : _ctx(NULL), _cache(cache), _gradient0(NULL)
 {
 }
 
@@ -52,9 +60,11 @@ bool GiCanvasAdapter::beginPaint(CGContextRef context)
     
     _ctx = context;
     _fill = false;
+    _gradient = NULL;
     
     CGContextSetShouldAntialias(_ctx, true);        // 两者都为true才反走样
     CGContextSetAllowsAntialiasing(_ctx, true);
+    
     CGContextSetFlatness(_ctx, 3);                  // 平滑度为3达到精确和速度的平衡点
     
     CGContextSetLineCap(_ctx, kCGLineCapRound);     // 圆端
@@ -68,6 +78,10 @@ bool GiCanvasAdapter::beginPaint(CGContextRef context)
 void GiCanvasAdapter::endPaint()
 {
     _ctx = NULL;
+    if (_gradient0) {
+        CGGradientRelease(_gradient0);
+        _gradient0 = NULL;
+    }
 }
 
 float GiCanvasAdapter::colorPart(int argb, int byteOrder)
@@ -108,6 +122,25 @@ void GiCanvasAdapter::setBrush(int argb, int style)
         CGContextSetRGBFillColor(_ctx, colorPart(argb, 2), colorPart(argb, 1),
                                  colorPart(argb, 0), alpha);
     }
+}
+
+bool GiCanvasAdapter::beginShape(int type, int, float x, float y, float w, float h)
+{
+    /*if (!_gradient && type == 16) { // kMgShapeSplines
+        CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
+        CGFloat colors[] = {
+            200.f / 255.f,  50.f / 255.f, 26.f / 255.f, 0.8f,
+            64.f / 255.f, 24.f / 255.f, 24.f / 255.f, 0.8f,
+            15.f / 255.f, 156.f / 255.f, 215.f / 255.f, 0.8f,
+        };
+        
+        _gradient0 = CGGradientCreateWithColorComponents(rgb, colors, NULL,
+                                                         sizeof(colors)/(sizeof(colors[0])*4));
+        CGColorSpaceRelease(rgb);
+    }
+    _gradient = (type == 16) ? _gradient0 : NULL;*/
+    
+    return true;
 }
 
 void GiCanvasAdapter::saveClip()
@@ -192,9 +225,21 @@ void GiCanvasAdapter::closePath()
 
 void GiCanvasAdapter::drawPath(bool stroke, bool fill)
 {
-    fill = fill && _fill;
-    CGContextDrawPath(_ctx, (stroke && fill) ? kCGPathEOFillStroke
-                      : (fill ? kCGPathEOFill : kCGPathStroke));  // will clear the path
+    if (_gradient && !CGContextIsPathEmpty(_ctx)) {
+        CGContextSaveGState(_ctx);
+        CGRect rect = CGContextGetPathBoundingBox(_ctx);
+        CGContextReplacePathWithStrokedPath(_ctx);
+        CGContextClip(_ctx);
+        
+        CGContextDrawLinearGradient(_ctx, _gradient, CGPointMake(CGRectGetMinX(rect), CGRectGetMinY(rect)),
+                                    CGPointMake(CGRectGetMaxX(rect), CGRectGetMaxY(rect)), 0);
+        CGContextRestoreGState(_ctx);
+    }
+    else {
+        fill = fill && _fill;
+        CGContextDrawPath(_ctx, (stroke && fill) ? kCGPathEOFillStroke
+                          : (fill ? kCGPathEOFill : kCGPathStroke));  // will clear the path
+    }
 }
 
 bool GiCanvasAdapter::clipPath()
@@ -258,7 +303,6 @@ float GiCanvasAdapter::drawTextAt(const char* text, float x, float y, float h, i
     
     x -= (align == 2) ? actsize.width : ((align == 1) ? actsize.width / 2 : 0);
     [str drawAtPoint:CGPointMake(x, y) withFont:font];  // 显示文字
-    [str release];
     
     UIGraphicsPopContext();
     

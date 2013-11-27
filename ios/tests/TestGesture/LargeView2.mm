@@ -13,7 +13,6 @@
         _subview = [[GraphView2 alloc]initWithFrame:CGRectMake(0, 0, 2048, 2048)
                                           withFlags:t];
         [self addSubview:_subview];
-        [_subview release];
         
         self.delegate = self;
         self.contentSize = _subview.frame.size;

@@ -167,7 +167,7 @@ void TestCanvas::testCubicBezier(GiCanvas* canvas, int n)
 void TestCanvas::testDynCurves(GiCanvas* canvas)
 {
     static float x1, y1, x2, y2, x3, y3, x4, y4;
-    static float xy[2 * (3 * 100 + 1)];
+    static float xy[2 * (3 * 100 + 1)] = { 0 };
     static int n = 0;
     
     if (!s_inited) {

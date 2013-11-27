@@ -7,7 +7,7 @@
 
 @interface MasterViewController : UITableViewController
 
-@property (nonatomic, assign) DetailViewController *detailViewController;
+@property (nonatomic, strong) DetailViewController *detailViewController;
 
 - (void)clearCachedData;
 

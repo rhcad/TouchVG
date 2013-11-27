@@ -51,38 +51,6 @@ struct MgStorage
     virtual int readString(const char* name, char* value, int count) = 0;
     //! 添加一个给定字段名称(常量)的浮点数数组
     virtual void writeFloatArray(const char* name, const float* values, int count) = 0;
-
-    //! 给定字段名称(常量)，取出一个单字节整数的值
-    virtual char  readInt8(const char* name, char defvalue) {
-        return (char)readInt(name, defvalue); }
-    //! 给定字段名称(常量)，取出一个双字节整数的值
-    virtual short readInt16(const char* name, short defvalue) {
-        return (short)readInt(name, defvalue); }
-    //! 给定字段名称(常量)，取出一个长整数的值
-    virtual long readInt32(const char* name, long defvalue) {
-        return (long)readInt(name, defvalue); }
-    //! 给定字段名称(常量)，取出一个单字节整数的值
-    virtual unsigned char  readUInt8(const char* name, unsigned char defvalue) {
-        return (unsigned char)readInt(name, defvalue); }
-    //! 给定字段名称(常量)，取出一个双字节整数的值
-    virtual unsigned short readUInt16(const char* name, unsigned short defvalue) {
-        return (unsigned short)readInt(name, defvalue); }
-    //! 给定字段名称(常量)，取出一个长整数的值
-    virtual unsigned long readUInt32(const char* name, unsigned long defvalue) {
-        return (unsigned long)readInt(name, defvalue); }
-
-    //! 添加一个给定字段名称(常量)的单字节整数的值
-    virtual void writeInt8(const char* name, char value) { writeInt(name, value); }
-    //! 添加一个给定字段名称(常量)的双字节整数的值
-    virtual void writeInt16(const char* name, short value) { writeInt(name, value); }
-    //! 添加一个给定字段名称(常量)的长整数的值
-    virtual void writeInt32(const char* name, long value) { writeInt(name, value); }
-    //! 添加一个给定字段名称(常量)的单字节整数的值
-    virtual void writeUInt8(const char* name, unsigned char value) { writeUInt(name, value); }
-    //! 添加一个给定字段名称(常量)的双字节整数的值
-    virtual void writeUInt16(const char* name, unsigned short value) { writeUInt(name, value); }
-    //! 添加一个给定字段名称(常量)的长整数的值
-    virtual void writeUInt32(const char* name, unsigned long value) { writeUInt(name, value); }
 #endif
 
     //! 给定字段名称(常量)，取出一个整数的值

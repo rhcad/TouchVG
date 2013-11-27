@@ -60,7 +60,6 @@ GiColor CGColorToGiColor(CGColorRef color);
     if (_activeGraphView == self)
         _activeGraphView = nil;
     delete _adapter;
-    [super dealloc];
 }
 
 - (void)initView:(GiView*)mainView :(GiCoreView*)coreView {
@@ -103,7 +102,6 @@ GiColor CGColorToGiColor(CGColorRef color);
     GiGraphView *v = [[GiGraphView alloc]initWithFrame:frame];
     if (parentView) {
         [parentView addSubview:v];
-        [v release];
     }
     return v;
 }
@@ -119,13 +117,16 @@ GiColor CGColorToGiColor(CGColorRef color);
     GiGraphView *v = [[GiGraphView alloc]initWithFrame:frame :refView];
     if (parentView) {
         [parentView addSubview:v];
-        [v release];
     }
     
     return v;
 }
 
 #pragma mark - GiGraphView drawRect
+
+- (void)drawRect:(CGRect)rect {
+    _adapter->drawLayer();
+}
 
 + (GiGraphView *)activeView {
     return _activeGraphView;
@@ -143,7 +144,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     return _adapter->imageCache();
 }
 
-- (int)cmdViewHandle {
+- (long)cmdViewHandle {
     return _adapter->coreView()->viewAdapterHandle();
 }
 
@@ -152,7 +153,15 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (UIImage *)snapshot {
-    return _adapter->snapshot(true);
+    [self hideContextActions];
+    
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0);
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 - (BOOL)savePng:(NSString *)filename {
@@ -173,24 +182,6 @@ GiColor CGColorToGiColor(CGColorRef color);
     }
 }
 
-- (void)drawRect:(CGRect)rect {
-    GiCoreView *coreView = _adapter->coreView();
-    GiCanvasAdapter canvas(_adapter->imageCache());
-    
-    coreView->onSize(_adapter, self.bounds.size.width, self.bounds.size.height);
-    
-    if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
-        if (!_adapter->drawAppend(&canvas)) {
-            coreView->drawAll(_adapter, &canvas);
-        }
-        canvas.endPaint();
-    }
-}
-
-- (void)redraw {
-    _adapter->redraw();
-}
-
 - (void)clearCachedData {
     _adapter->clearCachedData();
     [self.imageCache clearCachedData];
@@ -206,6 +197,10 @@ GiColor CGColorToGiColor(CGColorRef color);
     }
     _gestureEnabled = enabled;
     self.userInteractionEnabled = enabled;
+}
+
+- (UIView *)dynamicShapeView {
+    return _adapter->getDynView();
 }
 
 - (void)activiteView {
@@ -248,6 +243,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (void)removeFromSuperview {
+    _adapter->stopRegen();
     self.gestureEnabled = NO;
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [super removeFromSuperview];
@@ -349,9 +345,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     [super touchesEnded:touches withEvent:event];
 }
 
-- (void)ignoreTouch:(NSValue *)pointValue :(UIView *)handledButton {
-    CGPoint pt = [self.window convertPoint:[pointValue CGPointValue] toView:self];
-    
+- (void)ignoreTouch:(CGPoint)pt :(UIView *)handledButton {
     if (handledButton) {
         _buttonHandled = YES;
     }
@@ -359,6 +353,10 @@ GiColor CGColorToGiColor(CGColorRef color);
         [self performSelector:@selector(hideContextActions) withObject:nil afterDelay:0.5];
     }
     _ignorePt = pt;
+}
+
+- (void)redrawForDelay {
+    _adapter->redraw();
 }
 
 - (void)onContextActionsDisplay:(NSMutableArray *)buttons {

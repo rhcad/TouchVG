@@ -68,6 +68,10 @@
     <Compile Include="core\DemoCmdsGate.cs" />
     <Compile Include="core\democmdsPINVOKE.cs" />
     <Compile Include="core\Floats.cs" />
+    <Compile Include="core\MgCoreView.cs" />
+    <Compile Include="core\SWIGTYPE_p_GiContext.cs" />
+    <Compile Include="core\SWIGTYPE_p_MgStorage.cs" />
+    <Compile Include="core\SWIGTYPE_p_MgView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

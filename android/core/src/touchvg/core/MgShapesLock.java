@@ -55,6 +55,10 @@ public class MgShapesLock {
     return touchvgJNI.MgShapesLock_locked(swigCPtr, this);
   }
 
+  public void unlock() {
+    touchvgJNI.MgShapesLock_unlock(swigCPtr, this);
+  }
+
   public static boolean lockedForRead(MgView view) {
     return touchvgJNI.MgShapesLock_lockedForRead(MgView.getCPtr(view), view);
   }

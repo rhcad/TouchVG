@@ -25,8 +25,12 @@ public:
     //! 创建图层对象
     static MgLayer* create(MgShapeDoc* doc, int index);
     
-    //! 返回所属文档对象
-    MgShapeDoc* doc() const;
+    MgShapeDoc* doc() const;            //!< 返回所属文档对象
+    
+    bool isHided() const { return !!_bits.hided; }          //!< 返回图层是否隐藏
+    void setHided(bool hided) { _bits.hided = hided; }      //!< 设置图层是否隐藏
+    bool isLocked() const { return !!_bits.locked; }        //!< 返回图层是否锁定
+    void setLocked(bool locked) { _bits.locked = locked; }  //!< 设置图层是否锁定
     
 public:
     virtual MgObject* clone() const;
@@ -41,6 +45,15 @@ protected:
     virtual ~MgLayer();
     virtual bool saveExtra(MgStorage* s) const;
     virtual bool loadExtra(MgStorage* s);
+    
+private:
+    union {
+        int _flags;
+        struct {
+            int hided:1;
+            int locked:1;
+        } _bits;
+    };
 };
 
 #endif // TOUCHVG_SHAPELAYER_H_

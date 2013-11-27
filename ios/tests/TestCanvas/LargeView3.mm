@@ -18,7 +18,6 @@
             _subview = [[GraphView3 alloc]initWithFrame:CGRectMake(0, 0, w, w) withFlags:t];
         }
         [self addSubview:_subview];
-        [_subview release];
         
         self.delegate = self;
         self.contentSize = _subview.frame.size;

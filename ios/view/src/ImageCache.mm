@@ -7,12 +7,6 @@
 
 @implementation ImageCache
 
-- (void)dealloc {
-    [_images release];
-    [_path release];
-    [super dealloc];
-}
-
 - (id)init {
     self = [super init];
     if (self) {
@@ -54,7 +48,7 @@
     *key = [@"png:" stringByAppendingString:name];
     CGSize size = [self getImageSize:*key];
     
-    if (size.width < 1 && name && [name length] > 1) {
+    if (size.width < 1 && *key && [name length] > 1) {
         NSString *resname = [name stringByAppendingString:@".png"];
         UIImage *image = [UIImage imageNamed:resname];
         if (image && image.size.width > 1) {
@@ -74,7 +68,7 @@
     *key = [@"svg:" stringByAppendingString:name];
     CGSize size = [self getImageSize:*key];
     
-    if (size.width < 1 && name && [name length] > 1) {
+    if (size.width < 1 && *key && [name length] > 1) {
         NSString *resname = [name stringByAppendingString:@".svg"];
         UIImage *image = [[SVGKImage imageNamed:resname] UIImage];
         if (image && image.size.width > 1) {
@@ -109,31 +103,33 @@
     *name = [[filename lastPathComponent]lowercaseString]; // 无路径的小写文件名
     CGSize size = [self getImageSize:*name];
     
-    if (size.width < 1 && filename && [filename length] > 1) {
+    if (size.width < 1 && *name && [filename length] > 1) {
         UIImage *image;
         
         if ([*name hasPrefix:@"svg:"]) {
             image = [[SVGKImage imageWithContentsOfFile:filename] UIImage];
+            if (image && image.size.width > 1) {
+                [_images setObject:image forKey:*name];
+                size = image.size;
+            }
         }
         else {
             image = [[UIImage alloc]initWithContentsOfFile:filename];
+            if (image && image.size.width > 1) {
+                [_images setObject:image forKey:*name];
+                size = image.size;
+            }
         }
-        if (image && image.size.width > 1) {
-            [_images setObject:image forKey:*name];
-            [image release];
-            size = image.size;
-        } else {
-            [image release];
-            NSLog(@"Fail to load image file: %@", filename);
-        }
+    }
+    if (size.width < 1) {
+        NSLog(@"Fail to load image file: %@", filename);
     }
     
     return size;
 }
 
 - (void)setImagePath:(NSString *)path {
-    [_path release];
-    _path = [path retain];
+    _path = [path copy];
 }
 
 @end

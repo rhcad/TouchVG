@@ -135,13 +135,16 @@ public:
     MgBaseShape* cloneShape() const { return (MgBaseShape*)clone(); }
     
     //! 传入拥有者对象
-    virtual void setOwner(MgShape* owner) { if (owner) owner = owner; }
+    virtual void setOwner(MgShape* owner) {}
 
     //! 返回图形模型坐标范围
     virtual Box2d getExtent() const;
 
     //! 返回改变计数
-    virtual int getChangeCount() const;
+    virtual long getChangeCount() const;
+    
+    //! update() 或改变图形内容后调用
+    virtual void afterChanged();
 
     //! 参数改变后重新计算坐标
     virtual void update();

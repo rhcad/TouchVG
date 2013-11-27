@@ -26,23 +26,26 @@ int MgCmdSelect::getSelection(MgView* view, int count,
     if (forChange && m_clones.empty())  // forChange让此后的图形修改是在临时图形上进行的
         cloneShapes(view);
     
-    int ret = 0;
+    int i, ret = 0;
     int maxCount = (int)(m_clones.empty() ? m_selIds.size() : m_clones.size());
     
     if (count < 1 || !shapes)
         return maxCount;
     
+    for (i = maxCount; i < count; i++)
+        shapes[i] = NULL;
     count = mgMin(count, maxCount);
-    MgShapesLock locker(MgShapesLock::ReadOnly, 
-        m_clones.empty() && count > 0 ? view : NULL);
-
-    for (int i = 0; i < count; i++) {
-        if (m_clones.empty()) {
+    
+    if (m_clones.empty() && count > 0) {
+        MgShapesLock locker(MgShapesLock::ReadOnly, view);
+        for (i = 0; i < count && locker.locked(); i++) {
             MgShape* shape = view->shapes()->findShape(m_selIds[i]);
             if (shape)
                 shapes[ret++] = shape;
         }
-        else {
+    }
+    else {
+        for (i = 0; i < count; i++) {
             shapes[ret++] = m_clones[i];
         }
     }
@@ -326,6 +329,11 @@ MgCmdSelect::sel_iterator MgCmdSelect::getSelectedPostion(MgShape* shape)
 MgShape* MgCmdSelect::getShape(int id, const MgMotion* sender) const
 {
     return sender->view->shapes()->findShape(id);
+}
+
+MgShape* MgCmdSelect::getShape(const MgMotion* sender)
+{
+    return m_clones.empty() ? getShape(m_id, sender) : m_clones.front();
 }
 
 bool MgCmdSelect::isSelected(MgShape* shape)
@@ -835,6 +843,7 @@ bool MgCmdSelect::touchMoved(const MgMotion* sender)
             }
         }
         sender->view->redraw();
+        sender->view->dynamicChanged();
     }
     
     if (m_clones.empty() && m_boxsel) {    // 没有选中图形时就滑动多选
@@ -1398,10 +1407,10 @@ bool MgCmdSelect::overturnPolygon(const MgMotion* sender)
 bool MgCmdSelect::twoFingersMove(const MgMotion* sender)
 {
     if (sender->gestureState == kMgGesturePossible) {
-        return !m_selIds.empty() && !mgIsZero(sender->distanceM());  // 选择了图形，且双指未重合
+        return !m_selIds.empty() && !mgIsZero(sender->distanceM()); // 选择了图形，且双指未重合
     }
     if (sender->gestureState == kMgGestureBegan) {
-        if (m_selIds.empty() || sender->view->isReadOnly()) {                     // 没有选择图形
+        if (m_selIds.empty() || sender->view->isReadOnly()) {       // 没有选择图形
             return false;
         }
         cloneShapes(sender->view);
@@ -1456,6 +1465,7 @@ bool MgCmdSelect::twoFingersMove(const MgMotion* sender)
             shape->update();
         }
         sender->view->redraw();
+        sender->view->dynamicChanged();
     }
     else {
         applyCloneShapes(sender->view, sender->gestureState == kMgGestureEnded);

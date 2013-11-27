@@ -9,7 +9,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := democmds
 LOCAL_LDLIBS           := -L$(SYSROOT)/usr/lib -llog
 LOCAL_PRELINK_MODULE   := false
-LOCAL_CFLAGS           := -frtti -Wall -Wextra
+LOCAL_CFLAGS           := -frtti -Wall -Wextra -Wno-unused-parameter
 
 ifeq ($(TARGET_ARCH),arm)
 # Ignore "note: the mangling of 'va_list' has changed in GCC 4.4"

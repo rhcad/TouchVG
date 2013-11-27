@@ -35,6 +35,20 @@ public class MgView {
     }
   }
 
+  public static MgView fromHandle(int h) {
+    long cPtr = touchvgJNI.MgView_fromHandle(h);
+    return (cPtr == 0) ? null : new MgView(cPtr, false);
+  }
+
+  public int toHandle() {
+    return touchvgJNI.MgView_toHandle(swigCPtr, this);
+  }
+
+  public MgMotion motion() {
+    long cPtr = touchvgJNI.MgView_motion(swigCPtr, this);
+    return (cPtr == 0) ? null : new MgMotion(cPtr, false);
+  }
+
   public MgCmdManager cmds() {
     long cPtr = touchvgJNI.MgView_cmds(swigCPtr, this);
     return (cPtr == 0) ? null : new MgCmdManager(cPtr, false);
@@ -159,6 +173,10 @@ public class MgView {
 
   public void selectionChanged() {
     touchvgJNI.MgView_selectionChanged(swigCPtr, this);
+  }
+
+  public void dynamicChanged() {
+    touchvgJNI.MgView_dynamicChanged(swigCPtr, this);
   }
 
   public boolean shapeWillAdded(MgShape shape) {

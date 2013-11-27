@@ -27,7 +27,6 @@ static void addView2(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
         view = [[GraphView2 alloc]initWithFrame:frame withFlags:flags];
     }
     addView(arr, title, view);
-    [view release];
 }
 
 static void addLargeView2(NSMutableArray *arr, NSUInteger &i, NSUInteger index, 
@@ -39,7 +38,6 @@ static void addLargeView2(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
         view = [[LargeView2 alloc]initWithFrame:frame withFlags:flags];
     }
     addView(arr, title, view);
-    [view release];
 }
 
 static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)

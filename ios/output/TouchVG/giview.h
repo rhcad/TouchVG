@@ -17,13 +17,13 @@ public:
     virtual ~GiView() {}
 
     //! 标记视图待重新构建显示
-    virtual void regenAll() = 0;
+    virtual void regenAll() {}
 
     //! 标记视图待追加显示新图形
-    virtual void regenAppend() = 0;
+    virtual void regenAppend() {}
 
     //! 标记视图待更新显示
-    virtual void redraw() = 0;
+    virtual void redraw() {}
 
     //! 使用手指(true)或鼠标(false)交互
     virtual bool useFinger() { return true; }
@@ -41,6 +41,7 @@ public:
     virtual void commandChanged() {}        //!< 当前命令已改变
     virtual void selectionChanged() {}      //!< 选择集改变的通知
     virtual void contentChanged() {}        //!< 图形数据改变的通知
+    virtual void dynamicChanged() {}        //!< 图形动态改变的通知
 };
 
 #endif // TOUCHVG_CORE_GIVIEW_H

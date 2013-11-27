@@ -10,14 +10,15 @@
 
 struct MgShapeDoc::Impl {
     std::vector<MgLayer*> layers;
+    MgLayer*    curLayer;
     MgShapes*   curShapes;
     GiContext   context;
     Matrix2d    xf;
     Box2d       rectW;
     float       viewScale;
-    long        changeCount;
-    bool        readOnly;
+    volatile long   changeCount;
     volatile long   refcount;
+    bool        readOnly;
 
     MgLockRW    lock;
     MgLockRW    dynlock;
@@ -28,8 +29,9 @@ struct MgShapeDoc::Impl {
 MgShapeDoc::MgShapeDoc()
 {
     im = new Impl();
-    im->layers.push_back(MgLayer::create(this, 0));
-    im->curShapes = im->layers[0];
+    im->curLayer = MgLayer::create(this, 0);
+    im->layers.push_back(im->curLayer);
+    im->curShapes = im->curLayer;
     im->viewScale = 0;
     im->changeCount = 0;
     im->readOnly = false;
@@ -104,7 +106,7 @@ GiContext* MgShapeDoc::context() { return &im->context; }
 Matrix2d& MgShapeDoc::modelTransform() { return im->xf; }
 Box2d MgShapeDoc::getPageRectW() const { return im->rectW; }
 float MgShapeDoc::getViewScale() const { return im->viewScale; }
-int MgShapeDoc::getChangeCount() const { return im->changeCount; }
+long MgShapeDoc::getChangeCount() const { return im->changeCount; }
 bool MgShapeDoc::isReadOnly() const { return im->readOnly; }
 void MgShapeDoc::setReadOnly(bool readOnly) { im->readOnly = readOnly; }
 MgLockRW* MgShapeDoc::getLockData() const { return &im->lock; }
@@ -124,7 +126,8 @@ void MgShapeDoc::clear()
         im->layers.pop_back();
     }
     im->layers[0]->clear();
-    im->curShapes = im->layers[0];
+    im->curLayer = im->layers[0];
+    im->curShapes = im->curLayer;
 }
 
 void MgShapeDoc::clearCachedData()
@@ -139,7 +142,9 @@ Box2d MgShapeDoc::getExtent() const
     Box2d rect;
 
     for (unsigned i = 0; i < im->layers.size(); i++) {
-        rect.unionWith(im->layers[i]->getExtent());
+        if (!im->layers[i]->isHided()) {
+            rect.unionWith(im->layers[i]->getExtent());
+        }
     }
 
     return rect;
@@ -163,8 +168,13 @@ MgShapes* MgShapeDoc::getCurrentShapes() const
 
 bool MgShapeDoc::setCurrentShapes(MgShapes* shapes)
 {
-    im->curShapes = shapes ? shapes : im->layers[0];
+    im->curShapes = shapes ? shapes : im->curLayer;
     return true;
+}
+
+MgLayer* MgShapeDoc::getCurrentLayer() const
+{
+    return im->curLayer;
 }
 
 int MgShapeDoc::getLayerCount() const
@@ -177,10 +187,12 @@ bool MgShapeDoc::switchLayer(int index)
     bool ret = false;
 
     if (index == getLayerCount()) {
-        im->layers.push_back(MgLayer::create(this, index));
+        im->curLayer = MgLayer::create(this, index);
+        im->layers.push_back(im->curLayer);
     }
     if (index >= 0 && index < getLayerCount()) {
-        im->curShapes = im->layers[index];
+        im->curLayer = im->layers[index];
+        im->curShapes = im->curLayer;
         ret = true;
     }
 
@@ -192,7 +204,9 @@ int MgShapeDoc::draw(GiGraphics& gs) const
     int n = 0;
 
     for (unsigned i = 0; i < im->layers.size(); i++) {
-        n += im->layers[i]->draw(gs);
+        if (!im->layers[i]->isHided()) {
+            n += im->layers[i]->draw(gs);
+        }
     }
 
     return n;
@@ -249,7 +263,7 @@ bool MgShapeDoc::save(MgStorage* s, int startIndex) const
     s->writeFloat("viewScale", im->viewScale);
     rect = getExtent();
     s->writeFloatArray("extent", &rect.xmin, 4);
-    s->writeUInt32("count", 1);
+    s->writeUInt("count", 1);
 
     for (unsigned i = 0; i < im->layers.size(); i++) {
         ret = im->layers[i]->save(s, startIndex) || ret;
@@ -275,7 +289,7 @@ bool MgShapeDoc::load(MgShapeFactory* factory, MgStorage* s, bool addOnly)
         s->readFloatArray("zoomExtent", &im->rectW.xmin, 4);
     im->viewScale = s->readFloat("viewScale", im->viewScale);
     s->readFloatArray("extent", &rect.xmin, 4);
-    s->readUInt32("count", 0);
+    s->readInt("count", 0);
 
     for (int i = 0; i < 99; i++) {
         if (i < getLayerCount()) {

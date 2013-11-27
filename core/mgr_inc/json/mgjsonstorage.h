@@ -8,6 +8,13 @@
 
 #ifndef SWIG
 #include <cstdio>
+inline FILE* mgopenfile(const char* fn, const char* m) {
+#if defined(_MSC_VER) && _MSC_VER >= 1400
+    FILE* fp = NULL; fopen_s(&fp, fn, m); return fp;
+#else
+    return fopen(fn, m);
+#endif
+}
 #endif
 struct MgStorage;
 

@@ -5,7 +5,7 @@
 
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate>
 
-@property (nonatomic, retain) UIViewController *content;
+@property (nonatomic, strong) UIViewController *content;
 
 - (void)clearCachedData;
 - (void)editDetailPage:(id)sender;

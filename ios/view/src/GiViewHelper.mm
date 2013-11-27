@@ -10,20 +10,22 @@
 #include "gicoreview.h"
 
 GiColor CGColorToGiColor(CGColorRef color) {
-    int num = CGColorGetNumberOfComponents(color);
+    size_t num = CGColorGetNumberOfComponents(color);
     CGColorSpaceModel space = CGColorSpaceGetModel(CGColorGetColorSpace(color));
     const CGFloat *rgba = CGColorGetComponents(color);
     
     if (space == kCGColorSpaceModelMonochrome && num >= 2) {
-        unsigned char c = lroundf(rgba[0] * 255.f);
-        return GiColor(c, c, c, lroundf(rgba[1] * 255.f));
+        int c = (int)lroundf(rgba[0] * 255.f);
+        return GiColor(c, c, c, (int)lroundf(rgba[1] * 255.f));
     }
     if (num < 3) {
         return GiColor::Invalid();
     }
     
-    return GiColor(lroundf(rgba[0] * 255.f), lroundf(rgba[1] * 255.f),
-                   lroundf(rgba[2] * 255.f), lroundf(CGColorGetAlpha(color) * 255.f));
+    return GiColor((int)lroundf(rgba[0] * 255.f),
+                   (int)lroundf(rgba[1] * 255.f),
+                   (int)lroundf(rgba[2] * 255.f),
+                   (int)lroundf(CGColorGetAlpha(color) * 255.f));
 }
 
 @implementation GiViewHelper
@@ -32,14 +34,14 @@ GiColor CGColorToGiColor(CGColorRef color) {
 @synthesize command, lineWidth, strokeWidth, lineColor, lineAlpha;
 @synthesize lineStyle, fillColor, fillAlpha;
 
-- (id)init:(GiGraphView *)view {
+- (id)initWithView:(GiGraphView *)view {
     self = [super init];
-    _view = view;
+    _view = view ? view : [GiGraphView activeView];
     return self;
 }
 
 + (id)instance:(GiGraphView *)view {
-    return [[[GiViewHelper alloc]init:view]autorelease];
+    return [[GiViewHelper alloc]initWithView:view];
 }
 
 + (GiGraphView *)activeView {
@@ -60,7 +62,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
     return _view;
 }
 
-- (int)cmdViewHandle {
+- (long)cmdViewHandle {
     return [_view cmdViewHandle];
 }
 
@@ -138,7 +140,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (void)setLineAlpha:(float)value {
-    [_view coreView]->getContext(true).setLineAlpha(lroundf(value * 255.f));
+    [_view coreView]->getContext(true).setLineAlpha((int)lroundf(value * 255.f));
     [_view coreView]->setContext(kContextLineAlpha);
 }
 
@@ -158,7 +160,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (void)setFillAlpha:(float)value {
-    [_view coreView]->getContext(true).setFillAlpha(lroundf(value * 255.f));
+    [_view coreView]->getContext(true).setFillAlpha((int)lroundf(value * 255.f));
     [_view coreView]->setContext(kContextFillAlpha);
 }
 
@@ -193,7 +195,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
     return [_view coreView]->getSelectedShapeID();
 }
 
-- (int)changeCount {
+- (long)changeCount {
     return [_view coreView]->getChangeCount();
 }
 
@@ -228,6 +230,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
     }
     
     return ret;
+}
+
+- (void)clearShapes {
+    [_view coreView]->clear();
 }
 
 - (UIImage *)snapshot {

@@ -59,6 +59,24 @@ public class MgLayer : MgShapes {
     return ret;
   }
 
+  public bool isHided() {
+    bool ret = touchvgPINVOKE.MgLayer_isHided(swigCPtr);
+    return ret;
+  }
+
+  public void setHided(bool hided) {
+    touchvgPINVOKE.MgLayer_setHided(swigCPtr, hided);
+  }
+
+  public bool isLocked() {
+    bool ret = touchvgPINVOKE.MgLayer_isLocked(swigCPtr);
+    return ret;
+  }
+
+  public void setLocked(bool locked) {
+    touchvgPINVOKE.MgLayer_setLocked(swigCPtr, locked);
+  }
+
   public override MgObject clone() {
     IntPtr cPtr = touchvgPINVOKE.MgLayer_clone(swigCPtr);
     MgObject ret = (cPtr == IntPtr.Zero) ? null : new MgObject(cPtr, false);

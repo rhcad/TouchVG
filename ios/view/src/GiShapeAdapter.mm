@@ -46,16 +46,16 @@ void GiShapeAdapter::checkNeedFire(bool stroke, bool fill)
     }
 }
 
-bool GiShapeAdapter::beginShape(int sid, float x, float y, float w, float h)
+bool GiShapeAdapter::beginShape(int type, int sid, float x, float y, float w, float h)
 {
     fireLastPath();
-    return _callback->beginShape(sid, CGRectMake(x, y, w, h));
+    return _callback->beginShape(type, sid, CGRectMake(x, y, w, h));
 }
 
-void GiShapeAdapter::endShape(int sid, float, float)
+void GiShapeAdapter::endShape(int type, int sid, float, float)
 {
     fireLastPath();
-    _callback->endShape(sid);
+    _callback->endShape(type, sid);
 }
 
 void GiShapeAdapter::setPen(int argb, float width, int style, float phase)
@@ -246,7 +246,7 @@ void GiShapeCallback::addPath(UIBezierPath *path, UIColor *strokeColor, UIColor 
     }
 }
 
-bool GiShapeCallback::beginShape(int, CGRect frame)
+bool GiShapeCallback::beginShape(int, int, CGRect frame)
 {
     _shapeLayer = [CALayer layer];
     _shapeLayer.frame = frame;
@@ -254,7 +254,7 @@ bool GiShapeCallback::beginShape(int, CGRect frame)
     return true;
 }
 
-void GiShapeCallback::endShape(int)
+void GiShapeCallback::endShape(int type, int)
 {
     _shapeLayer = nil;
 }

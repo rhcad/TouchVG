@@ -37,7 +37,6 @@ public:
             delete _coreView;
             _coreView = NULL;
         }
-        [_tmpshot release];
     }
     
     GiCoreView *coreView() {
@@ -55,7 +54,6 @@ public:
     bool drawAppend(GiCanvasAdapter* canvas) {
         if (_tmpshot) {
             [_tmpshot drawAtPoint:CGPointZero];
-            [_tmpshot release];
             _tmpshot = nil;
             return _coreView->drawAppend(this, canvas);
         }
@@ -68,10 +66,8 @@ public:
     }
     
     virtual void regenAppend() {
-        [_tmpshot release];
         _tmpshot = nil;                 // renderInContext可能会调用drawRect
         _tmpshot = snapshot();
-        [_tmpshot retain];
         
         [_view setNeedsDisplay];
         [_dynview setNeedsDisplay];
@@ -82,7 +78,6 @@ public:
             _dynview = [[IosTempView1 alloc]initWithFrame:_view.frame :this];
             _dynview.autoresizingMask = _view.autoresizingMask;
             [_view.superview addSubview:_dynview];
-            [_dynview release];
         }
         [_dynview setNeedsDisplay];
     }
@@ -118,7 +113,6 @@ public:
 - (void)dealloc
 {
     delete _viewAdapter;
-    [super dealloc];
 }
 
 - (id)initWithFrame:(CGRect)frame

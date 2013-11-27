@@ -61,7 +61,7 @@ bool GiSvgCanvas::close()
     return ret;
 }
 
-bool GiSvgCanvas::beginShape(int sid, float, float, float, float)
+bool GiSvgCanvas::beginShape(int, int sid, float, float, float, float)
 {
     std::stringstream ss;
     ss << "s" << sid;
@@ -69,7 +69,7 @@ bool GiSvgCanvas::beginShape(int sid, float, float, float, float)
     return true;
 }
 
-void GiSvgCanvas::endShape(int, float, float)
+void GiSvgCanvas::endShape(int, int, float, float)
 {
     im->doc->popGroup();
 }

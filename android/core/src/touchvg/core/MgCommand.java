@@ -127,4 +127,9 @@ public class MgCommand {
     return (getClass() == MgCommand.class) ? touchvgJNI.MgCommand_doContextAction(swigCPtr, this, MgMotion.getCPtr(sender), sender, action) : touchvgJNI.MgCommand_doContextActionSwigExplicitMgCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender, action);
   }
 
+  public MgShape getShape(MgMotion sender) {
+    long cPtr = (getClass() == MgCommand.class) ? touchvgJNI.MgCommand_getShape(swigCPtr, this, MgMotion.getCPtr(sender), sender) : touchvgJNI.MgCommand_getShapeSwigExplicitMgCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender);
+    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  }
+
 }

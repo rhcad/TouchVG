@@ -153,10 +153,6 @@ public class MgSplines extends MgBaseLines {
     return touchvgJNI.MgSplines_hitTest(swigCPtr, this, Point2d.getCPtr(pt), pt, tol, MgHitResult.getCPtr(res), res);
   }
 
-  public void smooth(float tol) {
-    touchvgJNI.MgSplines_smooth(swigCPtr, this, tol);
-  }
-
   public boolean isCurve() {
     return touchvgJNI.MgSplines_isCurve(swigCPtr, this);
   }

@@ -50,6 +50,22 @@ public class MgLayer extends MgShapes {
     return (cPtr == 0) ? null : new MgShapeDoc(cPtr, false);
   }
 
+  public boolean isHided() {
+    return touchvgJNI.MgLayer_isHided(swigCPtr, this);
+  }
+
+  public void setHided(boolean hided) {
+    touchvgJNI.MgLayer_setHided(swigCPtr, this, hided);
+  }
+
+  public boolean isLocked() {
+    return touchvgJNI.MgLayer_isLocked(swigCPtr, this);
+  }
+
+  public void setLocked(boolean locked) {
+    touchvgJNI.MgLayer_setLocked(swigCPtr, this, locked);
+  }
+
   public MgObject clone() {
     long cPtr = touchvgJNI.MgLayer_clone(swigCPtr, this);
     return (cPtr == 0) ? null : new MgObject(cPtr, false);

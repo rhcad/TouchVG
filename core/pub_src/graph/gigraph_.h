@@ -23,7 +23,8 @@ public:
     float       minPenWidth;        //!< 最小像素线宽
 
     long        lastZoomTimes;      //!< 记下的放缩结果改变次数
-    long        drawRefcnt;         //!< 绘图锁定计数
+    volatile long   drawRefcnt;     //!< 绘图锁定计数
+    volatile long   stopping;       //!< 是否需要停止绘图
     bool        isPrint;            //!< 是否打印或打印预览
     int         drawColors;         //!< 绘图DC颜色数
     RECT_2D     clipBox0;           //!< 开始绘图时的剪裁框(LP)
@@ -70,9 +71,9 @@ private:
 //! 图形系统的绘图引用锁定辅助类
 class GiLock
 {
-    long*  m_refcount;
+    volatile long*  m_refcount;
 public:
-    GiLock(long* refcount) : m_refcount(refcount)
+    GiLock(volatile long* refcount) : m_refcount(refcount)
     {
         giInterlockedIncrement(m_refcount);
     }

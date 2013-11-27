@@ -16,6 +16,7 @@ ipch
 *~
 *.DS_Store
 xcuserdata
+xcshareddata
 ._*
 .metadata
 bin

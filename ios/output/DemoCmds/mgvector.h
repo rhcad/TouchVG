@@ -25,11 +25,13 @@ public:
         }
     }
     template<class T2>
-    mgvector(const T2 *v, int n) {
-        _v = n > 0 ? new T[n] : (T*)0;
-        _n = n;
-        for (int i = 0; i < _n; i++)
-            _v[i] = (T)v[i];
+    mgvector(const T2 *v, int n) : _v((T*)0), _n(0) {
+        if (v && n > 0) {
+            _v = new T[n];
+            _n = n;
+            for (int i = 0; i < n; i++)
+                _v[i] = (T)v[i];
+        }
     }
     template<class T2>
     mgvector(const T2 v1, const T2 v2) {

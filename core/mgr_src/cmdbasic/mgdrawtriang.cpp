@@ -52,7 +52,7 @@ bool MgCmdDrawTriangle::touchEnded(const MgMotion* sender)
         m_step++;
         if (3 == m_step) {
             addShape(sender);
-            delayClear();
+            delayClear(sender);
             m_step = 0;
         }
     }

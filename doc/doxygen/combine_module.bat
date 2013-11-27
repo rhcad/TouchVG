@@ -15,6 +15,7 @@ xcopy ..\..\core\mgr_src\cmdbasic\*.* %destpath%\cmdbasic\ /Y
 xcopy ..\..\core\mgr_src\cmdmgr\*.* %destpath%\cmdmgr\ /Y
 xcopy ..\..\core\mgr_src\json\*.* %destpath%\json\ /Y
 xcopy ..\..\core\mgr_src\export\*.* %destpath%\export\ /Y
+xcopy ..\..\core\mgr_src\record\*.* %destpath%\record\ /Y
 xcopy ..\..\core\mgr_src\view\*.* %destpath%\view\ /Y
 
 xcopy ..\..\core\democmds\gate\*.* %destpath%\democmds\ /Y

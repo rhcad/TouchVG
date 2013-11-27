@@ -44,7 +44,7 @@ bool MgCmdDrawLine::touchEnded(const MgMotion* sender)
     if ( ((MgLine*)dynshape()->shape())->length() > sender->displayMmToModel(2.f)) {
         addShape(sender);
     }
-    delayClear();
+    delayClear(sender);
 
     return MgCommandDraw::touchEnded(sender);
 }

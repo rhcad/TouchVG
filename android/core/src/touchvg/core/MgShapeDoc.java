@@ -94,6 +94,11 @@ public class MgShapeDoc extends MgObject {
     return touchvgJNI.MgShapeDoc_setCurrentShapes(swigCPtr, this, MgShapes.getCPtr(shapes), shapes);
   }
 
+  public MgLayer getCurrentLayer() {
+    long cPtr = touchvgJNI.MgShapeDoc_getCurrentLayer(swigCPtr, this);
+    return (cPtr == 0) ? null : new MgLayer(cPtr, false);
+  }
+
   public boolean switchLayer(int index) {
     return touchvgJNI.MgShapeDoc_switchLayer(swigCPtr, this, index);
   }
@@ -133,6 +138,15 @@ public class MgShapeDoc extends MgObject {
 
   public void setReadOnly(boolean readOnly) {
     touchvgJNI.MgShapeDoc_setReadOnly(swigCPtr, this, readOnly);
+  }
+
+  public static MgShapeDoc fromHandle(int h) {
+    long cPtr = touchvgJNI.MgShapeDoc_fromHandle(h);
+    return (cPtr == 0) ? null : new MgShapeDoc(cPtr, false);
+  }
+
+  public int toHandle() {
+    return touchvgJNI.MgShapeDoc_toHandle(swigCPtr, this);
   }
 
   public MgObject clone() {

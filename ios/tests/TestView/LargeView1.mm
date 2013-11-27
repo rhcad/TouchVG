@@ -15,7 +15,6 @@
         
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, w)];
         [self addSubview:view];
-        [view release];
         
         UIView *subview;
         
@@ -36,7 +35,6 @@
 #endif
         }
         [view addSubview:subview];
-        [subview release];
         
         self.delegate = self;
         self.contentSize = subview.frame.size;

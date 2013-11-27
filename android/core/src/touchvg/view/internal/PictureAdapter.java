@@ -65,7 +65,7 @@ public class PictureAdapter extends GiCanvas {
     }
     
     @Override
-    public boolean beginShape(int sid, float x, float y, float w, float h) {
+    public boolean beginShape(int type, int sid, float x, float y, float w, float h) {
         if (w < 1 || h < 1)
             return false;
         mPicture = new Picture();
@@ -75,7 +75,7 @@ public class PictureAdapter extends GiCanvas {
     }
     
     @Override
-    public void endShape(int sid, float x, float y) {
+    public void endShape(int type, int sid, float x, float y) {
         mPicture.endRecording();
         mCallback.onPictureCreated(mPicture, x, y, sid);
         mPicture = null;

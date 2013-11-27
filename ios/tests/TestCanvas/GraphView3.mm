@@ -56,12 +56,7 @@ static int machToMs(uint64_t start)
 
 - (void)dealloc
 {
-    if (_dynview && _dynview != self) {
-        [_dynview release];
-        _dynview = nil;
-    }
     delete _canvas;
-    [super dealloc];
 }
 
 - (id)initWithFrame:(CGRect)frame withFlags:(int)t
@@ -194,11 +189,7 @@ static int machToMs(uint64_t start)
     uint64_t start = mach_absolute_time();
     CGSize size = self.bounds.size;
     
-    if (UIGraphicsBeginImageContextWithOptions) {
-        UIGraphicsBeginImageContextWithOptions(size, self.opaque, 0);
-    } else {
-        UIGraphicsBeginImageContext(size);
-    }
+    UIGraphicsBeginImageContextWithOptions(size, self.opaque, 0);
     
     int drawTime = machToMs(start);
     NSLog(@"UIGraphicsBeginImageContext: %d ms", drawTime);
@@ -267,8 +258,8 @@ static int machToMs(uint64_t start)
     
 #if 1
     CGImageRef cgimage = CGBitmapContextCreateImage(ctx);
-    UIImage *image = [[[UIImage alloc]initWithCGImage:cgimage scale:scale
-                                         orientation:UIImageOrientationUp] autorelease];
+    UIImage *image = [[UIImage alloc]initWithCGImage:cgimage scale:scale
+                                         orientation:UIImageOrientationUp];
     CGImageRelease(cgimage);
     CGContextRelease(ctx);
 #else   // 下面取图像会失败
@@ -309,7 +300,6 @@ static int machToMs(uint64_t start)
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save" message:msg
                                                    delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
-    [alert release];
 }
 
 - (void)save
@@ -346,41 +336,34 @@ static int machToMs(uint64_t start)
     CalloutView *callout = [[CalloutView alloc]initWithFrame:rect];
     
     [self addSubview:callout];
-    [callout release];
 }
 
 @end
 
-@implementation GraphView4
-
-- (void)run
-{
-    while (![_thread isCancelled]) {
-        [_dynview performSelectorOnMainThread:@selector(setNeedsDisplay)
-                                   withObject:nil waitUntilDone:YES];
-    }
+@interface GraphView4() {
+    BOOL _canceled;
 }
+@end
+
+@implementation GraphView4
 
 - (void)removeFromSuperview
 {
-    if (_thread) {
-        [_thread cancel];
-        if (![_thread isFinished])
-            [NSThread sleepForTimeInterval:0.1];
-        [_thread release];
-        _thread = nil;
-    }
+    _canceled = YES;
     [super removeFromSuperview];
 }
 
 - (void)didMoveToSuperview
 {
     [super didMoveToSuperview];
-    if (!_thread) {
-        _thread = [[NSThread alloc] initWithTarget:self selector:@selector(run) object:nil];
-        [_thread start];
-        _drawTimes++;
-    }
+    _drawTimes++;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        while (!_canceled) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setNeedsDisplay];
+            });
+        }
+    });
 }
 
 @end

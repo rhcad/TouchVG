@@ -15,14 +15,6 @@
 
 @implementation AppDelegate
 
-- (void)dealloc
-{
-    [_window release];
-    [_navigationController release];
-    [_splitViewController release];
-    [super dealloc];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -30,17 +22,14 @@
     if (ISPHONE) {
         _masterController = [[MasterViewController alloc] init];
         _navigationController = [[UINavigationController alloc] initWithRootViewController:_masterController];
-        [_masterController release];
         _window.rootViewController = _navigationController;
     }
     else {
         _masterController = [[MasterViewController alloc] init];
         _navigationController = [[UINavigationController alloc] initWithRootViewController:_masterController];
-        [_masterController release];
         
         DetailViewController *detailController = [[DetailViewController alloc] init];
         UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailController];
-        [detailController release];
     	
     	_masterController.detailViewController = detailController;
     	
@@ -49,7 +38,6 @@
         _splitViewController.viewControllers = [NSArray arrayWithObjects:_navigationController, detailNavigationController, nil];
         
         _window.rootViewController = _splitViewController;
-        [detailNavigationController release];
     }
     [_window makeKeyAndVisible];
     

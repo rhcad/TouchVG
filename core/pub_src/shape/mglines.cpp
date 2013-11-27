@@ -196,7 +196,7 @@ bool MgBaseLines::_hitTestBox(const Box2d& rect) const
 bool MgBaseLines::_save(MgStorage* s) const
 {
     bool ret = __super::_save(s);
-    s->writeUInt32("count", _count);
+    s->writeUInt("count", _count);
     s->writeFloatArray("points", (const float*)_points, _count * 2);
     return ret;
 }
@@ -205,7 +205,7 @@ bool MgBaseLines::_load(MgShapeFactory* factory, MgStorage* s)
 {
     bool ret = __super::_load(factory, s);
     
-    int n = s->readUInt32("count", 0);
+    int n = s->readInt("count", 0);
     if (n < 1 || n > 9999)
         return s->setError(n < 1 ? "No point." : "Too many points.");
     

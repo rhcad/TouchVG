@@ -6,12 +6,6 @@
 
 @implementation BasicAnimationView
 
-- (void)dealloc
-{
-    [shapeLayer release];
-    [super dealloc];
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
@@ -63,7 +57,7 @@
         }
         
         CABasicAnimation* pathAnim = [CABasicAnimation animationWithKeyPath: @"path"];
-        pathAnim.toValue = (id)newPath;
+        pathAnim.toValue = (__bridge id)newPath;
         if (needReleasePath) {
             CGPathRelease(newPath);
             newPath = nil;
@@ -73,7 +67,7 @@
         boundsAnim.toValue = [NSValue valueWithCGRect:newBounds];
         
         CABasicAnimation* fillAnim = [CABasicAnimation animationWithKeyPath: @"fillColor"];
-        fillAnim.toValue = (id)fillColor;
+        fillAnim.toValue = (__bridge id)fillColor;
         
         CABasicAnimation* positionAnim = [CABasicAnimation animationWithKeyPath: @"position"];
         positionAnim.toValue = [NSValue valueWithCGPoint:pt];

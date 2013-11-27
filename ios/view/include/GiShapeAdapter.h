@@ -9,8 +9,8 @@
 struct GiShapeAdapterCallback
 {
     virtual void addPath(UIBezierPath *path, UIColor *strokeColor, UIColor *fillColor) = 0;
-    virtual bool beginShape(int sid, CGRect frame) = 0;
-    virtual void endShape(int sid) = 0;
+    virtual bool beginShape(int type, int sid, CGRect frame) = 0;
+    virtual void endShape(int type, int sid) = 0;
 };
 
 //! GiShapeAdapterCallback 的默认实现
@@ -21,8 +21,8 @@ public:
     
 private:
     virtual void addPath(UIBezierPath *path, UIColor *strokeColor, UIColor *fillColor);
-    virtual bool beginShape(int sid, CGRect frame);
-    virtual void endShape(int sid);
+    virtual bool beginShape(int type, int sid, CGRect frame);
+    virtual void endShape(int type, int sid);
     
     CALayer *_rootLayer;
     CALayer *_shapeLayer;
@@ -59,8 +59,8 @@ public:
     void drawHandle(float x, float y, int type);
     void drawBitmap(const char* name, float xc, float yc, float w, float h, float angle);
     float drawTextAt(const char* text, float x, float y, float h, int align);
-    bool beginShape(int sid, float x, float y, float w, float h);
-    void endShape(int sid, float x, float y);
+    bool beginShape(int type, int sid, float x, float y, float w, float h);
+    void endShape(int type, int sid, float x, float y);
     
 private:
     bool hasLineColor() const;

@@ -51,15 +51,15 @@ public class GiView {
   }
 
   public void regenAll() {
-    touchvgJNI.GiView_regenAll(swigCPtr, this);
+    if (getClass() == GiView.class) touchvgJNI.GiView_regenAll(swigCPtr, this); else touchvgJNI.GiView_regenAllSwigExplicitGiView(swigCPtr, this);
   }
 
   public void regenAppend() {
-    touchvgJNI.GiView_regenAppend(swigCPtr, this);
+    if (getClass() == GiView.class) touchvgJNI.GiView_regenAppend(swigCPtr, this); else touchvgJNI.GiView_regenAppendSwigExplicitGiView(swigCPtr, this);
   }
 
   public void redraw() {
-    touchvgJNI.GiView_redraw(swigCPtr, this);
+    if (getClass() == GiView.class) touchvgJNI.GiView_redraw(swigCPtr, this); else touchvgJNI.GiView_redrawSwigExplicitGiView(swigCPtr, this);
   }
 
   public boolean useFinger() {
@@ -84,6 +84,10 @@ public class GiView {
 
   public void contentChanged() {
     if (getClass() == GiView.class) touchvgJNI.GiView_contentChanged(swigCPtr, this); else touchvgJNI.GiView_contentChangedSwigExplicitGiView(swigCPtr, this);
+  }
+
+  public void dynamicChanged() {
+    if (getClass() == GiView.class) touchvgJNI.GiView_dynamicChanged(swigCPtr, this); else touchvgJNI.GiView_dynamicChangedSwigExplicitGiView(swigCPtr, this);
   }
 
   public GiView() {

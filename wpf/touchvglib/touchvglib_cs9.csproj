@@ -61,6 +61,7 @@
     <Compile Include="core\GiGestureState.cs" />
     <Compile Include="core\GiGestureType.cs" />
     <Compile Include="core\GiGraphics.cs" />
+    <Compile Include="core\GiHandleTypes.cs" />
     <Compile Include="core\GiLineStyle.cs" />
     <Compile Include="core\GiMouseHelper.cs" />
     <Compile Include="core\GiPath.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="core\MgCommandDraw.cs" />
     <Compile Include="core\MgComposite.cs" />
     <Compile Include="core\MgContextAction.cs" />
+    <Compile Include="core\MgCoreView.cs" />
     <Compile Include="core\mgcurv.cs" />
     <Compile Include="core\MgDiamond.cs" />
     <Compile Include="core\MgDynShapeLock.cs" />

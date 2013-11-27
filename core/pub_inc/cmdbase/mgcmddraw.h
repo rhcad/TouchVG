@@ -18,7 +18,7 @@ public:
     virtual ~MgCommandDraw();
     
     MgShape* addShape(const MgMotion* sender, MgShape* shape = NULL, bool autolock = true);
-    void delayClear();
+    void delayClear(const MgMotion* sender);
     bool touchBeganStep(const MgMotion* sender);
     bool touchMovedStep(const MgMotion* sender);
     bool touchEndedStep(const MgMotion* sender);
@@ -47,10 +47,11 @@ public:
     virtual bool click(const MgMotion* sender);
     virtual bool longPress(const MgMotion* sender);
     virtual bool mouseHover(const MgMotion* sender);
+    virtual MgShape* getShape(const MgMotion*) { return m_shape; }
 
     int getStep() { return m_needClear ? 0 : m_step; }
-    void setStep(int step) { m_step = step; }
     MgShape* dynshape() { return m_shape; }
+    void setStep(int step) { m_step = step; }
     Point2d snapPoint(const MgMotion* sender, bool firstStep = false);
     Point2d snapPoint(const MgMotion* sender, const Point2d& orignPt, bool firstStep = false);
     
@@ -58,7 +59,7 @@ protected:
     int         m_step;
 private:
     MgShape*    m_shape;
-    bool        m_needClear;
+    int         m_needClear;
 };
 
 #endif // TOUCHVG_CMD_DRAW_H_

@@ -42,8 +42,8 @@ private:
     virtual void drawBitmap(const char* name, float xc, float yc, 
                             float w, float h, float angle);
     virtual float drawTextAt(const char* text, float x, float y, float h, int align);
-    virtual bool beginShape(int sid, float x, float y, float w, float h);
-    virtual void endShape(int sid, float x, float y);
+    virtual bool beginShape(int type, int sid, float x, float y, float w, float h);
+    virtual void endShape(int type, int sid, float x, float y);
 
 private:
     struct Impl;

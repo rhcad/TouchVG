@@ -187,10 +187,6 @@ public class MgSplines : MgBaseLines {
     return ret;
   }
 
-  public void smooth(float tol) {
-    touchvgPINVOKE.MgSplines_smooth(swigCPtr, tol);
-  }
-
   public override bool isCurve() {
     bool ret = touchvgPINVOKE.MgSplines_isCurve(swigCPtr);
     return ret;

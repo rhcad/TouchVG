@@ -80,6 +80,10 @@ public class MgBaseShape extends MgObject {
     return (getClass() == MgBaseShape.class) ? touchvgJNI.MgBaseShape_getChangeCount(swigCPtr, this) : touchvgJNI.MgBaseShape_getChangeCountSwigExplicitMgBaseShape(swigCPtr, this);
   }
 
+  public void afterChanged() {
+    if (getClass() == MgBaseShape.class) touchvgJNI.MgBaseShape_afterChanged(swigCPtr, this); else touchvgJNI.MgBaseShape_afterChangedSwigExplicitMgBaseShape(swigCPtr, this);
+  }
+
   public void update() {
     if (getClass() == MgBaseShape.class) touchvgJNI.MgBaseShape_update(swigCPtr, this); else touchvgJNI.MgBaseShape_updateSwigExplicitMgBaseShape(swigCPtr, this);
   }

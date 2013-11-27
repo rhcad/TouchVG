@@ -53,7 +53,9 @@ public:
     int dyndraw(int mode, GiGraphics& gs, const GiContext *ctx, int segment) const;
 
     bool save(MgStorage* s, int startIndex = 0) const;
+    bool saveShape(MgStorage* s, MgShape* shape, int index) const;
     bool load(MgShapeFactory* factory, MgStorage* s, bool addOnly = false);
+    void setNewShapeID(int sid);
     
     //! 删除所有图形
     void clear();
@@ -81,6 +83,12 @@ public:
 
     //! 返回拥有者对象
     MgObject* getOwner() const;
+    
+    //! 返回图层序号
+    int getIndex() const;
+    
+    static MgShapes* fromHandle(long h) { MgShapes* p; *(long*)&p = h; return p; } //!< 转为对象
+    long toHandle() { long h; *(MgShapes**)&h = this; return h; }   //!< 得到句柄，用于跨库转换
     
 public:
     virtual MgObject* clone() const;

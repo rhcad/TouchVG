@@ -14,8 +14,6 @@ UIViewController *createTestView(NSUInteger index, CGRect frame);
 
 @implementation MasterViewController
 
-@synthesize detailViewController = _detailController;
-
 - (id)init
 {
     self = [super init];
@@ -28,31 +26,23 @@ UIViewController *createTestView(NSUInteger index, CGRect frame);
     }
     return self;
 }
-							
-- (void)dealloc
-{
-    [_titles release];
-    [super dealloc];
-}
 
 - (void)setNavigationButtons
 {
-    if (!self.navigationItem.leftBarButtonItem && _detailController) {
+    if (!self.navigationItem.leftBarButtonItem && _detailViewController) {
         UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                       target:_detailController
+                                       target:_detailViewController
                                        action:@selector(editDetailPage:)];
         self.navigationItem.leftBarButtonItem = editButton;
-        [editButton release];
     }
     
-    if (!self.navigationItem.rightBarButtonItem && _detailController) {
+    if (!self.navigationItem.rightBarButtonItem && _detailViewController) {
         UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
                                        initWithBarButtonSystemItem:UIBarButtonSystemItemSave
-                                       target:_detailController
+                                       target:_detailViewController
                                        action:@selector(saveDetailPage:)];
         self.navigationItem.rightBarButtonItem = saveButton;
-        [saveButton release];
     }
 }
 
@@ -88,8 +78,8 @@ UIViewController *createTestView(NSUInteger index, CGRect frame);
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                       reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:CellIdentifier];
         if (ISPHONE) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -104,24 +94,23 @@ UIViewController *createTestView(NSUInteger index, CGRect frame);
     UIViewController *controller;
     
     if (ISPHONE) {
-	    if (!_detailController) {
-	        _detailController = [[DetailViewController alloc] init];
+	    if (!_detailViewController) {
+	        _detailViewController = [[DetailViewController alloc] init];
             [self setNavigationButtons];
 	    }
-	    controller = createTestView(indexPath.row, _detailController.view.bounds);
-        [self.navigationController pushViewController:_detailController animated:YES];
+	    controller = createTestView(indexPath.row, _detailViewController.view.bounds);
+        [self.navigationController pushViewController:_detailViewController animated:YES];
     }
     else {
-        controller = createTestView(indexPath.row, _detailController.view.bounds);
+        controller = createTestView(indexPath.row, _detailViewController.view.bounds);
     }
     
-    _detailController.content = controller;
-    [controller release];
+    _detailViewController.content = controller;
 }
 
 - (void)clearCachedData
 {
-    [_detailController clearCachedData];
+    [_detailViewController clearCachedData];
 }
 
 @end

@@ -42,15 +42,15 @@ public class GiView : IDisposable {
   }
 
   public virtual void regenAll() {
-    touchvgPINVOKE.GiView_regenAll(swigCPtr);
+    if (SwigDerivedClassHasMethod("regenAll", swigMethodTypes0)) touchvgPINVOKE.GiView_regenAllSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_regenAll(swigCPtr);
   }
 
   public virtual void regenAppend() {
-    touchvgPINVOKE.GiView_regenAppend(swigCPtr);
+    if (SwigDerivedClassHasMethod("regenAppend", swigMethodTypes1)) touchvgPINVOKE.GiView_regenAppendSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_regenAppend(swigCPtr);
   }
 
   public virtual void redraw() {
-    touchvgPINVOKE.GiView_redraw(swigCPtr);
+    if (SwigDerivedClassHasMethod("redraw", swigMethodTypes2)) touchvgPINVOKE.GiView_redrawSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_redraw(swigCPtr);
   }
 
   public virtual bool useFinger() {
@@ -81,6 +81,10 @@ public class GiView : IDisposable {
     if (SwigDerivedClassHasMethod("contentChanged", swigMethodTypes8)) touchvgPINVOKE.GiView_contentChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_contentChanged(swigCPtr);
   }
 
+  public virtual void dynamicChanged() {
+    if (SwigDerivedClassHasMethod("dynamicChanged", swigMethodTypes9)) touchvgPINVOKE.GiView_dynamicChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_dynamicChanged(swigCPtr);
+  }
+
   public GiView() : this(touchvgPINVOKE.new_GiView(), true) {
     SwigDirectorConnect();
   }
@@ -104,7 +108,9 @@ public class GiView : IDisposable {
       swigDelegate7 = new SwigDelegateGiView_7(SwigDirectorselectionChanged);
     if (SwigDerivedClassHasMethod("contentChanged", swigMethodTypes8))
       swigDelegate8 = new SwigDelegateGiView_8(SwigDirectorcontentChanged);
-    touchvgPINVOKE.GiView_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8);
+    if (SwigDerivedClassHasMethod("dynamicChanged", swigMethodTypes9))
+      swigDelegate9 = new SwigDelegateGiView_9(SwigDirectordynamicChanged);
+    touchvgPINVOKE.GiView_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9);
   }
 
   private bool SwigDerivedClassHasMethod(string methodName, Type[] methodTypes) {
@@ -149,6 +155,10 @@ public class GiView : IDisposable {
     contentChanged();
   }
 
+  private void SwigDirectordynamicChanged() {
+    dynamicChanged();
+  }
+
   public delegate void SwigDelegateGiView_0();
   public delegate void SwigDelegateGiView_1();
   public delegate void SwigDelegateGiView_2();
@@ -158,6 +168,7 @@ public class GiView : IDisposable {
   public delegate void SwigDelegateGiView_6();
   public delegate void SwigDelegateGiView_7();
   public delegate void SwigDelegateGiView_8();
+  public delegate void SwigDelegateGiView_9();
 
   private SwigDelegateGiView_0 swigDelegate0;
   private SwigDelegateGiView_1 swigDelegate1;
@@ -168,6 +179,7 @@ public class GiView : IDisposable {
   private SwigDelegateGiView_6 swigDelegate6;
   private SwigDelegateGiView_7 swigDelegate7;
   private SwigDelegateGiView_8 swigDelegate8;
+  private SwigDelegateGiView_9 swigDelegate9;
 
   private static Type[] swigMethodTypes0 = new Type[] {  };
   private static Type[] swigMethodTypes1 = new Type[] {  };
@@ -178,6 +190,7 @@ public class GiView : IDisposable {
   private static Type[] swigMethodTypes6 = new Type[] {  };
   private static Type[] swigMethodTypes7 = new Type[] {  };
   private static Type[] swigMethodTypes8 = new Type[] {  };
+  private static Type[] swigMethodTypes9 = new Type[] {  };
 }
 
 }

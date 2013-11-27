@@ -248,6 +248,144 @@ class democmdsPINVOKE {
 
   [DllImport("democmds", EntryPoint="CSharp_delete_DemoCmdsGate")]
   public static extern void delete_DemoCmdsGate(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_delete_MgCoreView")]
+  public static extern void delete_MgCoreView(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_fromHandle")]
+  public static extern IntPtr MgCoreView_fromHandle(int jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_toHandle")]
+  public static extern int MgCoreView_toHandle(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_viewAdapter")]
+  public static extern IntPtr MgCoreView_viewAdapter(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_viewAdapterHandle")]
+  public static extern int MgCoreView_viewAdapterHandle(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_docHandle")]
+  public static extern int MgCoreView_docHandle(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_shapesHandle")]
+  public static extern int MgCoreView_shapesHandle(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_isPressDragging")]
+  public static extern bool MgCoreView_isPressDragging(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getCommand")]
+  public static extern string MgCoreView_getCommand(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_setCommand__SWIG_0")]
+  public static extern bool MgCoreView_setCommand__SWIG_0(HandleRef jarg1, string jarg2, string jarg3);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_setCommand__SWIG_1")]
+  public static extern bool MgCoreView_setCommand__SWIG_1(HandleRef jarg1, string jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_doContextAction")]
+  public static extern bool MgCoreView_doContextAction(HandleRef jarg1, int jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_clearCachedData")]
+  public static extern void MgCoreView_clearCachedData(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_addShapesForTest")]
+  public static extern int MgCoreView_addShapesForTest(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getShapeCount")]
+  public static extern int MgCoreView_getShapeCount(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getChangeCount")]
+  public static extern int MgCoreView_getChangeCount(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getDrawCount")]
+  public static extern int MgCoreView_getDrawCount(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getSelectedShapeCount")]
+  public static extern int MgCoreView_getSelectedShapeCount(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getSelectedShapeType")]
+  public static extern int MgCoreView_getSelectedShapeType(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getSelectedShapeID")]
+  public static extern int MgCoreView_getSelectedShapeID(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_clear")]
+  public static extern void MgCoreView_clear(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_loadFromFile__SWIG_0")]
+  public static extern bool MgCoreView_loadFromFile__SWIG_0(HandleRef jarg1, string jarg2, bool jarg3, bool jarg4);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_loadFromFile__SWIG_1")]
+  public static extern bool MgCoreView_loadFromFile__SWIG_1(HandleRef jarg1, string jarg2, bool jarg3);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_loadFromFile__SWIG_2")]
+  public static extern bool MgCoreView_loadFromFile__SWIG_2(HandleRef jarg1, string jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_saveToFile__SWIG_0")]
+  public static extern bool MgCoreView_saveToFile__SWIG_0(HandleRef jarg1, string jarg2, bool jarg3);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_saveToFile__SWIG_1")]
+  public static extern bool MgCoreView_saveToFile__SWIG_1(HandleRef jarg1, string jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_loadShapes__SWIG_0")]
+  public static extern bool MgCoreView_loadShapes__SWIG_0(HandleRef jarg1, HandleRef jarg2, bool jarg3, bool jarg4);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_loadShapes__SWIG_1")]
+  public static extern bool MgCoreView_loadShapes__SWIG_1(HandleRef jarg1, HandleRef jarg2, bool jarg3);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_loadShapes__SWIG_2")]
+  public static extern bool MgCoreView_loadShapes__SWIG_2(HandleRef jarg1, HandleRef jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_saveShapes")]
+  public static extern bool MgCoreView_saveShapes(HandleRef jarg1, HandleRef jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_loadDynamicShapes")]
+  public static extern bool MgCoreView_loadDynamicShapes(HandleRef jarg1, HandleRef jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getContent")]
+  public static extern string MgCoreView_getContent(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_freeContent")]
+  public static extern void MgCoreView_freeContent(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_setContent")]
+  public static extern bool MgCoreView_setContent(HandleRef jarg1, string jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_exportSVG")]
+  public static extern bool MgCoreView_exportSVG(HandleRef jarg1, string jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_zoomToExtent")]
+  public static extern bool MgCoreView_zoomToExtent(HandleRef jarg1);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_zoomToModel")]
+  public static extern bool MgCoreView_zoomToModel(HandleRef jarg1, float jarg2, float jarg3, float jarg4, float jarg5);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_calcPenWidth")]
+  public static extern float MgCoreView_calcPenWidth(HandleRef jarg1, float jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getContext")]
+  public static extern IntPtr MgCoreView_getContext(HandleRef jarg1, bool jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_setContext__SWIG_0")]
+  public static extern void MgCoreView_setContext__SWIG_0(HandleRef jarg1, HandleRef jarg2, int jarg3, int jarg4);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_setContext__SWIG_1")]
+  public static extern void MgCoreView_setContext__SWIG_1(HandleRef jarg1, int jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_setContextEditing")]
+  public static extern void MgCoreView_setContextEditing(HandleRef jarg1, bool jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_addImageShape__SWIG_0")]
+  public static extern int MgCoreView_addImageShape__SWIG_0(HandleRef jarg1, string jarg2, float jarg3, float jarg4);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_addImageShape__SWIG_1")]
+  public static extern int MgCoreView_addImageShape__SWIG_1(HandleRef jarg1, string jarg2, float jarg3, float jarg4, float jarg5, float jarg6);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getBoundingBox__SWIG_0")]
+  public static extern bool MgCoreView_getBoundingBox__SWIG_0(HandleRef jarg1, HandleRef jarg2);
+
+  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_getBoundingBox__SWIG_1")]
+  public static extern bool MgCoreView_getBoundingBox__SWIG_1(HandleRef jarg1, HandleRef jarg2, int jarg3);
 }
 
 }

@@ -112,6 +112,12 @@ public class MgShapeDoc : MgObject {
     return ret;
   }
 
+  public MgLayer getCurrentLayer() {
+    IntPtr cPtr = touchvgPINVOKE.MgShapeDoc_getCurrentLayer(swigCPtr);
+    MgLayer ret = (cPtr == IntPtr.Zero) ? null : new MgLayer(cPtr, false);
+    return ret;
+  }
+
   public bool switchLayer(int index) {
     bool ret = touchvgPINVOKE.MgShapeDoc_switchLayer(swigCPtr, index);
     return ret;
@@ -160,6 +166,17 @@ public class MgShapeDoc : MgObject {
 
   public void setReadOnly(bool readOnly) {
     touchvgPINVOKE.MgShapeDoc_setReadOnly(swigCPtr, readOnly);
+  }
+
+  public static MgShapeDoc fromHandle(int h) {
+    IntPtr cPtr = touchvgPINVOKE.MgShapeDoc_fromHandle(h);
+    MgShapeDoc ret = (cPtr == IntPtr.Zero) ? null : new MgShapeDoc(cPtr, false);
+    return ret;
+  }
+
+  public int toHandle() {
+    int ret = touchvgPINVOKE.MgShapeDoc_toHandle(swigCPtr);
+    return ret;
   }
 
   public override MgObject clone() {

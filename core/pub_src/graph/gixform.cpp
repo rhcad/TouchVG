@@ -28,7 +28,7 @@ struct GiTransformImpl
     bool        zoomEnabled;    //!< 是否允许放缩
     Point2d     tmpCenterW;     //!< 当前放缩结果，不论是否允许放缩
     float       tmpViewScale;   //!< 当前放缩结果，不论是否允许放缩
-    long        zoomTimes;      //!< 放缩结果改变的次数
+    volatile long   zoomTimes;  //!< 放缩结果改变的次数
 
     float       minViewScale;   //!< 最小显示比例
     float       maxViewScale;   //!< 最大显示比例

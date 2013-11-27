@@ -6,16 +6,20 @@
 #include "mgstorage.h"
 #include <mgspfactory.h>
 #include <list>
+#include <map>
 
 struct MgShapes::I
 {
     typedef std::list<MgShape*> Container;
     typedef Container::const_iterator citerator;
     typedef Container::iterator iterator;
+    typedef std::map<int, MgShape*>  ID2SHAPE;
     
     Container   shapes;
+    ID2SHAPE    id2shape;
     MgObject*   owner;
     int         index;
+    int         newShapeID;
     
     MgShape* findShape(int sid) const;
     int getNewID(int sid);
@@ -31,6 +35,7 @@ MgShapes::MgShapes(MgObject* owner, int index)
     im = new I();
     im->owner = owner;
     im->index = index;
+    im->newShapeID = 1;
 }
 
 MgShapes::~MgShapes()
@@ -82,6 +87,7 @@ void MgShapes::clear()
         (*it)->release();
     }
     im->shapes.clear();
+    im->id2shape.clear();
 }
 
 void MgShapes::clearCachedData()
@@ -96,12 +102,18 @@ MgObject* MgShapes::getOwner() const
     return this ? im->owner : NULL;
 }
 
+int MgShapes::getIndex() const
+{
+    return im->index;
+}
+
 MgShape* MgShapes::addShape(const MgShape& src)
 {
     MgShape* p = src.cloneShape();
     if (p) {
         p->setParent(this, im->getNewID(src.getID()));
         im->shapes.push_back(p);
+        im->id2shape[p->getID()] = p;
     }
     return p;
 }
@@ -112,6 +124,7 @@ MgShape* MgShapes::addShapeByType(MgShapeFactory* factory, int type)
     if (p) {
         p->setParent(this, im->getNewID(0));
         im->shapes.push_back(p);
+        im->id2shape[p->getID()] = p;
     }
     return p;
 }
@@ -125,6 +138,7 @@ MgShape* MgShapes::removeShape(int sid, bool skipLockedShape)
                 return NULL;
             }
             im->shapes.erase(it);
+            im->id2shape.erase(shape->getID());
             return shape;
         }
     }
@@ -143,6 +157,7 @@ MgShape* MgShapes::moveTo(int sid, MgShapes* dest)
             
             shape->setParent(d, d->im->getNewID(shape->getID()));
             d->im->shapes.push_back(shape);
+            d->im->id2shape[sid] = shape;
         }
         else if (shape) {
             MgShape* newsp = addShape(*shape);
@@ -293,9 +308,9 @@ int MgShapes::dyndraw(int mode, GiGraphics& gs, const GiContext *ctx, int segmen
     Box2d clip(gs.getClipModel());
     int count = 0;
     
-    for (I::citerator it = im->shapes.begin(); it != im->shapes.end(); ++it) {
+    for (I::citerator it = im->shapes.begin(); it != im->shapes.end() && !gs.isStopping(); ++it) {
         const MgShape* sp = *it;
-        if (sp->shapec()->getExtent().isIntersect(clip)) {
+        if (sp->getParent() == this && sp->shapec()->getExtent().isIntersect(clip)) {
             if (sp->draw(mode, gs, ctx, segment))
                 count++;
         }
@@ -314,26 +329,34 @@ bool MgShapes::save(MgStorage* s, int startIndex) const
         ret = saveExtra(s);
         rect = getExtent();
         s->writeFloatArray("extent", &rect.xmin, 4);
-        s->writeUInt32("count", (int)im->shapes.size() - startIndex);
+        s->writeUInt("count", (int)im->shapes.size() - startIndex);
         
         for (I::citerator it = im->shapes.begin();
              ret && it != im->shapes.end(); ++it, ++index)
         {
             if (index < startIndex)
                 continue;
-            ret = s->writeNode("shape", index - startIndex, false);
-            if (ret) {
-                s->writeUInt32("type", (*it)->getType() & 0xFFFF);
-                s->writeUInt32("id", (*it)->getID());
-                
-                rect = (*it)->shapec()->getExtent();
-                s->writeFloatArray("extent", &rect.xmin, 4);
-                
-                ret = (*it)->save(s);
-                s->writeNode("shape", index - startIndex, true);
-            }
+            ret = saveShape(s, *it, index - startIndex);
         }
         s->writeNode("shapes", im->index, true);
+    }
+    
+    return ret;
+}
+
+bool MgShapes::saveShape(MgStorage* s, MgShape* shape, int index) const
+{
+    bool ret = s->writeNode("shape", index, false);
+    
+    if (ret) {
+        s->writeUInt("type", shape->getType() & 0xFFFF);
+        s->writeUInt("id", shape->getID());
+        
+        Box2d rect(shape->shapec()->getExtent());
+        s->writeFloatArray("extent", &rect.xmin, 4);
+        
+        ret = shape->save(s);
+        s->writeNode("shape", index, true);
     }
     
     return ret;
@@ -350,24 +373,33 @@ bool MgShapes::load(MgShapeFactory* factory, MgStorage* s, bool addOnly)
             clear();
         
         ret = loadExtra(s);
-        s->readFloatArray("extent", &rect.xmin, 4);
-        s->readUInt32("count", 0);
+        //s->readFloatArray("extent", &rect.xmin, 4);
+        int n = s->readInt("count", 0);
         
-        while (ret && s->readNode("shape", index, false)) {
-            int type = s->readUInt32("type", 0);
-            int id = s->readUInt32("id", 0);
-            MgShape* shape = factory->createShape(type);
-            
+        for (; ret && s->readNode("shape", index, false); n--) {
+            const int type = s->readInt("type", 0);
+            const int id = s->readInt("id", 0);
             s->readFloatArray("extent", &rect.xmin, 4);
-            if (shape) {
-                shape->setParent(this, im->getNewID(id));
+            
+            MgShape* shape = addOnly && id ? findShape(id) : NULL;
+            
+            if (shape && shape->shape()->getType() == type) {
                 ret = shape->load(factory, s);
-                if (ret) {
-                    shape->shape()->setFlag(kMgClosed, shape->shape()->isClosed());
-                    im->shapes.push_back(shape);
-                }
-                else {
-                    shape->release();
+                shape->shape()->setFlag(kMgClosed, shape->shape()->isClosed());
+            }
+            else {
+                shape = factory->createShape(type);
+                if (shape) {
+                    shape->setParent(this, im->getNewID(id));
+                    ret = shape->load(factory, s);
+                    if (ret) {
+                        shape->shape()->setFlag(kMgClosed, shape->shape()->isClosed());
+                        im->shapes.push_back(shape);
+                        im->id2shape[shape->getID()] = shape;
+                    }
+                    else {
+                        shape->release();
+                    }
                 }
             }
             s->readNode("shape", index++, true);
@@ -381,25 +413,25 @@ bool MgShapes::load(MgShapeFactory* factory, MgStorage* s, bool addOnly)
     return ret;
 }
 
+void MgShapes::setNewShapeID(int sid)
+{
+    im->newShapeID = sid;
+}
+
 MgShape* MgShapes::I::findShape(int sid) const
 {
     if (!this || 0 == sid)
         return NULL;
-    for (citerator it = shapes.begin(); it != shapes.end(); ++it) {
-        if ((*it)->getID() == sid)
-            return *it;
-    }
-    return NULL;
+    ID2SHAPE::const_iterator it = id2shape.find(sid);
+    return it != id2shape.end() ? it->second : NULL;
 }
 
 int MgShapes::I::getNewID(int sid)
 {
     if (0 == sid || findShape(sid)) {
-        sid = 1;
-        if (!shapes.empty())
-            sid = shapes.back()->getID() + 1;
-        while (findShape(sid))
-            sid++;
+        while (findShape(newShapeID))
+            newShapeID++;
+        sid = newShapeID++;
     }
     return sid;
 }

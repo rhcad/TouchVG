@@ -59,5 +59,5 @@ bool MgCmdDrawRect::touchEnded(const MgMotion* sender)
 void MgCmdDrawRect::addRectShape(const MgMotion* sender)
 {
     addShape(sender);
-    delayClear();
+    delayClear(sender);
 }

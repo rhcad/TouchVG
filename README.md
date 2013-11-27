@@ -45,6 +45,11 @@ TouchVG 的功能
 ----------
 > 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/rhcad/touchvg/issues)。
 
+为开源项目捐款
+------------
+> 欢迎您[为TouchVG项目捐款](https://me.alipay.com/rhcad)，支持我不断完善此项目，也可以为您增加更多功能。此捐款账号为淘宝账号，免手续费。
+
+
 Android编译说明
 ---------------
 

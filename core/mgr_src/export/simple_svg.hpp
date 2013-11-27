@@ -567,7 +567,7 @@ namespace svg
         }
         std::string toString(Layout const & layout) const
         {
-            if (polylines.empty())
+            if (polylines.empty() || scale < 0)
                 return "";
 
             std::string ret;

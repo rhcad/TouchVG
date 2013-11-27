@@ -74,8 +74,7 @@ bool MgCmdDrawSplines::mouseHover(const MgMotion* sender)
 bool MgCmdDrawSplines::touchMoved(const MgMotion* sender)
 {
     MgBaseLines* lines = (MgBaseLines*)dynshape()->shape();
-    Point2d pnt(!m_freehand ? snapPoint(sender)
-        : (sender->pointM + sender->lastPtM) / 2);   // 中点采样法
+    Point2d pnt(!m_freehand ? snapPoint(sender) : sender->pointM);
     
     dynshape()->shape()->setPoint(m_step, pnt);
     if (m_step > 0 && canAddPoint(sender, false)) {
@@ -97,14 +96,12 @@ bool MgCmdDrawSplines::touchEnded(const MgMotion* sender)
         
         Tol tol(sender->displayMmToModel(1.f));
         if (m_step > 0 && !dynshape()->shape()->getExtent().isEmpty(tol, false)) {
-            //MgSplines* splines = (MgSplines*)dynshape()->shape();
-            //splines->smooth(sender->cmds()->lineHalfWidth(m_shape, sender) + sender->displayMmToModel(1.f));
             addShape(sender);
         }
         else {
             click(sender);  // add a point
         }
-        delayClear();
+        delayClear(sender);
     }
     else {
         MgBaseLines* lines = (MgBaseLines*)dynshape()->shape();
@@ -117,7 +114,7 @@ bool MgCmdDrawSplines::touchEnded(const MgMotion* sender)
         }
         if (m_step > 1 && lines->isClosed()) {
             addShape(sender);
-            delayClear();
+            delayClear(sender);
         }
         else if (sender->startPtM.distanceTo(sender->pointM) >
                 sender->displayMmToModel(5.f)) {
@@ -145,7 +142,7 @@ bool MgCmdDrawSplines::doubleClick(const MgMotion* sender)
         }
         if (m_step > 1) {
             addShape(sender);
-            delayClear();
+            delayClear(sender);
         }
     }
     else {
@@ -181,16 +178,16 @@ bool MgCmdDrawSplines::cancel(const MgMotion* sender)
     return MgCommandDraw::cancel(sender);
 }
 
-bool MgCmdDrawSplines::canAddPoint(const MgMotion*, bool ended)
+bool MgCmdDrawSplines::canAddPoint(const MgMotion* sender, bool ended)
 {
     if (!m_freehand && !ended)
         return false;
     
-    //if (m_step > 0) {
-    //    float dist = sender->pointM.distanceTo(dynshape()->shape()->getPoint(m_step - 1));
-    //    if (dist < sender->displayMmToModel(ended ? 0.2f : 0.5f, sender))
-    //        return false;
-    //}
+    if (m_step > 0) {
+        float dist = sender->pointM.distanceTo(dynshape()->shape()->getPoint(m_step - 1));
+        if (dist < sender->displayMmToModel(ended ? 0.3f : 0.5f))
+            return false;
+    }
     
     return true;
 }

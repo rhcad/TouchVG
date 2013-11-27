@@ -36,7 +36,11 @@ public class GiGraphics {
   }
 
   public GiGraphics(GiTransform xform) {
-    this(touchvgJNI.new_GiGraphics(GiTransform.getCPtr(xform), xform), true);
+    this(touchvgJNI.new_GiGraphics__SWIG_0(GiTransform.getCPtr(xform), xform), true);
+  }
+
+  public GiGraphics(GiGraphics src) {
+    this(touchvgJNI.new_GiGraphics__SWIG_1(GiGraphics.getCPtr(src), src), true);
   }
 
   public void copy(GiGraphics src) {
@@ -53,6 +57,14 @@ public class GiGraphics {
 
   public boolean isPrint() {
     return touchvgJNI.GiGraphics_isPrint(swigCPtr, this);
+  }
+
+  public boolean isStopping() {
+    return touchvgJNI.GiGraphics_isStopping(swigCPtr, this);
+  }
+
+  public void stopDrawing() {
+    touchvgJNI.GiGraphics_stopDrawing(swigCPtr, this);
   }
 
   public Box2d getClipModel() {
@@ -237,6 +249,14 @@ public class GiGraphics {
 
   public boolean drawClosedBSplines(GiContext ctx, int count, Point2d ctlpts) {
     return touchvgJNI.GiGraphics_drawClosedBSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts);
+  }
+
+  public boolean drawQuadSplines(GiContext ctx, int count, Point2d ctlpts, boolean modelUnit) {
+    return touchvgJNI.GiGraphics_drawQuadSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts, modelUnit);
+  }
+
+  public boolean drawQuadSplines(GiContext ctx, int count, Point2d ctlpts) {
+    return touchvgJNI.GiGraphics_drawQuadSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts);
   }
 
   public boolean drawPath(GiContext ctx, GiPath path, boolean fill, boolean modelUnit) {

@@ -368,9 +368,15 @@ public class GraphView extends View {
         void onContentChanged(GraphView view);
     }
     
+    //! 图形动态改变的通知
+    public interface DynamicChangedListener {
+        void onDynamicChanged(GraphView view);
+    }
+    
     private ArrayList<CommandChangedListener> commandChangedListeners;
     private ArrayList<SelectionChangedListener> selectionChangedListeners;
     private ArrayList<ContentChangedListener> contentChangedListeners;
+    private ArrayList<DynamicChangedListener> dynamicChangedListeners;
     
     //! 添加当前命令改变的观察者
     public void setOnCommandChangedListener(CommandChangedListener listener) {
@@ -391,6 +397,13 @@ public class GraphView extends View {
         if (this.contentChangedListeners == null)
             this.contentChangedListeners = new ArrayList<ContentChangedListener>();
         this.contentChangedListeners.add(listener);
+    }
+    
+    //! 添加图形动态改变的观察者
+    public void setOnDynamicChangedListener(DynamicChangedListener listener) {
+        if (this.dynamicChangedListeners == null)
+            this.dynamicChangedListeners = new ArrayList<DynamicChangedListener>();
+        this.dynamicChangedListeners.add(listener);
     }
     
     //! 视图回调适配器
@@ -448,7 +461,7 @@ public class GraphView extends View {
         @Override
         public boolean showContextActions(Ints actions, Floats buttonXY,
                                           float x, float y, float w, float h) {
-            if (actions.count() == 0 && mContextAction == null) {
+            if ((actions == null || actions.count() == 0) && mContextAction == null) {
                 return true;
             }
             if (!mContextActionEnabled) {
@@ -483,6 +496,15 @@ public class GraphView extends View {
             if (contentChangedListeners != null) {
                 for (ContentChangedListener listener : contentChangedListeners) {
                     listener.onContentChanged(GraphView.this);
+                }
+            }
+        }
+        
+        @Override
+        public void dynamicChanged() {
+            if (dynamicChangedListeners != null) {
+                for (DynamicChangedListener listener : dynamicChangedListeners) {
+                    listener.onDynamicChanged(GraphView.this);
                 }
             }
         }

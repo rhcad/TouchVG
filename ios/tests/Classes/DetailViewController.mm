@@ -2,21 +2,13 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import "DetailViewController.h"
+#import "TestView.h"
 
 @interface DetailViewController ()
-@property (nonatomic, assign) UIPopoverController *masterPopoverController;
+@property (nonatomic, weak) UIPopoverController *masterPopoverController;
 @end
 
 @implementation DetailViewController
-
-@synthesize masterPopoverController = _masterPopoverController;
-@synthesize content = _content;
-
-- (void)dealloc
-{
-    [_content release];
-    [super dealloc];
-}
 
 - (void)viewDidLoad
 {
@@ -30,11 +22,13 @@
     
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveDetailPage:)];          
     self.navigationItem.rightBarButtonItem = saveButton;
-    [saveButton release];
 }
 
 - (void)viewDidUnload
 {
+    if ([_content.view respondsToSelector:@selector(tearDown)]) {
+        [_content.view performSelector:@selector(tearDown)];
+    }
     [super viewDidUnload];
 }
 
@@ -56,11 +50,9 @@
 {
     if (_content) {
         [_content.view removeFromSuperview];
-        [_content release];
     }
     _content = c;
     if (_content) {
-        [_content retain];
         _content.view.frame = self.view.bounds;
         [self.view addSubview:_content.view];
         _content.view.autoresizingMask = 0xFF;
@@ -108,7 +100,7 @@
     }
 }
 
-- (void)savePng:(id)obj
+- (void)saveViewPng:(id)obj
 {
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                           NSUserDomainMask, YES) objectAtIndex:0];
@@ -121,7 +113,6 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save" message:msg
                                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
-        [alert release];
     }
 }
 
@@ -133,7 +124,7 @@
         [_content.view performSelector:@selector(save)];
     }
     else if ([_content.view respondsToSelector:@selector(savePng:)]) {
-        [self savePng:_content.view];
+        [self saveViewPng:_content.view];
     }
     else if ([_content.view.subviews count] > 0) {
         UIView *sview = [_content.view.subviews objectAtIndex:0];
@@ -141,7 +132,7 @@
             [sview performSelector:@selector(save)];
         }
         else if ([sview respondsToSelector:@selector(savePng:)]) {
-            [self savePng:sview];
+            [self saveViewPng:sview];
         }
     }
 }

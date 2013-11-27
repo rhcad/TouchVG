@@ -15,8 +15,8 @@ struct RandomParam
     
     static void init();
 
-    RandomParam(int curve = 10) : lineCount(200), rectCount(0), arcCount(200)
-    , curveCount(curve), randomLineStyle(true), fill(false) {}
+    RandomParam(int n = 1000) : lineCount(n), rectCount(n), arcCount(n)
+    , curveCount(n), randomLineStyle(false), fill(false) {}
 
     int getShapeCount() const { return lineCount + rectCount + arcCount + curveCount; }
     int addShapes(MgShapes* shapes);

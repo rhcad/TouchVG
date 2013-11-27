@@ -127,15 +127,14 @@ public:
     
 #ifndef SWIG
     //! 清除后备缓冲位图，以便重新绘图
-    virtual void clearCachedBitmap(bool clearAll = false) { clearAll = !clearAll; }
+    virtual void clearCachedBitmap(bool clearAll = false) {}
 #endif
 
     //! 开始绘制一个图形
-    virtual bool beginShape(int sid, float x, float y, float w, float h) {
-        return sid||x||y||w||h; }
+    virtual bool beginShape(int type, int sid, float x, float y, float w, float h) { return true; }
     
     //! 结束绘制一个图形
-    virtual void endShape(int sid, float x, float y) { if (sid) x += y; }
+    virtual void endShape(int type, int sid, float x, float y) {}
 };
 
 #endif // TOUCHVG_CORE_GICANVAS_H

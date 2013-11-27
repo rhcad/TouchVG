@@ -6,6 +6,7 @@
 #include "GiCanvasAdapter.h"
 #include "gicoreview.h"
 #include <vector>
+#import <QuartzCore/QuartzCore.h>
 
 class GiViewAdapter;
 
@@ -20,18 +21,38 @@ class GiViewAdapter;
 
 @end
 
+//! iOS图形层绘制类
+@interface GiGraphLayer : NSObject {
+    UIView          *_view;
+    GiViewAdapter   *_adapter;
+    __block long    _needRegen;
+    __block CALayer *_frontLayer;
+    __block CALayer *_layers[3];
+    __block long    _used[3];
+    BOOL            _needsClear[3];
+}
+
+@property(readonly) CALayer *frontLayer;
+
+- (id)initWithAdapter:(GiViewAdapter *)adapter;
+- (void)freeLayers;
+- (void)regenAll;
+- (void)regenAppend;
+- (void)drawFrontLayer:(CGContextRef)ctx;
+
+@end
+
 //! iOS绘图视图适配器
 class GiViewAdapter : public GiView
 {
 private:
-    UIView      *_view;         //!< 静态图形视图, GiGraphView
+    GiGraphView *_view;         //!< 静态图形视图, GiGraphView
     UIView      *_dynview;      //!< 动态图形视图, IosTempView
     GiCoreView  *_coreView;     //!< 内核视图分发器
-    UIImage     *_tmpshot;      //!< 用于增量绘图的临时快照
-    long        _drawCount;     //!< 用于增量绘图的计数
     NSMutableArray *_buttons;           //!< 上下文按钮的数组
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     ImageCache  *_imageCache;           //!< 图像对象缓存
+    GiGraphLayer    *_layers;   //!< 图形层绘制对象
     
 public:
     std::vector<id> delegates;  //!< GiGraphViewDelegate 观察者数组
@@ -39,17 +60,20 @@ public:
         unsigned int didCommandChanged:1;
         unsigned int didSelectionChanged:1;
         unsigned int didContentChanged:1;
+        unsigned int didDynamicChanged:1;
     } respondsTo;
     
-    GiViewAdapter(UIView *mainView, GiCoreView *coreView);
+    GiViewAdapter(GiGraphView *mainView, GiCoreView *coreView);
     virtual ~GiViewAdapter();
     
     GiCoreView *coreView() { return _coreView; }
     ImageCache *imageCache() { return _imageCache; }
+    UIView *mainView() { return _view; }
     UIView *getDynView();
-    UIImage *snapshot(bool autoDraw);
-    bool drawAppend(GiCanvas* canvas);
+    void drawLayer();
     void clearCachedData();
+    void stopRegen();
+    bool isMainThread() const;
     
     virtual void regenAll();
     virtual void regenAppend();
@@ -63,6 +87,7 @@ public:
     virtual void commandChanged();
     virtual void selectionChanged();
     virtual void contentChanged();
+    virtual void dynamicChanged();
     
     bool dispatchGesture(GiGestureType gestureType, GiGestureState gestureState, CGPoint pt);
     bool dispatchPan(GiGestureState gestureState, CGPoint pt, bool switchGesture = false);
@@ -70,6 +95,7 @@ public:
     
 private:
     void setContextButton(UIButton *btn, NSString *caption, NSString *imageName);
+    void redraw_();
 };
 
 /*! \category GiGraphView()
@@ -111,5 +137,9 @@ private:
 - (BOOL)pressHandler:(UILongPressGestureRecognizer *)sender;
 - (void)delayTap;
 - (void)dispatchTapPending;
+
+- (void)ignoreTouch:(CGPoint)pt :(UIView *)handledButton;
+- (void)redrawForDelay;
+- (void)onContextActionsDisplay:(NSMutableArray *)buttons;
 
 @end

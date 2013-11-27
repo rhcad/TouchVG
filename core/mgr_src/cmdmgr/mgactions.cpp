@@ -19,7 +19,7 @@ bool MgCmdManagerImpl::showInSelect(const MgMotion* sender, int selState, const 
         return false;
     }
     
-    int actions[12];
+    int actions[12] = { 0 };
     int n = 0;
     bool isslines = (shape && selState == kMgSelOneShape
                      && shape->shapec()->isKindOf(kMgShapeSplines));

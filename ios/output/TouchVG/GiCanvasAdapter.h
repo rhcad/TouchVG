@@ -2,8 +2,11 @@
 //! \brief 定义画布适配器类 GiCanvasAdapter
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
-#include <CoreGraphics/CoreGraphics.h>
+#ifndef TOUCHVG_IOS_CANVASADAPTER_H
+#define TOUCHVG_IOS_CANVASADAPTER_H
+
 #include "gicanvas.h"
+#include <CoreGraphics/CoreGraphics.h>
 
 @class ImageCache;
 
@@ -13,7 +16,7 @@
 class GiCanvasAdapter : public GiCanvas
 {
 public:
-    GiCanvasAdapter(ImageCache *cache = nil);
+    GiCanvasAdapter(ImageCache *cache = (ImageCache *)0);
     virtual ~GiCanvasAdapter();
     
     //! 在给定上下文上开始绘制
@@ -28,7 +31,7 @@ public:
     //! 返回屏幕点密度
     static int getScreenDpi();
     
-    static const CGFloat* const LINEDASH[];     //!< 虚线定义, 0..4
+    static const float* const LINEDASH[];     //!< 虚线定义, 0..4
     static float colorPart(int argb, int byteOrder);
     
 public:
@@ -52,9 +55,14 @@ public:
     void drawHandle(float x, float y, int type);
     void drawBitmap(const char* name, float xc, float yc, float w, float h, float angle);
     float drawTextAt(const char* text, float x, float y, float h, int align);
+    bool beginShape(int type, int sid, float x, float y, float w, float h);
     
 private:
     CGContextRef    _ctx;
     bool            _fill;
     ImageCache      *_cache;
+    CGGradientRef   _gradient0;
+    CGGradientRef   _gradient;
 };
+
+#endif // TOUCHVG_IOS_CANVASADAPTER_H

@@ -20,6 +20,7 @@ class MgView;
 - (void)onCommandChanged:(id)view;      //!< 当前命令改变的通知
 - (void)onSelectionChanged:(id)view;    //!< 图形选择集改变的通知
 - (void)onContentChanged:(id)view;      //!< 图形数据改变的通知
+- (void)onDynamicChanged:(id)view;      //!< 图形动态改变的通知
 
 @end
 
@@ -50,17 +51,21 @@ class MgView;
 
 + (GiGraphView *)activeView;                //!< 得到当前激活的绘图视图
 - (void)activiteView;                       //!< 设置为当前活动视图，触摸时自动调用
+- (UIView *)dynamicShapeView;               //!< 动态图形视图
 
 #ifdef __cplusplus
 - (GiView *)viewAdapter;                    //!< 得到视图适配器对象, GiViewAdapter
 - (GiCoreView *)coreView;                   //!< 得到跨平台内核视图
 - (MgView *)cmdView;                        //!< 返回内核命令视图
 #endif
-- (int)cmdViewHandle;                       //!< 返回内核视图的句柄, MgView 指针
+- (long)cmdViewHandle;                      //!< 返回内核视图的句柄, MgView 指针
 
 - (UIImage *)snapshot;                      //!< 得到静态图形的快照，自动释放
 - (BOOL)savePng:(NSString *)filename;       //!< 保存静态图形的快照到PNG文件
 - (void)clearCachedData;                    //!< 释放临时数据内存
+
+- (void)hideContextActions;                 //!< 隐藏上下文按钮
+- (IBAction)onContextAction:(id)sender;     //!< 上下文按钮的响应函数
 
 - (void)addDelegate:(id<GiGraphViewDelegate>)d;     //!< 增加绘图消息观察者
 - (void)removeDelegate:(id<GiGraphViewDelegate>)d;  //!< 去掉绘图消息观察者

@@ -41,7 +41,11 @@ public class GiGraphics : IDisposable {
     }
   }
 
-  public GiGraphics(GiTransform xform) : this(touchvgPINVOKE.new_GiGraphics(GiTransform.getCPtr(xform)), true) {
+  public GiGraphics(GiTransform xform) : this(touchvgPINVOKE.new_GiGraphics__SWIG_0(GiTransform.getCPtr(xform)), true) {
+  }
+
+  public GiGraphics(GiGraphics src) : this(touchvgPINVOKE.new_GiGraphics__SWIG_1(GiGraphics.getCPtr(src)), true) {
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void copy(GiGraphics src) {
@@ -62,6 +66,15 @@ public class GiGraphics : IDisposable {
   public bool isPrint() {
     bool ret = touchvgPINVOKE.GiGraphics_isPrint(swigCPtr);
     return ret;
+  }
+
+  public bool isStopping() {
+    bool ret = touchvgPINVOKE.GiGraphics_isStopping(swigCPtr);
+    return ret;
+  }
+
+  public void stopDrawing() {
+    touchvgPINVOKE.GiGraphics_stopDrawing(swigCPtr);
   }
 
   public Box2d getClipModel() {
@@ -311,6 +324,16 @@ public class GiGraphics : IDisposable {
 
   public bool drawClosedBSplines(GiContext ctx, int count, Point2d ctlpts) {
     bool ret = touchvgPINVOKE.GiGraphics_drawClosedBSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts));
+    return ret;
+  }
+
+  public bool drawQuadSplines(GiContext ctx, int count, Point2d ctlpts, bool modelUnit) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawQuadSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts), modelUnit);
+    return ret;
+  }
+
+  public bool drawQuadSplines(GiContext ctx, int count, Point2d ctlpts) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawQuadSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts));
     return ret;
   }
 

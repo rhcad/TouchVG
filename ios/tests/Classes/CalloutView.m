@@ -20,7 +20,6 @@ static CalloutView* _view = nil;
     if (_view == self) {
         _view = nil;
     }
-    [super dealloc];
 }
 
 + (id)currentView

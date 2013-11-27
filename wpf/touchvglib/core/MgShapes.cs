@@ -146,6 +146,11 @@ public class MgShapes : MgObject {
     return ret;
   }
 
+  public bool saveShape(MgStorage s, MgShape shape, int index) {
+    bool ret = touchvgPINVOKE.MgShapes_saveShape(swigCPtr, MgStorage.getCPtr(s), MgShape.getCPtr(shape), index);
+    return ret;
+  }
+
   public bool load(MgShapeFactory factory, MgStorage s, bool addOnly) {
     bool ret = touchvgPINVOKE.MgShapes_load__SWIG_0(swigCPtr, MgShapeFactory.getCPtr(factory), MgStorage.getCPtr(s), addOnly);
     return ret;
@@ -154,6 +159,10 @@ public class MgShapes : MgObject {
   public bool load(MgShapeFactory factory, MgStorage s) {
     bool ret = touchvgPINVOKE.MgShapes_load__SWIG_1(swigCPtr, MgShapeFactory.getCPtr(factory), MgStorage.getCPtr(s));
     return ret;
+  }
+
+  public void setNewShapeID(int sid) {
+    touchvgPINVOKE.MgShapes_setNewShapeID(swigCPtr, sid);
   }
 
   public void clear() {
@@ -205,6 +214,22 @@ public class MgShapes : MgObject {
   public MgObject getOwner() {
     IntPtr cPtr = touchvgPINVOKE.MgShapes_getOwner(swigCPtr);
     MgObject ret = (cPtr == IntPtr.Zero) ? null : new MgObject(cPtr, false);
+    return ret;
+  }
+
+  public int getIndex() {
+    int ret = touchvgPINVOKE.MgShapes_getIndex(swigCPtr);
+    return ret;
+  }
+
+  public static MgShapes fromHandle(int h) {
+    IntPtr cPtr = touchvgPINVOKE.MgShapes_fromHandle(h);
+    MgShapes ret = (cPtr == IntPtr.Zero) ? null : new MgShapes(cPtr, false);
+    return ret;
+  }
+
+  public int toHandle() {
+    int ret = touchvgPINVOKE.MgShapes_toHandle(swigCPtr);
     return ret;
   }
 

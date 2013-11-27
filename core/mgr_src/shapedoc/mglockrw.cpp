@@ -9,10 +9,15 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #endif
-static void giSleep(int ms) { Sleep(ms); }
+void giSleep(int ms) { Sleep(ms); }
 #else
 #include <unistd.h>
-static void giSleep(int ms) { usleep(ms * 1000); }
+void giSleep(int ms) { usleep(ms * 1000); }
+#endif
+
+#if defined(_MACOSX) || defined(__APPLE__) || defined(__DARWIN__)
+#include <dispatch/dispatch.h>
+dispatch_queue_t vg_rwlock_queue = dispatch_queue_create("touchvg.rwlock", DISPATCH_QUEUE_CONCURRENT);
 #endif
 
 MgLockRW::MgLockRW() : _editFlags(0)
@@ -22,7 +27,12 @@ MgLockRW::MgLockRW() : _editFlags(0)
 
 bool MgLockRW::lockData(bool forWrite, int timeout)
 {
+#if defined(_MACOSX) || defined(__APPLE__) || defined(__DARWIN__)
+    __block bool ret = false;
+    dispatch_barrier_sync(vg_rwlock_queue, ^{
+#else
     bool ret = false;
+#endif
     
     if (1 == giInterlockedIncrement(_counts)) {     // first locked
         giInterlockedIncrement(_counts + (forWrite ? 2 : 1));
@@ -41,6 +51,9 @@ bool MgLockRW::lockData(bool forWrite, int timeout)
             giInterlockedDecrement(_counts);
         }
     }
+#if defined(_MACOSX) || defined(__APPLE__) || defined(__DARWIN__)
+    });
+#endif
     
     return ret;
 }

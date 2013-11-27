@@ -7,7 +7,7 @@
 #include "mgshapedoc.h"
 #include <mgstorage.h>
 
-MgLayer::MgLayer(MgShapeDoc* doc, int index) : MgShapes(doc, index)
+MgLayer::MgLayer(MgShapeDoc* doc, int index) : MgShapes(doc, index), _flags(0)
 {
 }
 
@@ -41,25 +41,28 @@ void MgLayer::copy(const MgObject& src)
 {
     MgShapes::copy(src);
     if (src.isKindOf(Type())) {
-        //const MgLayer& layer = (const MgLayer&)src;
+        const MgLayer& layer = (const MgLayer&)src;
+        _flags = layer._flags;
     }
 }
 
 bool MgLayer::equals(const MgObject& src) const
 {
     if (src.isKindOf(Type()) && MgShapes::equals(src)) {
-        //const MgLayer& layer = (const MgLayer&)src;
-        return true;
+        const MgLayer& layer = (const MgLayer&)src;
+        return _flags == layer._flags;
     }
     return false;
 }
 
 bool MgLayer::saveExtra(MgStorage* s) const
 {
-    return !!s;
+    s->writeUInt("flags", _flags);
+    return true;
 }
 
 bool MgLayer::loadExtra(MgStorage* s)
 {
-    return !!s;
+    _flags = s->readInt("flags", _flags);
+    return true;
 }

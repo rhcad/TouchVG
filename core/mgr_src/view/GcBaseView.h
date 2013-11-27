@@ -33,7 +33,7 @@ public:
     GiTransform* xform() { return &_xf; }
     
     //! 得到图形显示对象
-    GiGraphics* graph() { return &_gs; }
+    GiGraphics* graph(bool dyndraw = false) { return dyndraw ? &_dyngs : &_gs; }
     
     //! 显示所有图形
     virtual int drawAll(GiGraphics& gs);
@@ -58,6 +58,7 @@ private:
     GiView*     _view;
     GiTransform _xf;
     GiGraphics  _gs;
+    GiGraphics  _dyngs;
 
     Point2d     _lastCenter;
     float       _lastScale;

@@ -78,7 +78,7 @@ int RandomParam::addShapes(MgShapes* shapes)
                 else
                 {
                     sp->shape()->setPoint(i, sp->shape()->getPoint(i-1)
-                        + Vector2d(RandF(-200, 200), RandF(-200, 200)));
+                        + Vector2d(RandF(-100, 100), RandF(-100, 100)));
                 }
             }
         }
@@ -114,12 +114,13 @@ int RandomParam::addShapes(MgShapes* shapes)
         if (NULL == sp)
         {
             MgShapeT<MgLine> shape;
+            Point2d pt(Point2d(RandF(-1000, 1000), RandF(-1000, 1000)));
 
             sp = shapes->addShape(shape);
             ret++;
             setShapeProp(sp->context());
-            sp->shape()->setPoint(0, Point2d(RandF(-1000, 1000), RandF(-1000, 1000)));
-            sp->shape()->setPoint(1, Point2d(RandF(-1000, 1000), RandF(-1000, 1000)));
+            sp->shape()->setPoint(0, pt);
+            sp->shape()->setPoint(1, pt + Vector2d(RandF(-100, 100), RandF(-100, 100)));
         }
 
         sp->shape()->update();

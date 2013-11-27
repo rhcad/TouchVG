@@ -59,6 +59,7 @@ private:
     virtual bool touchMoved(const MgMotion* sender);
     virtual bool touchEnded(const MgMotion* sender);
     virtual bool twoFingersMove(const MgMotion* sender);
+    virtual MgShape* getShape(const MgMotion* sender);
 
 private:
     int getStep() { return 0; }

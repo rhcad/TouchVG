@@ -23,6 +23,7 @@ public:
     Document& document() { return _doc; }
     const char* getError() { return _err ? _err : _doc.GetParseError(); }
     FileStream& createStream(FILE* fp);
+    bool save(FILE* fp, bool pretty);
     
 private:
     bool readNode(const char* name, int index, bool ended);
@@ -48,6 +49,7 @@ private:
     StringBuffer _strbuf;
     FileStream  *_fs;
     const char* _err;
+    int _nodeCount;
 };
 
 #endif
@@ -78,24 +80,7 @@ const char* MgJsonStorage::stringify(bool pretty)
 
 bool MgJsonStorage::save(FILE* fp, bool pretty)
 {
-    if (fp && !_impl->document().IsNull()) {
-        Document::AllocatorType allocator;
-        FileStream& fs = _impl->createStream(fp);
-
-        if (pretty) {
-            PrettyWriter<FileStream> writer(fs, &allocator);
-            _impl->document().Accept(writer);
-        }
-        else {
-            Writer<FileStream> writer(fs, &allocator);
-            _impl->document().Accept(writer);
-        }
-        _impl->clear();
-
-        return true;
-    }
-
-    return false;
+    return fp && !_impl->document().IsNull() && _impl->save(fp, pretty);
 }
 
 MgStorage* MgJsonStorage::storageForRead(const char* content)
@@ -163,6 +148,7 @@ void MgJsonStorage::Impl::clear()
     _doc.SetNull();
     _stack.clear();
     _strbuf.Clear();
+    _nodeCount = 0;
     if (_fs) {
         delete _fs;
         _fs = NULL;
@@ -220,6 +206,7 @@ bool MgJsonStorage::Impl::readNode(const char* name, int index, bool ended)
         if (_stack.empty()) {           // 根节点已出栈
             clear();
         }
+        _nodeCount++;
     }
     
     return true;
@@ -257,6 +244,7 @@ bool MgJsonStorage::Impl::writeNode(const char* name, int index, bool ended)
         if (!_stack.empty()) {
             _stack.pop_back();          // 出栈
         }
+        _nodeCount++;
     }
     
     return true;
@@ -280,6 +268,37 @@ const char* MgJsonStorage::Impl::stringify(bool pretty)
     }
     
     return _strbuf.GetString();
+}
+
+bool MgJsonStorage::Impl::save(FILE* fp, bool pretty)
+{
+    Document::AllocatorType allocator;
+    
+    if (_nodeCount < 100) {
+        if (pretty) {
+            PrettyWriter<StringBuffer> writer(_strbuf, &allocator);
+            _doc.Accept(writer);
+        }
+        else {
+            Writer<StringBuffer> writer(_strbuf, &allocator);
+            _doc.Accept(writer);
+        }
+        fputs(_strbuf.GetString(), fp);
+    } else {
+        FileStream& fs = createStream(fp);
+        
+        if (pretty) {
+            PrettyWriter<FileStream> writer(fs, &allocator);
+            document().Accept(writer);
+        }
+        else {
+            Writer<FileStream> writer(fs, &allocator);
+            document().Accept(writer);
+        }
+    }
+    clear();
+    
+    return true;
 }
 
 int MgJsonStorage::Impl::readInt(const char* name, int defvalue)
