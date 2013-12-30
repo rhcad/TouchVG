@@ -1,9 +1,9 @@
 // cmds.cpp
 #include "cmds.h"
-#include <cmdsubject.h>
-#include <mgspfactory.h>
+#include "cmdsubject.h"
+#include "mgspfactory.h"
 #include "HitTestCmd.h"
-#include <mgshapet.h>
+#include "mgshapet.h"
 
 class DemoCmdsObserver : public CmdObserverDefault
 {

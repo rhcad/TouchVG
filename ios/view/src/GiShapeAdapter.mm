@@ -58,7 +58,7 @@ void GiShapeAdapter::endShape(int type, int sid, float, float)
     _callback->endShape(type, sid);
 }
 
-void GiShapeAdapter::setPen(int argb, float width, int style, float phase)
+void GiShapeAdapter::setPen(int argb, float width, int style, float phase, float)
 {
     fireLastPath();
     

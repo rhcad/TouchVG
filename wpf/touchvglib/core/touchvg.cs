@@ -171,10 +171,6 @@ public class touchvg {
     return ret;
   }
 
-  public static void giSleep(int ms) {
-    touchvgPINVOKE.giSleep(ms);
-  }
-
 }
 
 }

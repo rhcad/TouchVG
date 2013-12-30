@@ -57,12 +57,20 @@ void GiViewAdapter::clearCachedData() {
     _coreView->clearCachedData();
 }
 
-void GiViewAdapter::regenAll() {
-    [_layers regenAll];
+void GiViewAdapter::regenAll(bool changed) {
+    _regenValue = changed ? 2 : 1;
+    if (changed) {
+        _coreView->submitBackDoc();
+    }
+    _coreView->submitDynamicShapes(this);
+    [_layers regenAll:changed];
 }
 
-void GiViewAdapter::regenAppend() {
-    [_layers regenAppend];
+void GiViewAdapter::regenAppend(int sid) {
+    _regenValue = sid << 2;
+    _coreView->submitBackDoc();
+    _coreView->submitDynamicShapes(this);
+    [_layers regenAppend:sid];
 }
 
 void GiViewAdapter::drawLayer() {
@@ -92,6 +100,7 @@ void GiViewAdapter::redraw_() {
 }
 
 void GiViewAdapter::redraw() {
+    _coreView->submitDynamicShapes(this);
     if (isMainThread()) {
         redraw_();
     }

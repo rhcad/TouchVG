@@ -63,14 +63,41 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual int docHandle() {
-    int ret = touchvgPINVOKE.MgCoreView_docHandle(swigCPtr);
+  public virtual int backDoc() {
+    int ret = touchvgPINVOKE.MgCoreView_backDoc(swigCPtr);
     return ret;
   }
 
-  public virtual int shapesHandle() {
-    int ret = touchvgPINVOKE.MgCoreView_shapesHandle(swigCPtr);
+  public virtual int backShapes() {
+    int ret = touchvgPINVOKE.MgCoreView_backShapes(swigCPtr);
     return ret;
+  }
+
+  public virtual int acquireFrontDoc() {
+    int ret = touchvgPINVOKE.MgCoreView_acquireFrontDoc(swigCPtr);
+    return ret;
+  }
+
+  public virtual void releaseDoc(int hDoc) {
+    touchvgPINVOKE.MgCoreView_releaseDoc(swigCPtr, hDoc);
+  }
+
+  public virtual int acquireDynamicShapes() {
+    int ret = touchvgPINVOKE.MgCoreView_acquireDynamicShapes(swigCPtr);
+    return ret;
+  }
+
+  public virtual void releaseShapes(int hShapes) {
+    touchvgPINVOKE.MgCoreView_releaseShapes(swigCPtr, hShapes);
+  }
+
+  public virtual bool loadDynamicShapes(MgStorage s) {
+    bool ret = touchvgPINVOKE.MgCoreView_loadDynamicShapes(swigCPtr, MgStorage.getCPtr(s));
+    return ret;
+  }
+
+  public virtual void applyDynamicShapes() {
+    touchvgPINVOKE.MgCoreView_applyDynamicShapes(swigCPtr);
   }
 
   public virtual bool isPressDragging() {
@@ -141,58 +168,58 @@ public class MgCoreView : IDisposable {
     touchvgPINVOKE.MgCoreView_clear(swigCPtr);
   }
 
-  public virtual bool loadFromFile(string vgfile, bool readOnly, bool needLock) {
-    bool ret = touchvgPINVOKE.MgCoreView_loadFromFile__SWIG_0(swigCPtr, vgfile, readOnly, needLock);
-    return ret;
-  }
-
   public virtual bool loadFromFile(string vgfile, bool readOnly) {
-    bool ret = touchvgPINVOKE.MgCoreView_loadFromFile__SWIG_1(swigCPtr, vgfile, readOnly);
+    bool ret = touchvgPINVOKE.MgCoreView_loadFromFile__SWIG_0(swigCPtr, vgfile, readOnly);
     return ret;
   }
 
   public virtual bool loadFromFile(string vgfile) {
-    bool ret = touchvgPINVOKE.MgCoreView_loadFromFile__SWIG_2(swigCPtr, vgfile);
+    bool ret = touchvgPINVOKE.MgCoreView_loadFromFile__SWIG_1(swigCPtr, vgfile);
     return ret;
   }
 
-  public virtual bool saveToFile(string vgfile, bool pretty) {
-    bool ret = touchvgPINVOKE.MgCoreView_saveToFile__SWIG_0(swigCPtr, vgfile, pretty);
+  public virtual bool saveToFile(int hDoc, string vgfile, bool pretty) {
+    bool ret = touchvgPINVOKE.MgCoreView_saveToFile__SWIG_0(swigCPtr, hDoc, vgfile, pretty);
     return ret;
   }
 
-  public virtual bool saveToFile(string vgfile) {
-    bool ret = touchvgPINVOKE.MgCoreView_saveToFile__SWIG_1(swigCPtr, vgfile);
+  public virtual bool saveToFile(int hDoc, string vgfile) {
+    bool ret = touchvgPINVOKE.MgCoreView_saveToFile__SWIG_1(swigCPtr, hDoc, vgfile);
     return ret;
   }
 
-  public virtual bool loadShapes(MgStorage s, bool readOnly, bool needLock) {
-    bool ret = touchvgPINVOKE.MgCoreView_loadShapes__SWIG_0(swigCPtr, MgStorage.getCPtr(s), readOnly, needLock);
+  public bool saveToFile(string vgfile, bool pretty) {
+    bool ret = touchvgPINVOKE.MgCoreView_saveToFile__SWIG_2(swigCPtr, vgfile, pretty);
+    return ret;
+  }
+
+  public bool saveToFile(string vgfile) {
+    bool ret = touchvgPINVOKE.MgCoreView_saveToFile__SWIG_3(swigCPtr, vgfile);
     return ret;
   }
 
   public virtual bool loadShapes(MgStorage s, bool readOnly) {
-    bool ret = touchvgPINVOKE.MgCoreView_loadShapes__SWIG_1(swigCPtr, MgStorage.getCPtr(s), readOnly);
+    bool ret = touchvgPINVOKE.MgCoreView_loadShapes__SWIG_0(swigCPtr, MgStorage.getCPtr(s), readOnly);
     return ret;
   }
 
   public virtual bool loadShapes(MgStorage s) {
-    bool ret = touchvgPINVOKE.MgCoreView_loadShapes__SWIG_2(swigCPtr, MgStorage.getCPtr(s));
+    bool ret = touchvgPINVOKE.MgCoreView_loadShapes__SWIG_1(swigCPtr, MgStorage.getCPtr(s));
     return ret;
   }
 
-  public virtual bool saveShapes(MgStorage s) {
-    bool ret = touchvgPINVOKE.MgCoreView_saveShapes(swigCPtr, MgStorage.getCPtr(s));
+  public virtual bool saveShapes(int hDoc, MgStorage s) {
+    bool ret = touchvgPINVOKE.MgCoreView_saveShapes__SWIG_0(swigCPtr, hDoc, MgStorage.getCPtr(s));
     return ret;
   }
 
-  public virtual bool loadDynamicShapes(MgStorage s) {
-    bool ret = touchvgPINVOKE.MgCoreView_loadDynamicShapes(swigCPtr, MgStorage.getCPtr(s));
+  public bool saveShapes(MgStorage s) {
+    bool ret = touchvgPINVOKE.MgCoreView_saveShapes__SWIG_1(swigCPtr, MgStorage.getCPtr(s));
     return ret;
   }
 
-  public virtual string getContent() {
-    string ret = touchvgPINVOKE.MgCoreView_getContent(swigCPtr);
+  public virtual string getContent(int hDoc) {
+    string ret = touchvgPINVOKE.MgCoreView_getContent__SWIG_0(swigCPtr, hDoc);
     return ret;
   }
 
@@ -205,8 +232,8 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual bool exportSVG(string filename) {
-    bool ret = touchvgPINVOKE.MgCoreView_exportSVG(swigCPtr, filename);
+  public string getContent() {
+    string ret = touchvgPINVOKE.MgCoreView_getContent__SWIG_1(swigCPtr);
     return ret;
   }
 
@@ -220,23 +247,18 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual float calcPenWidth(float lineWidth) {
-    float ret = touchvgPINVOKE.MgCoreView_calcPenWidth(swigCPtr, lineWidth);
-    return ret;
-  }
-
   public virtual GiContext getContext(bool forChange) {
     GiContext ret = new GiContext(touchvgPINVOKE.MgCoreView_getContext(swigCPtr, forChange), false);
     return ret;
   }
 
-  public virtual void setContext(GiContext ctx, int mask, int apply) {
-    touchvgPINVOKE.MgCoreView_setContext__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), mask, apply);
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+  public virtual void setContext(int mask) {
+    touchvgPINVOKE.MgCoreView_setContext__SWIG_0(swigCPtr, mask);
   }
 
-  public virtual void setContext(int mask) {
-    touchvgPINVOKE.MgCoreView_setContext__SWIG_1(swigCPtr, mask);
+  public virtual void setContext(GiContext ctx, int mask, int apply) {
+    touchvgPINVOKE.MgCoreView_setContext__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), mask, apply);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
   public virtual void setContextEditing(bool editing) {

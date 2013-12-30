@@ -173,8 +173,12 @@ public class MgShapes : MgObject {
     touchvgPINVOKE.MgShapes_clearCachedData(swigCPtr);
   }
 
+  public void copyShapes(MgShapes src, bool deeply) {
+    touchvgPINVOKE.MgShapes_copyShapes__SWIG_0(swigCPtr, MgShapes.getCPtr(src), deeply);
+  }
+
   public void copyShapes(MgShapes src) {
-    touchvgPINVOKE.MgShapes_copyShapes(swigCPtr, MgShapes.getCPtr(src));
+    touchvgPINVOKE.MgShapes_copyShapes__SWIG_1(swigCPtr, MgShapes.getCPtr(src));
   }
 
   public MgShape addShape(MgShape src) {
@@ -184,26 +188,33 @@ public class MgShapes : MgObject {
     return ret;
   }
 
-  public MgShape removeShape(int sid, bool skipLockedShape) {
-    IntPtr cPtr = touchvgPINVOKE.MgShapes_removeShape__SWIG_0(swigCPtr, sid, skipLockedShape);
-    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
+  public bool addShapeDirect(MgShape shape) {
+    bool ret = touchvgPINVOKE.MgShapes_addShapeDirect(swigCPtr, MgShape.getCPtr(shape));
     return ret;
   }
 
-  public MgShape removeShape(int sid) {
-    IntPtr cPtr = touchvgPINVOKE.MgShapes_removeShape__SWIG_1(swigCPtr, sid);
-    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
+  public bool updateShape(MgShape shape) {
+    bool ret = touchvgPINVOKE.MgShapes_updateShape(swigCPtr, MgShape.getCPtr(shape));
     return ret;
   }
 
-  public MgShape moveTo(int sid, MgShapes dest) {
-    IntPtr cPtr = touchvgPINVOKE.MgShapes_moveTo(swigCPtr, sid, MgShapes.getCPtr(dest));
-    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
+  public bool removeShape(int sid, bool skipLockedShape) {
+    bool ret = touchvgPINVOKE.MgShapes_removeShape__SWIG_0(swigCPtr, sid, skipLockedShape);
     return ret;
   }
 
-  public void moveAllShapesTo(MgShapes dest) {
-    touchvgPINVOKE.MgShapes_moveAllShapesTo(swigCPtr, MgShapes.getCPtr(dest));
+  public bool removeShape(int sid) {
+    bool ret = touchvgPINVOKE.MgShapes_removeShape__SWIG_1(swigCPtr, sid);
+    return ret;
+  }
+
+  public bool moveShapeTo(int sid, MgShapes dest) {
+    bool ret = touchvgPINVOKE.MgShapes_moveShapeTo(swigCPtr, sid, MgShapes.getCPtr(dest));
+    return ret;
+  }
+
+  public void copyShapesTo(MgShapes dest) {
+    touchvgPINVOKE.MgShapes_copyShapesTo(swigCPtr, MgShapes.getCPtr(dest));
   }
 
   public bool bringToFront(int sid) {
@@ -246,6 +257,10 @@ public class MgShapes : MgObject {
 
   public override void release() {
     touchvgPINVOKE.MgShapes_release(swigCPtr);
+  }
+
+  public override void addRef() {
+    touchvgPINVOKE.MgShapes_addRef(swigCPtr);
   }
 
   public override bool equals(MgObject src) {

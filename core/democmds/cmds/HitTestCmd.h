@@ -4,7 +4,7 @@
 #ifndef TOUCHVG_TEST_HITTESTCMD_H
 #define TOUCHVG_TEST_HITTESTCMD_H
 
-#include <mgcmd.h>
+#include "mgcmd.h"
 #include <list>
 
 class HitTestCmd : public MgCommand

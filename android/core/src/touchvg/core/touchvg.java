@@ -101,8 +101,4 @@ public class touchvg {
     return touchvgJNI.mgRound(d);
   }
 
-  public static void giSleep(int ms) {
-    touchvgJNI.giSleep(ms);
-  }
-
 }

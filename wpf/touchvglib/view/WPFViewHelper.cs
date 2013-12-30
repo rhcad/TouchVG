@@ -72,7 +72,7 @@ namespace touchvg.view
             get
             {
                 GiContext ctx = CoreView.getContext(false);
-                return (int)CoreView.calcPenWidth(ctx.getLineWidth());
+                return (int)CoreView.calcPenWidth(View.ViewAdapter, ctx.getLineWidth());
             }
             set
             {
@@ -204,7 +204,7 @@ namespace touchvg.view
         //! 导出静态图形到SVG文件
         public bool ExportSVG(string filename)
         {
-            return CoreView.exportSVG(filename);
+            return false;// CoreView.exportSVG(filename);
         }
 
         //! 放缩显示全部内容到视图区域

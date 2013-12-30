@@ -425,7 +425,9 @@ public class GraphView extends View {
         }
         
         @Override
-        public void regenAll() {
+        public void regenAll(boolean changed) {
+            mCoreView.submitBackDoc();
+            mCoreView.submitDynamicShapes(mViewAdapter);
             if (mCachedBitmap != null && !mRegenning &&
                 (mCachedBitmap.getWidth() != getWidth()
                  || mCachedBitmap.getHeight() != getHeight())) {
@@ -436,11 +438,13 @@ public class GraphView extends View {
         }
         
         @Override
-        public void regenAppend() {
+        public void regenAppend(int sid) {
+            mCoreView.submitBackDoc();
+            mCoreView.submitDynamicShapes(mViewAdapter);
             if (mCachedBitmap != null && !mRegenning) {
                 synchronized(mCachedBitmap) {
                     if (mCanvasAdapter.beginPaint(new Canvas(mCachedBitmap))) {
-                        mCoreView.drawAppend(mViewAdapter, mCanvasAdapter);
+                        mCoreView.drawAppend(mViewAdapter, mCanvasAdapter, sid);
                         mCanvasAdapter.endPaint();
                     }
                 }
@@ -450,6 +454,7 @@ public class GraphView extends View {
         
         @Override
         public void redraw() {
+            mCoreView.submitDynamicShapes(mViewAdapter);
             invalidate();
         }
         

@@ -59,11 +59,6 @@ public class MgView {
     return (cPtr == 0) ? null : new GiTransform(cPtr, false);
   }
 
-  public GiGraphics graph() {
-    long cPtr = touchvgJNI.MgView_graph(swigCPtr, this);
-    return (cPtr == 0) ? null : new GiGraphics(cPtr, false);
-  }
-
   public MgShapeDoc doc() {
     long cPtr = touchvgJNI.MgView_doc(swigCPtr, this);
     return (cPtr == 0) ? null : new MgShapeDoc(cPtr, false);
@@ -98,11 +93,6 @@ public class MgView {
     return (cPtr == 0) ? null : new MgActionDispatcher(cPtr, false);
   }
 
-  public MgLockData getLockData() {
-    long cPtr = touchvgJNI.MgView_getLockData(swigCPtr, this);
-    return (cPtr == 0) ? null : new MgLockData(cPtr, false);
-  }
-
   public CmdSubject getCmdSubject() {
     long cPtr = touchvgJNI.MgView_getCmdSubject(swigCPtr, this);
     return (cPtr == 0) ? null : new CmdSubject(cPtr, false);
@@ -117,8 +107,8 @@ public class MgView {
     return touchvgJNI.MgView_setCurrentShapes(swigCPtr, this, MgShapes.getCPtr(shapes), shapes);
   }
 
-  public boolean toSelectCommand(MgMotion sender) {
-    return touchvgJNI.MgView_toSelectCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender);
+  public boolean toSelectCommand() {
+    return touchvgJNI.MgView_toSelectCommand(swigCPtr, this);
   }
 
   public int getNewShapeID() {
@@ -143,20 +133,20 @@ public class MgView {
     return (cPtr == 0) ? null : new MgCommand(cPtr, false);
   }
 
-  public boolean setCommand(MgMotion sender, String name) {
-    return touchvgJNI.MgView_setCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender, name);
+  public boolean setCommand(String name) {
+    return touchvgJNI.MgView_setCommand(swigCPtr, this, name);
   }
 
   public boolean isReadOnly() {
     return touchvgJNI.MgView_isReadOnly(swigCPtr, this);
   }
 
-  public void regenAll() {
-    touchvgJNI.MgView_regenAll(swigCPtr, this);
+  public void regenAll(boolean changed) {
+    touchvgJNI.MgView_regenAll(swigCPtr, this, changed);
   }
 
-  public void regenAppend() {
-    touchvgJNI.MgView_regenAppend(swigCPtr, this);
+  public void regenAppend(int sid) {
+    touchvgJNI.MgView_regenAppend(swigCPtr, this, sid);
   }
 
   public void redraw() {

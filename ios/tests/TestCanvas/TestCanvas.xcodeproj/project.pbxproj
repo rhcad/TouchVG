@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		AE2B80311804026200E50A6E /* TouchVG.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE2B80301804026200E50A6E /* TouchVG.bundle */; };
 		AE3341B516ECBDBE00F0E517 /* CalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3341B416ECBDBE00F0E517 /* CalloutView.m */; };
-		AE34D03017F9054A004BC88B /* testcanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE34D02F17F9054A004BC88B /* testcanvas.cpp */; };
 		AE4E6F0516129337006CAA5C /* GraphView3.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE4E6F0316129337006CAA5C /* GraphView3.mm */; };
 		AE4E6F0616129337006CAA5C /* ViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE4E6F0416129337006CAA5C /* ViewFactory.mm */; };
 		AE815F331718EA71006BC607 /* BasicAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE815F321718EA71006BC607 /* BasicAnimationView.m */; };
 		AE815F351718EDCB006BC607 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE815F341718EDCB006BC607 /* QuartzCore.framework */; };
+		AE97A1A8186D52AD00DFEA77 /* testcanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE97A1A7186D52AD00DFEA77 /* testcanvas.cpp */; };
 		AEADC21F16EB570800484962 /* LargeView3.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEADC21E16EB570800484962 /* LargeView3.mm */; };
 		AEF2D52B160964BA00DDB7F2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52A160964BA00DDB7F2 /* UIKit.framework */; };
 		AEF2D52D160964BA00DDB7F2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52C160964BA00DDB7F2 /* Foundation.framework */; };
@@ -32,15 +32,15 @@
 		AE2F18EB18429B7D000981AD /* TestView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestView.h; sourceTree = "<group>"; };
 		AE3341B316ECBDBE00F0E517 /* CalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutView.h; sourceTree = "<group>"; };
 		AE3341B416ECBDBE00F0E517 /* CalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutView.m; sourceTree = "<group>"; };
-		AE34D02D17F9051A004BC88B /* gicanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gicanvas.h; path = ../../../core/pub_inc/canvas/gicanvas.h; sourceTree = "<group>"; };
-		AE34D02E17F9053C004BC88B /* testcanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = testcanvas.h; path = ../../../core/mgr_inc/test/testcanvas.h; sourceTree = "<group>"; };
-		AE34D02F17F9054A004BC88B /* testcanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testcanvas.cpp; path = ../../../core/mgr_src/test/testcanvas.cpp; sourceTree = "<group>"; };
 		AE4E6F0216129337006CAA5C /* GraphView3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView3.h; sourceTree = "<group>"; };
 		AE4E6F0316129337006CAA5C /* GraphView3.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GraphView3.mm; sourceTree = "<group>"; };
 		AE4E6F0416129337006CAA5C /* ViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewFactory.mm; sourceTree = "<group>"; };
 		AE815F301718E759006BC607 /* BasicAnimationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicAnimationView.h; sourceTree = "<group>"; };
 		AE815F321718EA71006BC607 /* BasicAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicAnimationView.m; sourceTree = "<group>"; };
 		AE815F341718EDCB006BC607 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AE97A1A5186D529200DFEA77 /* gicanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = gicanvas.h; path = ../../../thirdparty/TouchVGCore/core/include/canvas/gicanvas.h; sourceTree = "<group>"; };
+		AE97A1A6186D529F00DFEA77 /* testcanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = testcanvas.h; path = ../../../thirdparty/TouchVGCore/core/include/test/testcanvas.h; sourceTree = "<group>"; };
+		AE97A1A7186D52AD00DFEA77 /* testcanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testcanvas.cpp; path = ../../../thirdparty/TouchVGCore/core/src/test/testcanvas.cpp; sourceTree = "<group>"; };
 		AEADC21D16EB570800484962 /* LargeView3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargeView3.h; sourceTree = "<group>"; };
 		AEADC21E16EB570800484962 /* LargeView3.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LargeView3.mm; sourceTree = "<group>"; };
 		AEF2D526160964BA00DDB7F2 /* TestCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,9 +80,9 @@
 		AE0762F3160AABE000518207 /* canvas */ = {
 			isa = PBXGroup;
 			children = (
-				AE34D02F17F9054A004BC88B /* testcanvas.cpp */,
-				AE34D02E17F9053C004BC88B /* testcanvas.h */,
-				AE34D02D17F9051A004BC88B /* gicanvas.h */,
+				AE97A1A7186D52AD00DFEA77 /* testcanvas.cpp */,
+				AE97A1A6186D529F00DFEA77 /* testcanvas.h */,
+				AE97A1A5186D529200DFEA77 /* gicanvas.h */,
 				C9FA89C217ED410E00B73E16 /* GiCanvasAdapter.mm */,
 				C9FA89C117ED410500B73E16 /* GiCanvasAdapter.h */,
 			);
@@ -240,6 +240,7 @@
 				AEF2D53B160964BA00DDB7F2 /* AppDelegate.m in Sources */,
 				AEF2D53E160964BA00DDB7F2 /* MasterViewController.mm in Sources */,
 				AEF2D541160964BA00DDB7F2 /* DetailViewController.mm in Sources */,
+				AE97A1A8186D52AD00DFEA77 /* testcanvas.cpp in Sources */,
 				AEF2D5B01609BF7D00DDB7F2 /* main.m in Sources */,
 				AE4E6F0516129337006CAA5C /* GraphView3.mm in Sources */,
 				AE4E6F0616129337006CAA5C /* ViewFactory.mm in Sources */,
@@ -247,7 +248,6 @@
 				AE3341B516ECBDBE00F0E517 /* CalloutView.m in Sources */,
 				AE815F331718EA71006BC607 /* BasicAnimationView.m in Sources */,
 				C9FA89C317ED410E00B73E16 /* GiCanvasAdapter.mm in Sources */,
-				AE34D03017F9054A004BC88B /* testcanvas.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +258,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -275,7 +274,6 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -295,7 +293,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -305,7 +302,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

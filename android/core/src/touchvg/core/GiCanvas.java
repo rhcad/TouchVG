@@ -50,8 +50,8 @@ public class GiCanvas {
     touchvgJNI.GiCanvas_change_ownership(this, swigCPtr, true);
   }
 
-  public void setPen(int argb, float width, int style, float phase) {
-    touchvgJNI.GiCanvas_setPen(swigCPtr, this, argb, width, style, phase);
+  public void setPen(int argb, float width, int style, float phase, float orgw) {
+    touchvgJNI.GiCanvas_setPen(swigCPtr, this, argb, width, style, phase, orgw);
   }
 
   public void setBrush(int argb, int style) {
@@ -130,8 +130,8 @@ public class GiCanvas {
     return touchvgJNI.GiCanvas_drawTextAt(swigCPtr, this, text, x, y, h, align);
   }
 
-  public boolean beginShape(int type, int sid, float x, float y, float w, float h) {
-    return (getClass() == GiCanvas.class) ? touchvgJNI.GiCanvas_beginShape(swigCPtr, this, type, sid, x, y, w, h) : touchvgJNI.GiCanvas_beginShapeSwigExplicitGiCanvas(swigCPtr, this, type, sid, x, y, w, h);
+  public boolean beginShape(int type, int sid, int version, float x, float y, float w, float h) {
+    return (getClass() == GiCanvas.class) ? touchvgJNI.GiCanvas_beginShape(swigCPtr, this, type, sid, version, x, y, w, h) : touchvgJNI.GiCanvas_beginShapeSwigExplicitGiCanvas(swigCPtr, this, type, sid, version, x, y, w, h);
   }
 
   public void endShape(int type, int sid, float x, float y) {

@@ -175,16 +175,4 @@ public class GiContext {
     touchvgJNI.GiContext_setFillAlpha(swigCPtr, this, alpha);
   }
 
-  public boolean isAutoFillColor() {
-    return touchvgJNI.GiContext_isAutoFillColor(swigCPtr, this);
-  }
-
-  public void setAutoFillColor(boolean value) {
-    touchvgJNI.GiContext_setAutoFillColor(swigCPtr, this, value);
-  }
-
-  public int getType() {
-    return touchvgJNI.GiContext_getType(swigCPtr, this);
-  }
-
 }

@@ -123,7 +123,7 @@ void dyndraw(GiCanvas* canvas)
 {
     static float phase = 0;
     phase += 1;
-    canvas->setPen(0, 0, 1, phase);
+    canvas->setPen(0, 0, 1, phase, 0);
     canvas->setBrush(0x88005500, 0);
     canvas->drawEllipse((float)_pt.x - 50.f, (float)_pt.y - 50.f, 100.f, 100.f, true, false);
 }

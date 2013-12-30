@@ -86,7 +86,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
 
 - (float)strokeWidth {
     GiContext& ctx = [_view coreView]->getContext(false);
-    return [_view coreView]->calcPenWidth(ctx.getLineWidth());
+    return [_view coreView]->calcPenWidth([_view viewAdapter], ctx.getLineWidth());
 }
 
 - (void)setStrokeWidth:(float)value {
@@ -169,9 +169,11 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (NSString *)content {
-    const char* str = [_view coreView]->getContent();
+    long hDoc = [_view coreView]->acquireFrontDoc();
+    const char* str = [_view coreView]->getContent(hDoc);
     NSString * ret = [NSString stringWithCString:str encoding:NSUTF8StringEncoding];
     [_view coreView]->freeContent();
+    [_view coreView]->releaseDoc(hDoc);
     return ret;
 }
 
@@ -224,7 +226,9 @@ GiColor CGColorToGiColor(CGColorRef color) {
         if (![fm fileExistsAtPath:vgfile]) {
             [fm createFileAtPath:vgfile contents:[NSData data] attributes:nil];
         }
-        ret = [_view coreView]->saveToFile([vgfile UTF8String]);
+        long hDoc = [_view coreView]->acquireFrontDoc();
+        ret = [_view coreView]->saveToFile(hDoc, [vgfile UTF8String]);
+        [_view coreView]->releaseDoc(hDoc);
     } else {
         ret = [fm removeItemAtPath:vgfile error:nil];
     }
@@ -245,7 +249,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (BOOL)exportSVG:(NSString *)filename {
-    return [_view coreView]->exportSVG([[self addExtension:filename :@".svg"] UTF8String]);
+    return NO;//[_view coreView]->exportSVG([[self addExtension:filename :@".svg"] UTF8String]);
 }
 
 - (BOOL)zoomToExtent {
@@ -305,8 +309,12 @@ GiColor CGColorToGiColor(CGColorRef color) {
     
     GiShapeCallback shapeCallback(rootLayer, hidden);
     GiShapeAdapter adapter(&shapeCallback);
+    long hDoc = [_view coreView]->acquireFrontDoc();
+    long hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
     
-    [_view coreView]->drawAll([_view viewAdapter], &adapter);
+    [_view coreView]->drawAll(hDoc, hGs, &adapter);
+    [_view coreView]->releaseDoc(hDoc);
+    [_view coreView]->releaseGraphics([_view viewAdapter], hGs);
     
     return rootLayer;
 }

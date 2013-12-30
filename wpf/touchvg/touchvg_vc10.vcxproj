@@ -40,9 +40,9 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\build\$(Configuration)10\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\build\$(Configuration)10\obj\touchvg_csharp\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\build\$(Configuration)10\obj\..\build\$(ConfigurationName)9\obj\$(ProjectName)_csharp\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\build\$(Configuration)10\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\build\$(Configuration)10\obj\touchvg_csharp\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\build\$(Configuration)10\obj\..\build\$(ConfigurationName)9\obj\$(ProjectName)_csharp\</IntDir>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\export;..\..\core\mgr_inc\test</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\thirdparty\TouchVGCore\core\include;..\..\thirdparty\TouchVGCore\core\include\geom;..\..\thirdparty\TouchVGCore\core\include\graph;..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\thirdparty\TouchVGCore\core\include\shape;..\..\thirdparty\TouchVGCore\core\include\storage;..\..\thirdparty\TouchVGCore\core\include\cmd;..\..\thirdparty\TouchVGCore\core\include\cmdobserver;..\..\thirdparty\TouchVGCore\core\include\cmdbase;..\..\thirdparty\TouchVGCore\core\include\cmdbasic;..\..\thirdparty\TouchVGCore\core\include\cmdmgr;..\..\thirdparty\TouchVGCore\core\include\view;..\..\thirdparty\TouchVGCore\core\include\shapedoc;..\..\thirdparty\TouchVGCore\core\include\json;..\..\thirdparty\TouchVGCore\core\include\export;..\..\thirdparty\TouchVGCore\core\include\test</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -63,7 +63,7 @@
       <DisableSpecificWarnings>4819;4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\thirdparty\TouchVGCore\win\build\$(Configuration)10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -73,6 +73,7 @@
       </DataExecutionPrevention>
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>TouchVGCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -83,7 +84,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\mgr_inc\cmdbasic;..\..\core\mgr_inc\cmdmgr;..\..\core\mgr_inc\view;..\..\core\mgr_inc\shapedoc;..\..\core\mgr_inc\json;..\..\core\mgr_inc\export;..\..\core\mgr_inc\test</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\thirdparty\TouchVGCore\core\include;..\..\thirdparty\TouchVGCore\core\include\geom;..\..\thirdparty\TouchVGCore\core\include\graph;..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\thirdparty\TouchVGCore\core\include\shape;..\..\thirdparty\TouchVGCore\core\include\storage;..\..\thirdparty\TouchVGCore\core\include\cmd;..\..\thirdparty\TouchVGCore\core\include\cmdobserver;..\..\thirdparty\TouchVGCore\core\include\cmdbase;..\..\thirdparty\TouchVGCore\core\include\cmdbasic;..\..\thirdparty\TouchVGCore\core\include\cmdmgr;..\..\thirdparty\TouchVGCore\core\include\view;..\..\thirdparty\TouchVGCore\core\include\shapedoc;..\..\thirdparty\TouchVGCore\core\include\json;..\..\thirdparty\TouchVGCore\core\include\export;..\..\thirdparty\TouchVGCore\core\include\test</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -93,7 +94,7 @@
       <DisableSpecificWarnings>4819;4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\thirdparty\TouchVGCore\win\build\$(Configuration)10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -105,6 +106,7 @@
       </DataExecutionPrevention>
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>TouchVGCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -112,157 +114,28 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\core\mgr_src\view\touchvg.i">
+    <CustomBuild Include="..\..\thirdparty\TouchVGCore\core\src\view\touchvg.i">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Swig generating...</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir $(ProjectDir)..\touchvglib\core -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\core\pub_inc" -I"$(ProjectDir)..\..\core\pub_inc\canvas" -I"$(ProjectDir)..\..\core\pub_inc\graph" -I"$(ProjectDir)..\..\core\pub_inc\cmd" -I"$(ProjectDir)..\..\core\mgr_inc\test" -I"$(ProjectDir)..\..\core\mgr_inc\view" -I"$(ProjectDir)..\..\core\pub_inc\storage" -I"$(ProjectDir)..\..\core\pub_inc\geom" -I"$(ProjectDir)..\..\core\pub_inc\shape" -I"$(ProjectDir)..\..\core\pub_inc\cmdobserver" -I"$(ProjectDir)..\..\core\pub_inc\cmdbase" -I"$(ProjectDir)..\..\core\mgr_inc\cmdbasic" -I"$(ProjectDir)..\..\core\mgr_inc\shapedoc" -I"$(ProjectDir)..\..\core\mgr_inc\json" -I"$(ProjectDir)..\..\core\mgr_inc\cmdmgr" %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir "$(ProjectDir)..\touchvglib\core" -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\canvas" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\graph" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\test" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\view" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\storage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\geom" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shape" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdobserver" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbase" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbasic" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shapedoc" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\jsonstorage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdmgr" "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)touchvg_csharp_wrap.cpp;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Swig generating...</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir $(ProjectDir)..\touchvglib\core -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\core\pub_inc" -I"$(ProjectDir)..\..\core\pub_inc\canvas" -I"$(ProjectDir)..\..\core\pub_inc\graph" -I"$(ProjectDir)..\..\core\pub_inc\cmd" -I"$(ProjectDir)..\..\core\mgr_inc\test" -I"$(ProjectDir)..\..\core\mgr_inc\view" -I"$(ProjectDir)..\..\core\pub_inc\storage" -I"$(ProjectDir)..\..\core\pub_inc\geom" -I"$(ProjectDir)..\..\core\pub_inc\shape" -I"$(ProjectDir)..\..\core\pub_inc\cmdobserver" -I"$(ProjectDir)..\..\core\pub_inc\cmdbase" -I"$(ProjectDir)..\..\core\mgr_inc\cmdbasic" -I"$(ProjectDir)..\..\core\mgr_inc\shapedoc" -I"$(ProjectDir)..\..\core\mgr_inc\json" -I"$(ProjectDir)..\..\core\mgr_inc\cmdmgr" %(FullPath)</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir "$(ProjectDir)..\touchvglib\core" -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\canvas" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\graph" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\test" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\view" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\storage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\geom" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shape" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdobserver" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbase" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbasic" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shapedoc" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\jsonstorage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdmgr" "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)touchvg_csharp_wrap.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\cmdbasic.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgcmderase.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawcircle.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawdiamond.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawellipse.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawfreelines.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawgrid.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawline.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawlines.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawparallel.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawpolygon.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawsplines.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawsquare.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgdrawtriang.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdmgr\cmdsubject.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgactions.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgcmdmgr2.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgcmdmgr_.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgcmdselect.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdmgr\mgsnapimpl.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\export\svgcanvas.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\shapedoc\mglayer.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\shapedoc\mglockrw.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\shapedoc\mgshapedoc.cpp" />
-    <ClCompile Include="..\..\core\pub_src\cmdbase\mgcmddraw.cpp" />
-    <ClCompile Include="..\..\core\pub_src\cmdbase\mgdrawarc.cpp" />
-    <ClCompile Include="..\..\core\pub_src\cmdbase\mgdrawrect.cpp" />
-    <ClCompile Include="..\..\core\pub_src\cmdbase\mgsplock.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mgcomposite.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mgellipse.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mggrid.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mgline.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mglines.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mgrdrect.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mgrect.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mgshape.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mgshapes.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\cmdbasic\mgbasicspreg.cpp" />
-    <ClCompile Include="..\..\core\pub_src\shape\mgsplines.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\view\GcGraphView.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\view\GcMagnifierView.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\view\GcShapeDoc.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\view\gicoreview.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\view\gimousehelper.cpp" />
     <ClCompile Include=".\touchvg_csharp_wrap.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\test\RandomShape.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\test\testcanvas.cpp" />
-    <ClCompile Include="..\..\core\mgr_src\json\mgjsonstorage.cpp" />
-    <ClCompile Include="..\..\core\pub_src\graph\gigraph.cpp" />
-    <ClCompile Include="..\..\core\pub_src\graph\gipath.cpp" />
-    <ClCompile Include="..\..\core\pub_src\graph\gixform.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mgbase.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mgbnd.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mgbox.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mgcurv.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mglnrel.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mgmat.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mgnear.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mgnearbz.cpp" />
-    <ClCompile Include="..\..\core\pub_src\geom\mgvec.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\core\mgr_inc\export\svgcanvas.h" />
-    <ClInclude Include="..\..\core\mgr_inc\view\gimousehelper.h" />
-    <ClInclude Include="..\..\core\mgr_src\cmdbasic\mgcmderase.h" />
-    <ClInclude Include="..\..\core\mgr_src\cmdmgr\mgcmdmgr_.h" />
-    <ClInclude Include="..\..\core\mgr_src\cmdmgr\mgcmdselect.h" />
-    <ClInclude Include="..\..\core\mgr_src\export\simple_svg.hpp" />
-    <ClInclude Include="..\..\core\pub_inc\cmdbase\mgcmddraw.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmdbase\mgdrawarc.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmdbase\mgdrawrect.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\cmdbasic.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawcircle.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawdiamond.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawellipse.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawfreelines.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawgrid.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawline.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawlines.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawparallel.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawpolygon.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawquadrangle.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawsplines.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawsquare.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgdrawtriang.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdmgr\mgcmdmgr.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdmgr\mgcmdmgrfactory.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmdobserver\cmdobserver.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmdobserver\cmdsubject.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmd\mgaction.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmd\mgcmd.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmd\mglockdata.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmd\mgselect.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmd\mgsnap.h" />
-    <ClInclude Include="..\..\core\pub_inc\cmd\mgview.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgbase.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgbnd.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgbox.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgcurv.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgdef.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mglnrel.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgmat.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgnear.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgpnt.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgtol.h" />
-    <ClInclude Include="..\..\core\pub_inc\geom\mgvec.h" />
-    <ClInclude Include="..\..\core\pub_inc\graph\gicolor.h" />
-    <ClInclude Include="..\..\core\pub_inc\graph\gicontxt.h" />
-    <ClInclude Include="..\..\core\pub_inc\graph\gigraph.h" />
-    <ClInclude Include="..\..\core\pub_inc\graph\gilock.h" />
-    <ClInclude Include="..\..\core\pub_inc\graph\gipath.h" />
-    <ClInclude Include="..\..\core\pub_inc\graph\gixform.h" />
-    <ClInclude Include="..\..\core\mgr_inc\shapedoc\mglayer.h" />
-    <ClInclude Include="..\..\core\mgr_inc\shapedoc\mgshapedoc.h" />
-    <ClInclude Include="..\..\core\pub_inc\mglog.h" />
-    <ClInclude Include="..\..\core\pub_inc\mgvector.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgbasicsp.h" />
-    <ClInclude Include="..\..\core\mgr_inc\cmdbasic\mgbasicspreg.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgcomposite.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mggrid.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgobject.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgshape.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgshapes.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgshapet.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgshapetype.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgshape_.h" />
-    <ClInclude Include="..\..\core\pub_inc\shape\mgspfactory.h" />
-    <ClInclude Include="..\..\core\mgr_inc\json\mgjsonstorage.h" />
-    <ClInclude Include="..\..\core\pub_inc\storage\mgstorage.h" />
-    <ClInclude Include="..\..\core\pub_inc\storage\mgstoragebs.h" />
-    <ClInclude Include="..\..\core\mgr_inc\test\RandomShape.h" />
-    <ClInclude Include="..\..\core\mgr_inc\view\gicoreview.h" />
-    <ClInclude Include="..\..\core\mgr_inc\view\gigesture.h" />
-    <ClInclude Include="..\..\core\mgr_src\view\GcBaseView.h" />
-    <ClInclude Include="..\..\core\mgr_src\view\GcGraphView.h" />
-    <ClInclude Include="..\..\core\mgr_src\view\GcMagnifierView.h" />
-    <ClInclude Include="..\..\core\mgr_src\view\GcShapeDoc.h" />
+    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\view\gimousehelper.h" />
+    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\graph\gicolor.h" />
+    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\graph\gicontxt.h" />
+    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\view\gicoreview.h" />
+    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\view\gigesture.h" />
     <ClInclude Include=".\touchvg_csharp_wrap.h" />
-    <ClInclude Include="..\..\core\pub_inc\canvas\gicanvas.h" />
-    <ClInclude Include="..\..\core\mgr_inc\view\giview.h" />
-    <ClInclude Include="..\..\core\mgr_inc\test\testcanvas.h" />
+    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\canvas\gicanvas.h" />
+    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\view\giview.h" />
+    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\test\testcanvas.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -105,7 +105,7 @@ public class CanvasAdapter extends GiCanvas {
     }
     
     @Override
-    public void setPen(int argb, float width, int style, float phase) {
+    public void setPen(int argb, float width, int style, float phase, float orgw) {
         if (argb != 0) {
             mPen.setColor(argb);
         }

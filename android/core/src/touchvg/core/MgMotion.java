@@ -195,10 +195,6 @@ public class MgMotion {
     return (cPtr == 0) ? null : new MgCmdManager(cPtr, false);
   }
 
-  public boolean toSelectCommand() {
-    return touchvgJNI.MgMotion_toSelectCommand(swigCPtr, this);
-  }
-
   public Point2d startCenterM() {
     return new Point2d(touchvgJNI.MgMotion_startCenterM(swigCPtr, this), true);
   }

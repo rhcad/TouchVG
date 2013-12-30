@@ -52,6 +52,10 @@ public class MgObject : IDisposable {
     touchvgPINVOKE.MgObject_release(swigCPtr);
   }
 
+  public virtual void addRef() {
+    touchvgPINVOKE.MgObject_addRef(swigCPtr);
+  }
+
   public virtual bool equals(MgObject src) {
     bool ret = touchvgPINVOKE.MgObject_equals(swigCPtr, MgObject.getCPtr(src));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
@@ -79,13 +83,15 @@ public class MgObject : IDisposable {
       swigDelegate1 = new SwigDelegateMgObject_1(SwigDirectorcopy);
     if (SwigDerivedClassHasMethod("release", swigMethodTypes2))
       swigDelegate2 = new SwigDelegateMgObject_2(SwigDirectorrelease);
-    if (SwigDerivedClassHasMethod("equals", swigMethodTypes3))
-      swigDelegate3 = new SwigDelegateMgObject_3(SwigDirectorequals);
-    if (SwigDerivedClassHasMethod("getType", swigMethodTypes4))
-      swigDelegate4 = new SwigDelegateMgObject_4(SwigDirectorgetType);
-    if (SwigDerivedClassHasMethod("isKindOf", swigMethodTypes5))
-      swigDelegate5 = new SwigDelegateMgObject_5(SwigDirectorisKindOf);
-    touchvgPINVOKE.MgObject_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5);
+    if (SwigDerivedClassHasMethod("addRef", swigMethodTypes3))
+      swigDelegate3 = new SwigDelegateMgObject_3(SwigDirectoraddRef);
+    if (SwigDerivedClassHasMethod("equals", swigMethodTypes4))
+      swigDelegate4 = new SwigDelegateMgObject_4(SwigDirectorequals);
+    if (SwigDerivedClassHasMethod("getType", swigMethodTypes5))
+      swigDelegate5 = new SwigDelegateMgObject_5(SwigDirectorgetType);
+    if (SwigDerivedClassHasMethod("isKindOf", swigMethodTypes6))
+      swigDelegate6 = new SwigDelegateMgObject_6(SwigDirectorisKindOf);
+    touchvgPINVOKE.MgObject_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6);
   }
 
   private bool SwigDerivedClassHasMethod(string methodName, Type[] methodTypes) {
@@ -106,6 +112,10 @@ public class MgObject : IDisposable {
     release();
   }
 
+  private void SwigDirectoraddRef() {
+    addRef();
+  }
+
   private bool SwigDirectorequals(IntPtr src) {
     return equals(new MgObject(src, false));
   }
@@ -121,9 +131,10 @@ public class MgObject : IDisposable {
   public delegate IntPtr SwigDelegateMgObject_0();
   public delegate void SwigDelegateMgObject_1(IntPtr src);
   public delegate void SwigDelegateMgObject_2();
-  public delegate bool SwigDelegateMgObject_3(IntPtr src);
-  public delegate int SwigDelegateMgObject_4();
-  public delegate bool SwigDelegateMgObject_5(int type);
+  public delegate void SwigDelegateMgObject_3();
+  public delegate bool SwigDelegateMgObject_4(IntPtr src);
+  public delegate int SwigDelegateMgObject_5();
+  public delegate bool SwigDelegateMgObject_6(int type);
 
   private SwigDelegateMgObject_0 swigDelegate0;
   private SwigDelegateMgObject_1 swigDelegate1;
@@ -131,13 +142,15 @@ public class MgObject : IDisposable {
   private SwigDelegateMgObject_3 swigDelegate3;
   private SwigDelegateMgObject_4 swigDelegate4;
   private SwigDelegateMgObject_5 swigDelegate5;
+  private SwigDelegateMgObject_6 swigDelegate6;
 
   private static Type[] swigMethodTypes0 = new Type[] {  };
   private static Type[] swigMethodTypes1 = new Type[] { typeof(MgObject) };
   private static Type[] swigMethodTypes2 = new Type[] {  };
-  private static Type[] swigMethodTypes3 = new Type[] { typeof(MgObject) };
-  private static Type[] swigMethodTypes4 = new Type[] {  };
-  private static Type[] swigMethodTypes5 = new Type[] { typeof(int) };
+  private static Type[] swigMethodTypes3 = new Type[] {  };
+  private static Type[] swigMethodTypes4 = new Type[] { typeof(MgObject) };
+  private static Type[] swigMethodTypes5 = new Type[] {  };
+  private static Type[] swigMethodTypes6 = new Type[] { typeof(int) };
 }
 
 }

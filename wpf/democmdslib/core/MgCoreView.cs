@@ -63,14 +63,41 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual int docHandle() {
-    int ret = democmdsPINVOKE.MgCoreView_docHandle(swigCPtr);
+  public virtual int backDoc() {
+    int ret = democmdsPINVOKE.MgCoreView_backDoc(swigCPtr);
     return ret;
   }
 
-  public virtual int shapesHandle() {
-    int ret = democmdsPINVOKE.MgCoreView_shapesHandle(swigCPtr);
+  public virtual int backShapes() {
+    int ret = democmdsPINVOKE.MgCoreView_backShapes(swigCPtr);
     return ret;
+  }
+
+  public virtual int acquireFrontDoc() {
+    int ret = democmdsPINVOKE.MgCoreView_acquireFrontDoc(swigCPtr);
+    return ret;
+  }
+
+  public virtual void releaseDoc(int hDoc) {
+    democmdsPINVOKE.MgCoreView_releaseDoc(swigCPtr, hDoc);
+  }
+
+  public virtual int acquireDynamicShapes() {
+    int ret = democmdsPINVOKE.MgCoreView_acquireDynamicShapes(swigCPtr);
+    return ret;
+  }
+
+  public virtual void releaseShapes(int hShapes) {
+    democmdsPINVOKE.MgCoreView_releaseShapes(swigCPtr, hShapes);
+  }
+
+  public virtual bool loadDynamicShapes(SWIGTYPE_p_MgStorage s) {
+    bool ret = democmdsPINVOKE.MgCoreView_loadDynamicShapes(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s));
+    return ret;
+  }
+
+  public virtual void applyDynamicShapes() {
+    democmdsPINVOKE.MgCoreView_applyDynamicShapes(swigCPtr);
   }
 
   public virtual bool isPressDragging() {
@@ -141,58 +168,58 @@ public class MgCoreView : IDisposable {
     democmdsPINVOKE.MgCoreView_clear(swigCPtr);
   }
 
-  public virtual bool loadFromFile(string vgfile, bool readOnly, bool needLock) {
-    bool ret = democmdsPINVOKE.MgCoreView_loadFromFile__SWIG_0(swigCPtr, vgfile, readOnly, needLock);
-    return ret;
-  }
-
   public virtual bool loadFromFile(string vgfile, bool readOnly) {
-    bool ret = democmdsPINVOKE.MgCoreView_loadFromFile__SWIG_1(swigCPtr, vgfile, readOnly);
+    bool ret = democmdsPINVOKE.MgCoreView_loadFromFile__SWIG_0(swigCPtr, vgfile, readOnly);
     return ret;
   }
 
   public virtual bool loadFromFile(string vgfile) {
-    bool ret = democmdsPINVOKE.MgCoreView_loadFromFile__SWIG_2(swigCPtr, vgfile);
+    bool ret = democmdsPINVOKE.MgCoreView_loadFromFile__SWIG_1(swigCPtr, vgfile);
     return ret;
   }
 
-  public virtual bool saveToFile(string vgfile, bool pretty) {
-    bool ret = democmdsPINVOKE.MgCoreView_saveToFile__SWIG_0(swigCPtr, vgfile, pretty);
+  public virtual bool saveToFile(int hDoc, string vgfile, bool pretty) {
+    bool ret = democmdsPINVOKE.MgCoreView_saveToFile__SWIG_0(swigCPtr, hDoc, vgfile, pretty);
     return ret;
   }
 
-  public virtual bool saveToFile(string vgfile) {
-    bool ret = democmdsPINVOKE.MgCoreView_saveToFile__SWIG_1(swigCPtr, vgfile);
+  public virtual bool saveToFile(int hDoc, string vgfile) {
+    bool ret = democmdsPINVOKE.MgCoreView_saveToFile__SWIG_1(swigCPtr, hDoc, vgfile);
     return ret;
   }
 
-  public virtual bool loadShapes(SWIGTYPE_p_MgStorage s, bool readOnly, bool needLock) {
-    bool ret = democmdsPINVOKE.MgCoreView_loadShapes__SWIG_0(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s), readOnly, needLock);
+  public bool saveToFile(string vgfile, bool pretty) {
+    bool ret = democmdsPINVOKE.MgCoreView_saveToFile__SWIG_2(swigCPtr, vgfile, pretty);
+    return ret;
+  }
+
+  public bool saveToFile(string vgfile) {
+    bool ret = democmdsPINVOKE.MgCoreView_saveToFile__SWIG_3(swigCPtr, vgfile);
     return ret;
   }
 
   public virtual bool loadShapes(SWIGTYPE_p_MgStorage s, bool readOnly) {
-    bool ret = democmdsPINVOKE.MgCoreView_loadShapes__SWIG_1(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s), readOnly);
+    bool ret = democmdsPINVOKE.MgCoreView_loadShapes__SWIG_0(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s), readOnly);
     return ret;
   }
 
   public virtual bool loadShapes(SWIGTYPE_p_MgStorage s) {
-    bool ret = democmdsPINVOKE.MgCoreView_loadShapes__SWIG_2(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s));
+    bool ret = democmdsPINVOKE.MgCoreView_loadShapes__SWIG_1(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s));
     return ret;
   }
 
-  public virtual bool saveShapes(SWIGTYPE_p_MgStorage s) {
-    bool ret = democmdsPINVOKE.MgCoreView_saveShapes(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s));
+  public virtual bool saveShapes(int hDoc, SWIGTYPE_p_MgStorage s) {
+    bool ret = democmdsPINVOKE.MgCoreView_saveShapes__SWIG_0(swigCPtr, hDoc, SWIGTYPE_p_MgStorage.getCPtr(s));
     return ret;
   }
 
-  public virtual bool loadDynamicShapes(SWIGTYPE_p_MgStorage s) {
-    bool ret = democmdsPINVOKE.MgCoreView_loadDynamicShapes(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s));
+  public bool saveShapes(SWIGTYPE_p_MgStorage s) {
+    bool ret = democmdsPINVOKE.MgCoreView_saveShapes__SWIG_1(swigCPtr, SWIGTYPE_p_MgStorage.getCPtr(s));
     return ret;
   }
 
-  public virtual string getContent() {
-    string ret = democmdsPINVOKE.MgCoreView_getContent(swigCPtr);
+  public virtual string getContent(int hDoc) {
+    string ret = democmdsPINVOKE.MgCoreView_getContent__SWIG_0(swigCPtr, hDoc);
     return ret;
   }
 
@@ -205,8 +232,8 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual bool exportSVG(string filename) {
-    bool ret = democmdsPINVOKE.MgCoreView_exportSVG(swigCPtr, filename);
+  public string getContent() {
+    string ret = democmdsPINVOKE.MgCoreView_getContent__SWIG_1(swigCPtr);
     return ret;
   }
 
@@ -220,23 +247,18 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual float calcPenWidth(float lineWidth) {
-    float ret = democmdsPINVOKE.MgCoreView_calcPenWidth(swigCPtr, lineWidth);
-    return ret;
-  }
-
   public virtual SWIGTYPE_p_GiContext getContext(bool forChange) {
     SWIGTYPE_p_GiContext ret = new SWIGTYPE_p_GiContext(democmdsPINVOKE.MgCoreView_getContext(swigCPtr, forChange), false);
     return ret;
   }
 
-  public virtual void setContext(SWIGTYPE_p_GiContext ctx, int mask, int apply) {
-    democmdsPINVOKE.MgCoreView_setContext__SWIG_0(swigCPtr, SWIGTYPE_p_GiContext.getCPtr(ctx), mask, apply);
-    if (democmdsPINVOKE.SWIGPendingException.Pending) throw democmdsPINVOKE.SWIGPendingException.Retrieve();
+  public virtual void setContext(int mask) {
+    democmdsPINVOKE.MgCoreView_setContext__SWIG_0(swigCPtr, mask);
   }
 
-  public virtual void setContext(int mask) {
-    democmdsPINVOKE.MgCoreView_setContext__SWIG_1(swigCPtr, mask);
+  public virtual void setContext(SWIGTYPE_p_GiContext ctx, int mask, int apply) {
+    democmdsPINVOKE.MgCoreView_setContext__SWIG_1(swigCPtr, SWIGTYPE_p_GiContext.getCPtr(ctx), mask, apply);
+    if (democmdsPINVOKE.SWIGPendingException.Pending) throw democmdsPINVOKE.SWIGPendingException.Retrieve();
   }
 
   public virtual void setContextEditing(bool editing) {

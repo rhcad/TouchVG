@@ -35,12 +35,25 @@ public class GiGraphics {
     }
   }
 
+  public GiGraphics(GiTransform xform, boolean needFreeXf) {
+    this(touchvgJNI.new_GiGraphics__SWIG_0(GiTransform.getCPtr(xform), xform, needFreeXf), true);
+  }
+
   public GiGraphics(GiTransform xform) {
-    this(touchvgJNI.new_GiGraphics__SWIG_0(GiTransform.getCPtr(xform), xform), true);
+    this(touchvgJNI.new_GiGraphics__SWIG_1(GiTransform.getCPtr(xform), xform), true);
   }
 
   public GiGraphics(GiGraphics src) {
-    this(touchvgJNI.new_GiGraphics__SWIG_1(GiGraphics.getCPtr(src), src), true);
+    this(touchvgJNI.new_GiGraphics__SWIG_2(GiGraphics.getCPtr(src), src), true);
+  }
+
+  public static GiGraphics fromHandle(int h) {
+    long cPtr = touchvgJNI.GiGraphics_fromHandle(h);
+    return (cPtr == 0) ? null : new GiGraphics(cPtr, false);
+  }
+
+  public int toHandle() {
+    return touchvgJNI.GiGraphics_toHandle(swigCPtr, this);
   }
 
   public void copy(GiGraphics src) {
@@ -63,8 +76,12 @@ public class GiGraphics {
     return touchvgJNI.GiGraphics_isStopping(swigCPtr, this);
   }
 
+  public void stopDrawing(boolean stopped) {
+    touchvgJNI.GiGraphics_stopDrawing__SWIG_0(swigCPtr, this, stopped);
+  }
+
   public void stopDrawing() {
-    touchvgJNI.GiGraphics_stopDrawing(swigCPtr, this);
+    touchvgJNI.GiGraphics_stopDrawing__SWIG_1(swigCPtr, this);
   }
 
   public Box2d getClipModel() {
@@ -273,6 +290,18 @@ public class GiGraphics {
 
   public boolean drawHandle(Point2d pnt, int type) {
     return touchvgJNI.GiGraphics_drawHandle__SWIG_1(swigCPtr, this, Point2d.getCPtr(pnt), pnt, type);
+  }
+
+  public boolean beginPaint(GiCanvas canvas, RECT_2D clipBox) {
+    return touchvgJNI.GiGraphics_beginPaint__SWIG_0(swigCPtr, this, GiCanvas.getCPtr(canvas), canvas, RECT_2D.getCPtr(clipBox), clipBox);
+  }
+
+  public boolean beginPaint(GiCanvas canvas) {
+    return touchvgJNI.GiGraphics_beginPaint__SWIG_1(swigCPtr, this, GiCanvas.getCPtr(canvas), canvas);
+  }
+
+  public void endPaint() {
+    touchvgJNI.GiGraphics_endPaint(swigCPtr, this);
   }
 
 }

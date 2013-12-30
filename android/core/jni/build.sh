@@ -1,28 +1,30 @@
 #!/bin/sh
+# Type './build.sh' to make Android native libraries.
+# Type `./build.sh -swig` to re-generate JNI classes too.
 #
-if [ ! -f touchvg_java_wrap.cpp ]; then # Make JNI classes
+if [ "$1"x = "-swig"x ] || [ ! -f touchvg_java_wrap.cpp ] ; then # Make JNI classes
     mkdir -p ../src/touchvg/core
     rm -rf ../src/touchvg/core/*.*
     
     swig -c++ -java -package touchvg.core -D__ANDROID__ \
         -outdir ../src/touchvg/core \
         -o touchvg_java_wrap.cpp \
-        -I../../../core/pub_inc \
-        -I../../../core/pub_inc/canvas \
-        -I../../../core/pub_inc/graph \
-        -I../../../core/pub_inc/cmd \
-        -I../../../core/mgr_inc/test \
-        -I../../../core/mgr_inc/view \
-        -I../../../core/pub_inc/storage \
-        -I../../../core/pub_inc/geom \
-        -I../../../core/pub_inc/shape \
-        -I../../../core/pub_inc/cmdobserver \
-        -I../../../core/pub_inc/cmdbase \
-        -I../../../core/mgr_inc/cmdbasic \
-        -I../../../core/mgr_inc/shapedoc \
-        -I../../../core/mgr_inc/json \
-        -I../../../core/mgr_inc/cmdmgr \
-        ../../../core/mgr_src/view/touchvg.i
+        -I../../../thirdparty/TouchVGCore/core/include \
+        -I../../../thirdparty/TouchVGCore/core/include/canvas \
+        -I../../../thirdparty/TouchVGCore/core/include/graph \
+        -I../../../thirdparty/TouchVGCore/core/include/cmd \
+        -I../../../thirdparty/TouchVGCore/core/include/storage \
+        -I../../../thirdparty/TouchVGCore/core/include/geom \
+        -I../../../thirdparty/TouchVGCore/core/include/shape \
+        -I../../../thirdparty/TouchVGCore/core/include/cmdobserver \
+        -I../../../thirdparty/TouchVGCore/core/include/cmdbase \
+        -I../../../thirdparty/TouchVGCore/core/include/test \
+        -I../../../thirdparty/TouchVGCore/core/include/view \
+        -I../../../thirdparty/TouchVGCore/core/include/cmdbasic \
+        -I../../../thirdparty/TouchVGCore/core/include/shapedoc \
+        -I../../../thirdparty/TouchVGCore/core/include/jsonstorage \
+        -I../../../thirdparty/TouchVGCore/core/include/cmdmgr \
+        ../../../thirdparty/TouchVGCore/core/src/view/touchvg.i
     python replacejstr.py
 fi
 ndk-build

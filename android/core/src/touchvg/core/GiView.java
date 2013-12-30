@@ -50,12 +50,12 @@ public class GiView {
     touchvgJNI.GiView_change_ownership(this, swigCPtr, true);
   }
 
-  public void regenAll() {
-    if (getClass() == GiView.class) touchvgJNI.GiView_regenAll(swigCPtr, this); else touchvgJNI.GiView_regenAllSwigExplicitGiView(swigCPtr, this);
+  public void regenAll(boolean changed) {
+    if (getClass() == GiView.class) touchvgJNI.GiView_regenAll(swigCPtr, this, changed); else touchvgJNI.GiView_regenAllSwigExplicitGiView(swigCPtr, this, changed);
   }
 
-  public void regenAppend() {
-    if (getClass() == GiView.class) touchvgJNI.GiView_regenAppend(swigCPtr, this); else touchvgJNI.GiView_regenAppendSwigExplicitGiView(swigCPtr, this);
+  public void regenAppend(int sid) {
+    if (getClass() == GiView.class) touchvgJNI.GiView_regenAppend(swigCPtr, this, sid); else touchvgJNI.GiView_regenAppendSwigExplicitGiView(swigCPtr, this, sid);
   }
 
   public void redraw() {
@@ -88,6 +88,10 @@ public class GiView {
 
   public void dynamicChanged() {
     if (getClass() == GiView.class) touchvgJNI.GiView_dynamicChanged(swigCPtr, this); else touchvgJNI.GiView_dynamicChangedSwigExplicitGiView(swigCPtr, this);
+  }
+
+  public void viewChanged(GiView oldview) {
+    if (getClass() == GiView.class) touchvgJNI.GiView_viewChanged(swigCPtr, this, GiView.getCPtr(oldview), oldview); else touchvgJNI.GiView_viewChangedSwigExplicitGiView(swigCPtr, this, GiView.getCPtr(oldview), oldview);
   }
 
   public GiView() {

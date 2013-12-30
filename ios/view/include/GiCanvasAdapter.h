@@ -35,7 +35,7 @@ public:
     static float colorPart(int argb, int byteOrder);
     
 public:
-    void setPen(int argb, float width, int style, float phase);
+    void setPen(int argb, float width, int style, float phase, float orgw);
     void setBrush(int argb, int style);
     void clearRect(float x, float y, float w, float h);
     void drawRect(float x, float y, float w, float h, bool stroke, bool fill);

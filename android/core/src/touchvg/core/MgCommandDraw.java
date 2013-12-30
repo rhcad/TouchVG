@@ -55,18 +55,13 @@ public class MgCommandDraw extends MgCommand {
     touchvgJNI.MgCommandDraw_director_connect(this, swigCPtr, swigCMemOwn, true);
   }
 
-  public MgShape addShape(MgMotion sender, MgShape shape, boolean autolock) {
-    long cPtr = touchvgJNI.MgCommandDraw_addShape__SWIG_0(swigCPtr, this, MgMotion.getCPtr(sender), sender, MgShape.getCPtr(shape), shape, autolock);
-    return (cPtr == 0) ? null : new MgShape(cPtr, false);
-  }
-
   public MgShape addShape(MgMotion sender, MgShape shape) {
-    long cPtr = touchvgJNI.MgCommandDraw_addShape__SWIG_1(swigCPtr, this, MgMotion.getCPtr(sender), sender, MgShape.getCPtr(shape), shape);
+    long cPtr = touchvgJNI.MgCommandDraw_addShape__SWIG_0(swigCPtr, this, MgMotion.getCPtr(sender), sender, MgShape.getCPtr(shape), shape);
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
   public MgShape addShape(MgMotion sender) {
-    long cPtr = touchvgJNI.MgCommandDraw_addShape__SWIG_2(swigCPtr, this, MgMotion.getCPtr(sender), sender);
+    long cPtr = touchvgJNI.MgCommandDraw_addShape__SWIG_1(swigCPtr, this, MgMotion.getCPtr(sender), sender);
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
@@ -114,7 +109,7 @@ public class MgCommandDraw extends MgCommand {
     return (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_draw(swigCPtr, this, MgMotion.getCPtr(sender), sender, GiGraphics.getCPtr(gs), gs) : touchvgJNI.MgCommandDraw_drawSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(sender), sender, GiGraphics.getCPtr(gs), gs);
   }
 
-  public int gatherShapes(MgMotion sender, MgShapes shapes) {
+  public boolean gatherShapes(MgMotion sender, MgShapes shapes) {
     return (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_gatherShapes(swigCPtr, this, MgMotion.getCPtr(sender), sender, MgShapes.getCPtr(shapes), shapes) : touchvgJNI.MgCommandDraw_gatherShapesSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(sender), sender, MgShapes.getCPtr(shapes), shapes);
   }
 
@@ -142,8 +137,8 @@ public class MgCommandDraw extends MgCommand {
     return (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_mouseHover(swigCPtr, this, MgMotion.getCPtr(sender), sender) : touchvgJNI.MgCommandDraw_mouseHoverSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }
 
-  public MgShape getShape(MgMotion arg0) {
-    long cPtr = (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_getShape(swigCPtr, this, MgMotion.getCPtr(arg0), arg0) : touchvgJNI.MgCommandDraw_getShapeSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(arg0), arg0);
+  public MgShape getShape(MgMotion sender) {
+    long cPtr = (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_getShape(swigCPtr, this, MgMotion.getCPtr(sender), sender) : touchvgJNI.MgCommandDraw_getShapeSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(sender), sender);
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 

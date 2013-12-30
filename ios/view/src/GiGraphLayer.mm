@@ -59,7 +59,7 @@
     return i;
 }
 
-- (void)regenAll {
+- (void)regenAll:(BOOL)changed {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         int index = [self pickLayer];
         if (index >= 0) {
@@ -70,7 +70,7 @@
     });
 }
 
-- (void)regenAppend {
+- (void)regenAppend:(int)sid {
     if (_frontLayer && ![self inRegenning]) {
         int index = [self pickLayer];
         if (index >= 0) {
@@ -94,7 +94,7 @@
     if (_frontLayer) {
         [_frontLayer renderInContext:ctx];
     } else {
-        [self regenAll];
+        [self regenAll:NO];
     }
 }
 
@@ -127,15 +127,21 @@
     while (--index >= 0 && _layers[index] != layer) ;
     
     if (_view.window && canvas.beginPaint(ctx)) {
+        long hDoc = coreView->acquireFrontDoc();
+        long hGs = coreView->acquireGraphics(_adapter);
+        
         if (_needsClear[index] || !_frontLayer) {
             CGContextClearRect(ctx, layer.bounds);
             coreView->onSize(_adapter, layer.bounds.size.width, layer.bounds.size.height);
-            n = coreView->drawAll(_adapter, &canvas);
+            n = coreView->drawAll(hDoc, hGs, &canvas);
         }
         else {
             [_frontLayer renderInContext:ctx];
-            n = coreView->drawAppend(_adapter, &canvas);
+            n = coreView->drawAppend(hDoc, hGs, &canvas, _adapter->getRegenValue() >> 2);
         }
+        
+        coreView->releaseDoc(hDoc);
+        coreView->releaseGraphics(_adapter, hGs);
         [self endPaint:&canvas :n :start];
     }
     

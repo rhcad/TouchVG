@@ -83,7 +83,10 @@ public class ShapeView extends GraphView {
     //! 视图回调适配器
     protected class ShapeViewAdapter extends ViewAdapter {
         @Override
-        public void regenAll() {
+        public void regenAll(boolean changed) {
+            mCoreView.submitBackDoc();
+            mCoreView.submitDynamicShapes(mViewAdapter);
+            
             final ViewGroup f = (ViewGroup) getParent();
             if (mShapeLayout != null) {
                 f.removeView(mShapeLayout);
@@ -95,8 +98,13 @@ public class ShapeView extends GraphView {
         }
         
         @Override
-        public void regenAppend() {
-            regenAll();
+        public void regenAppend(int sid) {
+            regenAll(true);
+        }
+        
+        @Override
+        public void redraw() {
+            mCoreView.submitDynamicShapes(mViewAdapter);
         }
     }
 }

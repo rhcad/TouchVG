@@ -236,11 +236,6 @@ public class MgMotion : IDisposable {
     return ret;
   }
 
-  public bool toSelectCommand() {
-    bool ret = touchvgPINVOKE.MgMotion_toSelectCommand(swigCPtr);
-    return ret;
-  }
-
   public Point2d startCenterM() {
     Point2d ret = new Point2d(touchvgPINVOKE.MgMotion_startCenterM(swigCPtr), true);
     return ret;

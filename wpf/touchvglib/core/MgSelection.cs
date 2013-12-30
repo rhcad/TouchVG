@@ -41,14 +41,14 @@ public class MgSelection : IDisposable {
     }
   }
 
-  public int getSelection(MgView view, Shapes shapes, bool forChange) {
-    int ret = touchvgPINVOKE.MgSelection_getSelection__SWIG_0(swigCPtr, MgView.getCPtr(view), Shapes.getCPtr(shapes), forChange);
+  public int getSelection(MgView view, ConstShapes shapes) {
+    int ret = touchvgPINVOKE.MgSelection_getSelection(swigCPtr, MgView.getCPtr(view), ConstShapes.getCPtr(shapes));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int getSelection(MgView view, Shapes shapes) {
-    int ret = touchvgPINVOKE.MgSelection_getSelection__SWIG_1(swigCPtr, MgView.getCPtr(view), Shapes.getCPtr(shapes));
+  public int getSelectionForChange(MgView view, Shapes shapes) {
+    int ret = touchvgPINVOKE.MgSelection_getSelectionForChange(swigCPtr, MgView.getCPtr(view), Shapes.getCPtr(shapes));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

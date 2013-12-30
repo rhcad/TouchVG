@@ -65,7 +65,8 @@ public class PictureAdapter extends GiCanvas {
     }
     
     @Override
-    public boolean beginShape(int type, int sid, float x, float y, float w, float h) {
+    public boolean beginShape(int type, int sid, int version,
+            float x, float y, float w, float h) {
         if (w < 1 || h < 1)
             return false;
         mPicture = new Picture();
@@ -91,7 +92,7 @@ public class PictureAdapter extends GiCanvas {
     }
     
     @Override
-    public void setPen(int argb, float width, int style, float phase) {
+    public void setPen(int argb, float width, int style, float phase, float orgw) {
         if (argb != 0) {
             mPen.setColor(argb);
         }

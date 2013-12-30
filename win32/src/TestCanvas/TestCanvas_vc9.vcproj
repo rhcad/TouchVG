@@ -41,14 +41,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\core\pub_inc\canvas;..\..\..\core\mgr_inc\test;..\..\include\canvas"
+				AdditionalIncludeDirectories="..\..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\..\thirdparty\TouchVGCore\core\include\test;..\..\include\canvas"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				WarningLevel="4"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4819"
+				DisableSpecificWarnings="4819;4100"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -116,13 +116,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\..\core\pub_inc\canvas;..\..\..\core\mgr_inc\test;..\..\include\canvas"
+				AdditionalIncludeDirectories="..\..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\..\thirdparty\TouchVGCore\core\include\test;..\..\include\canvas"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="4"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4819"
+				DisableSpecificWarnings="4819;4100"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -183,7 +183,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\mgr_src\test\testcanvas.cpp"
+				RelativePath="..\..\..\thirdparty\TouchVGCore\core\src\test\testcanvas.cpp"
 				>
 			</File>
 		</Filter>
@@ -193,7 +193,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\core\pub_inc\canvas\gicanvas.h"
+				RelativePath="..\..\..\thirdparty\TouchVGCore\core\include\canvas\gicanvas.h"
 				>
 			</File>
 			<File
@@ -201,7 +201,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\core\pub_inc\canvas\testcanvas.h"
+				RelativePath="..\..\..\thirdparty\TouchVGCore\core\include\test\testcanvas.h"
 				>
 			</File>
 		</Filter>

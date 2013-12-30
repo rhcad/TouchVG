@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import touchvg.core.CmdObserverDefault;
+import touchvg.core.ConstShapes;
 import touchvg.core.GiContext;
 import touchvg.core.GiGraphics;
 import touchvg.core.Ints;
@@ -19,11 +20,9 @@ import touchvg.core.MgMotion;
 import touchvg.core.MgObject;
 import touchvg.core.MgShape;
 import touchvg.core.MgShapeFactory;
-import touchvg.core.MgShapesLock;
 import touchvg.core.MgSplines;
 import touchvg.core.MgStorage;
 import touchvg.core.Point2d;
-import touchvg.core.Shapes;
 import touchvg.view.ViewHelper;
 import vgtest.app.R;
 import android.content.Context;
@@ -117,24 +116,23 @@ public class ViewSinShape extends LinearLayout {
         @Override
         public boolean doAction(MgMotion sender, int action) {
             if (action == ACTION_SWITCH) {
-                final MgShapesLock locker = new MgShapesLock(sender.getView());
-                if (locker.locked()) {
-                    final Shapes shapes = new Shapes();
-                    sender.getView().getSelection().getSelection(sender.getView(), shapes);
+                final ConstShapes shapes = new ConstShapes();
+                sender.getView().getSelection().getSelection(sender.getView(), shapes);
 
-                    for (int i = shapes.count() - 1; i >= 0; i--) {
-                        final MgShape shape = shapes.get(i);
-                        final SinShape sp = castSinShape(shape.shape());
+                for (int i = shapes.count() - 1; i >= 0; i--) {
+                    final MgShape shape = shapes.get(i).cloneShape();
+                    final SinShape sp = castSinShape(shape.shape());
 
-                        if (sp != null) {
-                            sp.switchValue();
-                            sp.update();
-                        }
+                    if (sp != null) {
+                        sp.switchValue();
+                        sp.update();
+                        sender.getView().shapes().updateShape(shape);
+                    } else {
+                        shape.release();
                     }
-                    shapes.delete();
-                    sender.getView().regenAll();
                 }
-                locker.delete();
+                shapes.delete();
+                sender.getView().regenAll(true);
             }
             return super.doAction(sender, action);
         }
@@ -187,7 +185,7 @@ public class ViewSinShape extends LinearLayout {
         public boolean touchEnded(MgMotion sender) {
             dynshape().shape().setHandlePoint(0, snapPoint(sender), 0);
             addShape(sender);
-            return sender.toSelectCommand();     // 画完一个就退出
+            return sender.getView().toSelectCommand();  // 画完一个就退出
         }
     }
 

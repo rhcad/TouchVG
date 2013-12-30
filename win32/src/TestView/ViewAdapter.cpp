@@ -17,19 +17,24 @@ ViewAdapter::~ViewAdapter()
     delete _coreView;
 }
 
-void ViewAdapter::regenAll()
+void ViewAdapter::regenAll(bool changed)
 {
+    _coreView->submitBackDoc();
+    _coreView->submitDynamicShapes(this);
+
     _canvas.clearCachedBitmap();
     InvalidateRect(_hwnd, NULL, FALSE);
 }
 
-void ViewAdapter::regenAppend()
+void ViewAdapter::regenAppend(int)
 {
-    regenAll();
+    regenAll(true);
 }
 
 void ViewAdapter::redraw()
 {
+    _coreView->submitDynamicShapes(this);
+
     InvalidateRect(_hwnd, NULL, FALSE);
 }
 
@@ -42,22 +47,23 @@ void ViewAdapter::onSize(int w, int h, int dpi)
 void ViewAdapter::onDraw(HDC hdc)
 {
     onSize(0, 0, GetDeviceCaps(hdc,LOGPIXELSY));
+    _coreView->setBkColor(this, GetBkColor(hdc) | 0xFF000000);
 
-    if (_canvas.beginPaint(_hwnd, hdc)) {       // 开始在画布上绘制
-        if (!_canvas.drawCachedBitmap()) {      // 显示上次保存的内容
-            _canvas.clearWindow();              // 使用背景色清除显示
-            _coreView->drawAll(this, &_canvas); // 显示所有图形
-            _canvas.saveCachedBitmap();         // 缓存显示的内容
+    if (_canvas.beginPaint(_hwnd, hdc)) {           // 开始在画布上绘制
+        if (!_canvas.drawCachedBitmap()) {          // 显示上次保存的内容
+            _canvas.clearWindow();                  // 使用背景色清除显示
+            _coreView->drawAll(this, &_canvas);     // 显示所有图形
+            _canvas.saveCachedBitmap();             // 缓存显示的内容
         }
-        _coreView->dynDraw(this, &_canvas);     // 绘制动态图形
-        _canvas.endPaint();                     // 结束绘制
+        _coreView->dynDraw(this, &_canvas);         // 绘制动态图形
+        _canvas.endPaint();                         // 结束绘制
     }
 }
 
 void ViewAdapter::drawTo(GiCanvas* canvas)
 {
-    _coreView->drawAll(this, canvas);           // 显示所有图形
-    _coreView->dynDraw(this, canvas);           // 绘制动态图形
+    _coreView->drawAll(this, canvas);               // 显示所有图形
+    _coreView->dynDraw(this, canvas);               // 绘制动态图形
 }
 
 bool ViewAdapter::onLButtonDown(int x, int y, WPARAM wparam)

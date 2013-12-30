@@ -98,7 +98,7 @@ public class SurfaceView3 extends SurfaceView {
 
     private void dynDraw(CanvasAdapter canvas) {
         mPhase += 1;
-        canvas.setPen(0, 0, 1, mPhase);
+        canvas.setPen(0, 0, 1, mPhase, 0);
         canvas.setBrush(0x22005500, 0);
         mCanvas.drawEllipse(lastX - 50, lastY - 50, 100, 100, true, true);
     }

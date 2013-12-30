@@ -187,8 +187,8 @@ public class MgGroup : MgComposite {
     return ret;
   }
 
-  public bool addShape(MgShape shape) {
-    bool ret = touchvgPINVOKE.MgGroup_addShape(swigCPtr, MgShape.getCPtr(shape));
+  public bool addShapeToGroup(MgShape shape) {
+    bool ret = touchvgPINVOKE.MgGroup_addShapeToGroup(swigCPtr, MgShape.getCPtr(shape));
     return ret;
   }
 

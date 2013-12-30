@@ -44,20 +44,14 @@ public class MgCommandDraw : MgCommand {
     SwigDirectorConnect();
   }
 
-  public MgShape addShape(MgMotion sender, MgShape shape, bool autolock) {
-    IntPtr cPtr = touchvgPINVOKE.MgCommandDraw_addShape__SWIG_0(swigCPtr, MgMotion.getCPtr(sender), MgShape.getCPtr(shape), autolock);
-    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
-    return ret;
-  }
-
   public MgShape addShape(MgMotion sender, MgShape shape) {
-    IntPtr cPtr = touchvgPINVOKE.MgCommandDraw_addShape__SWIG_1(swigCPtr, MgMotion.getCPtr(sender), MgShape.getCPtr(shape));
+    IntPtr cPtr = touchvgPINVOKE.MgCommandDraw_addShape__SWIG_0(swigCPtr, MgMotion.getCPtr(sender), MgShape.getCPtr(shape));
     MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
     return ret;
   }
 
   public MgShape addShape(MgMotion sender) {
-    IntPtr cPtr = touchvgPINVOKE.MgCommandDraw_addShape__SWIG_2(swigCPtr, MgMotion.getCPtr(sender));
+    IntPtr cPtr = touchvgPINVOKE.MgCommandDraw_addShape__SWIG_1(swigCPtr, MgMotion.getCPtr(sender));
     MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
     return ret;
   }
@@ -116,8 +110,8 @@ public class MgCommandDraw : MgCommand {
     return ret;
   }
 
-  public override int gatherShapes(MgMotion sender, MgShapes shapes) {
-    int ret = (SwigDerivedClassHasMethod("gatherShapes", swigMethodTypes5) ? touchvgPINVOKE.MgCommandDraw_gatherShapesSwigExplicitMgCommandDraw(swigCPtr, MgMotion.getCPtr(sender), MgShapes.getCPtr(shapes)) : touchvgPINVOKE.MgCommandDraw_gatherShapes(swigCPtr, MgMotion.getCPtr(sender), MgShapes.getCPtr(shapes)));
+  public override bool gatherShapes(MgMotion sender, MgShapes shapes) {
+    bool ret = (SwigDerivedClassHasMethod("gatherShapes", swigMethodTypes5) ? touchvgPINVOKE.MgCommandDraw_gatherShapesSwigExplicitMgCommandDraw(swigCPtr, MgMotion.getCPtr(sender), MgShapes.getCPtr(shapes)) : touchvgPINVOKE.MgCommandDraw_gatherShapes(swigCPtr, MgMotion.getCPtr(sender), MgShapes.getCPtr(shapes)));
     return ret;
   }
 
@@ -151,8 +145,8 @@ public class MgCommandDraw : MgCommand {
     return ret;
   }
 
-  public override MgShape getShape(MgMotion arg0) {
-    IntPtr cPtr = (SwigDerivedClassHasMethod("getShape", swigMethodTypes17) ? touchvgPINVOKE.MgCommandDraw_getShapeSwigExplicitMgCommandDraw(swigCPtr, MgMotion.getCPtr(arg0)) : touchvgPINVOKE.MgCommandDraw_getShape(swigCPtr, MgMotion.getCPtr(arg0)));
+  public override MgShape getShape(MgMotion sender) {
+    IntPtr cPtr = (SwigDerivedClassHasMethod("getShape", swigMethodTypes17) ? touchvgPINVOKE.MgCommandDraw_getShapeSwigExplicitMgCommandDraw(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCommandDraw_getShape(swigCPtr, MgMotion.getCPtr(sender)));
     MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
     return ret;
   }
@@ -266,7 +260,7 @@ public class MgCommandDraw : MgCommand {
     return draw((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), (gs == IntPtr.Zero) ? null : new GiGraphics(gs, false));
   }
 
-  private int SwigDirectorgatherShapes(IntPtr sender, IntPtr shapes) {
+  private bool SwigDirectorgatherShapes(IntPtr sender, IntPtr shapes) {
     return gatherShapes((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), (shapes == IntPtr.Zero) ? null : new MgShapes(shapes, false));
   }
 
@@ -314,8 +308,8 @@ public class MgCommandDraw : MgCommand {
     return doContextAction((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), action);
   }
 
-  private IntPtr SwigDirectorgetShape(IntPtr arg0) {
-    return MgShape.getCPtr(getShape((arg0 == IntPtr.Zero) ? null : new MgMotion(arg0, false))).Handle;
+  private IntPtr SwigDirectorgetShape(IntPtr sender) {
+    return MgShape.getCPtr(getShape((sender == IntPtr.Zero) ? null : new MgMotion(sender, false))).Handle;
   }
 
   private int SwigDirectorgetShapeType() {
@@ -335,7 +329,7 @@ public class MgCommandDraw : MgCommand {
   public delegate bool SwigDelegateMgCommandDraw_2(IntPtr sender, IntPtr arg1);
   public delegate bool SwigDelegateMgCommandDraw_3(IntPtr sender);
   public delegate bool SwigDelegateMgCommandDraw_4(IntPtr sender, IntPtr gs);
-  public delegate int SwigDelegateMgCommandDraw_5(IntPtr sender, IntPtr shapes);
+  public delegate bool SwigDelegateMgCommandDraw_5(IntPtr sender, IntPtr shapes);
   public delegate bool SwigDelegateMgCommandDraw_6(IntPtr sender);
   public delegate bool SwigDelegateMgCommandDraw_7(IntPtr sender);
   public delegate bool SwigDelegateMgCommandDraw_8(IntPtr sender);
@@ -347,7 +341,7 @@ public class MgCommandDraw : MgCommand {
   public delegate bool SwigDelegateMgCommandDraw_14();
   public delegate bool SwigDelegateMgCommandDraw_15();
   public delegate bool SwigDelegateMgCommandDraw_16(IntPtr sender, int action);
-  public delegate IntPtr SwigDelegateMgCommandDraw_17(IntPtr arg0);
+  public delegate IntPtr SwigDelegateMgCommandDraw_17(IntPtr sender);
   public delegate int SwigDelegateMgCommandDraw_18();
   public delegate int SwigDelegateMgCommandDraw_19();
   public delegate void SwigDelegateMgCommandDraw_20(int step, IntPtr pt);

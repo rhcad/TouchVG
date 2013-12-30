@@ -53,12 +53,36 @@ public class MgCoreView {
     return democmdsJNI.MgCoreView_viewAdapterHandle(swigCPtr, this);
   }
 
-  public int docHandle() {
-    return democmdsJNI.MgCoreView_docHandle(swigCPtr, this);
+  public int backDoc() {
+    return democmdsJNI.MgCoreView_backDoc(swigCPtr, this);
   }
 
-  public int shapesHandle() {
-    return democmdsJNI.MgCoreView_shapesHandle(swigCPtr, this);
+  public int backShapes() {
+    return democmdsJNI.MgCoreView_backShapes(swigCPtr, this);
+  }
+
+  public int acquireFrontDoc() {
+    return democmdsJNI.MgCoreView_acquireFrontDoc(swigCPtr, this);
+  }
+
+  public void releaseDoc(int hDoc) {
+    democmdsJNI.MgCoreView_releaseDoc(swigCPtr, this, hDoc);
+  }
+
+  public int acquireDynamicShapes() {
+    return democmdsJNI.MgCoreView_acquireDynamicShapes(swigCPtr, this);
+  }
+
+  public void releaseShapes(int hShapes) {
+    democmdsJNI.MgCoreView_releaseShapes(swigCPtr, this, hShapes);
+  }
+
+  public boolean loadDynamicShapes(SWIGTYPE_p_MgStorage s) {
+    return democmdsJNI.MgCoreView_loadDynamicShapes(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s));
+  }
+
+  public void applyDynamicShapes() {
+    democmdsJNI.MgCoreView_applyDynamicShapes(swigCPtr, this);
   }
 
   public boolean isPressDragging() {
@@ -117,48 +141,48 @@ public class MgCoreView {
     democmdsJNI.MgCoreView_clear(swigCPtr, this);
   }
 
-  public boolean loadFromFile(String vgfile, boolean readOnly, boolean needLock) {
-    return democmdsJNI.MgCoreView_loadFromFile__SWIG_0(swigCPtr, this, vgfile, readOnly, needLock);
-  }
-
   public boolean loadFromFile(String vgfile, boolean readOnly) {
-    return democmdsJNI.MgCoreView_loadFromFile__SWIG_1(swigCPtr, this, vgfile, readOnly);
+    return democmdsJNI.MgCoreView_loadFromFile__SWIG_0(swigCPtr, this, vgfile, readOnly);
   }
 
   public boolean loadFromFile(String vgfile) {
-    return democmdsJNI.MgCoreView_loadFromFile__SWIG_2(swigCPtr, this, vgfile);
+    return democmdsJNI.MgCoreView_loadFromFile__SWIG_1(swigCPtr, this, vgfile);
+  }
+
+  public boolean saveToFile(int hDoc, String vgfile, boolean pretty) {
+    return democmdsJNI.MgCoreView_saveToFile__SWIG_0(swigCPtr, this, hDoc, vgfile, pretty);
+  }
+
+  public boolean saveToFile(int hDoc, String vgfile) {
+    return democmdsJNI.MgCoreView_saveToFile__SWIG_1(swigCPtr, this, hDoc, vgfile);
   }
 
   public boolean saveToFile(String vgfile, boolean pretty) {
-    return democmdsJNI.MgCoreView_saveToFile__SWIG_0(swigCPtr, this, vgfile, pretty);
+    return democmdsJNI.MgCoreView_saveToFile__SWIG_2(swigCPtr, this, vgfile, pretty);
   }
 
   public boolean saveToFile(String vgfile) {
-    return democmdsJNI.MgCoreView_saveToFile__SWIG_1(swigCPtr, this, vgfile);
-  }
-
-  public boolean loadShapes(SWIGTYPE_p_MgStorage s, boolean readOnly, boolean needLock) {
-    return democmdsJNI.MgCoreView_loadShapes__SWIG_0(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s), readOnly, needLock);
+    return democmdsJNI.MgCoreView_saveToFile__SWIG_3(swigCPtr, this, vgfile);
   }
 
   public boolean loadShapes(SWIGTYPE_p_MgStorage s, boolean readOnly) {
-    return democmdsJNI.MgCoreView_loadShapes__SWIG_1(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s), readOnly);
+    return democmdsJNI.MgCoreView_loadShapes__SWIG_0(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s), readOnly);
   }
 
   public boolean loadShapes(SWIGTYPE_p_MgStorage s) {
-    return democmdsJNI.MgCoreView_loadShapes__SWIG_2(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s));
+    return democmdsJNI.MgCoreView_loadShapes__SWIG_1(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s));
+  }
+
+  public boolean saveShapes(int hDoc, SWIGTYPE_p_MgStorage s) {
+    return democmdsJNI.MgCoreView_saveShapes__SWIG_0(swigCPtr, this, hDoc, SWIGTYPE_p_MgStorage.getCPtr(s));
   }
 
   public boolean saveShapes(SWIGTYPE_p_MgStorage s) {
-    return democmdsJNI.MgCoreView_saveShapes(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s));
+    return democmdsJNI.MgCoreView_saveShapes__SWIG_1(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s));
   }
 
-  public boolean loadDynamicShapes(SWIGTYPE_p_MgStorage s) {
-    return democmdsJNI.MgCoreView_loadDynamicShapes(swigCPtr, this, SWIGTYPE_p_MgStorage.getCPtr(s));
-  }
-
-  public String getContent() {
-    return democmdsJNI.MgCoreView_getContent(swigCPtr, this);
+  public String getContent(int hDoc) {
+    return democmdsJNI.MgCoreView_getContent__SWIG_0(swigCPtr, this, hDoc);
   }
 
   public void freeContent() {
@@ -169,8 +193,8 @@ public class MgCoreView {
     return democmdsJNI.MgCoreView_setContent(swigCPtr, this, content);
   }
 
-  public boolean exportSVG(String filename) {
-    return democmdsJNI.MgCoreView_exportSVG(swigCPtr, this, filename);
+  public String getContent() {
+    return democmdsJNI.MgCoreView_getContent__SWIG_1(swigCPtr, this);
   }
 
   public boolean zoomToExtent() {
@@ -181,20 +205,16 @@ public class MgCoreView {
     return democmdsJNI.MgCoreView_zoomToModel(swigCPtr, this, x, y, w, h);
   }
 
-  public float calcPenWidth(float lineWidth) {
-    return democmdsJNI.MgCoreView_calcPenWidth(swigCPtr, this, lineWidth);
-  }
-
   public SWIGTYPE_p_GiContext getContext(boolean forChange) {
     return new SWIGTYPE_p_GiContext(democmdsJNI.MgCoreView_getContext(swigCPtr, this, forChange), false);
   }
 
-  public void setContext(SWIGTYPE_p_GiContext ctx, int mask, int apply) {
-    democmdsJNI.MgCoreView_setContext__SWIG_0(swigCPtr, this, SWIGTYPE_p_GiContext.getCPtr(ctx), mask, apply);
+  public void setContext(int mask) {
+    democmdsJNI.MgCoreView_setContext__SWIG_0(swigCPtr, this, mask);
   }
 
-  public void setContext(int mask) {
-    democmdsJNI.MgCoreView_setContext__SWIG_1(swigCPtr, this, mask);
+  public void setContext(SWIGTYPE_p_GiContext ctx, int mask, int apply) {
+    democmdsJNI.MgCoreView_setContext__SWIG_1(swigCPtr, this, SWIGTYPE_p_GiContext.getCPtr(ctx), mask, apply);
   }
 
   public void setContextEditing(boolean editing) {

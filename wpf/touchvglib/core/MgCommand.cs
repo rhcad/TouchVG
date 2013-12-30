@@ -74,8 +74,8 @@ public class MgCommand : IDisposable {
     return ret;
   }
 
-  public virtual int gatherShapes(MgMotion sender, MgShapes shapes) {
-    int ret = (SwigDerivedClassHasMethod("gatherShapes", swigMethodTypes5) ? touchvgPINVOKE.MgCommand_gatherShapesSwigExplicitMgCommand(swigCPtr, MgMotion.getCPtr(sender), MgShapes.getCPtr(shapes)) : touchvgPINVOKE.MgCommand_gatherShapes(swigCPtr, MgMotion.getCPtr(sender), MgShapes.getCPtr(shapes)));
+  public virtual bool gatherShapes(MgMotion sender, MgShapes shapes) {
+    bool ret = (SwigDerivedClassHasMethod("gatherShapes", swigMethodTypes5) ? touchvgPINVOKE.MgCommand_gatherShapesSwigExplicitMgCommand(swigCPtr, MgMotion.getCPtr(sender), MgShapes.getCPtr(shapes)) : touchvgPINVOKE.MgCommand_gatherShapes(swigCPtr, MgMotion.getCPtr(sender), MgShapes.getCPtr(shapes)));
     return ret;
   }
 
@@ -206,7 +206,7 @@ public class MgCommand : IDisposable {
     return draw((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), (gs == IntPtr.Zero) ? null : new GiGraphics(gs, false));
   }
 
-  private int SwigDirectorgatherShapes(IntPtr sender, IntPtr shapes) {
+  private bool SwigDirectorgatherShapes(IntPtr sender, IntPtr shapes) {
     return gatherShapes((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), (shapes == IntPtr.Zero) ? null : new MgShapes(shapes, false));
   }
 
@@ -263,7 +263,7 @@ public class MgCommand : IDisposable {
   public delegate bool SwigDelegateMgCommand_2(IntPtr sender, IntPtr s);
   public delegate bool SwigDelegateMgCommand_3(IntPtr sender);
   public delegate bool SwigDelegateMgCommand_4(IntPtr sender, IntPtr gs);
-  public delegate int SwigDelegateMgCommand_5(IntPtr sender, IntPtr shapes);
+  public delegate bool SwigDelegateMgCommand_5(IntPtr sender, IntPtr shapes);
   public delegate bool SwigDelegateMgCommand_6(IntPtr sender);
   public delegate bool SwigDelegateMgCommand_7(IntPtr sender);
   public delegate bool SwigDelegateMgCommand_8(IntPtr sender);

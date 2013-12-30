@@ -40,29 +40,29 @@ public class MgShapeDoc extends MgObject {
     return (cPtr == 0) ? null : new MgShapeDoc(cPtr, false);
   }
 
+  public void copyShapes(MgShapeDoc src, boolean deeply) {
+    touchvgJNI.MgShapeDoc_copyShapes(swigCPtr, this, MgShapeDoc.getCPtr(src), src, deeply);
+  }
+
   public static MgShapeDoc createDoc() {
     long cPtr = touchvgJNI.MgShapeDoc_createDoc();
     return (cPtr == 0) ? null : new MgShapeDoc(cPtr, false);
   }
 
-  public void addRef() {
-    touchvgJNI.MgShapeDoc_addRef(swigCPtr, this);
-  }
-
   public boolean save(MgStorage s, int startIndex) {
-    return touchvgJNI.MgShapeDoc_save__SWIG_0(swigCPtr, this, MgStorage.getCPtr(s), s, startIndex);
+    return touchvgJNI.MgShapeDoc_save(swigCPtr, this, MgStorage.getCPtr(s), s, startIndex);
   }
 
-  public boolean save(MgStorage s) {
-    return touchvgJNI.MgShapeDoc_save__SWIG_1(swigCPtr, this, MgStorage.getCPtr(s), s);
+  public boolean saveAll(MgStorage s, GiTransform xform) {
+    return touchvgJNI.MgShapeDoc_saveAll(swigCPtr, this, MgStorage.getCPtr(s), s, GiTransform.getCPtr(xform), xform);
   }
 
   public boolean load(MgShapeFactory factory, MgStorage s, boolean addOnly) {
-    return touchvgJNI.MgShapeDoc_load__SWIG_0(swigCPtr, this, MgShapeFactory.getCPtr(factory), factory, MgStorage.getCPtr(s), s, addOnly);
+    return touchvgJNI.MgShapeDoc_load(swigCPtr, this, MgShapeFactory.getCPtr(factory), factory, MgStorage.getCPtr(s), s, addOnly);
   }
 
-  public boolean load(MgShapeFactory factory, MgStorage s) {
-    return touchvgJNI.MgShapeDoc_load__SWIG_1(swigCPtr, this, MgShapeFactory.getCPtr(factory), factory, MgStorage.getCPtr(s), s);
+  public boolean loadAll(MgShapeFactory factory, MgStorage s, GiTransform xform) {
+    return touchvgJNI.MgShapeDoc_loadAll(swigCPtr, this, MgShapeFactory.getCPtr(factory), factory, MgStorage.getCPtr(s), s, GiTransform.getCPtr(xform), xform);
   }
 
   public void clear() {
@@ -128,10 +128,6 @@ public class MgShapeDoc extends MgObject {
     touchvgJNI.MgShapeDoc_setPageRectW(swigCPtr, this, Box2d.getCPtr(rectW), rectW, viewScale);
   }
 
-  public int getChangeCount() {
-    return touchvgJNI.MgShapeDoc_getChangeCount(swigCPtr, this);
-  }
-
   public boolean isReadOnly() {
     return touchvgJNI.MgShapeDoc_isReadOnly(swigCPtr, this);
   }
@@ -160,6 +156,10 @@ public class MgShapeDoc extends MgObject {
 
   public void release() {
     touchvgJNI.MgShapeDoc_release(swigCPtr, this);
+  }
+
+  public void addRef() {
+    touchvgJNI.MgShapeDoc_addRef(swigCPtr, this);
   }
 
   public boolean equals(MgObject src) {

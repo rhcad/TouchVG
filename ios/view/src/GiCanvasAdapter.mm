@@ -89,7 +89,7 @@ float GiCanvasAdapter::colorPart(int argb, int byteOrder)
     return (float)((argb >> (byteOrder * 8)) & 0xFF) / 255.f;
 }
 
-void GiCanvasAdapter::setPen(int argb, float width, int style, float phase)
+void GiCanvasAdapter::setPen(int argb, float width, int style, float phase, float)
 {
     if (argb != 0) {
         CGContextSetRGBStrokeColor(_ctx, colorPart(argb, 2), colorPart(argb, 1),

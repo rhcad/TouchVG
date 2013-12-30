@@ -41,14 +41,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\core\pub_inc;..\..\..\core\pub_inc\geom;..\..\..\core\pub_inc\canvas;..\..\..\core\pub_inc\graph;..\..\..\core\pub_inc\shape;..\..\..\core\pub_inc\storage;..\..\..\core\pub_inc\cmd;..\..\..\core\pub_inc\cmdbase;..\..\..\core\pub_inc\cmdobserver;..\..\..\core\mgr_inc\cmdbasic;..\..\..\core\mgr_inc\cmdmgr;..\..\..\core\mgr_inc\json;..\..\..\core\mgr_inc\export;..\..\..\core\mgr_inc\shapedoc;..\..\..\core\mgr_inc\view;..\..\..\core\mgr_inc\test;..\..\include\canvas"
+				AdditionalIncludeDirectories="..\..\..\thirdparty\TouchVGCore\core\include;..\..\..\thirdparty\TouchVGCore\core\include\geom;..\..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\..\thirdparty\TouchVGCore\core\include\graph;..\..\..\thirdparty\TouchVGCore\core\include\shape;..\..\..\thirdparty\TouchVGCore\core\include\storage;..\..\..\thirdparty\TouchVGCore\core\include\cmd;..\..\..\thirdparty\TouchVGCore\core\include\cmdbase;..\..\..\thirdparty\TouchVGCore\core\include\cmdobserver;..\..\..\thirdparty\TouchVGCore\core\include\cmdbasic;..\..\..\thirdparty\TouchVGCore\core\include\cmdmgr;..\..\..\thirdparty\TouchVGCore\core\include\json;..\..\..\thirdparty\TouchVGCore\core\include\export;..\..\..\thirdparty\TouchVGCore\core\include\shapedoc;..\..\..\thirdparty\TouchVGCore\core\include\view;..\..\..\thirdparty\TouchVGCore\core\include\test;..\..\include\canvas"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				WarningLevel="4"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4819"
+				DisableSpecificWarnings="4819;4100"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -61,8 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="TouchVGCore.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
+				AdditionalLibraryDirectories="&quot;..\..\..\thirdparty\TouchVGCore\win\build\$(ConfigurationName)9&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -116,13 +117,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\..\core\pub_inc;..\..\..\core\pub_inc\geom;..\..\..\core\pub_inc\canvas;..\..\..\core\pub_inc\graph;..\..\..\core\pub_inc\shape;..\..\..\core\pub_inc\storage;..\..\..\core\pub_inc\cmd;..\..\..\core\pub_inc\cmdbase;..\..\..\core\pub_inc\cmdobserver;..\..\..\core\mgr_inc\cmdbasic;..\..\..\core\mgr_inc\cmdmgr;..\..\..\core\mgr_inc\json;..\..\..\core\mgr_inc\export;..\..\..\core\mgr_inc\shapedoc;..\..\..\core\mgr_inc\view;..\..\..\core\mgr_inc\test;..\..\include\canvas"
+				AdditionalIncludeDirectories="..\..\..\thirdparty\TouchVGCore\core\include;..\..\..\thirdparty\TouchVGCore\core\include\geom;..\..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\..\thirdparty\TouchVGCore\core\include\graph;..\..\..\thirdparty\TouchVGCore\core\include\shape;..\..\..\thirdparty\TouchVGCore\core\include\storage;..\..\..\thirdparty\TouchVGCore\core\include\cmd;..\..\..\thirdparty\TouchVGCore\core\include\cmdbase;..\..\..\thirdparty\TouchVGCore\core\include\cmdobserver;..\..\..\thirdparty\TouchVGCore\core\include\cmdbasic;..\..\..\thirdparty\TouchVGCore\core\include\cmdmgr;..\..\..\thirdparty\TouchVGCore\core\include\json;..\..\..\thirdparty\TouchVGCore\core\include\export;..\..\..\thirdparty\TouchVGCore\core\include\shapedoc;..\..\..\thirdparty\TouchVGCore\core\include\view;..\..\..\thirdparty\TouchVGCore\core\include\test;..\..\include\canvas"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="4"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4819"
+				DisableSpecificWarnings="4819;4100"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -135,8 +136,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="TouchVGCore.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
+				AdditionalLibraryDirectories="&quot;..\..\..\thirdparty\TouchVGCore\win\build\$(ConfigurationName)9&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -198,254 +200,6 @@
 			</File>
 			<File
 				RelativePath=".\ViewAdapter.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="core"
-			>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\cmdbasic.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdmgr\cmdsubject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\view\GcGraphView.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\view\GcMagnifierView.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\view\GcShapeDoc.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\view\gicoreview.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\graph\gigraph.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\view\gimousehelper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\graph\gipath.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\graph\gixform.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdmgr\mgactions.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mgbase.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgbasicspreg.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mgbnd.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mgbox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\cmdbase\mgcmddraw.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgcmderase.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdmgr\mgcmdmgr2.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdmgr\mgcmdmgr_.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdmgr\mgcmdselect.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mgcomposite.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mgcurv.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\cmdbase\mgdrawarc.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawcircle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawdiamond.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawellipse.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawfreelines.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawgrid.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawline.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawlines.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawparallel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawpolygon.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\cmdbase\mgdrawrect.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawsplines.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawsquare.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdbasic\mgdrawtriang.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mgellipse.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mggrid.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\json\mgjsonstorage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\shapedoc\mglayer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mgline.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mglines.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mglnrel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\shapedoc\mglockrw.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mgmat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mgnear.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mgnearbz.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mgrdrect.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mgrect.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mgshape.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\shapedoc\mgshapedoc.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mgshapes.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\cmdmgr\mgsnapimpl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\shape\mgsplines.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\cmdbase\mgsplock.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\pub_src\geom\mgvec.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\test\RandomShape.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="export"
-			>
-			<File
-				RelativePath="..\..\..\core\mgr_src\export\simple_svg.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_src\export\svgcanvas.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\core\mgr_inc\export\svgcanvas.h"
 				>
 			</File>
 		</Filter>

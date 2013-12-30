@@ -87,7 +87,7 @@ static int machToMs(uint64_t start)
 {
     static float phase = 0;
     phase += 1;
-    canvas->setPen(0, 0, 1, phase);
+    canvas->setPen(0, 0, 1, phase, 0);
     canvas->setBrush(0x88005500, 0);
     canvas->drawEllipse(_lastpt.x - 50, _lastpt.y - 50, 100, 100, true, true);
 }
@@ -98,7 +98,7 @@ static int machToMs(uint64_t start)
     
     CGContextSetFlatness(c, _flatness);
     CGContextSetAllowsAntialiasing(c, _antiAlias);
-    canvas->setPen(0, _lineWidth, _lineStyle, 0);
+    canvas->setPen(0, _lineWidth, _lineStyle, 0, 0);
     canvas->setBrush(_useFill ? 0x4400ff00 : 0, 0);
     
     if (_flags & 0x20000) {     // in scroll view

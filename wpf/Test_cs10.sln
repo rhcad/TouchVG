@@ -11,8 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "touchvglib_cs10", "touchvgl
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "democmds", "democmds\democmds_vc10.vcxproj", "{6437BB7B-62DC-49B3-98F9-E22D3978EE9D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7119A43-A135-413A-A852-F2945924AC17} = {A7119A43-A135-413A-A852-F2945924AC17}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "touchvg", "touchvg\touchvg_vc10.vcxproj", "{180CC455-E62C-4AB8-A024-F3FF724719EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A7119A43-A135-413A-A852-F2945924AC17} = {A7119A43-A135-413A-A852-F2945924AC17}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "democmdslib_cs10", "democmdslib\democmdslib_cs10.csproj", "{F0736804-0A5D-4A92-8A27-657D619187CD}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -22,6 +28,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "democmds", "democmds", "{3BD7B525-C1F6-4A8E-B61F-E20F53A110A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "touchvg", "touchvg", "{A9B0FFEA-2B25-401B-866C-80CA6039EF25}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TouchVGCore", "..\thirdparty\TouchVGCore\win\msvc\TouchVGCore\TouchVGCore_vc10.vcxproj", "{A7119A43-A135-413A-A852-F2945924AC17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +101,16 @@ Global
 		{F0736804-0A5D-4A92-8A27-657D619187CD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F0736804-0A5D-4A92-8A27-657D619187CD}.Release|Win32.ActiveCfg = Release|Any CPU
 		{F0736804-0A5D-4A92-8A27-657D619187CD}.Release|Win32.Build.0 = Release|Any CPU
+		{A7119A43-A135-413A-A852-F2945924AC17}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Debug|Win32.Build.0 = Debug|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Release|Any CPU.ActiveCfg = Release|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Release|Win32.ActiveCfg = Release|Win32
+		{A7119A43-A135-413A-A852-F2945924AC17}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +118,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{180CC455-E62C-4AB8-A024-F3FF724719EA} = {A9B0FFEA-2B25-401B-866C-80CA6039EF25}
 		{AD99A603-DE1E-461B-975B-464BCEFBE035} = {A9B0FFEA-2B25-401B-866C-80CA6039EF25}
+		{A7119A43-A135-413A-A852-F2945924AC17} = {A9B0FFEA-2B25-401B-866C-80CA6039EF25}
 		{F0736804-0A5D-4A92-8A27-657D619187CD} = {3BD7B525-C1F6-4A8E-B61F-E20F53A110A2}
 		{6437BB7B-62DC-49B3-98F9-E22D3978EE9D} = {3BD7B525-C1F6-4A8E-B61F-E20F53A110A2}
 	EndGlobalSection

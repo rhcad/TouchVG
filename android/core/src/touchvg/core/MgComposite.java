@@ -59,12 +59,21 @@ public class MgComposite extends MgBaseShape {
     return (cPtr == 0) ? null : new MgShapes(cPtr, false);
   }
 
+  public MgShape getOwnerShape() {
+    long cPtr = touchvgJNI.MgComposite_getOwnerShape(swigCPtr, this);
+    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  }
+
   public boolean canOffsetShapeAlone(MgShape shape) {
     return (getClass() == MgComposite.class) ? touchvgJNI.MgComposite_canOffsetShapeAlone(swigCPtr, this, MgShape.getCPtr(shape), shape) : touchvgJNI.MgComposite_canOffsetShapeAloneSwigExplicitMgComposite(swigCPtr, this, MgShape.getCPtr(shape), shape);
   }
 
   public boolean isCurve() {
     return (getClass() == MgComposite.class) ? touchvgJNI.MgComposite_isCurve(swigCPtr, this) : touchvgJNI.MgComposite_isCurveSwigExplicitMgComposite(swigCPtr, this);
+  }
+
+  public void setOwner(MgShape owner) {
+    if (getClass() == MgComposite.class) touchvgJNI.MgComposite_setOwner(swigCPtr, this, MgShape.getCPtr(owner), owner); else touchvgJNI.MgComposite_setOwnerSwigExplicitMgComposite(swigCPtr, this, MgShape.getCPtr(owner), owner);
   }
 
   protected MgComposite() {

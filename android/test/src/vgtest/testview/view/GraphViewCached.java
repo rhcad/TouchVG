@@ -166,7 +166,10 @@ public class GraphViewCached extends View {
     
     private class ViewAdapter extends GiView {
         @Override
-        public void regenAll() {
+        public void regenAll(boolean changed) {
+            mCoreView.submitBackDoc();
+            mCoreView.submitDynamicShapes(mViewAdapter);
+            
             if (mCacheBitmap != null) {
                 mCacheBitmap.recycle();
                 mCacheBitmap = null;
@@ -175,11 +178,14 @@ public class GraphViewCached extends View {
         }
         
         @Override
-        public void regenAppend() {
+        public void regenAppend(int sid) {
+            mCoreView.submitBackDoc();
+            mCoreView.submitDynamicShapes(mViewAdapter);
+            
             if (mCacheBitmap != null) {
                 final Canvas canvas = new Canvas(mCacheBitmap);
                 if (mCanvasAdapter.beginPaint(canvas)) {
-                    mCoreView.drawAppend(mViewAdapter, mCanvasAdapter);
+                    mCoreView.drawAppend(mViewAdapter, mCanvasAdapter, sid);
                     mCanvasAdapter.endPaint();
                 }
             }
@@ -191,6 +197,8 @@ public class GraphViewCached extends View {
         
         @Override
         public void redraw() {
+            mCoreView.submitDynamicShapes(mViewAdapter);
+            
             if (mDynDrawView != null) {
                 mDynDrawView.doDraw();
             }

@@ -70,12 +70,6 @@ public class MgView : IDisposable {
     return ret;
   }
 
-  public virtual GiGraphics graph() {
-    IntPtr cPtr = touchvgPINVOKE.MgView_graph(swigCPtr);
-    GiGraphics ret = (cPtr == IntPtr.Zero) ? null : new GiGraphics(cPtr, false);
-    return ret;
-  }
-
   public virtual MgShapeDoc doc() {
     IntPtr cPtr = touchvgPINVOKE.MgView_doc(swigCPtr);
     MgShapeDoc ret = (cPtr == IntPtr.Zero) ? null : new MgShapeDoc(cPtr, false);
@@ -117,12 +111,6 @@ public class MgView : IDisposable {
     return ret;
   }
 
-  public virtual MgLockData getLockData() {
-    IntPtr cPtr = touchvgPINVOKE.MgView_getLockData(swigCPtr);
-    MgLockData ret = (cPtr == IntPtr.Zero) ? null : new MgLockData(cPtr, false);
-    return ret;
-  }
-
   public virtual CmdSubject getCmdSubject() {
     IntPtr cPtr = touchvgPINVOKE.MgView_getCmdSubject(swigCPtr);
     CmdSubject ret = (cPtr == IntPtr.Zero) ? null : new CmdSubject(cPtr, false);
@@ -140,8 +128,8 @@ public class MgView : IDisposable {
     return ret;
   }
 
-  public virtual bool toSelectCommand(MgMotion sender) {
-    bool ret = touchvgPINVOKE.MgView_toSelectCommand(swigCPtr, MgMotion.getCPtr(sender));
+  public virtual bool toSelectCommand() {
+    bool ret = touchvgPINVOKE.MgView_toSelectCommand(swigCPtr);
     return ret;
   }
 
@@ -171,8 +159,8 @@ public class MgView : IDisposable {
     return ret;
   }
 
-  public virtual bool setCommand(MgMotion sender, string name) {
-    bool ret = touchvgPINVOKE.MgView_setCommand(swigCPtr, MgMotion.getCPtr(sender), name);
+  public virtual bool setCommand(string name) {
+    bool ret = touchvgPINVOKE.MgView_setCommand(swigCPtr, name);
     return ret;
   }
 
@@ -181,12 +169,12 @@ public class MgView : IDisposable {
     return ret;
   }
 
-  public virtual void regenAll() {
-    touchvgPINVOKE.MgView_regenAll(swigCPtr);
+  public virtual void regenAll(bool changed) {
+    touchvgPINVOKE.MgView_regenAll(swigCPtr, changed);
   }
 
-  public virtual void regenAppend() {
-    touchvgPINVOKE.MgView_regenAppend(swigCPtr);
+  public virtual void regenAppend(int sid) {
+    touchvgPINVOKE.MgView_regenAppend(swigCPtr, sid);
   }
 
   public virtual void redraw() {

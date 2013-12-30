@@ -107,19 +107,24 @@ namespace touchvg.view
                 base.Dispose();
             }
 
-            public override void regenAll()
+            public override void regenAll(bool changed)
             {
+                if (changed)
+                    CoreView.submitBackDoc();
+                CoreView.submitDynamicShapes(_owner.ViewAdapter);
+
                 _owner.MainCanvas.InvalidateVisual();
                 _owner.TempCanvas.InvalidateVisual();
             }
 
-            public override void regenAppend()
+            public override void regenAppend(int sid)
             {
-                regenAll();
+                regenAll(true);
             }
 
             public override void redraw()
             {
+                CoreView.submitDynamicShapes(_owner.ViewAdapter);
                 _owner.TempCanvas.InvalidateVisual();
             }
 

@@ -53,7 +53,7 @@ namespace touchvg.view
         {
         }
 
-        public override void setPen(int argb, float width, int style, float phase)
+        public override void setPen(int argb, float width, int style, float phase, float orgw)
         {
             _pen = _pen.Clone();
 

@@ -79,7 +79,7 @@ public class MgCommand {
     return touchvgJNI.MgCommand_draw(swigCPtr, this, MgMotion.getCPtr(sender), sender, GiGraphics.getCPtr(gs), gs);
   }
 
-  public int gatherShapes(MgMotion sender, MgShapes shapes) {
+  public boolean gatherShapes(MgMotion sender, MgShapes shapes) {
     return (getClass() == MgCommand.class) ? touchvgJNI.MgCommand_gatherShapes(swigCPtr, this, MgMotion.getCPtr(sender), sender, MgShapes.getCPtr(shapes), shapes) : touchvgJNI.MgCommand_gatherShapesSwigExplicitMgCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender, MgShapes.getCPtr(shapes), shapes);
   }
 

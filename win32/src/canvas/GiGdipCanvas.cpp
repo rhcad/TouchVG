@@ -141,7 +141,7 @@ bool GiGdipCanvas::beginPaintBuffered(int width, int height, COLORREF bkcolor)
 void GiGdipCanvas::_beginPaint()
 {
     memset(_impl->savegs, 0, sizeof(_impl->savegs));
-    setPen(~ _impl->bkcolor.ToCOLORREF(), 0, 0, 0);
+    setPen(~ _impl->bkcolor.ToCOLORREF(), 0, 0, 0, 0);
     _impl->getGs()->SetSmoothingMode(SmoothingModeAntiAlias);
 }
 
@@ -210,7 +210,7 @@ bool GiGdipCanvas::isBufferedDrawing() const
     return _impl->bufBmp != NULL;
 }
 
-void GiGdipCanvas::setPen(int argb, float width, int style, float phase)
+void GiGdipCanvas::setPen(int argb, float width, int style, float phase, float)
 {
     if (!_impl->pen) {
         _impl->pen = new Pen(Color(argb ? argb : Color::Black));

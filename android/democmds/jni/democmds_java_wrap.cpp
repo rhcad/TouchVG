@@ -597,7 +597,7 @@ SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1viewAdapterHa
 }
 
 
-SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1docHandle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1backDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   long result;
@@ -606,13 +606,13 @@ SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1docHandle(JNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgCoreView **)&jarg1; 
-  result = (long)(arg1)->docHandle();
+  result = (long)(arg1)->backDoc();
   jresult = (jint)result; 
   return jresult;
 }
 
 
-SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1shapesHandle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1backShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   long result;
@@ -621,9 +621,93 @@ SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1shapesHandle(
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgCoreView **)&jarg1; 
-  result = (long)(arg1)->shapesHandle();
+  result = (long)(arg1)->backShapes();
   jresult = (jint)result; 
   return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1acquireFrontDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  result = (long)(arg1)->acquireFrontDoc();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1releaseDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = (long)jarg2; 
+  (arg1)->releaseDoc(arg2);
+}
+
+
+SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1acquireDynamicShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  result = (long)(arg1)->acquireDynamicShapes();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1releaseShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = (long)jarg2; 
+  (arg1)->releaseShapes(arg2);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadDynamicShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+  jboolean jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  MgStorage *arg2 = (MgStorage *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = *(MgStorage **)&jarg2; 
+  result = (bool)(arg1)->loadDynamicShapes(arg2);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1applyDynamicShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  (arg1)->applyDynamicShapes();
 }
 
 
@@ -852,33 +936,7 @@ SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1clear(JNIEnv 
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadFromFile_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jboolean jarg3, jboolean jarg4) {
-  jboolean jresult = 0 ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  char *arg2 = (char *) 0 ;
-  bool arg3 ;
-  bool arg4 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgCoreView **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return 0;
-  }
-  arg3 = jarg3 ? true : false; 
-  arg4 = jarg4 ? true : false; 
-  result = (bool)(arg1)->loadFromFile((char const *)arg2,arg3,arg4);
-  jresult = (jboolean)result; 
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadFromFile_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jboolean jarg3) {
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadFromFile_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jboolean jarg3) {
   jboolean jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -902,7 +960,7 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadFromF
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadFromFile_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadFromFile_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   jboolean jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -924,7 +982,57 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadFromF
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveToFile_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jboolean jarg3) {
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveToFile_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jstring jarg3, jboolean jarg4) {
+  jboolean jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long arg2 ;
+  char *arg3 = (char *) 0 ;
+  bool arg4 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = (long)jarg2; 
+  arg3 = 0;
+  if (jarg3) {
+    arg3 = (char *)jenv->GetStringUTFChars(jarg3, 0);
+    if (!arg3) return 0;
+  }
+  arg4 = jarg4 ? true : false; 
+  result = (bool)(arg1)->saveToFile(arg2,(char const *)arg3,arg4);
+  jresult = (jboolean)result; 
+  if (arg3) jenv->ReleaseStringUTFChars(jarg3, (const char *)arg3);
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveToFile_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jstring jarg3) {
+  jboolean jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long arg2 ;
+  char *arg3 = (char *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = (long)jarg2; 
+  arg3 = 0;
+  if (jarg3) {
+    arg3 = (char *)jenv->GetStringUTFChars(jarg3, 0);
+    if (!arg3) return 0;
+  }
+  result = (bool)(arg1)->saveToFile(arg2,(char const *)arg3);
+  jresult = (jboolean)result; 
+  if (arg3) jenv->ReleaseStringUTFChars(jarg3, (const char *)arg3);
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveToFile_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jboolean jarg3) {
   jboolean jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -948,7 +1056,7 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveToFil
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveToFile_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveToFile_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   jboolean jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -970,28 +1078,7 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveToFil
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadShapes_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jboolean jarg3, jboolean jarg4) {
-  jboolean jresult = 0 ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  MgStorage *arg2 = (MgStorage *) 0 ;
-  bool arg3 ;
-  bool arg4 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgCoreView **)&jarg1; 
-  arg2 = *(MgStorage **)&jarg2; 
-  arg3 = jarg3 ? true : false; 
-  arg4 = jarg4 ? true : false; 
-  result = (bool)(arg1)->loadShapes(arg2,arg3,arg4);
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadShapes_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jboolean jarg3) {
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadShapes_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jboolean jarg3) {
   jboolean jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   MgStorage *arg2 = (MgStorage *) 0 ;
@@ -1010,7 +1097,7 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadShape
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadShapes_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadShapes_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jboolean jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   MgStorage *arg2 = (MgStorage *) 0 ;
@@ -1027,7 +1114,26 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadShape
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveShapes_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3) {
+  jboolean jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long arg2 ;
+  MgStorage *arg3 = (MgStorage *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = (long)jarg2; 
+  arg3 = *(MgStorage **)&jarg3; 
+  result = (bool)(arg1)->saveShapes(arg2,arg3);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveShapes_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   jboolean jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   MgStorage *arg2 = (MgStorage *) 0 ;
@@ -1044,33 +1150,18 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1saveShape
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1loadDynamicShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  jboolean jresult = 0 ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  MgStorage *arg2 = (MgStorage *) 0 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgCoreView **)&jarg1; 
-  arg2 = *(MgStorage **)&jarg2; 
-  result = (bool)(arg1)->loadDynamicShapes(arg2);
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jstring JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1getContent(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1getContent_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jstring jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long arg2 ;
   char *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgCoreView **)&jarg1; 
-  result = (char *)(arg1)->getContent();
+  arg2 = (long)jarg2; 
+  result = (char *)(arg1)->getContent(arg2);
   if (result) jresult = jenv->NewStringUTF((const char *)result);
   return jresult;
 }
@@ -1109,24 +1200,17 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1setConten
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1exportSVG(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  jboolean jresult = 0 ;
+SWIGEXPORT jstring JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1getContent_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
-  char *arg2 = (char *) 0 ;
-  bool result;
+  char *result = 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgCoreView **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return 0;
-  }
-  result = (bool)(arg1)->exportSVG((char const *)arg2);
-  jresult = (jboolean)result; 
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
+  result = (char *)(arg1)->getContent();
+  if (result) jresult = jenv->NewStringUTF((const char *)result);
   return jresult;
 }
 
@@ -1169,23 +1253,6 @@ SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1zoomToMod
 }
 
 
-SWIGEXPORT jfloat JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1calcPenWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jfloat jarg2) {
-  jfloat jresult = 0 ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  float arg2 ;
-  float result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgCoreView **)&jarg1; 
-  arg2 = (float)jarg2; 
-  result = (float)(arg1)->calcPenWidth(arg2);
-  jresult = (jfloat)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1getContext(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
   jlong jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
@@ -1203,7 +1270,20 @@ SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1getContext(J
 }
 
 
-SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1setContext_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jint jarg3, jint jarg4) {
+SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1setContext_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->setContext(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1setContext_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jint jarg3, jint jarg4) {
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   GiContext *arg2 = 0 ;
   int arg3 ;
@@ -1221,19 +1301,6 @@ SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1setContext_1_
   arg3 = (int)jarg3; 
   arg4 = (int)jarg4; 
   (arg1)->setContext((GiContext const &)*arg2,arg3,arg4);
-}
-
-
-SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1setContext_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  int arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgCoreView **)&jarg1; 
-  arg2 = (int)jarg2; 
-  (arg1)->setContext(arg2);
 }
 
 

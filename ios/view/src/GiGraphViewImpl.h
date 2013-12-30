@@ -36,8 +36,8 @@ class GiViewAdapter;
 
 - (id)initWithAdapter:(GiViewAdapter *)adapter;
 - (void)freeLayers;
-- (void)regenAll;
-- (void)regenAppend;
+- (void)regenAll:(BOOL)changed;
+- (void)regenAppend:(int)sid;
 - (void)drawFrontLayer:(CGContextRef)ctx;
 
 @end
@@ -53,6 +53,7 @@ private:
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     ImageCache  *_imageCache;           //!< 图像对象缓存
     GiGraphLayer    *_layers;   //!< 图形层绘制对象
+    int         _regenValue;
     
 public:
     std::vector<id> delegates;  //!< GiGraphViewDelegate 观察者数组
@@ -74,9 +75,10 @@ public:
     void clearCachedData();
     void stopRegen();
     bool isMainThread() const;
+    int getRegenValue() const { return _regenValue; }
     
-    virtual void regenAll();
-    virtual void regenAppend();
+    virtual void regenAll(bool changed);
+    virtual void regenAppend(int sid);
     virtual void redraw();
     virtual bool isContextActionsVisible();
     virtual bool showContextActions(const mgvector<int>& actions,

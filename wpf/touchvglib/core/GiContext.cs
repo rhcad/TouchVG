@@ -198,20 +198,6 @@ public class GiContext : IDisposable {
     touchvgPINVOKE.GiContext_setFillAlpha(swigCPtr, alpha);
   }
 
-  public bool isAutoFillColor() {
-    bool ret = touchvgPINVOKE.GiContext_isAutoFillColor(swigCPtr);
-    return ret;
-  }
-
-  public void setAutoFillColor(bool value) {
-    touchvgPINVOKE.GiContext_setAutoFillColor(swigCPtr, value);
-  }
-
-  public int getType() {
-    int ret = touchvgPINVOKE.GiContext_getType(swigCPtr);
-    return ret;
-  }
-
 }
 
 }

@@ -25,6 +25,7 @@ private:
     UIView      *_dynview;
     GiCoreView  *_coreView;
     UIImage     *_tmpshot;
+    int         _sid;
     
 public:
     ViewAdapter1(UIView *mainView) : _view(mainView), _dynview(nil), _tmpshot(nil) {
@@ -52,20 +53,37 @@ public:
     }
     
     bool drawAppend(GiCanvasAdapter* canvas) {
+        bool ret = false;
+        
         if (_tmpshot) {
             [_tmpshot drawAtPoint:CGPointZero];
             _tmpshot = nil;
-            return _coreView->drawAppend(this, canvas);
+            
+            long hDoc = _coreView->acquireFrontDoc();
+            long hGs = _coreView->acquireGraphics(this);
+            
+            ret = _coreView->drawAppend(hDoc, hGs, canvas, _sid);
+            
+            _coreView->releaseDoc(hDoc);
+            _coreView->releaseGraphics(this, hGs);
         }
-        return false;
+        return ret;
     }
     
-    virtual void regenAll() {
+    virtual void regenAll(bool changed) {
+        if (changed) {
+            _sid = 0;
+            _coreView->submitBackDoc();
+        }
+        _coreView->submitDynamicShapes(this);
         [_view setNeedsDisplay];
         [_dynview setNeedsDisplay];
     }
     
-    virtual void regenAppend() {
+    virtual void regenAppend(int sid) {
+        _sid = sid;
+        _coreView->submitBackDoc();
+        _coreView->submitDynamicShapes(this);
         _tmpshot = nil;                 // renderInContext可能会调用drawRect
         _tmpshot = snapshot();
         
@@ -74,6 +92,7 @@ public:
     }
     
     virtual void redraw() {
+        _coreView->submitDynamicShapes(this);
         if (!_dynview && _view) {       // 自动创建动态图形视图
             _dynview = [[IosTempView1 alloc]initWithFrame:_view.frame :this];
             _dynview.autoresizingMask = _view.autoresizingMask;
@@ -101,7 +120,14 @@ public:
     GiCanvasAdapter canvas;
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
-        _viewAdapter->coreView()->dynDraw(_viewAdapter, &canvas);
+        GiCoreView* coreView = _viewAdapter->coreView();
+        long hShapes = coreView->acquireDynamicShapes();
+        long hGs = coreView->acquireGraphics(_viewAdapter);
+        
+        coreView->dynDraw(hShapes, hGs, &canvas);
+        
+        coreView->releaseShapes(hShapes);
+        coreView->releaseGraphics(_viewAdapter, hGs);
         canvas.endPaint();
     }
 }
@@ -133,12 +159,19 @@ public:
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     GiCanvasAdapter canvas;
+    GiCoreView* coreView = [self coreView];
     
-    [self coreView]->onSize(_viewAdapter, self.bounds.size.width, self.bounds.size.height);
+    coreView->onSize(_viewAdapter, self.bounds.size.width, self.bounds.size.height);
     
     if (canvas.beginPaint(context)) {
         if (!_viewAdapter->drawAppend(&canvas)) {
-            [self coreView]->drawAll(_viewAdapter, &canvas);
+            long hDoc = coreView->acquireFrontDoc();
+            long hGs = coreView->acquireGraphics(_viewAdapter);
+            
+            coreView->drawAll(hDoc, hGs, &canvas);
+            
+            coreView->releaseDoc(hDoc);
+            coreView->releaseGraphics(_viewAdapter, hGs);
         }
         canvas.endPaint();
     }

@@ -41,13 +41,11 @@ public class MgShape extends MgObject {
   }
 
   public GiContext context() {
-    long cPtr = touchvgJNI.MgShape_context(swigCPtr, this);
-    return (cPtr == 0) ? null : new GiContext(cPtr, false);
+    return new GiContext(touchvgJNI.MgShape_context(swigCPtr, this), false);
   }
 
-  public GiContext contextc() {
-    long cPtr = touchvgJNI.MgShape_contextc(swigCPtr, this);
-    return (cPtr == 0) ? null : new GiContext(cPtr, false);
+  public void setContext(GiContext ctx, int mask) {
+    touchvgJNI.MgShape_setContext(swigCPtr, this, GiContext.getCPtr(ctx), ctx, mask);
   }
 
   public MgBaseShape shape() {

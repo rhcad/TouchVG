@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\build\$(ConfigurationName)9"
-			IntermediateDirectory="..\build\$(ConfigurationName)9\obj\democmds_csharp"
+			IntermediateDirectory="..\build\$(ConfigurationName)9\obj\$(ProjectName)_csharp"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\democmds\cmds;..\..\core\democmds\gate"
+				AdditionalIncludeDirectories="..\..\thirdparty\TouchVGCore\core\include;..\..\thirdparty\TouchVGCore\core\include\geom;..\..\thirdparty\TouchVGCore\core\include\graph;..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\thirdparty\TouchVGCore\core\include\shape;..\..\thirdparty\TouchVGCore\core\include\storage;..\..\thirdparty\TouchVGCore\core\include\cmd;..\..\thirdparty\TouchVGCore\core\include\cmdobserver;..\..\thirdparty\TouchVGCore\core\include\cmdbase;..\..\core\democmds\cmds;..\..\core\democmds\gate"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories=""
+				AdditionalDependencies="TouchVGCore.lib"
+				AdditionalLibraryDirectories="&quot;..\..\thirdparty\TouchVGCore\win\build\$(ConfigurationName)9&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(IntDir)$(TargetName).pdb"
@@ -100,7 +101,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\build\$(ConfigurationName)9"
-			IntermediateDirectory="..\build\$(ConfigurationName)9\obj\democmds_csharp"
+			IntermediateDirectory="..\build\$(ConfigurationName)9\obj\$(ProjectName)_csharp"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -124,7 +125,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\core\pub_inc;..\..\core\pub_inc\geom;..\..\core\pub_inc\graph;..\..\core\pub_inc\canvas;..\..\core\pub_inc\shape;..\..\core\pub_inc\storage;..\..\core\pub_inc\cmd;..\..\core\pub_inc\cmdobserver;..\..\core\pub_inc\cmdbase;..\..\core\democmds\cmds;..\..\core\democmds\gate"
+				AdditionalIncludeDirectories="..\..\thirdparty\TouchVGCore\core\include;..\..\thirdparty\TouchVGCore\core\include\geom;..\..\thirdparty\TouchVGCore\core\include\graph;..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\thirdparty\TouchVGCore\core\include\shape;..\..\thirdparty\TouchVGCore\core\include\storage;..\..\thirdparty\TouchVGCore\core\include\cmd;..\..\thirdparty\TouchVGCore\core\include\cmdobserver;..\..\thirdparty\TouchVGCore\core\include\cmdbase;..\..\core\democmds\cmds;..\..\core\democmds\gate"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -144,7 +145,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalLibraryDirectories=""
+				AdditionalDependencies="TouchVGCore.lib"
+				AdditionalLibraryDirectories="&quot;..\..\thirdparty\TouchVGCore\win\build\$(ConfigurationName)9&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="$(IntDir)$(TargetName).pdb"
@@ -198,7 +200,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Swig generating..."
-						CommandLine="swig.exe -c++ -csharp -namespace &quot;democmds.core&quot; -module democmds -outdir $(ProjectDir)..\democmdslib\core -o &quot;$(ProjectDir)democmds_csharp_wrap.cpp&quot; -I&quot;$(ProjectDir)..\..\core\pub_inc&quot; -I&quot;$(ProjectDir)..\..\core\pub_inc\cmd&quot; -I&quot;$(ProjectDir)..\..\core\democmds\gate&quot; $(InputPath)&#x0D;&#x0A;"
+						CommandLine="swig.exe -c++ -csharp -namespace &quot;democmds.core&quot; -module democmds -outdir $(ProjectDir)..\democmdslib\core -o &quot;$(ProjectDir)democmds_csharp_wrap.cpp&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd&quot; -I&quot;$(ProjectDir)..\..\core\democmds\gate&quot; $(InputPath)&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)democmds_csharp_wrap.cpp"
 					/>
 				</FileConfiguration>
@@ -208,7 +210,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Swig generating..."
-						CommandLine="swig.exe -c++ -csharp -namespace &quot;democmds.core&quot; -module democmds -outdir $(ProjectDir)..\democmdslib\core -o &quot;$(ProjectDir)democmds_csharp_wrap.cpp&quot; -I&quot;$(ProjectDir)..\..\core\pub_inc&quot; -I&quot;$(ProjectDir)..\..\core\pub_inc\cmd&quot; -I&quot;$(ProjectDir)..\..\core\democmds\gate&quot; $(InputPath)&#x0D;&#x0A;"
+						CommandLine="swig.exe -c++ -csharp -namespace &quot;democmds.core&quot; -module democmds -outdir $(ProjectDir)..\democmdslib\core -o &quot;$(ProjectDir)democmds_csharp_wrap.cpp&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd&quot; -I&quot;$(ProjectDir)..\..\core\democmds\gate&quot; $(InputPath)&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)democmds_csharp_wrap.cpp"
 					/>
 				</FileConfiguration>
@@ -233,326 +235,26 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<Filter
-				Name="democmds"
+			<File
+				RelativePath="..\..\core\democmds\cmds\cmds.cpp"
 				>
-				<File
-					RelativePath="..\..\core\democmds\cmds\cmds.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\core\democmds\cmds\cmds.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\core\democmds\gate\DemoCmds.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\core\democmds\cmds\HitTestCmd.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\core\democmds\cmds\HitTestCmd.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="base"
+			</File>
+			<File
+				RelativePath="..\..\core\democmds\cmds\cmds.h"
 				>
-				<File
-					RelativePath="..\..\core\pub_inc\mglog.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\core\pub_inc\mgvector.h"
-					>
-				</File>
-				<Filter
-					Name="cmdbase_src"
-					>
-					<File
-						RelativePath="..\..\core\pub_src\cmdbase\mgcmddraw.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\cmdbase\mgdrawarc.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\cmdbase\mgdrawrect.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\cmdbase\mgsplock.cpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="command"
-					>
-					<Filter
-						Name="cmd"
-						>
-						<File
-							RelativePath="..\..\core\pub_inc\cmd\mgaction.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\core\pub_inc\cmd\mgcmd.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\core\pub_inc\cmd\mglockdata.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\core\pub_inc\cmd\mgselect.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\core\pub_inc\cmd\mgsnap.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\core\pub_inc\cmd\mgview.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="cmdbase"
-						>
-						<File
-							RelativePath="..\..\core\pub_inc\cmdbase\mgcmddraw.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\core\pub_inc\cmdbase\mgdrawarc.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\core\pub_inc\cmdbase\mgdrawrect.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="cmdobserver"
-						>
-						<File
-							RelativePath="..\..\core\pub_inc\cmdobserver\cmdobserver.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\core\pub_inc\cmdobserver\cmdsubject.h"
-							>
-						</File>
-					</Filter>
-				</Filter>
-				<Filter
-					Name="geom"
-					>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mgbase.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgbase.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mgbnd.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgbnd.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mgbox.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgbox.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mgcurv.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgcurv.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgdef.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mglnrel.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mglnrel.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mgmat.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgmat.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mgnear.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgnear.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mgnearbz.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgpnt.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgtol.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\geom\mgvec.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\geom\mgvec.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="graph"
-					>
-					<File
-						RelativePath="..\..\core\pub_src\graph\gigraph.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\graph\gigraph.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\graph\gilock.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\graph\gipath.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\graph\gipath.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\graph\gixform.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\graph\gixform.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="shape"
-					>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgbasicsp.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mgcomposite.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgcomposite.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mgellipse.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mggrid.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mggrid.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mgline.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mglines.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgobject.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mgrdrect.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mgrect.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mgshape.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgshape.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgshape_.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mgshapes.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgshapes.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgshapet.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgshapetype.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\shape\mgspfactory.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_src\shape\mgsplines.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\core\pub_inc\storage\mgstorage.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
+			</File>
+			<File
+				RelativePath="..\..\core\democmds\gate\DemoCmds.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\core\democmds\cmds\HitTestCmd.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\core\democmds\cmds\HitTestCmd.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

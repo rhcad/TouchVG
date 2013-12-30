@@ -47,33 +47,33 @@ public class MgShapeDoc : MgObject {
     return ret;
   }
 
+  public void copyShapes(MgShapeDoc src, bool deeply) {
+    touchvgPINVOKE.MgShapeDoc_copyShapes(swigCPtr, MgShapeDoc.getCPtr(src), deeply);
+  }
+
   public static MgShapeDoc createDoc() {
     IntPtr cPtr = touchvgPINVOKE.MgShapeDoc_createDoc();
     MgShapeDoc ret = (cPtr == IntPtr.Zero) ? null : new MgShapeDoc(cPtr, false);
     return ret;
   }
 
-  public void addRef() {
-    touchvgPINVOKE.MgShapeDoc_addRef(swigCPtr);
-  }
-
   public bool save(MgStorage s, int startIndex) {
-    bool ret = touchvgPINVOKE.MgShapeDoc_save__SWIG_0(swigCPtr, MgStorage.getCPtr(s), startIndex);
+    bool ret = touchvgPINVOKE.MgShapeDoc_save(swigCPtr, MgStorage.getCPtr(s), startIndex);
     return ret;
   }
 
-  public bool save(MgStorage s) {
-    bool ret = touchvgPINVOKE.MgShapeDoc_save__SWIG_1(swigCPtr, MgStorage.getCPtr(s));
+  public bool saveAll(MgStorage s, GiTransform xform) {
+    bool ret = touchvgPINVOKE.MgShapeDoc_saveAll(swigCPtr, MgStorage.getCPtr(s), GiTransform.getCPtr(xform));
     return ret;
   }
 
   public bool load(MgShapeFactory factory, MgStorage s, bool addOnly) {
-    bool ret = touchvgPINVOKE.MgShapeDoc_load__SWIG_0(swigCPtr, MgShapeFactory.getCPtr(factory), MgStorage.getCPtr(s), addOnly);
+    bool ret = touchvgPINVOKE.MgShapeDoc_load(swigCPtr, MgShapeFactory.getCPtr(factory), MgStorage.getCPtr(s), addOnly);
     return ret;
   }
 
-  public bool load(MgShapeFactory factory, MgStorage s) {
-    bool ret = touchvgPINVOKE.MgShapeDoc_load__SWIG_1(swigCPtr, MgShapeFactory.getCPtr(factory), MgStorage.getCPtr(s));
+  public bool loadAll(MgShapeFactory factory, MgStorage s, GiTransform xform) {
+    bool ret = touchvgPINVOKE.MgShapeDoc_loadAll(swigCPtr, MgShapeFactory.getCPtr(factory), MgStorage.getCPtr(s), GiTransform.getCPtr(xform));
     return ret;
   }
 
@@ -154,11 +154,6 @@ public class MgShapeDoc : MgObject {
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public int getChangeCount() {
-    int ret = touchvgPINVOKE.MgShapeDoc_getChangeCount(swigCPtr);
-    return ret;
-  }
-
   public bool isReadOnly() {
     bool ret = touchvgPINVOKE.MgShapeDoc_isReadOnly(swigCPtr);
     return ret;
@@ -192,6 +187,10 @@ public class MgShapeDoc : MgObject {
 
   public override void release() {
     touchvgPINVOKE.MgShapeDoc_release(swigCPtr);
+  }
+
+  public override void addRef() {
+    touchvgPINVOKE.MgShapeDoc_addRef(swigCPtr);
   }
 
   public override bool equals(MgObject src) {

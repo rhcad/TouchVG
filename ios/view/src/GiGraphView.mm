@@ -20,11 +20,16 @@
 
 - (void)drawRect:(CGRect)rect {
     GiCanvasAdapter canvas(_adapter->imageCache());
+    GiCoreView* coreView = _adapter->coreView();
+    long hShapes = coreView->acquireDynamicShapes();
+    long hGs = coreView->acquireGraphics(_adapter);
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
-        _adapter->coreView()->dynDraw(_adapter, &canvas);
+        coreView->dynDraw(hShapes, hGs, &canvas);
         canvas.endPaint();
     }
+    coreView->releaseShapes(hShapes);
+    coreView->releaseGraphics(_adapter, hGs);
 }
 
 @end

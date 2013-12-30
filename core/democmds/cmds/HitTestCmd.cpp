@@ -11,7 +11,7 @@ bool HitTestCmd::draw(const MgMotion* sender, GiGraphics* gs)
          it != _items.end(); ++it) {
         gs->drawLine(&ctx, it->nearpt, it->pt);
     }
-    MgShape* sp = sender->view->shapes()->findShape(_curid);
+    const MgShape* sp = sender->view->shapes()->findShape(_curid);
     if (sp) {
         GiContext ctxSel(0, GiColor(0, 0, 255, 128));
         sp->draw(2, *gs, &ctxSel, _hit.segment);
@@ -33,12 +33,12 @@ bool HitTestCmd::touchBegan(const MgMotion*)
 bool HitTestCmd::touchMoved(const MgMotion* sender)
 {
     if (mgIsZero(_tol)) {
-        _tol = sender->displayMmToModel(20, sender->view->graph());
+        _tol = sender->displayMmToModel(20);
     }
     
     Box2d box(sender->pointM, 2 * _tol, 0);
-    MgShape* sp = sender->view->shapes()->hitTest(box, _hit);
-    float mindist = sender->displayMmToModel(0.5f, sender->view->graph());
+    const MgShape* sp = sender->view->shapes()->hitTest(box, _hit);
+    float mindist = sender->displayMmToModel(0.5f);
     
     _curid = sp ? sp->getID() : 0;
     _cur.nearpt = _hit.nearpt;

@@ -153,8 +153,8 @@ public class MgGroup extends MgComposite {
     return touchvgJNI.MgGroup_hitTest(swigCPtr, this, Point2d.getCPtr(pt), pt, tol, MgHitResult.getCPtr(res), res);
   }
 
-  public boolean addShape(MgShape shape) {
-    return touchvgJNI.MgGroup_addShape(swigCPtr, this, MgShape.getCPtr(shape), shape);
+  public boolean addShapeToGroup(MgShape shape) {
+    return touchvgJNI.MgGroup_addShapeToGroup(swigCPtr, this, MgShape.getCPtr(shape), shape);
   }
 
 }

@@ -2,21 +2,21 @@ set destpath=..\all.tmp\touchvg
 
 del /Q/S  %destpath%
 
-xcopy ..\..\core\pub_inc\*.* %destpath%\ /Y/S
-xcopy ..\..\core\mgr_inc\*.* %destpath%\ /Y/S
+xcopy ..\..\thirdparty\TouchVGCore\core\include\*.* %destpath%\ /Y/S
+xcopy ..\..\thirdparty\TouchVGCore\core\include\*.* %destpath%\ /Y/S
 
 xcopy ..\..\core\pub_src\geom\*.* %destpath%\geom\ /Y
 xcopy ..\..\core\pub_src\graph\*.* %destpath%\graph\ /Y
 xcopy ..\..\core\pub_src\shape\*.* %destpath%\shape\ /Y
 xcopy ..\..\core\pub_src\cmdbase\*.* %destpath%\cmdbase\ /Y
 
-xcopy ..\..\core\mgr_src\shapedoc\*.* %destpath%\shapedoc\ /Y
-xcopy ..\..\core\mgr_src\cmdbasic\*.* %destpath%\cmdbasic\ /Y
-xcopy ..\..\core\mgr_src\cmdmgr\*.* %destpath%\cmdmgr\ /Y
-xcopy ..\..\core\mgr_src\json\*.* %destpath%\json\ /Y
-xcopy ..\..\core\mgr_src\export\*.* %destpath%\export\ /Y
-xcopy ..\..\core\mgr_src\record\*.* %destpath%\record\ /Y
-xcopy ..\..\core\mgr_src\view\*.* %destpath%\view\ /Y
+xcopy ..\..\thirdparty\TouchVGCore\core\src\shapedoc\*.* %destpath%\shapedoc\ /Y
+xcopy ..\..\thirdparty\TouchVGCore\core\src\cmdbasic\*.* %destpath%\cmdbasic\ /Y
+xcopy ..\..\thirdparty\TouchVGCore\core\src\cmdmgr\*.* %destpath%\cmdmgr\ /Y
+xcopy ..\..\thirdparty\TouchVGCore\core\src\json\*.* %destpath%\json\ /Y
+xcopy ..\..\thirdparty\TouchVGCore\core\src\export\*.* %destpath%\export\ /Y
+xcopy ..\..\thirdparty\TouchVGCore\core\src\record\*.* %destpath%\record\ /Y
+xcopy ..\..\thirdparty\TouchVGCore\core\src\view\*.* %destpath%\view\ /Y
 
 xcopy ..\..\core\democmds\gate\*.* %destpath%\democmds\ /Y
 xcopy ..\..\core\democmds\cmds\*.* %destpath%\democmds\ /Y

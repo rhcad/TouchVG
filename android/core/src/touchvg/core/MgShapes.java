@@ -142,8 +142,12 @@ public class MgShapes extends MgObject {
     touchvgJNI.MgShapes_clearCachedData(swigCPtr, this);
   }
 
+  public void copyShapes(MgShapes src, boolean deeply) {
+    touchvgJNI.MgShapes_copyShapes__SWIG_0(swigCPtr, this, MgShapes.getCPtr(src), src, deeply);
+  }
+
   public void copyShapes(MgShapes src) {
-    touchvgJNI.MgShapes_copyShapes(swigCPtr, this, MgShapes.getCPtr(src), src);
+    touchvgJNI.MgShapes_copyShapes__SWIG_1(swigCPtr, this, MgShapes.getCPtr(src), src);
   }
 
   public MgShape addShape(MgShape src) {
@@ -151,23 +155,28 @@ public class MgShapes extends MgObject {
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
-  public MgShape removeShape(int sid, boolean skipLockedShape) {
-    long cPtr = touchvgJNI.MgShapes_removeShape__SWIG_0(swigCPtr, this, sid, skipLockedShape);
-    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  public boolean addShapeDirect(MgShape shape) {
+    return touchvgJNI.MgShapes_addShapeDirect(swigCPtr, this, MgShape.getCPtr(shape), shape);
   }
 
-  public MgShape removeShape(int sid) {
-    long cPtr = touchvgJNI.MgShapes_removeShape__SWIG_1(swigCPtr, this, sid);
-    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  public boolean updateShape(MgShape shape) {
+    return touchvgJNI.MgShapes_updateShape(swigCPtr, this, MgShape.getCPtr(shape), shape);
   }
 
-  public MgShape moveTo(int sid, MgShapes dest) {
-    long cPtr = touchvgJNI.MgShapes_moveTo(swigCPtr, this, sid, MgShapes.getCPtr(dest), dest);
-    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  public boolean removeShape(int sid, boolean skipLockedShape) {
+    return touchvgJNI.MgShapes_removeShape__SWIG_0(swigCPtr, this, sid, skipLockedShape);
   }
 
-  public void moveAllShapesTo(MgShapes dest) {
-    touchvgJNI.MgShapes_moveAllShapesTo(swigCPtr, this, MgShapes.getCPtr(dest), dest);
+  public boolean removeShape(int sid) {
+    return touchvgJNI.MgShapes_removeShape__SWIG_1(swigCPtr, this, sid);
+  }
+
+  public boolean moveShapeTo(int sid, MgShapes dest) {
+    return touchvgJNI.MgShapes_moveShapeTo(swigCPtr, this, sid, MgShapes.getCPtr(dest), dest);
+  }
+
+  public void copyShapesTo(MgShapes dest) {
+    touchvgJNI.MgShapes_copyShapesTo(swigCPtr, this, MgShapes.getCPtr(dest), dest);
   }
 
   public boolean bringToFront(int sid) {
@@ -203,6 +212,10 @@ public class MgShapes extends MgObject {
 
   public void release() {
     touchvgJNI.MgShapes_release(swigCPtr, this);
+  }
+
+  public void addRef() {
+    touchvgJNI.MgShapes_addRef(swigCPtr, this);
   }
 
   public boolean equals(MgObject src) {

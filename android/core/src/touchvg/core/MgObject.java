@@ -59,6 +59,10 @@ public class MgObject {
     touchvgJNI.MgObject_release(swigCPtr, this);
   }
 
+  public void addRef() {
+    touchvgJNI.MgObject_addRef(swigCPtr, this);
+  }
+
   public boolean equals(MgObject src) {
     return touchvgJNI.MgObject_equals(swigCPtr, this, MgObject.getCPtr(src), src);
   }

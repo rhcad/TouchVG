@@ -15,6 +15,8 @@ public final class MgShapeBit {
   public final static MgShapeBit kMgFixedSize = new MgShapeBit("kMgFixedSize");
   public final static MgShapeBit kMgRotateDisnable = new MgShapeBit("kMgRotateDisnable");
   public final static MgShapeBit kMgShapeLocked = new MgShapeBit("kMgShapeLocked");
+  public final static MgShapeBit kMgNoSnap = new MgShapeBit("kMgNoSnap");
+  public final static MgShapeBit kMgNoAction = new MgShapeBit("kMgNoAction");
 
   public final int swigValue() {
     return swigValue;
@@ -50,7 +52,7 @@ public final class MgShapeBit {
     swigNext = this.swigValue+1;
   }
 
-  private static MgShapeBit[] swigValues = { kMgSquare, kMgClosed, kMgFixedLength, kMgFixedSize, kMgRotateDisnable, kMgShapeLocked };
+  private static MgShapeBit[] swigValues = { kMgSquare, kMgClosed, kMgFixedLength, kMgFixedSize, kMgRotateDisnable, kMgShapeLocked, kMgNoSnap, kMgNoAction };
   private static int swigNext = 0;
   private final int swigValue;
   private final String swigName;

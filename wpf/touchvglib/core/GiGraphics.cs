@@ -41,11 +41,25 @@ public class GiGraphics : IDisposable {
     }
   }
 
-  public GiGraphics(GiTransform xform) : this(touchvgPINVOKE.new_GiGraphics__SWIG_0(GiTransform.getCPtr(xform)), true) {
+  public GiGraphics(GiTransform xform, bool needFreeXf) : this(touchvgPINVOKE.new_GiGraphics__SWIG_0(GiTransform.getCPtr(xform), needFreeXf), true) {
   }
 
-  public GiGraphics(GiGraphics src) : this(touchvgPINVOKE.new_GiGraphics__SWIG_1(GiGraphics.getCPtr(src)), true) {
+  public GiGraphics(GiTransform xform) : this(touchvgPINVOKE.new_GiGraphics__SWIG_1(GiTransform.getCPtr(xform)), true) {
+  }
+
+  public GiGraphics(GiGraphics src) : this(touchvgPINVOKE.new_GiGraphics__SWIG_2(GiGraphics.getCPtr(src)), true) {
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static GiGraphics fromHandle(int h) {
+    IntPtr cPtr = touchvgPINVOKE.GiGraphics_fromHandle(h);
+    GiGraphics ret = (cPtr == IntPtr.Zero) ? null : new GiGraphics(cPtr, false);
+    return ret;
+  }
+
+  public int toHandle() {
+    int ret = touchvgPINVOKE.GiGraphics_toHandle(swigCPtr);
+    return ret;
   }
 
   public void copy(GiGraphics src) {
@@ -73,8 +87,12 @@ public class GiGraphics : IDisposable {
     return ret;
   }
 
+  public void stopDrawing(bool stopped) {
+    touchvgPINVOKE.GiGraphics_stopDrawing__SWIG_0(swigCPtr, stopped);
+  }
+
   public void stopDrawing() {
-    touchvgPINVOKE.GiGraphics_stopDrawing(swigCPtr);
+    touchvgPINVOKE.GiGraphics_stopDrawing__SWIG_1(swigCPtr);
   }
 
   public Box2d getClipModel() {
@@ -359,6 +377,21 @@ public class GiGraphics : IDisposable {
     bool ret = touchvgPINVOKE.GiGraphics_drawHandle__SWIG_1(swigCPtr, Point2d.getCPtr(pnt), type);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
+  }
+
+  public bool beginPaint(GiCanvas canvas, RECT_2D clipBox) {
+    bool ret = touchvgPINVOKE.GiGraphics_beginPaint__SWIG_0(swigCPtr, GiCanvas.getCPtr(canvas), RECT_2D.getCPtr(clipBox));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool beginPaint(GiCanvas canvas) {
+    bool ret = touchvgPINVOKE.GiGraphics_beginPaint__SWIG_1(swigCPtr, GiCanvas.getCPtr(canvas));
+    return ret;
+  }
+
+  public void endPaint() {
+    touchvgPINVOKE.GiGraphics_endPaint(swigCPtr);
   }
 
 }

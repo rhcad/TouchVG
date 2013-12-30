@@ -80,6 +80,10 @@ public class MgBaseShape extends MgObject {
     return (getClass() == MgBaseShape.class) ? touchvgJNI.MgBaseShape_getChangeCount(swigCPtr, this) : touchvgJNI.MgBaseShape_getChangeCountSwigExplicitMgBaseShape(swigCPtr, this);
   }
 
+  public void resetChangeCount(int count) {
+    if (getClass() == MgBaseShape.class) touchvgJNI.MgBaseShape_resetChangeCount(swigCPtr, this, count); else touchvgJNI.MgBaseShape_resetChangeCountSwigExplicitMgBaseShape(swigCPtr, this, count);
+  }
+
   public void afterChanged() {
     if (getClass() == MgBaseShape.class) touchvgJNI.MgBaseShape_afterChanged(swigCPtr, this); else touchvgJNI.MgBaseShape_afterChangedSwigExplicitMgBaseShape(swigCPtr, this);
   }
@@ -186,6 +190,10 @@ public class MgBaseShape extends MgObject {
 
   public boolean isKindOf(int type) {
     return (getClass() == MgBaseShape.class) ? touchvgJNI.MgBaseShape_isKindOf(swigCPtr, this, type) : touchvgJNI.MgBaseShape_isKindOfSwigExplicitMgBaseShape(swigCPtr, this, type);
+  }
+
+  public void addRef() {
+    if (getClass() == MgBaseShape.class) touchvgJNI.MgBaseShape_addRef(swigCPtr, this); else touchvgJNI.MgBaseShape_addRefSwigExplicitMgBaseShape(swigCPtr, this);
   }
 
   public void setExtent(Box2d rect) {

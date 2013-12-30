@@ -166,7 +166,7 @@ public class MgCmdDrawRect : MgCommandDraw {
     return draw((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), (gs == IntPtr.Zero) ? null : new GiGraphics(gs, false));
   }
 
-  private int SwigDirectorgatherShapes(IntPtr sender, IntPtr shapes) {
+  private bool SwigDirectorgatherShapes(IntPtr sender, IntPtr shapes) {
     return gatherShapes((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), (shapes == IntPtr.Zero) ? null : new MgShapes(shapes, false));
   }
 
@@ -214,8 +214,8 @@ public class MgCmdDrawRect : MgCommandDraw {
     return doContextAction((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), action);
   }
 
-  private IntPtr SwigDirectorgetShape(IntPtr arg0) {
-    return MgShape.getCPtr(getShape((arg0 == IntPtr.Zero) ? null : new MgMotion(arg0, false))).Handle;
+  private IntPtr SwigDirectorgetShape(IntPtr sender) {
+    return MgShape.getCPtr(getShape((sender == IntPtr.Zero) ? null : new MgMotion(sender, false))).Handle;
   }
 
   private int SwigDirectorgetShapeType() {
@@ -239,7 +239,7 @@ public class MgCmdDrawRect : MgCommandDraw {
   public delegate bool SwigDelegateMgCmdDrawRect_2(IntPtr sender, IntPtr s);
   public delegate bool SwigDelegateMgCmdDrawRect_3(IntPtr sender);
   public delegate bool SwigDelegateMgCmdDrawRect_4(IntPtr sender, IntPtr gs);
-  public delegate int SwigDelegateMgCmdDrawRect_5(IntPtr sender, IntPtr shapes);
+  public delegate bool SwigDelegateMgCmdDrawRect_5(IntPtr sender, IntPtr shapes);
   public delegate bool SwigDelegateMgCmdDrawRect_6(IntPtr sender);
   public delegate bool SwigDelegateMgCmdDrawRect_7(IntPtr sender);
   public delegate bool SwigDelegateMgCmdDrawRect_8(IntPtr sender);
@@ -251,7 +251,7 @@ public class MgCmdDrawRect : MgCommandDraw {
   public delegate bool SwigDelegateMgCmdDrawRect_14();
   public delegate bool SwigDelegateMgCmdDrawRect_15();
   public delegate bool SwigDelegateMgCmdDrawRect_16(IntPtr sender, int action);
-  public delegate IntPtr SwigDelegateMgCmdDrawRect_17(IntPtr arg0);
+  public delegate IntPtr SwigDelegateMgCmdDrawRect_17(IntPtr sender);
   public delegate int SwigDelegateMgCmdDrawRect_18();
   public delegate int SwigDelegateMgCmdDrawRect_19();
   public delegate void SwigDelegateMgCmdDrawRect_20(int step, IntPtr pt);

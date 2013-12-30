@@ -48,15 +48,13 @@ public class MgShape : MgObject {
   }
 
   public virtual GiContext context() {
-    IntPtr cPtr = touchvgPINVOKE.MgShape_context(swigCPtr);
-    GiContext ret = (cPtr == IntPtr.Zero) ? null : new GiContext(cPtr, false);
+    GiContext ret = new GiContext(touchvgPINVOKE.MgShape_context(swigCPtr), false);
     return ret;
   }
 
-  public virtual GiContext contextc() {
-    IntPtr cPtr = touchvgPINVOKE.MgShape_contextc(swigCPtr);
-    GiContext ret = (cPtr == IntPtr.Zero) ? null : new GiContext(cPtr, false);
-    return ret;
+  public virtual void setContext(GiContext ctx, int mask) {
+    touchvgPINVOKE.MgShape_setContext(swigCPtr, GiContext.getCPtr(ctx), mask);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
   public virtual MgBaseShape shape() {

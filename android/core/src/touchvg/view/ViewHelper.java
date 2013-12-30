@@ -135,7 +135,7 @@ public class ViewHelper {
     //! 返回像素单位的线宽，总是为正数
     public int getStrokeWidth() {
         float w = mView.coreView().getContext(false).getLineWidth();
-        return Math.round(mView.coreView().calcPenWidth(w));
+        return Math.round(mView.coreView().calcPenWidth(mView.viewAdapter(), w));
     }
     
     //! 设置像素单位的线宽，总是为正数
@@ -246,7 +246,7 @@ public class ViewHelper {
     
     //! 导出静态图形到SVG文件，自动添加后缀名.svg
     public boolean exportSVG(String filename) {
-        return mView.coreView().exportSVG(addExtension(filename, ".svg"));
+        return false;//mView.coreView().exportSVG(addExtension(filename, ".svg"));
     }
     
     //! 返回图形总数

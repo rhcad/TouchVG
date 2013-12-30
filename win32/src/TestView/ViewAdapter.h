@@ -27,8 +27,8 @@ public:
 
     bool setCommand(const char* name);
 
-    virtual void regenAll();
-    virtual void regenAppend();
+    virtual void regenAll(bool changed);
+    virtual void regenAppend(int sid);
     virtual void redraw();
     virtual bool useFinger() { return false; }
 

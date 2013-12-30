@@ -1,14 +1,16 @@
 #!/bin/sh
+# Type './build.sh' to make Android native libraries.
+# Type `./build.sh -swig` to re-generate JNI classes too.
 #
-if [ ! -f democmds_java_wrap.cpp ]; then # Make JNI classes
+if [ "$1"x = "-swig"x ] || [ ! -f democmds_java_wrap.cpp ] ; then # Make JNI classes
     mkdir -p ../src/democmds/core
     rm -rf ../src/democmds/core/*.*
     
     swig -c++ -java -package democmds.core -D__ANDROID__ \
         -outdir ../src/democmds/core \
         -o democmds_java_wrap.cpp \
-        -I../../../core/pub_inc \
-        -I../../../core/pub_inc/cmd \
+        -I../../../thirdparty/TouchVGCore/core/include \
+        -I../../../thirdparty/TouchVGCore/core/include/cmd \
         -I../../../core/democmds/gate \
         ../../../core/democmds/gate/democmds.i
     python replacejstr.py
