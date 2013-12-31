@@ -12,7 +12,7 @@ if [ "$1"x = "-swig"x ] || [ ! -f democmds_java_wrap.cpp ] ; then # Make JNI cla
         -I../../../thirdparty/TouchVGCore/core/include \
         -I../../../thirdparty/TouchVGCore/core/include/cmd \
         -I../../../core/democmds/gate \
-        ../../../core/democmds/gate/democmds.i
+          ../../../core/democmds/gate/democmds.i
     python replacejstr.py
 fi
 ndk-build

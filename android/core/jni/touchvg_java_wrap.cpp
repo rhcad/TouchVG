@@ -37803,21 +37803,6 @@ SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_MgCoreView_1toHandle(JNIEnv
 }
 
 
-SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_MgCoreView_1viewAdapter(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  MgView *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgCoreView **)&jarg1; 
-  result = (MgView *)(arg1)->viewAdapter();
-  *(MgView **)&jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_MgCoreView_1viewAdapterHandle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
@@ -39239,21 +39224,6 @@ SWIGEXPORT jboolean JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1isPressDrag
   arg1 = *(GiCoreView **)&jarg1; 
   result = (bool)(arg1)->isPressDragging();
   jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1viewAdapter(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  MgView *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(GiCoreView **)&jarg1; 
-  result = (MgView *)(arg1)->viewAdapter();
-  *(MgView **)&jresult = result; 
   return jresult;
 }
 

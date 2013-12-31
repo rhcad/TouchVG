@@ -40,7 +40,7 @@ namespace touchvg.view
         //! 返回内核命令视图
         public MgView cmdView()
         {
-            return CoreView.viewAdapter();
+            return MgView.fromHandle(cmdViewHandle());
         }
 
         //! 当前命令名称

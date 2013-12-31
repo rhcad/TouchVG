@@ -55,8 +55,7 @@ public class ViewHelper {
     
     //! 返回内核命令视图
     public MgView cmdView() {
-        final GiCoreView v = mView.coreView();
-        return v != null ? v.viewAdapter() : null;
+        return MgView.fromHandle(cmdViewHandle());
     }
     
     //! 自动创建FrameLayout布局，在其中创建普通绘图视图，并记下此视图

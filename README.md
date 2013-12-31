@@ -73,7 +73,7 @@ Android编译说明
 
 >> 如果是在Windows上编译，推荐使用 MSYS（Unix模拟环境工具）、TDM-GCC（一种MinGW发行版）。
 
->> 如需重新生成内核JNI类，则先删除 android 目录下的 `*_java_wrap.cpp`，再运行 `./build.sh`
+>> 如需重新生成内核JNI类，则运行 `./build.sh -swig`
 （需要安装[SWIG](http://sourceforge.net/projects/swig/files/)，并将SWIG位置加到 PATH 环境变量）。
 
 iOS编译说明
@@ -97,7 +97,7 @@ WPF编译说明
 
 > 在 Visual Studio 2010 中打开 `wpf/Test_cs10.sln`，运行 WpfDemo 工程。VS2008则打开 `wpf/Test_cs9.sln` 。
 
-> 如需重新生成内核类（编译 Swig Files 下的 touchvg.i 或 democmds.i），需要安装
+> 如需重新生成内核类（编译 Swig Files 下的 touchvg.swig 或 democmds.i），需要安装
 [SwigWin](http://sourceforge.net/projects/swig/files/swigwin/)，并将SWIG解压位置加到 PATH 环境变量。
   
 其他编译说明

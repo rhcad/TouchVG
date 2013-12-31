@@ -153,10 +153,6 @@ GiColor CGColorToGiColor(CGColorRef color);
     return _adapter->coreView()->viewAdapterHandle();
 }
 
-- (MgView *)cmdView {
-    return _adapter->coreView()->viewAdapter();
-}
-
 - (UIImage *)snapshot {
     [self hideContextActions];
     

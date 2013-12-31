@@ -45,7 +45,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\thirdparty\TouchVGCore\core\src\view\touchvg.i">
+    <CustomBuild Include="..\..\thirdparty\TouchVGCore\core\src\view\touchvg.swig">
       <Filter>Swig Files</Filter>
     </CustomBuild>
   </ItemGroup>

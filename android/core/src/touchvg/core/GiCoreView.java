@@ -159,11 +159,6 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_isPressDragging(swigCPtr, this);
   }
 
-  public MgView viewAdapter() {
-    long cPtr = touchvgJNI.GiCoreView_viewAdapter(swigCPtr, this);
-    return (cPtr == 0) ? null : new MgView(cPtr, false);
-  }
-
   public int viewAdapterHandle() {
     return touchvgJNI.GiCoreView_viewAdapterHandle(swigCPtr, this);
   }

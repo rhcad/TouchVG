@@ -192,7 +192,7 @@
 			UniqueIdentifier="{B66BBF33-21A8-451F-A173-F4C554C67AFE}"
 			>
 			<File
-				RelativePath="..\..\thirdparty\TouchVGCore\core\src\view\touchvg.i"
+				RelativePath="..\..\thirdparty\TouchVGCore\core\src\view\touchvg.swig"
 				>
 				<FileConfiguration
 					Name="Release|Win32"

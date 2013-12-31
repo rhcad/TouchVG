@@ -1727,7 +1727,6 @@ public class touchvgJNI {
   public final static native void delete_MgCoreView(long jarg1);
   public final static native long MgCoreView_fromHandle(int jarg1);
   public final static native int MgCoreView_toHandle(long jarg1, MgCoreView jarg1_);
-  public final static native long MgCoreView_viewAdapter(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_viewAdapterHandle(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_backDoc(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_backShapes(long jarg1, MgCoreView jarg1_);
@@ -1807,7 +1806,6 @@ public class touchvgJNI {
   public final static native int GiCoreView_getGestureState(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_getVersion(long jarg1, GiCoreView jarg1_);
   public final static native boolean GiCoreView_isPressDragging(long jarg1, GiCoreView jarg1_);
-  public final static native long GiCoreView_viewAdapter(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_viewAdapterHandle(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_backDoc(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_backShapes(long jarg1, GiCoreView jarg1_);

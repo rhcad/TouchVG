@@ -23,8 +23,8 @@
 		AE97A1AC186D536D00DFEA77 /* TouchVG.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */; };
 		AE97A1B1186D592300DFEA77 /* libDemoCmds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE97A1AD186D538D00DFEA77 /* libDemoCmds.a */; };
 		AE97A1B2186D592600DFEA77 /* libTouchVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE97A1AF186D539000DFEA77 /* libTouchVG.a */; };
+		AEA5E49618729F3B00C5EC49 /* libSVGKit-iOS.1.2.0pre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA5E49218729ABA00C5EC49 /* libSVGKit-iOS.1.2.0pre.a */; };
 		AEADC21F16EB570800484962 /* LargeView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEADC21E16EB570800484962 /* LargeView1.mm */; };
-		AED5E6A6186F17FF00D8CA3E /* libSVGKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AED5E6A5186F17FF00D8CA3E /* libSVGKit-iOS.a */; };
 		AEF2D52B160964BA00DDB7F2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52A160964BA00DDB7F2 /* UIKit.framework */; };
 		AEF2D52D160964BA00DDB7F2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52C160964BA00DDB7F2 /* Foundation.framework */; };
 		AEF2D52F160964BA00DDB7F2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52E160964BA00DDB7F2 /* CoreGraphics.framework */; };
@@ -65,6 +65,20 @@
 			remoteGlobalIDString = AE2A3A48178FC511000194AE;
 			remoteInfo = DemoCmds;
 		};
+		AEA5E49118729ABA00C5EC49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6639618E16145D0400E58CCA;
+			remoteInfo = "SVGKit-iOS";
+		};
+		AEA5E49318729AD000C5EC49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6639618D16145D0400E58CCA;
+			remoteInfo = "SVGKit-iOS";
+		};
 		AED5E69E186EF0CE00D8CA3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */;
@@ -102,9 +116,9 @@
 		AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchVG.xcodeproj; path = ../../TouchVG/TouchVG.xcodeproj; sourceTree = "<group>"; };
 		AE97A1AD186D538D00DFEA77 /* libDemoCmds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDemoCmds.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-aptrtuozhsetvlaucaunnldzugbi/Build/Products/Debug-iphoneos/libDemoCmds.a"; sourceTree = "<group>"; };
 		AE97A1AF186D539000DFEA77 /* libTouchVG.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTouchVG.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-aptrtuozhsetvlaucaunnldzugbi/Build/Products/Debug-iphoneos/libTouchVG.a"; sourceTree = "<group>"; };
+		AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "SVGKit-iOS.xcodeproj"; path = "../../../../SVGKit/SVGKit-iOS.xcodeproj"; sourceTree = "<group>"; };
 		AEADC21D16EB570800484962 /* LargeView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargeView1.h; sourceTree = "<group>"; };
 		AEADC21E16EB570800484962 /* LargeView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LargeView1.mm; sourceTree = "<group>"; };
-		AED5E6A5186F17FF00D8CA3E /* libSVGKit-iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libSVGKit-iOS.a"; path = "../../output/libSVGKit-iOS.a"; sourceTree = "<group>"; };
 		AEF2D526160964BA00DDB7F2 /* TestView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEF2D52A160964BA00DDB7F2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AEF2D52C160964BA00DDB7F2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -127,12 +141,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEA5E49618729F3B00C5EC49 /* libSVGKit-iOS.1.2.0pre.a in Frameworks */,
 				027CB28918715FBC00C18ECE /* libTouchVGCore.a in Frameworks */,
 				AE97A1B2186D592600DFEA77 /* libTouchVG.a in Frameworks */,
 				AE97A1B1186D592300DFEA77 /* libDemoCmds.a in Frameworks */,
 				AE3B011D18110A610004AAC7 /* libxml2.dylib in Frameworks */,
 				AE3B011B18110A370004AAC7 /* CoreText.framework in Frameworks */,
-				AED5E6A6186F17FF00D8CA3E /* libSVGKit-iOS.a in Frameworks */,
 				AE815F351718EDCB006BC607 /* QuartzCore.framework in Frameworks */,
 				AEF2D52B160964BA00DDB7F2 /* UIKit.framework in Frameworks */,
 				AEF2D52D160964BA00DDB7F2 /* Foundation.framework in Frameworks */,
@@ -168,12 +182,20 @@
 		AE34D03117F905DE004BC88B /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				AED5E6A5186F17FF00D8CA3E /* libSVGKit-iOS.a */,
+				AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */,
 				027CB27D18715F9E00C18ECE /* TouchVGCore.xcodeproj */,
 				AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */,
 				AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */,
 			);
 			name = lib;
+			sourceTree = "<group>";
+		};
+		AEA5E48E18729ABA00C5EC49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AEA5E49218729ABA00C5EC49 /* libSVGKit-iOS.1.2.0pre.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		AED5E69B186EF0CE00D8CA3E /* Products */ = {
@@ -283,6 +305,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				AEA5E49418729AD000C5EC49 /* PBXTargetDependency */,
 				027CB28818715FAE00C18ECE /* PBXTargetDependency */,
 				027CB28618715FAC00C18ECE /* PBXTargetDependency */,
 				027CB28418715FA900C18ECE /* PBXTargetDependency */,
@@ -317,6 +340,10 @@
 					ProjectRef = AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */;
 				},
 				{
+					ProductGroup = AEA5E48E18729ABA00C5EC49 /* Products */;
+					ProjectRef = AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */;
+				},
+				{
 					ProductGroup = AED5E6A0186F179000D8CA3E /* Products */;
 					ProjectRef = AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */;
 				},
@@ -338,6 +365,13 @@
 			fileType = archive.ar;
 			path = libTouchVGCore.a;
 			remoteRef = 027CB28118715F9E00C18ECE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AEA5E49218729ABA00C5EC49 /* libSVGKit-iOS.1.2.0pre.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libSVGKit-iOS.1.2.0pre.a";
+			remoteRef = AEA5E49118729ABA00C5EC49 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		AED5E69F186EF0CE00D8CA3E /* libDemoCmds.a */ = {
@@ -408,6 +442,11 @@
 			isa = PBXTargetDependency;
 			name = DemoCmds;
 			targetProxy = 027CB28718715FAE00C18ECE /* PBXContainerItemProxy */;
+		};
+		AEA5E49418729AD000C5EC49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SVGKit-iOS";
+			targetProxy = AEA5E49318729AD000C5EC49 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
