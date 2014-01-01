@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:TouchGL/TouchGL.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:tests/TestGL/TestGL.xcodeproj">
    </FileRef>
    <FileRef

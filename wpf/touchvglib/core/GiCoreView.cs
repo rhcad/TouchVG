@@ -182,12 +182,6 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public override MgView viewAdapter() {
-    IntPtr cPtr = touchvgPINVOKE.GiCoreView_viewAdapter(swigCPtr);
-    MgView ret = (cPtr == IntPtr.Zero) ? null : new MgView(cPtr, false);
-    return ret;
-  }
-
   public override int viewAdapterHandle() {
     int ret = touchvgPINVOKE.GiCoreView_viewAdapterHandle(swigCPtr);
     return ret;

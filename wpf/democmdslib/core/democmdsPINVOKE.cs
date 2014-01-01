@@ -258,9 +258,6 @@ class democmdsPINVOKE {
   [DllImport("democmds", EntryPoint="CSharp_MgCoreView_toHandle")]
   public static extern int MgCoreView_toHandle(HandleRef jarg1);
 
-  [DllImport("democmds", EntryPoint="CSharp_MgCoreView_viewAdapter")]
-  public static extern IntPtr MgCoreView_viewAdapter(HandleRef jarg1);
-
   [DllImport("democmds", EntryPoint="CSharp_MgCoreView_viewAdapterHandle")]
   public static extern int MgCoreView_viewAdapterHandle(HandleRef jarg1);
 

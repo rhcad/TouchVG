@@ -558,18 +558,6 @@ SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_toHandle(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_MgCoreView_viewAdapter(void * jarg1) {
-  void * jresult ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  MgView *result = 0 ;
-  
-  arg1 = (MgCoreView *)jarg1; 
-  result = (MgView *)(arg1)->viewAdapter();
-  jresult = (void *)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_viewAdapterHandle(void * jarg1) {
   long jresult ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;

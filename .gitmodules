@@ -1,3 +1,6 @@
 [submodule "thirdparty/TouchVGCore"]
 	path = thirdparty/TouchVGCore
 	url = http://git.oschina.net/rhcad/TouchVGCore.git
+[submodule "thirdparty/MonkVG"]
+	path = thirdparty/MonkVG
+	url = http://git.oschina.net/rhcad/MonkVG.git

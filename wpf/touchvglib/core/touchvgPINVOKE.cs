@@ -5118,9 +5118,6 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_toHandle")]
   public static extern int MgCoreView_toHandle(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_viewAdapter")]
-  public static extern IntPtr MgCoreView_viewAdapter(HandleRef jarg1);
-
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_viewAdapterHandle")]
   public static extern int MgCoreView_viewAdapterHandle(HandleRef jarg1);
 
@@ -5357,9 +5354,6 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isPressDragging")]
   public static extern bool GiCoreView_isPressDragging(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_viewAdapter")]
-  public static extern IntPtr GiCoreView_viewAdapter(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_viewAdapterHandle")]
   public static extern int GiCoreView_viewAdapterHandle(HandleRef jarg1);

@@ -44,11 +44,6 @@ public class MgCoreView {
     return democmdsJNI.MgCoreView_toHandle(swigCPtr, this);
   }
 
-  public SWIGTYPE_p_MgView viewAdapter() {
-    long cPtr = democmdsJNI.MgCoreView_viewAdapter(swigCPtr, this);
-    return (cPtr == 0) ? null : new SWIGTYPE_p_MgView(cPtr, false);
-  }
-
   public int viewAdapterHandle() {
     return democmdsJNI.MgCoreView_viewAdapterHandle(swigCPtr, this);
   }

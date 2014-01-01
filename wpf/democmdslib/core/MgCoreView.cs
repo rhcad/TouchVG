@@ -52,12 +52,6 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual SWIGTYPE_p_MgView viewAdapter() {
-    IntPtr cPtr = democmdsPINVOKE.MgCoreView_viewAdapter(swigCPtr);
-    SWIGTYPE_p_MgView ret = (cPtr == IntPtr.Zero) ? null : new SWIGTYPE_p_MgView(cPtr, false);
-    return ret;
-  }
-
   public virtual int viewAdapterHandle() {
     int ret = democmdsPINVOKE.MgCoreView_viewAdapterHandle(swigCPtr);
     return ret;

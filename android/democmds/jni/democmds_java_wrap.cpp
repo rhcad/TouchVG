@@ -567,21 +567,6 @@ SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1toHandle(JNIE
 }
 
 
-SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1viewAdapter(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  MgView *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgCoreView **)&jarg1; 
-  result = (MgView *)(arg1)->viewAdapter();
-  *(MgView **)&jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_MgCoreView_1viewAdapterHandle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;

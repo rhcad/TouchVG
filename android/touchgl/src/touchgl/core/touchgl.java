@@ -6,21 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package democmds.core;
+package touchgl.core;
 
-public class SWIGTYPE_p_MgView {
-  private long swigCPtr;
-
-  protected SWIGTYPE_p_MgView(long cPtr, boolean futureUse) {
-    swigCPtr = cPtr;
-  }
-
-  protected SWIGTYPE_p_MgView() {
-    swigCPtr = 0;
-  }
-
-  protected static long getCPtr(SWIGTYPE_p_MgView obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
-  }
+public class touchgl {
 }
-
