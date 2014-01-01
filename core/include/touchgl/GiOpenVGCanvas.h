@@ -18,6 +18,7 @@ public:
     
     void beginPaint(bool autosave);
     void endPaint() {}
+    void clear();
     
 public:
     void setPen(int argb, float width, int style, float phase, float orgw);

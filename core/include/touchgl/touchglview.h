@@ -19,6 +19,7 @@ public:
     void resize(int widthPx, int heightPx);
     int getWidthPx();
     int getHeightPx();
+    void clear();
     void prepareToDraw();
     
     GiCanvas* beginPaint(bool pathCached) const;

@@ -48,6 +48,11 @@ int TouchGLView::getHeightPx()
     return _impl->height;
 }
 
+void TouchGLView::clear()
+{
+    _impl->canvas.clear();
+}
+
 GiCanvas* TouchGLView::beginPaint(bool pathCached) const
 {
     _impl->canvas.beginPaint(pathCached);

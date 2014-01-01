@@ -55,6 +55,10 @@ public class TouchGLView {
     return touchglJNI.TouchGLView_getHeightPx(swigCPtr, this);
   }
 
+  public void clear() {
+    touchglJNI.TouchGLView_clear(swigCPtr, this);
+  }
+
   public void prepareToDraw() {
     touchglJNI.TouchGLView_prepareToDraw(swigCPtr, this);
   }

@@ -5501,6 +5501,17 @@ SWIGEXPORT jint JNICALL Java_touchgl_core_touchglJNI_TouchGLView_1getHeightPx(JN
 }
 
 
+SWIGEXPORT void JNICALL Java_touchgl_core_touchglJNI_TouchGLView_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  TouchGLView *arg1 = (TouchGLView *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TouchGLView **)&jarg1; 
+  (arg1)->clear();
+}
+
+
 SWIGEXPORT void JNICALL Java_touchgl_core_touchglJNI_TouchGLView_1prepareToDraw(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   TouchGLView *arg1 = (TouchGLView *) 0 ;
   

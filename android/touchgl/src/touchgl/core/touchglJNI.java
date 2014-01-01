@@ -289,6 +289,7 @@ public class touchglJNI {
   public final static native void TouchGLView_resize(long jarg1, TouchGLView jarg1_, int jarg2, int jarg3);
   public final static native int TouchGLView_getWidthPx(long jarg1, TouchGLView jarg1_);
   public final static native int TouchGLView_getHeightPx(long jarg1, TouchGLView jarg1_);
+  public final static native void TouchGLView_clear(long jarg1, TouchGLView jarg1_);
   public final static native void TouchGLView_prepareToDraw(long jarg1, TouchGLView jarg1_);
   public final static native long TouchGLView_beginPaint(long jarg1, TouchGLView jarg1_, boolean jarg2);
   public final static native void TouchGLView_endPaint(long jarg1, TouchGLView jarg1_);

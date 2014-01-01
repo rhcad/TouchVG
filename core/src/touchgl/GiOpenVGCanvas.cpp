@@ -136,6 +136,11 @@ GiOpenVGCanvas::~GiOpenVGCanvas()
     delete im;
 }
 
+void GiOpenVGCanvas::clear()
+{
+    im->clear();
+}
+
 void GiOpenVGCanvas::beginPaint(bool autosave)
 {
     im->autosave = autosave;
