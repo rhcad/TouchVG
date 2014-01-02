@@ -82,6 +82,15 @@ public class ViewHelper {
         return layout;
     }
     
+    //! 在指定的布局（建议为FrameLayout）中创建OpenGL绘图视图，并记下此视图
+    public ViewGroup createGLViewInLayout(Context context, ViewGroup layout) {
+        GLGraphView view = new GLGraphView(context);
+        mView = view;
+        layout.addView(view, new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        return layout;
+    }
+    
     //! 在指定的布局（建议为FrameLayout）中创建 ShapeView 绘图视图，并记下此视图
     public ViewGroup createShapeViewInLayout(Context context, ViewGroup layout) {
         ShapeView view = new ShapeView(context);
