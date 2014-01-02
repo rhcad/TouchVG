@@ -61,7 +61,7 @@ public class DummyActivity extends Activity {
         ViewHelper helper = new ViewHelper();
         String filename = FILEPATH + "/resume.vg";
         
-        if (helper.getView() != null && helper.saveToFile(filename)) {
+        if (helper.saveToFile(filename)) {
             outState.putString("file", filename);
             outState.putString("cmd", helper.getCommand());
             
@@ -77,7 +77,7 @@ public class DummyActivity extends Activity {
         ViewHelper helper = new ViewHelper();
         String filename = savedInstanceState.getString("file");
         
-        if (helper.getView() != null && helper.loadFromFile(filename)) {
+        if (helper.loadFromFile(filename)) {
             helper.setCommand(savedInstanceState.getString("cmd"));
         }
     }

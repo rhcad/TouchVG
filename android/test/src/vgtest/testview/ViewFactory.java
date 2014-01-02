@@ -41,6 +41,13 @@ public class ViewFactory {
         addItem("vgtest.testview.view.GraphView1", 3<<1, "GraphView lines");
         addItem("vgtest.testview.view.GraphView1", 32|(4<<1), "GraphView hittest in democmds");
         addItem("vgtest.testview.view.GraphView1", 32|1, "GraphView select");
+        
+        addItem("vgtest.testview.view.GLGraphView1", 1<<1, "GLGraphView splines");
+        addItem("vgtest.testview.view.GLGraphView1", 32|(1<<1), "GLGraphView draw");
+        addItem("vgtest.testview.view.GLGraphView1", 2<<1, "GLGraphView line");
+        addItem("vgtest.testview.view.GLGraphView1", 3<<1, "GLGraphView lines");
+        addItem("vgtest.testview.view.GLGraphView1", 32|1, "GLGraphView select");
+        
         addItem("vgtest.testview.view.TestMagnifier1", 1<<1, "TestMagnifier");
         addItem("vgtest.testview.view.TestMagnifier1", 16|(1<<1), "TestMagnifier, 2 views");
         addItem("vgtest.testview.view.LargeView1", 1<<1, "Scroll GraphView splines");
@@ -83,6 +90,18 @@ public class ViewFactory {
         addItem("vgtest.testview.canvas.GraphView1", 0x100, "testClipPath");
         addItem("vgtest.testview.canvas.GraphView1", 0x200, "testHandle");
         addItem("vgtest.testview.canvas.GraphView2", 0x400, "testDynCurves");
+        
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x01, "testRect in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x02, "testLine in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x04, "testTextAt in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x08, "testEllipse in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x10, "testQuadBezier in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x20, "testCubicBezier in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x40, "testPolygon in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x80|0x40|0x02, "testClearRect in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x100, "testClipPath in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x200, "testHandle in GLSurfaceView");
+        addItem("vgtest.testview.canvas.GLGraphView1", 0x400, "testDynCurves in GLSurfaceView");
         
         addItem("vgtest.testview.canvas.SurfaceView1", 0x20, "testCubicBezier in SurfaceView");
         addItem("vgtest.testview.canvas.SurfaceView1", 0x80|0x40|0x02, "testClearRect in SurfaceView");

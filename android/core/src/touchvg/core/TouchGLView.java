@@ -6,7 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package touchgl.core;
+package touchvg.core;
 
 public class TouchGLView {
   private long swigCPtr;
@@ -29,47 +29,47 @@ public class TouchGLView {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        touchglJNI.delete_TouchGLView(swigCPtr);
+        touchvgJNI.delete_TouchGLView(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
   public TouchGLView(int widthPt, int heightPt, int pixelsPerPoint) {
-    this(touchglJNI.new_TouchGLView__SWIG_0(widthPt, heightPt, pixelsPerPoint), true);
+    this(touchvgJNI.new_TouchGLView__SWIG_0(widthPt, heightPt, pixelsPerPoint), true);
   }
 
   public TouchGLView(int widthPt, int heightPt) {
-    this(touchglJNI.new_TouchGLView__SWIG_1(widthPt, heightPt), true);
+    this(touchvgJNI.new_TouchGLView__SWIG_1(widthPt, heightPt), true);
   }
 
   public void resize(int widthPx, int heightPx) {
-    touchglJNI.TouchGLView_resize(swigCPtr, this, widthPx, heightPx);
+    touchvgJNI.TouchGLView_resize(swigCPtr, this, widthPx, heightPx);
   }
 
   public int getWidthPx() {
-    return touchglJNI.TouchGLView_getWidthPx(swigCPtr, this);
+    return touchvgJNI.TouchGLView_getWidthPx(swigCPtr, this);
   }
 
   public int getHeightPx() {
-    return touchglJNI.TouchGLView_getHeightPx(swigCPtr, this);
+    return touchvgJNI.TouchGLView_getHeightPx(swigCPtr, this);
   }
 
   public void clear() {
-    touchglJNI.TouchGLView_clear(swigCPtr, this);
+    touchvgJNI.TouchGLView_clear(swigCPtr, this);
   }
 
   public void prepareToDraw() {
-    touchglJNI.TouchGLView_prepareToDraw(swigCPtr, this);
+    touchvgJNI.TouchGLView_prepareToDraw(swigCPtr, this);
   }
 
   public GiCanvas beginPaint(boolean pathCached) {
-    long cPtr = touchglJNI.TouchGLView_beginPaint(swigCPtr, this, pathCached);
+    long cPtr = touchvgJNI.TouchGLView_beginPaint(swigCPtr, this, pathCached);
     return (cPtr == 0) ? null : new GiCanvas(cPtr, false);
   }
 
   public void endPaint() {
-    touchglJNI.TouchGLView_endPaint(swigCPtr, this);
+    touchvgJNI.TouchGLView_endPaint(swigCPtr, this);
   }
 
 }

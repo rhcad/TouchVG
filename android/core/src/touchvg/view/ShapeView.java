@@ -21,7 +21,7 @@ import android.widget.RelativeLayout.LayoutParams;
 //! 每个图形都是一个子视图的绘图视图类
 /*! \ingroup GROUP_ANDROID
  */
-public class ShapeView extends GraphView {
+public class ShapeView extends StdGraphView {
     private RelativeLayout mShapeLayout;
     private PictureAdapter mRegenAdapter;
 
@@ -81,7 +81,7 @@ public class ShapeView extends GraphView {
     }
 
     //! 视图回调适配器
-    protected class ShapeViewAdapter extends ViewAdapter {
+    protected class ShapeViewAdapter extends StdViewAdapter {
         @Override
         public void regenAll(boolean changed) {
             mCoreView.submitBackDoc();

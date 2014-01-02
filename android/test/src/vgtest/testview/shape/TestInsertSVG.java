@@ -38,8 +38,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(tigerBtn, param);
         tigerBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.insertSVGFromResource(R.raw.tiger, 
-                        mHelper.getView().getWidth() / 2, mHelper.getView().getHeight() / 2);
+                mHelper.insertSVGFromResource(R.raw.tiger, 100, 100);
             }
         });
         

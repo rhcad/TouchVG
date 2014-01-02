@@ -2,14 +2,14 @@
 
 package vgtest.testview.view;
 
-import touchvg.view.GraphView;
+import touchvg.view.StdGraphView;
 import touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import democmds.core.DemoCmdsGate;
 
-public class GraphView1 extends GraphView {
+public class GraphView1 extends StdGraphView {
     
     static {
         System.loadLibrary("democmds");

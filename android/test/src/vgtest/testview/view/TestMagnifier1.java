@@ -4,11 +4,12 @@
 
 package vgtest.testview.view;
 
+import touchvg.view.GLGraphView;
+import touchvg.view.StdGraphView;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.LinearLayout;
-import touchvg.view.GraphView;
 
 //! 测试放大镜的布局视图类
 public class TestMagnifier1 extends LinearLayout {
@@ -25,7 +26,7 @@ public class TestMagnifier1 extends LinearLayout {
         final GraphView1 view = new GraphView1(context);
         addView(view, param);
         
-        final GraphView magView = new GraphView(context, view);
+        final StdGraphView magView = new StdGraphView(context, view);
         addView(magView, param);
         magView.setBackgroundColor(Color.GREEN);
         
@@ -33,7 +34,7 @@ public class TestMagnifier1 extends LinearLayout {
             final GraphView1 view2 = new GraphView1(context);
             addView(view2, param);
             
-            final GraphView magView2 = new GraphView(context, view2);
+            final GLGraphView magView2 = new GLGraphView(context, view2);
             addView(magView2, param);
             magView2.setBackgroundColor(Color.BLUE);
         }
