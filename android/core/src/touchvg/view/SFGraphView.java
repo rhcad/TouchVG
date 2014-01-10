@@ -2,12 +2,8 @@
 
 package touchvg.view;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
 import touchvg.core.GiCoreView;
 import touchvg.core.GiView;
-import touchvg.core.TouchGLView;
 import touchvg.view.internal.BaseViewAdapter;
 import touchvg.view.internal.ContextAction;
 import touchvg.view.internal.GestureListener;
@@ -16,17 +12,25 @@ import touchvg.view.internal.ResourceUtil;
 import touchvg.view.internal.ViewUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.opengl.GLSurfaceView;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff.Mode;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 
-public class GLGraphView extends GLSurfaceView implements GraphView {
-    private TouchGLView mGlView;
+public class SFGraphView extends SurfaceView implements GraphView {
     private GiCoreView mCoreView;
-    private GLViewAdapter mViewAdapter = new GLViewAdapter();
+    private ViewAdapter mViewAdapter = new ViewAdapter();
     private ImageCache mImageCache = new ImageCache();
+    private CanvasAdapter mCanvasAdapter;
+    private RenderRunnable mRender;
+    private SurfaceView mDynDrawView;
+    private CanvasAdapter mDynDrawCanvas;
     private GestureDetector mGestureDetector;
     private GestureListener mGestureListener;
     private boolean mGestureEnable = true;
@@ -35,7 +39,7 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
         System.loadLibrary("touchvg");
     }
     
-    public GLGraphView(Context context) {
+    public SFGraphView(Context context) {
         super(context);
         mCoreView = new GiCoreView();
         mCoreView.createView(mViewAdapter);
@@ -45,7 +49,7 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
         }
     }
     
-    public GLGraphView(Context context, GraphView mainView) {
+    public SFGraphView(Context context, GraphView mainView) {
         super(context);
         mCoreView = new GiCoreView(mainView.coreView());
         mCoreView.createMagnifierView(mViewAdapter, mainView.viewAdapter());
@@ -53,9 +57,9 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
     }
     
     private void initView(Context context) {
-        setEGLContextClientVersion(2);          // OpenGL ES 2.0
-        setRenderer(new GLRenderer());
-        setRenderMode(RENDERMODE_WHEN_DIRTY);
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
+        getHolder().addCallback(new SurfaceCallback());
+        setZOrderMediaOverlay(true);
         
         mGestureListener = new GestureListener(mCoreView, mViewAdapter);
         mGestureDetector = new GestureDetector(context, mGestureListener);
@@ -88,6 +92,8 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
         if (ViewUtil.activeView == this) {
             ViewUtil.activeView = null;
         }
+        mDynDrawView = null;
+        
         super.onDetachedFromWindow();
         
         if (mImageCache != null) {
@@ -99,65 +105,136 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
         mCoreView.destoryView(mViewAdapter);
         mViewAdapter.delete();
         mCoreView.delete();
-        mGlView.delete();
     }
     
-    private class GLRenderer implements GLSurfaceView.Renderer {
+    private class RenderRunnable implements Runnable {
+        
+        public void requestRender() {
+            synchronized(this) {
+                this.notify();
+            }
+        }
         
         @Override
-        public void onDrawFrame(GL10 gl) {
-            if (mGlView != null) {
-                gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-                
-                mGlView.prepareToDraw();
-                
-                int doc, shapes, gs;
+        public void run() {
+            while (mCanvasAdapter != null) {
+                synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                render();
+            }
+        }
+        
+        private void render() {
+            Canvas canvas = null;
+            try {
+                canvas = (mCanvasAdapter != null) ? getHolder().lockCanvas() : null;
+                if (canvas != null && mCanvasAdapter.beginPaint(canvas)) {
+                    int doc, gs;
+                    
+                    synchronized (mCoreView) {
+                        doc = mCoreView.acquireFrontDoc();
+                        gs = mCoreView.acquireGraphics(mViewAdapter);
+                    }
+                    
+                    canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
+                    mCoreView.drawAll(doc, gs, mCanvasAdapter);
+                    
+                    mCoreView.releaseDoc(doc);
+                    mCoreView.releaseGraphics(mViewAdapter, gs);
+                    mCanvasAdapter.endPaint();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (canvas != null) {
+                    getHolder().unlockCanvasAndPost(canvas);
+                }
+            }
+        }
+    }
+    
+    private class SurfaceCallback implements SurfaceHolder.Callback {
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            mCoreView.onSize(mViewAdapter, width, height);
+            mRender.requestRender();
+        }
+        
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            mCanvasAdapter = new CanvasAdapter(null, mImageCache);
+            mRender = new RenderRunnable();
+        }
+        
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            mCanvasAdapter.delete();
+            mCanvasAdapter = null;
+            mRender.requestRender();
+            mRender = null;
+        }
+    }
+    
+    private void renderDynamicShapes() {
+        Canvas canvas = null;
+        try {
+            canvas = (mDynDrawCanvas != null) ? mDynDrawView.getHolder().lockCanvas() : null;
+            if (canvas != null && mDynDrawCanvas.beginPaint(canvas)) {
+                int shapes, gs;
                 
                 synchronized (mCoreView) {
-                    doc = mCoreView.acquireFrontDoc();
                     shapes = mCoreView.acquireDynamicShapes();
                     gs = mCoreView.acquireGraphics(mViewAdapter);
                 }
                 
-                mCoreView.drawAll(doc, gs, mGlView.beginPaint(true));
-                mGlView.endPaint();
-                mCoreView.dynDraw(shapes, gs, mGlView.beginPaint(false));
-                mGlView.endPaint();
+                canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
+                mCoreView.dynDraw(shapes, gs, mDynDrawCanvas);
                 
-                mCoreView.releaseDoc(doc);
                 mCoreView.releaseShapes(shapes);
                 mCoreView.releaseGraphics(mViewAdapter, gs);
+                mDynDrawCanvas.endPaint();
             }
-        }
-        
-        @Override
-        public void onSurfaceChanged(GL10 gl, int width, int height) {
-            if (mGlView == null) {
-                mGlView = new TouchGLView(width, height);
-            } else {
-                mGlView.resize(width, height);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (canvas != null) {
+                mDynDrawView.getHolder().unlockCanvasAndPost(canvas);
             }
-            gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-            gl.glViewport(0, 0, width, height);
-            
-            mCoreView.onSize(mViewAdapter, width, height);
-        }
-        
-        @Override
-        public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         }
     }
     
-    private class GLViewAdapter extends BaseViewAdapter {
+    private class DynDrawSurfaceCallback implements SurfaceHolder.Callback {
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        }
+        
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            mDynDrawCanvas = new CanvasAdapter(null, mImageCache);
+        }
+        
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            mDynDrawCanvas.delete();
+            mDynDrawCanvas = null;
+        }
+    }
+    
+    private class ViewAdapter extends BaseViewAdapter {
         
         @Override
         protected GraphView getView() {
-            return GLGraphView.this;
+            return SFGraphView.this;
         }
         
         @Override
         protected ContextAction createContextAction() {
-            return new ContextAction(mCoreView, GLGraphView.this);
+            return new ContextAction(mCoreView, SFGraphView.this);
         }
         
         @Override
@@ -167,9 +244,8 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
                     mCoreView.submitBackDoc();
                 mCoreView.submitDynamicShapes(mViewAdapter);
             }
-            if (mGlView != null) {
-                mGlView.clear();
-                requestRender();
+            if (mRender != null) {
+                mRender.requestRender();
             }
         }
         
@@ -183,7 +259,7 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
             synchronized (mCoreView) {
                 mCoreView.submitDynamicShapes(mViewAdapter);
             }
-            requestRender();
+            renderDynamicShapes();
         }
     }
 
@@ -203,6 +279,18 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
     }
 
     @Override
+    public View createDynamicShapeView(Context context) {
+        if (mDynDrawView == null) {
+            mDynDrawView = new SurfaceView(context);
+
+            mDynDrawView.getHolder().setFormat(PixelFormat.TRANSPARENT);
+            mDynDrawView.getHolder().addCallback(new DynDrawSurfaceCallback());
+            mDynDrawView.setZOrderMediaOverlay(true);
+        }
+        return mDynDrawView;
+    }
+
+    @Override
     public ImageCache getImageCache() {
         return mImageCache;
     }
@@ -210,7 +298,6 @@ public class GLGraphView extends GLSurfaceView implements GraphView {
     @Override
     public void clearCachedData() {
         mCoreView.clearCachedData();
-        mGlView.clear();
     }
 
     @Override

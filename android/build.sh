@@ -3,7 +3,6 @@
 # Type `./build.sh -swig` to re-generate JNI classes too.
 #
 cd ../thirdparty/TouchVGCore/android; ./build.sh; cd ../../../android
-cd ../thirdparty/MonkVG/projects/MonkVG-Android/jni; ndk-build; cd ../../../../../android
 
 cd core/jni; ./build.sh $1; cd ../..
 cd democmds/jni; ./build.sh $1; cd ../..

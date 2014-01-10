@@ -5,6 +5,7 @@ package touchvg.view;
 import touchvg.core.GiCoreView;
 import touchvg.core.GiView;
 import touchvg.view.internal.ImageCache;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 
@@ -19,6 +20,9 @@ public interface GraphView {
 
     //! 返回视图回调适配器对象
     public View getView();
+    
+    //! 创建动态绘图子视图
+    public View createDynamicShapeView(Context context);
 
     //! 返回图像对象缓存
     public ImageCache getImageCache();

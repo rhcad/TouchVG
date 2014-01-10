@@ -2,14 +2,14 @@
 
 package vgtest.testview.view;
 
-import touchvg.view.GLGraphView;
+import touchvg.view.SFGraphView;
 import touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
 
-public class GLGraphView1 extends GLGraphView {
+public class SFGraphView1 extends SFGraphView {
 
-    public GLGraphView1(Context context) {
+    public SFGraphView1(Context context) {
         super(context);
         
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");

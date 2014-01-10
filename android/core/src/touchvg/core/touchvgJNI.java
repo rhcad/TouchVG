@@ -1868,16 +1868,6 @@ public class touchvgJNI {
   public final static native void TestCanvas_testTextAt(long jarg1, GiCanvas jarg1_, int jarg2);
   public final static native long new_TestCanvas();
   public final static native void delete_TestCanvas(long jarg1);
-  public final static native long new_TouchGLView__SWIG_0(int jarg1, int jarg2, int jarg3);
-  public final static native long new_TouchGLView__SWIG_1(int jarg1, int jarg2);
-  public final static native void delete_TouchGLView(long jarg1);
-  public final static native void TouchGLView_resize(long jarg1, TouchGLView jarg1_, int jarg2, int jarg3);
-  public final static native int TouchGLView_getWidthPx(long jarg1, TouchGLView jarg1_);
-  public final static native int TouchGLView_getHeightPx(long jarg1, TouchGLView jarg1_);
-  public final static native void TouchGLView_clear(long jarg1, TouchGLView jarg1_);
-  public final static native void TouchGLView_prepareToDraw(long jarg1, TouchGLView jarg1_);
-  public final static native long TouchGLView_beginPaint(long jarg1, TouchGLView jarg1_, boolean jarg2);
-  public final static native void TouchGLView_endPaint(long jarg1, TouchGLView jarg1_);
   public final static native long MgShape_SWIGUpcast(long jarg1);
   public final static native long MgBaseShape_SWIGUpcast(long jarg1);
   public final static native long MgShapes_SWIGUpcast(long jarg1);

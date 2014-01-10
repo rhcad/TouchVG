@@ -4,6 +4,7 @@ package vgtest.app;
 
 import java.lang.reflect.Constructor;
 
+import touchvg.view.GraphView;
 import touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
@@ -43,7 +44,15 @@ public class DummyActivity extends Activity {
             this.setContentView(layout);
             
             if (view != null) {
-                layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+                layout.addView(view, params);
+                
+                if (view instanceof GraphView) {
+                    view = ((GraphView)view).createDynamicShapeView(this);
+                    if (view != null) {
+                        layout.addView(view, params);
+                    }
+                }
             }
         }
         this.setTitle(bundle.getString("title"));

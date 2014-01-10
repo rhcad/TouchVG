@@ -17,6 +17,7 @@ import touchvg.view.internal.ViewUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
@@ -70,6 +71,13 @@ public class ViewHelper {
         final FrameLayout layout = new FrameLayout(context);
         layout.addView(view, new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        
+        final View dynview = view.createDynamicShapeView(context);
+        if (dynview != null) {
+            layout.addView(dynview, new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        }
+        
         return layout;
     }
     
@@ -79,15 +87,29 @@ public class ViewHelper {
         mView = view;
         layout.addView(view, new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        
+        final View dynview = view.createDynamicShapeView(context);
+        if (dynview != null) {
+            layout.addView(dynview, new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        }
+        
         return layout;
     }
     
-    //! 在指定的布局（建议为FrameLayout）中创建OpenGL绘图视图，并记下此视图
-    public ViewGroup createGLViewInLayout(Context context, ViewGroup layout) {
-        GLGraphView view = new GLGraphView(context);
+    //! 在指定的布局（建议为FrameLayout）中创建SurfaceView绘图视图，并记下此视图
+    public ViewGroup createSurfaceViewInLayout(Context context, ViewGroup layout) {
+        SFGraphView view = new SFGraphView(context);
         mView = view;
         layout.addView(view, new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        
+        final View dynview = view.createDynamicShapeView(context);
+        if (dynview != null) {
+            layout.addView(dynview, new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        }
+        
         return layout;
     }
     
@@ -112,6 +134,13 @@ public class ViewHelper {
         final FrameLayout layout = new FrameLayout(context);
         layout.addView(view, new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        
+        final View dynview = view.createDynamicShapeView(context);
+        if (dynview != null) {
+            layout.addView(dynview, new LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        }
+        
         return layout;
     }
     

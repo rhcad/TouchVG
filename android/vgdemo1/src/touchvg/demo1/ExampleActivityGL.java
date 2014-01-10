@@ -11,7 +11,7 @@ public class ExampleActivityGL extends ExampleActivity1 {
     protected void createGraphView() {
         setContentView(R.layout.activity_example1);
         final ViewGroup layout = (ViewGroup)this.findViewById(R.id.frame);
-        mHelper.createGLViewInLayout(this, layout);
+        mHelper.createSurfaceViewInLayout(this, layout);
         layout.setBackgroundColor(Color.GRAY);
     }
 }

@@ -4,7 +4,7 @@
 
 package vgtest.testview.view;
 
-import touchvg.view.GLGraphView;
+import touchvg.view.SFGraphView;
 import touchvg.view.StdGraphView;
 import android.app.Activity;
 import android.content.Context;
@@ -34,7 +34,7 @@ public class TestMagnifier1 extends LinearLayout {
             final GraphView1 view2 = new GraphView1(context);
             addView(view2, param);
             
-            final GLGraphView magView2 = new GLGraphView(context, view2);
+            final SFGraphView magView2 = new SFGraphView(context, view2);
             addView(magView2, param);
             magView2.setBackgroundColor(Color.BLUE);
         }

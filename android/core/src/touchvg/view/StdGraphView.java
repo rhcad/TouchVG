@@ -290,6 +290,11 @@ public class StdGraphView extends View implements GraphView {
     }
     
     @Override
+    public View createDynamicShapeView(Context context) {
+        return null;
+    }
+    
+    @Override
     public ImageCache getImageCache() {
         return mImageCache;
     }
