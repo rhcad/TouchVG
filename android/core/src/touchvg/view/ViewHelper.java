@@ -28,6 +28,10 @@ import android.widget.FrameLayout;
 public class ViewHelper {
     private GraphView mView;
     
+    static {
+        System.loadLibrary("touchvg");  // 加载绘图内核动态库，以便访问JNI
+    }
+    
     //! 指定视图的构造函数
     public ViewHelper(GraphView view) {
         mView = view;

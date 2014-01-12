@@ -21,27 +21,6 @@ class GiViewAdapter;
 
 @end
 
-//! iOS图形层绘制类
-@interface GiGraphLayer : NSObject {
-    UIView          *_view;
-    GiViewAdapter   *_adapter;
-    __block long    _needRegen;
-    __block CALayer *_frontLayer;
-    __block CALayer *_layers[3];
-    __block long    _used[3];
-    BOOL            _needsClear[3];
-}
-
-@property(readonly) CALayer *frontLayer;
-
-- (id)initWithAdapter:(GiViewAdapter *)adapter;
-- (void)freeLayers;
-- (void)regenAll:(BOOL)changed;
-- (void)regenAppend:(int)sid;
-- (void)drawFrontLayer:(CGContextRef)ctx;
-
-@end
-
 //! iOS绘图视图适配器
 class GiViewAdapter : public GiView
 {
@@ -52,8 +31,6 @@ private:
     NSMutableArray *_buttons;           //!< 上下文按钮的数组
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     ImageCache  *_imageCache;           //!< 图像对象缓存
-    GiGraphLayer    *_layers;   //!< 图形层绘制对象
-    int         _regenValue;
     
 public:
     std::vector<id> delegates;  //!< GiGraphViewDelegate 观察者数组
@@ -71,11 +48,9 @@ public:
     ImageCache *imageCache() { return _imageCache; }
     UIView *mainView() { return _view; }
     UIView *getDynView();
-    void drawLayer();
     void clearCachedData();
     void stopRegen();
     bool isMainThread() const;
-    int getRegenValue() const { return _regenValue; }
     
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);
@@ -97,6 +72,7 @@ public:
     
 private:
     void setContextButton(UIButton *btn, NSString *caption, NSString *imageName);
+    void regen_(bool changed);
     void redraw_();
 };
 

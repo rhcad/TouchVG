@@ -24,7 +24,5 @@ gen
 obj
 gdb.setup
 gdbserver
-android/core/libs/armeabi
-android/democmds/libs/armeabi
 ios/output/*.a
 *.db

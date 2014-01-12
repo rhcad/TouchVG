@@ -39,13 +39,11 @@ GiViewAdapter::GiViewAdapter(GiGraphView *mainView, GiCoreView *coreView)
     : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
 {
     _coreView = new GiCoreView(coreView);
-    _layers = [[GiGraphLayer alloc]initWithAdapter:this];
     memset(&respondsTo, 0, sizeof(respondsTo));
     _imageCache = [[ImageCache alloc]init];
 }
 
 GiViewAdapter::~GiViewAdapter() {
-    [_layers freeLayers];
     _coreView->destoryView(this);
     delete _coreView;
 }
@@ -58,23 +56,24 @@ void GiViewAdapter::clearCachedData() {
 }
 
 void GiViewAdapter::regenAll(bool changed) {
-    _regenValue = changed ? 2 : 1;
+    if (isMainThread()) {
+        regen_(changed);
+    }
+    else {
+        dispatch_async(dispatch_get_main_queue(), ^{ regen_(changed); });
+    }
+}
+
+void GiViewAdapter::regen_(bool changed) {
     if (changed) {
         _coreView->submitBackDoc();
     }
     _coreView->submitDynamicShapes(this);
-    [_layers regenAll:changed];
+    [_view setNeedsDisplay];
 }
 
 void GiViewAdapter::regenAppend(int sid) {
-    _regenValue = sid << 2;
-    _coreView->submitBackDoc();
-    _coreView->submitDynamicShapes(this);
-    [_layers regenAppend:sid];
-}
-
-void GiViewAdapter::drawLayer() {
-    [_layers drawFrontLayer:UIGraphicsGetCurrentContext()];
+    regenAll(true);
 }
 
 void GiViewAdapter::stopRegen() {
@@ -92,6 +91,7 @@ UIView *GiViewAdapter::getDynView() {
 
 void GiViewAdapter::redraw_() {
     if (getDynView()) {
+        _coreView->submitDynamicShapes(this);
         [_dynview setNeedsDisplay];
     }
     else {
@@ -100,7 +100,6 @@ void GiViewAdapter::redraw_() {
 }
 
 void GiViewAdapter::redraw() {
-    _coreView->submitDynamicShapes(this);
     if (isMainThread()) {
         redraw_();
     }

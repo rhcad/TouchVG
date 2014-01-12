@@ -130,7 +130,17 @@ GiColor CGColorToGiColor(CGColorRef color);
 #pragma mark - GiGraphView drawRect
 
 - (void)drawRect:(CGRect)rect {
-    _adapter->drawLayer();
+    GiCanvasAdapter canvas(_adapter->imageCache());
+    GiCoreView* coreView = _adapter->coreView();
+    long hDoc = coreView->MgCoreView::acquireFrontDoc();
+    long hGs = coreView->acquireGraphics(_adapter);
+    
+    if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
+        coreView->drawAll(hDoc, hGs, &canvas);
+        canvas.endPaint();
+    }
+    coreView->releaseDoc(hDoc);
+    coreView->releaseGraphics(_adapter, hGs);
 }
 
 + (GiGraphView *)activeView {
