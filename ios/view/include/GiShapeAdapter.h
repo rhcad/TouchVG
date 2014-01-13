@@ -59,7 +59,7 @@ public:
     void drawHandle(float x, float y, int type);
     void drawBitmap(const char* name, float xc, float yc, float w, float h, float angle);
     float drawTextAt(const char* text, float x, float y, float h, int align);
-    bool beginShape(int type, int sid, float x, float y, float w, float h);
+    bool beginShape(int type, int sid, int version, float x, float y, float w, float h);
     void endShape(int type, int sid, float x, float y);
     
 private:

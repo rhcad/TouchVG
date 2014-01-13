@@ -46,7 +46,7 @@ void GiShapeAdapter::checkNeedFire(bool stroke, bool fill)
     }
 }
 
-bool GiShapeAdapter::beginShape(int type, int sid, float x, float y, float w, float h)
+bool GiShapeAdapter::beginShape(int type, int sid, int, float x, float y, float w, float h)
 {
     fireLastPath();
     return _callback->beginShape(type, sid, CGRectMake(x, y, w, h));

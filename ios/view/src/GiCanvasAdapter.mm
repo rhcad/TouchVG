@@ -124,7 +124,7 @@ void GiCanvasAdapter::setBrush(int argb, int style)
     }
 }
 
-bool GiCanvasAdapter::beginShape(int type, int, float x, float y, float w, float h)
+bool GiCanvasAdapter::beginShape(int type, int, int, float x, float y, float w, float h)
 {
     /*if (!_gradient && type == 16) { // kMgShapeSplines
         CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
