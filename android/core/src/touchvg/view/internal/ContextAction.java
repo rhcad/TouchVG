@@ -27,12 +27,14 @@ public class ContextAction {
     private static int[] mExtImageIDs;
     private static int mCaptionsID;
     private static String[] mCaptions;
+    private static float mDensity;
     
     public ContextAction(GiCoreView core, View view) {
         this.mCoreView = core;
         this.mView = view;
+        mDensity = view.getContext().getApplicationContext().getResources().getDisplayMetrics().density;
     }
-    
+
     public void release() {
         this.mCoreView = null;
         this.mView = null;
@@ -89,10 +91,10 @@ public class ContextAction {
         
         if (layout != null) {
             final LayoutParams params = new LayoutParams(
-                (hasImage ? 32 : LayoutParams.WRAP_CONTENT),
-                (hasImage ? 32 : LayoutParams.WRAP_CONTENT));
-            params.leftMargin = xc - (hasImage ? 32 : 64) / 2;
-            params.topMargin = yc - (hasImage ? 36 : 40) / 2;
+                (hasImage ? Math.round(mDensity * 32) : LayoutParams.WRAP_CONTENT),
+                (hasImage ? Math.round(mDensity * 32) : LayoutParams.WRAP_CONTENT));
+            params.leftMargin = xc - Math.round(mDensity * (hasImage ? 32 : 64)) / 2;
+            params.topMargin = yc - Math.round(mDensity * (hasImage ? 36 : 40)) / 2;
             
             layout.addView(btn, params);
         }

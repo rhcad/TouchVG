@@ -27,10 +27,15 @@ public class SFGraphView extends SurfaceView implements GraphView {
     private GiCoreView mCoreView;
     private ViewAdapter mViewAdapter = new ViewAdapter();
     private ImageCache mImageCache = new ImageCache();
-    private CanvasAdapter mCanvasAdapter;
+    
+    private CanvasAdapter mCanvasAdapter = new CanvasAdapter(null, mImageCache);
     private RenderRunnable mRender;
+    
     private SurfaceView mDynDrawView;
-    private CanvasAdapter mDynDrawCanvas;
+    private CanvasAdapter mDynDrawCanvas = new CanvasAdapter(null, mImageCache);
+    private DynRenderRunnable mDynDrawRender;
+    
+    private int mBkColor = Color.WHITE;
     private GestureDetector mGestureDetector;
     private GestureListener mGestureListener;
     private boolean mGestureEnable = true;
@@ -96,8 +101,28 @@ public class SFGraphView extends SurfaceView implements GraphView {
         
         super.onDetachedFromWindow();
         
+        synchronized (mCanvasAdapter) {
+            try {
+                mCanvasAdapter.wait(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        mCanvasAdapter.delete();
+        mCanvasAdapter = null;
+        
+        synchronized (mDynDrawCanvas) {
+            try {
+                mDynDrawCanvas.wait(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        mDynDrawCanvas.delete();
+        mDynDrawCanvas = null;
+        
         if (mImageCache != null) {
-            synchronized(mImageCache) {}
+            synchronized (mImageCache) {}
             mImageCache.clear();
             mImageCache = null;
         }
@@ -108,16 +133,21 @@ public class SFGraphView extends SurfaceView implements GraphView {
     }
     
     private class RenderRunnable implements Runnable {
+        private boolean mStopping = false;
         
         public void requestRender() {
-            synchronized(this) {
+            synchronized (this) {
                 this.notify();
             }
         }
         
+        public void stop() {
+            mStopping = true;
+        }
+        
         @Override
         public void run() {
-            while (mCanvasAdapter != null) {
+            while (!mStopping) {
                 synchronized (this) {
                     try {
                         this.wait();
@@ -127,12 +157,17 @@ public class SFGraphView extends SurfaceView implements GraphView {
                 }
                 render();
             }
+            if (mCanvasAdapter != null) {
+                synchronized (mCanvasAdapter) {
+                    mCanvasAdapter.notify();
+                }
+            }
         }
         
         private void render() {
             Canvas canvas = null;
             try {
-                canvas = (mCanvasAdapter != null) ? getHolder().lockCanvas() : null;
+                canvas = !mStopping ? getHolder().lockCanvas() : null;
                 if (canvas != null && mCanvasAdapter.beginPaint(canvas)) {
                     int doc, gs;
                     
@@ -141,12 +176,16 @@ public class SFGraphView extends SurfaceView implements GraphView {
                         gs = mCoreView.acquireGraphics(mViewAdapter);
                     }
                     
-                    canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
+                    canvas.drawColor(mBkColor,
+                            mBkColor == Color.TRANSPARENT ? Mode.CLEAR : Mode.SRC_OVER);
                     mCoreView.drawAll(doc, gs, mCanvasAdapter);
                     
                     mCoreView.releaseDoc(doc);
                     mCoreView.releaseGraphics(mViewAdapter, gs);
                     mCanvasAdapter.endPaint();
+                    
+                    if (mDynDrawRender != null)
+                        mDynDrawRender.reset();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -167,43 +206,102 @@ public class SFGraphView extends SurfaceView implements GraphView {
         
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            mCanvasAdapter = new CanvasAdapter(null, mImageCache);
             mRender = new RenderRunnable();
+            new Thread(mRender).start();
         }
         
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            mCanvasAdapter.delete();
-            mCanvasAdapter = null;
+            mCoreView.stopDrawing(mViewAdapter);
+            mRender.stop();
             mRender.requestRender();
             mRender = null;
         }
     }
     
-    private void renderDynamicShapes() {
-        Canvas canvas = null;
-        try {
-            canvas = (mDynDrawCanvas != null) ? mDynDrawView.getHolder().lockCanvas() : null;
-            if (canvas != null && mDynDrawCanvas.beginPaint(canvas)) {
-                int shapes, gs;
-                
-                synchronized (mCoreView) {
-                    shapes = mCoreView.acquireDynamicShapes();
-                    gs = mCoreView.acquireGraphics(mViewAdapter);
-                }
-                
-                canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
-                mCoreView.dynDraw(shapes, gs, mDynDrawCanvas);
-                
-                mCoreView.releaseShapes(shapes);
-                mCoreView.releaseGraphics(mViewAdapter, gs);
-                mDynDrawCanvas.endPaint();
+    private class DynRenderRunnable implements Runnable {
+        private boolean mStopping = false;
+        private int[] mAppendShapeIDs = new int[]{ 0, 0, 0, 0, 0 };
+        
+        public void requestRender() {
+            synchronized (this) {
+                this.notify();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (canvas != null) {
-                mDynDrawView.getHolder().unlockCanvasAndPost(canvas);
+        }
+        
+        public void stop() {
+            mStopping = true;
+        }
+        
+        public void reset() {
+            for (int i = 0; i < mAppendShapeIDs.length; i++) {
+                mAppendShapeIDs[i] = 0;
+            }
+            requestRender();
+        }
+        
+        public void requestRender(int sid) {
+            for (int i = 0; i < mAppendShapeIDs.length; i++) {
+                if (mAppendShapeIDs[i] == 0) {
+                    mAppendShapeIDs[i] = sid;
+                    break;
+                }
+            }
+            requestRender();
+        }
+        
+        @Override
+        public void run() {
+            while (!mStopping) {
+                synchronized (this) {
+                    try {
+                        this.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                render();
+            }
+            if (mDynDrawCanvas != null) {
+                synchronized (mDynDrawCanvas) {
+                    mDynDrawCanvas.notify();
+                }
+            }
+        }
+        
+        private void render() {
+            Canvas canvas = null;
+            try {
+                canvas = !mStopping ? mDynDrawView.getHolder().lockCanvas() : null;
+                if (canvas != null && mDynDrawCanvas.beginPaint(canvas)) {
+                    int doc = 0, shapes, gs;
+                    
+                    synchronized (mCoreView) {
+                        if (mAppendShapeIDs[0] != 0) {
+                            doc = mCoreView.acquireFrontDoc();
+                        }
+                        shapes = mCoreView.acquireDynamicShapes();
+                        gs = mCoreView.acquireGraphics(mViewAdapter);
+                    }
+                    
+                    canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
+                    for (int sid : mAppendShapeIDs) {
+                        if (sid != 0)
+                            mCoreView.drawAppend(doc, gs, mDynDrawCanvas, sid);
+                    }
+                    mCoreView.dynDraw(shapes, gs, mDynDrawCanvas);
+                    
+                    mCoreView.releaseDoc(doc);
+                    mCoreView.releaseShapes(shapes);
+                    mCoreView.releaseGraphics(mViewAdapter, gs);
+                    mDynDrawCanvas.endPaint();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (canvas != null) {
+                    mDynDrawView.getHolder().unlockCanvasAndPost(canvas);
+                }
             }
         }
     }
@@ -211,17 +309,20 @@ public class SFGraphView extends SurfaceView implements GraphView {
     private class DynDrawSurfaceCallback implements SurfaceHolder.Callback {
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            mDynDrawRender.requestRender();
         }
         
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            mDynDrawCanvas = new CanvasAdapter(null, mImageCache);
+            mDynDrawRender = new DynRenderRunnable();
+            new Thread(mDynDrawRender).start();
         }
         
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            mDynDrawCanvas.delete();
-            mDynDrawCanvas = null;
+            mDynDrawRender.stop();
+            mDynDrawRender.requestRender();
+            mDynDrawRender = null;
         }
     }
     
@@ -251,7 +352,15 @@ public class SFGraphView extends SurfaceView implements GraphView {
         
         @Override
         public void regenAppend(int sid) {
-            regenAll(true);
+            synchronized (mCoreView) {
+                mCoreView.submitBackDoc();
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
+            if (mRender != null) {
+                mRender.requestRender();
+            }
+            if (mDynDrawRender != null)
+                mDynDrawRender.requestRender(sid);
         }
         
         @Override
@@ -259,7 +368,8 @@ public class SFGraphView extends SurfaceView implements GraphView {
             synchronized (mCoreView) {
                 mCoreView.submitDynamicShapes(mViewAdapter);
             }
-            renderDynamicShapes();
+            if (mDynDrawRender != null)
+                mDynDrawRender.requestRender();
         }
     }
 
@@ -302,6 +412,7 @@ public class SFGraphView extends SurfaceView implements GraphView {
 
     @Override
     public void setBackgroundColor(int color) {
+        mBkColor = color;
         mCoreView.setBkColor(mViewAdapter, color);
         mViewAdapter.regenAll(false);
     }

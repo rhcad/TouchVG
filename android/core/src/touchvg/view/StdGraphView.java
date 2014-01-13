@@ -78,7 +78,7 @@ public class StdGraphView extends View implements GraphView {
         ResourceUtil.setContextImages(context);
         
         final DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
-        GiCoreView.setScreenDpi(dm.densityDpi);             // 应用DPI
+        GiCoreView.setScreenDpi(dm.densityDpi, dm.density);
         if (mCanvasRegen != null) {
             setLayerType(View.LAYER_TYPE_SOFTWARE, null);   // 避免路径太大不能渲染
         }
