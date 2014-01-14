@@ -258,7 +258,7 @@ public class CanvasAdapter extends GiCanvas {
     }
     
     public Bitmap getHandleBitmap(int type) {
-        return (mHandleIDs != null && type >= 0 && type < mHandleIDs.length) ?
+        return (mHandleIDs != null && type >= 0 && type < mHandleIDs.length && mView != null) ?
         BitmapFactory.decodeResource(mView.getResources(), mHandleIDs[type]) : null;
     }
     
@@ -273,10 +273,11 @@ public class CanvasAdapter extends GiCanvas {
     
     @Override
     public void drawBitmap(String name, float xc, float yc, float w, float h,
-                           float angle) {
+ float angle) {
         final Drawable drawable = mCache != null ? mCache.getImage(mView, name)
-                : name == null ? new BitmapDrawable(mView.getResources(), getHandleBitmap(3)) : null;
-        
+                : (name == null && mView != null) ? new BitmapDrawable(mView.getResources(),
+                        getHandleBitmap(3)) : null;
+
         if (drawable != null) {
             Matrix mat = new Matrix();
             int width = ImageCache.getWidth(drawable);

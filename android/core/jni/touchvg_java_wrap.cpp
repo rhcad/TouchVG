@@ -16598,6 +16598,21 @@ SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_GiTransform_1getWndRectM(J
 }
 
 
+SWIGEXPORT jlong JNICALL Java_touchvg_core_touchvgJNI_GiTransform_1getWndRect(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  GiTransform *arg1 = (GiTransform *) 0 ;
+  Box2d result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiTransform **)&jarg1; 
+  result = ((GiTransform const *)arg1)->getWndRect();
+  *(Box2d **)&jresult = new Box2d((const Box2d &)result); 
+  return jresult;
+}
+
+
 SWIGEXPORT jfloat JNICALL Java_touchvg_core_touchvgJNI_GiTransform_1getMinViewScale(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jfloat jresult = 0 ;
   GiTransform *arg1 = (GiTransform *) 0 ;
@@ -18015,6 +18030,16 @@ SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_GiGraphics_1setMaxPenWidth_
   arg1 = *(GiGraphics **)&jarg1; 
   arg2 = (float)jarg2; 
   (arg1)->setMaxPenWidth(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_touchvg_core_touchvgJNI_GiGraphics_1setPenWidthFactor(JNIEnv *jenv, jclass jcls, jfloat jarg1) {
+  float arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (float)jarg1; 
+  GiGraphics::setPenWidthFactor(arg1);
 }
 
 

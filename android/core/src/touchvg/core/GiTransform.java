@@ -147,6 +147,10 @@ public class GiTransform {
     return new Box2d(touchvgJNI.GiTransform_getWndRectM(swigCPtr, this), true);
   }
 
+  public Box2d getWndRect() {
+    return new Box2d(touchvgJNI.GiTransform_getWndRect(swigCPtr, this), true);
+  }
+
   public float getMinViewScale() {
     return touchvgJNI.GiTransform_getMinViewScale(swigCPtr, this);
   }

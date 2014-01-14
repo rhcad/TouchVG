@@ -136,6 +136,10 @@ public class GiGraphics {
     touchvgJNI.GiGraphics_setMaxPenWidth__SWIG_1(swigCPtr, this, pixels);
   }
 
+  public static void setPenWidthFactor(float factor) {
+    touchvgJNI.GiGraphics_setPenWidthFactor(factor);
+  }
+
   public boolean drawLine(GiContext ctx, Point2d startPt, Point2d endPt, boolean modelUnit) {
     return touchvgJNI.GiGraphics_drawLine__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Point2d.getCPtr(startPt), startPt, Point2d.getCPtr(endPt), endPt, modelUnit);
   }
