@@ -108,7 +108,7 @@ public class ExampleActivity1 extends Activity {
         this.findViewById(R.id.addSVGFile).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHelper.insertImageFromFile(PATH + "map.svg");
+                mHelper.insertSVGFromResource(R.raw.text);
             }
         });
     }
