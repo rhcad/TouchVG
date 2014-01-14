@@ -22,6 +22,7 @@ public class ExampleActivity1 extends Activity {
         
         this.createGraphView();
         this.initButtons();
+        mHelper.setCommand("splines");
         mHelper.setStrokeWidth(5);
     }
     

@@ -1806,7 +1806,7 @@ public class touchvgJNI {
   public final static native float GiCoreView_calcPenWidth(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, float jarg3);
   public final static native int GiCoreView_getGestureType(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_getGestureState(long jarg1, GiCoreView jarg1_);
-  public final static native int GiCoreView_getVersion(long jarg1, GiCoreView jarg1_);
+  public final static native int GiCoreView_getVersion();
   public final static native boolean GiCoreView_isPressDragging(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_viewAdapterHandle(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_backDoc(long jarg1, GiCoreView jarg1_);

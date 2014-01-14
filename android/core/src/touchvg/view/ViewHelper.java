@@ -27,9 +27,15 @@ import android.widget.FrameLayout;
  */
 public class ViewHelper {
     private GraphView mView;
+    private static int JARVERSION = 50;
     
     static {
         System.loadLibrary("touchvg");  // 加载绘图内核动态库，以便访问JNI
+    }
+    
+    //! 返回绘图包的版本号，1.0.jarver.sover
+    public static String getVersion() {
+        return String.format("1.0.%d.%d", JARVERSION, GiCoreView.getVersion());
     }
     
     //! 指定视图的构造函数
@@ -280,15 +286,19 @@ public class ViewHelper {
     
     //! 保存静态图形的快照到PNG文件，自动添加后缀名.png
     public boolean savePng(String filename) {
+        final Bitmap bmp = mView.snapshot();
         boolean ret = false;
-        synchronized(mView.snapshot()) {
-            try {
-                filename = addExtension(filename, ".png");
-                final FileOutputStream os = new FileOutputStream(filename);
-                ret = createFolder(filename) && mView.snapshot().compress(
-                        Bitmap.CompressFormat.PNG, 100, os);
-            } catch (Exception e) {
-                e.printStackTrace();
+
+        if (bmp != null) {
+            synchronized (bmp) {
+                try {
+                    filename = addExtension(filename, ".png");
+                    final FileOutputStream os = new FileOutputStream(filename);
+                    ret = createFolder(filename)
+                            && bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         return ret;

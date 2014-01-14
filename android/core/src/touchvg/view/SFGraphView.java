@@ -166,33 +166,37 @@ public class SFGraphView extends SurfaceView implements GraphView {
             }
         }
         
+        public void draw(CanvasAdapter canvasAdapter) {
+            int doc, gs, n, oldcnt = 0;
+
+            if (mDynDrawRender != null)
+                oldcnt = mDynDrawRender.getAppendCount();
+
+            synchronized (mCoreView) {
+                doc = mCoreView.acquireFrontDoc();
+                gs = mCoreView.acquireGraphics(mViewAdapter);
+            }
+            try {
+                n = mCoreView.drawAll(doc, gs, canvasAdapter);
+            } finally {
+                mCoreView.releaseDoc(doc);
+                mCoreView.releaseGraphics(mViewAdapter, gs);
+            }
+
+            Log.d(TAG, "render n=" + n);
+            if (mDynDrawRender != null)
+                mDynDrawRender.reset(oldcnt);
+        }
+        
         private void render() {
             Canvas canvas = null;
             try {
                 canvas = !mStopping ? getHolder().lockCanvas() : null;
-                if (canvas != null && mCanvasAdapter.beginPaint(canvas)) {
-                    int doc, gs, n, oldcnt = 0;
-
-                    if (mDynDrawRender != null)
-                        oldcnt = mDynDrawRender.getAppendCount();
-
-                    synchronized (mCoreView) {
-                        doc = mCoreView.acquireFrontDoc();
-                        gs = mCoreView.acquireGraphics(mViewAdapter);
-                    }
-                    try {
-                        canvas.drawColor(mBkColor, 
-                                mBkColor == Color.TRANSPARENT ? Mode.CLEAR : Mode.SRC_OVER);
-                        n = mCoreView.drawAll(doc, gs, mCanvasAdapter);
-                    } finally {
-                        mCoreView.releaseDoc(doc);
-                        mCoreView.releaseGraphics(mViewAdapter, gs);
-                        mCanvasAdapter.endPaint();
-                    }
-
-                    Log.d(TAG, "render n=" + n);
-                    if (mDynDrawRender != null)
-                        mDynDrawRender.reset(oldcnt);
+                if (mCanvasAdapter != null && mCanvasAdapter.beginPaint(canvas)) {
+                    canvas.drawColor(mBkColor,
+                            mBkColor == Color.TRANSPARENT ? Mode.CLEAR : Mode.SRC_OVER);
+                    draw(mCanvasAdapter);
+                    mCanvasAdapter.endPaint();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -213,6 +217,10 @@ public class SFGraphView extends SurfaceView implements GraphView {
         
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
+            final Canvas canvas = holder.lockCanvas();
+            canvas.drawColor(mBkColor, mBkColor == Color.TRANSPARENT ? Mode.CLEAR : Mode.SRC_OVER);
+            holder.unlockCanvasAndPost(canvas);
+            
             mRender = new RenderRunnable();
             new Thread(mRender).start();
         }
@@ -258,7 +266,7 @@ public class SFGraphView extends SurfaceView implements GraphView {
             requestRender();
         }
         
-        public void requestRender(int sid) {
+        public void requestAppendRender(int sid) {
             for (int i = 0; i < mAppendShapeIDs.length; i++) {
                 if (mAppendShapeIDs[i] == 0) {
                     mAppendShapeIDs[i] = sid;
@@ -380,7 +388,7 @@ public class SFGraphView extends SurfaceView implements GraphView {
                 mRender.requestRender();
             }
             if (mDynDrawRender != null)
-                mDynDrawRender.requestRender(sid);
+                mDynDrawRender.requestAppendRender(sid);
         }
         
         @Override
@@ -460,7 +468,13 @@ public class SFGraphView extends SurfaceView implements GraphView {
 
     @Override
     public Bitmap snapshot() {
-        return null;
+        final Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        if (mCanvasAdapter != null && mCanvasAdapter.beginPaint(new Canvas(bitmap))) {
+            mCanvasAdapter.getCanvas().drawColor(mBkColor);
+            mRender.draw(mCanvasAdapter);
+            mCanvasAdapter.endPaint();
+        }
+        return bitmap;
     }
 
     @Override

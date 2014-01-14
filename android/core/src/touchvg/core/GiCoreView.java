@@ -151,8 +151,8 @@ public class GiCoreView extends MgCoreView {
     return GiGestureState.swigToEnum(touchvgJNI.GiCoreView_getGestureState(swigCPtr, this));
   }
 
-  public int getVersion() {
-    return touchvgJNI.GiCoreView_getVersion(swigCPtr, this);
+  public static int getVersion() {
+    return touchvgJNI.GiCoreView_getVersion();
   }
 
   public boolean isPressDragging() {

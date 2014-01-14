@@ -39223,16 +39223,13 @@ SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1getGestureState
 }
 
 
-SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1getVersion(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_touchvg_core_touchvgJNI_GiCoreView_1getVersion(JNIEnv *jenv, jclass jcls) {
   jint jresult = 0 ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
   int result;
   
   (void)jenv;
   (void)jcls;
-  (void)jarg1_;
-  arg1 = *(GiCoreView **)&jarg1; 
-  result = (int)(arg1)->getVersion();
+  result = (int)GiCoreView::getVersion();
   jresult = (jint)result; 
   return jresult;
 }
