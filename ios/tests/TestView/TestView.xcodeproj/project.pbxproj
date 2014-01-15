@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		027CB28918715FBC00C18ECE /* libTouchVGCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 027CB28218715F9E00C18ECE /* libTouchVGCore.a */; };
 		AE03795E181FB31E0049931F /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03795D181FB31E0049931F /* pencil.png */; };
 		AE252D2B181FC93300884B5C /* AnimatedPathView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */; };
 		AE252D30181FCB0700884B5C /* pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE252D2F181FCB0700884B5C /* pencil@2x.png */; };
@@ -19,11 +18,6 @@
 		AE4E6F0616129337006CAA5C /* ViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE4E6F0416129337006CAA5C /* ViewFactory.mm */; };
 		AE53750E177D26980050CC4F /* GiGraphView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE53750D177D26980050CC4F /* GiGraphView1.mm */; };
 		AE815F351718EDCB006BC607 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE815F341718EDCB006BC607 /* QuartzCore.framework */; };
-		AE97A1AA186D536500DFEA77 /* DemoCmds.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */; };
-		AE97A1AC186D536D00DFEA77 /* TouchVG.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */; };
-		AE97A1B1186D592300DFEA77 /* libDemoCmds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE97A1AD186D538D00DFEA77 /* libDemoCmds.a */; };
-		AE97A1B2186D592600DFEA77 /* libTouchVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE97A1AF186D539000DFEA77 /* libTouchVG.a */; };
-		AEA5E49618729F3B00C5EC49 /* libSVGKit-iOS.1.2.0pre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AEA5E49218729ABA00C5EC49 /* libSVGKit-iOS.1.2.0pre.a */; };
 		AEADC21F16EB570800484962 /* LargeView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEADC21E16EB570800484962 /* LargeView1.mm */; };
 		AEF2D52B160964BA00DDB7F2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52A160964BA00DDB7F2 /* UIKit.framework */; };
 		AEF2D52D160964BA00DDB7F2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52C160964BA00DDB7F2 /* Foundation.framework */; };
@@ -36,68 +30,12 @@
 		AEF2D5B01609BF7D00DDB7F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF2D5AD1609BF7D00DDB7F2 /* main.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		027CB28118715F9E00C18ECE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 027CB27D18715F9E00C18ECE /* TouchVGCore.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AE490E54185715D9004F70CC;
-			remoteInfo = TouchVGCore;
-		};
-		027CB28318715FA900C18ECE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 027CB27D18715F9E00C18ECE /* TouchVGCore.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AE490E53185715D9004F70CC;
-			remoteInfo = TouchVGCore;
-		};
-		027CB28518715FAC00C18ECE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AE2A3A48178FC511000194AE;
-			remoteInfo = TouchVG;
-		};
-		027CB28718715FAE00C18ECE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AE2A3A48178FC511000194AE;
-			remoteInfo = DemoCmds;
-		};
-		AEA5E49118729ABA00C5EC49 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6639618E16145D0400E58CCA;
-			remoteInfo = "SVGKit-iOS";
-		};
-		AEA5E49318729AD000C5EC49 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 6639618D16145D0400E58CCA;
-			remoteInfo = "SVGKit-iOS";
-		};
-		AED5E69E186EF0CE00D8CA3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AE2A3A49178FC511000194AE;
-			remoteInfo = DemoCmds;
-		};
-		AED5E6A3186F179000D8CA3E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AE2A3A49178FC511000194AE;
-			remoteInfo = TouchVG;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		027CB27D18715F9E00C18ECE /* TouchVGCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchVGCore.xcodeproj; path = ../../../thirdparty/TouchVGCore/ios/TouchVGCore/TouchVGCore.xcodeproj; sourceTree = "<group>"; };
 		AE03795D181FB31E0049931F /* pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil.png; sourceTree = "<group>"; };
+		AE208E6C18868B7700FE68E1 /* libDemoCmds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDemoCmds.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos/libDemoCmds.a"; sourceTree = "<group>"; };
+		AE208E6D18868B7700FE68E1 /* libTouchVG.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTouchVG.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos/libTouchVG.a"; sourceTree = "<group>"; };
+		AE208E6E18868B7700FE68E1 /* libTouchVGCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTouchVGCore.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos/libTouchVGCore.a"; sourceTree = "<group>"; };
+		AE208E7218868BB700FE68E1 /* libSVGKit-iOS.1.2.0pre.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libSVGKit-iOS.1.2.0pre.a"; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos/libSVGKit-iOS.1.2.0pre.a"; sourceTree = "<group>"; };
 		AE252D29181FC93300884B5C /* AnimatedPathView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedPathView1.h; sourceTree = "<group>"; };
 		AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnimatedPathView1.mm; sourceTree = "<group>"; };
 		AE252D2F181FCB0700884B5C /* pencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pencil@2x.png"; sourceTree = "<group>"; };
@@ -112,11 +50,8 @@
 		AE53750C177D26980050CC4F /* GiGraphView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiGraphView1.h; sourceTree = "<group>"; };
 		AE53750D177D26980050CC4F /* GiGraphView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiGraphView1.mm; sourceTree = "<group>"; };
 		AE815F341718EDCB006BC607 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DemoCmds.xcodeproj; path = ../../DemoCmds/DemoCmds.xcodeproj; sourceTree = "<group>"; };
-		AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchVG.xcodeproj; path = ../../TouchVG/TouchVG.xcodeproj; sourceTree = "<group>"; };
 		AE97A1AD186D538D00DFEA77 /* libDemoCmds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDemoCmds.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-aptrtuozhsetvlaucaunnldzugbi/Build/Products/Debug-iphoneos/libDemoCmds.a"; sourceTree = "<group>"; };
 		AE97A1AF186D539000DFEA77 /* libTouchVG.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTouchVG.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-aptrtuozhsetvlaucaunnldzugbi/Build/Products/Debug-iphoneos/libTouchVG.a"; sourceTree = "<group>"; };
-		AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "SVGKit-iOS.xcodeproj"; path = "../../../../SVGKit/SVGKit-iOS.xcodeproj"; sourceTree = "<group>"; };
 		AEADC21D16EB570800484962 /* LargeView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargeView1.h; sourceTree = "<group>"; };
 		AEADC21E16EB570800484962 /* LargeView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LargeView1.mm; sourceTree = "<group>"; };
 		AEF2D526160964BA00DDB7F2 /* TestView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,10 +76,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AEA5E49618729F3B00C5EC49 /* libSVGKit-iOS.1.2.0pre.a in Frameworks */,
-				027CB28918715FBC00C18ECE /* libTouchVGCore.a in Frameworks */,
-				AE97A1B2186D592600DFEA77 /* libTouchVG.a in Frameworks */,
-				AE97A1B1186D592300DFEA77 /* libDemoCmds.a in Frameworks */,
 				AE3B011D18110A610004AAC7 /* libxml2.dylib in Frameworks */,
 				AE3B011B18110A370004AAC7 /* CoreText.framework in Frameworks */,
 				AE815F351718EDCB006BC607 /* QuartzCore.framework in Frameworks */,
@@ -157,14 +88,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		027CB27E18715F9E00C18ECE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				027CB28218715F9E00C18ECE /* libTouchVGCore.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AE0762FD160AAE3A00518207 /* Test */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,46 +102,10 @@
 			name = Test;
 			sourceTree = "<group>";
 		};
-		AE34D03117F905DE004BC88B /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */,
-				027CB27D18715F9E00C18ECE /* TouchVGCore.xcodeproj */,
-				AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */,
-				AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */,
-			);
-			name = lib;
-			sourceTree = "<group>";
-		};
-		AEA5E48E18729ABA00C5EC49 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AEA5E49218729ABA00C5EC49 /* libSVGKit-iOS.1.2.0pre.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AED5E69B186EF0CE00D8CA3E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AED5E69F186EF0CE00D8CA3E /* libDemoCmds.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AED5E6A0186F179000D8CA3E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AED5E6A4186F179000D8CA3E /* libTouchVG.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AEF2D51B160964BA00DDB7F2 = {
 			isa = PBXGroup;
 			children = (
 				AE0762FD160AAE3A00518207 /* Test */,
-				AE34D03117F905DE004BC88B /* lib */,
 				AEF2D530160964BA00DDB7F2 /* Classes */,
 				AEF2D56C1609B67200DDB7F2 /* Resources */,
 				AEF2D529160964BA00DDB7F2 /* Frameworks */,
@@ -237,6 +124,10 @@
 		AEF2D529160964BA00DDB7F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE208E7218868BB700FE68E1 /* libSVGKit-iOS.1.2.0pre.a */,
+				AE208E6C18868B7700FE68E1 /* libDemoCmds.a */,
+				AE208E6D18868B7700FE68E1 /* libTouchVG.a */,
+				AE208E6E18868B7700FE68E1 /* libTouchVGCore.a */,
 				AE97A1AF186D539000DFEA77 /* libTouchVG.a */,
 				AE97A1AD186D538D00DFEA77 /* libDemoCmds.a */,
 				AE3B011C18110A610004AAC7 /* libxml2.dylib */,
@@ -305,10 +196,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				AEA5E49418729AD000C5EC49 /* PBXTargetDependency */,
-				027CB28818715FAE00C18ECE /* PBXTargetDependency */,
-				027CB28618715FAC00C18ECE /* PBXTargetDependency */,
-				027CB28418715FA900C18ECE /* PBXTargetDependency */,
 			);
 			name = TestView;
 			productName = TestView;
@@ -334,24 +221,6 @@
 			mainGroup = AEF2D51B160964BA00DDB7F2;
 			productRefGroup = AEF2D527160964BA00DDB7F2 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = AED5E69B186EF0CE00D8CA3E /* Products */;
-					ProjectRef = AE97A1A9186D536500DFEA77 /* DemoCmds.xcodeproj */;
-				},
-				{
-					ProductGroup = AEA5E48E18729ABA00C5EC49 /* Products */;
-					ProjectRef = AEA5E48D18729ABA00C5EC49 /* SVGKit-iOS.xcodeproj */;
-				},
-				{
-					ProductGroup = AED5E6A0186F179000D8CA3E /* Products */;
-					ProjectRef = AE97A1AB186D536D00DFEA77 /* TouchVG.xcodeproj */;
-				},
-				{
-					ProductGroup = 027CB27E18715F9E00C18ECE /* Products */;
-					ProjectRef = 027CB27D18715F9E00C18ECE /* TouchVGCore.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				AEF2D525160964BA00DDB7F2 /* TestView */,
@@ -359,48 +228,15 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		027CB28218715F9E00C18ECE /* libTouchVGCore.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libTouchVGCore.a;
-			remoteRef = 027CB28118715F9E00C18ECE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AEA5E49218729ABA00C5EC49 /* libSVGKit-iOS.1.2.0pre.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libSVGKit-iOS.1.2.0pre.a";
-			remoteRef = AEA5E49118729ABA00C5EC49 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AED5E69F186EF0CE00D8CA3E /* libDemoCmds.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libDemoCmds.a;
-			remoteRef = AED5E69E186EF0CE00D8CA3E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AED5E6A4186F179000D8CA3E /* libTouchVG.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libTouchVG.a;
-			remoteRef = AED5E6A3186F179000D8CA3E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		AEF2D524160964BA00DDB7F2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE97A1AA186D536500DFEA77 /* DemoCmds.xcodeproj in Resources */,
 				AEF2D56F1609B67200DDB7F2 /* app57.png in Resources */,
 				AEF2D5701609B67200DDB7F2 /* app72.png in Resources */,
 				AE34D03717F91762004BC88B /* TouchVG.bundle in Resources */,
 				AE3B01151811064D0004AAC7 /* fonts.svg in Resources */,
-				AE97A1AC186D536D00DFEA77 /* TouchVG.xcodeproj in Resources */,
 				AE03795E181FB31E0049931F /* pencil.png in Resources */,
 				AE252D30181FCB0700884B5C /* pencil@2x.png in Resources */,
 			);
@@ -427,34 +263,12 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		027CB28418715FA900C18ECE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = TouchVGCore;
-			targetProxy = 027CB28318715FA900C18ECE /* PBXContainerItemProxy */;
-		};
-		027CB28618715FAC00C18ECE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = TouchVG;
-			targetProxy = 027CB28518715FAC00C18ECE /* PBXContainerItemProxy */;
-		};
-		027CB28818715FAE00C18ECE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = DemoCmds;
-			targetProxy = 027CB28718715FAE00C18ECE /* PBXContainerItemProxy */;
-		};
-		AEA5E49418729AD000C5EC49 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "SVGKit-iOS";
-			targetProxy = AEA5E49318729AD000C5EC49 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
 		AEF2D54E160964BA00DDB7F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -479,7 +293,8 @@
 					../../view/include,
 					"../../../core/democmds/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -491,6 +306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -508,7 +324,8 @@
 					../../view/include,
 					"../../../core/democmds/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -523,6 +340,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../Classes/Prefix.pch;
 				INFOPLIST_FILE = ../Classes/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"-lTouchVGCore",
+					"-lTouchVG",
+					"-lDemoCmds",
+					"-lSVGKit-iOS.1.2.0pre",
+				);
 				PRODUCT_NAME = TestView;
 				PUBLIC_HEADERS_FOLDER_PATH = "";
 				WRAPPER_EXTENSION = app;
@@ -535,6 +362,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../Classes/Prefix.pch;
 				INFOPLIST_FILE = ../Classes/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos",
+				);
+				OTHER_LDFLAGS = (
+					"-lTouchVGCore",
+					"-lTouchVG",
+					"-lDemoCmds",
+					"-lSVGKit-iOS.1.2.0pre",
+				);
 				PRODUCT_NAME = TestView;
 				PUBLIC_HEADERS_FOLDER_PATH = "";
 				WRAPPER_EXTENSION = app;

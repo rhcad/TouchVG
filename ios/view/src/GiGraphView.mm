@@ -132,7 +132,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 - (void)drawRect:(CGRect)rect {
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
-    long hDoc = coreView->MgCoreView::acquireFrontDoc();
+    long hDoc = coreView->acquireFrontDoc();
     long hGs = coreView->acquireGraphics(_adapter);
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
@@ -245,7 +245,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 - (IBAction)onContextAction:(id)sender {
     UIView *btn = (UIView *)sender;
-    int action = btn ? btn.tag : 0;
+    int action = btn ? (int)btn.tag : 0;
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(hideContextActions) object:nil];
@@ -432,7 +432,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     }
     
     CGPoint pt = [sender locationInView:sender.view];
-    const int touchCount = [sender numberOfTouches];
+    const int touchCount = (int)[sender numberOfTouches];
     BOOL ret = YES;
     
     if (sender.state == UIGestureRecognizerStatePossible) { // 检查手势的有效性

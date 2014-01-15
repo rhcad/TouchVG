@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		AE037956181FA29B0049931F /* GiShapeAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE037955181FA29B0049931F /* GiShapeAdapter.h */; };
 		AE037959181FA2CD0049931F /* GiShapeAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE037958181FA2CD0049931F /* GiShapeAdapter.mm */; };
+		AE208E5718867EA500FE68E1 /* ImageCache.mm in Headers */ = {isa = PBXBuildFile; fileRef = AEC3381F180E28520029D7B3 /* ImageCache.mm */; };
+		AE208E5818867EA500FE68E1 /* GiViewAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = AE3A618017EE7CC600B23F69 /* GiViewAdapter.mm */; };
+		AE208E5918867EA500FE68E1 /* GiViewHelper.mm in Headers */ = {isa = PBXBuildFile; fileRef = AEF1B1D917E29D36005B5132 /* GiViewHelper.mm */; };
+		AE208E5A18867EA500FE68E1 /* GiGraphView.mm in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A6A178FC617000194AE /* GiGraphView.mm */; };
+		AE208E5B18867EA500FE68E1 /* GiCanvasAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A6B178FC617000194AE /* GiCanvasAdapter.mm */; };
+		AE208E5C18867EA500FE68E1 /* GiShapeAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = AE037958181FA2CD0049931F /* GiShapeAdapter.mm */; };
 		AE2A3A4D178FC511000194AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3A4C178FC511000194AE /* Foundation.framework */; };
 		AE2A3A67178FC608000194AE /* GiGraphView.h in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A65178FC608000194AE /* GiGraphView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE2A3A68178FC608000194AE /* GiCanvasAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A66178FC608000194AE /* GiCanvasAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -419,6 +425,12 @@
 				AEF1B1D817E29D2C005B5132 /* GiViewHelper.h in Headers */,
 				AE2A3A67178FC608000194AE /* GiGraphView.h in Headers */,
 				AE2A3A68178FC608000194AE /* GiCanvasAdapter.h in Headers */,
+				AE208E5718867EA500FE68E1 /* ImageCache.mm in Headers */,
+				AE208E5818867EA500FE68E1 /* GiViewAdapter.mm in Headers */,
+				AE208E5918867EA500FE68E1 /* GiViewHelper.mm in Headers */,
+				AE208E5A18867EA500FE68E1 /* GiGraphView.mm in Headers */,
+				AE208E5B18867EA500FE68E1 /* GiCanvasAdapter.mm in Headers */,
+				AE208E5C18867EA500FE68E1 /* GiShapeAdapter.mm in Headers */,
 				AEE5C71017E17D1100AFF74D /* GiGraphViewImpl.h in Headers */,
 				AEC33820180E28520029D7B3 /* ImageCache.h in Headers */,
 				AE3B0111181104F60004AAC7 /* SVGKImage.h in Headers */,
@@ -524,6 +536,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -541,7 +554,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -550,6 +564,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -560,7 +575,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -573,7 +588,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TouchVG/Prefix.pch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = /TouchVG/include;
+				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -585,7 +600,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TouchVG/Prefix.pch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = /TouchVG/include;
+				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
