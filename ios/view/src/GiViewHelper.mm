@@ -9,6 +9,8 @@
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
+#define IOSLIBVERSION     50
+
 GiColor CGColorToGiColor(CGColorRef color) {
     size_t num = CGColorGetNumberOfComponents(color);
     CGColorSpaceModel space = CGColorSpaceGetModel(CGColorGetColorSpace(color));
@@ -33,6 +35,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
 @synthesize shapeCount, selectedCount, selectedType, selectedShapeID, content, changeCount;
 @synthesize command, lineWidth, strokeWidth, lineColor, lineAlpha;
 @synthesize lineStyle, fillColor, fillAlpha;
+
++ (NSString *)version {
+    return [NSString stringWithFormat:@"1.0.%d.%d", IOSLIBVERSION, GiCoreView::getVersion()];
+}
 
 - (id)initWithView:(GiGraphView *)view {
     self = [super init];

@@ -16,6 +16,7 @@
 
 + (id)instance:(GiGraphView *)view;                 //!< 创建一个自动释放的本类对象，传入nil时取当前绘图视图
 - (id)initWithView:(GiGraphView *)view;             //!< 供上一函数(instance:)使用的初始化函数
++ (NSString *)version;                              //!< 返回本库的版本号, 1.0.ioslibver.corelibver
 
 + (GiGraphView *)activeView;                        //!< 得到当前激活的绘图视图
 - (GiGraphView *)createGraphView:(CGRect)frame :(UIView *)parentView;   //!< 创建普通图形视图，并记到本类
