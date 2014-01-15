@@ -172,8 +172,8 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public int getVersion() {
-    int ret = touchvgPINVOKE.GiCoreView_getVersion(swigCPtr);
+  public static int getVersion() {
+    int ret = touchvgPINVOKE.GiCoreView_getVersion();
     return ret;
   }
 

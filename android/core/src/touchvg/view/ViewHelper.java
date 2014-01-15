@@ -17,6 +17,7 @@ import touchvg.view.internal.ViewUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -26,11 +27,13 @@ import android.widget.FrameLayout;
 /*! \ingroup GROUP_ANDROID
  */
 public class ViewHelper {
+    private static final String TAG = "touchvg";
     private GraphView mView;
     private static int JARVERSION = 50;
     
     static {
         System.loadLibrary("touchvg");  // 加载绘图内核动态库，以便访问JNI
+        Log.i(TAG, "TouchVG V" + getVersion());
     }
     
     //! 返回绘图包的版本号，1.0.jarver.sover

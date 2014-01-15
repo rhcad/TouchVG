@@ -175,6 +175,11 @@ public class GiTransform : IDisposable {
     return ret;
   }
 
+  public Box2d getWndRect() {
+    Box2d ret = new Box2d(touchvgPINVOKE.GiTransform_getWndRect(swigCPtr), true);
+    return ret;
+  }
+
   public float getMinViewScale() {
     float ret = touchvgPINVOKE.GiTransform_getMinViewScale(swigCPtr);
     return ret;

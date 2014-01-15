@@ -30,9 +30,6 @@ public interface GraphView {
     //! 释放临时缓存
     public void clearCachedData();
 
-    //! 设置背景色
-    public void setBackgroundColor(int color);
-
     //! 是否允许上下文操作
     public void setContextActionEnabled(boolean enabled);
 

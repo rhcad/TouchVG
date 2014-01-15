@@ -162,6 +162,10 @@ public class GiGraphics : IDisposable {
     touchvgPINVOKE.GiGraphics_setMaxPenWidth__SWIG_1(swigCPtr, pixels);
   }
 
+  public static void setPenWidthFactor(float factor) {
+    touchvgPINVOKE.GiGraphics_setPenWidthFactor(factor);
+  }
+
   public bool drawLine(GiContext ctx, Point2d startPt, Point2d endPt, bool modelUnit) {
     bool ret = touchvgPINVOKE.GiGraphics_drawLine__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), Point2d.getCPtr(startPt), Point2d.getCPtr(endPt), modelUnit);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();

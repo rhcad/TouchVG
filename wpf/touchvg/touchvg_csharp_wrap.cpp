@@ -11821,6 +11821,18 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GiTransform_getWndRectM(void * jarg1) {
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiTransform_getWndRect(void * jarg1) {
+  void * jresult ;
+  GiTransform *arg1 = (GiTransform *) 0 ;
+  Box2d result;
+  
+  arg1 = (GiTransform *)jarg1; 
+  result = ((GiTransform const *)arg1)->getWndRect();
+  jresult = new Box2d((const Box2d &)result); 
+  return jresult;
+}
+
+
 SWIGEXPORT float SWIGSTDCALL CSharp_GiTransform_getMinViewScale(void * jarg1) {
   float jresult ;
   GiTransform *arg1 = (GiTransform *) 0 ;
@@ -12928,6 +12940,14 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GiGraphics_setMaxPenWidth__SWIG_1(void * jarg
   arg1 = (GiGraphics *)jarg1; 
   arg2 = (float)jarg2; 
   (arg1)->setMaxPenWidth(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiGraphics_setPenWidthFactor(float jarg1) {
+  float arg1 ;
+  
+  arg1 = (float)jarg1; 
+  GiGraphics::setPenWidthFactor(arg1);
 }
 
 
@@ -29163,13 +29183,11 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_getGestureState(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_getVersion(void * jarg1) {
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_getVersion() {
   int jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
   int result;
   
-  arg1 = (GiCoreView *)jarg1; 
-  result = (int)(arg1)->getVersion();
+  result = (int)GiCoreView::getVersion();
   jresult = result; 
   return jresult;
 }

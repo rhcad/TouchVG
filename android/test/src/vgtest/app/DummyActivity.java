@@ -9,11 +9,13 @@ import touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
 public class DummyActivity extends Activity {
+    private static final String TAG = "DummyActivity";
     private static final String FILEPATH = "mnt/sdcard/TouchVG";
     
     @Override
@@ -48,9 +50,9 @@ public class DummyActivity extends Activity {
                 layout.addView(view, params);
                 
                 if (view instanceof GraphView) {
-                    view = ((GraphView)view).createDynamicShapeView(this);
-                    if (view != null) {
-                        layout.addView(view, params);
+                    final View dynview = ((GraphView)view).createDynamicShapeView(this);
+                    if (dynview != null) {
+                        layout.addView(dynview, params);
                     }
                 }
             }
@@ -71,6 +73,7 @@ public class DummyActivity extends Activity {
         String filename = FILEPATH + "/resume.vg";
         
         if (helper.saveToFile(filename)) {
+            Log.d(TAG, "Auto save to " + filename);
             outState.putString("file", filename);
             outState.putString("cmd", helper.getCommand());
             
@@ -87,6 +90,7 @@ public class DummyActivity extends Activity {
         String filename = savedInstanceState.getString("file");
         
         if (helper.loadFromFile(filename)) {
+            Log.d(TAG, "Auto load from " + filename);
             helper.setCommand(savedInstanceState.getString("cmd"));
         }
     }

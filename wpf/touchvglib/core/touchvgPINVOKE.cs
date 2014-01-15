@@ -1554,6 +1554,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_GiTransform_getWndRectM")]
   public static extern IntPtr GiTransform_getWndRectM(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_GiTransform_getWndRect")]
+  public static extern IntPtr GiTransform_getWndRect(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_GiTransform_getMinViewScale")]
   public static extern float GiTransform_getMinViewScale(HandleRef jarg1);
 
@@ -1775,6 +1778,9 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_GiGraphics_setMaxPenWidth__SWIG_1")]
   public static extern void GiGraphics_setMaxPenWidth__SWIG_1(HandleRef jarg1, float jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiGraphics_setPenWidthFactor")]
+  public static extern void GiGraphics_setPenWidthFactor(float jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiGraphics_drawLine__SWIG_0")]
   public static extern bool GiGraphics_drawLine__SWIG_0(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, HandleRef jarg4, bool jarg5);
@@ -5350,7 +5356,7 @@ class touchvgPINVOKE {
   public static extern int GiCoreView_getGestureState(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getVersion")]
-  public static extern int GiCoreView_getVersion(HandleRef jarg1);
+  public static extern int GiCoreView_getVersion();
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isPressDragging")]
   public static extern bool GiCoreView_isPressDragging(HandleRef jarg1);

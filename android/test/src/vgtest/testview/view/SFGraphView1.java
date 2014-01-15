@@ -6,6 +6,7 @@ import touchvg.view.SFGraphView;
 import touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
+import android.view.ViewGroup;
 
 public class SFGraphView1 extends SFGraphView {
 
@@ -30,6 +31,17 @@ public class SFGraphView1 extends SFGraphView {
         }
         else if ((flags >> 1) == 3) {
             helper.setCommand("lines");
+        }
+    }
+    
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        
+        int flags = ((Activity) getContext()).getIntent().getExtras().getInt("flags");
+        if ((flags & 256) != 0) {
+            ViewGroup layout = (ViewGroup)getParent();
+            super.setBackground(layout.getBackground());
         }
     }
 }

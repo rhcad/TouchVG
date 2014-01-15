@@ -35,18 +35,20 @@ public class ViewFactory {
         addItem("vgtest.testview.shape.TestDragView", 0, "TestDragView");
         addItem("vgtest.testview.shape.TestInsertSVG", 0, "TestInsertSVG");
         
-        addItem("vgtest.testview.view.GraphView1", 1<<1, "GraphView splines");
-        addItem("vgtest.testview.view.GraphView1", 32|(1<<1), "GraphView draw");
-        addItem("vgtest.testview.view.GraphView1", 2<<1, "GraphView line");
-        addItem("vgtest.testview.view.GraphView1", 3<<1, "GraphView lines");
-        addItem("vgtest.testview.view.GraphView1", 32|(4<<1), "GraphView hittest in democmds");
-        addItem("vgtest.testview.view.GraphView1", 32|1, "GraphView select");
+        addItem("vgtest.testview.view.GraphView1", 1<<1, "StdGraphView splines");
+        addItem("vgtest.testview.view.GraphView1", 32|(1<<1), "StdGraphView draw");
+        addItem("vgtest.testview.view.GraphView1", 2<<1, "StdGraphView line");
+        addItem("vgtest.testview.view.GraphView1", 3<<1, "StdGraphView lines");
+        addItem("vgtest.testview.view.GraphView1", 32|(4<<1), "StdGraphView hittest in democmds");
+        addItem("vgtest.testview.view.GraphView1", 32|1, "StdGraphView select");
         
         addItem("vgtest.testview.view.SFGraphView1", 1<<1, "SFGraphView splines");
         addItem("vgtest.testview.view.SFGraphView1", 32|(1<<1), "SFGraphView draw");
         addItem("vgtest.testview.view.SFGraphView1", 2<<1, "SFGraphView line");
         addItem("vgtest.testview.view.SFGraphView1", 3<<1, "SFGraphView lines");
         addItem("vgtest.testview.view.SFGraphView1", 32|1, "SFGraphView select");
+        addItem("vgtest.testview.view.SFGraphView1", 256|32|1, "SFGraphView select transparent");
+        addItem("vgtest.testview.view.SFGraphView1", 256|32|(1<<1), "SFGraphView draw transparent");
         
         addItem("vgtest.testview.view.TestMagnifier1", 1<<1, "TestMagnifier");
         addItem("vgtest.testview.view.TestMagnifier1", 16|(1<<1), "TestMagnifier, 2 views");
