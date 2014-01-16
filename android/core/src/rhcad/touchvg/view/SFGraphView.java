@@ -216,7 +216,7 @@ public class SFGraphView extends SurfaceView implements GraphView {
                     mCanvasAdapter.endPaint();
                     
                     if (mDynDrawRender != null)
-                        mDynDrawRender.reset(oldcnt);
+                        mDynDrawRender.afterRegen(oldcnt);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -285,12 +285,14 @@ public class SFGraphView extends SurfaceView implements GraphView {
             return n;
         }
         
-        public void reset(int count) {
+        public void afterRegen(int count) {
             count = Math.min(count, getAppendCount());
             for (int i = 0, j = count; i < mAppendShapeIDs.length; i++, j++) {
                 mAppendShapeIDs[i] = j < mAppendShapeIDs.length ? mAppendShapeIDs[j] : 0;
             }
-            requestRender();
+            if (count > 0) {
+                requestRender();
+            }
         }
         
         public void requestAppendRender(int sid) {

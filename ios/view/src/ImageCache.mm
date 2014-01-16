@@ -4,6 +4,7 @@
 
 #import "ImageCache.h"
 #import "SVGKImage.h"
+#import "ARCMacro.h"
 
 @implementation ImageCache
 
@@ -17,6 +18,7 @@
 
 - (void)clearCachedData {
     [_images removeAllObjects];
+    [_images RELEASE];
 }
 
 - (UIImage *)loadImage:(NSString *)name {
@@ -117,6 +119,7 @@
             image = [[UIImage alloc]initWithContentsOfFile:filename];
             if (image && image.size.width > 1) {
                 [_images setObject:image forKey:*name];
+                [image RELEASE];
                 size = image.size;
             }
         }

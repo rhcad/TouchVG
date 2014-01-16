@@ -4,6 +4,7 @@
 
 #import "GiGraphViewImpl.h"
 #import "ImageCache.h"
+#import "ARCMacro.h"
 
 static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"取消",
     @"删除", @"克隆", @"定长", @"不定长", @"锁定", @"解锁", @"编辑", @"返回",
@@ -35,15 +36,26 @@ static NSString* const IMAGENAMES[] = { nil, @"vg_selall.png", nil, @"vg_draw.pn
 
 @end
 
+#define APPENDSIZE sizeof(_appendIDs)/sizeof(_appendIDs[0])
+
 GiViewAdapter::GiViewAdapter(GiGraphView *mainView, GiCoreView *coreView)
-    : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil), _actionEnabled(true)
+    : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
+    , _actionEnabled(true)
 {
     _coreView = new GiCoreView(coreView);
     memset(&respondsTo, 0, sizeof(respondsTo));
     _imageCache = [[ImageCache alloc]init];
+    _render = [[GiLayerRender alloc]initWithAdapter:this];
+    
+    for (int i = 0; i < APPENDSIZE; i++)
+        _appendIDs[i] = 0;
 }
 
 GiViewAdapter::~GiViewAdapter() {
+    [_buttons RELEASE];
+    [_buttonImages RELEASE];
+    [_imageCache RELEASE];
+    [_render RELEASE];
     _coreView->destoryView(this);
     delete _coreView;
 }
@@ -55,26 +67,59 @@ void GiViewAdapter::clearCachedData() {
     _coreView->clearCachedData();
 }
 
-void GiViewAdapter::regenAll(bool changed) {
-    if (isMainThread()) {
-        regen_(changed);
+int GiViewAdapter::getAppendCount() const {
+    int n = 0;
+    for (int i = 0; i < APPENDSIZE; i++) {
+        if (_appendIDs[i] != 0) {
+            n++;
+        }
     }
-    else {
-        dispatch_async(dispatch_get_main_queue(), ^{ regen_(changed); });
+    return n;
+}
+
+void GiViewAdapter::afterRegen(int count) {
+    count = MIN(count, getAppendCount());
+    for (int i = 0, j = count; i < APPENDSIZE; i++, j++) {
+        _appendIDs[i] = j < APPENDSIZE ? _appendIDs[j] : 0;
+    }
+    [_view setNeedsDisplay];
+    if (count > 0) {
+        [_dynview setNeedsDisplay];
     }
 }
 
-void GiViewAdapter::regen_(bool changed) {
+void GiViewAdapter::regenAll(bool changed) {
+    if (isMainThread()) {
+        regen_(changed, 0);
+    }
+    else {
+        dispatch_async(dispatch_get_main_queue(), ^{ regen_(changed, 0); });
+    }
+}
+
+void GiViewAdapter::regen_(bool changed, int sid) {
     if (changed) {
         _coreView->submitBackDoc();
     }
     _coreView->submitDynamicShapes(this);
-    [_view setNeedsDisplay];
+    
+    for (int i = 0; i < APPENDSIZE; i++) {
+        if (_appendIDs[i] == 0) {
+            _appendIDs[i] = sid;
+            break;
+        }
+    }
+    [_render startRender];
     [_dynview setNeedsDisplay];
 }
 
 void GiViewAdapter::regenAppend(int sid) {
-    regenAll(true);
+    if (isMainThread()) {
+        regen_(true, sid);
+    }
+    else {
+        dispatch_async(dispatch_get_main_queue(), ^{ regen_(true, sid); });
+    }
 }
 
 void GiViewAdapter::stopRegen() {
@@ -86,6 +131,7 @@ UIView *GiViewAdapter::getDynView() {
         _dynview = [[IosTempView alloc]initView:_view.frame :this];
         _dynview.autoresizingMask = _view.autoresizingMask;
         [_view.superview addSubview:_dynview];
+        [_dynview RELEASE];
     }
     return _dynview;
 }
@@ -196,6 +242,7 @@ bool GiViewAdapter::showContextActions(const mgvector<int>& actions,
         btn.frame = [btnParent convertRect:btn.frame fromView:_view];
         [btnParent addSubview:btn];
         [_buttons addObject:btn];
+        [btn RELEASE];
     }
     [_view performSelector:@selector(onContextActionsDisplay:) withObject:_buttons];
     

@@ -4,6 +4,7 @@
 
 #import "GiGraphViewImpl.h"
 #import "ImageCache.h"
+#import "ARCMacro.h"
 
 #pragma mark - IosTempView
 @implementation IosTempView
@@ -30,6 +31,62 @@
     }
     coreView->releaseShapes(hShapes);
     coreView->releaseGraphics(_adapter, hGs);
+}
+
+@end
+
+@implementation GiLayerRender
+
+- (id)initWithAdapter:(GiViewAdapter *)adapter {
+    self = [super init];
+    if (self) {
+        _adapter = adapter;
+        _layer = [[CALayer alloc]init];
+        _layer.delegate = self;
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [_layer RELEASE];
+    [super DEALLOC];
+}
+
+- (CALayer *)getLayer {
+    return _layer;
+}
+
+- (void)startRender {
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [_layer setNeedsDisplay];
+        [_layer display];
+    });
+}
+
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
+    GiCanvasAdapter canvas(_adapter->imageCache());
+    GiCoreView* coreView = _adapter->coreView();
+    __block long hDoc, hGs, oldcnt;
+    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        oldcnt = _adapter->getAppendCount();
+        hDoc = coreView->acquireFrontDoc();
+        hGs = coreView->acquireGraphics(_adapter);
+        coreView->onSize(_adapter, _adapter->mainView().bounds.size.width,
+                         _adapter->mainView().bounds.size.height);
+    });
+    
+    if (canvas.beginPaint(ctx)) {
+        CGContextClearRect(ctx, _adapter->mainView().bounds);
+        coreView->drawAll(hDoc, hGs, &canvas);
+        canvas.endPaint();
+    }
+    coreView->releaseDoc(hDoc);
+    coreView->releaseGraphics(_adapter, hGs);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _adapter->afterRegen((int)oldcnt);
+    });
 }
 
 @end
@@ -65,6 +122,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     if (_activeGraphView == self)
         _activeGraphView = nil;
     delete _adapter;
+    [super DEALLOC];
 }
 
 - (void)initView:(GiView*)mainView :(GiCoreView*)coreView {
@@ -130,17 +188,10 @@ GiColor CGColorToGiColor(CGColorRef color);
 #pragma mark - GiGraphView drawRect
 
 - (void)drawRect:(CGRect)rect {
-    GiCanvasAdapter canvas(_adapter->imageCache());
-    GiCoreView* coreView = _adapter->coreView();
-    long hDoc = coreView->acquireFrontDoc();
-    long hGs = coreView->acquireGraphics(_adapter);
-    
-    if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
-        coreView->drawAll(hDoc, hGs, &canvas);
-        canvas.endPaint();
+    CALayer *renderLayer = _adapter->getLayer();
+    if (renderLayer) {
+        [renderLayer renderInContext:UIGraphicsGetCurrentContext()];
     }
-    coreView->releaseDoc(hDoc);
-    coreView->releaseGraphics(_adapter, hGs);
 }
 
 + (GiGraphView *)activeView {

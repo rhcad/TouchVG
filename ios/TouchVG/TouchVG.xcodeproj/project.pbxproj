@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02A4C4101888838700F5188B /* ARCMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = 02A4C40F1888838700F5188B /* ARCMacro.h */; };
 		AE037956181FA29B0049931F /* GiShapeAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE037955181FA29B0049931F /* GiShapeAdapter.h */; };
 		AE037959181FA2CD0049931F /* GiShapeAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE037958181FA2CD0049931F /* GiShapeAdapter.mm */; };
 		AE208E5718867EA500FE68E1 /* ImageCache.mm in Headers */ = {isa = PBXBuildFile; fileRef = AEC3381F180E28520029D7B3 /* ImageCache.mm */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02A4C40F1888838700F5188B /* ARCMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARCMacro.h; path = ../../view/include/ARCMacro.h; sourceTree = "<group>"; };
 		AE037955181FA29B0049931F /* GiShapeAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiShapeAdapter.h; path = ../../view/include/GiShapeAdapter.h; sourceTree = "<group>"; };
 		AE037958181FA2CD0049931F /* GiShapeAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiShapeAdapter.mm; path = ../../view/src/GiShapeAdapter.mm; sourceTree = "<group>"; };
 		AE2A3A49178FC511000194AE /* libTouchVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -391,6 +393,7 @@
 		AEF1B1DB17E29D76005B5132 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				02A4C40F1888838700F5188B /* ARCMacro.h */,
 				AEF1B1D717E29D2C005B5132 /* GiViewHelper.h */,
 				AE2A3A65178FC608000194AE /* GiGraphView.h */,
 				AE2A3A66178FC608000194AE /* GiCanvasAdapter.h */,
@@ -428,6 +431,7 @@
 				AE208E5718867EA500FE68E1 /* ImageCache.mm in Headers */,
 				AE208E5818867EA500FE68E1 /* GiViewAdapter.mm in Headers */,
 				AE208E5918867EA500FE68E1 /* GiViewHelper.mm in Headers */,
+				02A4C4101888838700F5188B /* ARCMacro.h in Headers */,
 				AE208E5A18867EA500FE68E1 /* GiGraphView.mm in Headers */,
 				AE208E5B18867EA500FE68E1 /* GiCanvasAdapter.mm in Headers */,
 				AE208E5C18867EA500FE68E1 /* GiShapeAdapter.mm in Headers */,

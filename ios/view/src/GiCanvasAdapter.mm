@@ -3,6 +3,7 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import "ImageCache.h"
+#import "ARCMacro.h"
 #include "GiCanvasAdapter.h"
 #include <sys/sysctl.h>
 
@@ -303,6 +304,7 @@ float GiCanvasAdapter::drawTextAt(const char* text, float x, float y, float h, i
     
     x -= (align == 2) ? actsize.width : ((align == 1) ? actsize.width / 2 : 0);
     [str drawAtPoint:CGPointMake(x, y) withFont:font];  // 显示文字
+    [str RELEASE];
     
     UIGraphicsPopContext();
     

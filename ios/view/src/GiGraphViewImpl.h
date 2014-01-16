@@ -21,6 +21,18 @@ class GiViewAdapter;
 
 @end
 
+//! 在层上显示图形的渲染类
+@interface GiLayerRender : NSObject {
+    CALayer     *_layer;
+    GiViewAdapter   *_adapter;
+}
+
+- (id)initWithAdapter:(GiViewAdapter *)adapter;
+- (void)startRender;
+- (CALayer *)getLayer;
+
+@end
+
 //! iOS绘图视图适配器
 class GiViewAdapter : public GiView
 {
@@ -32,6 +44,8 @@ private:
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     ImageCache  *_imageCache;           //!< 图像对象缓存
     bool        _actionEnabled;         //!< 是否允许上下文操作
+    int         _appendIDs[10];         //!< 还未来得及重构显示的新增图形的ID
+    GiLayerRender   *_render;           //!< 后台渲染对象
     
 public:
     std::vector<id> delegates;  //!< GiGraphViewDelegate 观察者数组
@@ -52,6 +66,10 @@ public:
     void clearCachedData();
     void stopRegen();
     bool isMainThread() const;
+    
+    int getAppendCount() const;
+    void afterRegen(int count);
+    CALayer* getLayer() { return [_render getLayer]; }
     
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);
@@ -74,7 +92,7 @@ public:
     
 private:
     void setContextButton(UIButton *btn, NSString *caption, NSString *imageName);
-    void regen_(bool changed);
+    void regen_(bool changed, int sid);
     void redraw_();
 };
 
