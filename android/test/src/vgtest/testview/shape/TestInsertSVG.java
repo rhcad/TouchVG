@@ -7,6 +7,7 @@ import vgtest.app.R;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 //! 测试插入SVG图形的视图类
@@ -20,7 +21,8 @@ public class TestInsertSVG extends LinearLayout {
         this.setOrientation(LinearLayout.VERTICAL);
         createButtons(context);
         
-        addView(mHelper.createGraphView(context), 
+        final FrameLayout layout = new FrameLayout(context);
+        addView(mHelper.createGraphView(context, layout), 
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         mHelper.setImagePath(PATH);
     }

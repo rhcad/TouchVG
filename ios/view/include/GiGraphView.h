@@ -56,12 +56,12 @@ class GiView;
 - (GiView *)viewAdapter;                    //!< 得到视图适配器对象, GiViewAdapter
 - (GiCoreView *)coreView;                   //!< 得到跨平台内核视图
 #endif
-- (long)cmdViewHandle;                      //!< 返回内核视图的句柄, MgView 指针
 
 - (UIImage *)snapshot;                      //!< 得到静态图形的快照，自动释放
 - (BOOL)savePng:(NSString *)filename;       //!< 保存静态图形的快照到PNG文件
 - (void)clearCachedData;                    //!< 释放临时数据内存
 
+- (void)setContextActionEnabled:(BOOL)en;   //!< 是否允许上下文操作
 - (void)hideContextActions;                 //!< 隐藏上下文按钮
 - (IBAction)onContextAction:(id)sender;     //!< 上下文按钮的响应函数
 

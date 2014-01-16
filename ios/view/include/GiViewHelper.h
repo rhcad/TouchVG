@@ -33,6 +33,7 @@
 @property (nonatomic,assign)  UIColor   *fillColor; //!< 填充颜色，忽略透明度，clearColor或nil表示不填充
 @property (nonatomic)         float     fillAlpha;  //!< 填充透明度, 0-1
 - (void)setContextEditing:(BOOL)editing;            //!< 线条属性是否正在动态修改
+- (BOOL)setCommand:(NSString *)name withParam:(NSString *)param;    //!< 指定名称和JSON串参数，启动命令
 
 @property(nonatomic, readonly) int shapeCount;      //!< 图形总数
 @property(nonatomic, readonly) int selectedCount;   //!< 选中的图形个数
@@ -62,7 +63,7 @@
 //! 插入一个程序资源中的PNG图片(name.png)，并指定图片的中心位置
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt;
 
-//! 在默认位置插入一个程序资源中的SVG图片(name.png)
+//! 在默认位置插入一个程序资源中的SVG图片(name.svg)
 - (int)insertSVGFromResource:(NSString *)name;
 
 //! 插入一个程序资源中的SVG图片(name.svg)，并指定图片的中心位置

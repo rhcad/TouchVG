@@ -22,15 +22,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.FrameLayout;
 
 //! Android绘图视图辅助类
 /*! \ingroup GROUP_ANDROID
  */
 public class ViewHelper {
     private static final String TAG = "touchvg";
+    private static final int JARVERSION = 50;
     private GraphView mView;
-    private static int JARVERSION = 50;
     
     static {
         System.loadLibrary("touchvg");  // 加载绘图内核动态库，以便访问JNI
@@ -79,7 +78,7 @@ public class ViewHelper {
     }
     
     //! 在指定的布局中创建SurfaceView绘图视图，并记下此视图
-    public ViewGroup createSurfaceViewInLayout(Context context, ViewGroup layout) {
+    public ViewGroup createSurfaceView(Context context, ViewGroup layout) {
         final SFGraphView view = new SFGraphView(context);
         mView = view;
         layout.addView(view, new LayoutParams(
@@ -88,18 +87,8 @@ public class ViewHelper {
         return layout;
     }
     
-    //! 自动创建FrameLayout布局，在其中创建普通绘图视图，并记下此视图
-    public FrameLayout createGraphView(Context context) {
-        final StdGraphView view = new StdGraphView(context);
-        mView = view;
-        final FrameLayout layout = new FrameLayout(context);
-        layout.addView(view, new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        return layout;
-    }
-    
     //! 在指定的布局（建议为FrameLayout）中创建普通绘图视图，并记下此视图
-    public ViewGroup createGraphViewInLayout(Context context, ViewGroup layout) {
+    public ViewGroup createGraphView(Context context, ViewGroup layout) {
         final StdGraphView view = new StdGraphView(context);
         mView = view;
         layout.addView(view, new LayoutParams(
@@ -108,7 +97,7 @@ public class ViewHelper {
     }
     
     //! 在指定的布局（建议为FrameLayout）中创建 ShapeView 绘图视图，并记下此视图
-    public ViewGroup createShapeViewInLayout(Context context, ViewGroup layout) {
+    public ViewGroup createShapeView(Context context, ViewGroup layout) {
         ShapeView view = new ShapeView(context);
         mView = view;
         layout.addView(view, new LayoutParams(
@@ -117,7 +106,7 @@ public class ViewHelper {
     }
     
     //! 在指定的布局中创建放大镜视图，并记下此视图
-    public ViewGroup createMagnifierViewInLayout(Context context, ViewGroup layout, GraphView mainView) {
+    public ViewGroup createMagnifierView(Context context, ViewGroup layout, GraphView mainView) {
         final SFGraphView view = new SFGraphView(context, mainView != null ? mainView : mView);
         mView = view;
         layout.addView(view, new LayoutParams(

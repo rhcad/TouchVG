@@ -5,13 +5,12 @@ package touchvg.demo1;
 import android.graphics.Color;
 import android.view.ViewGroup;
 
-public class ExampleActivityGL extends ExampleActivity1 {
+public class ExampleActivitySF extends ExampleActivity1 {
 
     @Override
     protected void createGraphView() {
         setContentView(R.layout.activity_example1);
         final ViewGroup layout = (ViewGroup)this.findViewById(R.id.frame);
-        mHelper.createSurfaceViewInLayout(this, layout);
-        layout.setBackgroundColor(Color.GRAY);
+        mHelper.createSurfaceView(this, layout).setBackgroundColor(Color.GRAY);
     }
 }

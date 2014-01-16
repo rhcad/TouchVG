@@ -69,7 +69,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (long)cmdViewHandle {
-    return [_view cmdViewHandle];
+    return [_view coreView]->viewAdapterHandle();
 }
 
 - (NSString *)command {
@@ -80,13 +80,17 @@ GiColor CGColorToGiColor(CGColorRef color) {
     [_view coreView]->setCommand([_view viewAdapter], [name UTF8String]);
 }
 
+- (BOOL)setCommand:(NSString *)name withParam:(NSString *)param {
+    return [_view coreView]->setCommand([_view viewAdapter], [name UTF8String], [param UTF8String]);
+}
+
 - (float)lineWidth {
     float w = [_view coreView]->getContext(false).getLineWidth();
-    return w > 1e-5f ? 100.f * w : w;
+    return w > 1e-6f ? 100.f * w : w;
 }
 
 - (void)setLineWidth:(float)value {
-    [_view coreView]->getContext(true).setLineWidth(value > 1e-5f ? value / 100.f : value, true);
+    [_view coreView]->getContext(true).setLineWidth(value > 1e-6f ? value / 100.f : value, true);
     [_view coreView]->setContext(kContextLineWidth);
 }
 

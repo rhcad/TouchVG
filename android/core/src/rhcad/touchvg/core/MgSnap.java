@@ -35,8 +35,8 @@ public class MgSnap {
     }
   }
 
-  public void clearSnap() {
-    touchvgJNI.MgSnap_clearSnap(swigCPtr, this);
+  public void clearSnap(MgMotion sender) {
+    touchvgJNI.MgSnap_clearSnap(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }
 
   public boolean drawSnap(MgMotion sender, GiGraphics gs) {

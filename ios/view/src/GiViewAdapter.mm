@@ -36,7 +36,7 @@ static NSString* const IMAGENAMES[] = { nil, @"vg_selall.png", nil, @"vg_draw.pn
 @end
 
 GiViewAdapter::GiViewAdapter(GiGraphView *mainView, GiCoreView *coreView)
-    : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
+    : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil), _actionEnabled(true)
 {
     _coreView = new GiCoreView(coreView);
     memset(&respondsTo, 0, sizeof(respondsTo));
@@ -70,6 +70,7 @@ void GiViewAdapter::regen_(bool changed) {
     }
     _coreView->submitDynamicShapes(this);
     [_view setNeedsDisplay];
+    [_dynview setNeedsDisplay];
 }
 
 void GiViewAdapter::regenAppend(int sid) {
@@ -156,7 +157,7 @@ bool GiViewAdapter::showContextActions(const mgvector<int>& actions,
     int n = actions.count();
     UIView *btnParent = _view;
     
-    if (n == 0) {
+    if (n == 0 || !_actionEnabled) {
         hideContextActions();
         return true;
     }
@@ -167,6 +168,8 @@ bool GiViewAdapter::showContextActions(const mgvector<int>& actions,
     if ([_buttons count] > 0 && _coreView->isPressDragging()) {
         return false;
     }
+    [NSObject cancelPreviousPerformRequestsWithTarget:_view
+                                             selector:@selector(hideContextActions) object:nil];
     hideContextActions();
     
     for (int i = 0; i < n; i++) {

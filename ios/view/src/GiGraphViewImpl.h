@@ -31,6 +31,7 @@ private:
     NSMutableArray *_buttons;           //!< 上下文按钮的数组
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     ImageCache  *_imageCache;           //!< 图像对象缓存
+    bool        _actionEnabled;         //!< 是否允许上下文操作
     
 public:
     std::vector<id> delegates;  //!< GiGraphViewDelegate 观察者数组
@@ -60,6 +61,7 @@ public:
                                     const mgvector<float>& buttonXY,
                                     float x, float y, float w, float h);
     void hideContextActions();
+    void setContextActionEnabled(bool enabled) { _actionEnabled = enabled; }
     
     virtual void commandChanged();
     virtual void selectionChanged();

@@ -29,6 +29,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 //! 测试自定义图形类的测试视图类
@@ -43,7 +44,8 @@ public class ViewSinShape extends LinearLayout {
         this.setOrientation(LinearLayout.VERTICAL);
         createButtons(context);
         
-        addView(mHelper.createGraphView(context), 
+        final FrameLayout layout = new FrameLayout(context);
+        addView(mHelper.createGraphView(context, layout), 
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         ViewHelper.setExtraContextImages(context, MYIMAGEIDS);

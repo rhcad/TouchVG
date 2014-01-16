@@ -18,7 +18,7 @@ public class AnimationActivity1 extends ExampleActivity1 {
         setContentView(R.layout.activity_animation1);
         
         final ViewGroup layout = (ViewGroup)this.findViewById(R.id.frame);
-        mHelper.createShapeViewInLayout(this, layout).setBackgroundColor(Color.WHITE);
+        mHelper.createShapeView(this, layout).setBackgroundColor(Color.WHITE);
         
         mHelper.getView().setContextActionEnabled(false);
         mHelper.getView().setOnSelectionChangedListener(new SelectionChangedListener() {

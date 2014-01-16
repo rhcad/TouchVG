@@ -30947,14 +30947,17 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_delete_1MgActionDispa
 }
 
 
-SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgSnap_1clearSnap(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgSnap_1clearSnap(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   MgSnap *arg1 = (MgSnap *) 0 ;
+  MgMotion *arg2 = (MgMotion *) 0 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
+  (void)jarg2_;
   arg1 = *(MgSnap **)&jarg1; 
-  (arg1)->clearSnap();
+  arg2 = *(MgMotion **)&jarg2; 
+  (arg1)->clearSnap((MgMotion const *)arg2);
 }
 
 

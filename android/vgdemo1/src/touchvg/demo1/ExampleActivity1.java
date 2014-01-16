@@ -29,8 +29,7 @@ public class ExampleActivity1 extends Activity {
     protected void createGraphView() {
         setContentView(R.layout.activity_example1);
         final ViewGroup layout = (ViewGroup)this.findViewById(R.id.frame);
-        mHelper.createGraphViewInLayout(this, layout);
-        layout.setBackgroundColor(Color.WHITE);
+        mHelper.createGraphView(this, layout).setBackgroundColor(Color.WHITE);
     }
     
     @Override

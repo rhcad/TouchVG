@@ -1313,7 +1313,7 @@ public class touchvgJNI {
   public final static native boolean MgActionDispatcher_showInDrawing(long jarg1, MgActionDispatcher jarg1_, long jarg2, MgMotion jarg2_, long jarg3, MgShape jarg3_);
   public final static native boolean MgActionDispatcher_doAction(long jarg1, MgActionDispatcher jarg1_, long jarg2, MgMotion jarg2_, int jarg3);
   public final static native void delete_MgActionDispatcher(long jarg1);
-  public final static native void MgSnap_clearSnap(long jarg1, MgSnap jarg1_);
+  public final static native void MgSnap_clearSnap(long jarg1, MgSnap jarg1_, long jarg2, MgMotion jarg2_);
   public final static native boolean MgSnap_drawSnap(long jarg1, MgSnap jarg1_, long jarg2, MgMotion jarg2_, long jarg3, GiGraphics jarg3_);
   public final static native int MgSnap_getSnappedType(long jarg1, MgSnap jarg1_);
   public final static native int MgSnap_getSnappedPoint(long jarg1, MgSnap jarg1_, long jarg2, Point2d jarg2_, long jarg3, Point2d jarg3_);

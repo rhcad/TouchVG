@@ -159,10 +159,6 @@ GiColor CGColorToGiColor(CGColorRef color);
     return _adapter->imageCache();
 }
 
-- (long)cmdViewHandle {
-    return _adapter->coreView()->viewAdapterHandle();
-}
-
 - (UIImage *)snapshot {
     [self hideContextActions];
     
@@ -237,6 +233,10 @@ GiColor CGColorToGiColor(CGColorRef color);
             break;
         }
     }
+}
+
+- (void)setContextActionEnabled:(BOOL)enabled {
+    _adapter->setContextActionEnabled(!!enabled);
 }
 
 - (void)hideContextActions {
