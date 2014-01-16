@@ -78,52 +78,32 @@ public class ViewHelper {
         return MgView.fromHandle(cmdViewHandle());
     }
     
+    //! 在指定的布局中创建SurfaceView绘图视图，并记下此视图
+    public ViewGroup createSurfaceViewInLayout(Context context, ViewGroup layout) {
+        final SFGraphView view = new SFGraphView(context);
+        mView = view;
+        layout.addView(view, new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        createDynamicShapeView(context, layout, view);
+        return layout;
+    }
+    
     //! 自动创建FrameLayout布局，在其中创建普通绘图视图，并记下此视图
     public FrameLayout createGraphView(Context context) {
-        StdGraphView view = new StdGraphView(context);
+        final StdGraphView view = new StdGraphView(context);
         mView = view;
         final FrameLayout layout = new FrameLayout(context);
         layout.addView(view, new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        
-        final View dynview = view.createDynamicShapeView(context);
-        if (dynview != null) {
-            layout.addView(dynview, new LayoutParams(
-                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        }
-        
         return layout;
     }
     
     //! 在指定的布局（建议为FrameLayout）中创建普通绘图视图，并记下此视图
     public ViewGroup createGraphViewInLayout(Context context, ViewGroup layout) {
-        StdGraphView view = new StdGraphView(context);
+        final StdGraphView view = new StdGraphView(context);
         mView = view;
         layout.addView(view, new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        
-        final View dynview = view.createDynamicShapeView(context);
-        if (dynview != null) {
-            layout.addView(dynview, new LayoutParams(
-                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        }
-        
-        return layout;
-    }
-    
-    //! 在指定的布局（建议为FrameLayout）中创建SurfaceView绘图视图，并记下此视图
-    public ViewGroup createSurfaceViewInLayout(Context context, ViewGroup layout) {
-        SFGraphView view = new SFGraphView(context);
-        mView = view;
-        layout.addView(view, new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        
-        final View dynview = view.createDynamicShapeView(context);
-        if (dynview != null) {
-            layout.addView(dynview, new LayoutParams(
-                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        }
-        
         return layout;
     }
     
@@ -136,26 +116,22 @@ public class ViewHelper {
         return layout;
     }
     
-    /**
-     * @brief 自动创建FrameLayout布局，在其中创建放大镜视图，并记下此视图
-     * @param context 视图上下文对象
-     * @param mainView 参照的主视图对象，如果为null则取本对象的视图或当前激活视图
-     * @return 容纳新绘图视图的FrameLayout布局对象
-     */
-    public FrameLayout createMagnifierView(Context context, GraphView mainView) {
-        StdGraphView view = new StdGraphView(context, mainView != null ? mainView : mView);
+    //! 在指定的布局中创建放大镜视图，并记下此视图
+    public ViewGroup createMagnifierViewInLayout(Context context, ViewGroup layout, GraphView mainView) {
+        final SFGraphView view = new SFGraphView(context, mainView != null ? mainView : mView);
         mView = view;
-        final FrameLayout layout = new FrameLayout(context);
         layout.addView(view, new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        
+        createDynamicShapeView(context, layout, view);
+        return layout;
+    }
+    
+    private void createDynamicShapeView(Context context, ViewGroup layout, GraphView view) {
         final View dynview = view.createDynamicShapeView(context);
         if (dynview != null) {
             layout.addView(dynview, new LayoutParams(
                     LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         }
-        
-        return layout;
     }
     
     //! 设置额外的上下文操作按钮的图像ID数组，其动作序号从40起

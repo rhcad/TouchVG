@@ -16,7 +16,7 @@ public class TestMagnifier1 extends LinearLayout {
 
     public TestMagnifier1(Context context) {
         super(context);
-        this.setOrientation(VERTICAL);
+        this.setOrientation(HORIZONTAL);
         
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");
         
@@ -31,12 +31,14 @@ public class TestMagnifier1 extends LinearLayout {
         magView.setBackgroundColor(Color.GREEN);
         
         if ((flags & 16) != 0) {
-            final GraphView1 view2 = new GraphView1(context);
+            final SFGraphView1 view2 = new SFGraphView1(context);
             addView(view2, param);
+            addView(view2.createDynamicShapeView(context), param);
             
             final SFGraphView magView2 = new SFGraphView(context, view2);
             addView(magView2, param);
             magView2.setBackgroundColor(Color.BLUE);
+            addView(magView2.createDynamicShapeView(context), param);
         }
     }
 
