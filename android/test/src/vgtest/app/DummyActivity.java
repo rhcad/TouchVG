@@ -4,8 +4,8 @@ package vgtest.app;
 
 import java.lang.reflect.Constructor;
 
-import touchvg.view.GraphView;
-import touchvg.view.ViewHelper;
+import rhcad.touchvg.view.GraphView;
+import rhcad.touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;

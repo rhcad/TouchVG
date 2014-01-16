@@ -4,8 +4,8 @@
 
 package vgtest.testview.view;
 
-import touchvg.view.SFGraphView;
-import touchvg.view.StdGraphView;
+import rhcad.touchvg.view.SFGraphView;
+import rhcad.touchvg.view.StdGraphView;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;

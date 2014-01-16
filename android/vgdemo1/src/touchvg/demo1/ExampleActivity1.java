@@ -2,7 +2,7 @@
 
 package touchvg.demo1;
 
-import touchvg.view.ViewHelper;
+import rhcad.touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;

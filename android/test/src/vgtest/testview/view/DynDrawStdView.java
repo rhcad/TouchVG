@@ -4,9 +4,9 @@
 
 package vgtest.testview.view;
 
-import touchvg.core.GiCoreView;
-import touchvg.core.GiView;
-import touchvg.view.CanvasAdapter;
+import rhcad.touchvg.core.GiCoreView;
+import rhcad.touchvg.core.GiView;
+import rhcad.touchvg.view.CanvasAdapter;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;

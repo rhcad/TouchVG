@@ -2,8 +2,8 @@
 
 package vgtest.testview.view;
 
-import touchvg.view.StdGraphView;
-import touchvg.view.ViewHelper;
+import rhcad.touchvg.view.StdGraphView;
+import rhcad.touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;

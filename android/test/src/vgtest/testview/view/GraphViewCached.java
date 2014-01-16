@@ -4,11 +4,11 @@
 
 package vgtest.testview.view;
 
-import touchvg.core.GiCoreView;
-import touchvg.core.GiGestureState;
-import touchvg.core.GiGestureType;
-import touchvg.core.GiView;
-import touchvg.view.CanvasAdapter;
+import rhcad.touchvg.core.GiCoreView;
+import rhcad.touchvg.core.GiGestureState;
+import rhcad.touchvg.core.GiGestureType;
+import rhcad.touchvg.core.GiView;
+import rhcad.touchvg.view.CanvasAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;

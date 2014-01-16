@@ -2,9 +2,9 @@
 
 package touchvg.demo1;
 
-import touchvg.view.GraphView;
-import touchvg.view.GraphView.SelectionChangedListener;
-import touchvg.view.ShapeView;
+import rhcad.touchvg.view.GraphView;
+import rhcad.touchvg.view.GraphView.SelectionChangedListener;
+import rhcad.touchvg.view.ShapeView;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.view.View;

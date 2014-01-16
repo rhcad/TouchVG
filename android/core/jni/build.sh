@@ -3,11 +3,11 @@
 # Type `./build.sh -swig` to re-generate JNI classes too.
 #
 if [ "$1"x = "-swig"x ] || [ ! -f touchvg_java_wrap.cpp ] ; then # Make JNI classes
-    mkdir -p ../src/touchvg/core
-    rm -rf ../src/touchvg/core/*.*
+    mkdir -p ../src/rhcad/touchvg/core
+    rm -rf ../src/rhcad/touchvg/core/*.*
     
-    swig -c++ -java -package touchvg.core -D__ANDROID__ \
-        -outdir ../src/touchvg/core \
+    swig -c++ -java -package rhcad.touchvg.core -D__ANDROID__ \
+        -outdir ../src/rhcad/touchvg/core \
         -o touchvg_java_wrap.cpp \
         -I../../../thirdparty/TouchVGCore/core/include \
         -I../../../thirdparty/TouchVGCore/core/include/canvas \

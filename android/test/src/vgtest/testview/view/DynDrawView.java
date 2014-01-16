@@ -4,8 +4,8 @@
 
 package vgtest.testview.view;
 
-import touchvg.core.GiCoreView;
-import touchvg.core.GiView;
+import rhcad.touchvg.core.GiCoreView;
+import rhcad.touchvg.core.GiView;
 
 //! 动态绘图视图接口
 public interface DynDrawView {

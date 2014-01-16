@@ -4,8 +4,8 @@
 
 package vgtest.testview.canvas;
 
-import touchvg.core.TestCanvas;
-import touchvg.view.CanvasAdapter;
+import rhcad.touchvg.core.TestCanvas;
+import rhcad.touchvg.view.CanvasAdapter;
 import vgtest.app.R;
 import android.app.Activity;
 import android.content.Context;

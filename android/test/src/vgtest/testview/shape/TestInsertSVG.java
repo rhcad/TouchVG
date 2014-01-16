@@ -2,7 +2,7 @@
 
 package vgtest.testview.shape;
 
-import touchvg.view.ViewHelper;
+import rhcad.touchvg.view.ViewHelper;
 import vgtest.app.R;
 import android.content.Context;
 import android.view.View;
