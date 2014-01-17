@@ -40,7 +40,7 @@ static NSString* const IMAGENAMES[] = { nil, @"vg_selall.png", nil, @"vg_draw.pn
 
 GiViewAdapter::GiViewAdapter(GiGraphView *mainView, GiCoreView *coreView)
     : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
-    , _actionEnabled(true)
+    , _actionEnabled(true), _oldAppendCount(0)
 {
     _coreView = new GiCoreView(coreView);
     memset(&respondsTo, 0, sizeof(respondsTo));
@@ -77,15 +77,31 @@ int GiViewAdapter::getAppendCount() const {
     return n;
 }
 
-void GiViewAdapter::afterRegen(int count) {
-    count = MIN(count, getAppendCount());
-    for (int i = 0, j = count; i < APPENDSIZE; i++, j++) {
+void GiViewAdapter::beginRender() {
+    _oldAppendCount = getAppendCount();
+}
+
+bool GiViewAdapter::renderInContext(CGContextRef ctx) {
+    if (![_render getLayer]) {
+        return false;
+    }
+    
+    [[_render getLayer] renderInContext:ctx];
+    
+    for (int i = 0, j = _oldAppendCount; i < APPENDSIZE; i++, j++) {
         _appendIDs[i] = j < APPENDSIZE ? _appendIDs[j] : 0;
     }
-    [_view setNeedsDisplay];
-    if (count > 0) {
+    if (_oldAppendCount > 0) {
         [_dynview setNeedsDisplay];
     }
+    _oldAppendCount = 0;
+    [_render startRender:YES];
+    
+    return true;
+}
+
+int GiViewAdapter::getAppendID(int index) const {
+    return index < APPENDSIZE ? _appendIDs[index] : 0;
 }
 
 void GiViewAdapter::regenAll(bool changed) {
@@ -98,6 +114,9 @@ void GiViewAdapter::regenAll(bool changed) {
 }
 
 void GiViewAdapter::regen_(bool changed, int sid) {
+    if (!_view.window) {
+        return;
+    }
     if (changed) {
         _coreView->submitBackDoc();
     }
@@ -109,7 +128,7 @@ void GiViewAdapter::regen_(bool changed, int sid) {
             break;
         }
     }
-    [_render startRender];
+    [_render startRender:NO];
     [_dynview setNeedsDisplay];
 }
 

@@ -23,12 +23,13 @@ class GiViewAdapter;
 
 //! 在层上显示图形的渲染类
 @interface GiLayerRender : NSObject {
-    CALayer     *_layer;
+    CALayer         *_layer;
     GiViewAdapter   *_adapter;
+    __block long    _drawing;
 }
 
 - (id)initWithAdapter:(GiViewAdapter *)adapter;
-- (void)startRender;
+- (void)startRender:(BOOL)forPending;
 - (CALayer *)getLayer;
 
 @end
@@ -45,6 +46,7 @@ private:
     ImageCache  *_imageCache;           //!< 图像对象缓存
     bool        _actionEnabled;         //!< 是否允许上下文操作
     int         _appendIDs[10];         //!< 还未来得及重构显示的新增图形的ID
+    int         _oldAppendCount;        //!< 后台渲染前的待渲染新增图形数
     GiLayerRender   *_render;           //!< 后台渲染对象
     
 public:
@@ -68,8 +70,9 @@ public:
     bool isMainThread() const;
     
     int getAppendCount() const;
-    void afterRegen(int count);
-    CALayer* getLayer() { return [_render getLayer]; }
+    void beginRender();
+    bool renderInContext(CGContextRef ctx);
+    int getAppendID(int index) const;
     
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);

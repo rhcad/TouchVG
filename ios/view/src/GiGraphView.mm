@@ -22,10 +22,14 @@
 - (void)drawRect:(CGRect)rect {
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
+    long hDoc = _adapter->getAppendCount() > 0 ? coreView->acquireFrontDoc() : 0;
     long hShapes = coreView->acquireDynamicShapes();
     long hGs = coreView->acquireGraphics(_adapter);
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
+        for (int i = 0, sid = 0; (sid = _adapter->getAppendID(i)) != 0; i++) {
+            coreView->drawAppend(hDoc, hGs, &canvas, sid);
+        }
         coreView->dynDraw(hShapes, hGs, &canvas);
         canvas.endPaint();
     }
@@ -41,8 +45,6 @@
     self = [super init];
     if (self) {
         _adapter = adapter;
-        _layer = [[CALayer alloc]init];
-        _layer.delegate = self;
     }
     return self;
 }
@@ -56,37 +58,57 @@
     return _layer;
 }
 
-- (void)startRender {
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [_layer setNeedsDisplay];
-        [_layer display];
-    });
+- (void)startRender:(BOOL)forPending {
+    if (forPending) {
+        if (_adapter->getAppendCount() == 0 && _drawing == 0) {
+            return;
+        }
+        _drawing = 0;
+    }
+    if (++_drawing == 1) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            CALayer *srcLayer = _adapter->mainView().layer;
+            
+            if (!_layer) {
+                _layer = [[CALayer alloc]init];
+                _layer.delegate = self;
+                _layer.contentsScale = srcLayer.contentsScale;
+            }
+            
+            _layer.frame = srcLayer.frame;
+            _layer.position = srcLayer.position;
+            [_layer setAffineTransform:[srcLayer affineTransform]];
+            
+            [_layer setNeedsDisplay];
+            [_layer display];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_adapter->mainView() setNeedsDisplay];
+                --_drawing;
+            });
+        });
+    }
 }
 
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
-    __block long hDoc, hGs, oldcnt;
+    __block long hDoc, hGs;
     
     dispatch_sync(dispatch_get_main_queue(), ^{
-        oldcnt = _adapter->getAppendCount();
+        _adapter->beginRender();
         hDoc = coreView->acquireFrontDoc();
         hGs = coreView->acquireGraphics(_adapter);
-        coreView->onSize(_adapter, _adapter->mainView().bounds.size.width,
-                         _adapter->mainView().bounds.size.height);
     });
     
     if (canvas.beginPaint(ctx)) {
         CGContextClearRect(ctx, _adapter->mainView().bounds);
-        coreView->drawAll(hDoc, hGs, &canvas);
+        int n = coreView->drawAll(hDoc, hGs, &canvas);
         canvas.endPaint();
+        NSLog(@"%d shapes rendered", n);
     }
     coreView->releaseDoc(hDoc);
     coreView->releaseGraphics(_adapter, hGs);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _adapter->afterRegen((int)oldcnt);
-    });
 }
 
 @end
@@ -188,9 +210,9 @@ GiColor CGColorToGiColor(CGColorRef color);
 #pragma mark - GiGraphView drawRect
 
 - (void)drawRect:(CGRect)rect {
-    CALayer *renderLayer = _adapter->getLayer();
-    if (renderLayer) {
-        [renderLayer renderInContext:UIGraphicsGetCurrentContext()];
+    _adapter->coreView()->onSize(_adapter, self.bounds.size.width, self.bounds.size.height);
+    if (!_adapter->renderInContext(UIGraphicsGetCurrentContext())) {
+        _adapter->regenAll(true);
     }
 }
 

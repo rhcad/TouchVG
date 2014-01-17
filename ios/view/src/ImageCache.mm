@@ -72,12 +72,18 @@
     
     if (size.width < 1 && *key && [name length] > 1) {
         NSString *resname = [name stringByAppendingString:@".svg"];
-        UIImage *image = [[SVGKImage imageNamed:resname] UIImage];
-        if (image && image.size.width > 1) {
-            [_images setObject:image forKey:*key];
-            size = image.size;
-        } else {
-            NSLog(@"Fail to load image resource: %@", resname);
+        @try {
+            UIImage *image = [[SVGKImage imageNamed:resname] UIImage];
+            
+            if (image && image.size.width > 1) {
+                [_images setObject:image forKey:*key];
+                size = image.size;
+            } else {
+                NSLog(@"Fail to load image resource: %@", resname);
+            }
+        }
+        @catch (NSException *e) {
+            NSLog(@"Fail to parse %@", resname);
         }
     }
     
@@ -85,8 +91,16 @@
 }
 
 + (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size {
-    SVGKImage* svgimg = [SVGKImage imageWithContentsOfFile:filename];
-    UIImage *image = [svgimg UIImage];
+    SVGKImage* svgimg = nil;
+    UIImage *image = nil;
+    
+    @try {
+        svgimg = [SVGKImage imageWithContentsOfFile:filename];
+        image = [svgimg UIImage];
+    }
+    @catch (NSException *e) {
+        NSLog(@"Fail to parse SVG file: %@", filename);
+    }
     
     if (image && (svgimg.size.width > size.width || svgimg.size.height > size.height)) {
         [svgimg scaleToFitInside:size];
@@ -106,10 +120,15 @@
     CGSize size = [self getImageSize:*name];
     
     if (size.width < 1 && *name && [filename length] > 1) {
-        UIImage *image;
+        UIImage *image = nil;
         
         if ([*name hasPrefix:@"svg:"]) {
-            image = [[SVGKImage imageWithContentsOfFile:filename] UIImage];
+            @try {
+                image = [[SVGKImage imageWithContentsOfFile:filename] UIImage];
+            }
+            @catch (NSException *e) {
+                NSLog(@"Fail to parse %@", name);
+            }
             if (image && image.size.width > 1) {
                 [_images setObject:image forKey:*name];
                 size = image.size;
