@@ -16,6 +16,10 @@ static NSString* const IMAGENAMES[] = { nil, @"vg_selall.png", nil, @"vg_draw.pn
     @"vg_endedit.png", nil, nil, @"vg_addvertex.png", @"vg_delvertex.png",
     @"vg_group.png", @"vg_ungroup.png", @"vg_overturn.png",
 };
+NSString* EXTIMAGENAMES[41] = { nil };
+static const int EXTRA_ACTION_BEGIN = 40;
+
+static int getExtraImageCount() { int n = 0; while (EXTIMAGENAMES[n]) n++; return n; }
 
 //! Button class for showContextActions().
 @interface UIButtonAutoHide : UIButton
@@ -244,6 +248,11 @@ bool GiViewAdapter::showContextActions(const mgvector<int>& actions,
         if (action > 0 && action < sizeof(CAPTIONS)/sizeof(CAPTIONS[0])) {
             caption = CAPTIONS[action];
             imageName = IMAGENAMES[action];
+        }
+        else if (action - EXTRA_ACTION_BEGIN >= 0
+                 && action - EXTRA_ACTION_BEGIN < getExtraImageCount()) {
+            caption = @"?";
+            imageName = EXTIMAGENAMES[action - EXTRA_ACTION_BEGIN];
         }
         else {
             continue;

@@ -10,6 +10,7 @@
 #include "gicoreview.h"
 
 #define IOSLIBVERSION     50
+extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
     size_t num = CGColorGetNumberOfComponents(color);
@@ -82,6 +83,14 @@ GiColor CGColorToGiColor(CGColorRef color) {
 
 - (BOOL)setCommand:(NSString *)name withParam:(NSString *)param {
     return [_view coreView]->setCommand([_view viewAdapter], [name UTF8String], [param UTF8String]);
+}
+
++ (void)setExtraContextImages:(NSArray *)names {
+    NSUInteger i = 0;
+    for (; i < 40 && i < [names count]; i++) {
+        EXTIMAGENAMES[i] = [names objectAtIndex:i];
+    }
+    EXTIMAGENAMES[i] = nil;
 }
 
 - (float)lineWidth {

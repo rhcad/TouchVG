@@ -19,7 +19,7 @@ import android.widget.RelativeLayout.LayoutParams;
 
 //! 绘图视图的上下文操作布局类
 public class ContextAction {
-    
+    private static final int EXTRA_ACTION_BEGIN = 40;
     private GiCoreView mCoreView;
     private View mView;
     private RelativeLayout mButtonLayout;
@@ -116,9 +116,11 @@ public class ContextAction {
             button.setBackgroundResource(mImageIDs[action]);
             return true;
         }
-        if (mExtImageIDs != null && action - 40 < mExtImageIDs.length
-            && action >= 40 && mExtImageIDs[action - 40] != 0) {
-            button.setBackgroundResource(mExtImageIDs[action - 40]);
+        if (mExtImageIDs != null
+            && action - EXTRA_ACTION_BEGIN >= 0
+            && action - EXTRA_ACTION_BEGIN < mExtImageIDs.length
+            && mExtImageIDs[action - EXTRA_ACTION_BEGIN] != 0) {
+            button.setBackgroundResource(mExtImageIDs[action - EXTRA_ACTION_BEGIN]);
             return true;
         }
         if (mCaptions == null && mCaptionsID != 0) {

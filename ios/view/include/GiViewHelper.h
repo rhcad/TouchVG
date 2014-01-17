@@ -34,7 +34,8 @@
 @property (nonatomic)         float     fillAlpha;  //!< 填充透明度, 0-1
 - (void)setContextEditing:(BOOL)editing;            //!< 线条属性是否正在动态修改
 - (BOOL)setCommand:(NSString *)name withParam:(NSString *)param;    //!< 指定名称和JSON串参数，启动命令
-
++ (void)setExtraContextImages:(NSArray *)names;     //!< 设置额外的上下文操作按钮的图像名(name.png)数组
+    
 @property(nonatomic, readonly) int shapeCount;      //!< 图形总数
 @property(nonatomic, readonly) int selectedCount;   //!< 选中的图形个数
 @property(nonatomic, readonly) int selectedType;    //!< 选中的图形的类型, MgShapeType
