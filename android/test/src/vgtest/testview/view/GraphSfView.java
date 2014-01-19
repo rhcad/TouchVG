@@ -196,9 +196,11 @@ public class GraphSfView extends SurfaceView {
     private class ViewAdapter extends GiView {
         @Override
         public void regenAll(boolean changed) {
-            mCoreView.submitBackDoc(mViewAdapter);
-            mCoreView.submitDynamicShapes(mViewAdapter);
-            
+            synchronized (mCoreView) {
+                if (changed)
+                    mCoreView.submitBackDoc(mViewAdapter);
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
             doDraw();
             if (mDynDrawView != null) {
                 mDynDrawView.doDraw();
@@ -212,8 +214,9 @@ public class GraphSfView extends SurfaceView {
         
         @Override
         public void redraw() {
-            mCoreView.submitDynamicShapes(mViewAdapter);
-            
+            synchronized (mCoreView) {
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
             if (mDynDrawView != null) {
                 mDynDrawView.doDraw();
             }

@@ -133,9 +133,11 @@ public class GraphView extends View {
     private class ViewAdapter extends GiView {
         @Override
         public void regenAll(boolean changed) {
-            mCoreView.submitBackDoc(mViewAdapter);
-            mCoreView.submitDynamicShapes(mViewAdapter);
-            
+            synchronized (mCoreView) {
+                if (changed)
+                    mCoreView.submitBackDoc(mViewAdapter);
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
             doDraw();
             if (mDynDrawView != null) {
                 mDynDrawView.doDraw();
@@ -149,8 +151,9 @@ public class GraphView extends View {
         
         @Override
         public void redraw() {
-            mCoreView.submitDynamicShapes(mViewAdapter);
-            
+            synchronized (mCoreView) {
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
             if (mDynDrawView != null) {
                 mDynDrawView.doDraw();
             }

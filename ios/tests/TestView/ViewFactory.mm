@@ -21,7 +21,7 @@ static void addView(NSMutableArray *arr, NSString* title, UIView* view)
     }
 }
 
-static void testGraphView(GiGraphView *v, int type)
+static void testGraphView(GiPaintView *v, int type)
 {
     GiViewHelper *hlp = [GiViewHelper instance:v];
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
@@ -145,7 +145,7 @@ static void testMagnifierView(NSMutableArray *arr, NSUInteger &i, NSUInteger ind
     
     if (wrapview) {
         CGRect magframe = CGRectMake(10, 10, 200, 200);
-        UIView *v = [GiGraphView createMagnifierView:magframe refView:nil parentView:wrapview];
+        UIView *v = [GiPaintView createMagnifierView:magframe refView:nil parentView:wrapview];
         v.backgroundColor = [UIColor greenColor];
     }
 }
@@ -158,7 +158,7 @@ static void addAnimatedPathView1(NSMutableArray *arr, NSUInteger &i, NSUInteger 
     if (!arr && index == i++) {
         view = [[AnimatedPathView1 alloc]initWithFrame:frame];
         
-        GiGraphView *v = [[GiGraphView alloc]initWithFrame:frame];
+        GiPaintView *v = [[GiPaintView alloc]initWithFrame:frame];
         GiViewHelper *hlp = [GiViewHelper instance:v];
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
@@ -179,22 +179,22 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     
     addGraphView(arr, i, index, @"GiGraphView1", frame, 0);
     addLargeView1(arr, i, index, @"GiGraphView1 in large view", frame, 0);
-    addGraphView(arr, i, index, @"GiGraphView splines", frame, 1);
-    addGraphView(arr, i, index, @"GiGraphView draw", frame, 1|32);
-    addGraphView(arr, i, index, @"GiGraphView select", frame, 2|32);
-    addGraphView(arr, i, index, @"GiGraphView zoom", frame, 32);
-    addGraphView(arr, i, index, @"GiGraphView line", frame, 4);
-    addGraphView(arr, i, index, @"GiGraphView lines", frame, 5);
-    addGraphView(arr, i, index, @"GiGraphView hittest in democmds", frame, 6|32);
-    addGraphView(arr, i, index, @"GiGraphView add images", frame, 7);
-    addGraphView(arr, i, index, @"GiGraphView load images", frame, 8);
-    addGraphView(arr, i, index, @"GiGraphView SVG images", frame, 9);
-    addGraphView(arr, i, index, @"GiGraphView SVG pages", frame, 10);
-    addGraphView(arr, i, index, @"GiGraphView select randShapes", frame, 2|32);
-    addGraphView(arr, i, index, @"GiGraphView select loadShapes", frame, 3);
-    addLargeView1(arr, i, index, @"GiGraphView in large view", frame, 1);
-    addLargeView1(arr, i, index, @"GiGraphView draw in large view", frame, 4|32);
-    addLargeView1(arr, i, index, @"GiGraphView SVG pages in large view", frame, 10);
+    addGraphView(arr, i, index, @"GiPaintView splines", frame, 1);
+    addGraphView(arr, i, index, @"GiPaintView draw", frame, 1|32);
+    addGraphView(arr, i, index, @"GiPaintView select", frame, 2|32);
+    addGraphView(arr, i, index, @"GiPaintView zoom", frame, 32);
+    addGraphView(arr, i, index, @"GiPaintView line", frame, 4);
+    addGraphView(arr, i, index, @"GiPaintView lines", frame, 5);
+    addGraphView(arr, i, index, @"GiPaintView hittest in democmds", frame, 6|32);
+    addGraphView(arr, i, index, @"GiPaintView add images", frame, 7);
+    addGraphView(arr, i, index, @"GiPaintView load images", frame, 8);
+    addGraphView(arr, i, index, @"GiPaintView SVG images", frame, 9);
+    addGraphView(arr, i, index, @"GiPaintView SVG pages", frame, 10);
+    addGraphView(arr, i, index, @"GiPaintView select randShapes", frame, 2|32);
+    addGraphView(arr, i, index, @"GiPaintView select loadShapes", frame, 3);
+    addLargeView1(arr, i, index, @"GiPaintView in large view", frame, 1);
+    addLargeView1(arr, i, index, @"GiPaintView draw in large view", frame, 4|32);
+    addLargeView1(arr, i, index, @"GiPaintView SVG pages in large view", frame, 10);
     testMagnifierView(arr, i, index, @"MagnifierView", frame, 1);
     addAnimatedPathView1(arr, i, index, @"AnimatedPathView1", frame, 0);
     addGraphView(arr, i, index, @"Empty view", frame, -1);

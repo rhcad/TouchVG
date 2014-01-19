@@ -1,8 +1,8 @@
-//! \file GiGraphView.mm
-//! \brief 实现iOS绘图视图类 GiGraphView
+//! \file GiPaintView.mm
+//! \brief 实现iOS绘图视图类 GiPaintView
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
-#import "GiGraphViewImpl.h"
+#import "GiViewImpl.h"
 #import "ImageCache.h"
 #import "ARCMacro.h"
 
@@ -113,10 +113,10 @@
 
 @end
 
-static GiGraphView* _activeGraphView = nil;
+static GiPaintView* _activePaintView = nil;
 GiColor CGColorToGiColor(CGColorRef color);
 
-@implementation GiGraphView
+@implementation GiPaintView
 
 @synthesize panRecognizer = _panRecognizer;
 @synthesize tapRecognizer = _tapRecognizer;
@@ -129,20 +129,20 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 #pragma mark - Respond to low-memory warnings
 + (void)initialize {
-	if (self == [GiGraphView class]) {  // Have to protect against subclasses calling this
+	if (self == [GiPaintView class]) {  // Have to protect against subclasses calling this
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarningNotification:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 	}
 }
 
 + (void)didReceiveMemoryWarningNotification:(NSNotification*)notification {
-	[_activeGraphView clearCachedData];
+	[_activePaintView clearCachedData];
 }
 
 #pragma mark - createGraphView
 
 - (void)dealloc {
-    if (_activeGraphView == self)
-        _activeGraphView = nil;
+    if (_activePaintView == self)
+        _activePaintView = nil;
     delete _adapter;
     [super DEALLOC];
 }
@@ -168,14 +168,14 @@ GiColor CGColorToGiColor(CGColorRef color);
     self = [super initWithFrame:frame];
     if (self) {
         self.autoresizingMask = 0xFF;               // 自动适应大小
-        _activeGraphView = self;                    // 设置为当前绘图视图
+        _activePaintView = self;                    // 设置为当前绘图视图
         [self initView:NULL :NULL];
         [self coreView]->onSize(_adapter, frame.size.width, frame.size.height);
     }
     return self;
 }
 
-- (id)initWithFrame:(CGRect)frame :(GiGraphView *)refView {
+- (id)initWithFrame:(CGRect)frame :(GiPaintView *)refView {
     self = [super initWithFrame:frame];
     if (self) {
         [self initView:[refView viewAdapter] :[refView coreView]];
@@ -183,23 +183,23 @@ GiColor CGColorToGiColor(CGColorRef color);
     return self;
 }
 
-+ (GiGraphView *)createGraphView:(CGRect)frame :(UIView *)parentView {
-    GiGraphView *v = [[GiGraphView alloc]initWithFrame:frame];
++ (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView {
+    GiPaintView *v = [[GiPaintView alloc]initWithFrame:frame];
     if (parentView) {
         [parentView addSubview:v];
     }
     return v;
 }
 
-+ (GiGraphView *)createMagnifierView:(CGRect)frame
-                              refView:(GiGraphView *)refView
-                           parentView:(UIView *)parentView
++ (GiPaintView *)createMagnifierView:(CGRect)frame
+                             refView:(GiPaintView *)refView
+                          parentView:(UIView *)parentView
 {
-    refView = refView ? refView : [GiGraphView activeView];
+    refView = refView ? refView : [GiPaintView activeView];
     if (!refView)
         return nil;
     
-    GiGraphView *v = [[GiGraphView alloc]initWithFrame:frame :refView];
+    GiPaintView *v = [[GiPaintView alloc]initWithFrame:frame :refView];
     if (parentView) {
         [parentView addSubview:v];
     }
@@ -207,7 +207,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     return v;
 }
 
-#pragma mark - GiGraphView drawRect
+#pragma mark - GiPaintView drawRect
 
 - (void)drawRect:(CGRect)rect {
     _adapter->coreView()->onSize(_adapter, self.bounds.size.width, self.bounds.size.height);
@@ -216,8 +216,8 @@ GiColor CGColorToGiColor(CGColorRef color);
     }
 }
 
-+ (GiGraphView *)activeView {
-    return _activeGraphView;
++ (GiPaintView *)activeView {
+    return _activePaintView;
 }
 
 - (GiView *)viewAdapter {
@@ -269,7 +269,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 - (void)setGestureEnabled:(BOOL)enabled {
     UIGestureRecognizer *recognizers[] = {
-        _pinchRecognizer, _rotationRecognizer, _panRecognizer, 
+        _pinchRecognizer, _rotationRecognizer, _panRecognizer,
         _tapRecognizer, _twoTapsRecognizer, _pressRecognizer, nil
     };
     for (int i = 0; recognizers[i]; i++) {
@@ -284,22 +284,23 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (void)activiteView {
-    if (_activeGraphView != self) {
-        _activeGraphView = self;
+    if (_activePaintView != self) {
+        _activePaintView = self;
     }
 }
 
-- (void)addDelegate:(id<GiGraphViewDelegate>)d {
+- (void)addDelegate:(id<GiPaintViewDelegate>)d {
     if (d) {
         [self removeDelegate:d];
         _adapter->delegates.push_back(d);
         _adapter->respondsTo.didCommandChanged |= [d respondsToSelector:@selector(onCommandChanged:)];
         _adapter->respondsTo.didSelectionChanged |= [d respondsToSelector:@selector(onSelectionChanged:)];
         _adapter->respondsTo.didContentChanged |= [d respondsToSelector:@selector(onContentChanged:)];
+        _adapter->respondsTo.didDynamicChanged |= [d respondsToSelector:@selector(onDynamicChanged:)];
     }
 }
 
-- (void)removeDelegate:(id<GiGraphViewDelegate>)d {
+- (void)removeDelegate:(id<GiPaintViewDelegate>)d {
     for (size_t i = 0; i < _adapter->delegates.size(); i++) {
         if (_adapter->delegates[i] == d) {
             _adapter->delegates.erase(_adapter->delegates.begin() + i);
@@ -336,7 +337,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 @end
 
 #pragma mark - GestureRecognizer
-@implementation GiGraphView(GestureRecognizer)
+@implementation GiPaintView(GestureRecognizer)
 
 - (void)setupGestureRecognizers {
     UIGestureRecognizer *recognizers[7];
@@ -602,15 +603,15 @@ GiColor CGColorToGiColor(CGColorRef color);
     _tapCount = 0;          // 双击时忽略单击
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(delayTap) object:nil];
     
-    return ([self gesturePost:sender] 
-            && _adapter->dispatchGesture(kGiGestureDblTap, kGiGestureEnded, 
+    return ([self gesturePost:sender]
+            && _adapter->dispatchGesture(kGiGestureDblTap, kGiGestureEnded,
                                          [sender locationInView:sender.view]));
 }
 
 - (BOOL)pressHandler:(UILongPressGestureRecognizer *)sender {
     return ([self gestureCheck:sender]
             && [self gesturePost:sender]
-            && _adapter->dispatchGesture(kGiGesturePress, (GiGestureState)sender.state, 
+            && _adapter->dispatchGesture(kGiGesturePress, (GiGestureState)sender.state,
                                          [sender locationInView:sender.view]));
 }
 

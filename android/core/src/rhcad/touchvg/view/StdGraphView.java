@@ -114,14 +114,20 @@ public class StdGraphView extends View implements GraphView {
     }
     
     private int drawShapes(Canvas canvas, CanvasAdapter adapter, boolean dyndraw) {
-        int n = 0;
+        int n = 0, doc = 0, shapes, gs;
         
+        synchronized (mCoreView) {
+            if (mCachedBitmap == null || !dyndraw)
+                doc = mCoreView.acquireFrontDoc();
+            shapes = dyndraw ? mCoreView.acquireDynamicShapes() : 0;
+            gs = mCoreView.acquireGraphics(mViewAdapter);
+        }
         if (adapter.beginPaint(canvas)) {
             if (mCachedBitmap == null || !dyndraw) {
                 if (this.getBackground() != null) {
                     this.getBackground().draw(canvas);
                 }
-                n = mCoreView.drawAll(mViewAdapter, adapter);
+                n = mCoreView.drawAll(doc, gs, adapter);
             }
             else if (mCachedBitmap != null) {
                 synchronized(mCachedBitmap) {
@@ -129,12 +135,14 @@ public class StdGraphView extends View implements GraphView {
                     n++;
                 }
             }
-            
             if (dyndraw) {
-                mCoreView.dynDraw(mViewAdapter, adapter);
+                mCoreView.dynDraw(shapes, gs, adapter);
             }
             adapter.endPaint();
         }
+        mCoreView.releaseDoc(doc);
+        mCoreView.releaseShapes(shapes);
+        mCoreView.releaseGraphics(mViewAdapter, gs);
         
         return n;
     }
@@ -241,8 +249,11 @@ public class StdGraphView extends View implements GraphView {
         
         @Override
         public void regenAll(boolean changed) {
-            mCoreView.submitBackDoc(mViewAdapter);
-            mCoreView.submitDynamicShapes(mViewAdapter);
+            synchronized (mCoreView) {
+                if (changed)
+                    mCoreView.submitBackDoc(mViewAdapter);
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
             if (mCachedBitmap != null && !mRegenning
                     && (mCachedBitmap.getWidth() != getWidth()
                     || mCachedBitmap.getHeight() != getHeight())) {
@@ -254,22 +265,36 @@ public class StdGraphView extends View implements GraphView {
         
         @Override
         public void regenAppend(int sid) {
-            mCoreView.submitBackDoc(mViewAdapter);
-            mCoreView.submitDynamicShapes(mViewAdapter);
+            int doc = 0, gs = 0;
+            
+            synchronized (mCoreView) {
+                mCoreView.submitBackDoc(mViewAdapter);
+                mCoreView.submitDynamicShapes(mViewAdapter);
+                
+                if (mCachedBitmap != null && !mRegenning) {
+                    doc = mCoreView.acquireFrontDoc();
+                    gs = mCoreView.acquireGraphics(mViewAdapter);
+                }
+            }
             if (mCachedBitmap != null && !mRegenning) {
                 synchronized(mCachedBitmap) {
                     if (mCanvasAdapter.beginPaint(new Canvas(mCachedBitmap))) {
-                        mCoreView.drawAppend(mViewAdapter, mCanvasAdapter, sid);
+                        mCoreView.drawAppend(doc, gs, mCanvasAdapter, sid);
                         mCanvasAdapter.endPaint();
                     }
                 }
             }
+            mCoreView.releaseDoc(doc);
+            mCoreView.releaseGraphics(mViewAdapter, gs);
+            
             invalidate();
         }
         
         @Override
         public void redraw() {
-            mCoreView.submitDynamicShapes(mViewAdapter);
+            synchronized (mCoreView) {
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
             invalidate();
         }
     }

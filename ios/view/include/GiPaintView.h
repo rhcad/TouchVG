@@ -1,5 +1,5 @@
-//! \file GiGraphView.h
-//! \brief 定义iOS绘图视图类 GiGraphView
+//! \file GiPaintView.h
+//! \brief 定义iOS绘图视图类 GiPaintView
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import <UIKit/UIKit.h>
@@ -11,9 +11,9 @@ class GiView;
 
 //! 绘图消息的观察者协议
 /*! \ingroup GROUP_IOS
-    \see GiGraphView
+    \see GiPaintView
  */
-@protocol GiGraphViewDelegate <NSObject>
+@protocol GiPaintViewDelegate <NSObject>
 @optional
 
 - (void)onCommandChanged:(id)view;      //!< 当前命令改变的通知
@@ -27,9 +27,9 @@ class GiView;
 
 //! iOS绘图视图类
 /*! \ingroup GROUP_IOS
-    \see GiGraphViewDelegate
+    \see GiPaintViewDelegate
  */
-@interface GiGraphView : UIView
+@interface GiPaintView : UIView
 
 @property(nonatomic, readonly) UIPanGestureRecognizer *panRecognizer;           //!< 拖动手势识别器
 @property(nonatomic, readonly) UITapGestureRecognizer *tapRecognizer;           //!< 单指点击手势识别器
@@ -41,14 +41,14 @@ class GiView;
 @property(nonatomic, readonly) ImageCache           *imageCache;                //!< 图像对象缓存
 
 //! 创建普通图形视图，并添加到父视图、设置为当前视图，不需要额外释放
-+ (GiGraphView *)createGraphView:(CGRect)frame :(UIView *)parentView;
++ (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView;
 
 //! 创建放大镜视图并添加到父视图，不需要额外释放
-+ (GiGraphView *)createMagnifierView:(CGRect)frame
-                             refView:(GiGraphView *)refView
++ (GiPaintView *)createMagnifierView:(CGRect)frame
+                             refView:(GiPaintView *)refView
                           parentView:(UIView *)parentView;
 
-+ (GiGraphView *)activeView;                //!< 得到当前激活的绘图视图
++ (GiPaintView *)activeView;                //!< 得到当前激活的绘图视图
 - (void)activiteView;                       //!< 设置为当前活动视图，触摸时自动调用
 - (UIView *)dynamicShapeView;               //!< 动态图形视图
 
@@ -65,7 +65,7 @@ class GiView;
 - (void)hideContextActions;                 //!< 隐藏上下文按钮
 - (IBAction)onContextAction:(id)sender;     //!< 上下文按钮的响应函数
 
-- (void)addDelegate:(id<GiGraphViewDelegate>)d;     //!< 增加绘图消息观察者
-- (void)removeDelegate:(id<GiGraphViewDelegate>)d;  //!< 去掉绘图消息观察者
+- (void)addDelegate:(id<GiPaintViewDelegate>)d;     //!< 增加绘图消息观察者
+- (void)removeDelegate:(id<GiPaintViewDelegate>)d;  //!< 去掉绘图消息观察者
 
 @end

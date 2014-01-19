@@ -4,7 +4,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "GiViewHelper.h"
-#import "GiGraphView.h"
+#import "GiPaintView.h"
 #import "ImageCache.h"
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
@@ -41,31 +41,31 @@ GiColor CGColorToGiColor(CGColorRef color) {
     return [NSString stringWithFormat:@"1.0.%d.%d", IOSLIBVERSION, GiCoreView::getVersion()];
 }
 
-- (id)initWithView:(GiGraphView *)view {
+- (id)initWithView:(GiPaintView *)view {
     self = [super init];
-    _view = view ? view : [GiGraphView activeView];
+    _view = view ? view : [GiPaintView activeView];
     return self;
 }
 
-+ (id)instance:(GiGraphView *)view {
++ (id)instance:(GiPaintView *)view {
     return [[GiViewHelper alloc]initWithView:view];
 }
 
-+ (GiGraphView *)activeView {
-    return [GiGraphView activeView];
++ (GiPaintView *)activeView {
+    return [GiPaintView activeView];
 }
 
-- (GiGraphView *)createGraphView:(CGRect)frame :(UIView *)parentView {
-    _view = [GiGraphView createGraphView:frame :parentView];
+- (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView {
+    _view = [GiPaintView createGraphView:frame :parentView];
     return _view;
 }
 
-- (GiGraphView *)createMagnifierView:(CGRect)frame
-                              refView:(GiGraphView *)refView
-                           parentView:(UIView *)parentView
+- (GiPaintView *)createMagnifierView:(CGRect)frame
+                             refView:(GiPaintView *)refView
+                          parentView:(UIView *)parentView
 {
-    refView = refView ? refView : [GiGraphView activeView];
-    _view = [GiGraphView createMagnifierView:frame refView:refView parentView:parentView];
+    refView = refView ? refView : [GiPaintView activeView];
+    _view = [GiPaintView createMagnifierView:frame refView:refView parentView:parentView];
     return _view;
 }
 
@@ -229,7 +229,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r {
-    return [_view coreView]->loadFromFile([[self addExtension:vgfile :@"vg"] UTF8String], r); 
+    return [_view coreView]->loadFromFile([[self addExtension:vgfile :@"vg"] UTF8String], r);
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile {

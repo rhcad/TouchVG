@@ -2,7 +2,7 @@
 //! \brief 实现iOS绘图视图适配器 GiViewAdapter
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
-#import "GiGraphViewImpl.h"
+#import "GiViewImpl.h"
 #import "ImageCache.h"
 #import "ARCMacro.h"
 
@@ -23,7 +23,7 @@ static int getExtraImageCount() { int n = 0; while (EXTIMAGENAMES[n]) n++; retur
 
 //! Button class for showContextActions().
 @interface UIButtonAutoHide : UIButton
-@property (nonatomic,assign) GiGraphView *delegate;
+@property (nonatomic,assign) GiPaintView *delegate;
 @end
 
 @implementation UIButtonAutoHide
@@ -42,9 +42,9 @@ static int getExtraImageCount() { int n = 0; while (EXTIMAGENAMES[n]) n++; retur
 
 #define APPENDSIZE sizeof(_appendIDs)/sizeof(_appendIDs[0])
 
-GiViewAdapter::GiViewAdapter(GiGraphView *mainView, GiCoreView *coreView)
-    : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
-    , _actionEnabled(true), _oldAppendCount(0)
+GiViewAdapter::GiViewAdapter(GiPaintView *mainView, GiCoreView *coreView)
+: _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
+, _actionEnabled(true), _oldAppendCount(0)
 {
     _coreView = new GiCoreView(coreView);
     memset(&respondsTo, 0, sizeof(respondsTo));
@@ -182,12 +182,12 @@ bool GiViewAdapter::isMainThread() const {
     return dispatch_get_current_queue() == dispatch_get_main_queue();
 }
 
-bool GiViewAdapter::dispatchGesture(GiGestureType gestureType, GiGestureState gestureState, CGPoint pt) {
-    return _coreView->onGesture(this, gestureType, gestureState, pt.x, pt.y);
+bool GiViewAdapter::dispatchGesture(GiGestureType type, GiGestureState state, CGPoint pt) {
+    return _coreView->onGesture(this, type, state, pt.x, pt.y);
 }
 
-bool GiViewAdapter::dispatchPan(GiGestureState gestureState, CGPoint pt, bool switchGesture) {
-    return _coreView->onGesture(this, kGiGesturePan, gestureState, pt.x, pt.y, switchGesture);
+bool GiViewAdapter::dispatchPan(GiGestureState state, CGPoint pt, bool switchGesture) {
+    return _coreView->onGesture(this, kGiGesturePan, state, pt.x, pt.y, switchGesture);
 }
 
 bool GiViewAdapter::twoFingersMove(UIGestureRecognizer *sender, int state, bool switchGesture) {
@@ -203,7 +203,7 @@ bool GiViewAdapter::twoFingersMove(UIGestureRecognizer *sender, int state, bool 
     }
     
     state = state < 0 ? (int)sender.state : state;
-    return _coreView->twoFingersMove(this, (GiGestureState)state, 
+    return _coreView->twoFingersMove(this, (GiGestureState)state,
                                      pt1.x, pt1.y, pt2.x, pt2.y, switchGesture);
 }
 

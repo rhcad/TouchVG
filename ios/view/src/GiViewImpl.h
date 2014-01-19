@@ -1,8 +1,8 @@
-//! \file GiGraphViewImpl.h
+//! \file GiViewImpl.h
 //! \brief 定义iOS绘图视图类的内部实现接口
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
-#import "GiGraphView.h"
+#import "GiPaintView.h"
 #include "GiCanvasAdapter.h"
 #include "gicoreview.h"
 #include <vector>
@@ -38,9 +38,9 @@ class GiViewAdapter;
 class GiViewAdapter : public GiView
 {
 private:
-    GiGraphView *_view;         //!< 静态图形视图, GiGraphView
-    UIView      *_dynview;      //!< 动态图形视图, IosTempView
-    GiCoreView  *_coreView;     //!< 内核视图分发器
+    GiPaintView *_view;                 //!< 静态图形视图, GiPaintView
+    UIView      *_dynview;              //!< 动态图形视图, IosTempView
+    GiCoreView  *_coreView;             //!< 内核视图分发器
     NSMutableArray *_buttons;           //!< 上下文按钮的数组
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     ImageCache  *_imageCache;           //!< 图像对象缓存
@@ -50,7 +50,7 @@ private:
     GiLayerRender   *_render;           //!< 后台渲染对象
     
 public:
-    std::vector<id> delegates;  //!< GiGraphViewDelegate 观察者数组
+    std::vector<id> delegates;  //!< GiPaintViewDelegate 观察者数组
     struct {
         unsigned int didCommandChanged:1;
         unsigned int didSelectionChanged:1;
@@ -58,7 +58,7 @@ public:
         unsigned int didDynamicChanged:1;
     } respondsTo;
     
-    GiViewAdapter(GiGraphView *mainView, GiCoreView *coreView);
+    GiViewAdapter(GiPaintView *mainView, GiCoreView *coreView);
     virtual ~GiViewAdapter();
     
     GiCoreView *coreView() { return _coreView; }
@@ -89,8 +89,8 @@ public:
     virtual void contentChanged();
     virtual void dynamicChanged();
     
-    bool dispatchGesture(GiGestureType gestureType, GiGestureState gestureState, CGPoint pt);
-    bool dispatchPan(GiGestureState gestureState, CGPoint pt, bool switchGesture = false);
+    bool dispatchGesture(GiGestureType type, GiGestureState state, CGPoint pt);
+    bool dispatchPan(GiGestureState state, CGPoint pt, bool switchGesture = false);
     bool twoFingersMove(UIGestureRecognizer *sender, int state = -1, bool switchGesture = false);
     
 private:
@@ -99,10 +99,10 @@ private:
     void redraw_();
 };
 
-/*! \category GiGraphView()
-    \brief GiGraphView 的内部数据定义
+/*! \category GiPaintView()
+ \brief GiPaintView 的内部数据定义
  */
-@interface GiGraphView()<UIGestureRecognizerDelegate> {
+@interface GiPaintView()<UIGestureRecognizerDelegate> {
     GiViewAdapter   *_adapter;              //!< 视图回调适配器
     
     UIPanGestureRecognizer *_panRecognizer;             //!< 拖动手势识别器
@@ -126,10 +126,10 @@ private:
 
 @end
 
-/*! \category GiGraphView(GestureRecognizer)
-    \brief GiGraphView 的手势响应实现部分
+/*! \category GiPaintView(GestureRecognizer)
+ \brief GiPaintView 的手势响应实现部分
  */
-@interface GiGraphView(GestureRecognizer)
+@interface GiPaintView(GestureRecognizer)
 
 - (void)setupGestureRecognizers;
 - (BOOL)panHandler:(UIGestureRecognizer *)sender;

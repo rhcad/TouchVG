@@ -84,9 +84,11 @@ public class ShapeView extends StdGraphView {
     protected class ShapeViewAdapter extends StdViewAdapter {
         @Override
         public void regenAll(boolean changed) {
-            mCoreView.submitBackDoc(mViewAdapter);
-            mCoreView.submitDynamicShapes(mViewAdapter);
-            
+            synchronized (mCoreView) {
+                if (changed)
+                    mCoreView.submitBackDoc(mViewAdapter);
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
             final ViewGroup f = (ViewGroup) getParent();
             if (mShapeLayout != null) {
                 f.removeView(mShapeLayout);
@@ -104,7 +106,9 @@ public class ShapeView extends StdGraphView {
         
         @Override
         public void redraw() {
-            mCoreView.submitDynamicShapes(mViewAdapter);
+            synchronized (mCoreView) {
+                mCoreView.submitDynamicShapes(mViewAdapter);
+            }
         }
     }
 }
