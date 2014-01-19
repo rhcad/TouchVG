@@ -167,7 +167,7 @@ public class GraphViewCached extends View {
     private class ViewAdapter extends GiView {
         @Override
         public void regenAll(boolean changed) {
-            mCoreView.submitBackDoc();
+            mCoreView.submitBackDoc(mViewAdapter);
             mCoreView.submitDynamicShapes(mViewAdapter);
             
             if (mCacheBitmap != null) {
@@ -179,7 +179,7 @@ public class GraphViewCached extends View {
         
         @Override
         public void regenAppend(int sid) {
-            mCoreView.submitBackDoc();
+            mCoreView.submitBackDoc(mViewAdapter);
             mCoreView.submitDynamicShapes(mViewAdapter);
             
             if (mCacheBitmap != null) {

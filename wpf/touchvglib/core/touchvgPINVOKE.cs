@@ -2472,11 +2472,8 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_updateShape")]
   public static extern bool MgShapes_updateShape(HandleRef jarg1, HandleRef jarg2);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgShapes_removeShape__SWIG_0")]
-  public static extern bool MgShapes_removeShape__SWIG_0(HandleRef jarg1, int jarg2, bool jarg3);
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgShapes_removeShape__SWIG_1")]
-  public static extern bool MgShapes_removeShape__SWIG_1(HandleRef jarg1, int jarg2);
+  [DllImport("touchvg", EntryPoint="CSharp_MgShapes_removeShape")]
+  public static extern bool MgShapes_removeShape(HandleRef jarg1, int jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_moveShapeTo")]
   public static extern bool MgShapes_moveShapeTo(HandleRef jarg1, int jarg2, HandleRef jarg3);
@@ -3892,7 +3889,7 @@ class touchvgPINVOKE {
   public static extern void delete_MgActionDispatcher(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgSnap_clearSnap")]
-  public static extern void MgSnap_clearSnap(HandleRef jarg1);
+  public static extern void MgSnap_clearSnap(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgSnap_drawSnap")]
   public static extern bool MgSnap_drawSnap(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3);
@@ -5341,7 +5338,7 @@ class touchvgPINVOKE {
   public static extern bool GiCoreView_twoFingersMove__SWIG_1(HandleRef jarg1, HandleRef jarg2, int jarg3, float jarg4, float jarg5, float jarg6, float jarg7);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_submitBackDoc")]
-  public static extern void GiCoreView_submitBackDoc(HandleRef jarg1);
+  public static extern bool GiCoreView_submitBackDoc(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_submitDynamicShapes")]
   public static extern bool GiCoreView_submitDynamicShapes(HandleRef jarg1, HandleRef jarg2);
@@ -5357,6 +5354,12 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getVersion")]
   public static extern int GiCoreView_getVersion();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_exportSVG__SWIG_0")]
+  public static extern int GiCoreView_exportSVG__SWIG_0(HandleRef jarg1, int jarg2, int jarg3, string jarg4);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_exportSVG__SWIG_1")]
+  public static extern int GiCoreView_exportSVG__SWIG_1(HandleRef jarg1, HandleRef jarg2, string jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isPressDragging")]
   public static extern bool GiCoreView_isPressDragging(HandleRef jarg1);

@@ -11543,25 +11543,25 @@ SWIGEXPORT float SWIGSTDCALL CSharp_GiTransform_getDpiY(void * jarg1) {
 }
 
 
-SWIGEXPORT long SWIGSTDCALL CSharp_GiTransform_getWidth(void * jarg1) {
-  long jresult ;
+SWIGEXPORT int SWIGSTDCALL CSharp_GiTransform_getWidth(void * jarg1) {
+  int jresult ;
   GiTransform *arg1 = (GiTransform *) 0 ;
-  long result;
+  int result;
   
   arg1 = (GiTransform *)jarg1; 
-  result = (long)((GiTransform const *)arg1)->getWidth();
+  result = (int)((GiTransform const *)arg1)->getWidth();
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT long SWIGSTDCALL CSharp_GiTransform_getHeight(void * jarg1) {
-  long jresult ;
+SWIGEXPORT int SWIGSTDCALL CSharp_GiTransform_getHeight(void * jarg1) {
+  int jresult ;
   GiTransform *arg1 = (GiTransform *) 0 ;
-  long result;
+  int result;
   
   arg1 = (GiTransform *)jarg1; 
-  result = (long)((GiTransform const *)arg1)->getHeight();
+  result = (int)((GiTransform const *)arg1)->getHeight();
   jresult = result; 
   return jresult;
 }
@@ -11745,16 +11745,16 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GiTransform_modelToDisplay(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiTransform_setWndSize(void * jarg1, long jarg2, long jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiTransform_setWndSize(void * jarg1, int jarg2, int jarg3) {
   unsigned int jresult ;
   GiTransform *arg1 = (GiTransform *) 0 ;
-  long arg2 ;
-  long arg3 ;
+  int arg2 ;
+  int arg3 ;
   bool result;
   
   arg1 = (GiTransform *)jarg1; 
-  arg2 = (long)jarg2; 
-  arg3 = (long)jarg3; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
   result = (bool)(arg1)->setWndSize(arg2,arg3);
   jresult = result; 
   return jresult;
@@ -16319,23 +16319,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgShapes_updateShape(void * jarg1, vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgShapes_removeShape__SWIG_0(void * jarg1, int jarg2, unsigned int jarg3) {
-  unsigned int jresult ;
-  MgShapes *arg1 = (MgShapes *) 0 ;
-  int arg2 ;
-  bool arg3 ;
-  bool result;
-  
-  arg1 = (MgShapes *)jarg1; 
-  arg2 = (int)jarg2; 
-  arg3 = jarg3 ? true : false; 
-  result = (bool)(arg1)->removeShape(arg2,arg3);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgShapes_removeShape__SWIG_1(void * jarg1, int jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgShapes_removeShape(void * jarg1, int jarg2) {
   unsigned int jresult ;
   MgShapes *arg1 = (MgShapes *) 0 ;
   int arg2 ;
@@ -22826,11 +22810,13 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_MgActionDispatcher(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MgSnap_clearSnap(void * jarg1) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MgSnap_clearSnap(void * jarg1, void * jarg2) {
   MgSnap *arg1 = (MgSnap *) 0 ;
+  MgMotion *arg2 = (MgMotion *) 0 ;
   
   arg1 = (MgSnap *)jarg1; 
-  (arg1)->clearSnap();
+  arg2 = (MgMotion *)jarg2; 
+  (arg1)->clearSnap((MgMotion const *)arg2);
 }
 
 
@@ -29121,11 +29107,17 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_twoFingersMove__SWIG_1(voi
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreView_submitBackDoc(void * jarg1) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_submitBackDoc(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
+  GiView *arg2 = (GiView *) 0 ;
+  bool result;
   
   arg1 = (GiCoreView *)jarg1; 
-  (arg1)->submitBackDoc();
+  arg2 = (GiView *)jarg2; 
+  result = (bool)(arg1)->submitBackDoc(arg2);
+  jresult = result; 
+  return jresult;
 }
 
 
@@ -29188,6 +29180,40 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_getVersion() {
   int result;
   
   result = (int)GiCoreView::getVersion();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_exportSVG__SWIG_0(void * jarg1, long jarg2, long jarg3, char * jarg4) {
+  int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  long arg2 ;
+  long arg3 ;
+  char *arg4 = (char *) 0 ;
+  int result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (long)jarg2; 
+  arg3 = (long)jarg3; 
+  arg4 = (char *)jarg4; 
+  result = (int)(arg1)->exportSVG(arg2,arg3,(char const *)arg4);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_exportSVG__SWIG_1(void * jarg1, void * jarg2, char * jarg3) {
+  int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  GiView *arg2 = (GiView *) 0 ;
+  char *arg3 = (char *) 0 ;
+  int result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (GiView *)jarg2; 
+  arg3 = (char *)jarg3; 
+  result = (int)(arg1)->exportSVG(arg2,(char const *)arg3);
   jresult = result; 
   return jresult;
 }

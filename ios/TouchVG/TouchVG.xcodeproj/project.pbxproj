@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		024FCF5C188A5272000B0C41 /* GiDpiUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 024FCF5B188A5272000B0C41 /* GiDpiUtil.mm */; };
 		02A4C4101888838700F5188B /* ARCMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = 02A4C40F1888838700F5188B /* ARCMacro.h */; };
 		AE037956181FA29B0049931F /* GiShapeAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE037955181FA29B0049931F /* GiShapeAdapter.h */; };
 		AE037959181FA2CD0049931F /* GiShapeAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE037958181FA2CD0049931F /* GiShapeAdapter.mm */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		024FCF5B188A5272000B0C41 /* GiDpiUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiDpiUtil.mm; path = ../../view/src/GiDpiUtil.mm; sourceTree = "<group>"; };
 		02A4C40F1888838700F5188B /* ARCMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARCMacro.h; path = ../../view/include/ARCMacro.h; sourceTree = "<group>"; };
 		AE037955181FA29B0049931F /* GiShapeAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiShapeAdapter.h; path = ../../view/include/GiShapeAdapter.h; sourceTree = "<group>"; };
 		AE037958181FA2CD0049931F /* GiShapeAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiShapeAdapter.mm; path = ../../view/src/GiShapeAdapter.mm; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 		AEF1B1DC17E29D7D005B5132 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				024FCF5B188A5272000B0C41 /* GiDpiUtil.mm */,
 				AE3B0110181104F60004AAC7 /* SVGKImage.h */,
 				AEC3381E180E28520029D7B3 /* ImageCache.h */,
 				AEC3381F180E28520029D7B3 /* ImageCache.mm */,
@@ -527,6 +530,7 @@
 				AE2A3A6C178FC617000194AE /* GiGraphView.mm in Sources */,
 				AE2A3A6D178FC617000194AE /* GiCanvasAdapter.mm in Sources */,
 				AEF1B1DA17E29D36005B5132 /* GiViewHelper.mm in Sources */,
+				024FCF5C188A5272000B0C41 /* GiDpiUtil.mm in Sources */,
 				AE3A618117EE7CC600B23F69 /* GiViewAdapter.mm in Sources */,
 				AEC33821180E28520029D7B3 /* ImageCache.mm in Sources */,
 				AE037959181FA2CD0049931F /* GiShapeAdapter.mm in Sources */,

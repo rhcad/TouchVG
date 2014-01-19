@@ -634,11 +634,13 @@ public class SVGParser {
 			this.nextCmd = nextCmd;
 		}
 
-		public int getNextCmd() {
+		@SuppressWarnings("unused")
+        public int getNextCmd() {
 			return nextCmd;
 		}
 
-		public float getNumber(int index) {
+		@SuppressWarnings("unused")
+        public float getNumber(int index) {
 			return numbers.get(index);
 		}
 

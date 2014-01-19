@@ -84,7 +84,7 @@ public class ShapeView extends StdGraphView {
     protected class ShapeViewAdapter extends StdViewAdapter {
         @Override
         public void regenAll(boolean changed) {
-            mCoreView.submitBackDoc();
+            mCoreView.submitBackDoc(mViewAdapter);
             mCoreView.submitDynamicShapes(mViewAdapter);
             
             final ViewGroup f = (ViewGroup) getParent();

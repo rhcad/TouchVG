@@ -73,7 +73,7 @@ public:
     virtual void regenAll(bool changed) {
         if (changed) {
             _sid = 0;
-            _coreView->submitBackDoc();
+            _coreView->submitBackDoc(this);
         }
         _coreView->submitDynamicShapes(this);
         [_view setNeedsDisplay];
@@ -82,7 +82,7 @@ public:
     
     virtual void regenAppend(int sid) {
         _sid = sid;
-        _coreView->submitBackDoc();
+        _coreView->submitBackDoc(this);
         _coreView->submitDynamicShapes(this);
         _tmpshot = nil;                 // renderInContext可能会调用drawRect
         _tmpshot = snapshot();

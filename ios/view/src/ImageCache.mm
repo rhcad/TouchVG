@@ -127,7 +127,7 @@
                 image = [[SVGKImage imageWithContentsOfFile:filename] UIImage];
             }
             @catch (NSException *e) {
-                NSLog(@"Fail to parse %@", name);
+                NSLog(@"Fail to parse %@", filename);
             }
             if (image && image.size.width > 1) {
                 [_images setObject:image forKey:*name];

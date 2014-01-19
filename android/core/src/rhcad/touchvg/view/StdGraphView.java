@@ -241,7 +241,7 @@ public class StdGraphView extends View implements GraphView {
         
         @Override
         public void regenAll(boolean changed) {
-            mCoreView.submitBackDoc();
+            mCoreView.submitBackDoc(mViewAdapter);
             mCoreView.submitDynamicShapes(mViewAdapter);
             if (mCachedBitmap != null && !mRegenning
                     && (mCachedBitmap.getWidth() != getWidth()
@@ -254,7 +254,7 @@ public class StdGraphView extends View implements GraphView {
         
         @Override
         public void regenAppend(int sid) {
-            mCoreView.submitBackDoc();
+            mCoreView.submitBackDoc(mViewAdapter);
             mCoreView.submitDynamicShapes(mViewAdapter);
             if (mCachedBitmap != null && !mRegenning) {
                 synchronized(mCachedBitmap) {

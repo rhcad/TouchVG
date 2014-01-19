@@ -268,7 +268,8 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (BOOL)exportSVG:(NSString *)filename {
-    return NO;//[_view coreView]->exportSVG([[self addExtension:filename :@".svg"] UTF8String]);
+    filename = [self addExtension:filename :@".svg"];
+    return [_view coreView]->exportSVG([_view viewAdapter], [filename UTF8String]);
 }
 
 - (BOOL)zoomToExtent {

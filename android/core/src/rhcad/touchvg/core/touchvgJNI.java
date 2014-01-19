@@ -793,8 +793,7 @@ public class touchvgJNI {
   public final static native long MgShapes_addShape(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
   public final static native boolean MgShapes_addShapeDirect(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
   public final static native boolean MgShapes_updateShape(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
-  public final static native boolean MgShapes_removeShape__SWIG_0(long jarg1, MgShapes jarg1_, int jarg2, boolean jarg3);
-  public final static native boolean MgShapes_removeShape__SWIG_1(long jarg1, MgShapes jarg1_, int jarg2);
+  public final static native boolean MgShapes_removeShape(long jarg1, MgShapes jarg1_, int jarg2);
   public final static native boolean MgShapes_moveShapeTo(long jarg1, MgShapes jarg1_, int jarg2, long jarg3, MgShapes jarg3_);
   public final static native void MgShapes_copyShapesTo(long jarg1, MgShapes jarg1_, long jarg2, MgShapes jarg2_);
   public final static native boolean MgShapes_bringToFront(long jarg1, MgShapes jarg1_, int jarg2);
@@ -1801,12 +1800,14 @@ public class touchvgJNI {
   public final static native boolean GiCoreView_onGesture__SWIG_1(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, int jarg3, int jarg4, float jarg5, float jarg6);
   public final static native boolean GiCoreView_twoFingersMove__SWIG_0(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, int jarg3, float jarg4, float jarg5, float jarg6, float jarg7, boolean jarg8);
   public final static native boolean GiCoreView_twoFingersMove__SWIG_1(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, int jarg3, float jarg4, float jarg5, float jarg6, float jarg7);
-  public final static native void GiCoreView_submitBackDoc(long jarg1, GiCoreView jarg1_);
+  public final static native boolean GiCoreView_submitBackDoc(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
   public final static native boolean GiCoreView_submitDynamicShapes(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
   public final static native float GiCoreView_calcPenWidth(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, float jarg3);
   public final static native int GiCoreView_getGestureType(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_getGestureState(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_getVersion();
+  public final static native int GiCoreView_exportSVG__SWIG_0(long jarg1, GiCoreView jarg1_, int jarg2, int jarg3, String jarg4);
+  public final static native int GiCoreView_exportSVG__SWIG_1(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, String jarg3);
   public final static native boolean GiCoreView_isPressDragging(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_viewAdapterHandle(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_backDoc(long jarg1, GiCoreView jarg1_);

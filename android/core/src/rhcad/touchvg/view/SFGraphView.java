@@ -397,7 +397,7 @@ public class SFGraphView extends SurfaceView implements GraphView {
         public void regenAll(boolean changed) {
             synchronized (mCoreView) {
                 if (changed)
-                    mCoreView.submitBackDoc();
+                    mCoreView.submitBackDoc(mViewAdapter);
                 mCoreView.submitDynamicShapes(mViewAdapter);
             }
             if (mRender != null) {
@@ -408,7 +408,7 @@ public class SFGraphView extends SurfaceView implements GraphView {
         @Override
         public void regenAppend(int sid) {
             synchronized (mCoreView) {
-                mCoreView.submitBackDoc();
+                mCoreView.submitBackDoc(mViewAdapter);
                 mCoreView.submitDynamicShapes(mViewAdapter);
             }
             if (mRender != null) {

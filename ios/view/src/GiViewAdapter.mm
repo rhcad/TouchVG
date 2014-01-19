@@ -122,7 +122,7 @@ void GiViewAdapter::regen_(bool changed, int sid) {
         return;
     }
     if (changed) {
-        _coreView->submitBackDoc();
+        _coreView->submitBackDoc(this);
     }
     _coreView->submitDynamicShapes(this);
     

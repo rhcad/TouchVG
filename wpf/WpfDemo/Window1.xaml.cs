@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,7 +34,7 @@ namespace WpfDemo
             "四边形",    "quadrangle",
             "折线",      "lines",
             "曲线",      "spline_mouse",
-            "平行四边形", "parallelogram",
+            "平行四边形", "parallel",
             "网格",      "grid",
             "三点圆弧",  "arc3p",
             "圆心圆弧",  "arc_cse",
@@ -57,7 +57,7 @@ namespace WpfDemo
         {
             _view = new WPFGraphView(canvas1);
             _view.OnCommandChanged += new CommandChangedEventHandler(View_OnCommandChanged);
-            _view.OnSelectionChanged +=new touchvg.view.SelectionChangedEventHandler(View_OnSelectionChanged);
+            _view.OnSelectionChanged += new touchvg.view.SelectionChangedEventHandler(View_OnSelectionChanged);
 
             List<KeyValuePair<string, string>> commandSource = new List<KeyValuePair<string, string>>();
             for (int i = 0; i < _commands.Length; i += 2)

@@ -131,8 +131,8 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_twoFingersMove__SWIG_1(swigCPtr, this, GiView.getCPtr(view), view, state.swigValue(), x1, y1, x2, y2);
   }
 
-  public void submitBackDoc() {
-    touchvgJNI.GiCoreView_submitBackDoc(swigCPtr, this);
+  public boolean submitBackDoc(GiView view) {
+    return touchvgJNI.GiCoreView_submitBackDoc(swigCPtr, this, GiView.getCPtr(view), view);
   }
 
   public boolean submitDynamicShapes(GiView view) {
@@ -153,6 +153,14 @@ public class GiCoreView extends MgCoreView {
 
   public static int getVersion() {
     return touchvgJNI.GiCoreView_getVersion();
+  }
+
+  public int exportSVG(int hDoc, int hGs, String filename) {
+    return touchvgJNI.GiCoreView_exportSVG__SWIG_0(swigCPtr, this, hDoc, hGs, filename);
+  }
+
+  public int exportSVG(GiView view, String filename) {
+    return touchvgJNI.GiCoreView_exportSVG__SWIG_1(swigCPtr, this, GiView.getCPtr(view), view, filename);
   }
 
   public boolean isPressDragging() {

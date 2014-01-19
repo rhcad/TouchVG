@@ -10,7 +10,6 @@
 %module democmds
 %{
 #include <DemoCmds.h>
-#include <mgcoreview.h>
 %}
 
 %include <mgvector.h>
@@ -18,7 +17,6 @@
 %template(Chars) mgvector<char>;
 
 %include <DemoCmds.h>
-%include <mgcoreview.h>
 
 #ifdef SWIGJAVA
 %{

@@ -198,13 +198,8 @@ public class MgShapes : MgObject {
     return ret;
   }
 
-  public bool removeShape(int sid, bool skipLockedShape) {
-    bool ret = touchvgPINVOKE.MgShapes_removeShape__SWIG_0(swigCPtr, sid, skipLockedShape);
-    return ret;
-  }
-
   public bool removeShape(int sid) {
-    bool ret = touchvgPINVOKE.MgShapes_removeShape__SWIG_1(swigCPtr, sid);
+    bool ret = touchvgPINVOKE.MgShapes_removeShape(swigCPtr, sid);
     return ret;
   }
 

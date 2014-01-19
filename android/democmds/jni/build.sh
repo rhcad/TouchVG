@@ -10,7 +10,6 @@ if [ "$1"x = "-swig"x ] || [ ! -f democmds_java_wrap.cpp ] ; then # Make JNI cla
         -outdir ../src/democmds/core \
         -o democmds_java_wrap.cpp \
         -I../../../thirdparty/TouchVGCore/core/include \
-        -I../../../thirdparty/TouchVGCore/core/include/cmd \
         -I../../../core/democmds/gate \
           ../../../core/democmds/gate/democmds.i
     python replacejstr.py

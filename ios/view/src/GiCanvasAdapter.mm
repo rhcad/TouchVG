@@ -5,40 +5,12 @@
 #import "ImageCache.h"
 #import "ARCMacro.h"
 #include "GiCanvasAdapter.h"
-#include <sys/sysctl.h>
 
 static const float patDash[]      = { 4, 2, 0 };
 static const float patDot[]       = { 1, 2, 0 };
 static const float patDashDot[]   = { 10, 2, 2, 2, 0 };
 static const float dashDotdot[]   = { 20, 2, 2, 2, 2, 2, 0 };
 const float* const GiCanvasAdapter::LINEDASH[] = { NULL, patDash, patDot, patDashDot, dashDotdot };
-
-int GiCanvasAdapter::getScreenDpi()
-{
-    static int dpi = 0;
-    
-    if (dpi == 0) {
-        size_t size = 15;
-        char machine[15 + 1] = "";
-        
-        sysctlbyname("hw.machine", machine, &size, NULL, 0);
-        
-        if (strcmp(machine, "i386") == 0) {     // 模拟器
-            dpi = 72;
-        } else {    // Identifier: http://theiphonewiki.com/wiki/Models
-            bool iPadMini = (strcmp(machine, "iPad2,5") == 0 ||
-                             strcmp(machine, "iPad2,6") == 0 ||
-                             strcmp(machine, "iPad2,7") == 0 ||
-                             strcmp(machine, "iPad4,4") == 0 ||
-                             strcmp(machine, "iPad4,5") == 0);
-            BOOL iPad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
-            
-            dpi = (iPad && !iPadMini) ? 132 : 163;
-        }
-    }
-    
-    return dpi;
-}
 
 GiCanvasAdapter::GiCanvasAdapter(ImageCache *cache) : _ctx(NULL), _cache(cache), _gradient0(NULL)
 {

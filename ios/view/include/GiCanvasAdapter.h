@@ -10,6 +10,8 @@
 
 @class ImageCache;
 
+int giGetScreenDpi();
+
 //! 使用 Quartz 2D 实现的画布适配器类
 /*! \ingroup GROUP_IOS
  */
@@ -27,9 +29,6 @@ public:
     
     //! 返回绘图上下文
     CGContextRef context();
-    
-    //! 返回屏幕点密度
-    static int getScreenDpi();
     
     static const float* const LINEDASH[];     //!< 虚线定义, 0..4
     static float colorPart(int argb, int byteOrder);

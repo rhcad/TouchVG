@@ -1,4 +1,4 @@
-﻿//! \file ViewHelper.java
+//! \file ViewHelper.java
 //! \brief Android绘图视图辅助类
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
@@ -275,7 +275,8 @@ public class ViewHelper {
     
     //! 导出静态图形到SVG文件，自动添加后缀名.svg
     public boolean exportSVG(String filename) {
-        return false;//mView.coreView().exportSVG(addExtension(filename, ".svg"));
+        filename = addExtension(filename, ".svg");
+        return mView.coreView().exportSVG(mView.viewAdapter(), filename) > 0;
     }
     
     //! 返回图形总数

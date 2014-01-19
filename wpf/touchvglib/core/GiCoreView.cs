@@ -148,8 +148,9 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public void submitBackDoc() {
-    touchvgPINVOKE.GiCoreView_submitBackDoc(swigCPtr);
+  public bool submitBackDoc(GiView view) {
+    bool ret = touchvgPINVOKE.GiCoreView_submitBackDoc(swigCPtr, GiView.getCPtr(view));
+    return ret;
   }
 
   public bool submitDynamicShapes(GiView view) {
@@ -174,6 +175,16 @@ public class GiCoreView : MgCoreView {
 
   public static int getVersion() {
     int ret = touchvgPINVOKE.GiCoreView_getVersion();
+    return ret;
+  }
+
+  public int exportSVG(int hDoc, int hGs, string filename) {
+    int ret = touchvgPINVOKE.GiCoreView_exportSVG__SWIG_0(swigCPtr, hDoc, hGs, filename);
+    return ret;
+  }
+
+  public int exportSVG(GiView view, string filename) {
+    int ret = touchvgPINVOKE.GiCoreView_exportSVG__SWIG_1(swigCPtr, GiView.getCPtr(view), filename);
     return ret;
   }
 

@@ -133,7 +133,7 @@ public class GraphView extends View {
     private class ViewAdapter extends GiView {
         @Override
         public void regenAll(boolean changed) {
-            mCoreView.submitBackDoc();
+            mCoreView.submitBackDoc(mViewAdapter);
             mCoreView.submitDynamicShapes(mViewAdapter);
             
             doDraw();

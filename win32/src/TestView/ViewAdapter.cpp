@@ -19,7 +19,8 @@ ViewAdapter::~ViewAdapter()
 
 void ViewAdapter::regenAll(bool changed)
 {
-    _coreView->submitBackDoc();
+    if (changed)
+        _coreView->submitBackDoc(this);
     _coreView->submitDynamicShapes(this);
 
     _canvas.clearCachedBitmap();

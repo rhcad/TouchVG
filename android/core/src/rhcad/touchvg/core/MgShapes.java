@@ -163,12 +163,8 @@ public class MgShapes extends MgObject {
     return touchvgJNI.MgShapes_updateShape(swigCPtr, this, MgShape.getCPtr(shape), shape);
   }
 
-  public boolean removeShape(int sid, boolean skipLockedShape) {
-    return touchvgJNI.MgShapes_removeShape__SWIG_0(swigCPtr, this, sid, skipLockedShape);
-  }
-
   public boolean removeShape(int sid) {
-    return touchvgJNI.MgShapes_removeShape__SWIG_1(swigCPtr, this, sid);
+    return touchvgJNI.MgShapes_removeShape(swigCPtr, this, sid);
   }
 
   public boolean moveShapeTo(int sid, MgShapes dest) {

@@ -110,7 +110,7 @@ namespace touchvg.view
             public override void regenAll(bool changed)
             {
                 if (changed)
-                    CoreView.submitBackDoc();
+                    CoreView.submitBackDoc(_owner.ViewAdapter);
                 CoreView.submitDynamicShapes(_owner.ViewAdapter);
 
                 _owner.MainCanvas.InvalidateVisual();

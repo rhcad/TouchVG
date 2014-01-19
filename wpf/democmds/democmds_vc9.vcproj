@@ -200,7 +200,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Swig generating..."
-						CommandLine="swig.exe -c++ -csharp -namespace &quot;democmds.core&quot; -module democmds -outdir $(ProjectDir)..\democmdslib\core -o &quot;$(ProjectDir)democmds_csharp_wrap.cpp&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd&quot; -I&quot;$(ProjectDir)..\..\core\democmds\gate&quot; $(InputPath)&#x0D;&#x0A;"
+						CommandLine="swig.exe -c++ -csharp -namespace &quot;democmds.core&quot; -module democmds -outdir $(ProjectDir)..\democmdslib\core -o &quot;$(ProjectDir)democmds_csharp_wrap.cpp&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include&quot; -I&quot;$(ProjectDir)..\..\core\democmds\gate&quot; $(InputPath)&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)democmds_csharp_wrap.cpp"
 					/>
 				</FileConfiguration>
@@ -210,7 +210,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Swig generating..."
-						CommandLine="swig.exe -c++ -csharp -namespace &quot;democmds.core&quot; -module democmds -outdir $(ProjectDir)..\democmdslib\core -o &quot;$(ProjectDir)democmds_csharp_wrap.cpp&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd&quot; -I&quot;$(ProjectDir)..\..\core\democmds\gate&quot; $(InputPath)&#x0D;&#x0A;"
+						CommandLine="swig.exe -c++ -csharp -namespace &quot;democmds.core&quot; -module democmds -outdir $(ProjectDir)..\democmdslib\core -o &quot;$(ProjectDir)democmds_csharp_wrap.cpp&quot; -I&quot;$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include&quot; -I&quot;$(ProjectDir)..\..\core\democmds\gate&quot; $(InputPath)&#x0D;&#x0A;"
 						Outputs="$(ProjectDir)democmds_csharp_wrap.cpp"
 					/>
 				</FileConfiguration>

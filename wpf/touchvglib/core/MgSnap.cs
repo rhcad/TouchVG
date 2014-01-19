@@ -41,8 +41,8 @@ public class MgSnap : IDisposable {
     }
   }
 
-  public virtual void clearSnap() {
-    touchvgPINVOKE.MgSnap_clearSnap(swigCPtr);
+  public virtual void clearSnap(MgMotion sender) {
+    touchvgPINVOKE.MgSnap_clearSnap(swigCPtr, MgMotion.getCPtr(sender));
   }
 
   public virtual bool drawSnap(MgMotion sender, GiGraphics gs) {

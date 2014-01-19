@@ -5,6 +5,7 @@ package com.larvalabs.svgandroid;
  * 
  * @author Larva Labs, LLC
  */
+@SuppressWarnings("serial")
 public class SVGParseException extends RuntimeException {
 
 	public SVGParseException(String s) {

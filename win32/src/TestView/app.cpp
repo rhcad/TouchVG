@@ -58,7 +58,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 #include <windowsx.h>
 
 static ViewAdapter* _adapter = NULL;
-/*
+
 #include <svgcanvas.h>
 
 void exportSVG(HWND hwnd)
@@ -76,7 +76,7 @@ void exportSVG(HWND hwnd)
         _adapter->drawTo(&canvas);
     }
 }
-*/
+
 // 主窗口的消息处理函数
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
@@ -126,7 +126,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
         break;
     case WM_LBUTTONUP:          // 鼠标抬起
         handled = _adapter->onLButtonUp(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam));
-        //exportSVG(hwnd);
+        exportSVG(hwnd);
         break;
     case WM_MOUSEMOVE:          // 鼠标移动
         handled = _adapter->onMouseMove(GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam), wparam);

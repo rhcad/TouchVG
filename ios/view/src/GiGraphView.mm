@@ -151,7 +151,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     self.opaque = NO;                               // 透明背景
     self.multipleTouchEnabled = YES;                // 检测多个触点
     
-    GiCoreView::setScreenDpi(GiCanvasAdapter::getScreenDpi());
+    GiCoreView::setScreenDpi(giGetScreenDpi());
     [self setupGestureRecognizers];
     
     if (mainView && coreView) {

@@ -16256,13 +16256,13 @@ SWIGEXPORT jfloat JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiTransform_1getDpi
 SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiTransform_1getWidth(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   GiTransform *arg1 = (GiTransform *) 0 ;
-  long result;
+  int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(GiTransform **)&jarg1; 
-  result = (long)((GiTransform const *)arg1)->getWidth();
+  result = (int)((GiTransform const *)arg1)->getWidth();
   jresult = (jint)result; 
   return jresult;
 }
@@ -16271,13 +16271,13 @@ SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiTransform_1getWidth
 SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiTransform_1getHeight(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   GiTransform *arg1 = (GiTransform *) 0 ;
-  long result;
+  int result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(GiTransform **)&jarg1; 
-  result = (long)((GiTransform const *)arg1)->getHeight();
+  result = (int)((GiTransform const *)arg1)->getHeight();
   jresult = (jint)result; 
   return jresult;
 }
@@ -16506,16 +16506,16 @@ SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiTransform_1modelTo
 SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiTransform_1setWndSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
   jboolean jresult = 0 ;
   GiTransform *arg1 = (GiTransform *) 0 ;
-  long arg2 ;
-  long arg3 ;
+  int arg2 ;
+  int arg3 ;
   bool result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(GiTransform **)&jarg1; 
-  arg2 = (long)jarg2; 
-  arg3 = (long)jarg3; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
   result = (bool)(arg1)->setWndSize(arg2,arg3);
   jresult = (jboolean)result; 
   return jresult;
@@ -22308,26 +22308,7 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1updateS
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1removeShape_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jboolean jarg3) {
-  jboolean jresult = 0 ;
-  MgShapes *arg1 = (MgShapes *) 0 ;
-  int arg2 ;
-  bool arg3 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(MgShapes **)&jarg1; 
-  arg2 = (int)jarg2; 
-  arg3 = jarg3 ? true : false; 
-  result = (bool)(arg1)->removeShape(arg2,arg3);
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1removeShape_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1removeShape(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jboolean jresult = 0 ;
   MgShapes *arg1 = (MgShapes *) 0 ;
   int arg2 ;
@@ -39147,14 +39128,21 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1twoFi
 }
 
 
-SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1submitBackDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1submitBackDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jboolean jresult = 0 ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
+  GiView *arg2 = (GiView *) 0 ;
+  bool result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
+  (void)jarg2_;
   arg1 = *(GiCoreView **)&jarg1; 
-  (arg1)->submitBackDoc();
+  arg2 = *(GiView **)&jarg2; 
+  result = (bool)(arg1)->submitBackDoc(arg2);
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 
@@ -39234,6 +39222,57 @@ SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1getVersio
   (void)jcls;
   result = (int)GiCoreView::getVersion();
   jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1exportSVG_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3, jstring jarg4) {
+  jint jresult = 0 ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  long arg2 ;
+  long arg3 ;
+  char *arg4 = (char *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiCoreView **)&jarg1; 
+  arg2 = (long)jarg2; 
+  arg3 = (long)jarg3; 
+  arg4 = 0;
+  if (jarg4) {
+    arg4 = (char *)jenv->GetStringUTFChars(jarg4, 0);
+    if (!arg4) return 0;
+  }
+  result = (int)(arg1)->exportSVG(arg2,arg3,(char const *)arg4);
+  jresult = (jint)result; 
+  if (arg4) jenv->ReleaseStringUTFChars(jarg4, (const char *)arg4);
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1exportSVG_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jstring jarg3) {
+  jint jresult = 0 ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  GiView *arg2 = (GiView *) 0 ;
+  char *arg3 = (char *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(GiCoreView **)&jarg1; 
+  arg2 = *(GiView **)&jarg2; 
+  arg3 = 0;
+  if (jarg3) {
+    arg3 = (char *)jenv->GetStringUTFChars(jarg3, 0);
+    if (!arg3) return 0;
+  }
+  result = (int)(arg1)->exportSVG(arg2,(char const *)arg3);
+  jresult = (jint)result; 
+  if (arg3) jenv->ReleaseStringUTFChars(jarg3, (const char *)arg3);
   return jresult;
 }
 
