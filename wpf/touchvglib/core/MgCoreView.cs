@@ -85,13 +85,39 @@ public class MgCoreView : IDisposable {
     touchvgPINVOKE.MgCoreView_releaseShapes(swigCPtr, hShapes);
   }
 
-  public virtual bool loadDynamicShapes(MgStorage s) {
-    bool ret = touchvgPINVOKE.MgCoreView_loadDynamicShapes(swigCPtr, MgStorage.getCPtr(s));
+  public virtual bool isUndoRecording() {
+    bool ret = touchvgPINVOKE.MgCoreView_isUndoRecording(swigCPtr);
     return ret;
   }
 
-  public virtual void applyDynamicShapes() {
-    touchvgPINVOKE.MgCoreView_applyDynamicShapes(swigCPtr);
+  public virtual bool isRecording() {
+    bool ret = touchvgPINVOKE.MgCoreView_isRecording(swigCPtr);
+    return ret;
+  }
+
+  public virtual bool isPlaying() {
+    bool ret = touchvgPINVOKE.MgCoreView_isPlaying(swigCPtr);
+    return ret;
+  }
+
+  public virtual int getRecordTick(bool forUndo) {
+    int ret = touchvgPINVOKE.MgCoreView_getRecordTick(swigCPtr, forUndo);
+    return ret;
+  }
+
+  public virtual bool isUndoLoading() {
+    bool ret = touchvgPINVOKE.MgCoreView_isUndoLoading(swigCPtr);
+    return ret;
+  }
+
+  public virtual bool canUndo() {
+    bool ret = touchvgPINVOKE.MgCoreView_canUndo(swigCPtr);
+    return ret;
+  }
+
+  public virtual bool canRedo() {
+    bool ret = touchvgPINVOKE.MgCoreView_canRedo(swigCPtr);
+    return ret;
   }
 
   public virtual bool isPressDragging() {
@@ -266,6 +292,12 @@ public class MgCoreView : IDisposable {
 
   public virtual int addImageShape(string name, float xc, float yc, float w, float h) {
     int ret = touchvgPINVOKE.MgCoreView_addImageShape__SWIG_1(swigCPtr, name, xc, yc, w, h);
+    return ret;
+  }
+
+  public virtual bool getDisplayExtent(Floats box) {
+    bool ret = touchvgPINVOKE.MgCoreView_getDisplayExtent(swigCPtr, Floats.getCPtr(box));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 

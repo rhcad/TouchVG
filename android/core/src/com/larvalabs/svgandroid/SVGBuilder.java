@@ -1,10 +1,5 @@
 package com.larvalabs.svgandroid;
 
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.graphics.ColorFilter;
-import android.util.Log;
-
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -12,6 +7,11 @@ import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
 import org.xml.sax.InputSource;
+
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.ColorFilter;
+import android.util.Log;
 
 import com.larvalabs.svgandroid.SVGParser.SVGHandler;
 

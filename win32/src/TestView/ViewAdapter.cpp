@@ -96,5 +96,5 @@ bool ViewAdapter::onRButtonUp(int x, int y)
 
 bool ViewAdapter::setCommand(const char* name)
 {
-    return _coreView->setCommand(this, name);
+    return _coreView->setCommand(name);
 }

@@ -2,14 +2,14 @@
 //! \brief 实现iOS绘图视图辅助类 GiViewHelper
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
-#import <QuartzCore/QuartzCore.h>
 #import "GiViewHelper.h"
-#import "GiPaintView.h"
+#import "GiViewImpl.h"
 #import "ImageCache.h"
+#import "ARCMacro.h"
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
-#define IOSLIBVERSION     50
+#define IOSLIBVERSION     0
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -31,24 +31,43 @@ GiColor CGColorToGiColor(CGColorRef color) {
                    (int)lroundf(CGColorGetAlpha(color) * 255.f));
 }
 
+@interface GiViewHelper ()
+@property (nonatomic, WEAK) GiPaintView *view;
+@end
+
 @implementation GiViewHelper
 
-@synthesize shapeCount, selectedCount, selectedType, selectedShapeID, content, changeCount;
+@synthesize shapeCount, selectedCount, selectedType, selectedShapeID, content;
+@synthesize changeCount, drawCount, displayExtent, boundingBox;
 @synthesize command, lineWidth, strokeWidth, lineColor, lineAlpha;
 @synthesize lineStyle, fillColor, fillAlpha;
 
+static GiViewHelper *_sharedInstance = nil;
+
 + (NSString *)version {
-    return [NSString stringWithFormat:@"1.0.%d.%d", IOSLIBVERSION, GiCoreView::getVersion()];
+    return [NSString stringWithFormat:@"1.1.%d.%d", IOSLIBVERSION, GiCoreView::getVersion()];
 }
 
-- (id)initWithView:(GiPaintView *)view {
-    self = [super init];
-    _view = view ? view : [GiPaintView activeView];
-    return self;
++ (void)initialize {
+	if (!_sharedInstance) {
+		_sharedInstance = [[GiViewHelper alloc] init];
+	}
 }
 
-+ (id)instance:(GiPaintView *)view {
-    return [[GiViewHelper alloc]initWithView:view];
++ (GiViewHelper *)sharedInstance {
+    if (!_sharedInstance.view) {
+        _sharedInstance.view = [GiPaintView activeView];
+    }
+	return _sharedInstance;
+}
+
++ (GiViewHelper *)sharedInstance:(GiPaintView *)view {
+    _sharedInstance.view = view;
+    return _sharedInstance;
+}
+
+- (id)init {
+    return _sharedInstance ? nil : [super init];
 }
 
 + (GiPaintView *)activeView {
@@ -78,11 +97,11 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (void)setCommand:(NSString *)name {
-    [_view coreView]->setCommand([_view viewAdapter], [name UTF8String]);
+    [_view coreView]->setCommand([name UTF8String]);
 }
 
 - (BOOL)setCommand:(NSString *)name withParam:(NSString *)param {
-    return [_view coreView]->setCommand([_view viewAdapter], [name UTF8String], [param UTF8String]);
+    return [_view coreView]->setCommand([name UTF8String], [param UTF8String]);
 }
 
 + (void)setExtraContextImages:(NSArray *)names {
@@ -188,7 +207,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 - (NSString *)content {
-    long hDoc = [_view coreView]->acquireFrontDoc();
+    __block long hDoc;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        hDoc = [_view coreView]->acquireFrontDoc();
+    });
     const char* str = [_view coreView]->getContent(hDoc);
     NSString * ret = [NSString stringWithCString:str encoding:NSUTF8StringEncoding];
     [_view coreView]->freeContent();
@@ -220,6 +242,30 @@ GiColor CGColorToGiColor(CGColorRef color) {
     return [_view coreView]->getChangeCount();
 }
 
+- (long)drawCount {
+    return [_view coreView]->getDrawCount();
+}
+
+- (CGRect)displayExtent {
+    mgvector<float> box(4);
+    if ([_view coreView]->getDisplayExtent(box)) {
+        float w = box.get(2) - box.get(0);
+        float h = box.get(3) - box.get(1);
+        return CGRectMake(box.get(0), box.get(1), w, h);
+    }
+    return CGRectNull;
+}
+
+- (CGRect)boundingBox {
+    mgvector<float> box(4);
+    if ([_view coreView]->getBoundingBox(box)) {
+        float w = box.get(2) - box.get(0);
+        float h = box.get(3) - box.get(1);
+        return CGRectMake(box.get(0), box.get(1), w, h);
+    }
+    return CGRectNull;
+}
+
 - (NSString *)addExtension:(NSString *)filename :(NSString *)ext {
     if (filename && ![filename hasSuffix:ext]) {
         filename = [[filename stringByDeletingPathExtension]
@@ -245,7 +291,10 @@ GiColor CGColorToGiColor(CGColorRef color) {
         if (![fm fileExistsAtPath:vgfile]) {
             [fm createFileAtPath:vgfile contents:[NSData data] attributes:nil];
         }
-        long hDoc = [_view coreView]->acquireFrontDoc();
+        __block long hDoc;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            hDoc = [_view coreView]->acquireFrontDoc();
+        });
         ret = [_view coreView]->saveToFile(hDoc, [vgfile UTF8String]);
         [_view coreView]->releaseDoc(hDoc);
     } else {
@@ -329,14 +378,73 @@ GiColor CGColorToGiColor(CGColorRef color) {
     
     GiShapeCallback shapeCallback(rootLayer, hidden);
     GiShapeAdapter adapter(&shapeCallback);
-    long hDoc = [_view coreView]->acquireFrontDoc();
-    long hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
+    __block long hDoc, hGs;
     
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        hDoc = [_view coreView]->acquireFrontDoc();
+        hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
+    });
     [_view coreView]->drawAll(hDoc, hGs, &adapter);
     [_view coreView]->releaseDoc(hDoc);
     [_view coreView]->releaseGraphics([_view viewAdapter], hGs);
     
     return rootLayer;
+}
+
+- (BOOL)recreateDirectory:(NSString *)path {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    [fm removeItemAtPath:path error:nil];
+    if (![fm createDirectoryAtPath:path
+       withIntermediateDirectories:YES attributes:nil error:nil]) {
+        NSLog(@"Fail to create directory: %@", path);
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)startUndoRecord:(NSString *)path {
+    if ([_view coreView]->isUndoRecording()
+        || !path || ![self recreateDirectory:path]) {
+        return NO;
+    }
+    return [_view viewAdapter2]->startRecord([path UTF8String], GiViewAdapter::kUndo);
+}
+
+- (void)stopUndoRecord {
+    [_view viewAdapter2]->stopRecord(true);
+}
+
+- (BOOL)canUndo {
+    return [_view coreView]->canUndo();
+}
+
+- (BOOL)canRedo {
+    return [_view coreView]->canRedo();
+}
+
+- (void)undo {
+    [_view viewAdapter2]->undo();
+}
+
+- (void)redo {
+    [_view viewAdapter2]->redo();
+}
+
+- (BOOL)isRecording {
+    return [_view coreView]->isRecording();
+}
+
+- (BOOL)startRecord:(NSString *)path {
+    if ([_view coreView]->isRecording()
+        || !path || ![self recreateDirectory:path]) {
+        return NO;
+    }
+    return [_view viewAdapter2]->startRecord([path UTF8String], GiViewAdapter::kRecord);
+}
+
+- (void)stopRecord {
+    [_view viewAdapter2]->stopRecord(false);
 }
 
 @end

@@ -338,10 +338,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../Classes/Prefix.pch;
 				INFOPLIST_FILE = ../Classes/Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos",
-				);
 				OTHER_LDFLAGS = (
 					"-lTouchVGCore",
 					"-lTouchVG",
@@ -360,10 +356,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../Classes/Prefix.pch;
 				INFOPLIST_FILE = ../Classes/Info.plist;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos",
-				);
 				OTHER_LDFLAGS = (
 					"-lTouchVGCore",
 					"-lTouchVG",

@@ -66,10 +66,9 @@ public class GraphView1 extends View {
         long ms = SystemClock.currentThreadTimeMillis();
         if (mCanvas.beginPaint(canvas)) {
             canvas.drawColor(Color.TRANSPARENT);
-            if ((mCreateFlags & 0xF0000) != 0) {  // in scroll view
+            if ((mCreateFlags & 0xF0000) != 0) { // in scroll view
                 TestCanvas.test(mCanvas, mCreateFlags, 400);
-            }
-            else {
+            } else {
                 TestCanvas.test(mCanvas, mCreateFlags);
             }
             dynDraw(mCanvas);

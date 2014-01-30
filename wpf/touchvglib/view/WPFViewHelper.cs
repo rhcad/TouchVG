@@ -47,7 +47,13 @@ namespace touchvg.view
         public string Command
         {
             get { return CoreView.getCommand(); }
-            set { CoreView.setCommand(View.ViewAdapter, value); }
+            set { CoreView.setCommand(value); }
+        }
+
+        //! 指定名称和JSON串参数，启动命令
+        public bool setCommand(string name, string param)
+        {
+            return CoreView.setCommand(name, param);
         }
 
         //! 线宽，正数表示0.1毫米单位，零表示1像素宽，负数表示像素单位
@@ -229,6 +235,12 @@ namespace touchvg.view
         public bool Load(string vgfile)
         {
             return CoreView.loadFromFile(vgfile);
+        }
+
+        //! 从JSON文件中只读加载图形
+        public bool Load(string vgfile, bool readOnly)
+        {
+            return CoreView.loadFromFile(vgfile, readOnly);
         }
 
         //! 保存图形到JSON文件

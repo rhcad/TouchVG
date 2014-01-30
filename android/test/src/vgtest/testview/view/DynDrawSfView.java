@@ -27,25 +27,25 @@ public class DynDrawSfView extends SurfaceView implements DynDrawView {
     public DynDrawSfView(Context context) {
         super(context);
         mCanvasAdapter = new CanvasAdapter(this);
-        
+
         getHolder().addCallback(new SurfaceCallback());
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
     }
-    
+
     public void setCoreView(GiView viewAdapter, GiCoreView coreView) {
         mViewAdapter = viewAdapter;
         mCoreView = coreView;
     }
-    
+
     public long getDrawnTime() {
         return mDrawnTime;
     }
-    
+
     public long getEndPaintTime() {
         return mEndPaintTime;
     }
-    
+
     public boolean isDrawing() {
         return mCanvasAdapter != null && mCanvasAdapter.isDrawing();
     }
@@ -69,14 +69,14 @@ public class DynDrawSfView extends SurfaceView implements DynDrawView {
         mViewAdapter = null;
         super.onDetachedFromWindow();
     }
-    
+
     public void doDraw() {
         if (!mCanvasAdapter.isDrawing()) {
             mBeginTime = android.os.SystemClock.uptimeMillis();
             new Thread(new DrawThread()).start();
         }
     }
-    
+
     private class SurfaceCallback implements SurfaceHolder.Callback {
         public void surfaceCreated(SurfaceHolder holder) {
             doDraw();
@@ -88,7 +88,7 @@ public class DynDrawSfView extends SurfaceView implements DynDrawView {
         public void surfaceDestroyed(SurfaceHolder holder) {
         }
     }
-    
+
     private class DrawThread implements Runnable {
         public void run() {
             Canvas canvas = null;

@@ -34,29 +34,26 @@ public class GraphViewCached extends View {
         mViewAdapter = new ViewAdapter();
         mCoreView = new GiCoreView(null);
         mCoreView.createView(mViewAdapter, 0);
-        
+
         DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
         GiCoreView.setScreenDpi(dm.densityDpi);
-        
+
         this.setOnTouchListener(new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan, 
+                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan,
                             GiGestureState.kGiGestureBegan, event.getX(), event.getY());
-                }
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan, 
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan,
                             GiGestureState.kGiGestureEnded, event.getX(), event.getY());
                     showTime();
-                }
-                else if (mDynDrawView != null
+                } else if (mDynDrawView != null
                         && event.getEventTime() > mDynDrawView.getEndPaintTime()) {
-                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan, 
+                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan,
                             GiGestureState.kGiGestureMoved, event.getX(), event.getY());
                     showTime();
-                }
-                else if (mDynDrawView == null && event.getEventTime() > mEndPaintTime) {
-                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan, 
+                } else if (mDynDrawView == null && event.getEventTime() > mEndPaintTime) {
+                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan,
                             GiGestureState.kGiGestureMoved, event.getX(), event.getY());
                     showTime();
                 }
@@ -64,22 +61,22 @@ public class GraphViewCached extends View {
             }
         });
     }
-    
+
     public GiCoreView coreView() {
         return mCoreView;
     }
-    
+
     public void setDynDrawView(DynDrawView view) {
         mDynDrawView = view;
         if (mDynDrawView != null) {
             mDynDrawView.setCoreView(mViewAdapter, mCoreView);
         }
     }
-    
+
     public long getDrawnTime() {
         return mDrawnTime;
     }
-    
+
     private void showTime() {
         Activity activity = (Activity) this.getContext();
         String title = activity.getTitle().toString();
@@ -90,7 +87,7 @@ public class GraphViewCached extends View {
         String dyntext = mDynDrawView != null ? (mDynDrawView.getDrawnTime() + "/") : "";
         activity.setTitle(title + " - " + dyntext + mDrawnTime + " ms");
     }
-    
+
     private void doDraw() {
         mBeginTime = android.os.SystemClock.uptimeMillis();
         invalidate();
@@ -100,12 +97,11 @@ public class GraphViewCached extends View {
     protected void onDraw(Canvas canvas) {
         autoBuildCache();
         mCoreView.onSize(mViewAdapter, this.getWidth(), this.getHeight());
-        
+
         if (mCanvasAdapter.beginPaint(canvas)) {
             if (mCacheBitmap != null) {
                 canvas.drawBitmap(mCacheBitmap, 0, 0, null);
-            }
-            else {
+            } else {
                 mCoreView.drawAll(mViewAdapter, mCanvasAdapter);
             }
             if (mDynDrawView == null) {
@@ -116,23 +112,22 @@ public class GraphViewCached extends View {
         mEndPaintTime = android.os.SystemClock.uptimeMillis();
         mDrawnTime = mEndPaintTime - mBeginTime;
     }
-    
+
     private void autoBuildCache() {
-        if (mCacheBitmap != null && (mCacheBitmap.getWidth() != getWidth()
-                || mCacheBitmap.getHeight() != getHeight())) {
+        if (mCacheBitmap != null
+                && (mCacheBitmap.getWidth() != getWidth() || mCacheBitmap.getHeight() != getHeight())) {
             mCacheBitmap.recycle();
             mCacheBitmap = null;
         }
         if (mCacheBitmap == null) {
             mCacheBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             final Canvas canvas = new Canvas(mCacheBitmap);
-            
+
             if (mCanvasAdapter.beginPaint(canvas)) {
                 canvas.drawColor(0);
                 mCoreView.drawAll(mViewAdapter, mCanvasAdapter);
                 mCanvasAdapter.endPaint();
-            }
-            else {
+            } else {
                 mCacheBitmap.recycle();
                 mCacheBitmap = null;
             }
@@ -163,7 +158,7 @@ public class GraphViewCached extends View {
         }
         super.onDetachedFromWindow();
     }
-    
+
     private class ViewAdapter extends GiView {
         @Override
         public void regenAll(boolean changed) {
@@ -178,7 +173,7 @@ public class GraphViewCached extends View {
             }
             doDraw();
         }
-        
+
         @Override
         public void regenAppend(int sid) {
             synchronized (mCoreView) {
@@ -197,7 +192,7 @@ public class GraphViewCached extends View {
                 mDynDrawView.doDraw();
             }
         }
-        
+
         @Override
         public void redraw() {
             synchronized (mCoreView) {
@@ -205,8 +200,7 @@ public class GraphViewCached extends View {
             }
             if (mDynDrawView != null) {
                 mDynDrawView.doDraw();
-            }
-            else {
+            } else {
                 doDraw();
             }
         }

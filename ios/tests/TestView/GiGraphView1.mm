@@ -149,7 +149,7 @@ public:
         self.autoresizingMask = 0xFF;               // 自动适应大小
         _viewAdapter = new ViewAdapter1(self);
         
-        GiCoreView::setScreenDpi(GiCanvasAdapter::getScreenDpi());
+        GiCoreView::setScreenDpi(giGetScreenDpi());
         [self coreView]->onSize(_viewAdapter, frame.size.width, frame.size.height);
     }
     return self;
@@ -243,8 +243,8 @@ static char _lastVgFile[256] = { 0 };
 {
     NSString *vgfile = [[filename stringByDeletingPathExtension]
                         stringByAppendingPathExtension:@"vg"];
-    [[GiViewHelper instance:self] saveToFile:vgfile];
-    [[GiViewHelper instance:self] exportSVG:vgfile];
+    [[GiViewHelper sharedInstance:self] saveToFile:vgfile];
+    [[GiViewHelper sharedInstance] exportSVG:vgfile];
     strncpy(_lastVgFile, [vgfile UTF8String], sizeof(_lastVgFile));
     return [super savePng:filename];
 }
@@ -258,6 +258,21 @@ static char _lastVgFile[256] = { 0 };
     }
     
     return [NSString stringWithUTF8String:_lastVgFile];
+}
+
+- (id)initWithFrame:(CGRect)frame withType:(int)type {
+    self = [super initWithFrame:frame];
+    if (self) {
+        _testType = type;
+        
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+        if (_testType & 64) {
+            [[GiViewHelper sharedInstance:self] startRecord:[path stringByAppendingPathComponent:@"record"]];
+        }
+        [[GiViewHelper sharedInstance:self] startUndoRecord:[path stringByAppendingPathComponent:@"undo"]];
+    }
+    return self;
 }
 
 @end

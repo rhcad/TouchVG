@@ -163,6 +163,26 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_exportSVG__SWIG_1(swigCPtr, this, GiView.getCPtr(view), view, filename);
   }
 
+  public boolean startRecord(String path, int doc, boolean forUndo) {
+    return touchvgJNI.GiCoreView_startRecord(swigCPtr, this, path, doc, forUndo);
+  }
+
+  public void stopRecord(boolean forUndo) {
+    touchvgJNI.GiCoreView_stopRecord(swigCPtr, this, forUndo);
+  }
+
+  public boolean recordShapes(boolean forUndo, int tick, int doc, int shapes) {
+    return touchvgJNI.GiCoreView_recordShapes(swigCPtr, this, forUndo, tick, doc, shapes);
+  }
+
+  public boolean undo(GiView view) {
+    return touchvgJNI.GiCoreView_undo(swigCPtr, this, GiView.getCPtr(view), view);
+  }
+
+  public boolean redo(GiView view) {
+    return touchvgJNI.GiCoreView_redo(swigCPtr, this, GiView.getCPtr(view), view);
+  }
+
   public boolean isPressDragging() {
     return touchvgJNI.GiCoreView_isPressDragging(swigCPtr, this);
   }
@@ -195,32 +215,44 @@ public class GiCoreView extends MgCoreView {
     touchvgJNI.GiCoreView_releaseShapes(swigCPtr, this, hShapes);
   }
 
-  public boolean loadDynamicShapes(MgStorage s) {
-    return touchvgJNI.GiCoreView_loadDynamicShapes(swigCPtr, this, MgStorage.getCPtr(s), s);
+  public boolean isUndoRecording() {
+    return touchvgJNI.GiCoreView_isUndoRecording(swigCPtr, this);
   }
 
-  public void applyDynamicShapes() {
-    touchvgJNI.GiCoreView_applyDynamicShapes(swigCPtr, this);
+  public boolean isRecording() {
+    return touchvgJNI.GiCoreView_isRecording(swigCPtr, this);
+  }
+
+  public boolean isPlaying() {
+    return touchvgJNI.GiCoreView_isPlaying(swigCPtr, this);
+  }
+
+  public int getRecordTick(boolean forUndo) {
+    return touchvgJNI.GiCoreView_getRecordTick(swigCPtr, this, forUndo);
+  }
+
+  public boolean isUndoLoading() {
+    return touchvgJNI.GiCoreView_isUndoLoading(swigCPtr, this);
+  }
+
+  public boolean canUndo() {
+    return touchvgJNI.GiCoreView_canUndo(swigCPtr, this);
+  }
+
+  public boolean canRedo() {
+    return touchvgJNI.GiCoreView_canRedo(swigCPtr, this);
   }
 
   public String getCommand() {
     return touchvgJNI.GiCoreView_getCommand(swigCPtr, this);
   }
 
-  public boolean setCommand(GiView view, String name, String params) {
-    return touchvgJNI.GiCoreView_setCommand__SWIG_0(swigCPtr, this, GiView.getCPtr(view), view, name, params);
-  }
-
-  public boolean setCommand(GiView view, String name) {
-    return touchvgJNI.GiCoreView_setCommand__SWIG_1(swigCPtr, this, GiView.getCPtr(view), view, name);
-  }
-
   public boolean setCommand(String name, String params) {
-    return touchvgJNI.GiCoreView_setCommand__SWIG_2(swigCPtr, this, name, params);
+    return touchvgJNI.GiCoreView_setCommand__SWIG_0(swigCPtr, this, name, params);
   }
 
   public boolean setCommand(String name) {
-    return touchvgJNI.GiCoreView_setCommand__SWIG_3(swigCPtr, this, name);
+    return touchvgJNI.GiCoreView_setCommand__SWIG_1(swigCPtr, this, name);
   }
 
   public boolean doContextAction(int action) {
@@ -333,6 +365,10 @@ public class GiCoreView extends MgCoreView {
 
   public int addImageShape(String name, float xc, float yc, float w, float h) {
     return touchvgJNI.GiCoreView_addImageShape__SWIG_1(swigCPtr, this, name, xc, yc, w, h);
+  }
+
+  public boolean getDisplayExtent(Floats box) {
+    return touchvgJNI.GiCoreView_getDisplayExtent(swigCPtr, this, Floats.getCPtr(box), box);
   }
 
   public boolean getBoundingBox(Floats box) {

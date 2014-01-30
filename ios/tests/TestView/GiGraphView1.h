@@ -19,8 +19,11 @@ class GiCoreView;
 @end
 
 //! iOS测试绘图视图类
-@interface GiGraphView2 : GiPaintView
+@interface GiGraphView2 : GiPaintView {
+    int     _testType;
+}
 
+- (id)initWithFrame:(CGRect)frame withType:(int)type;
 + (NSString *)lastFileName;
 
 @end

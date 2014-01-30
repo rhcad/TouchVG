@@ -65,10 +65,6 @@ public class MgCommandDraw extends MgCommand {
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
-  public void delayClear(MgMotion sender) {
-    touchvgJNI.MgCommandDraw_delayClear(swigCPtr, this, MgMotion.getCPtr(sender), sender);
-  }
-
   public boolean touchBeganStep(MgMotion sender) {
     return touchvgJNI.MgCommandDraw_touchBeganStep(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }

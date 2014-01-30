@@ -47,8 +47,9 @@ public class MgShapeDoc : MgObject {
     return ret;
   }
 
-  public void copyShapes(MgShapeDoc src, bool deeply) {
-    touchvgPINVOKE.MgShapeDoc_copyShapes(swigCPtr, MgShapeDoc.getCPtr(src), deeply);
+  public int copyShapes(MgShapeDoc src, bool deeply) {
+    int ret = touchvgPINVOKE.MgShapeDoc_copyShapes(swigCPtr, MgShapeDoc.getCPtr(src), deeply);
+    return ret;
   }
 
   public static MgShapeDoc createDoc() {
@@ -98,6 +99,12 @@ public class MgShapeDoc : MgObject {
 
   public int getShapeCount() {
     int ret = touchvgPINVOKE.MgShapeDoc_getShapeCount(swigCPtr);
+    return ret;
+  }
+
+  public MgShape findShape(int sid) {
+    IntPtr cPtr = touchvgPINVOKE.MgShapeDoc_findShape(swigCPtr, sid);
+    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
     return ret;
   }
 

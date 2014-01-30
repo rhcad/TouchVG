@@ -56,7 +56,7 @@ public class SurfaceView2 extends SurfaceView {
 
     @Override
     public void setBackgroundColor(int color) {
-        mCanvas.setBackgroundColor(color);  // 视图仍然是透明色
+        mCanvas.setBackgroundColor(color); // 视图仍然是透明色
     }
 
     protected void showTime(long ms) {
@@ -114,10 +114,9 @@ public class SurfaceView2 extends SurfaceView {
                 if (canvas != null) {
                     if (mCanvas.beginPaint(canvas)) {
                         canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
-                        if ((mCreateFlags & 0xF0000) != 0) {  // in scroll view
+                        if ((mCreateFlags & 0xF0000) != 0) { // in scroll view
                             TestCanvas.test(mCanvas, mCreateFlags, 400);
-                        }
-                        else {
+                        } else {
                             TestCanvas.test(mCanvas, mCreateFlags);
                         }
                         dynDraw(mCanvas);

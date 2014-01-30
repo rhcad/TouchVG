@@ -10,13 +10,11 @@
 //! iOS绘图视图辅助类
 /*! \ingroup GROUP_IOS
  */
-@interface GiViewHelper : NSObject {
-    GiPaintView *_view;
-}
+@interface GiViewHelper : NSObject
 
-+ (id)instance:(GiPaintView *)view;                 //!< 创建一个自动释放的本类对象，传入nil时取当前绘图视图
-- (id)initWithView:(GiPaintView *)view;             //!< 供上一函数(instance:)使用的初始化函数
-+ (NSString *)version;                              //!< 返回本库的版本号, 1.0.ioslibver.corelibver
++ (GiViewHelper *)sharedInstance;                           //!< 返回单实例对象
++ (GiViewHelper *)sharedInstance:(GiPaintView *)view;       //!< 指定绘图视图
++ (NSString *)version;                              //!< 返回本库的版本号, 1.1.ioslibver.corelibver
 
 + (GiPaintView *)activeView;                        //!< 得到当前激活的绘图视图
 - (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView;   //!< 创建普通图形视图，并记到本类
@@ -41,9 +39,12 @@
 @property(nonatomic, readonly) int selectedType;    //!< 选中的图形的类型, MgShapeType
 @property(nonatomic, readonly) int selectedShapeID; //!< 当前选中的图形的ID，选中多个时只取第一个
 @property(nonatomic, readonly) long changeCount;    //!< 图形改变次数，可用于检查是否需要保存
+@property(nonatomic, readonly) long drawCount;      //!< 显示次数
+@property(nonatomic, readonly) CGRect displayExtent; //!< 图形显示范围
+@property(nonatomic, readonly) CGRect boundingBox;  //!< 选择包络框
 @property(nonatomic, assign) NSString *content;     //!< 图形的JSON内容
 
-- (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r;   //!< 从JSON文件中加载图形，自动改后缀名为.vg
+- (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r;   //!< 从JSON文件中只读加载图形，自动改后缀名为.vg
 - (BOOL)loadFromFile:(NSString *)vgfile;    //!< 从JSON文件中加载图形，自动改后缀名为.vg
 - (BOOL)saveToFile:(NSString *)vgfile;      //!< 保存图形到JSON文件，自动改后缀名为.vg
 - (void)clearShapes;                        //!< 清除所有图形
@@ -57,6 +58,17 @@
 - (BOOL)zoomToModel:(CGRect)rect;           //!< 放缩显示指定范围到视图区域
 - (int)addShapesForTest;                    //!< 添加测试图形
 - (void)clearCachedData;                    //!< 释放临时数据内存
+
+- (BOOL)startUndoRecord:(NSString *)path;   //!< 开始Undo录制，在主线程用
+- (void)stopUndoRecord;                     //!< 停止Undo录制，在主线程用
+- (BOOL)canUndo;                            //!< 能否撤销
+- (BOOL)canRedo;                            //!< 能否重做
+- (void)undo;                               //!< 撤销
+- (void)redo;                               //!< 重做
+
+- (BOOL)isRecording;                        //!< 是否正在录屏
+- (BOOL)startRecord:(NSString *)path;       //!< 开始录屏，在主线程用
+- (void)stopRecord;                         //!< 停止录屏，在主线程用
 
 //! 在默认位置插入一个程序资源中的PNG图片(name.png)
 - (int)insertPNGFromResource:(NSString *)name;

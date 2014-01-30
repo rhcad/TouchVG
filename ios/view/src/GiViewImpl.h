@@ -26,10 +26,13 @@ class GiViewAdapter;
     CALayer         *_layer;
     GiViewAdapter   *_adapter;
     __block long    _drawing;
+    __block long    _doc;
+    __block long    _gs;
 }
 
 - (id)initWithAdapter:(GiViewAdapter *)adapter;
-- (void)startRender:(BOOL)forPending;
+- (void)startRender:(long)doc :(long)gs;
+- (void)startRenderForPending;
 - (CALayer *)getLayer;
 
 @end
@@ -48,6 +51,7 @@ private:
     int         _appendIDs[10];         //!< 还未来得及重构显示的新增图形的ID
     int         _oldAppendCount;        //!< 后台渲染前的待渲染新增图形数
     GiLayerRender   *_render;           //!< 后台渲染对象
+    dispatch_queue_t _recordQueue[2];   //!< 录制队列
     
 public:
     std::vector<id> delegates;  //!< GiPaintViewDelegate 观察者数组
@@ -74,6 +78,12 @@ public:
     bool renderInContext(CGContextRef ctx);
     int getAppendID(int index) const;
     
+    void undo();
+    void redo();
+    enum RecordType { kUndo, kRecord, kPlay };
+    bool startRecord(const char* path, RecordType type);
+    void stopRecord(bool forUndo);
+    
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);
     virtual void redraw();
@@ -95,8 +105,9 @@ public:
     
 private:
     void setContextButton(UIButton *btn, NSString *caption, NSString *imageName);
-    void regen_(bool changed, int sid);
+    void regen_(bool changed, int sid, bool loading = false);
     void redraw_();
+    void recordShapes(bool forUndo, long doc, long shapes);
 };
 
 /*! \category GiPaintView()

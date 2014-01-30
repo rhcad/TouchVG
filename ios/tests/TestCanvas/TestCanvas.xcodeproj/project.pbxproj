@@ -28,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0209DF371891D9BA00C6CBF4 /* ARCMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARCMacro.h; path = ../../view/include/ARCMacro.h; sourceTree = "<group>"; };
 		AE2B80301804026200E50A6E /* TouchVG.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TouchVG.bundle; path = ../Resources/TouchVG.bundle; sourceTree = "<group>"; };
 		AE2F18EB18429B7D000981AD /* TestView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestView.h; sourceTree = "<group>"; };
 		AE3341B316ECBDBE00F0E517 /* CalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutView.h; sourceTree = "<group>"; };
@@ -137,6 +138,7 @@
 		AEF2D530160964BA00DDB7F2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0209DF371891D9BA00C6CBF4 /* ARCMacro.h */,
 				AE3341B316ECBDBE00F0E517 /* CalloutView.h */,
 				AE3341B416ECBDBE00F0E517 /* CalloutView.m */,
 				AEF2D539160964BA00DDB7F2 /* AppDelegate.h */,

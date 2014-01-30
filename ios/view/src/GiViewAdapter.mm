@@ -43,13 +43,14 @@ static int getExtraImageCount() { int n = 0; while (EXTIMAGENAMES[n]) n++; retur
 #define APPENDSIZE sizeof(_appendIDs)/sizeof(_appendIDs[0])
 
 GiViewAdapter::GiViewAdapter(GiPaintView *mainView, GiCoreView *coreView)
-: _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
-, _actionEnabled(true), _oldAppendCount(0)
+    : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
+    , _actionEnabled(true), _oldAppendCount(0)
 {
     _coreView = new GiCoreView(coreView);
     memset(&respondsTo, 0, sizeof(respondsTo));
     _imageCache = [[ImageCache alloc]init];
     _render = [[GiLayerRender alloc]initWithAdapter:this];
+    _recordQueue[0] = _recordQueue[1] = NULL;
     
     for (int i = 0; i < APPENDSIZE; i++)
         _appendIDs[i] = 0;
@@ -99,7 +100,7 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
         [_dynview setNeedsDisplay];
     }
     _oldAppendCount = 0;
-    [_render startRender:YES];
+    [_render startRenderForPending];
     
     return true;
 }
@@ -108,23 +109,109 @@ int GiViewAdapter::getAppendID(int index) const {
     return index < APPENDSIZE ? _appendIDs[index] : 0;
 }
 
-void GiViewAdapter::regenAll(bool changed) {
-    if (isMainThread()) {
-        regen_(changed, 0);
-    }
-    else {
-        dispatch_async(dispatch_get_main_queue(), ^{ regen_(changed, 0); });
+bool GiViewAdapter::startRecord(const char* path, RecordType type)
+{
+    int i = type > kUndo ? 1 : 0;
+    if (type < kUndo || type > kPlay || _recordQueue[i])
+        return false;
+    
+    long doc = type < kPlay ? _coreView->acquireFrontDoc() : 0;
+    if (!_coreView->startRecord(path, doc, type == kUndo))
+        return NO;
+    
+    const char* labels[] = { "touchvg.undo", "touchvg.record", "touchvg.play" };
+    _recordQueue[i] = dispatch_queue_create(labels[type], NULL);
+    
+    return true;
+}
+
+void GiViewAdapter::undo() {
+    if (_recordQueue[0]) {
+        _coreView->setCommand(_coreView->getCommand());
+        dispatch_async(_recordQueue[0], ^{
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                _coreView->undo(this);
+            });
+        });
     }
 }
 
-void GiViewAdapter::regen_(bool changed, int sid) {
+void GiViewAdapter::redo() {
+    if (_recordQueue[0]) {
+        _coreView->setCommand(_coreView->getCommand());
+        dispatch_async(_recordQueue[0], ^{
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                _coreView->redo(this);
+            });
+        });
+    }
+}
+
+void GiViewAdapter::stopRecord(bool forUndo)
+{
+    int i = forUndo ? 0 : 1;
+    if (_recordQueue[i]) {
+        dispatch_async(_recordQueue[i], ^{
+            _coreView->stopRecord(forUndo);
+        });
+        dispatch_release(_recordQueue[i]);
+        _recordQueue[i] = NULL;
+    }
+}
+
+void GiViewAdapter::recordShapes(bool forUndo, long doc, long shapes)
+{
+    int i = forUndo ? 0 : 1;
+    if ((doc || shapes) && _recordQueue[i]) {
+        long tick = _coreView->getRecordTick(forUndo);
+        dispatch_async(_recordQueue[i], ^{
+            if (_view.window) {
+                _coreView->recordShapes(forUndo, tick, doc, shapes);
+            }
+        });
+    }
+}
+
+void GiViewAdapter::regenAll(bool changed) {
+    bool loading = _coreView->isUndoLoading();
+    if (isMainThread()) {
+        regen_(changed, 0, loading);
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            regen_(changed, 0, loading);
+        });
+    }
+}
+
+void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
     if (!_view.window) {
         return;
     }
-    if (changed) {
-        _coreView->submitBackDoc(this);
+    
+    long doc0 = 0, shapes0 = 0, doc1 = 0, shapes1 = 0;
+    
+    if (!_coreView->isPlaying()) {
+        if (loading) {
+            doc1 = _coreView->acquireFrontDoc();
+            shapes1 = _coreView->acquireDynamicShapes();
+        } else {
+            if (changed && _coreView->submitBackDoc(this)) {
+                if (_recordQueue[0])
+                    doc0 = _coreView->acquireFrontDoc();
+                if (_recordQueue[1])
+                    doc1 = _coreView->acquireFrontDoc();
+            }
+            if (_coreView->submitDynamicShapes(this)) {
+                if (_recordQueue[0])
+                    shapes0 = _coreView->acquireDynamicShapes();
+                if (_recordQueue[1])
+                    shapes1 = _coreView->acquireDynamicShapes();
+            }
+        }
     }
-    _coreView->submitDynamicShapes(this);
+    
+    recordShapes(true, doc0, shapes0);
+    recordShapes(false, doc1, shapes1);
     
     for (int i = 0; i < APPENDSIZE; i++) {
         if (_appendIDs[i] == 0) {
@@ -132,15 +219,14 @@ void GiViewAdapter::regen_(bool changed, int sid) {
             break;
         }
     }
-    [_render startRender:NO];
+    [_render startRender:_coreView->acquireFrontDoc() :_coreView->acquireGraphics(this)];
     [_dynview setNeedsDisplay];
 }
 
 void GiViewAdapter::regenAppend(int sid) {
     if (isMainThread()) {
         regen_(true, sid);
-    }
-    else {
+    } else {
         dispatch_async(dispatch_get_main_queue(), ^{ regen_(true, sid); });
     }
 }
@@ -160,8 +246,19 @@ UIView *GiViewAdapter::getDynView() {
 }
 
 void GiViewAdapter::redraw_() {
+    long shapes0 = 0, shapes1 = 0;
+    
     if (getDynView()) {
-        _coreView->submitDynamicShapes(this);
+        if (!_coreView->isPlaying()) {
+            if (_coreView->submitDynamicShapes(this)) {
+                if (_recordQueue[0])
+                    shapes0 = _coreView->acquireDynamicShapes();
+                if (_recordQueue[1])
+                    shapes1 = _coreView->acquireDynamicShapes();
+            }
+            recordShapes(true, 0, shapes0);
+            recordShapes(false, 0, shapes1);
+        }
         [_dynview setNeedsDisplay];
     }
     else {
@@ -172,8 +269,7 @@ void GiViewAdapter::redraw_() {
 void GiViewAdapter::redraw() {
     if (isMainThread()) {
         redraw_();
-    }
-    else {
+    } else {
         dispatch_async(dispatch_get_main_queue(), ^{ redraw_(); });
     }
 }
@@ -204,7 +300,7 @@ bool GiViewAdapter::twoFingersMove(UIGestureRecognizer *sender, int state, bool 
     
     state = state < 0 ? (int)sender.state : state;
     return _coreView->twoFingersMove(this, (GiGestureState)state,
-                                     pt1.x, pt1.y, pt2.x, pt2.y, switchGesture);
+                                         pt1.x, pt1.y, pt2.x, pt2.y, switchGesture);
 }
 
 void GiViewAdapter::hideContextActions() {

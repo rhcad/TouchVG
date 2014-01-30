@@ -6,7 +6,6 @@ package rhcad.touchvg.view.internal;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.Ints;
-
 import android.content.Context;
 import android.view.MotionEvent;
 import android.view.View;

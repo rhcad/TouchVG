@@ -7,7 +7,6 @@ package rhcad.touchvg.view;
 import rhcad.touchvg.view.internal.ImageCache;
 import rhcad.touchvg.view.internal.PictureAdapter;
 import rhcad.touchvg.view.internal.PictureAdapter.PictureCreated;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Picture;

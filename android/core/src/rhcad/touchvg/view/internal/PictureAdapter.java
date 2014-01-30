@@ -5,7 +5,6 @@
 package rhcad.touchvg.view.internal;
 
 import rhcad.touchvg.core.GiCanvas;
-
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;

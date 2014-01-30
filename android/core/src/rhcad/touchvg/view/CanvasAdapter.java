@@ -6,7 +6,6 @@ package rhcad.touchvg.view;
 
 import rhcad.touchvg.core.GiCanvas;
 import rhcad.touchvg.view.internal.ImageCache;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;

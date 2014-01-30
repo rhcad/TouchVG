@@ -33,22 +33,19 @@ public class LargeView1 extends ScrollView {
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");
         View view = null;
 
-        if ((flags & 0x10000) != 0) {       // in scroll view
-            if ((flags & 0x400) != 0) {     // testDynCurves
+        if ((flags & 0x10000) != 0) { // in scroll view
+            if ((flags & 0x400) != 0) { // testDynCurves
                 view = new GraphView2(context);
-            }
-            else {
+            } else {
                 view = new GraphView1(context);
             }
-        }
-        else if ((flags & 0x20000) != 0) {  // uses surface view
-            if ((flags & 0x400) != 0) {     // testDynCurves
+        } else if ((flags & 0x20000) != 0) { // uses surface view
+            if ((flags & 0x400) != 0) { // testDynCurves
                 view = new SurfaceView3(context);
-            }
-            else {
+            } else {
                 view = new SurfaceView2(context);
             }
-            //OpenGLRenderer(4096x4096): Shape rect too large to be rendered into a texture
+            // OpenGLRenderer(4096x4096): Shape rect too large to be rendered into a texture
         }
 
         if (view != null) {

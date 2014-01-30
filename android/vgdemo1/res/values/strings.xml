@@ -15,5 +15,7 @@
     <string name="saveBtn">保存</string>
     <string name="loadBtn">加载</string>
     <string name="addSVGFile">SVG</string>
+    <string name="undoBtn">撤销</string>
+    <string name="redoBtn">重做</string>
 
 </resources>

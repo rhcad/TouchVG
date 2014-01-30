@@ -14,16 +14,16 @@ public class TestDragView extends ViewSinShape {
     public TestDragView(Context context) {
         super(context);
     }
-    
+
     @Override
     protected void createButtons(Context context) {
         final LinearLayout layout = new LinearLayout(context);
-        final LayoutParams param = new LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        
+        final LayoutParams param = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
+
         layout.setOrientation(LinearLayout.HORIZONTAL);
         this.addView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        
+
         final Button sinBtn = new Button(context);
         sinBtn.setText("Press me then drag");
         sinBtn.setBackgroundColor(Color.GRAY);
@@ -42,29 +42,32 @@ public class TestDragView extends ViewSinShape {
             }
         });
     }
-    
+
     @Override
     public boolean onDragEvent(DragEvent event) {
         boolean ret = true;
-        
+
         switch (event.getAction()) {
         case DragEvent.ACTION_DRAG_ENTERED:
             mHelper.setCommand(DrawSinShape.NAME);
-            ret = mHelper.getView().onTouch(MotionEvent.ACTION_DOWN, event.getX(), event.getY());
+            ret = mHelper.getGraphView().onTouch(MotionEvent.ACTION_DOWN, event.getX(),
+                    event.getY());
             break;
-            
+
         case DragEvent.ACTION_DRAG_LOCATION:
-            ret = mHelper.getView().onTouch(MotionEvent.ACTION_MOVE, event.getX(), event.getY());
+            ret = mHelper.getGraphView().onTouch(MotionEvent.ACTION_MOVE,
+                    event.getX(), event.getY());
             break;
-            
+
         case DragEvent.ACTION_DROP:
-            ret = mHelper.getView().onTouch(MotionEvent.ACTION_UP, event.getX(), event.getY());
+            ret = mHelper.getGraphView().onTouch(MotionEvent.ACTION_UP,
+                    event.getX(), event.getY());
             break;
-            
+
         default:
             break;
         }
-        
+
         return ret;
     }
 }

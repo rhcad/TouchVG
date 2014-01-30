@@ -23,7 +23,7 @@
             subview = _subview1;
         }
         else {
-            _subview2 = [[GiGraphView2 alloc]initWithFrame:view.bounds];
+            _subview2 = [[GiGraphView2 alloc]initWithFrame:view.bounds withType:type];
             subview = _subview2;
 #ifdef __IPHONE_5_0
             if (_subview2.panRecognizer) {

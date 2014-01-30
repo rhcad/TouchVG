@@ -115,7 +115,6 @@
 		AE97A148186D4BF900DFEA77 /* testcanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = testcanvas.h; sourceTree = "<group>"; };
 		AE97A14A186D4BF900DFEA77 /* gicoreview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gicoreview.h; sourceTree = "<group>"; };
 		AE97A14B186D4BF900DFEA77 /* gigesture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gigesture.h; sourceTree = "<group>"; };
-		AE97A14C186D4BF900DFEA77 /* gimousehelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gimousehelper.h; sourceTree = "<group>"; };
 		AE97A14D186D4BF900DFEA77 /* girecordcanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = girecordcanvas.h; sourceTree = "<group>"; };
 		AE97A14E186D4BF900DFEA77 /* girecordshape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = girecordshape.h; sourceTree = "<group>"; };
 		AE97A14F186D4BF900DFEA77 /* giview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = giview.h; sourceTree = "<group>"; };
@@ -384,7 +383,6 @@
 			children = (
 				AE97A14A186D4BF900DFEA77 /* gicoreview.h */,
 				AE97A14B186D4BF900DFEA77 /* gigesture.h */,
-				AE97A14C186D4BF900DFEA77 /* gimousehelper.h */,
 				AE97A14D186D4BF900DFEA77 /* girecordcanvas.h */,
 				AE97A14E186D4BF900DFEA77 /* girecordshape.h */,
 				AE97A14F186D4BF900DFEA77 /* giview.h */,

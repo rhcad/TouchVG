@@ -4,14 +4,16 @@ SRCS        =$(wildcard *.cpp)
 OBJS        =$(SRCS:.cpp=.o)
 INSTALL_DIR ?=$(ROOTDIR)/build
 
+CORE_INC    =$(ROOTDIR)/thirdparty/TouchVGCore/core/include
+
 CPPFLAGS    += -Wall \
-               -I$(ROOTDIR)/core/pub_inc \
-               -I$(ROOTDIR)/core/pub_inc/geom \
-               -I$(ROOTDIR)/core/pub_inc/graph \
-               -I$(ROOTDIR)/core/pub_inc/shape \
-               -I$(ROOTDIR)/core/pub_inc/cmd \
-               -I$(ROOTDIR)/core/pub_inc/cmdbase \
-               -I$(ROOTDIR)/core/pub_inc/cmdobserver \
+               -I$(CORE_INC) \
+               -I$(CORE_INC)/geom \
+               -I$(CORE_INC)/graph \
+               -I$(CORE_INC)/shape \
+               -I$(CORE_INC)/cmd \
+               -I$(CORE_INC)/cmdbase \
+               -I$(CORE_INC)/cmdobserver \
                -I$(ROOTDIR)/core/democmds/cmds
 
 all:        $(TARGET)

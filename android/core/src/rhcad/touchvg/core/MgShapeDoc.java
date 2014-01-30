@@ -40,8 +40,8 @@ public class MgShapeDoc extends MgObject {
     return (cPtr == 0) ? null : new MgShapeDoc(cPtr, false);
   }
 
-  public void copyShapes(MgShapeDoc src, boolean deeply) {
-    touchvgJNI.MgShapeDoc_copyShapes(swigCPtr, this, MgShapeDoc.getCPtr(src), src, deeply);
+  public int copyShapes(MgShapeDoc src, boolean deeply) {
+    return touchvgJNI.MgShapeDoc_copyShapes(swigCPtr, this, MgShapeDoc.getCPtr(src), src, deeply);
   }
 
   public static MgShapeDoc createDoc() {
@@ -83,6 +83,11 @@ public class MgShapeDoc extends MgObject {
 
   public int getShapeCount() {
     return touchvgJNI.MgShapeDoc_getShapeCount(swigCPtr, this);
+  }
+
+  public MgShape findShape(int sid) {
+    long cPtr = touchvgJNI.MgShapeDoc_findShape(swigCPtr, this, sid);
+    return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
   public MgShapes getCurrentShapes() {

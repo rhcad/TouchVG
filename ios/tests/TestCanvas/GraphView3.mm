@@ -353,9 +353,9 @@ static int machToMs(uint64_t start)
     [super removeFromSuperview];
 }
 
-- (void)didMoveToSuperview
+- (void)didMoveToWindow
 {
-    [super didMoveToSuperview];
+    [super didMoveToWindow];
     _drawTimes++;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         while (!_canceled) {

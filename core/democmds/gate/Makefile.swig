@@ -3,23 +3,26 @@ PKGNAME  =touchvg
 PROJNAME =democmds
 SWIGFILE =democmds.i
 
-INCLUDES += -I$(ROOTDIR)/core/pub_inc \
-            -I$(ROOTDIR)/core/pub_inc/geom \
-            -I$(ROOTDIR)/core/pub_inc/graph \
-            -I$(ROOTDIR)/core/pub_inc/canvas \
-            -I$(ROOTDIR)/core/pub_inc/shape \
-            -I$(ROOTDIR)/core/pub_inc/storage \
-            -I$(ROOTDIR)/core/pub_inc/cmd \
-            -I$(ROOTDIR)/core/pub_inc/cmdbase \
-            -I$(ROOTDIR)/core/pub_inc/cmdobserver \
+CORE_INC =$(ROOTDIR)/thirdparty/TouchVGCore/core/include
+CORE_SRC =$(ROOTDIR)/thirdparty/TouchVGCore/core/src
+
+INCLUDES += -I$(CORE_INC) \
+            -I$(CORE_INC)/geom \
+            -I$(CORE_INC)/graph \
+            -I$(CORE_INC)/canvas \
+            -I$(CORE_INC)/shape \
+            -I$(CORE_INC)/storage \
+            -I$(CORE_INC)/cmd \
+            -I$(CORE_INC)/cmdbase \
+            -I$(CORE_INC)/cmdobserver \
             -I$(ROOTDIR)/core/democmds/cmds \
             -I$(ROOTDIR)/core/democmds/gate
 
 SOURCES   =$(wildcard *.cpp) \
-           $(wildcard ../../pub_src/geom/*.cpp) \
-           $(wildcard ../../pub_src/graph/*.cpp) \
-           $(wildcard ../../pub_src/shape/*.cpp) \
-           $(wildcard ../../pub_src/cmdbase/*.cpp) \
+           $(wildcard $(CORE_SRC)/geom/*.cpp) \
+           $(wildcard $(CORE_SRC)/graph/*.cpp) \
+           $(wildcard $(CORE_SRC)/shape/*.cpp) \
+           $(wildcard $(CORE_SRC)/cmdbase/*.cpp) \
            $(wildcard ../cmds/*.cpp)
 
 include $(ROOTDIR)/core/mk/config.mk

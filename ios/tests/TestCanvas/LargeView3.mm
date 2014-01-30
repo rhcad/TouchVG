@@ -29,9 +29,9 @@
 }
 
 /*
-- (void)didMoveToSuperview
+- (void)didMoveToWindow
 {
-    [super didMoveToSuperview];
+    [super didMoveToWindow];
     self.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
     if (!_subview.backgroundColor) {
         _subview.backgroundColor = self.superview.backgroundColor;

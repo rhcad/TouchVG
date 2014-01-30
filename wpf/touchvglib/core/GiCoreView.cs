@@ -188,6 +188,30 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
+  public bool startRecord(string path, int doc, bool forUndo) {
+    bool ret = touchvgPINVOKE.GiCoreView_startRecord(swigCPtr, path, doc, forUndo);
+    return ret;
+  }
+
+  public void stopRecord(bool forUndo) {
+    touchvgPINVOKE.GiCoreView_stopRecord(swigCPtr, forUndo);
+  }
+
+  public bool recordShapes(bool forUndo, int tick, int doc, int shapes) {
+    bool ret = touchvgPINVOKE.GiCoreView_recordShapes(swigCPtr, forUndo, tick, doc, shapes);
+    return ret;
+  }
+
+  public bool undo(GiView view) {
+    bool ret = touchvgPINVOKE.GiCoreView_undo(swigCPtr, GiView.getCPtr(view));
+    return ret;
+  }
+
+  public bool redo(GiView view) {
+    bool ret = touchvgPINVOKE.GiCoreView_redo(swigCPtr, GiView.getCPtr(view));
+    return ret;
+  }
+
   public override bool isPressDragging() {
     bool ret = touchvgPINVOKE.GiCoreView_isPressDragging(swigCPtr);
     return ret;
@@ -226,13 +250,39 @@ public class GiCoreView : MgCoreView {
     touchvgPINVOKE.GiCoreView_releaseShapes(swigCPtr, hShapes);
   }
 
-  public override bool loadDynamicShapes(MgStorage s) {
-    bool ret = touchvgPINVOKE.GiCoreView_loadDynamicShapes(swigCPtr, MgStorage.getCPtr(s));
+  public override bool isUndoRecording() {
+    bool ret = touchvgPINVOKE.GiCoreView_isUndoRecording(swigCPtr);
     return ret;
   }
 
-  public override void applyDynamicShapes() {
-    touchvgPINVOKE.GiCoreView_applyDynamicShapes(swigCPtr);
+  public override bool isRecording() {
+    bool ret = touchvgPINVOKE.GiCoreView_isRecording(swigCPtr);
+    return ret;
+  }
+
+  public override bool isPlaying() {
+    bool ret = touchvgPINVOKE.GiCoreView_isPlaying(swigCPtr);
+    return ret;
+  }
+
+  public override int getRecordTick(bool forUndo) {
+    int ret = touchvgPINVOKE.GiCoreView_getRecordTick(swigCPtr, forUndo);
+    return ret;
+  }
+
+  public override bool isUndoLoading() {
+    bool ret = touchvgPINVOKE.GiCoreView_isUndoLoading(swigCPtr);
+    return ret;
+  }
+
+  public override bool canUndo() {
+    bool ret = touchvgPINVOKE.GiCoreView_canUndo(swigCPtr);
+    return ret;
+  }
+
+  public override bool canRedo() {
+    bool ret = touchvgPINVOKE.GiCoreView_canRedo(swigCPtr);
+    return ret;
   }
 
   public override string getCommand() {
@@ -240,23 +290,13 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public bool setCommand(GiView view, string name, string arg2) {
-    bool ret = touchvgPINVOKE.GiCoreView_setCommand__SWIG_0(swigCPtr, GiView.getCPtr(view), name, arg2);
-    return ret;
-  }
-
-  public bool setCommand(GiView view, string name) {
-    bool ret = touchvgPINVOKE.GiCoreView_setCommand__SWIG_1(swigCPtr, GiView.getCPtr(view), name);
-    return ret;
-  }
-
   public override bool setCommand(string name, string arg1) {
-    bool ret = touchvgPINVOKE.GiCoreView_setCommand__SWIG_2(swigCPtr, name, arg1);
+    bool ret = touchvgPINVOKE.GiCoreView_setCommand__SWIG_0(swigCPtr, name, arg1);
     return ret;
   }
 
   public override bool setCommand(string name) {
-    bool ret = touchvgPINVOKE.GiCoreView_setCommand__SWIG_3(swigCPtr, name);
+    bool ret = touchvgPINVOKE.GiCoreView_setCommand__SWIG_1(swigCPtr, name);
     return ret;
   }
 
@@ -392,6 +432,12 @@ public class GiCoreView : MgCoreView {
 
   public override int addImageShape(string name, float xc, float yc, float w, float h) {
     int ret = touchvgPINVOKE.GiCoreView_addImageShape__SWIG_1(swigCPtr, name, xc, yc, w, h);
+    return ret;
+  }
+
+  public override bool getDisplayExtent(Floats box) {
+    bool ret = touchvgPINVOKE.GiCoreView_getDisplayExtent(swigCPtr, Floats.getCPtr(box));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 

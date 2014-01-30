@@ -122,11 +122,11 @@ public class MgShapes extends MgObject {
     return touchvgJNI.MgShapes_saveShape(swigCPtr, this, MgStorage.getCPtr(s), s, MgShape.getCPtr(shape), shape, index);
   }
 
-  public boolean load(MgShapeFactory factory, MgStorage s, boolean addOnly) {
+  public int load(MgShapeFactory factory, MgStorage s, boolean addOnly) {
     return touchvgJNI.MgShapes_load__SWIG_0(swigCPtr, this, MgShapeFactory.getCPtr(factory), factory, MgStorage.getCPtr(s), s, addOnly);
   }
 
-  public boolean load(MgShapeFactory factory, MgStorage s) {
+  public int load(MgShapeFactory factory, MgStorage s) {
     return touchvgJNI.MgShapes_load__SWIG_1(swigCPtr, this, MgShapeFactory.getCPtr(factory), factory, MgStorage.getCPtr(s), s);
   }
 
@@ -142,12 +142,12 @@ public class MgShapes extends MgObject {
     touchvgJNI.MgShapes_clearCachedData(swigCPtr, this);
   }
 
-  public void copyShapes(MgShapes src, boolean deeply) {
-    touchvgJNI.MgShapes_copyShapes__SWIG_0(swigCPtr, this, MgShapes.getCPtr(src), src, deeply);
+  public int copyShapes(MgShapes src, boolean deeply) {
+    return touchvgJNI.MgShapes_copyShapes__SWIG_0(swigCPtr, this, MgShapes.getCPtr(src), src, deeply);
   }
 
-  public void copyShapes(MgShapes src) {
-    touchvgJNI.MgShapes_copyShapes__SWIG_1(swigCPtr, this, MgShapes.getCPtr(src), src);
+  public int copyShapes(MgShapes src) {
+    return touchvgJNI.MgShapes_copyShapes__SWIG_1(swigCPtr, this, MgShapes.getCPtr(src), src);
   }
 
   public MgShape addShape(MgShape src) {

@@ -7,6 +7,7 @@
 #ifdef __cplusplus
 class GiCoreView;
 class GiView;
+class GiViewAdapter;
 #endif
 
 //! 绘图消息的观察者协议
@@ -55,11 +56,14 @@ class GiView;
 #ifdef __cplusplus
 - (GiView *)viewAdapter;                    //!< 得到视图适配器对象, GiViewAdapter
 - (GiCoreView *)coreView;                   //!< 得到跨平台内核视图
+- (GiViewAdapter *)viewAdapter2;            //!< 得到视图适配器对象
 #endif
 
 - (UIImage *)snapshot;                      //!< 得到静态图形的快照，自动释放
 - (BOOL)savePng:(NSString *)filename;       //!< 保存静态图形的快照到PNG文件
 - (void)clearCachedData;                    //!< 释放临时数据内存
+- (void)tearDown;                           //!< 停止后台任务
+- (void)stopRecord:(BOOL)forUndo;           //!< 停止录制图形
 
 - (void)setContextActionEnabled:(BOOL)en;   //!< 是否允许上下文操作
 - (void)hideContextActions;                 //!< 隐藏上下文按钮

@@ -56,10 +56,6 @@ public class MgCommandDraw : MgCommand {
     return ret;
   }
 
-  public void delayClear(MgMotion sender) {
-    touchvgPINVOKE.MgCommandDraw_delayClear(swigCPtr, MgMotion.getCPtr(sender));
-  }
-
   public bool touchBeganStep(MgMotion sender) {
     bool ret = touchvgPINVOKE.MgCommandDraw_touchBeganStep(swigCPtr, MgMotion.getCPtr(sender));
     return ret;

@@ -62,7 +62,10 @@ public class ImageCache extends Object {
         }
     }
     
-    //! 设置图像文件的默认路径，自动加载时用
+    public String getImagePath() {
+        return mPath;
+    }
+    
     public void setImagePath(String path) {
         this.mPath = path;
     }

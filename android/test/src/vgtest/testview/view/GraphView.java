@@ -32,29 +32,26 @@ public class GraphView extends View {
         mViewAdapter = new ViewAdapter();
         mCoreView = new GiCoreView(null);
         mCoreView.createView(mViewAdapter, 0);
-        
+
         DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
         GiCoreView.setScreenDpi(dm.densityDpi);
-        
+
         this.setOnTouchListener(new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan, 
+                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan,
                             GiGestureState.kGiGestureBegan, event.getX(), event.getY());
-                }
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan, 
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan,
                             GiGestureState.kGiGestureEnded, event.getX(), event.getY());
                     showTime();
-                }
-                else if (mDynDrawView != null
+                } else if (mDynDrawView != null
                         && event.getEventTime() > mDynDrawView.getEndPaintTime()) {
-                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan, 
+                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan,
                             GiGestureState.kGiGestureMoved, event.getX(), event.getY());
                     showTime();
-                }
-                else if (mDynDrawView == null && event.getEventTime() > mEndPaintTime) {
-                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan, 
+                } else if (mDynDrawView == null && event.getEventTime() > mEndPaintTime) {
+                    mCoreView.onGesture(mViewAdapter, GiGestureType.kGiGesturePan,
                             GiGestureState.kGiGestureMoved, event.getX(), event.getY());
                     showTime();
                 }
@@ -62,22 +59,22 @@ public class GraphView extends View {
             }
         });
     }
-    
+
     public GiCoreView coreView() {
         return mCoreView;
     }
-    
+
     public void setDynDrawView(DynDrawView view) {
         mDynDrawView = view;
         if (mDynDrawView != null) {
             mDynDrawView.setCoreView(mViewAdapter, mCoreView);
         }
     }
-    
+
     public long getDrawnTime() {
         return mDrawnTime;
     }
-    
+
     private void showTime() {
         Activity activity = (Activity) this.getContext();
         String title = activity.getTitle().toString();
@@ -88,7 +85,7 @@ public class GraphView extends View {
         String dyntext = mDynDrawView != null ? (mDynDrawView.getDrawnTime() + "/") : "";
         activity.setTitle(title + " - " + dyntext + mDrawnTime + " ms");
     }
-    
+
     private void doDraw() {
         mBeginTime = android.os.SystemClock.uptimeMillis();
         invalidate();
@@ -97,7 +94,7 @@ public class GraphView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         mCoreView.onSize(mViewAdapter, this.getWidth(), this.getHeight());
-        
+
         if (mCanvasAdapter.beginPaint(canvas)) {
             mCoreView.drawAll(mViewAdapter, mCanvasAdapter);
             if (mDynDrawView == null) {
@@ -129,7 +126,7 @@ public class GraphView extends View {
         }
         super.onDetachedFromWindow();
     }
-    
+
     private class ViewAdapter extends GiView {
         @Override
         public void regenAll(boolean changed) {
@@ -143,12 +140,12 @@ public class GraphView extends View {
                 mDynDrawView.doDraw();
             }
         }
-        
+
         @Override
         public void regenAppend(int sid) {
             regenAll(true);
         }
-        
+
         @Override
         public void redraw() {
             synchronized (mCoreView) {
@@ -156,8 +153,7 @@ public class GraphView extends View {
             }
             if (mDynDrawView != null) {
                 mDynDrawView.doDraw();
-            }
-            else {
+            } else {
                 doDraw();
             }
         }

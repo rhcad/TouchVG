@@ -5,9 +5,25 @@
 #import "LargeView1.h"
 #import "AnimatedPathView1.h"
 #import "GiViewHelper.h"
+#import "ARCMacro.h"
 #include "DemoCmds.h"
 
 static UIViewController *_tmpController = nil;
+
+@interface GiWrapperView : UIView
+@end
+
+@implementation GiWrapperView
+
+- (void)removeFromSuperview {
+    UIView *view = [[self subviews] count] > 0 ? [[self subviews] objectAtIndex:0] : nil;
+    if ([view respondsToSelector:@selector(tearDown)]) {
+        [view performSelector:@selector(tearDown)];
+    }
+    [super removeFromSuperview];
+}
+
+@end
 
 static void addView(NSMutableArray *arr, NSString* title, UIView* view)
 {
@@ -23,14 +39,14 @@ static void addView(NSMutableArray *arr, NSString* title, UIView* view)
 
 static void testGraphView(GiPaintView *v, int type)
 {
-    GiViewHelper *hlp = [GiViewHelper instance:v];
+    GiViewHelper *hlp = [GiViewHelper sharedInstance:v];
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                           NSUserDomainMask, YES) objectAtIndex:0];
     
     if (type & 32) {
         [hlp addShapesForTest];
     }
-    type = type & ~32;
+    type = type & 0x0F;
     
     if (type == 1) {
         hlp.command = @"splines";
@@ -118,7 +134,7 @@ static UIView* addGraphView(NSMutableArray *arr, NSUInteger &i, NSUInteger index
     UIView *v, *wrapview = nil;
     
     if (!arr && index == i++) {
-        wrapview = [[UIView alloc]initWithFrame:frame];
+        wrapview = [[GiWrapperView alloc]initWithFrame:frame];
         wrapview.opaque = NO;
     }
     addView(arr, title, wrapview);
@@ -128,7 +144,7 @@ static UIView* addGraphView(NSMutableArray *arr, NSUInteger &i, NSUInteger index
             v = [[GiGraphView1 alloc]initWithFrame:wrapview.bounds];
         }
         else {
-            GiGraphView2 *v2 = [[GiGraphView2 alloc]initWithFrame:wrapview.bounds];
+            GiGraphView2 *v2 = [[GiGraphView2 alloc]initWithFrame:wrapview.bounds withType:type];
             v = v2;
             testGraphView(v2, type);
         }
@@ -159,7 +175,7 @@ static void addAnimatedPathView1(NSMutableArray *arr, NSUInteger &i, NSUInteger 
         view = [[AnimatedPathView1 alloc]initWithFrame:frame];
         
         GiPaintView *v = [[GiPaintView alloc]initWithFrame:frame];
-        GiViewHelper *hlp = [GiViewHelper instance:v];
+        GiViewHelper *hlp = [GiViewHelper sharedInstance];
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
         [hlp setImagePath:path];
@@ -169,6 +185,7 @@ static void addAnimatedPathView1(NSMutableArray *arr, NSUInteger &i, NSUInteger 
         
         [view setupDrawingLayer:[hlp exportLayerTree:YES]];
         [view startAnimation];
+        [v RELEASE];
     }
     addView(arr, title, view);
 }
@@ -177,14 +194,19 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
 {
     NSUInteger i = 0;
     
+    addGraphView(arr, i, index, @"Empty view", frame, -1);
     addGraphView(arr, i, index, @"GiGraphView1", frame, 0);
     addLargeView1(arr, i, index, @"GiGraphView1 in large view", frame, 0);
     addGraphView(arr, i, index, @"GiPaintView splines", frame, 1);
-    addGraphView(arr, i, index, @"GiPaintView draw", frame, 1|32);
+    addGraphView(arr, i, index, @"GiPaintView randShapes splines", frame, 1|32);
+    addGraphView(arr, i, index, @"GiPaintView randShapes line", frame, 4|32);
     addGraphView(arr, i, index, @"GiPaintView select", frame, 2|32);
     addGraphView(arr, i, index, @"GiPaintView zoom", frame, 32);
     addGraphView(arr, i, index, @"GiPaintView line", frame, 4);
     addGraphView(arr, i, index, @"GiPaintView lines", frame, 5);
+    addGraphView(arr, i, index, @"GiPaintView record splines", frame, 64|1);
+    addGraphView(arr, i, index, @"GiPaintView record line", frame, 64|4);
+    addGraphView(arr, i, index, @"GiPaintView record randShapes splines", frame, 64|1|32);
     addGraphView(arr, i, index, @"GiPaintView hittest in democmds", frame, 6|32);
     addGraphView(arr, i, index, @"GiPaintView add images", frame, 7);
     addGraphView(arr, i, index, @"GiPaintView load images", frame, 8);
@@ -197,7 +219,6 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addLargeView1(arr, i, index, @"GiPaintView SVG pages in large view", frame, 10);
     testMagnifierView(arr, i, index, @"MagnifierView", frame, 1);
     addAnimatedPathView1(arr, i, index, @"AnimatedPathView1", frame, 0);
-    addGraphView(arr, i, index, @"Empty view", frame, -1);
 }
 
 void getTestViewTitles(NSMutableArray *arr)

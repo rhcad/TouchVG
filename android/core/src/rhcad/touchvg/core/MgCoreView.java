@@ -72,12 +72,32 @@ public class MgCoreView {
     touchvgJNI.MgCoreView_releaseShapes(swigCPtr, this, hShapes);
   }
 
-  public boolean loadDynamicShapes(MgStorage s) {
-    return touchvgJNI.MgCoreView_loadDynamicShapes(swigCPtr, this, MgStorage.getCPtr(s), s);
+  public boolean isUndoRecording() {
+    return touchvgJNI.MgCoreView_isUndoRecording(swigCPtr, this);
   }
 
-  public void applyDynamicShapes() {
-    touchvgJNI.MgCoreView_applyDynamicShapes(swigCPtr, this);
+  public boolean isRecording() {
+    return touchvgJNI.MgCoreView_isRecording(swigCPtr, this);
+  }
+
+  public boolean isPlaying() {
+    return touchvgJNI.MgCoreView_isPlaying(swigCPtr, this);
+  }
+
+  public int getRecordTick(boolean forUndo) {
+    return touchvgJNI.MgCoreView_getRecordTick(swigCPtr, this, forUndo);
+  }
+
+  public boolean isUndoLoading() {
+    return touchvgJNI.MgCoreView_isUndoLoading(swigCPtr, this);
+  }
+
+  public boolean canUndo() {
+    return touchvgJNI.MgCoreView_canUndo(swigCPtr, this);
+  }
+
+  public boolean canRedo() {
+    return touchvgJNI.MgCoreView_canRedo(swigCPtr, this);
   }
 
   public boolean isPressDragging() {
@@ -222,6 +242,10 @@ public class MgCoreView {
 
   public int addImageShape(String name, float xc, float yc, float w, float h) {
     return touchvgJNI.MgCoreView_addImageShape__SWIG_1(swigCPtr, this, name, xc, yc, w, h);
+  }
+
+  public boolean getDisplayExtent(Floats box) {
+    return touchvgJNI.MgCoreView_getDisplayExtent(swigCPtr, this, Floats.getCPtr(box), box);
   }
 
   public boolean getBoundingBox(Floats box) {

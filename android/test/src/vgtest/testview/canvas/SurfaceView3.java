@@ -56,7 +56,7 @@ public class SurfaceView3 extends SurfaceView {
 
     @Override
     public void setBackgroundColor(int color) {
-        mCanvas.setBackgroundColor(color);  // 视图仍然是透明色
+        mCanvas.setBackgroundColor(color); // 视图仍然是透明色
     }
 
     protected void showTime(long ms) {
@@ -84,8 +84,7 @@ public class SurfaceView3 extends SurfaceView {
         if (mCanvas.beginPaint(canvas)) {
             if ((mCreateFlags & 0x1000) == 0) {
                 canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
-            }
-            else {
+            } else {
                 canvas.drawColor(Color.WHITE);
             }
             TestCanvas.test(mCanvas, mCreateFlags);

@@ -70,10 +70,9 @@ public class SurfaceView1 extends SurfaceView {
         if (canvas != null) {
             if (mCanvas.beginPaint(canvas)) {
                 canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
-                if ((mCreateFlags & 0xF0000) != 0) {  // in scroll view
+                if ((mCreateFlags & 0xF0000) != 0) { // in scroll view
                     TestCanvas.test(mCanvas, mCreateFlags, 400);
-                }
-                else {
+                } else {
                     TestCanvas.test(mCanvas, mCreateFlags);
                 }
                 mCanvas.endPaint();

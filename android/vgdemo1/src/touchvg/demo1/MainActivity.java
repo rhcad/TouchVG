@@ -11,22 +11,21 @@ import android.widget.ListView;
 
 public class MainActivity extends ListActivity {
     private static final String[] VIEWS = new String[] {
-        "ExampleActivity1", "ExampleActivitySF", "AnimationActivity1", 
-    };
-    
+        "ExampleActivity1", "ExampleActivitySF", "AnimationActivity1", };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         setListAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1, VIEWS));
     }
-    
+
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        
+
         try {
             String name = "touchvg.demo1." + VIEWS[position];
             Class<?> cls = Class.forName(name);

@@ -58,7 +58,19 @@
     return _layer;
 }
 
-- (void)startRender:(BOOL)forPending {
+- (void)startRender:(long)doc :(long)gs {
+    _doc = doc;
+    _gs = gs;
+    [self startRender_:NO];
+}
+
+- (void)startRenderForPending {
+    _doc = 0;
+    _gs = 0;
+    [self startRender_:YES];
+}
+
+- (void)startRender_:(BOOL)forPending {
     if (forPending) {
         if (_adapter->getAppendCount() == 0 && _drawing == 0) {
             return;
@@ -66,8 +78,9 @@
         _drawing = 0;
     }
     if (++_drawing == 1) {
+        UIView *mainView = _adapter->mainView();
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            CALayer *srcLayer = _adapter->mainView().layer;
+            CALayer *srcLayer = mainView.layer;
             
             if (!_layer) {
                 _layer = [[CALayer alloc]init];
@@ -83,7 +96,7 @@
             [_layer display];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_adapter->mainView() setNeedsDisplay];
+                [mainView setNeedsDisplay];
                 --_drawing;
             });
         });
@@ -93,22 +106,24 @@
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
-    __block long hDoc, hGs;
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        _adapter->beginRender();
-        hDoc = coreView->acquireFrontDoc();
-        hGs = coreView->acquireGraphics(_adapter);
-    });
-    
+    if (!_doc) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            _adapter->beginRender();
+            _doc = coreView->acquireFrontDoc();
+            _gs = coreView->acquireGraphics(_adapter);
+        });
+    }
     if (canvas.beginPaint(ctx)) {
         CGContextClearRect(ctx, _adapter->mainView().bounds);
-        int n = coreView->drawAll(hDoc, hGs, &canvas);
+        int n = coreView->drawAll(_doc, _gs, &canvas);
         canvas.endPaint();
         NSLog(@"%d shapes rendered", n);
     }
-    coreView->releaseDoc(hDoc);
-    coreView->releaseGraphics(_adapter, hGs);
+    coreView->releaseDoc(_doc);
+    coreView->releaseGraphics(_adapter, _gs);
+    _doc = 0;
+    _gs = 0;
 }
 
 @end
@@ -224,6 +239,10 @@ GiColor CGColorToGiColor(CGColorRef color);
     return _adapter;
 }
 
+- (GiViewAdapter *)viewAdapter2 {
+    return _adapter;
+}
+
 - (GiCoreView *)coreView {
     return _adapter->coreView();
 }
@@ -328,10 +347,28 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (void)removeFromSuperview {
+    [self tearDown];
+    [super removeFromSuperview];
+}
+
+- (void)tearDown {
     _adapter->stopRegen();
+    _adapter->stopRecord(false);
+    _adapter->stopRecord(true);
     self.gestureEnabled = NO;
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [super removeFromSuperview];
+}
+
+- (void)undo {
+    _adapter->undo();
+}
+
+- (void)redo {
+    _adapter->redo();
+}
+
+- (void)stopRecord:(BOOL)forUndo {
+    _adapter->stopRecord(forUndo);
 }
 
 @end

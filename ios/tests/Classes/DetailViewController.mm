@@ -153,4 +153,53 @@
     self.masterPopoverController = nil;
 }
 
+#pragma mark - Shake
+
+-(BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self resignFirstResponder];
+    [super viewWillDisappear:animated];
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if (motion == UIEventSubtypeMotionShake) {
+        if ([_content.view respondsToSelector:@selector(undo)]) {
+            [_content.view performSelector:@selector(undo)];
+        }
+        else if ([_content.view.subviews count] > 0) {
+            UIView *sview = [_content.view.subviews objectAtIndex:0];
+            if ([sview respondsToSelector:@selector(undo)]) {
+                [sview performSelector:@selector(undo)];
+            }
+        }
+    }
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    if ([_content.view respondsToSelector:@selector(redo)]) {
+        [_content.view performSelector:@selector(redo)];
+    }
+    else if ([_content.view.subviews count] > 0) {
+        UIView *sview = [_content.view.subviews objectAtIndex:0];
+        if ([sview respondsToSelector:@selector(redo)]) {
+            [sview performSelector:@selector(redo)];
+        }
+    }
+}
+
 @end

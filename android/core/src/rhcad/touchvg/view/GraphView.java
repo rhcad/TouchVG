@@ -7,6 +7,7 @@ import rhcad.touchvg.core.GiView;
 import rhcad.touchvg.view.internal.ImageCache;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
 //! 绘图视图接口
@@ -20,7 +21,7 @@ public interface GraphView {
 
     //! 返回视图回调适配器对象
     public View getView();
-    
+
     //! 创建动态绘图子视图
     public View createDynamicShapeView(Context context);
 
@@ -29,6 +30,9 @@ public interface GraphView {
 
     //! 释放临时缓存
     public void clearCachedData();
+
+    //! 所属的Activity暂停时调用
+    public void onPause();
 
     //! 是否允许上下文操作
     public void setContextActionEnabled(boolean enabled);
@@ -42,8 +46,11 @@ public interface GraphView {
     //! 传递单指轻击事件，可用于拖放操作
     public boolean onTap(float x, float y);
 
+    //! 设置背景图，本视图不透明时使用
+    public void setBackgroundDrawable(Drawable background);
+
     //! 得到静态图形的快照
-    public Bitmap snapshot();
+    public Bitmap snapshot(boolean transparent);
 
     //! 当前命令改变的通知
     public interface CommandChangedListener {

@@ -590,8 +590,8 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = ../../core/pub_inc \
-                         ../../core/mgr_inc \
+INPUT                  = ../../core/include \
+                         ../../core/include \
                          ../../win32/include \
                          ../../ios/view/include \
                          ../../android/core/src/touchvg/view \
@@ -628,8 +628,8 @@ RECURSIVE              = YES
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
 EXCLUDE                = ../../android/core/src/touchvg/view/internal \
-                         ../../core/mgr_inc/test \
-                         ../../core/pub_inc/mglog.h
+                         ../../core/include/test \
+                         ../../core/include/mglog.h
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or 
 # directories that are symbolic links (a Unix filesystem feature) are excluded 

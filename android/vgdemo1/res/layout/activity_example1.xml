@@ -74,6 +74,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/addSVGFile" />
 
+            <Button
+                android:id="@+id/undoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/undoBtn" />
+
+            <Button
+                android:id="@+id/redoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/redoBtn" />
+
         </LinearLayout>
 
         <FrameLayout

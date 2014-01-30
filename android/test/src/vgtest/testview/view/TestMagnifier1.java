@@ -17,24 +17,25 @@ public class TestMagnifier1 extends LinearLayout {
     public TestMagnifier1(Context context) {
         super(context);
         this.setOrientation(HORIZONTAL);
-        
+
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");
-        
-        final LayoutParams param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+        final LayoutParams param = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
         param.weight = 1;
-        
+
         final GraphView1 view = new GraphView1(context);
         addView(view, param);
-        
+
         final StdGraphView magView = new StdGraphView(context, view);
         addView(magView, param);
         magView.setBackgroundColor(Color.GREEN);
-        
+
         if ((flags & 16) != 0) {
             final SFGraphView1 view2 = new SFGraphView1(context);
             addView(view2, param);
             addView(view2.createDynamicShapeView(context), param);
-            
+
             final SFGraphView magView2 = new SFGraphView(context, view2);
             addView(magView2, param);
             magView2.setBackgroundColor(Color.BLUE);

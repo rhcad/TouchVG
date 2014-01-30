@@ -8,7 +8,6 @@ import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiGestureState;
 import rhcad.touchvg.core.GiGestureType;
 import rhcad.touchvg.core.GiView;
-
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,7 +44,7 @@ public class GestureListener extends SimpleOnGestureListener {
     public void setGestureEnable(boolean enabled) {
         if (!enabled) {
             cancelDragging();
-            mCoreView.setCommand(mAdapter, null);
+            mCoreView.setCommand(null);
         }
     }
     
@@ -159,8 +158,10 @@ public class GestureListener extends SimpleOnGestureListener {
                 mMoving = applyPendingPoints() ? MOVING : END_MOVE;
             }
             else {
-                mMoving = onMoved(GiGestureState.kGiGestureBegan, mFingerCount,
-                                  x1, y1, x2, y2, false) ? MOVING : END_MOVE;
+                mMoving = (onMoved(GiGestureState.kGiGesturePossible, mFingerCount,
+                                   x1, y1, x2, y2, false)
+                           && onMoved(GiGestureState.kGiGestureBegan, mFingerCount,
+                                      x1, y1, x2, y2, false)) ? MOVING : END_MOVE;
             }
             mXYCount = 0;
         }
@@ -222,8 +223,10 @@ public class GestureListener extends SimpleOnGestureListener {
     }
     
     private boolean applyPendingPoints() {
-        boolean ret = onMoved(GiGestureState.kGiGestureBegan, mFingerCount,
-                              mPoints[0], mPoints[1], 0, 0, false);
+        boolean ret = (onMoved(GiGestureState.kGiGesturePossible, mFingerCount,
+                               mPoints[0], mPoints[1], 0, 0, false)
+                       && onMoved(GiGestureState.kGiGestureBegan, mFingerCount,
+                                  mPoints[0], mPoints[1], 0, 0, false));
         for (int i = 2; i + 1 < mXYCount && ret; i += 2) {
             onMoved(GiGestureState.kGiGestureMoved, mFingerCount,
                     mPoints[i], mPoints[i + 1], 0, 0, false);

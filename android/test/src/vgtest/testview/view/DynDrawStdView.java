@@ -24,24 +24,24 @@ public class DynDrawStdView extends View implements DynDrawView {
         super(context);
         mCanvasAdapter = new CanvasAdapter(this);
     }
-    
+
     public void setCoreView(GiView viewAdapter, GiCoreView coreView) {
         mViewAdapter = viewAdapter;
         mCoreView = coreView;
     }
-    
+
     public long getDrawnTime() {
         return mDrawnTime;
     }
-    
+
     public long getEndPaintTime() {
         return mEndPaintTime;
     }
-    
+
     public boolean isDrawing() {
         return mCanvasAdapter != null && mCanvasAdapter.isDrawing();
     }
-    
+
     public void doDraw() {
         mBeginTime = android.os.SystemClock.uptimeMillis();
         this.invalidate();
