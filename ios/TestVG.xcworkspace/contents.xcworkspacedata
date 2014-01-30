@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../SVGKit/SVGKit-iOS.xcodeproj">
+      location = "group:../thirdparty/SVGKit/SVGKit-iOS.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:../thirdparty/TouchVGCore/ios/TouchVGCore/TouchVGCore.xcodeproj">

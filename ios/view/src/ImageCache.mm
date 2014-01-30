@@ -3,8 +3,10 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import "ImageCache.h"
-#import "SVGKImage.h"
 #import "ARCMacro.h"
+#ifdef USE_SVGKIT
+#import "SVGKImage.h"
+#endif
 
 @implementation ImageCache
 
@@ -71,6 +73,7 @@
     CGSize size = [self getImageSize:*key];
     
     if (size.width < 1 && *key && [name length] > 1) {
+#ifdef USE_SVGKIT
         NSString *resname = [name stringByAppendingString:@".svg"];
         @try {
             UIImage *image = [[SVGKImage imageNamed:resname] UIImage];
@@ -85,14 +88,16 @@
         @catch (NSException *e) {
             NSLog(@"Fail to parse %@", resname);
         }
+#endif
     }
     
     return size;
 }
 
 + (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size {
-    SVGKImage* svgimg = nil;
     UIImage *image = nil;
+#ifdef USE_SVGKIT
+    SVGKImage* svgimg = nil;
     
     @try {
         svgimg = [SVGKImage imageWithContentsOfFile:filename];
@@ -110,6 +115,7 @@
         image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
+#endif
     
     return image;
 }
@@ -123,6 +129,7 @@
         UIImage *image = nil;
         
         if ([*name hasPrefix:@"svg:"]) {
+#ifdef USE_SVGKIT
             @try {
                 image = [[SVGKImage imageWithContentsOfFile:filename] UIImage];
             }
@@ -133,6 +140,7 @@
                 [_images setObject:image forKey:*name];
                 size = image.size;
             }
+#endif
         }
         else {
             image = [[UIImage alloc]initWithContentsOfFile:filename];

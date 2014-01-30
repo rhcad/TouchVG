@@ -340,7 +340,7 @@
 				INFOPLIST_FILE = ../Classes/Info.plist;
 				OTHER_LDFLAGS = (
 					"-lTouchVGCore",
-					"-lTouchVG",
+					"-lTouchVG-SVG",
 					"-lDemoCmds",
 					"-lSVGKit-iOS.1.2.0pre",
 				);
@@ -358,7 +358,7 @@
 				INFOPLIST_FILE = ../Classes/Info.plist;
 				OTHER_LDFLAGS = (
 					"-lTouchVGCore",
-					"-lTouchVG",
+					"-lTouchVG-SVG",
 					"-lDemoCmds",
 					"-lSVGKit-iOS.1.2.0pre",
 				);
