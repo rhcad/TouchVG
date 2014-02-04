@@ -609,7 +609,7 @@ public class touchvgJNI {
   public final static native void delete_Ints(long jarg1);
   public final static native long new_Ints__SWIG_0(int jarg1);
   public final static native long new_Ints__SWIG_1();
-  public final static native void Ints_setSize(long jarg1, Ints jarg1_, int jarg2);
+  public final static native boolean Ints_setSize(long jarg1, Ints jarg1_, int jarg2);
   public final static native int Ints_count(long jarg1, Ints jarg1_);
   public final static native int Ints_get(long jarg1, Ints jarg1_, int jarg2);
   public final static native void Ints_set__SWIG_0(long jarg1, Ints jarg1_, int jarg2, int jarg3);
@@ -617,7 +617,7 @@ public class touchvgJNI {
   public final static native void delete_Floats(long jarg1);
   public final static native long new_Floats__SWIG_0(int jarg1);
   public final static native long new_Floats__SWIG_1();
-  public final static native void Floats_setSize(long jarg1, Floats jarg1_, int jarg2);
+  public final static native boolean Floats_setSize(long jarg1, Floats jarg1_, int jarg2);
   public final static native int Floats_count(long jarg1, Floats jarg1_);
   public final static native float Floats_get(long jarg1, Floats jarg1_, int jarg2);
   public final static native void Floats_set__SWIG_0(long jarg1, Floats jarg1_, int jarg2, float jarg3);
@@ -625,7 +625,7 @@ public class touchvgJNI {
   public final static native void delete_Chars(long jarg1);
   public final static native long new_Chars__SWIG_0(int jarg1);
   public final static native long new_Chars__SWIG_1();
-  public final static native void Chars_setSize(long jarg1, Chars jarg1_, int jarg2);
+  public final static native boolean Chars_setSize(long jarg1, Chars jarg1_, int jarg2);
   public final static native int Chars_count(long jarg1, Chars jarg1_);
   public final static native char Chars_get(long jarg1, Chars jarg1_, int jarg2);
   public final static native void Chars_set__SWIG_0(long jarg1, Chars jarg1_, int jarg2, char jarg3);
@@ -633,7 +633,7 @@ public class touchvgJNI {
   public final static native void delete_ConstShapes(long jarg1);
   public final static native long new_ConstShapes__SWIG_0(int jarg1);
   public final static native long new_ConstShapes__SWIG_1();
-  public final static native void ConstShapes_setSize(long jarg1, ConstShapes jarg1_, int jarg2);
+  public final static native boolean ConstShapes_setSize(long jarg1, ConstShapes jarg1_, int jarg2);
   public final static native int ConstShapes_count(long jarg1, ConstShapes jarg1_);
   public final static native long ConstShapes_get(long jarg1, ConstShapes jarg1_, int jarg2);
   public final static native void ConstShapes_set__SWIG_0(long jarg1, ConstShapes jarg1_, int jarg2, long jarg3, MgShape jarg3_);
@@ -641,7 +641,7 @@ public class touchvgJNI {
   public final static native void delete_Shapes(long jarg1);
   public final static native long new_Shapes__SWIG_0(int jarg1);
   public final static native long new_Shapes__SWIG_1();
-  public final static native void Shapes_setSize(long jarg1, Shapes jarg1_, int jarg2);
+  public final static native boolean Shapes_setSize(long jarg1, Shapes jarg1_, int jarg2);
   public final static native int Shapes_count(long jarg1, Shapes jarg1_);
   public final static native long Shapes_get(long jarg1, Shapes jarg1_, int jarg2);
   public final static native void Shapes_set__SWIG_0(long jarg1, Shapes jarg1_, int jarg2, long jarg3, MgShape jarg3_);
@@ -1732,9 +1732,9 @@ public class touchvgJNI {
   public final static native int MgCoreView_backDoc(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_backShapes(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_acquireFrontDoc(long jarg1, MgCoreView jarg1_);
-  public final static native void MgCoreView_releaseDoc(long jarg1, MgCoreView jarg1_, int jarg2);
+  public final static native void MgCoreView_releaseDoc(int jarg1);
   public final static native int MgCoreView_acquireDynamicShapes(long jarg1, MgCoreView jarg1_);
-  public final static native void MgCoreView_releaseShapes(long jarg1, MgCoreView jarg1_, int jarg2);
+  public final static native void MgCoreView_releaseShapes(int jarg1);
   public final static native boolean MgCoreView_isUndoRecording(long jarg1, MgCoreView jarg1_);
   public final static native boolean MgCoreView_isRecording(long jarg1, MgCoreView jarg1_);
   public final static native boolean MgCoreView_isPlaying(long jarg1, MgCoreView jarg1_);
@@ -1749,7 +1749,8 @@ public class touchvgJNI {
   public final static native boolean MgCoreView_doContextAction(long jarg1, MgCoreView jarg1_, int jarg2);
   public final static native void MgCoreView_clearCachedData(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_addShapesForTest(long jarg1, MgCoreView jarg1_);
-  public final static native int MgCoreView_getShapeCount(long jarg1, MgCoreView jarg1_);
+  public final static native int MgCoreView_getShapeCount__SWIG_0(long jarg1, MgCoreView jarg1_);
+  public final static native int MgCoreView_getShapeCount__SWIG_1(long jarg1, MgCoreView jarg1_, int jarg2);
   public final static native int MgCoreView_getChangeCount(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_getDrawCount(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_getSelectedShapeCount(long jarg1, MgCoreView jarg1_);
@@ -1788,10 +1789,10 @@ public class touchvgJNI {
   public final static native void GiCoreView_createView__SWIG_1(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
   public final static native void GiCoreView_createMagnifierView(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, long jarg3, GiView jarg3_);
   public final static native void GiCoreView_destoryView(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
-  public final static native boolean GiCoreView_isDrawing(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
-  public final static native boolean GiCoreView_stopDrawing(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
+  public final static native boolean GiCoreView_isDrawing(long jarg1, GiCoreView jarg1_);
+  public final static native int GiCoreView_stopDrawing(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_acquireGraphics(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
-  public final static native void GiCoreView_releaseGraphics(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, int jarg3);
+  public final static native void GiCoreView_releaseGraphics(long jarg1, GiCoreView jarg1_, int jarg2);
   public final static native int GiCoreView_drawAll__SWIG_0(long jarg1, GiCoreView jarg1_, int jarg2, int jarg3, long jarg4, GiCanvas jarg4_);
   public final static native int GiCoreView_drawAppend__SWIG_0(long jarg1, GiCoreView jarg1_, int jarg2, int jarg3, long jarg4, GiCanvas jarg4_, int jarg5);
   public final static native int GiCoreView_dynDraw__SWIG_0(long jarg1, GiCoreView jarg1_, int jarg2, int jarg3, long jarg4, GiCanvas jarg4_);
@@ -1824,9 +1825,7 @@ public class touchvgJNI {
   public final static native int GiCoreView_backDoc(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_backShapes(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_acquireFrontDoc(long jarg1, GiCoreView jarg1_);
-  public final static native void GiCoreView_releaseDoc(long jarg1, GiCoreView jarg1_, int jarg2);
   public final static native int GiCoreView_acquireDynamicShapes(long jarg1, GiCoreView jarg1_);
-  public final static native void GiCoreView_releaseShapes(long jarg1, GiCoreView jarg1_, int jarg2);
   public final static native boolean GiCoreView_isUndoRecording(long jarg1, GiCoreView jarg1_);
   public final static native boolean GiCoreView_isRecording(long jarg1, GiCoreView jarg1_);
   public final static native boolean GiCoreView_isPlaying(long jarg1, GiCoreView jarg1_);
@@ -1840,7 +1839,8 @@ public class touchvgJNI {
   public final static native boolean GiCoreView_doContextAction(long jarg1, GiCoreView jarg1_, int jarg2);
   public final static native void GiCoreView_clearCachedData(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_addShapesForTest(long jarg1, GiCoreView jarg1_);
-  public final static native int GiCoreView_getShapeCount(long jarg1, GiCoreView jarg1_);
+  public final static native int GiCoreView_getShapeCount__SWIG_0(long jarg1, GiCoreView jarg1_);
+  public final static native int GiCoreView_getShapeCount__SWIG_1(long jarg1, GiCoreView jarg1_, int jarg2);
   public final static native int GiCoreView_getChangeCount(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_getDrawCount(long jarg1, GiCoreView jarg1_);
   public final static native int GiCoreView_getSelectedShapeCount(long jarg1, GiCoreView jarg1_);

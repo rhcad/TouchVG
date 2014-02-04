@@ -62,7 +62,7 @@ static void addGraphView(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
         wrapview.opaque = NO;
     }
     addView(arr, title, wrapview);
-    [wrapview release];
+    [wrapview RELEASE];
     if (wrapview) {
         GiGraphView3 *v = [[GiGraphView3 alloc]initWithFrame:wrapview.bounds];
         [wrapview addSubview:v];

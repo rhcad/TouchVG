@@ -4,7 +4,6 @@
 
 #import "GiViewImpl.h"
 #import "ImageCache.h"
-#import "ARCMacro.h"
 
 #pragma mark - IosTempView
 @implementation IosTempView
@@ -33,8 +32,8 @@
         coreView->dynDraw(hShapes, hGs, &canvas);
         canvas.endPaint();
     }
-    coreView->releaseShapes(hShapes);
-    coreView->releaseGraphics(_adapter, hGs);
+    GiCoreView::releaseShapes(hShapes);
+    coreView->releaseGraphics(hGs);
 }
 
 @end
@@ -45,11 +44,13 @@
     self = [super init];
     if (self) {
         _adapter = adapter;
+        _queue = dispatch_queue_create("touchvg.render", NULL);
     }
     return self;
 }
 
 - (void)dealloc {
+    dispatch_release(_queue);
     [_layer RELEASE];
     [super DEALLOC];
 }
@@ -79,7 +80,7 @@
     }
     if (++_drawing == 1) {
         UIView *mainView = _adapter->mainView();
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        dispatch_async(_queue, ^{
             CALayer *srcLayer = mainView.layer;
             
             if (!_layer) {
@@ -116,12 +117,11 @@
     }
     if (canvas.beginPaint(ctx)) {
         CGContextClearRect(ctx, _adapter->mainView().bounds);
-        int n = coreView->drawAll(_doc, _gs, &canvas);
+        coreView->drawAll(_doc, _gs, &canvas);
         canvas.endPaint();
-        NSLog(@"%d shapes rendered", n);
     }
-    coreView->releaseDoc(_doc);
-    coreView->releaseGraphics(_adapter, _gs);
+    GiCoreView::releaseDoc(_doc);
+    coreView->releaseGraphics(_gs);
     _doc = 0;
     _gs = 0;
 }
@@ -264,7 +264,13 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (BOOL)savePng:(NSString *)filename {
-    return [UIImagePNGRepresentation([self snapshot]) writeToFile:filename atomically:NO];
+    UIImage *image = [self snapshot];
+    BOOL ret = [UIImagePNGRepresentation(image) writeToFile:filename atomically:NO];
+    if (ret) {
+        NSLog(@"savePng: %@, %d, %.0fx%.0f@%.0fx",
+              filename, ret, image.size.width, image.size.height, image.scale);
+    }
+    return ret;
 }
 
 - (void)setBackgroundColor:(UIColor *)color {
@@ -472,7 +478,7 @@ GiColor CGColorToGiColor(CGColorRef color);
         _buttonHandled = YES;
     }
     if (CGPointEqualToPoint(_ignorePt, pt) && _adapter->isContextActionsVisible()) {
-        [self performSelector:@selector(hideContextActions) withObject:nil afterDelay:0.5];
+        [self performSelector:@selector(hideContextActions) withObject:nil afterDelay:1];
     }
     _ignorePt = pt;
 }

@@ -47,8 +47,9 @@ public class ConstShapes : IDisposable {
   public ConstShapes() : this(touchvgPINVOKE.new_ConstShapes__SWIG_1(), true) {
   }
 
-  public void setSize(int n) {
-    touchvgPINVOKE.ConstShapes_setSize(swigCPtr, n);
+  public bool setSize(int n) {
+    bool ret = touchvgPINVOKE.ConstShapes_setSize(swigCPtr, n);
+    return ret;
   }
 
   public int count() {

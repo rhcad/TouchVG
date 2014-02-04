@@ -135,11 +135,10 @@ public class SFGraphView extends SurfaceView implements GraphView {
         try {
             n = mCoreView.drawAll(doc, gs, canvasAdapter);
         } finally {
-            mCoreView.releaseDoc(doc);
-            mCoreView.releaseGraphics(mViewAdapter, gs);
+            GiCoreView.releaseDoc(doc);
+            mCoreView.releaseGraphics(gs);
         }
 
-        Log.d(TAG, "drawShapes n=" + n);
         return n;
     }
 
@@ -349,9 +348,9 @@ public class SFGraphView extends SurfaceView implements GraphView {
                         }
                         mCoreView.dynDraw(shapes, gs, mDynDrawCanvas);
                     } finally {
-                        mCoreView.releaseDoc(doc);
-                        mCoreView.releaseShapes(shapes);
-                        mCoreView.releaseGraphics(mViewAdapter, gs);
+                        GiCoreView.releaseDoc(doc);
+                        GiCoreView.releaseShapes(shapes);
+                        mCoreView.releaseGraphics(gs);
                         mDynDrawCanvas.endPaint();
                     }
                 }

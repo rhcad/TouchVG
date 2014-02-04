@@ -143,9 +143,9 @@ public class StdGraphView extends View implements GraphView {
             }
             adapter.endPaint();
         }
-        mCoreView.releaseDoc(doc);
-        mCoreView.releaseShapes(shapes);
-        mCoreView.releaseGraphics(mViewAdapter, gs);
+        GiCoreView.releaseDoc(doc);
+        GiCoreView.releaseShapes(shapes);
+        mCoreView.releaseGraphics(gs);
 
         return n;
     }
@@ -342,8 +342,8 @@ public class StdGraphView extends View implements GraphView {
                     }
                 }
             }
-            mCoreView.releaseDoc(docd);
-            mCoreView.releaseGraphics(mViewAdapter, gs);
+            GiCoreView.releaseDoc(docd);
+            mCoreView.releaseGraphics(gs);
             postInvalidate();
         }
 

@@ -5,7 +5,7 @@
 #import "TestView.h"
 
 @interface DetailViewController ()
-@property (nonatomic, weak) UIPopoverController *masterPopoverController;
+@property (nonatomic, WEAK) UIPopoverController *masterPopoverController;
 @end
 
 @implementation DetailViewController
@@ -53,7 +53,11 @@
     }
     _content = c;
     if (_content) {
-        _content.view.frame = self.view.bounds;
+        CGRect barframe = self.navigationController.navigationBar.frame;
+        CGFloat y = barframe.origin.y + barframe.size.height;
+        _content.view.frame = CGRectMake(0, y,
+                                         self.view.bounds.size.width,
+                                         self.view.bounds.size.height - y);
         [self.view addSubview:_content.view];
         _content.view.autoresizingMask = 0xFF;
         [_content.view setNeedsDisplay];

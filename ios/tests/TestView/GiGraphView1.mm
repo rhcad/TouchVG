@@ -58,14 +58,7 @@ public:
         if (_tmpshot) {
             [_tmpshot drawAtPoint:CGPointZero];
             _tmpshot = nil;
-            
-            long hDoc = _coreView->acquireFrontDoc();
-            long hGs = _coreView->acquireGraphics(this);
-            
-            ret = _coreView->drawAppend(hDoc, hGs, canvas, _sid);
-            
-            _coreView->releaseDoc(hDoc);
-            _coreView->releaseGraphics(this, hGs);
+            ret = _coreView->drawAppend(this, canvas, _sid);
         }
         return ret;
     }
@@ -120,14 +113,7 @@ public:
     GiCanvasAdapter canvas;
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
-        GiCoreView* coreView = _viewAdapter->coreView();
-        long hShapes = coreView->acquireDynamicShapes();
-        long hGs = coreView->acquireGraphics(_viewAdapter);
-        
-        coreView->dynDraw(hShapes, hGs, &canvas);
-        
-        coreView->releaseShapes(hShapes);
-        coreView->releaseGraphics(_viewAdapter, hGs);
+        _viewAdapter->coreView()->dynDraw(_viewAdapter, &canvas);
         canvas.endPaint();
     }
 }
@@ -139,6 +125,7 @@ public:
 - (void)dealloc
 {
     delete _viewAdapter;
+    [super DEALLOC];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -165,13 +152,7 @@ public:
     
     if (canvas.beginPaint(context)) {
         if (!_viewAdapter->drawAppend(&canvas)) {
-            long hDoc = coreView->acquireFrontDoc();
-            long hGs = coreView->acquireGraphics(_viewAdapter);
-            
-            coreView->drawAll(hDoc, hGs, &canvas);
-            
-            coreView->releaseDoc(hDoc);
-            coreView->releaseGraphics(_viewAdapter, hGs);
+            coreView->drawAll(_viewAdapter, &canvas);
         }
         canvas.endPaint();
     }

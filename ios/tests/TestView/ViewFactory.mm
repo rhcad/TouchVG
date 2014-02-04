@@ -5,7 +5,6 @@
 #import "LargeView1.h"
 #import "AnimatedPathView1.h"
 #import "GiViewHelper.h"
-#import "ARCMacro.h"
 #include "DemoCmds.h"
 
 static UIViewController *_tmpController = nil;
@@ -91,24 +90,43 @@ static void testGraphView(GiPaintView *v, int type)
     else if (type == 10) {
         NSString *files[] = { @"page0.svg", @"page1.svg", @"page2.svg", @"page3.svg", nil };
         float x = 10;
-        for (int i = 0, index = 0; files[i]; i++) {
+        for (int i = 0; files[i]; i++) {
             NSString *filename = [path stringByAppendingPathComponent:files[i]];
             UIImage *image = [GiViewHelper getImageFromSVGFile:filename maxSize:CGSizeMake(200, 200)];
+            if (!image)
+                break;
+            
+            CGSize size = image.size;
+            float y = 20;
+            
+            UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
+            imageView.frame = CGRectMake(x, y, size.width, size.height);
+            imageView.layer.borderColor = [UIColor redColor].CGColor;
+            imageView.layer.borderWidth = 2;
+            [v addSubview:imageView];
+            [imageView RELEASE];
+            y += size.height + 2;
+            
+            [hlp createGraphView:CGRectMake(x, y, size.width, size.height) :v];
+            if ([hlp loadFromFile:filename]) {
+                [GiViewHelper activeView].layer.borderColor = [UIColor blueColor].CGColor;
+                [GiViewHelper activeView].layer.borderWidth = 2;
+            }
+            y += size.height + 2;
+            
+            image = [[UIImage alloc]initWithContentsOfFile:[GiViewHelper addExtension:filename :@".png"]];
             if (image) {
-                UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
-                imageView.center = CGPointMake(x + imageView.center.x, 10 + imageView.center.y);
-                imageView.layer.borderColor = [UIColor redColor].CGColor;
+                imageView = [[UIImageView alloc]initWithImage:image];
+                imageView.frame = CGRectMake(x, y, size.width, size.height);
+                imageView.layer.borderColor = [UIColor greenColor].CGColor;
                 imageView.layer.borderWidth = 2;
                 [v addSubview:imageView];
-                
-                [hlp createGraphView:CGRectMake(10 + 200 * index, 310, 200, 300) :v];
-                if ([hlp loadFromFile:filename]) {
-                    [GiViewHelper activeView].layer.borderColor = [UIColor blueColor].CGColor;
-                    [GiViewHelper activeView].layer.borderWidth = 2;
-                }
-                x += image.size.width + 5;
-                index++;
+                [imageView RELEASE];
+                [image RELEASE];
             }
+            y += size.height + 2;
+            
+            x += size.width + 2;
         }
     }
 }
@@ -179,7 +197,8 @@ static void addAnimatedPathView1(NSMutableArray *arr, NSUInteger &i, NSUInteger 
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
         [hlp setImagePath:path];
-        if (![hlp loadFromFile:[GiGraphView2 lastFileName]]) {
+        [hlp loadFromFile:[GiGraphView2 lastFileName]];
+        if (hlp.shapeCount == 0) {
             [hlp addShapesForTest];
         }
         

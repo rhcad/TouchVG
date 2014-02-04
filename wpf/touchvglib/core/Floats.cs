@@ -47,8 +47,9 @@ public class Floats : IDisposable {
   public Floats() : this(touchvgPINVOKE.new_Floats__SWIG_1(), true) {
   }
 
-  public void setSize(int n) {
-    touchvgPINVOKE.Floats_setSize(swigCPtr, n);
+  public bool setSize(int n) {
+    bool ret = touchvgPINVOKE.Floats_setSize(swigCPtr, n);
+    return ret;
   }
 
   public int count() {

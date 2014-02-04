@@ -43,8 +43,8 @@ public class Shapes {
     this(touchvgJNI.new_Shapes__SWIG_1(), true);
   }
 
-  public void setSize(int n) {
-    touchvgJNI.Shapes_setSize(swigCPtr, this, n);
+  public boolean setSize(int n) {
+    return touchvgJNI.Shapes_setSize(swigCPtr, this, n);
   }
 
   public int count() {

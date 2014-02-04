@@ -28,6 +28,7 @@ class GiViewAdapter;
     __block long    _drawing;
     __block long    _doc;
     __block long    _gs;
+    dispatch_queue_t _queue;
 }
 
 - (id)initWithAdapter:(GiViewAdapter *)adapter;

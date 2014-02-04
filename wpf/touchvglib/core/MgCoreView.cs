@@ -72,8 +72,8 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual void releaseDoc(int hDoc) {
-    touchvgPINVOKE.MgCoreView_releaseDoc(swigCPtr, hDoc);
+  public static void releaseDoc(int hDoc) {
+    touchvgPINVOKE.MgCoreView_releaseDoc(hDoc);
   }
 
   public virtual int acquireDynamicShapes() {
@@ -81,8 +81,8 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual void releaseShapes(int hShapes) {
-    touchvgPINVOKE.MgCoreView_releaseShapes(swigCPtr, hShapes);
+  public static void releaseShapes(int hShapes) {
+    touchvgPINVOKE.MgCoreView_releaseShapes(hShapes);
   }
 
   public virtual bool isUndoRecording() {
@@ -155,7 +155,12 @@ public class MgCoreView : IDisposable {
   }
 
   public virtual int getShapeCount() {
-    int ret = touchvgPINVOKE.MgCoreView_getShapeCount(swigCPtr);
+    int ret = touchvgPINVOKE.MgCoreView_getShapeCount__SWIG_0(swigCPtr);
+    return ret;
+  }
+
+  public virtual int getShapeCount(int hDoc) {
+    int ret = touchvgPINVOKE.MgCoreView_getShapeCount__SWIG_1(swigCPtr, hDoc);
     return ret;
   }
 

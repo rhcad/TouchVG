@@ -25,10 +25,12 @@
 #define RELEASE self
 #define DEALLOC self
 #define WEAK weak
+#define STRONG strong
 #else
 #define RETAIN retain
 #define AUTORELEASE autorelease
 #define RELEASE release
 #define DEALLOC dealloc
 #define WEAK assign
+#define STRONG retain
 #endif

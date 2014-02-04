@@ -62,13 +62,13 @@ public class GiCoreView : MgCoreView {
     touchvgPINVOKE.GiCoreView_destoryView(swigCPtr, GiView.getCPtr(view));
   }
 
-  public bool isDrawing(GiView view) {
-    bool ret = touchvgPINVOKE.GiCoreView_isDrawing(swigCPtr, GiView.getCPtr(view));
+  public bool isDrawing() {
+    bool ret = touchvgPINVOKE.GiCoreView_isDrawing(swigCPtr);
     return ret;
   }
 
-  public bool stopDrawing(GiView view) {
-    bool ret = touchvgPINVOKE.GiCoreView_stopDrawing(swigCPtr, GiView.getCPtr(view));
+  public int stopDrawing() {
+    int ret = touchvgPINVOKE.GiCoreView_stopDrawing(swigCPtr);
     return ret;
   }
 
@@ -77,8 +77,8 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public void releaseGraphics(GiView view, int hGs) {
-    touchvgPINVOKE.GiCoreView_releaseGraphics(swigCPtr, GiView.getCPtr(view), hGs);
+  public void releaseGraphics(int hGs) {
+    touchvgPINVOKE.GiCoreView_releaseGraphics(swigCPtr, hGs);
   }
 
   public int drawAll(int hDoc, int hGs, GiCanvas canvas) {
@@ -237,17 +237,9 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public override void releaseDoc(int hDoc) {
-    touchvgPINVOKE.GiCoreView_releaseDoc(swigCPtr, hDoc);
-  }
-
   public override int acquireDynamicShapes() {
     int ret = touchvgPINVOKE.GiCoreView_acquireDynamicShapes(swigCPtr);
     return ret;
-  }
-
-  public override void releaseShapes(int hShapes) {
-    touchvgPINVOKE.GiCoreView_releaseShapes(swigCPtr, hShapes);
   }
 
   public override bool isUndoRecording() {
@@ -315,7 +307,12 @@ public class GiCoreView : MgCoreView {
   }
 
   public override int getShapeCount() {
-    int ret = touchvgPINVOKE.GiCoreView_getShapeCount(swigCPtr);
+    int ret = touchvgPINVOKE.GiCoreView_getShapeCount__SWIG_0(swigCPtr);
+    return ret;
+  }
+
+  public override int getShapeCount(int hDoc) {
+    int ret = touchvgPINVOKE.GiCoreView_getShapeCount__SWIG_1(swigCPtr, hDoc);
     return ret;
   }
 

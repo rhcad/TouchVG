@@ -87,7 +87,11 @@ iOS编译说明
 
 > 在 Xcode 中打开 ios/TestVG.xcworkspace 文件，运行 TestView 演示程序。
 
->> 所需的 libTouchVGCore.a、libTouchVG-SVG.a、libDemoCmds.a、libSVGKit-iOS.a 需要自行编译 TestVG.xcworkspace 中的相应工程。可进入此项目的 ios 目录，运行`./build.sh`（需要配置Xcode命令行环境，以便使用 xcodebuild）自动编译所有静态库到 `ios/output` 目录下。
+>> 该程序有两个编译目标项，TestView 不支持SVG的显示，使用 libTouchVG.a；TestView-SVG 使用 SVGKit 库显示SVG图形，使用 libTouchVG-SVG.a。
+
+>> 所需的多个静态库有两种编译方式：
+>>> 进入此项目的 ios 目录，运行`./build.sh`（需要配置Xcode命令行环境，以便使用 xcodebuild）自动编译所有静态库到 `ios/output` 目录下。
+>>> 在 Xcode 集成开发环境中分别选择相应的库工程编译。
 
 >> 在真机上调试时需要修改主程序的Bundle Identifier，例如“com.yourcompany.TestView”，并选择自己的开发证书（Code Signing）。
 

@@ -3,7 +3,6 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import "ImageCache.h"
-#import "ARCMacro.h"
 #include "GiCanvasAdapter.h"
 
 static const float patDash[]      = { 4, 2, 0 };

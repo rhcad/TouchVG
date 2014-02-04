@@ -4,7 +4,6 @@
 
 #import "GiViewImpl.h"
 #import "ImageCache.h"
-#import "ARCMacro.h"
 
 static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"取消",
     @"删除", @"克隆", @"定长", @"不定长", @"锁定", @"解锁", @"编辑", @"返回",
@@ -122,6 +121,9 @@ bool GiViewAdapter::startRecord(const char* path, RecordType type)
     const char* labels[] = { "touchvg.undo", "touchvg.record", "touchvg.play" };
     _recordQueue[i] = dispatch_queue_create(labels[type], NULL);
     
+    if (type == kPlay && _recordQueue[i] && getDynView()) {
+    }
+    
     return true;
 }
 
@@ -232,7 +234,7 @@ void GiViewAdapter::regenAppend(int sid) {
 }
 
 void GiViewAdapter::stopRegen() {
-    _coreView->stopDrawing(this);
+    _coreView->stopDrawing();
 }
 
 UIView *GiViewAdapter::getDynView() {

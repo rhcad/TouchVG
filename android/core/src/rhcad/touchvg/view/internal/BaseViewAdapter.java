@@ -141,13 +141,13 @@ public abstract class BaseViewAdapter extends GiView {
 
     public void stop() {
         mDrawStopping = true;
-        coreView().stopDrawing(this);
+        coreView().stopDrawing();
         stopRecord(true);
         stopRecord(false);
     }
 
     public boolean startRecord(String path, int type) {
-        if (type == START_UNDO ? (mUndoing != null) : (mRecorder != null))
+        if ((type == START_UNDO ? (mUndoing != null) : (mRecorder != null)) || mDrawStopping)
             return false;
 
         synchronized (coreView()) {
@@ -229,8 +229,8 @@ public abstract class BaseViewAdapter extends GiView {
                     mPending[i + 1] = doc;
                     mPending[i + 2] = shapes;
                 } else {
-                    mCoreView.releaseDoc(doc);
-                    mCoreView.releaseShapes(shapes);
+                    GiCoreView.releaseDoc(doc);
+                    GiCoreView.releaseShapes(shapes);
                     tick = 0;
                     doc = 0;
                     shapes = 0;
@@ -251,11 +251,11 @@ public abstract class BaseViewAdapter extends GiView {
                     e.printStackTrace();
                 }
             }
-            coreView().stopRecord(mType == START_UNDO);
+            mCoreView.stopRecord(mType == START_UNDO);
             for (int i = 0; i < mPending.length; i++) {
                 if (mPending[i] != 0) {
-                    mCoreView.releaseDoc(mPending[i + 1]);
-                    mCoreView.releaseShapes(mPending[i + 2]);
+                    GiCoreView.releaseDoc(mPending[i + 1]);
+                    GiCoreView.releaseShapes(mPending[i + 2]);
                 }
             }
             mCoreView = null;
@@ -301,7 +301,7 @@ public abstract class BaseViewAdapter extends GiView {
                         }
                         loop = (doc == 0 && shapes != 0 && mPending[0] != 0);
                         if (loop) {
-                            mCoreView.releaseShapes(shapes);
+                            GiCoreView.releaseShapes(shapes);
                         }
                     }
                 }

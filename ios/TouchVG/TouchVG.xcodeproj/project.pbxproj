@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021DA342189F912500CFD9DC /* GiDpiUtil.mm in Headers */ = {isa = PBXBuildFile; fileRef = 024FCF5B188A5272000B0C41 /* GiDpiUtil.mm */; };
+		021DA343189F913300CFD9DC /* GiDpiUtil.mm in Headers */ = {isa = PBXBuildFile; fileRef = 024FCF5B188A5272000B0C41 /* GiDpiUtil.mm */; };
 		024FCF5C188A5272000B0C41 /* GiDpiUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 024FCF5B188A5272000B0C41 /* GiDpiUtil.mm */; };
 		02A4C4101888838700F5188B /* ARCMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = 02A4C40F1888838700F5188B /* ARCMacro.h */; };
 		02BD668A189A1E9A00A4A444 /* GiPaintView.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2A3A6A178FC617000194AE /* GiPaintView.mm */; };
@@ -31,7 +33,6 @@
 		02BD669F189A1E9A00A4A444 /* GiShapeAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = AE037958181FA2CD0049931F /* GiShapeAdapter.mm */; };
 		02BD66A0189A1E9A00A4A444 /* GiViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = AEE5C70E17E17D1100AFF74D /* GiViewImpl.h */; };
 		02BD66A1189A1E9A00A4A444 /* ImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = AEC3381E180E28520029D7B3 /* ImageCache.h */; };
-		02BD66A2189A1E9A00A4A444 /* SVGKImage.h in Headers */ = {isa = PBXBuildFile; fileRef = AE3B0110181104F60004AAC7 /* SVGKImage.h */; };
 		02BD66A3189A1E9A00A4A444 /* GiShapeAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE037955181FA29B0049931F /* GiShapeAdapter.h */; };
 		AE037956181FA29B0049931F /* GiShapeAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE037955181FA29B0049931F /* GiShapeAdapter.h */; };
 		AE037959181FA2CD0049931F /* GiShapeAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE037958181FA2CD0049931F /* GiShapeAdapter.mm */; };
@@ -72,7 +73,6 @@
 		AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AE2A3B4D178FC7EB000194AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AE3A618017EE7CC600B23F69 /* GiViewAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiViewAdapter.mm; path = ../../view/src/GiViewAdapter.mm; sourceTree = "<group>"; };
-		AE3B0110181104F60004AAC7 /* SVGKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVGKImage.h; path = ../../view/src/SVGKImage.h; sourceTree = "<group>"; };
 		AE97A0FD186D4BF900DFEA77 /* gicanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gicanvas.h; sourceTree = "<group>"; };
 		AE97A0FF186D4BF900DFEA77 /* mgaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgaction.h; sourceTree = "<group>"; };
 		AE97A100186D4BF900DFEA77 /* mgcmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgcmd.h; sourceTree = "<group>"; };
@@ -441,7 +441,6 @@
 			isa = PBXGroup;
 			children = (
 				024FCF5B188A5272000B0C41 /* GiDpiUtil.mm */,
-				AE3B0110181104F60004AAC7 /* SVGKImage.h */,
 				AEC3381E180E28520029D7B3 /* ImageCache.h */,
 				AEC3381F180E28520029D7B3 /* ImageCache.mm */,
 				AE3A618017EE7CC600B23F69 /* GiViewAdapter.mm */,
@@ -464,6 +463,7 @@
 				02BD6696189A1E9A00A4A444 /* GiViewHelper.h in Headers */,
 				02BD6697189A1E9A00A4A444 /* GiPaintView.h in Headers */,
 				02BD6698189A1E9A00A4A444 /* GiCanvasAdapter.h in Headers */,
+				021DA342189F912500CFD9DC /* GiDpiUtil.mm in Headers */,
 				02BD6699189A1E9A00A4A444 /* ImageCache.mm in Headers */,
 				02BD669A189A1E9A00A4A444 /* GiViewAdapter.mm in Headers */,
 				02BD669B189A1E9A00A4A444 /* GiViewHelper.mm in Headers */,
@@ -473,7 +473,6 @@
 				02BD669F189A1E9A00A4A444 /* GiShapeAdapter.mm in Headers */,
 				02BD66A0189A1E9A00A4A444 /* GiViewImpl.h in Headers */,
 				02BD66A1189A1E9A00A4A444 /* ImageCache.h in Headers */,
-				02BD66A2189A1E9A00A4A444 /* SVGKImage.h in Headers */,
 				02BD66A3189A1E9A00A4A444 /* GiShapeAdapter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,6 +484,7 @@
 				AEF1B1D817E29D2C005B5132 /* GiViewHelper.h in Headers */,
 				AE2A3A67178FC608000194AE /* GiPaintView.h in Headers */,
 				AE2A3A68178FC608000194AE /* GiCanvasAdapter.h in Headers */,
+				021DA343189F913300CFD9DC /* GiDpiUtil.mm in Headers */,
 				AE208E5718867EA500FE68E1 /* ImageCache.mm in Headers */,
 				AE208E5818867EA500FE68E1 /* GiViewAdapter.mm in Headers */,
 				AE208E5918867EA500FE68E1 /* GiViewHelper.mm in Headers */,
@@ -663,6 +663,7 @@
 					"$(inherited)",
 					USE_SVGKIT,
 				);
+				HEADER_SEARCH_PATHS = "../../thirdparty/SVGKit/Source/**";
 				PRODUCT_NAME = "TouchVG-SVG";
 				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -679,6 +680,7 @@
 					"$(inherited)",
 					USE_SVGKIT,
 				);
+				HEADER_SEARCH_PATHS = "../../thirdparty/SVGKit/Source/**";
 				PRODUCT_NAME = "TouchVG-SVG";
 				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -690,7 +692,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -717,7 +718,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -736,6 +736,7 @@
 		AE2A3A57178FC511000194AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/TouchVG.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TouchVG/Prefix.pch;
@@ -748,6 +749,7 @@
 		AE2A3A58178FC511000194AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/TouchVG.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TouchVG/Prefix.pch;

@@ -5,11 +5,10 @@
 #import "GiViewHelper.h"
 #import "GiViewImpl.h"
 #import "ImageCache.h"
-#import "ARCMacro.h"
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
-#define IOSLIBVERSION     0
+#define IOSLIBVERSION     1
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -208,9 +207,13 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (NSString *)content {
     __block long hDoc;
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    if ([_view viewAdapter2]->isMainThread()) {
         hDoc = [_view coreView]->acquireFrontDoc();
-    });
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            hDoc = [_view coreView]->acquireFrontDoc();
+        });
+    }
     const char* str = [_view coreView]->getContent(hDoc);
     NSString * ret = [NSString stringWithCString:str encoding:NSUTF8StringEncoding];
     [_view coreView]->freeContent();
@@ -266,40 +269,49 @@ static GiViewHelper *_sharedInstance = nil;
     return CGRectNull;
 }
 
-- (NSString *)addExtension:(NSString *)filename :(NSString *)ext {
++ (NSString *)addExtension:(NSString *)filename :(NSString *)ext {
     if (filename && ![filename hasSuffix:ext]) {
         filename = [[filename stringByDeletingPathExtension]
-                    stringByAppendingPathExtension:ext];
+                    stringByAppendingPathExtension:[ext substringFromIndex:1]];
     }
     return filename;
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r {
-    return [_view coreView]->loadFromFile([[self addExtension:vgfile :@"vg"] UTF8String], r);
+    vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
+    return [_view coreView]->loadFromFile([vgfile UTF8String], r);
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile {
-    return [_view coreView]->loadFromFile([[self addExtension:vgfile :@"vg"] UTF8String]);
+    vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
+    return [_view coreView]->loadFromFile([vgfile UTF8String]);
 }
 
 - (BOOL)saveToFile:(NSString *)vgfile {
     BOOL ret = NO;
     NSFileManager *fm = [NSFileManager defaultManager];
+    __block long hDoc;
     
-    vgfile = [self addExtension:vgfile :@"vg"];
-    if ([_view coreView]->getShapeCount() > 0) {
-        if (![fm fileExistsAtPath:vgfile]) {
-            [fm createFileAtPath:vgfile contents:[NSData data] attributes:nil];
-        }
-        __block long hDoc;
+    if ([_view viewAdapter2]->isMainThread()) {
+        hDoc = [_view coreView]->acquireFrontDoc();
+    } else {
         dispatch_sync(dispatch_get_main_queue(), ^{
             hDoc = [_view coreView]->acquireFrontDoc();
         });
+    }
+    
+    vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
+    if ([_view coreView]->getShapeCount(hDoc) > 0) {
+        if (![fm fileExistsAtPath:vgfile]) {
+            [fm createFileAtPath:vgfile contents:[NSData data] attributes:nil];
+        }
         ret = [_view coreView]->saveToFile(hDoc, [vgfile UTF8String]);
-        [_view coreView]->releaseDoc(hDoc);
+        NSLog(@"GiViewHelper saveToFile: %@, %d", vgfile, ret);
     } else {
         ret = [fm removeItemAtPath:vgfile error:nil];
+        NSLog(@"GiViewHelper removeItemAtPath: %@, %d", vgfile, ret);
     }
+    [_view coreView]->releaseDoc(hDoc);
     
     return ret;
 }
@@ -313,12 +325,14 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (BOOL)savePng:(NSString *)filename {
-    return [_view savePng:[self addExtension:filename :@".png"]];
+    return [_view savePng:[GiViewHelper addExtension:filename :@".png"]];
 }
 
 - (BOOL)exportSVG:(NSString *)filename {
-    filename = [self addExtension:filename :@".svg"];
-    return [_view coreView]->exportSVG([_view viewAdapter], [filename UTF8String]);
+    filename = [GiViewHelper addExtension:filename :@".svg"];
+    int ret = [_view coreView]->exportSVG([_view viewAdapter], [filename UTF8String]);
+    NSLog(@"GiViewHelper exportSVG: %@, %d", filename, ret);
+    return ret >= 0;
 }
 
 - (BOOL)zoomToExtent {
@@ -380,13 +394,18 @@ static GiViewHelper *_sharedInstance = nil;
     GiShapeAdapter adapter(&shapeCallback);
     __block long hDoc, hGs;
     
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    if ([_view viewAdapter2]->isMainThread()) {
         hDoc = [_view coreView]->acquireFrontDoc();
         hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
-    });
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            hDoc = [_view coreView]->acquireFrontDoc();
+            hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
+        });
+    }
     [_view coreView]->drawAll(hDoc, hGs, &adapter);
-    [_view coreView]->releaseDoc(hDoc);
-    [_view coreView]->releaseGraphics([_view viewAdapter], hGs);
+    GiCoreView::releaseDoc(hDoc);
+    [_view coreView]->releaseGraphics(hGs);
     
     return rootLayer;
 }

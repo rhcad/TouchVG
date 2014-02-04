@@ -22,6 +22,7 @@ namespace touchvg.view
      */
     public class WPFGraphView : IDisposable
     {
+        public static WPFGraphView ActiveView { get; private set; }
         public GiCoreView CoreView { get; private set; }
         private WPFViewAdapter _view;
         public GiView ViewAdapter { get { return _view; } }
@@ -32,12 +33,27 @@ namespace touchvg.view
         public event ContentChangedEventHandler OnContentChanged;
         public event DynamicChangedEventHandler OnDynamicChanged;
 
+        //! 构造普通绘图视图
         public WPFGraphView(Panel container)
         {
             this.CoreView = new GiCoreView();
             this._view = new WPFViewAdapter(this);
             this.CoreView.createView(this._view);
+            init(container);
+            ActiveView = this;
+        }
 
+        //! 构造放大镜绘图视图
+        public WPFGraphView(WPFGraphView mainView, Panel container)
+        {
+            this.CoreView = new GiCoreView(mainView.CoreView);
+            this._view = new WPFViewAdapter(this);
+            this.CoreView.createMagnifierView(this._view, mainView.ViewAdapter);
+            init(container);
+        }
+
+        private void init(Panel container)
+        {
             MainCanvas = new WPFMainCanvas(this.CoreView, _view) { Width = container.ActualWidth, Height = container.ActualHeight };
             TempCanvas = new WPFTempCanvas(this.CoreView, _view) { Width = container.ActualWidth, Height = container.ActualHeight };
             TempCanvas.Background = new SolidColorBrush(Colors.Transparent);
@@ -63,6 +79,10 @@ namespace touchvg.view
 
         public void Dispose()
         {
+            if (ActiveView == this)
+            {
+                ActiveView = null;
+            }
             if (this.MainCanvas != null)
             {
                 this.MainCanvas.clean();
@@ -85,6 +105,14 @@ namespace touchvg.view
                 this.CoreView = null;
             }
             WPFImageSourceHelper.Clean();
+        }
+
+        private void ActivateView()
+        {
+            if (ActiveView != this)
+            {
+                ActiveView = this;
+            }
         }
 
         //! WPF绘图视图适配器类
@@ -246,6 +274,7 @@ namespace touchvg.view
                 ClearActions();
                 CoreView.doContextAction(action);
                 e.Handled = true;
+                _owner.ActivateView();
             }
 
             private void button_Click(object sender, RoutedEventArgs e)

@@ -25,4 +25,6 @@ obj
 gdb.setup
 gdbserver
 ios/output/*.a
+ios/output/TouchVG*
+ios/output/Demo*
 *.db

@@ -7,6 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02FDBE93189DD22A0038C91F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF2D53A160964BA00DDB7F2 /* AppDelegate.m */; };
+		02FDBE94189DD22A0038C91F /* MasterViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEF2D53D160964BA00DDB7F2 /* MasterViewController.mm */; };
+		02FDBE95189DD22A0038C91F /* DetailViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEF2D540160964BA00DDB7F2 /* DetailViewController.mm */; };
+		02FDBE96189DD22A0038C91F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF2D5AD1609BF7D00DDB7F2 /* main.m */; };
+		02FDBE97189DD22A0038C91F /* ViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE4E6F0416129337006CAA5C /* ViewFactory.mm */; };
+		02FDBE98189DD22A0038C91F /* LargeView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEADC21E16EB570800484962 /* LargeView1.mm */; };
+		02FDBE99189DD22A0038C91F /* CalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3341B416ECBDBE00F0E517 /* CalloutView.m */; };
+		02FDBE9A189DD22A0038C91F /* GiGraphView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE53750D177D26980050CC4F /* GiGraphView1.mm */; };
+		02FDBE9B189DD22A0038C91F /* AnimatedPathView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */; };
+		02FDBE9E189DD22A0038C91F /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE3B011C18110A610004AAC7 /* libxml2.dylib */; };
+		02FDBE9F189DD22A0038C91F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE3B011A18110A370004AAC7 /* CoreText.framework */; };
+		02FDBEA0189DD22A0038C91F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE815F341718EDCB006BC607 /* QuartzCore.framework */; };
+		02FDBEA1189DD22A0038C91F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52A160964BA00DDB7F2 /* UIKit.framework */; };
+		02FDBEA2189DD22A0038C91F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52C160964BA00DDB7F2 /* Foundation.framework */; };
+		02FDBEA3189DD22A0038C91F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52E160964BA00DDB7F2 /* CoreGraphics.framework */; };
+		02FDBEA5189DD22A0038C91F /* app57.png in Resources */ = {isa = PBXBuildFile; fileRef = AEF2D56D1609B67200DDB7F2 /* app57.png */; };
+		02FDBEA6189DD22A0038C91F /* app72.png in Resources */ = {isa = PBXBuildFile; fileRef = AEF2D56E1609B67200DDB7F2 /* app72.png */; };
+		02FDBEA7189DD22A0038C91F /* TouchVG.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE34D03617F91762004BC88B /* TouchVG.bundle */; };
+		02FDBEA8189DD22A0038C91F /* fonts.svg in Resources */ = {isa = PBXBuildFile; fileRef = AE3B01141811064D0004AAC7 /* fonts.svg */; };
+		02FDBEA9189DD22A0038C91F /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03795D181FB31E0049931F /* pencil.png */; };
+		02FDBEAA189DD22A0038C91F /* pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE252D2F181FCB0700884B5C /* pencil@2x.png */; };
 		AE03795E181FB31E0049931F /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03795D181FB31E0049931F /* pencil.png */; };
 		AE252D2B181FC93300884B5C /* AnimatedPathView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */; };
 		AE252D30181FCB0700884B5C /* pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE252D2F181FCB0700884B5C /* pencil@2x.png */; };
@@ -31,11 +52,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02FDBEAE189DD22A0038C91F /* TestView-SVG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TestView-SVG.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE03795D181FB31E0049931F /* pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil.png; sourceTree = "<group>"; };
-		AE208E6C18868B7700FE68E1 /* libDemoCmds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDemoCmds.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos/libDemoCmds.a"; sourceTree = "<group>"; };
-		AE208E6D18868B7700FE68E1 /* libTouchVG.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTouchVG.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos/libTouchVG.a"; sourceTree = "<group>"; };
-		AE208E6E18868B7700FE68E1 /* libTouchVGCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTouchVGCore.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos/libTouchVGCore.a"; sourceTree = "<group>"; };
-		AE208E7218868BB700FE68E1 /* libSVGKit-iOS.1.2.0pre.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libSVGKit-iOS.1.2.0pre.a"; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-gfkeadudvkwayzepiwtmpzcazrvf/Build/Products/Debug-iphoneos/libSVGKit-iOS.1.2.0pre.a"; sourceTree = "<group>"; };
 		AE252D29181FC93300884B5C /* AnimatedPathView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedPathView1.h; sourceTree = "<group>"; };
 		AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnimatedPathView1.mm; sourceTree = "<group>"; };
 		AE252D2F181FCB0700884B5C /* pencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pencil@2x.png"; sourceTree = "<group>"; };
@@ -50,8 +68,6 @@
 		AE53750C177D26980050CC4F /* GiGraphView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiGraphView1.h; sourceTree = "<group>"; };
 		AE53750D177D26980050CC4F /* GiGraphView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiGraphView1.mm; sourceTree = "<group>"; };
 		AE815F341718EDCB006BC607 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		AE97A1AD186D538D00DFEA77 /* libDemoCmds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDemoCmds.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-aptrtuozhsetvlaucaunnldzugbi/Build/Products/Debug-iphoneos/libDemoCmds.a"; sourceTree = "<group>"; };
-		AE97A1AF186D539000DFEA77 /* libTouchVG.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTouchVG.a; path = "../../../../../Library/Developer/Xcode/DerivedData/TestVG-aptrtuozhsetvlaucaunnldzugbi/Build/Products/Debug-iphoneos/libTouchVG.a"; sourceTree = "<group>"; };
 		AEADC21D16EB570800484962 /* LargeView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LargeView1.h; sourceTree = "<group>"; };
 		AEADC21E16EB570800484962 /* LargeView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LargeView1.mm; sourceTree = "<group>"; };
 		AEF2D526160964BA00DDB7F2 /* TestView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +88,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		02FDBE9C189DD22A0038C91F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02FDBE9E189DD22A0038C91F /* libxml2.dylib in Frameworks */,
+				02FDBE9F189DD22A0038C91F /* CoreText.framework in Frameworks */,
+				02FDBEA0189DD22A0038C91F /* QuartzCore.framework in Frameworks */,
+				02FDBEA1189DD22A0038C91F /* UIKit.framework in Frameworks */,
+				02FDBEA2189DD22A0038C91F /* Foundation.framework in Frameworks */,
+				02FDBEA3189DD22A0038C91F /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AEF2D523160964BA00DDB7F2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -117,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				AEF2D526160964BA00DDB7F2 /* TestView.app */,
+				02FDBEAE189DD22A0038C91F /* TestView-SVG.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,12 +154,6 @@
 		AEF2D529160964BA00DDB7F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AE208E7218868BB700FE68E1 /* libSVGKit-iOS.1.2.0pre.a */,
-				AE208E6C18868B7700FE68E1 /* libDemoCmds.a */,
-				AE208E6D18868B7700FE68E1 /* libTouchVG.a */,
-				AE208E6E18868B7700FE68E1 /* libTouchVGCore.a */,
-				AE97A1AF186D539000DFEA77 /* libTouchVG.a */,
-				AE97A1AD186D538D00DFEA77 /* libDemoCmds.a */,
 				AE3B011C18110A610004AAC7 /* libxml2.dylib */,
 				AE3B011A18110A370004AAC7 /* CoreText.framework */,
 				AE815F341718EDCB006BC607 /* QuartzCore.framework */,
@@ -185,6 +209,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		02FDBE8F189DD22A0038C91F /* TestView-SVG */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02FDBEAB189DD22A0038C91F /* Build configuration list for PBXNativeTarget "TestView-SVG" */;
+			buildPhases = (
+				02FDBE92189DD22A0038C91F /* Sources */,
+				02FDBE9C189DD22A0038C91F /* Frameworks */,
+				02FDBEA4189DD22A0038C91F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TestView-SVG";
+			productName = TestView;
+			productReference = 02FDBEAE189DD22A0038C91F /* TestView-SVG.app */;
+			productType = "com.apple.product-type.application";
+		};
 		AEF2D525160964BA00DDB7F2 /* TestView */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AEF2D550160964BA00DDB7F2 /* Build configuration list for PBXNativeTarget "TestView" */;
@@ -224,11 +265,25 @@
 			projectRoot = "";
 			targets = (
 				AEF2D525160964BA00DDB7F2 /* TestView */,
+				02FDBE8F189DD22A0038C91F /* TestView-SVG */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		02FDBEA4189DD22A0038C91F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02FDBEA5189DD22A0038C91F /* app57.png in Resources */,
+				02FDBEA6189DD22A0038C91F /* app72.png in Resources */,
+				02FDBEA7189DD22A0038C91F /* TouchVG.bundle in Resources */,
+				02FDBEA8189DD22A0038C91F /* fonts.svg in Resources */,
+				02FDBEA9189DD22A0038C91F /* pencil.png in Resources */,
+				02FDBEAA189DD22A0038C91F /* pencil@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AEF2D524160964BA00DDB7F2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -245,6 +300,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		02FDBE92189DD22A0038C91F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02FDBE93189DD22A0038C91F /* AppDelegate.m in Sources */,
+				02FDBE94189DD22A0038C91F /* MasterViewController.mm in Sources */,
+				02FDBE95189DD22A0038C91F /* DetailViewController.mm in Sources */,
+				02FDBE96189DD22A0038C91F /* main.m in Sources */,
+				02FDBE97189DD22A0038C91F /* ViewFactory.mm in Sources */,
+				02FDBE98189DD22A0038C91F /* LargeView1.mm in Sources */,
+				02FDBE99189DD22A0038C91F /* CalloutView.m in Sources */,
+				02FDBE9A189DD22A0038C91F /* GiGraphView1.mm in Sources */,
+				02FDBE9B189DD22A0038C91F /* AnimatedPathView1.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AEF2D522160964BA00DDB7F2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,11 +335,40 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		02FDBEAC189DD22A0038C91F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = (
+					"-lTouchVGCore",
+					"-lTouchVG-SVG",
+					"-lDemoCmds",
+					"-lSVGKit-iOS.1.2.0pre",
+				);
+				PRODUCT_NAME = "TestView-SVG";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		02FDBEAD189DD22A0038C91F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = (
+					"-lTouchVGCore",
+					"-lTouchVG-SVG",
+					"-lDemoCmds",
+					"-lSVGKit-iOS.1.2.0pre",
+				);
+				PRODUCT_NAME = "TestView-SVG";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		AEF2D54E160964BA00DDB7F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -279,6 +379,8 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../Classes/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -292,8 +394,12 @@
 					../../view/include,
 					"../../../core/democmds/**",
 				);
+				INFOPLIST_FILE = ../Classes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)",
+					../../output,
+				);
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -305,7 +411,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
@@ -314,6 +419,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../Classes/Prefix.pch;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -322,8 +429,12 @@
 					../../view/include,
 					"../../../core/democmds/**",
 				);
+				INFOPLIST_FILE = ../Classes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)",
+					../../output,
+				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -335,14 +446,11 @@
 		AEF2D551160964BA00DDB7F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = ../Classes/Prefix.pch;
-				INFOPLIST_FILE = ../Classes/Info.plist;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				OTHER_LDFLAGS = (
 					"-lTouchVGCore",
-					"-lTouchVG-SVG",
+					"-lTouchVG",
 					"-lDemoCmds",
-					"-lSVGKit-iOS.1.2.0pre",
 				);
 				PRODUCT_NAME = TestView;
 				PUBLIC_HEADERS_FOLDER_PATH = "";
@@ -353,14 +461,11 @@
 		AEF2D552160964BA00DDB7F2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = ../Classes/Prefix.pch;
-				INFOPLIST_FILE = ../Classes/Info.plist;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				OTHER_LDFLAGS = (
 					"-lTouchVGCore",
-					"-lTouchVG-SVG",
+					"-lTouchVG",
 					"-lDemoCmds",
-					"-lSVGKit-iOS.1.2.0pre",
 				);
 				PRODUCT_NAME = TestView;
 				PUBLIC_HEADERS_FOLDER_PATH = "";
@@ -371,6 +476,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		02FDBEAB189DD22A0038C91F /* Build configuration list for PBXNativeTarget "TestView-SVG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02FDBEAC189DD22A0038C91F /* Debug */,
+				02FDBEAD189DD22A0038C91F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AEF2D520160964BA00DDB7F2 /* Build configuration list for PBXProject "TestView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

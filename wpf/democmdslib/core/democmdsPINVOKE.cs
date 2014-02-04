@@ -199,7 +199,7 @@ class democmdsPINVOKE {
   public static extern IntPtr new_Floats__SWIG_1();
 
   [DllImport("democmds", EntryPoint="CSharp_Floats_setSize")]
-  public static extern void Floats_setSize(HandleRef jarg1, int jarg2);
+  public static extern bool Floats_setSize(HandleRef jarg1, int jarg2);
 
   [DllImport("democmds", EntryPoint="CSharp_Floats_count")]
   public static extern int Floats_count(HandleRef jarg1);
@@ -223,7 +223,7 @@ class democmdsPINVOKE {
   public static extern IntPtr new_Chars__SWIG_1();
 
   [DllImport("democmds", EntryPoint="CSharp_Chars_setSize")]
-  public static extern void Chars_setSize(HandleRef jarg1, int jarg2);
+  public static extern bool Chars_setSize(HandleRef jarg1, int jarg2);
 
   [DllImport("democmds", EntryPoint="CSharp_Chars_count")]
   public static extern int Chars_count(HandleRef jarg1);

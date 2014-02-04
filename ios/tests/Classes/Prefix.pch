@@ -9,6 +9,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import "ARCMacro.h"
 
 //UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone
 #define ISPHONE 1

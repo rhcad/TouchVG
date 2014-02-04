@@ -3,7 +3,6 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import "ImageCache.h"
-#import "ARCMacro.h"
 #ifdef USE_SVGKIT
 #import "SVGKImage.h"
 #endif
@@ -66,7 +65,21 @@
     return size;
 }
 
-// TODO: 暂时直接从SVGKImage得到UIImage，应当在GiCanvasAdapter中从SVGKImage获取CALayer渲染
+#ifdef USE_SVGKIT
++ (UIImage *)renderSVG:(SVGKImage*)svgimg {
+    if (!svgimg || ![svgimg hasSize])
+        return nil;
+    
+    UIGraphicsBeginImageContextWithOptions(svgimg.size, NO, 0);
+    [svgimg.CALayerTree renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+#endif
+
 - (CGSize)addSVGFromResource:(NSString *)name :(NSString **)key {
     name = [name stringByDeletingPathExtension];
     *key = [@"svg:" stringByAppendingString:name];
@@ -76,7 +89,7 @@
 #ifdef USE_SVGKIT
         NSString *resname = [name stringByAppendingString:@".svg"];
         @try {
-            UIImage *image = [[SVGKImage imageNamed:resname] UIImage];
+            UIImage *image = [ImageCache renderSVG:[SVGKImage imageNamed:resname]];
             
             if (image && image.size.width > 1) {
                 [_images setObject:image forKey:*key];
@@ -86,7 +99,7 @@
             }
         }
         @catch (NSException *e) {
-            NSLog(@"Fail to parse %@", resname);
+            NSLog(@"Fail to parse %@ due to %@", resname, [e name]);
         }
 #endif
     }
@@ -100,11 +113,11 @@
     SVGKImage* svgimg = nil;
     
     @try {
-        svgimg = [SVGKImage imageWithContentsOfFile:filename];
-        image = [svgimg UIImage];
+        svgimg = [[SVGKImage alloc]initWithContentsOfFile:filename];
+        image = [ImageCache renderSVG:svgimg];
     }
     @catch (NSException *e) {
-        NSLog(@"Fail to parse SVG file: %@", filename);
+        NSLog(@"Fail to parse SVG file due to %@: %@", [e name], filename);
     }
     
     if (image && (svgimg.size.width > size.width || svgimg.size.height > size.height)) {
@@ -115,6 +128,7 @@
         image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
+    [svgimg RELEASE];
 #endif
     
     return image;
@@ -130,16 +144,19 @@
         
         if ([*name hasPrefix:@"svg:"]) {
 #ifdef USE_SVGKIT
+            SVGKImage* svgimg = nil;
             @try {
-                image = [[SVGKImage imageWithContentsOfFile:filename] UIImage];
+                svgimg = [[SVGKImage alloc]initWithContentsOfFile:filename];
+                image = [ImageCache renderSVG:svgimg];
             }
             @catch (NSException *e) {
-                NSLog(@"Fail to parse %@", filename);
+                NSLog(@"Fail to parse SVG file due to %@: %@", [e name], filename);
             }
             if (image && image.size.width > 1) {
                 [_images setObject:image forKey:*name];
                 size = image.size;
             }
+            [svgimg RELEASE];
 #endif
         }
         else {

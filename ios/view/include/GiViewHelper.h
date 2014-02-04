@@ -84,6 +84,7 @@
 
 //! 得到SVG文件的图像
 + (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size;
++ (NSString *)addExtension:(NSString *)filename :(NSString *)ext;
 
 //! 在默认位置插入一个PNG、JPEG或SVG等文件的图像
 - (int)insertImageFromFile:(NSString *)filename;

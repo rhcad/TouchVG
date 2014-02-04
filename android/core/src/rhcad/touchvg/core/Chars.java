@@ -43,8 +43,8 @@ public class Chars {
     this(touchvgJNI.new_Chars__SWIG_1(), true);
   }
 
-  public void setSize(int n) {
-    touchvgJNI.Chars_setSize(swigCPtr, this, n);
+  public boolean setSize(int n) {
+    return touchvgJNI.Chars_setSize(swigCPtr, this, n);
   }
 
   public int count() {

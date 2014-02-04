@@ -147,7 +147,7 @@ public class MgShapeDoc : MgObject {
   }
 
   public Box2d getPageRectW() {
-    Box2d ret = new Box2d(touchvgPINVOKE.MgShapeDoc_getPageRectW(swigCPtr), true);
+    Box2d ret = new Box2d(touchvgPINVOKE.MgShapeDoc_getPageRectW(swigCPtr), false);
     return ret;
   }
 

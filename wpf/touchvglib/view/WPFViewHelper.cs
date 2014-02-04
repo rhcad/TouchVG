@@ -3,9 +3,10 @@
 // Copyright (c) 2013, https://github.com/rhcad/touchvg
 
 using System;
+using System.Windows;
 using System.Windows.Media;
-using touchvg.core;
 using System.Text;
+using touchvg.core;
 
 namespace touchvg.view
 {
@@ -14,12 +15,19 @@ namespace touchvg.view
      */
     public class WPFViewHelper : IDisposable
     {
+        private static int LIB_RELEASE = 1; // TODO: 在本工程接口变化后增加此数
         private WPFGraphView View;
         private GiCoreView CoreView { get { return this.View.CoreView; } }
+        public static WPFGraphView ActiveView { get { return WPFGraphView.ActiveView; } }
+
+        public WPFViewHelper()
+        {
+            this.View = WPFGraphView.ActiveView;
+        }
 
         public WPFViewHelper(WPFGraphView view)
         {
-            this.View = view;
+            this.View = view != null ? view : WPFGraphView.ActiveView;
         }
 
         public void Dispose()
@@ -30,6 +38,11 @@ namespace touchvg.view
                 this.View = null;
             }
         }
+
+        //! 返回本库的版本号, 1.0.cslibver.corelibver
+        public string Version { get {
+            return string.Format("1.0.%d.%d", LIB_RELEASE, GiCoreView.getVersion());
+        } }
 
         //! 返回内核视图的句柄, MgView 指针
         public int cmdViewHandle()
@@ -195,6 +208,40 @@ namespace touchvg.view
             get { return CoreView.getChangeCount(); }
         }
 
+        //! 显示次数
+        public int DrawCount
+        {
+            get { return CoreView.getDrawCount(); }
+        }
+
+        //! 图形显示范围
+        public Rect DisplayExtent
+        {
+            get {
+                Floats box = new Floats(4);
+                if (CoreView.getDisplayExtent(box))
+                {
+                    return new Rect(box.get(0), box.get(1),
+                        box.get(2) - box.get(0), box.get(3) - box.get(1));
+                }
+                return new Rect();
+            }
+        }
+
+        //! 选择包络框
+        public Rect BoundingBox
+        {
+            get {
+                Floats box = new Floats(4);
+                if (CoreView.getBoundingBox(box))
+                {
+                    return new Rect(box.get(0), box.get(1),
+                        box.get(2) - box.get(0), box.get(3) - box.get(1));
+                }
+                return new Rect();
+            }
+        }
+
         //! 所有图形的JSON内容
         public string Content
         {
@@ -220,9 +267,9 @@ namespace touchvg.view
         }
 
         //! 放缩显示指定范围到视图区域
-        public bool ZoomToModel(double w, double h)
+        public bool ZoomToModel(float x, float y, double w, double h)
         {
-            return CoreView.zoomToModel(0, 0, (float)w, (float)h);
+            return CoreView.zoomToModel(x, y, (float)w, (float)h);
         }
 
         //! 添加测试图形

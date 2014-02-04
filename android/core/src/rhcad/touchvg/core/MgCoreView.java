@@ -60,16 +60,16 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_acquireFrontDoc(swigCPtr, this);
   }
 
-  public void releaseDoc(int hDoc) {
-    touchvgJNI.MgCoreView_releaseDoc(swigCPtr, this, hDoc);
+  public static void releaseDoc(int hDoc) {
+    touchvgJNI.MgCoreView_releaseDoc(hDoc);
   }
 
   public int acquireDynamicShapes() {
     return touchvgJNI.MgCoreView_acquireDynamicShapes(swigCPtr, this);
   }
 
-  public void releaseShapes(int hShapes) {
-    touchvgJNI.MgCoreView_releaseShapes(swigCPtr, this, hShapes);
+  public static void releaseShapes(int hShapes) {
+    touchvgJNI.MgCoreView_releaseShapes(hShapes);
   }
 
   public boolean isUndoRecording() {
@@ -129,7 +129,11 @@ public class MgCoreView {
   }
 
   public int getShapeCount() {
-    return touchvgJNI.MgCoreView_getShapeCount(swigCPtr, this);
+    return touchvgJNI.MgCoreView_getShapeCount__SWIG_0(swigCPtr, this);
+  }
+
+  public int getShapeCount(int hDoc) {
+    return touchvgJNI.MgCoreView_getShapeCount__SWIG_1(swigCPtr, this, hDoc);
   }
 
   public int getChangeCount() {

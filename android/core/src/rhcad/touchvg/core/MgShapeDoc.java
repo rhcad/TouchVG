@@ -122,7 +122,7 @@ public class MgShapeDoc extends MgObject {
   }
 
   public Box2d getPageRectW() {
-    return new Box2d(touchvgJNI.MgShapeDoc_getPageRectW(swigCPtr, this), true);
+    return new Box2d(touchvgJNI.MgShapeDoc_getPageRectW(swigCPtr, this), false);
   }
 
   public float getViewScale() {

@@ -20,6 +20,7 @@ static CalloutView* _view = nil;
     if (_view == self) {
         _view = nil;
     }
+    [super DEALLOC];
 }
 
 + (id)currentView

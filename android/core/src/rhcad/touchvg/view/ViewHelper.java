@@ -35,7 +35,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelper {
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 0;
+    private static final int JARVERSION = 1;
     private GraphView mView;
 
     static {
@@ -443,7 +443,8 @@ public class ViewHelper {
         vgfile = addExtension(vgfile, ".vg");
         if (mView == null) {
         } else if (getShapeCount() == 0) {
-            ret = new File(vgfile).delete();
+            final File f = new File(vgfile);
+            ret = !f.exists() || f.delete();
         } else {
             ret = createDirectory(vgfile, false) && mView.coreView().saveToFile(vgfile);
         }
@@ -457,7 +458,7 @@ public class ViewHelper {
 
     //! 返回指定后缀名的文件名
     public static String addExtension(String filename, String ext) {
-        if (!filename.endsWith(ext)) {
+        if (filename != null && !filename.endsWith(ext)) {
             filename = filename.substring(0, filename.lastIndexOf('.')) + ext;
         }
         return filename;
