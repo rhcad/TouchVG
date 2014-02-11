@@ -50,25 +50,25 @@ public class MgBaseLines : MgBaseShape {
     return ret;
   }
 
-  public bool resize(int count) {
-    bool ret = touchvgPINVOKE.MgBaseLines_resize(swigCPtr, count);
+  public virtual bool resize(int count) {
+    bool ret = (SwigDerivedClassHasMethod("resize", swigMethodTypes33) ? touchvgPINVOKE.MgBaseLines_resizeSwigExplicitMgBaseLines(swigCPtr, count) : touchvgPINVOKE.MgBaseLines_resize(swigCPtr, count));
     return ret;
   }
 
-  public bool addPoint(Point2d pt) {
-    bool ret = touchvgPINVOKE.MgBaseLines_addPoint(swigCPtr, Point2d.getCPtr(pt));
+  public virtual bool addPoint(Point2d pt) {
+    bool ret = (SwigDerivedClassHasMethod("addPoint", swigMethodTypes34) ? touchvgPINVOKE.MgBaseLines_addPointSwigExplicitMgBaseLines(swigCPtr, Point2d.getCPtr(pt)) : touchvgPINVOKE.MgBaseLines_addPoint(swigCPtr, Point2d.getCPtr(pt)));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public bool insertPoint(int segment, Point2d pt) {
-    bool ret = touchvgPINVOKE.MgBaseLines_insertPoint(swigCPtr, segment, Point2d.getCPtr(pt));
+  public virtual bool insertPoint(int segment, Point2d pt) {
+    bool ret = (SwigDerivedClassHasMethod("insertPoint", swigMethodTypes35) ? touchvgPINVOKE.MgBaseLines_insertPointSwigExplicitMgBaseLines(swigCPtr, segment, Point2d.getCPtr(pt)) : touchvgPINVOKE.MgBaseLines_insertPoint(swigCPtr, segment, Point2d.getCPtr(pt)));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public bool removePoint(int index) {
-    bool ret = touchvgPINVOKE.MgBaseLines_removePoint(swigCPtr, index);
+  public virtual bool removePoint(int index) {
+    bool ret = (SwigDerivedClassHasMethod("removePoint", swigMethodTypes36) ? touchvgPINVOKE.MgBaseLines_removePointSwigExplicitMgBaseLines(swigCPtr, index) : touchvgPINVOKE.MgBaseLines_removePoint(swigCPtr, index));
     return ret;
   }
 
@@ -148,7 +148,15 @@ public class MgBaseLines : MgBaseShape {
       swigDelegate31 = new SwigDelegateMgBaseLines_31(SwigDirectoroffset);
     if (SwigDerivedClassHasMethod("setFlag", swigMethodTypes32))
       swigDelegate32 = new SwigDelegateMgBaseLines_32(SwigDirectorsetFlag);
-    touchvgPINVOKE.MgBaseLines_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17, swigDelegate18, swigDelegate19, swigDelegate20, swigDelegate21, swigDelegate22, swigDelegate23, swigDelegate24, swigDelegate25, swigDelegate26, swigDelegate27, swigDelegate28, swigDelegate29, swigDelegate30, swigDelegate31, swigDelegate32);
+    if (SwigDerivedClassHasMethod("resize", swigMethodTypes33))
+      swigDelegate33 = new SwigDelegateMgBaseLines_33(SwigDirectorresize);
+    if (SwigDerivedClassHasMethod("addPoint", swigMethodTypes34))
+      swigDelegate34 = new SwigDelegateMgBaseLines_34(SwigDirectoraddPoint);
+    if (SwigDerivedClassHasMethod("insertPoint", swigMethodTypes35))
+      swigDelegate35 = new SwigDelegateMgBaseLines_35(SwigDirectorinsertPoint);
+    if (SwigDerivedClassHasMethod("removePoint", swigMethodTypes36))
+      swigDelegate36 = new SwigDelegateMgBaseLines_36(SwigDirectorremovePoint);
+    touchvgPINVOKE.MgBaseLines_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17, swigDelegate18, swigDelegate19, swigDelegate20, swigDelegate21, swigDelegate22, swigDelegate23, swigDelegate24, swigDelegate25, swigDelegate26, swigDelegate27, swigDelegate28, swigDelegate29, swigDelegate30, swigDelegate31, swigDelegate32, swigDelegate33, swigDelegate34, swigDelegate35, swigDelegate36);
   }
 
   private bool SwigDerivedClassHasMethod(string methodName, Type[] methodTypes) {
@@ -289,6 +297,22 @@ public class MgBaseLines : MgBaseShape {
     setFlag((MgShapeBit)bit, on);
   }
 
+  private bool SwigDirectorresize(int count) {
+    return resize(count);
+  }
+
+  private bool SwigDirectoraddPoint(IntPtr pt) {
+    return addPoint(new Point2d(pt, false));
+  }
+
+  private bool SwigDirectorinsertPoint(int segment, IntPtr pt) {
+    return insertPoint(segment, new Point2d(pt, false));
+  }
+
+  private bool SwigDirectorremovePoint(int index) {
+    return removePoint(index);
+  }
+
   public delegate IntPtr SwigDelegateMgBaseLines_0();
   public delegate void SwigDelegateMgBaseLines_1(IntPtr src);
   public delegate void SwigDelegateMgBaseLines_2();
@@ -322,6 +346,10 @@ public class MgBaseLines : MgBaseShape {
   public delegate int SwigDelegateMgBaseLines_30(int index);
   public delegate bool SwigDelegateMgBaseLines_31(IntPtr vec, int segment);
   public delegate void SwigDelegateMgBaseLines_32(int bit, bool on);
+  public delegate bool SwigDelegateMgBaseLines_33(int count);
+  public delegate bool SwigDelegateMgBaseLines_34(IntPtr pt);
+  public delegate bool SwigDelegateMgBaseLines_35(int segment, IntPtr pt);
+  public delegate bool SwigDelegateMgBaseLines_36(int index);
 
   private SwigDelegateMgBaseLines_0 swigDelegate0;
   private SwigDelegateMgBaseLines_1 swigDelegate1;
@@ -356,6 +384,10 @@ public class MgBaseLines : MgBaseShape {
   private SwigDelegateMgBaseLines_30 swigDelegate30;
   private SwigDelegateMgBaseLines_31 swigDelegate31;
   private SwigDelegateMgBaseLines_32 swigDelegate32;
+  private SwigDelegateMgBaseLines_33 swigDelegate33;
+  private SwigDelegateMgBaseLines_34 swigDelegate34;
+  private SwigDelegateMgBaseLines_35 swigDelegate35;
+  private SwigDelegateMgBaseLines_36 swigDelegate36;
 
   private static Type[] swigMethodTypes0 = new Type[] {  };
   private static Type[] swigMethodTypes1 = new Type[] { typeof(MgObject) };
@@ -390,6 +422,10 @@ public class MgBaseLines : MgBaseShape {
   private static Type[] swigMethodTypes30 = new Type[] { typeof(int) };
   private static Type[] swigMethodTypes31 = new Type[] { typeof(Vector2d), typeof(int) };
   private static Type[] swigMethodTypes32 = new Type[] { typeof(MgShapeBit), typeof(bool) };
+  private static Type[] swigMethodTypes33 = new Type[] { typeof(int) };
+  private static Type[] swigMethodTypes34 = new Type[] { typeof(Point2d) };
+  private static Type[] swigMethodTypes35 = new Type[] { typeof(int), typeof(Point2d) };
+  private static Type[] swigMethodTypes36 = new Type[] { typeof(int) };
 }
 
 }

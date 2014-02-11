@@ -59,19 +59,19 @@ public class MgBaseLines extends MgBaseShape {
   }
 
   public boolean resize(int count) {
-    return touchvgJNI.MgBaseLines_resize(swigCPtr, this, count);
+    return (getClass() == MgBaseLines.class) ? touchvgJNI.MgBaseLines_resize(swigCPtr, this, count) : touchvgJNI.MgBaseLines_resizeSwigExplicitMgBaseLines(swigCPtr, this, count);
   }
 
   public boolean addPoint(Point2d pt) {
-    return touchvgJNI.MgBaseLines_addPoint(swigCPtr, this, Point2d.getCPtr(pt), pt);
+    return (getClass() == MgBaseLines.class) ? touchvgJNI.MgBaseLines_addPoint(swigCPtr, this, Point2d.getCPtr(pt), pt) : touchvgJNI.MgBaseLines_addPointSwigExplicitMgBaseLines(swigCPtr, this, Point2d.getCPtr(pt), pt);
   }
 
   public boolean insertPoint(int segment, Point2d pt) {
-    return touchvgJNI.MgBaseLines_insertPoint(swigCPtr, this, segment, Point2d.getCPtr(pt), pt);
+    return (getClass() == MgBaseLines.class) ? touchvgJNI.MgBaseLines_insertPoint(swigCPtr, this, segment, Point2d.getCPtr(pt), pt) : touchvgJNI.MgBaseLines_insertPointSwigExplicitMgBaseLines(swigCPtr, this, segment, Point2d.getCPtr(pt), pt);
   }
 
   public boolean removePoint(int index) {
-    return touchvgJNI.MgBaseLines_removePoint(swigCPtr, this, index);
+    return (getClass() == MgBaseLines.class) ? touchvgJNI.MgBaseLines_removePoint(swigCPtr, this, index) : touchvgJNI.MgBaseLines_removePointSwigExplicitMgBaseLines(swigCPtr, this, index);
   }
 
   public int maxEdgeIndex() {

@@ -60,6 +60,11 @@ public class mgcurv : IDisposable {
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public static int fitCurve(int knotCount, Point2d knots, Vector2d knotvs, int count, Point2d pts, float tol) {
+    int ret = touchvgPINVOKE.mgcurv_fitCurve(knotCount, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), count, Point2d.getCPtr(pts), tol);
+    return ret;
+  }
+
   public static void ellipse90ToBezier(Point2d frompt, Point2d topt, Point2d ctrpt1, Point2d ctrpt2) {
     touchvgPINVOKE.mgcurv_ellipse90ToBezier(Point2d.getCPtr(frompt), Point2d.getCPtr(topt), Point2d.getCPtr(ctrpt1), Point2d.getCPtr(ctrpt2));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
@@ -107,8 +112,12 @@ public class mgcurv : IDisposable {
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public static void cubicSplineToBezier(int n, Point2d knots, Vector2d knotvs, int i, Point2d points, bool hermite) {
+    touchvgPINVOKE.mgcurv_cubicSplineToBezier__SWIG_0(n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), i, Point2d.getCPtr(points), hermite);
+  }
+
   public static void cubicSplineToBezier(int n, Point2d knots, Vector2d knotvs, int i, Point2d points) {
-    touchvgPINVOKE.mgcurv_cubicSplineToBezier(n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), i, Point2d.getCPtr(points));
+    touchvgPINVOKE.mgcurv_cubicSplineToBezier__SWIG_1(n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), i, Point2d.getCPtr(points));
   }
 
   public static int bsplinesToBeziers(Point2d points, int n, Point2d ctlpts, bool closed) {

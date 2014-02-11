@@ -35,18 +35,6 @@ public class ViewFactory {
         addItem("vgtest.testview.shape.TestDragView", 0, "TestDragView");
         addItem("vgtest.testview.shape.TestInsertSVG", 0, "TestInsertSVG");
 
-        addItem("vgtest.testview.view.GraphView1", 1 << 1, "StdGraphView splines");
-        addItem("vgtest.testview.view.GraphView1", 32 | (1 << 1), "StdGraphView randShapes splines");
-        addItem("vgtest.testview.view.GraphView1", 32 | (2 << 1), "StdGraphView randShapes line");
-        addItem("vgtest.testview.view.GraphView1", 2 << 1, "StdGraphView line");
-        addItem("vgtest.testview.view.GraphView1", 3 << 1, "StdGraphView lines");
-        addItem("vgtest.testview.view.GraphView1", 64 | (1 << 1), "StdGraphView record splines");
-        addItem("vgtest.testview.view.GraphView1", 64 | (2 << 1), "StdGraphView record line");
-        addItem("vgtest.testview.view.GraphView1", 64 | 32 | (1 << 1), "StdGraphView record randShapes splines");
-        addItem("vgtest.testview.view.GraphView1", 32 | (4 << 1),
-                "StdGraphView hittest in democmds");
-        addItem("vgtest.testview.view.GraphView1", 32 | 1, "StdGraphView select");
-
         addItem("vgtest.testview.view.SFGraphView1", 1 << 1, "SFGraphView splines");
         addItem("vgtest.testview.view.SFGraphView1", 32 | (1 << 1), "SFGraphView randShapes splines");
         addItem("vgtest.testview.view.SFGraphView1", 32 | (2 << 1), "SFGraphView randShapes line");
@@ -55,10 +43,24 @@ public class ViewFactory {
         addItem("vgtest.testview.view.SFGraphView1", 64 | (1 << 1), "SFGraphView record splines");
         addItem("vgtest.testview.view.SFGraphView1", 64 | (2 << 1), "SFGraphView record line");
         addItem("vgtest.testview.view.SFGraphView1", 64 | 32 | (1 << 1), "SFGraphView record randShapes splines");
+        addItem("vgtest.testview.view.SFGraphView1", 64 | 32 | (2 << 1), "SFGraphView record randShapes line");
         addItem("vgtest.testview.view.SFGraphView1", 32 | 1, "SFGraphView select");
         addItem("vgtest.testview.view.SFGraphView1", 256 | 32 | 1, "SFGraphView select transparent");
         addItem("vgtest.testview.view.SFGraphView1", 256 | 32 | (1 << 1),
                 "SFGraphView draw transparent");
+
+        addItem("vgtest.testview.view.GraphView1", 1 << 1, "StdGraphView splines");
+        addItem("vgtest.testview.view.GraphView1", 32 | (1 << 1), "StdGraphView randShapes splines");
+        addItem("vgtest.testview.view.GraphView1", 32 | (2 << 1), "StdGraphView randShapes line");
+        addItem("vgtest.testview.view.GraphView1", 2 << 1, "StdGraphView line");
+        addItem("vgtest.testview.view.GraphView1", 3 << 1, "StdGraphView lines");
+        addItem("vgtest.testview.view.GraphView1", 64 | (1 << 1), "StdGraphView record splines");
+        addItem("vgtest.testview.view.GraphView1", 64 | (2 << 1), "StdGraphView record line");
+        addItem("vgtest.testview.view.GraphView1", 64 | 32 | (1 << 1), "StdGraphView record randShapes splines");
+        addItem("vgtest.testview.view.GraphView1", 64 | 32 | (2 << 1), "StdGraphView record randShapes line");
+        addItem("vgtest.testview.view.GraphView1", 32 | (4 << 1),
+                "StdGraphView hittest in democmds");
+        addItem("vgtest.testview.view.GraphView1", 32 | 1, "StdGraphView select");
 
         addItem("vgtest.testview.view.TestMagnifier1", 1 << 1, "TestMagnifier");
         addItem("vgtest.testview.view.TestMagnifier1", 16 | (1 << 1), "TestMagnifier, 2 views");

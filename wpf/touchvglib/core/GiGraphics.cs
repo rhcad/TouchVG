@@ -203,6 +203,21 @@ public class GiGraphics : IDisposable {
     return ret;
   }
 
+  public bool drawBeziers(GiContext ctx, int count, Point2d knot, Vector2d knotvs, bool closed, bool modelUnit) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawBeziers__SWIG_3(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knot), Vector2d.getCPtr(knotvs), closed, modelUnit);
+    return ret;
+  }
+
+  public bool drawBeziers(GiContext ctx, int count, Point2d knot, Vector2d knotvs, bool closed) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawBeziers__SWIG_4(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knot), Vector2d.getCPtr(knotvs), closed);
+    return ret;
+  }
+
+  public bool drawBeziers(GiContext ctx, int count, Point2d knot, Vector2d knotvs) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawBeziers__SWIG_5(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knot), Vector2d.getCPtr(knotvs));
+    return ret;
+  }
+
   public bool drawArc(GiContext ctx, Point2d center, float rx, float ry, float startAngle, float sweepAngle, bool modelUnit) {
     bool ret = touchvgPINVOKE.GiGraphics_drawArc__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), Point2d.getCPtr(center), rx, ry, startAngle, sweepAngle, modelUnit);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
@@ -237,6 +252,18 @@ public class GiGraphics : IDisposable {
     return ret;
   }
 
+  public bool drawCircle(GiContext ctx, Point2d center, float r, bool modelUnit) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawCircle__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), Point2d.getCPtr(center), r, modelUnit);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool drawCircle(GiContext ctx, Point2d center, float r) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawCircle__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), Point2d.getCPtr(center), r);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   public bool drawEllipse(GiContext ctx, Point2d center, float rx, float ry, bool modelUnit) {
     bool ret = touchvgPINVOKE.GiGraphics_drawEllipse__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), Point2d.getCPtr(center), rx, ry, modelUnit);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
@@ -249,20 +276,14 @@ public class GiGraphics : IDisposable {
     return ret;
   }
 
-  public bool drawEllipse(GiContext ctx, Point2d center, float rx) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawEllipse__SWIG_2(swigCPtr, GiContext.getCPtr(ctx), Point2d.getCPtr(center), rx);
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
   public bool drawEllipse(GiContext ctx, Box2d rect, bool modelUnit) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawEllipse__SWIG_3(swigCPtr, GiContext.getCPtr(ctx), Box2d.getCPtr(rect), modelUnit);
+    bool ret = touchvgPINVOKE.GiGraphics_drawEllipse__SWIG_2(swigCPtr, GiContext.getCPtr(ctx), Box2d.getCPtr(rect), modelUnit);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public bool drawEllipse(GiContext ctx, Box2d rect) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawEllipse__SWIG_4(swigCPtr, GiContext.getCPtr(ctx), Box2d.getCPtr(rect));
+    bool ret = touchvgPINVOKE.GiGraphics_drawEllipse__SWIG_3(swigCPtr, GiContext.getCPtr(ctx), Box2d.getCPtr(rect));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -309,53 +330,48 @@ public class GiGraphics : IDisposable {
     return ret;
   }
 
-  public bool drawSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs, bool modelUnit) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), modelUnit);
+  public bool drawHermiteSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs, bool closed, bool modelUnit) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawHermiteSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), closed, modelUnit);
     return ret;
   }
 
-  public bool drawSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs));
+  public bool drawHermiteSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs, bool closed) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawHermiteSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), closed);
     return ret;
   }
 
-  public bool drawClosedSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs, bool modelUnit) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawClosedSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), modelUnit);
+  public bool drawHermiteSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawHermiteSplines__SWIG_2(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs));
     return ret;
   }
 
-  public bool drawClosedSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawClosedSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs));
+  public bool drawBSplines(GiContext ctx, int count, Point2d ctlpts, bool closed, bool modelUnit) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawBSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts), closed, modelUnit);
     return ret;
   }
 
-  public bool drawBSplines(GiContext ctx, int count, Point2d ctlpts, bool modelUnit) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawBSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts), modelUnit);
+  public bool drawBSplines(GiContext ctx, int count, Point2d ctlpts, bool closed) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawBSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts), closed);
     return ret;
   }
 
   public bool drawBSplines(GiContext ctx, int count, Point2d ctlpts) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawBSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts));
+    bool ret = touchvgPINVOKE.GiGraphics_drawBSplines__SWIG_2(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts));
     return ret;
   }
 
-  public bool drawClosedBSplines(GiContext ctx, int count, Point2d ctlpts, bool modelUnit) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawClosedBSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts), modelUnit);
+  public bool drawQuadSplines(GiContext ctx, int count, Point2d ctlpts, bool closed, bool modelUnit) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawQuadSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts), closed, modelUnit);
     return ret;
   }
 
-  public bool drawClosedBSplines(GiContext ctx, int count, Point2d ctlpts) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawClosedBSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts));
-    return ret;
-  }
-
-  public bool drawQuadSplines(GiContext ctx, int count, Point2d ctlpts, bool modelUnit) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawQuadSplines__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts), modelUnit);
+  public bool drawQuadSplines(GiContext ctx, int count, Point2d ctlpts, bool closed) {
+    bool ret = touchvgPINVOKE.GiGraphics_drawQuadSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts), closed);
     return ret;
   }
 
   public bool drawQuadSplines(GiContext ctx, int count, Point2d ctlpts) {
-    bool ret = touchvgPINVOKE.GiGraphics_drawQuadSplines__SWIG_1(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts));
+    bool ret = touchvgPINVOKE.GiGraphics_drawQuadSplines__SWIG_2(swigCPtr, GiContext.getCPtr(ctx), count, Point2d.getCPtr(ctlpts));
     return ret;
   }
 

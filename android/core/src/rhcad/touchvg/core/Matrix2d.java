@@ -103,6 +103,14 @@ public class Matrix2d {
     this(touchvgJNI.new_Matrix2d__SWIG_3(Vector2d.getCPtr(e0), e0, Vector2d.getCPtr(e1), e1, Point2d.getCPtr(origin), origin), true);
   }
 
+  public Matrix2d scaleBy(float sx, float sy) {
+    return new Matrix2d(touchvgJNI.Matrix2d_scaleBy__SWIG_0(swigCPtr, this, sx, sy), false);
+  }
+
+  public Matrix2d scaleBy(float s) {
+    return new Matrix2d(touchvgJNI.Matrix2d_scaleBy__SWIG_1(swigCPtr, this, s), false);
+  }
+
   public Matrix2d preMultBy(Matrix2d leftSide) {
     return new Matrix2d(touchvgJNI.Matrix2d_preMultBy(swigCPtr, this, Matrix2d.getCPtr(leftSide), leftSide), false);
   }

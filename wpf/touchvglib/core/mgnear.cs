@@ -69,24 +69,35 @@ public class mgnear : IDisposable {
     return ret;
   }
 
+  public static void cubicSplinesBox(Box2d box, int n, Point2d knots, Vector2d knotvs, bool closed, bool hermite) {
+    touchvgPINVOKE.mgnear_cubicSplinesBox__SWIG_0(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), closed, hermite);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public static void cubicSplinesBox(Box2d box, int n, Point2d knots, Vector2d knotvs, bool closed) {
-    touchvgPINVOKE.mgnear_cubicSplinesBox__SWIG_0(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), closed);
+    touchvgPINVOKE.mgnear_cubicSplinesBox__SWIG_1(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), closed);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
   public static void cubicSplinesBox(Box2d box, int n, Point2d knots, Vector2d knotvs) {
-    touchvgPINVOKE.mgnear_cubicSplinesBox__SWIG_1(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs));
+    touchvgPINVOKE.mgnear_cubicSplinesBox__SWIG_2(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public static bool cubicSplinesIntersectBox(Box2d box, int n, Point2d knots, Vector2d knotvs, bool closed, bool hermite) {
+    bool ret = touchvgPINVOKE.mgnear_cubicSplinesIntersectBox__SWIG_0(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), closed, hermite);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   public static bool cubicSplinesIntersectBox(Box2d box, int n, Point2d knots, Vector2d knotvs, bool closed) {
-    bool ret = touchvgPINVOKE.mgnear_cubicSplinesIntersectBox__SWIG_0(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), closed);
+    bool ret = touchvgPINVOKE.mgnear_cubicSplinesIntersectBox__SWIG_1(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs), closed);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public static bool cubicSplinesIntersectBox(Box2d box, int n, Point2d knots, Vector2d knotvs) {
-    bool ret = touchvgPINVOKE.mgnear_cubicSplinesIntersectBox__SWIG_1(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs));
+    bool ret = touchvgPINVOKE.mgnear_cubicSplinesIntersectBox__SWIG_2(Box2d.getCPtr(box), n, Point2d.getCPtr(knots), Vector2d.getCPtr(knotvs));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

@@ -120,6 +120,16 @@ public class Matrix2d : IDisposable {
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public Matrix2d scaleBy(float sx, float sy) {
+    Matrix2d ret = new Matrix2d(touchvgPINVOKE.Matrix2d_scaleBy__SWIG_0(swigCPtr, sx, sy), false);
+    return ret;
+  }
+
+  public Matrix2d scaleBy(float s) {
+    Matrix2d ret = new Matrix2d(touchvgPINVOKE.Matrix2d_scaleBy__SWIG_1(swigCPtr, s), false);
+    return ret;
+  }
+
   public Matrix2d preMultBy(Matrix2d leftSide) {
     Matrix2d ret = new Matrix2d(touchvgPINVOKE.Matrix2d_preMultBy(swigCPtr, Matrix2d.getCPtr(leftSide)), false);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();

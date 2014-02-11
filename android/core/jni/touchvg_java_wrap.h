@@ -201,12 +201,16 @@ public:
     virtual int getHandleType(int index) const;
     virtual bool offset(Vector2d const &vec, int segment);
     virtual void setFlag(MgShapeBit bit, bool on);
+    virtual bool resize(int count);
+    virtual bool addPoint(Point2d const &pt);
+    virtual bool insertPoint(int segment, Point2d const &pt);
+    virtual bool removePoint(int index);
 public:
     bool swig_overrides(int n) {
-      return (n < 33 ? swig_override[n] : false);
+      return (n < 37 ? swig_override[n] : false);
     }
 protected:
-    bool swig_override[33];
+    bool swig_override[37];
 };
 
 class SwigDirector_MgComposite : public MgComposite, public Swig::Director {

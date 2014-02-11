@@ -2445,7 +2445,69 @@ void SwigDirector_MgBaseLines::setFlag(MgShapeBit bit, bool on) {
   }
 }
 
-void SwigDirector_MgBaseLines::swig_connect_director(SWIG_Callback0_t callbackclone, SWIG_Callback1_t callbackcopy, SWIG_Callback2_t callbackrelease, SWIG_Callback3_t callbackaddRef, SWIG_Callback4_t callbackequals, SWIG_Callback5_t callbackgetType, SWIG_Callback6_t callbackisKindOf, SWIG_Callback7_t callbacksetOwner, SWIG_Callback8_t callbackgetExtent, SWIG_Callback9_t callbackgetChangeCount, SWIG_Callback10_t callbackresetChangeCount, SWIG_Callback11_t callbackafterChanged, SWIG_Callback12_t callbackupdate, SWIG_Callback13_t callbacktransform, SWIG_Callback14_t callbackclear, SWIG_Callback15_t callbackclearCachedData, SWIG_Callback16_t callbackgetPointCount, SWIG_Callback17_t callbackgetPoint, SWIG_Callback18_t callbacksetPoint, SWIG_Callback19_t callbackisClosed, SWIG_Callback20_t callbackisCurve, SWIG_Callback21_t callbackhitTest, SWIG_Callback22_t callbackhitTestBox, SWIG_Callback23_t callbackdraw, SWIG_Callback24_t callbacksave, SWIG_Callback25_t callbackload, SWIG_Callback26_t callbackgetHandleCount, SWIG_Callback27_t callbackgetHandlePoint, SWIG_Callback28_t callbacksetHandlePoint, SWIG_Callback29_t callbackisHandleFixed, SWIG_Callback30_t callbackgetHandleType, SWIG_Callback31_t callbackoffset, SWIG_Callback32_t callbacksetFlag) {
+bool SwigDirector_MgBaseLines::resize(int count) {
+  bool c_result = SwigValueInit< bool >() ;
+  unsigned int jresult = 0 ;
+  int jcount  ;
+  
+  if (!swig_callbackresize) {
+    return MgBaseLines::resize(count);
+  } else {
+    jcount = count;
+    jresult = (unsigned int) swig_callbackresize(jcount);
+    c_result = jresult ? true : false; 
+  }
+  return c_result;
+}
+
+bool SwigDirector_MgBaseLines::addPoint(Point2d const &pt) {
+  bool c_result = SwigValueInit< bool >() ;
+  unsigned int jresult = 0 ;
+  void * jpt = 0 ;
+  
+  if (!swig_callbackaddPoint) {
+    return MgBaseLines::addPoint(pt);
+  } else {
+    jpt = (Point2d *) &pt; 
+    jresult = (unsigned int) swig_callbackaddPoint(jpt);
+    c_result = jresult ? true : false; 
+  }
+  return c_result;
+}
+
+bool SwigDirector_MgBaseLines::insertPoint(int segment, Point2d const &pt) {
+  bool c_result = SwigValueInit< bool >() ;
+  unsigned int jresult = 0 ;
+  int jsegment  ;
+  void * jpt = 0 ;
+  
+  if (!swig_callbackinsertPoint) {
+    return MgBaseLines::insertPoint(segment,pt);
+  } else {
+    jsegment = segment;
+    jpt = (Point2d *) &pt; 
+    jresult = (unsigned int) swig_callbackinsertPoint(jsegment, jpt);
+    c_result = jresult ? true : false; 
+  }
+  return c_result;
+}
+
+bool SwigDirector_MgBaseLines::removePoint(int index) {
+  bool c_result = SwigValueInit< bool >() ;
+  unsigned int jresult = 0 ;
+  int jindex  ;
+  
+  if (!swig_callbackremovePoint) {
+    return MgBaseLines::removePoint(index);
+  } else {
+    jindex = index;
+    jresult = (unsigned int) swig_callbackremovePoint(jindex);
+    c_result = jresult ? true : false; 
+  }
+  return c_result;
+}
+
+void SwigDirector_MgBaseLines::swig_connect_director(SWIG_Callback0_t callbackclone, SWIG_Callback1_t callbackcopy, SWIG_Callback2_t callbackrelease, SWIG_Callback3_t callbackaddRef, SWIG_Callback4_t callbackequals, SWIG_Callback5_t callbackgetType, SWIG_Callback6_t callbackisKindOf, SWIG_Callback7_t callbacksetOwner, SWIG_Callback8_t callbackgetExtent, SWIG_Callback9_t callbackgetChangeCount, SWIG_Callback10_t callbackresetChangeCount, SWIG_Callback11_t callbackafterChanged, SWIG_Callback12_t callbackupdate, SWIG_Callback13_t callbacktransform, SWIG_Callback14_t callbackclear, SWIG_Callback15_t callbackclearCachedData, SWIG_Callback16_t callbackgetPointCount, SWIG_Callback17_t callbackgetPoint, SWIG_Callback18_t callbacksetPoint, SWIG_Callback19_t callbackisClosed, SWIG_Callback20_t callbackisCurve, SWIG_Callback21_t callbackhitTest, SWIG_Callback22_t callbackhitTestBox, SWIG_Callback23_t callbackdraw, SWIG_Callback24_t callbacksave, SWIG_Callback25_t callbackload, SWIG_Callback26_t callbackgetHandleCount, SWIG_Callback27_t callbackgetHandlePoint, SWIG_Callback28_t callbacksetHandlePoint, SWIG_Callback29_t callbackisHandleFixed, SWIG_Callback30_t callbackgetHandleType, SWIG_Callback31_t callbackoffset, SWIG_Callback32_t callbacksetFlag, SWIG_Callback33_t callbackresize, SWIG_Callback34_t callbackaddPoint, SWIG_Callback35_t callbackinsertPoint, SWIG_Callback36_t callbackremovePoint) {
   swig_callbackclone = callbackclone;
   swig_callbackcopy = callbackcopy;
   swig_callbackrelease = callbackrelease;
@@ -2479,6 +2541,10 @@ void SwigDirector_MgBaseLines::swig_connect_director(SWIG_Callback0_t callbackcl
   swig_callbackgetHandleType = callbackgetHandleType;
   swig_callbackoffset = callbackoffset;
   swig_callbacksetFlag = callbacksetFlag;
+  swig_callbackresize = callbackresize;
+  swig_callbackaddPoint = callbackaddPoint;
+  swig_callbackinsertPoint = callbackinsertPoint;
+  swig_callbackremovePoint = callbackremovePoint;
 }
 
 void SwigDirector_MgBaseLines::swig_init_callbacks() {
@@ -2515,6 +2581,10 @@ void SwigDirector_MgBaseLines::swig_init_callbacks() {
   swig_callbackgetHandleType = 0;
   swig_callbackoffset = 0;
   swig_callbacksetFlag = 0;
+  swig_callbackresize = 0;
+  swig_callbackaddPoint = 0;
+  swig_callbackinsertPoint = 0;
+  swig_callbackremovePoint = 0;
 }
 
 SwigDirector_MgComposite::SwigDirector_MgComposite() : MgComposite(), Swig::Director() {
@@ -5352,13 +5422,13 @@ SWIGEXPORT float SWIGSTDCALL CSharp_Vector2d_length(void * jarg1) {
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_Vector2d_lengthSqrd(void * jarg1) {
+SWIGEXPORT float SWIGSTDCALL CSharp_Vector2d_lengthSquare(void * jarg1) {
   float jresult ;
   Vector2d *arg1 = (Vector2d *) 0 ;
   float result;
   
   arg1 = (Vector2d *)jarg1; 
-  result = (float)((Vector2d const *)arg1)->lengthSqrd();
+  result = (float)((Vector2d const *)arg1)->lengthSquare();
   jresult = result; 
   return jresult;
 }
@@ -5550,6 +5620,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Vector2d_setLength(void * jarg1, float jarg
   arg2 = (float)jarg2; 
   result = (Vector2d *) &(arg1)->setLength(arg2);
   jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Vector2d_scaledVector(void * jarg1, float jarg2) {
+  void * jresult ;
+  Vector2d *arg1 = (Vector2d *) 0 ;
+  float arg2 ;
+  Vector2d result;
+  
+  arg1 = (Vector2d *)jarg1; 
+  arg2 = (float)jarg2; 
+  result = ((Vector2d const *)arg1)->scaledVector(arg2);
+  jresult = new Vector2d((const Vector2d &)result); 
   return jresult;
 }
 
@@ -6517,6 +6601,36 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Matrix2d__SWIG_3(void * jarg1, void * j
     return 0;
   } 
   result = (Matrix2d *)new Matrix2d((Vector2d const &)*arg1,(Vector2d const &)*arg2,(Point2d const &)*arg3);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Matrix2d_scaleBy__SWIG_0(void * jarg1, float jarg2, float jarg3) {
+  void * jresult ;
+  Matrix2d *arg1 = (Matrix2d *) 0 ;
+  float arg2 ;
+  float arg3 ;
+  Matrix2d *result = 0 ;
+  
+  arg1 = (Matrix2d *)jarg1; 
+  arg2 = (float)jarg2; 
+  arg3 = (float)jarg3; 
+  result = (Matrix2d *) &(arg1)->scaleBy(arg2,arg3);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_Matrix2d_scaleBy__SWIG_1(void * jarg1, float jarg2) {
+  void * jresult ;
+  Matrix2d *arg1 = (Matrix2d *) 0 ;
+  float arg2 ;
+  Matrix2d *result = 0 ;
+  
+  arg1 = (Matrix2d *)jarg1; 
+  arg2 = (float)jarg2; 
+  result = (Matrix2d *) &(arg1)->scaleBy(arg2);
   jresult = (void *)result; 
   return jresult;
 }
@@ -9070,6 +9184,28 @@ SWIGEXPORT void SWIGSTDCALL CSharp_mgcurv_bezier4P(void * jarg1, void * jarg2, v
 }
 
 
+SWIGEXPORT int SWIGSTDCALL CSharp_mgcurv_fitCurve(int jarg1, void * jarg2, void * jarg3, int jarg4, void * jarg5, float jarg6) {
+  int jresult ;
+  int arg1 ;
+  Point2d *arg2 = (Point2d *) 0 ;
+  Vector2d *arg3 = (Vector2d *) 0 ;
+  int arg4 ;
+  Point2d *arg5 = (Point2d *) 0 ;
+  float arg6 ;
+  int result;
+  
+  arg1 = (int)jarg1; 
+  arg2 = (Point2d *)jarg2; 
+  arg3 = (Vector2d *)jarg3; 
+  arg4 = (int)jarg4; 
+  arg5 = (Point2d *)jarg5; 
+  arg6 = (float)jarg6; 
+  result = (int)mgcurv::fitCurve(arg1,arg2,arg3,arg4,(Point2d const *)arg5,arg6);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_mgcurv_ellipse90ToBezier(void * jarg1, void * jarg2, void * jarg3, void * jarg4) {
   Point2d *arg1 = 0 ;
   Point2d *arg2 = 0 ;
@@ -9276,7 +9412,25 @@ SWIGEXPORT void SWIGSTDCALL CSharp_mgcurv_fitCubicSpline(int jarg1, void * jarg2
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_mgcurv_cubicSplineToBezier(int jarg1, void * jarg2, void * jarg3, int jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_mgcurv_cubicSplineToBezier__SWIG_0(int jarg1, void * jarg2, void * jarg3, int jarg4, void * jarg5, unsigned int jarg6) {
+  int arg1 ;
+  Point2d *arg2 = (Point2d *) 0 ;
+  Vector2d *arg3 = (Vector2d *) 0 ;
+  int arg4 ;
+  Point2d *arg5 ;
+  bool arg6 ;
+  
+  arg1 = (int)jarg1; 
+  arg2 = (Point2d *)jarg2; 
+  arg3 = (Vector2d *)jarg3; 
+  arg4 = (int)jarg4; 
+  arg5 = (Point2d *)jarg5; 
+  arg6 = jarg6 ? true : false; 
+  mgcurv::cubicSplineToBezier(arg1,(Point2d const *)arg2,(Vector2d const *)arg3,arg4,arg5,arg6);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_mgcurv_cubicSplineToBezier__SWIG_1(int jarg1, void * jarg2, void * jarg3, int jarg4, void * jarg5) {
   int arg1 ;
   Point2d *arg2 = (Point2d *) 0 ;
   Vector2d *arg3 = (Vector2d *) 0 ;
@@ -10092,7 +10246,29 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_mgnear_beziersIntersectBox__SWIG_1(vo
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_mgnear_cubicSplinesBox__SWIG_0(void * jarg1, int jarg2, void * jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_mgnear_cubicSplinesBox__SWIG_0(void * jarg1, int jarg2, void * jarg3, void * jarg4, unsigned int jarg5, unsigned int jarg6) {
+  Box2d *arg1 = 0 ;
+  int arg2 ;
+  Point2d *arg3 = (Point2d *) 0 ;
+  Vector2d *arg4 = (Vector2d *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  
+  arg1 = (Box2d *)jarg1;
+  if (!arg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Box2d & type is null", 0);
+    return ;
+  } 
+  arg2 = (int)jarg2; 
+  arg3 = (Point2d *)jarg3; 
+  arg4 = (Vector2d *)jarg4; 
+  arg5 = jarg5 ? true : false; 
+  arg6 = jarg6 ? true : false; 
+  mgnear::cubicSplinesBox(*arg1,arg2,(Point2d const *)arg3,(Vector2d const *)arg4,arg5,arg6);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_mgnear_cubicSplinesBox__SWIG_1(void * jarg1, int jarg2, void * jarg3, void * jarg4, unsigned int jarg5) {
   Box2d *arg1 = 0 ;
   int arg2 ;
   Point2d *arg3 = (Point2d *) 0 ;
@@ -10112,7 +10288,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_mgnear_cubicSplinesBox__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_mgnear_cubicSplinesBox__SWIG_1(void * jarg1, int jarg2, void * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_mgnear_cubicSplinesBox__SWIG_2(void * jarg1, int jarg2, void * jarg3, void * jarg4) {
   Box2d *arg1 = 0 ;
   int arg2 ;
   Point2d *arg3 = (Point2d *) 0 ;
@@ -10130,7 +10306,33 @@ SWIGEXPORT void SWIGSTDCALL CSharp_mgnear_cubicSplinesBox__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_mgnear_cubicSplinesIntersectBox__SWIG_0(void * jarg1, int jarg2, void * jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_mgnear_cubicSplinesIntersectBox__SWIG_0(void * jarg1, int jarg2, void * jarg3, void * jarg4, unsigned int jarg5, unsigned int jarg6) {
+  unsigned int jresult ;
+  Box2d *arg1 = 0 ;
+  int arg2 ;
+  Point2d *arg3 = (Point2d *) 0 ;
+  Vector2d *arg4 = (Vector2d *) 0 ;
+  bool arg5 ;
+  bool arg6 ;
+  bool result;
+  
+  arg1 = (Box2d *)jarg1;
+  if (!arg1) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Box2d const & type is null", 0);
+    return 0;
+  } 
+  arg2 = (int)jarg2; 
+  arg3 = (Point2d *)jarg3; 
+  arg4 = (Vector2d *)jarg4; 
+  arg5 = jarg5 ? true : false; 
+  arg6 = jarg6 ? true : false; 
+  result = (bool)mgnear::cubicSplinesIntersectBox((Box2d const &)*arg1,arg2,(Point2d const *)arg3,(Vector2d const *)arg4,arg5,arg6);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_mgnear_cubicSplinesIntersectBox__SWIG_1(void * jarg1, int jarg2, void * jarg3, void * jarg4, unsigned int jarg5) {
   unsigned int jresult ;
   Box2d *arg1 = 0 ;
   int arg2 ;
@@ -10154,7 +10356,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_mgnear_cubicSplinesIntersectBox__SWIG
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_mgnear_cubicSplinesIntersectBox__SWIG_1(void * jarg1, int jarg2, void * jarg3, void * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_mgnear_cubicSplinesIntersectBox__SWIG_2(void * jarg1, int jarg2, void * jarg3, void * jarg4) {
   unsigned int jresult ;
   Box2d *arg1 = 0 ;
   int arg2 ;
@@ -13103,6 +13305,72 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBeziers__SWIG_2(void *
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBeziers__SWIG_3(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5, unsigned int jarg6, unsigned int jarg7) {
+  unsigned int jresult ;
+  GiGraphics *arg1 = (GiGraphics *) 0 ;
+  GiContext *arg2 = (GiContext *) 0 ;
+  int arg3 ;
+  Point2d *arg4 = (Point2d *) 0 ;
+  Vector2d *arg5 = (Vector2d *) 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  bool result;
+  
+  arg1 = (GiGraphics *)jarg1; 
+  arg2 = (GiContext *)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (Point2d *)jarg4; 
+  arg5 = (Vector2d *)jarg5; 
+  arg6 = jarg6 ? true : false; 
+  arg7 = jarg7 ? true : false; 
+  result = (bool)(arg1)->drawBeziers((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5,arg6,arg7);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBeziers__SWIG_4(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5, unsigned int jarg6) {
+  unsigned int jresult ;
+  GiGraphics *arg1 = (GiGraphics *) 0 ;
+  GiContext *arg2 = (GiContext *) 0 ;
+  int arg3 ;
+  Point2d *arg4 = (Point2d *) 0 ;
+  Vector2d *arg5 = (Vector2d *) 0 ;
+  bool arg6 ;
+  bool result;
+  
+  arg1 = (GiGraphics *)jarg1; 
+  arg2 = (GiContext *)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (Point2d *)jarg4; 
+  arg5 = (Vector2d *)jarg5; 
+  arg6 = jarg6 ? true : false; 
+  result = (bool)(arg1)->drawBeziers((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5,arg6);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBeziers__SWIG_5(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5) {
+  unsigned int jresult ;
+  GiGraphics *arg1 = (GiGraphics *) 0 ;
+  GiContext *arg2 = (GiContext *) 0 ;
+  int arg3 ;
+  Point2d *arg4 = (Point2d *) 0 ;
+  Vector2d *arg5 = (Vector2d *) 0 ;
+  bool result;
+  
+  arg1 = (GiGraphics *)jarg1; 
+  arg2 = (GiContext *)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (Point2d *)jarg4; 
+  arg5 = (Vector2d *)jarg5; 
+  result = (bool)(arg1)->drawBeziers((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawArc__SWIG_0(void * jarg1, void * jarg2, void * jarg3, float jarg4, float jarg5, float jarg6, float jarg7, unsigned int jarg8) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
@@ -13265,6 +13533,52 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawPolygon__SWIG_1(void *
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawCircle__SWIG_0(void * jarg1, void * jarg2, void * jarg3, float jarg4, unsigned int jarg5) {
+  unsigned int jresult ;
+  GiGraphics *arg1 = (GiGraphics *) 0 ;
+  GiContext *arg2 = (GiContext *) 0 ;
+  Point2d *arg3 = 0 ;
+  float arg4 ;
+  bool arg5 ;
+  bool result;
+  
+  arg1 = (GiGraphics *)jarg1; 
+  arg2 = (GiContext *)jarg2; 
+  arg3 = (Point2d *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Point2d const & type is null", 0);
+    return 0;
+  } 
+  arg4 = (float)jarg4; 
+  arg5 = jarg5 ? true : false; 
+  result = (bool)(arg1)->drawCircle((GiContext const *)arg2,(Point2d const &)*arg3,arg4,arg5);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawCircle__SWIG_1(void * jarg1, void * jarg2, void * jarg3, float jarg4) {
+  unsigned int jresult ;
+  GiGraphics *arg1 = (GiGraphics *) 0 ;
+  GiContext *arg2 = (GiContext *) 0 ;
+  Point2d *arg3 = 0 ;
+  float arg4 ;
+  bool result;
+  
+  arg1 = (GiGraphics *)jarg1; 
+  arg2 = (GiContext *)jarg2; 
+  arg3 = (Point2d *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Point2d const & type is null", 0);
+    return 0;
+  } 
+  arg4 = (float)jarg4; 
+  result = (bool)(arg1)->drawCircle((GiContext const *)arg2,(Point2d const &)*arg3,arg4);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawEllipse__SWIG_0(void * jarg1, void * jarg2, void * jarg3, float jarg4, float jarg5, unsigned int jarg6) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
@@ -13315,29 +13629,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawEllipse__SWIG_1(void *
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawEllipse__SWIG_2(void * jarg1, void * jarg2, void * jarg3, float jarg4) {
-  unsigned int jresult ;
-  GiGraphics *arg1 = (GiGraphics *) 0 ;
-  GiContext *arg2 = (GiContext *) 0 ;
-  Point2d *arg3 = 0 ;
-  float arg4 ;
-  bool result;
-  
-  arg1 = (GiGraphics *)jarg1; 
-  arg2 = (GiContext *)jarg2; 
-  arg3 = (Point2d *)jarg3;
-  if (!arg3) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Point2d const & type is null", 0);
-    return 0;
-  } 
-  arg4 = (float)jarg4; 
-  result = (bool)(arg1)->drawEllipse((GiContext const *)arg2,(Point2d const &)*arg3,arg4);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawEllipse__SWIG_3(void * jarg1, void * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawEllipse__SWIG_2(void * jarg1, void * jarg2, void * jarg3, unsigned int jarg4) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
@@ -13359,7 +13651,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawEllipse__SWIG_3(void *
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawEllipse__SWIG_4(void * jarg1, void * jarg2, void * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawEllipse__SWIG_3(void * jarg1, void * jarg2, void * jarg3) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
@@ -13551,7 +13843,31 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawRoundRect__SWIG_2(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawSplines__SWIG_0(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5, unsigned int jarg6) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawHermiteSplines__SWIG_0(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5, unsigned int jarg6, unsigned int jarg7) {
+  unsigned int jresult ;
+  GiGraphics *arg1 = (GiGraphics *) 0 ;
+  GiContext *arg2 = (GiContext *) 0 ;
+  int arg3 ;
+  Point2d *arg4 = (Point2d *) 0 ;
+  Vector2d *arg5 = (Vector2d *) 0 ;
+  bool arg6 ;
+  bool arg7 ;
+  bool result;
+  
+  arg1 = (GiGraphics *)jarg1; 
+  arg2 = (GiContext *)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (Point2d *)jarg4; 
+  arg5 = (Vector2d *)jarg5; 
+  arg6 = jarg6 ? true : false; 
+  arg7 = jarg7 ? true : false; 
+  result = (bool)(arg1)->drawHermiteSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5,arg6,arg7);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawHermiteSplines__SWIG_1(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5, unsigned int jarg6) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
@@ -13567,13 +13883,13 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawSplines__SWIG_0(void *
   arg4 = (Point2d *)jarg4; 
   arg5 = (Vector2d *)jarg5; 
   arg6 = jarg6 ? true : false; 
-  result = (bool)(arg1)->drawSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5,arg6);
+  result = (bool)(arg1)->drawHermiteSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5,arg6);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawSplines__SWIG_1(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawHermiteSplines__SWIG_2(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
@@ -13587,19 +13903,19 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawSplines__SWIG_1(void *
   arg3 = (int)jarg3; 
   arg4 = (Point2d *)jarg4; 
   arg5 = (Vector2d *)jarg5; 
-  result = (bool)(arg1)->drawSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5);
+  result = (bool)(arg1)->drawHermiteSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawClosedSplines__SWIG_0(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5, unsigned int jarg6) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBSplines__SWIG_0(void * jarg1, void * jarg2, int jarg3, void * jarg4, unsigned int jarg5, unsigned int jarg6) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
   int arg3 ;
   Point2d *arg4 = (Point2d *) 0 ;
-  Vector2d *arg5 = (Vector2d *) 0 ;
+  bool arg5 ;
   bool arg6 ;
   bool result;
   
@@ -13607,35 +13923,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawClosedSplines__SWIG_0(
   arg2 = (GiContext *)jarg2; 
   arg3 = (int)jarg3; 
   arg4 = (Point2d *)jarg4; 
-  arg5 = (Vector2d *)jarg5; 
+  arg5 = jarg5 ? true : false; 
   arg6 = jarg6 ? true : false; 
-  result = (bool)(arg1)->drawClosedSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5,arg6);
+  result = (bool)(arg1)->drawBSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,arg5,arg6);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawClosedSplines__SWIG_1(void * jarg1, void * jarg2, int jarg3, void * jarg4, void * jarg5) {
-  unsigned int jresult ;
-  GiGraphics *arg1 = (GiGraphics *) 0 ;
-  GiContext *arg2 = (GiContext *) 0 ;
-  int arg3 ;
-  Point2d *arg4 = (Point2d *) 0 ;
-  Vector2d *arg5 = (Vector2d *) 0 ;
-  bool result;
-  
-  arg1 = (GiGraphics *)jarg1; 
-  arg2 = (GiContext *)jarg2; 
-  arg3 = (int)jarg3; 
-  arg4 = (Point2d *)jarg4; 
-  arg5 = (Vector2d *)jarg5; 
-  result = (bool)(arg1)->drawClosedSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,(Vector2d const *)arg5);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBSplines__SWIG_0(void * jarg1, void * jarg2, int jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBSplines__SWIG_1(void * jarg1, void * jarg2, int jarg3, void * jarg4, unsigned int jarg5) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
@@ -13655,7 +13951,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBSplines__SWIG_0(void 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBSplines__SWIG_1(void * jarg1, void * jarg2, int jarg3, void * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBSplines__SWIG_2(void * jarg1, void * jarg2, int jarg3, void * jarg4) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
@@ -13673,13 +13969,14 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawBSplines__SWIG_1(void 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawClosedBSplines__SWIG_0(void * jarg1, void * jarg2, int jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawQuadSplines__SWIG_0(void * jarg1, void * jarg2, int jarg3, void * jarg4, unsigned int jarg5, unsigned int jarg6) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
   int arg3 ;
   Point2d *arg4 = (Point2d *) 0 ;
   bool arg5 ;
+  bool arg6 ;
   bool result;
   
   arg1 = (GiGraphics *)jarg1; 
@@ -13687,31 +13984,14 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawClosedBSplines__SWIG_0
   arg3 = (int)jarg3; 
   arg4 = (Point2d *)jarg4; 
   arg5 = jarg5 ? true : false; 
-  result = (bool)(arg1)->drawClosedBSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,arg5);
+  arg6 = jarg6 ? true : false; 
+  result = (bool)(arg1)->drawQuadSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4,arg5,arg6);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawClosedBSplines__SWIG_1(void * jarg1, void * jarg2, int jarg3, void * jarg4) {
-  unsigned int jresult ;
-  GiGraphics *arg1 = (GiGraphics *) 0 ;
-  GiContext *arg2 = (GiContext *) 0 ;
-  int arg3 ;
-  Point2d *arg4 = (Point2d *) 0 ;
-  bool result;
-  
-  arg1 = (GiGraphics *)jarg1; 
-  arg2 = (GiContext *)jarg2; 
-  arg3 = (int)jarg3; 
-  arg4 = (Point2d *)jarg4; 
-  result = (bool)(arg1)->drawClosedBSplines((GiContext const *)arg2,arg3,(Point2d const *)arg4);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawQuadSplines__SWIG_0(void * jarg1, void * jarg2, int jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawQuadSplines__SWIG_1(void * jarg1, void * jarg2, int jarg3, void * jarg4, unsigned int jarg5) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
@@ -13731,7 +14011,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawQuadSplines__SWIG_0(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawQuadSplines__SWIG_1(void * jarg1, void * jarg2, int jarg3, void * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiGraphics_drawQuadSplines__SWIG_2(void * jarg1, void * jarg2, int jarg3, void * jarg4) {
   unsigned int jresult ;
   GiGraphics *arg1 = (GiGraphics *) 0 ;
   GiContext *arg2 = (GiContext *) 0 ;
@@ -19160,6 +19440,20 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_resize(void * jarg1, int 
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_resizeSwigExplicitMgBaseLines(void * jarg1, int jarg2) {
+  unsigned int jresult ;
+  MgBaseLines *arg1 = (MgBaseLines *) 0 ;
+  int arg2 ;
+  bool result;
+  
+  arg1 = (MgBaseLines *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (bool)(arg1)->MgBaseLines::resize(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_addPoint(void * jarg1, void * jarg2) {
   unsigned int jresult ;
   MgBaseLines *arg1 = (MgBaseLines *) 0 ;
@@ -19173,6 +19467,24 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_addPoint(void * jarg1, vo
     return 0;
   } 
   result = (bool)(arg1)->addPoint((Point2d const &)*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_addPointSwigExplicitMgBaseLines(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  MgBaseLines *arg1 = (MgBaseLines *) 0 ;
+  Point2d *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (MgBaseLines *)jarg1; 
+  arg2 = (Point2d *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Point2d const & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->MgBaseLines::addPoint((Point2d const &)*arg2);
   jresult = result; 
   return jresult;
 }
@@ -19198,6 +19510,26 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_insertPoint(void * jarg1,
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_insertPointSwigExplicitMgBaseLines(void * jarg1, int jarg2, void * jarg3) {
+  unsigned int jresult ;
+  MgBaseLines *arg1 = (MgBaseLines *) 0 ;
+  int arg2 ;
+  Point2d *arg3 = 0 ;
+  bool result;
+  
+  arg1 = (MgBaseLines *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (Point2d *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Point2d const & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->MgBaseLines::insertPoint(arg2,(Point2d const &)*arg3);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_removePoint(void * jarg1, int jarg2) {
   unsigned int jresult ;
   MgBaseLines *arg1 = (MgBaseLines *) 0 ;
@@ -19207,6 +19539,20 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_removePoint(void * jarg1,
   arg1 = (MgBaseLines *)jarg1; 
   arg2 = (int)jarg2; 
   result = (bool)(arg1)->removePoint(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgBaseLines_removePointSwigExplicitMgBaseLines(void * jarg1, int jarg2) {
+  unsigned int jresult ;
+  MgBaseLines *arg1 = (MgBaseLines *) 0 ;
+  int arg2 ;
+  bool result;
+  
+  arg1 = (MgBaseLines *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (bool)(arg1)->MgBaseLines::removePoint(arg2);
   jresult = result; 
   return jresult;
 }
@@ -19234,11 +19580,11 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_MgBaseLines() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MgBaseLines_director_connect(void *objarg, SwigDirector_MgBaseLines::SWIG_Callback0_t callback0, SwigDirector_MgBaseLines::SWIG_Callback1_t callback1, SwigDirector_MgBaseLines::SWIG_Callback2_t callback2, SwigDirector_MgBaseLines::SWIG_Callback3_t callback3, SwigDirector_MgBaseLines::SWIG_Callback4_t callback4, SwigDirector_MgBaseLines::SWIG_Callback5_t callback5, SwigDirector_MgBaseLines::SWIG_Callback6_t callback6, SwigDirector_MgBaseLines::SWIG_Callback7_t callback7, SwigDirector_MgBaseLines::SWIG_Callback8_t callback8, SwigDirector_MgBaseLines::SWIG_Callback9_t callback9, SwigDirector_MgBaseLines::SWIG_Callback10_t callback10, SwigDirector_MgBaseLines::SWIG_Callback11_t callback11, SwigDirector_MgBaseLines::SWIG_Callback12_t callback12, SwigDirector_MgBaseLines::SWIG_Callback13_t callback13, SwigDirector_MgBaseLines::SWIG_Callback14_t callback14, SwigDirector_MgBaseLines::SWIG_Callback15_t callback15, SwigDirector_MgBaseLines::SWIG_Callback16_t callback16, SwigDirector_MgBaseLines::SWIG_Callback17_t callback17, SwigDirector_MgBaseLines::SWIG_Callback18_t callback18, SwigDirector_MgBaseLines::SWIG_Callback19_t callback19, SwigDirector_MgBaseLines::SWIG_Callback20_t callback20, SwigDirector_MgBaseLines::SWIG_Callback21_t callback21, SwigDirector_MgBaseLines::SWIG_Callback22_t callback22, SwigDirector_MgBaseLines::SWIG_Callback23_t callback23, SwigDirector_MgBaseLines::SWIG_Callback24_t callback24, SwigDirector_MgBaseLines::SWIG_Callback25_t callback25, SwigDirector_MgBaseLines::SWIG_Callback26_t callback26, SwigDirector_MgBaseLines::SWIG_Callback27_t callback27, SwigDirector_MgBaseLines::SWIG_Callback28_t callback28, SwigDirector_MgBaseLines::SWIG_Callback29_t callback29, SwigDirector_MgBaseLines::SWIG_Callback30_t callback30, SwigDirector_MgBaseLines::SWIG_Callback31_t callback31, SwigDirector_MgBaseLines::SWIG_Callback32_t callback32) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MgBaseLines_director_connect(void *objarg, SwigDirector_MgBaseLines::SWIG_Callback0_t callback0, SwigDirector_MgBaseLines::SWIG_Callback1_t callback1, SwigDirector_MgBaseLines::SWIG_Callback2_t callback2, SwigDirector_MgBaseLines::SWIG_Callback3_t callback3, SwigDirector_MgBaseLines::SWIG_Callback4_t callback4, SwigDirector_MgBaseLines::SWIG_Callback5_t callback5, SwigDirector_MgBaseLines::SWIG_Callback6_t callback6, SwigDirector_MgBaseLines::SWIG_Callback7_t callback7, SwigDirector_MgBaseLines::SWIG_Callback8_t callback8, SwigDirector_MgBaseLines::SWIG_Callback9_t callback9, SwigDirector_MgBaseLines::SWIG_Callback10_t callback10, SwigDirector_MgBaseLines::SWIG_Callback11_t callback11, SwigDirector_MgBaseLines::SWIG_Callback12_t callback12, SwigDirector_MgBaseLines::SWIG_Callback13_t callback13, SwigDirector_MgBaseLines::SWIG_Callback14_t callback14, SwigDirector_MgBaseLines::SWIG_Callback15_t callback15, SwigDirector_MgBaseLines::SWIG_Callback16_t callback16, SwigDirector_MgBaseLines::SWIG_Callback17_t callback17, SwigDirector_MgBaseLines::SWIG_Callback18_t callback18, SwigDirector_MgBaseLines::SWIG_Callback19_t callback19, SwigDirector_MgBaseLines::SWIG_Callback20_t callback20, SwigDirector_MgBaseLines::SWIG_Callback21_t callback21, SwigDirector_MgBaseLines::SWIG_Callback22_t callback22, SwigDirector_MgBaseLines::SWIG_Callback23_t callback23, SwigDirector_MgBaseLines::SWIG_Callback24_t callback24, SwigDirector_MgBaseLines::SWIG_Callback25_t callback25, SwigDirector_MgBaseLines::SWIG_Callback26_t callback26, SwigDirector_MgBaseLines::SWIG_Callback27_t callback27, SwigDirector_MgBaseLines::SWIG_Callback28_t callback28, SwigDirector_MgBaseLines::SWIG_Callback29_t callback29, SwigDirector_MgBaseLines::SWIG_Callback30_t callback30, SwigDirector_MgBaseLines::SWIG_Callback31_t callback31, SwigDirector_MgBaseLines::SWIG_Callback32_t callback32, SwigDirector_MgBaseLines::SWIG_Callback33_t callback33, SwigDirector_MgBaseLines::SWIG_Callback34_t callback34, SwigDirector_MgBaseLines::SWIG_Callback35_t callback35, SwigDirector_MgBaseLines::SWIG_Callback36_t callback36) {
   MgBaseLines *obj = (MgBaseLines *)objarg;
   SwigDirector_MgBaseLines *director = dynamic_cast<SwigDirector_MgBaseLines *>(obj);
   if (director) {
-    director->swig_connect_director(callback0, callback1, callback2, callback3, callback4, callback5, callback6, callback7, callback8, callback9, callback10, callback11, callback12, callback13, callback14, callback15, callback16, callback17, callback18, callback19, callback20, callback21, callback22, callback23, callback24, callback25, callback26, callback27, callback28, callback29, callback30, callback31, callback32);
+    director->swig_connect_director(callback0, callback1, callback2, callback3, callback4, callback5, callback6, callback7, callback8, callback9, callback10, callback11, callback12, callback13, callback14, callback15, callback16, callback17, callback18, callback19, callback20, callback21, callback22, callback23, callback24, callback25, callback26, callback27, callback28, callback29, callback30, callback31, callback32, callback33, callback34, callback35, callback36);
   }
 }
 
@@ -20100,6 +20446,124 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgSplines_isCurve(void * jarg1) {
   result = (bool)((MgSplines const *)arg1)->isCurve();
   jresult = result; 
   return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgSplines_resize(void * jarg1, int jarg2) {
+  unsigned int jresult ;
+  MgSplines *arg1 = (MgSplines *) 0 ;
+  int arg2 ;
+  bool result;
+  
+  arg1 = (MgSplines *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (bool)(arg1)->resize(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgSplines_addPoint(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  MgSplines *arg1 = (MgSplines *) 0 ;
+  Point2d *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (MgSplines *)jarg1; 
+  arg2 = (Point2d *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Point2d const & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->addPoint((Point2d const &)*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgSplines_insertPoint(void * jarg1, int jarg2, void * jarg3) {
+  unsigned int jresult ;
+  MgSplines *arg1 = (MgSplines *) 0 ;
+  int arg2 ;
+  Point2d *arg3 = 0 ;
+  bool result;
+  
+  arg1 = (MgSplines *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (Point2d *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Point2d const & type is null", 0);
+    return 0;
+  } 
+  result = (bool)(arg1)->insertPoint(arg2,(Point2d const &)*arg3);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgSplines_removePoint(void * jarg1, int jarg2) {
+  unsigned int jresult ;
+  MgSplines *arg1 = (MgSplines *) 0 ;
+  int arg2 ;
+  bool result;
+  
+  arg1 = (MgSplines *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (bool)(arg1)->removePoint(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgSplines_smooth(void * jarg1, void * jarg2, float jarg3) {
+  unsigned int jresult ;
+  MgSplines *arg1 = (MgSplines *) 0 ;
+  Matrix2d *arg2 = 0 ;
+  float arg3 ;
+  bool result;
+  
+  arg1 = (MgSplines *)jarg1; 
+  arg2 = (Matrix2d *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Matrix2d const & type is null", 0);
+    return 0;
+  } 
+  arg3 = (float)jarg3; 
+  result = (bool)(arg1)->smooth((Matrix2d const &)*arg2,arg3);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgSplines_smoothForPoints(void * jarg1, int jarg2, void * jarg3, void * jarg4, float jarg5) {
+  int jresult ;
+  MgSplines *arg1 = (MgSplines *) 0 ;
+  int arg2 ;
+  Point2d *arg3 = (Point2d *) 0 ;
+  Matrix2d *arg4 = 0 ;
+  float arg5 ;
+  int result;
+  
+  arg1 = (MgSplines *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (Point2d *)jarg3; 
+  arg4 = (Matrix2d *)jarg4;
+  if (!arg4) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Matrix2d const & type is null", 0);
+    return 0;
+  } 
+  arg5 = (float)jarg5; 
+  result = (int)(arg1)->smoothForPoints(arg2,(Point2d const *)arg3,(Matrix2d const &)*arg4,arg5);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_MgSplines_clearVectors(void * jarg1) {
+  MgSplines *arg1 = (MgSplines *) 0 ;
+  
+  arg1 = (MgSplines *)jarg1; 
+  (arg1)->clearVectors();
 }
 
 
@@ -28293,6 +28757,92 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_canRedo(void * jarg1) {
 }
 
 
+SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_loadFirstFrame(void * jarg1) {
+  int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (int)(arg1)->loadFirstFrame();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_loadNextFrame(void * jarg1, int jarg2) {
+  int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int arg2 ;
+  int result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (int)(arg1)->loadNextFrame(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_loadPrevFrame(void * jarg1, int jarg2) {
+  int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int arg2 ;
+  int result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (int)(arg1)->loadPrevFrame(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_MgCoreView_applyFrame(void * jarg1, int jarg2) {
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int arg2 ;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->applyFrame(arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_getFrameIndex(void * jarg1) {
+  int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (int)((MgCoreView const *)arg1)->getFrameIndex();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_getPlayingDocForEdit(void * jarg1) {
+  long jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (long)(arg1)->getPlayingDocForEdit();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_getDynamicShapesForEdit(void * jarg1) {
+  long jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (long)(arg1)->getDynamicShapesForEdit();
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isPressDragging(void * jarg1) {
   unsigned int jresult ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
@@ -28300,6 +28850,18 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isPressDragging(void * jar
   
   arg1 = (MgCoreView *)jarg1; 
   result = (bool)(arg1)->isPressDragging();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isDrawingCommand(void * jarg1) {
+  unsigned int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  bool result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (bool)(arg1)->isDrawingCommand();
   jresult = result; 
   return jresult;
 }
@@ -29133,6 +29695,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreView_onSize(void * jarg1, void * jarg2,
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreView_setPenWidthRange(void * jarg1, void * jarg2, float jarg3, float jarg4) {
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  GiView *arg2 = (GiView *) 0 ;
+  float arg3 ;
+  float arg4 ;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (GiView *)jarg2; 
+  arg3 = (float)jarg3; 
+  arg4 = (float)jarg4; 
+  (arg1)->setPenWidthRange(arg2,arg3,arg4);
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_onGesture__SWIG_0(void * jarg1, void * jarg2, int jarg3, int jarg4, float jarg5, float jarg6, unsigned int jarg7) {
   unsigned int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
@@ -29417,6 +29993,24 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_redo(void * jarg1, void * 
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_loadFrameIndex(char * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  char *arg1 = (char *) 0 ;
+  mgvector< int > *arg2 = 0 ;
+  bool result;
+  
+  arg1 = (char *)jarg1; 
+  arg2 = (mgvector< int > *)jarg2;
+  if (!arg2) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "mgvector< int > & type is null", 0);
+    return 0;
+  } 
+  result = (bool)GiCoreView::loadFrameIndex((char const *)arg1,*arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_isPressDragging(void * jarg1) {
   unsigned int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
@@ -29424,6 +30018,18 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_isPressDragging(void * jar
   
   arg1 = (GiCoreView *)jarg1; 
   result = (bool)(arg1)->isPressDragging();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_isDrawingCommand(void * jarg1) {
+  unsigned int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  bool result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  result = (bool)(arg1)->isDrawingCommand();
   jresult = result; 
   return jresult;
 }
@@ -29570,6 +30176,92 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_canRedo(void * jarg1) {
   
   arg1 = (GiCoreView *)jarg1; 
   result = (bool)((GiCoreView const *)arg1)->canRedo();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_loadFirstFrame(void * jarg1) {
+  int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  int result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  result = (int)(arg1)->loadFirstFrame();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_loadNextFrame(void * jarg1, int jarg2) {
+  int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  int arg2 ;
+  int result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (int)(arg1)->loadNextFrame(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_loadPrevFrame(void * jarg1, int jarg2) {
+  int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  int arg2 ;
+  int result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (int)(arg1)->loadPrevFrame(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreView_applyFrame(void * jarg1, int jarg2) {
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  int arg2 ;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->applyFrame(arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_getFrameIndex(void * jarg1) {
+  int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  int result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  result = (int)((GiCoreView const *)arg1)->getFrameIndex();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreView_getPlayingDocForEdit(void * jarg1) {
+  long jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  long result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  result = (long)(arg1)->getPlayingDocForEdit();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreView_getDynamicShapesForEdit(void * jarg1) {
+  long jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  long result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  result = (long)(arg1)->getDynamicShapesForEdit();
   jresult = result; 
   return jresult;
 }

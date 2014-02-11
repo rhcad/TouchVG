@@ -55,20 +55,28 @@ public class mgnear {
     return touchvgJNI.mgnear_beziersIntersectBox__SWIG_1(Box2d.getCPtr(box), box, count, Point2d.getCPtr(points), points);
   }
 
+  public static void cubicSplinesBox(Box2d box, int n, Point2d knots, Vector2d knotvs, boolean closed, boolean hermite) {
+    touchvgJNI.mgnear_cubicSplinesBox__SWIG_0(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, closed, hermite);
+  }
+
   public static void cubicSplinesBox(Box2d box, int n, Point2d knots, Vector2d knotvs, boolean closed) {
-    touchvgJNI.mgnear_cubicSplinesBox__SWIG_0(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, closed);
+    touchvgJNI.mgnear_cubicSplinesBox__SWIG_1(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, closed);
   }
 
   public static void cubicSplinesBox(Box2d box, int n, Point2d knots, Vector2d knotvs) {
-    touchvgJNI.mgnear_cubicSplinesBox__SWIG_1(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs);
+    touchvgJNI.mgnear_cubicSplinesBox__SWIG_2(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs);
+  }
+
+  public static boolean cubicSplinesIntersectBox(Box2d box, int n, Point2d knots, Vector2d knotvs, boolean closed, boolean hermite) {
+    return touchvgJNI.mgnear_cubicSplinesIntersectBox__SWIG_0(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, closed, hermite);
   }
 
   public static boolean cubicSplinesIntersectBox(Box2d box, int n, Point2d knots, Vector2d knotvs, boolean closed) {
-    return touchvgJNI.mgnear_cubicSplinesIntersectBox__SWIG_0(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, closed);
+    return touchvgJNI.mgnear_cubicSplinesIntersectBox__SWIG_1(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, closed);
   }
 
   public static boolean cubicSplinesIntersectBox(Box2d box, int n, Point2d knots, Vector2d knotvs) {
-    return touchvgJNI.mgnear_cubicSplinesIntersectBox__SWIG_1(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs);
+    return touchvgJNI.mgnear_cubicSplinesIntersectBox__SWIG_2(Box2d.getCPtr(box), box, n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs);
   }
 
   public static void getRectHandle(Box2d rect, int index, Point2d pt) {

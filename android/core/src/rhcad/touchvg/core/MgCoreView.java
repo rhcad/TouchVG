@@ -100,8 +100,40 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_canRedo(swigCPtr, this);
   }
 
+  public int loadFirstFrame() {
+    return touchvgJNI.MgCoreView_loadFirstFrame(swigCPtr, this);
+  }
+
+  public int loadNextFrame(int index) {
+    return touchvgJNI.MgCoreView_loadNextFrame(swigCPtr, this, index);
+  }
+
+  public int loadPrevFrame(int index) {
+    return touchvgJNI.MgCoreView_loadPrevFrame(swigCPtr, this, index);
+  }
+
+  public void applyFrame(int flags) {
+    touchvgJNI.MgCoreView_applyFrame(swigCPtr, this, flags);
+  }
+
+  public int getFrameIndex() {
+    return touchvgJNI.MgCoreView_getFrameIndex(swigCPtr, this);
+  }
+
+  public int getPlayingDocForEdit() {
+    return touchvgJNI.MgCoreView_getPlayingDocForEdit(swigCPtr, this);
+  }
+
+  public int getDynamicShapesForEdit() {
+    return touchvgJNI.MgCoreView_getDynamicShapesForEdit(swigCPtr, this);
+  }
+
   public boolean isPressDragging() {
     return touchvgJNI.MgCoreView_isPressDragging(swigCPtr, this);
+  }
+
+  public boolean isDrawingCommand() {
+    return touchvgJNI.MgCoreView_isDrawingCommand(swigCPtr, this);
   }
 
   public String getCommand() {

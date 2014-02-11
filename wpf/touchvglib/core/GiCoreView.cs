@@ -128,6 +128,10 @@ public class GiCoreView : MgCoreView {
     touchvgPINVOKE.GiCoreView_onSize(swigCPtr, GiView.getCPtr(view), w, h);
   }
 
+  public void setPenWidthRange(GiView view, float minw, float maxw) {
+    touchvgPINVOKE.GiCoreView_setPenWidthRange(swigCPtr, GiView.getCPtr(view), minw, maxw);
+  }
+
   public bool onGesture(GiView view, GiGestureType type, GiGestureState state, float x, float y, bool switchGesture) {
     bool ret = touchvgPINVOKE.GiCoreView_onGesture__SWIG_0(swigCPtr, GiView.getCPtr(view), (int)type, (int)state, x, y, switchGesture);
     return ret;
@@ -212,8 +216,19 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
+  public static bool loadFrameIndex(string path, Ints arr) {
+    bool ret = touchvgPINVOKE.GiCoreView_loadFrameIndex(path, Ints.getCPtr(arr));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   public override bool isPressDragging() {
     bool ret = touchvgPINVOKE.GiCoreView_isPressDragging(swigCPtr);
+    return ret;
+  }
+
+  public override bool isDrawingCommand() {
+    bool ret = touchvgPINVOKE.GiCoreView_isDrawingCommand(swigCPtr);
     return ret;
   }
 
@@ -274,6 +289,40 @@ public class GiCoreView : MgCoreView {
 
   public override bool canRedo() {
     bool ret = touchvgPINVOKE.GiCoreView_canRedo(swigCPtr);
+    return ret;
+  }
+
+  public override int loadFirstFrame() {
+    int ret = touchvgPINVOKE.GiCoreView_loadFirstFrame(swigCPtr);
+    return ret;
+  }
+
+  public override int loadNextFrame(int index) {
+    int ret = touchvgPINVOKE.GiCoreView_loadNextFrame(swigCPtr, index);
+    return ret;
+  }
+
+  public override int loadPrevFrame(int index) {
+    int ret = touchvgPINVOKE.GiCoreView_loadPrevFrame(swigCPtr, index);
+    return ret;
+  }
+
+  public override void applyFrame(int flags) {
+    touchvgPINVOKE.GiCoreView_applyFrame(swigCPtr, flags);
+  }
+
+  public override int getFrameIndex() {
+    int ret = touchvgPINVOKE.GiCoreView_getFrameIndex(swigCPtr);
+    return ret;
+  }
+
+  public override int getPlayingDocForEdit() {
+    int ret = touchvgPINVOKE.GiCoreView_getPlayingDocForEdit(swigCPtr);
+    return ret;
+  }
+
+  public override int getDynamicShapesForEdit() {
+    int ret = touchvgPINVOKE.GiCoreView_getDynamicShapesForEdit(swigCPtr);
     return ret;
   }
 

@@ -95,11 +95,6 @@
             
             [_layer setNeedsDisplay];
             [_layer display];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [mainView setNeedsDisplay];
-                --_drawing;
-            });
         });
     }
 }
@@ -124,6 +119,11 @@
     coreView->releaseGraphics(_gs);
     _doc = 0;
     _gs = 0;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_adapter->mainView() setNeedsDisplay];
+        --_drawing;
+    });
 }
 
 @end
@@ -177,6 +177,7 @@ GiColor CGColorToGiColor(CGColorRef color);
         _adapter = new GiViewAdapter(self, NULL);
         _adapter->coreView()->createView(_adapter);
     }
+    _adapter->coreView()->setPenWidthRange(_adapter, 0.5f, -1);
 }
 
 - (id)initWithFrame:(CGRect)frame {

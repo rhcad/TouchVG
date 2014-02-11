@@ -192,6 +192,44 @@ public class MgSplines : MgBaseLines {
     return ret;
   }
 
+  public override bool resize(int count) {
+    bool ret = touchvgPINVOKE.MgSplines_resize(swigCPtr, count);
+    return ret;
+  }
+
+  public override bool addPoint(Point2d pt) {
+    bool ret = touchvgPINVOKE.MgSplines_addPoint(swigCPtr, Point2d.getCPtr(pt));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public override bool insertPoint(int segment, Point2d pt) {
+    bool ret = touchvgPINVOKE.MgSplines_insertPoint(swigCPtr, segment, Point2d.getCPtr(pt));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public override bool removePoint(int index) {
+    bool ret = touchvgPINVOKE.MgSplines_removePoint(swigCPtr, index);
+    return ret;
+  }
+
+  public bool smooth(Matrix2d m2d, float tol) {
+    bool ret = touchvgPINVOKE.MgSplines_smooth(swigCPtr, Matrix2d.getCPtr(m2d), tol);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public int smoothForPoints(int count, Point2d points, Matrix2d m2d, float tol) {
+    int ret = touchvgPINVOKE.MgSplines_smoothForPoints(swigCPtr, count, Point2d.getCPtr(points), Matrix2d.getCPtr(m2d), tol);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void clearVectors() {
+    touchvgPINVOKE.MgSplines_clearVectors(swigCPtr);
+  }
+
 }
 
 }

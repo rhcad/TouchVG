@@ -157,4 +157,32 @@ public class MgSplines extends MgBaseLines {
     return touchvgJNI.MgSplines_isCurve(swigCPtr, this);
   }
 
+  public boolean resize(int count) {
+    return touchvgJNI.MgSplines_resize(swigCPtr, this, count);
+  }
+
+  public boolean addPoint(Point2d pt) {
+    return touchvgJNI.MgSplines_addPoint(swigCPtr, this, Point2d.getCPtr(pt), pt);
+  }
+
+  public boolean insertPoint(int segment, Point2d pt) {
+    return touchvgJNI.MgSplines_insertPoint(swigCPtr, this, segment, Point2d.getCPtr(pt), pt);
+  }
+
+  public boolean removePoint(int index) {
+    return touchvgJNI.MgSplines_removePoint(swigCPtr, this, index);
+  }
+
+  public boolean smooth(Matrix2d m2d, float tol) {
+    return touchvgJNI.MgSplines_smooth(swigCPtr, this, Matrix2d.getCPtr(m2d), m2d, tol);
+  }
+
+  public int smoothForPoints(int count, Point2d points, Matrix2d m2d, float tol) {
+    return touchvgJNI.MgSplines_smoothForPoints(swigCPtr, this, count, Point2d.getCPtr(points), points, Matrix2d.getCPtr(m2d), m2d, tol);
+  }
+
+  public void clearVectors() {
+    touchvgJNI.MgSplines_clearVectors(swigCPtr, this);
+  }
+
 }

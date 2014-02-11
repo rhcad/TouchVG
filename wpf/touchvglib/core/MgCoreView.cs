@@ -120,8 +120,47 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
+  public virtual int loadFirstFrame() {
+    int ret = touchvgPINVOKE.MgCoreView_loadFirstFrame(swigCPtr);
+    return ret;
+  }
+
+  public virtual int loadNextFrame(int index) {
+    int ret = touchvgPINVOKE.MgCoreView_loadNextFrame(swigCPtr, index);
+    return ret;
+  }
+
+  public virtual int loadPrevFrame(int index) {
+    int ret = touchvgPINVOKE.MgCoreView_loadPrevFrame(swigCPtr, index);
+    return ret;
+  }
+
+  public virtual void applyFrame(int flags) {
+    touchvgPINVOKE.MgCoreView_applyFrame(swigCPtr, flags);
+  }
+
+  public virtual int getFrameIndex() {
+    int ret = touchvgPINVOKE.MgCoreView_getFrameIndex(swigCPtr);
+    return ret;
+  }
+
+  public virtual int getPlayingDocForEdit() {
+    int ret = touchvgPINVOKE.MgCoreView_getPlayingDocForEdit(swigCPtr);
+    return ret;
+  }
+
+  public virtual int getDynamicShapesForEdit() {
+    int ret = touchvgPINVOKE.MgCoreView_getDynamicShapesForEdit(swigCPtr);
+    return ret;
+  }
+
   public virtual bool isPressDragging() {
     bool ret = touchvgPINVOKE.MgCoreView_isPressDragging(swigCPtr);
+    return ret;
+  }
+
+  public virtual bool isDrawingCommand() {
+    bool ret = touchvgPINVOKE.MgCoreView_isDrawingCommand(swigCPtr);
     return ret;
   }
 

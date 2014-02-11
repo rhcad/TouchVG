@@ -163,8 +163,8 @@ public class Vector2d : IDisposable {
     return ret;
   }
 
-  public float lengthSqrd() {
-    float ret = touchvgPINVOKE.Vector2d_lengthSqrd(swigCPtr);
+  public float lengthSquare() {
+    float ret = touchvgPINVOKE.Vector2d_lengthSquare(swigCPtr);
     return ret;
   }
 
@@ -228,8 +228,13 @@ public class Vector2d : IDisposable {
     return ret;
   }
 
-  public Vector2d setLength(float len) {
-    Vector2d ret = new Vector2d(touchvgPINVOKE.Vector2d_setLength(swigCPtr, len), false);
+  public Vector2d setLength(float newLength) {
+    Vector2d ret = new Vector2d(touchvgPINVOKE.Vector2d_setLength(swigCPtr, newLength), false);
+    return ret;
+  }
+
+  public Vector2d scaledVector(float newLength) {
+    Vector2d ret = new Vector2d(touchvgPINVOKE.Vector2d_scaledVector(swigCPtr, newLength), true);
     return ret;
   }
 

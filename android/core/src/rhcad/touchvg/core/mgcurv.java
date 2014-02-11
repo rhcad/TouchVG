@@ -51,6 +51,10 @@ public class mgcurv {
     touchvgJNI.mgcurv_bezier4P(Point2d.getCPtr(pt1), pt1, Point2d.getCPtr(pt2), pt2, Point2d.getCPtr(pt3), pt3, Point2d.getCPtr(pt4), pt4, Point2d.getCPtr(ctrpt1), ctrpt1, Point2d.getCPtr(ctrpt2), ctrpt2);
   }
 
+  public static int fitCurve(int knotCount, Point2d knots, Vector2d knotvs, int count, Point2d pts, float tol) {
+    return touchvgJNI.mgcurv_fitCurve(knotCount, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, count, Point2d.getCPtr(pts), pts, tol);
+  }
+
   public static void ellipse90ToBezier(Point2d frompt, Point2d topt, Point2d ctrpt1, Point2d ctrpt2) {
     touchvgJNI.mgcurv_ellipse90ToBezier(Point2d.getCPtr(frompt), frompt, Point2d.getCPtr(topt), topt, Point2d.getCPtr(ctrpt1), ctrpt1, Point2d.getCPtr(ctrpt2), ctrpt2);
   }
@@ -87,8 +91,12 @@ public class mgcurv {
     touchvgJNI.mgcurv_fitCubicSpline(n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, i, t, Point2d.getCPtr(fitpt), fitpt);
   }
 
+  public static void cubicSplineToBezier(int n, Point2d knots, Vector2d knotvs, int i, Point2d points, boolean hermite) {
+    touchvgJNI.mgcurv_cubicSplineToBezier__SWIG_0(n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, i, Point2d.getCPtr(points), points, hermite);
+  }
+
   public static void cubicSplineToBezier(int n, Point2d knots, Vector2d knotvs, int i, Point2d points) {
-    touchvgJNI.mgcurv_cubicSplineToBezier(n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, i, Point2d.getCPtr(points), points);
+    touchvgJNI.mgcurv_cubicSplineToBezier__SWIG_1(n, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, i, Point2d.getCPtr(points), points);
   }
 
   public static int bsplinesToBeziers(Point2d points, int n, Point2d ctlpts, boolean closed) {

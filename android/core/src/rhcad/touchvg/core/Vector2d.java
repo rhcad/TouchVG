@@ -131,8 +131,8 @@ public class Vector2d {
     return touchvgJNI.Vector2d_length(swigCPtr, this);
   }
 
-  public float lengthSqrd() {
-    return touchvgJNI.Vector2d_lengthSqrd(swigCPtr, this);
+  public float lengthSquare() {
+    return touchvgJNI.Vector2d_lengthSquare(swigCPtr, this);
   }
 
   public Vector2d unitVector() {
@@ -179,8 +179,12 @@ public class Vector2d {
     return new Vector2d(touchvgJNI.Vector2d_setAngleLength(swigCPtr, this, angle, len), false);
   }
 
-  public Vector2d setLength(float len) {
-    return new Vector2d(touchvgJNI.Vector2d_setLength(swigCPtr, this, len), false);
+  public Vector2d setLength(float newLength) {
+    return new Vector2d(touchvgJNI.Vector2d_setLength(swigCPtr, this, newLength), false);
+  }
+
+  public Vector2d scaledVector(float newLength) {
+    return new Vector2d(touchvgJNI.Vector2d_scaledVector(swigCPtr, this, newLength), true);
   }
 
   public boolean isRightOf(Vector2d vec) {

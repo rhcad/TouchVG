@@ -286,17 +286,18 @@ public class SFGraphView extends SurfaceView implements GraphView {
         }
 
         public void afterRegen(int count) {
-            count = Math.min(count, getAppendCount());
+            int maxCount = getAppendCount();
+            count = Math.min(count, maxCount);
             for (int i = 0, j = count; i < mAppendShapeIDs.length; i++, j++) {
                 mAppendShapeIDs[i] = j < mAppendShapeIDs.length ? mAppendShapeIDs[j] : 0;
             }
-            if (count > 0) {
-                requestRender();
-            }
+            requestRender();
         }
 
         public void requestAppendRender(int sid) {
             for (int i = 0; i < mAppendShapeIDs.length; i++) {
+                if (mAppendShapeIDs[i] == sid)
+                    break;
                 if (mAppendShapeIDs[i] == 0) {
                     mAppendShapeIDs[i] = sid;
                     break;
@@ -452,11 +453,11 @@ public class SFGraphView extends SurfaceView implements GraphView {
                     }
                 }
             }
-            if (mRender != null) {
-                mRender.requestRender();
-            }
             if (mDynDrawRender != null) {
                 mDynDrawRender.requestAppendRender(sid);
+            }
+            if (mRender != null) {
+                mRender.requestRender();
             }
         }
 

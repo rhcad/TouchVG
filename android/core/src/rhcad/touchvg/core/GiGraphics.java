@@ -168,6 +168,18 @@ public class GiGraphics {
     return touchvgJNI.GiGraphics_drawBeziers__SWIG_2(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(points), points);
   }
 
+  public boolean drawBeziers(GiContext ctx, int count, Point2d knot, Vector2d knotvs, boolean closed, boolean modelUnit) {
+    return touchvgJNI.GiGraphics_drawBeziers__SWIG_3(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knot), knot, Vector2d.getCPtr(knotvs), knotvs, closed, modelUnit);
+  }
+
+  public boolean drawBeziers(GiContext ctx, int count, Point2d knot, Vector2d knotvs, boolean closed) {
+    return touchvgJNI.GiGraphics_drawBeziers__SWIG_4(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knot), knot, Vector2d.getCPtr(knotvs), knotvs, closed);
+  }
+
+  public boolean drawBeziers(GiContext ctx, int count, Point2d knot, Vector2d knotvs) {
+    return touchvgJNI.GiGraphics_drawBeziers__SWIG_5(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knot), knot, Vector2d.getCPtr(knotvs), knotvs);
+  }
+
   public boolean drawArc(GiContext ctx, Point2d center, float rx, float ry, float startAngle, float sweepAngle, boolean modelUnit) {
     return touchvgJNI.GiGraphics_drawArc__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Point2d.getCPtr(center), center, rx, ry, startAngle, sweepAngle, modelUnit);
   }
@@ -192,6 +204,14 @@ public class GiGraphics {
     return touchvgJNI.GiGraphics_drawPolygon__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(points), points);
   }
 
+  public boolean drawCircle(GiContext ctx, Point2d center, float r, boolean modelUnit) {
+    return touchvgJNI.GiGraphics_drawCircle__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Point2d.getCPtr(center), center, r, modelUnit);
+  }
+
+  public boolean drawCircle(GiContext ctx, Point2d center, float r) {
+    return touchvgJNI.GiGraphics_drawCircle__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Point2d.getCPtr(center), center, r);
+  }
+
   public boolean drawEllipse(GiContext ctx, Point2d center, float rx, float ry, boolean modelUnit) {
     return touchvgJNI.GiGraphics_drawEllipse__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Point2d.getCPtr(center), center, rx, ry, modelUnit);
   }
@@ -200,16 +220,12 @@ public class GiGraphics {
     return touchvgJNI.GiGraphics_drawEllipse__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Point2d.getCPtr(center), center, rx, ry);
   }
 
-  public boolean drawEllipse(GiContext ctx, Point2d center, float rx) {
-    return touchvgJNI.GiGraphics_drawEllipse__SWIG_2(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Point2d.getCPtr(center), center, rx);
-  }
-
   public boolean drawEllipse(GiContext ctx, Box2d rect, boolean modelUnit) {
-    return touchvgJNI.GiGraphics_drawEllipse__SWIG_3(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Box2d.getCPtr(rect), rect, modelUnit);
+    return touchvgJNI.GiGraphics_drawEllipse__SWIG_2(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Box2d.getCPtr(rect), rect, modelUnit);
   }
 
   public boolean drawEllipse(GiContext ctx, Box2d rect) {
-    return touchvgJNI.GiGraphics_drawEllipse__SWIG_4(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Box2d.getCPtr(rect), rect);
+    return touchvgJNI.GiGraphics_drawEllipse__SWIG_3(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Box2d.getCPtr(rect), rect);
   }
 
   public boolean drawPie(GiContext ctx, Point2d center, float rx, float ry, float startAngle, float sweepAngle, boolean modelUnit) {
@@ -240,44 +256,40 @@ public class GiGraphics {
     return touchvgJNI.GiGraphics_drawRoundRect__SWIG_2(swigCPtr, this, GiContext.getCPtr(ctx), ctx, Box2d.getCPtr(rect), rect, rx);
   }
 
-  public boolean drawSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs, boolean modelUnit) {
-    return touchvgJNI.GiGraphics_drawSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, modelUnit);
+  public boolean drawHermiteSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs, boolean closed, boolean modelUnit) {
+    return touchvgJNI.GiGraphics_drawHermiteSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, closed, modelUnit);
   }
 
-  public boolean drawSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs) {
-    return touchvgJNI.GiGraphics_drawSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs);
+  public boolean drawHermiteSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs, boolean closed) {
+    return touchvgJNI.GiGraphics_drawHermiteSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, closed);
   }
 
-  public boolean drawClosedSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs, boolean modelUnit) {
-    return touchvgJNI.GiGraphics_drawClosedSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, modelUnit);
+  public boolean drawHermiteSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs) {
+    return touchvgJNI.GiGraphics_drawHermiteSplines__SWIG_2(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs);
   }
 
-  public boolean drawClosedSplines(GiContext ctx, int count, Point2d knots, Vector2d knotvs) {
-    return touchvgJNI.GiGraphics_drawClosedSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs);
+  public boolean drawBSplines(GiContext ctx, int count, Point2d ctlpts, boolean closed, boolean modelUnit) {
+    return touchvgJNI.GiGraphics_drawBSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts, closed, modelUnit);
   }
 
-  public boolean drawBSplines(GiContext ctx, int count, Point2d ctlpts, boolean modelUnit) {
-    return touchvgJNI.GiGraphics_drawBSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts, modelUnit);
+  public boolean drawBSplines(GiContext ctx, int count, Point2d ctlpts, boolean closed) {
+    return touchvgJNI.GiGraphics_drawBSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts, closed);
   }
 
   public boolean drawBSplines(GiContext ctx, int count, Point2d ctlpts) {
-    return touchvgJNI.GiGraphics_drawBSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts);
+    return touchvgJNI.GiGraphics_drawBSplines__SWIG_2(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts);
   }
 
-  public boolean drawClosedBSplines(GiContext ctx, int count, Point2d ctlpts, boolean modelUnit) {
-    return touchvgJNI.GiGraphics_drawClosedBSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts, modelUnit);
+  public boolean drawQuadSplines(GiContext ctx, int count, Point2d ctlpts, boolean closed, boolean modelUnit) {
+    return touchvgJNI.GiGraphics_drawQuadSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts, closed, modelUnit);
   }
 
-  public boolean drawClosedBSplines(GiContext ctx, int count, Point2d ctlpts) {
-    return touchvgJNI.GiGraphics_drawClosedBSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts);
-  }
-
-  public boolean drawQuadSplines(GiContext ctx, int count, Point2d ctlpts, boolean modelUnit) {
-    return touchvgJNI.GiGraphics_drawQuadSplines__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts, modelUnit);
+  public boolean drawQuadSplines(GiContext ctx, int count, Point2d ctlpts, boolean closed) {
+    return touchvgJNI.GiGraphics_drawQuadSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts, closed);
   }
 
   public boolean drawQuadSplines(GiContext ctx, int count, Point2d ctlpts) {
-    return touchvgJNI.GiGraphics_drawQuadSplines__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts);
+    return touchvgJNI.GiGraphics_drawQuadSplines__SWIG_2(swigCPtr, this, GiContext.getCPtr(ctx), ctx, count, Point2d.getCPtr(ctlpts), ctlpts);
   }
 
   public boolean drawPath(GiContext ctx, GiPath path, boolean fill, boolean modelUnit) {

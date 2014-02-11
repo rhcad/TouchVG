@@ -382,6 +382,10 @@ public:
     virtual int getHandleType(int index) const;
     virtual bool offset(Vector2d const &vec, int segment);
     virtual void setFlag(MgShapeBit bit, bool on);
+    virtual bool resize(int count);
+    virtual bool addPoint(Point2d const &pt);
+    virtual bool insertPoint(int segment, Point2d const &pt);
+    virtual bool removePoint(int index);
 
     typedef void * (SWIGSTDCALL* SWIG_Callback0_t)();
     typedef void (SWIGSTDCALL* SWIG_Callback1_t)(void *);
@@ -416,7 +420,11 @@ public:
     typedef int (SWIGSTDCALL* SWIG_Callback30_t)(int);
     typedef unsigned int (SWIGSTDCALL* SWIG_Callback31_t)(void *, int);
     typedef void (SWIGSTDCALL* SWIG_Callback32_t)(int, unsigned int);
-    void swig_connect_director(SWIG_Callback0_t callbackclone, SWIG_Callback1_t callbackcopy, SWIG_Callback2_t callbackrelease, SWIG_Callback3_t callbackaddRef, SWIG_Callback4_t callbackequals, SWIG_Callback5_t callbackgetType, SWIG_Callback6_t callbackisKindOf, SWIG_Callback7_t callbacksetOwner, SWIG_Callback8_t callbackgetExtent, SWIG_Callback9_t callbackgetChangeCount, SWIG_Callback10_t callbackresetChangeCount, SWIG_Callback11_t callbackafterChanged, SWIG_Callback12_t callbackupdate, SWIG_Callback13_t callbacktransform, SWIG_Callback14_t callbackclear, SWIG_Callback15_t callbackclearCachedData, SWIG_Callback16_t callbackgetPointCount, SWIG_Callback17_t callbackgetPoint, SWIG_Callback18_t callbacksetPoint, SWIG_Callback19_t callbackisClosed, SWIG_Callback20_t callbackisCurve, SWIG_Callback21_t callbackhitTest, SWIG_Callback22_t callbackhitTestBox, SWIG_Callback23_t callbackdraw, SWIG_Callback24_t callbacksave, SWIG_Callback25_t callbackload, SWIG_Callback26_t callbackgetHandleCount, SWIG_Callback27_t callbackgetHandlePoint, SWIG_Callback28_t callbacksetHandlePoint, SWIG_Callback29_t callbackisHandleFixed, SWIG_Callback30_t callbackgetHandleType, SWIG_Callback31_t callbackoffset, SWIG_Callback32_t callbacksetFlag);
+    typedef unsigned int (SWIGSTDCALL* SWIG_Callback33_t)(int);
+    typedef unsigned int (SWIGSTDCALL* SWIG_Callback34_t)(void *);
+    typedef unsigned int (SWIGSTDCALL* SWIG_Callback35_t)(int, void *);
+    typedef unsigned int (SWIGSTDCALL* SWIG_Callback36_t)(int);
+    void swig_connect_director(SWIG_Callback0_t callbackclone, SWIG_Callback1_t callbackcopy, SWIG_Callback2_t callbackrelease, SWIG_Callback3_t callbackaddRef, SWIG_Callback4_t callbackequals, SWIG_Callback5_t callbackgetType, SWIG_Callback6_t callbackisKindOf, SWIG_Callback7_t callbacksetOwner, SWIG_Callback8_t callbackgetExtent, SWIG_Callback9_t callbackgetChangeCount, SWIG_Callback10_t callbackresetChangeCount, SWIG_Callback11_t callbackafterChanged, SWIG_Callback12_t callbackupdate, SWIG_Callback13_t callbacktransform, SWIG_Callback14_t callbackclear, SWIG_Callback15_t callbackclearCachedData, SWIG_Callback16_t callbackgetPointCount, SWIG_Callback17_t callbackgetPoint, SWIG_Callback18_t callbacksetPoint, SWIG_Callback19_t callbackisClosed, SWIG_Callback20_t callbackisCurve, SWIG_Callback21_t callbackhitTest, SWIG_Callback22_t callbackhitTestBox, SWIG_Callback23_t callbackdraw, SWIG_Callback24_t callbacksave, SWIG_Callback25_t callbackload, SWIG_Callback26_t callbackgetHandleCount, SWIG_Callback27_t callbackgetHandlePoint, SWIG_Callback28_t callbacksetHandlePoint, SWIG_Callback29_t callbackisHandleFixed, SWIG_Callback30_t callbackgetHandleType, SWIG_Callback31_t callbackoffset, SWIG_Callback32_t callbacksetFlag, SWIG_Callback33_t callbackresize, SWIG_Callback34_t callbackaddPoint, SWIG_Callback35_t callbackinsertPoint, SWIG_Callback36_t callbackremovePoint);
 
 private:
     SWIG_Callback0_t swig_callbackclone;
@@ -452,6 +460,10 @@ private:
     SWIG_Callback30_t swig_callbackgetHandleType;
     SWIG_Callback31_t swig_callbackoffset;
     SWIG_Callback32_t swig_callbacksetFlag;
+    SWIG_Callback33_t swig_callbackresize;
+    SWIG_Callback34_t swig_callbackaddPoint;
+    SWIG_Callback35_t swig_callbackinsertPoint;
+    SWIG_Callback36_t swig_callbackremovePoint;
     void swig_init_callbacks();
 };
 

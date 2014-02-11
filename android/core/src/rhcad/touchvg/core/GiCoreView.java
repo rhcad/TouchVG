@@ -115,6 +115,10 @@ public class GiCoreView extends MgCoreView {
     touchvgJNI.GiCoreView_onSize(swigCPtr, this, GiView.getCPtr(view), view, w, h);
   }
 
+  public void setPenWidthRange(GiView view, float minw, float maxw) {
+    touchvgJNI.GiCoreView_setPenWidthRange(swigCPtr, this, GiView.getCPtr(view), view, minw, maxw);
+  }
+
   public boolean onGesture(GiView view, GiGestureType type, GiGestureState state, float x, float y, boolean switchGesture) {
     return touchvgJNI.GiCoreView_onGesture__SWIG_0(swigCPtr, this, GiView.getCPtr(view), view, type.swigValue(), state.swigValue(), x, y, switchGesture);
   }
@@ -183,8 +187,16 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_redo(swigCPtr, this, GiView.getCPtr(view), view);
   }
 
+  public static boolean loadFrameIndex(String path, Ints arr) {
+    return touchvgJNI.GiCoreView_loadFrameIndex(path, Ints.getCPtr(arr), arr);
+  }
+
   public boolean isPressDragging() {
     return touchvgJNI.GiCoreView_isPressDragging(swigCPtr, this);
+  }
+
+  public boolean isDrawingCommand() {
+    return touchvgJNI.GiCoreView_isDrawingCommand(swigCPtr, this);
   }
 
   public int viewAdapterHandle() {
@@ -233,6 +245,34 @@ public class GiCoreView extends MgCoreView {
 
   public boolean canRedo() {
     return touchvgJNI.GiCoreView_canRedo(swigCPtr, this);
+  }
+
+  public int loadFirstFrame() {
+    return touchvgJNI.GiCoreView_loadFirstFrame(swigCPtr, this);
+  }
+
+  public int loadNextFrame(int index) {
+    return touchvgJNI.GiCoreView_loadNextFrame(swigCPtr, this, index);
+  }
+
+  public int loadPrevFrame(int index) {
+    return touchvgJNI.GiCoreView_loadPrevFrame(swigCPtr, this, index);
+  }
+
+  public void applyFrame(int flags) {
+    touchvgJNI.GiCoreView_applyFrame(swigCPtr, this, flags);
+  }
+
+  public int getFrameIndex() {
+    return touchvgJNI.GiCoreView_getFrameIndex(swigCPtr, this);
+  }
+
+  public int getPlayingDocForEdit() {
+    return touchvgJNI.GiCoreView_getPlayingDocForEdit(swigCPtr, this);
+  }
+
+  public int getDynamicShapesForEdit() {
+    return touchvgJNI.GiCoreView_getDynamicShapesForEdit(swigCPtr, this);
   }
 
   public String getCommand() {

@@ -95,11 +95,9 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
     for (int i = 0, j = _oldAppendCount; i < APPENDSIZE; i++, j++) {
         _appendIDs[i] = j < APPENDSIZE ? _appendIDs[j] : 0;
     }
-    if (_oldAppendCount > 0) {
-        [_dynview setNeedsDisplay];
-    }
     _oldAppendCount = 0;
     [_render startRenderForPending];
+    [_dynview setNeedsDisplay];
     
     return true;
 }
@@ -216,13 +214,14 @@ void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
     recordShapes(false, doc1, shapes1);
     
     for (int i = 0; i < APPENDSIZE; i++) {
+        if (_appendIDs[i] == sid)
+            break;
         if (_appendIDs[i] == 0) {
             _appendIDs[i] = sid;
             break;
         }
     }
     [_render startRender:_coreView->acquireFrontDoc() :_coreView->acquireGraphics(this)];
-    [_dynview setNeedsDisplay];
 }
 
 void GiViewAdapter::regenAppend(int sid) {

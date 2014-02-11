@@ -8,7 +8,7 @@
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
-#define IOSLIBVERSION     1
+#define IOSLIBVERSION     2
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {

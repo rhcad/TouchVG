@@ -35,7 +35,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelper {
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 1;
+    private static final int JARVERSION = 2;
     private GraphView mView;
 
     static {
@@ -508,8 +508,10 @@ public class ViewHelper {
         int id = ResourceUtil.getResIDFromName(getContext(), "raw", name);
         name = ImageCache.SVG_PREFIX + name;
         final Drawable d = mView.getImageCache().addSVG(getContext().getResources(), id, name);
-        return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
-                ImageCache.getHeight(d));
+        synchronized (mView.coreView()) {
+            return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
+                    ImageCache.getHeight(d));
+        }
     }
 
     //! 在默认位置插入一个程序资源中的SVG图像(id=R.raw.name)
@@ -522,8 +524,10 @@ public class ViewHelper {
         int id = ResourceUtil.getResIDFromName(getContext(), "raw", name);
         name = ImageCache.SVG_PREFIX + name;
         final Drawable d = mView.getImageCache().addSVG(getContext().getResources(), id, name);
-        return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc, ImageCache.getWidth(d),
-                ImageCache.getHeight(d));
+        synchronized (mView.coreView()) {
+            return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
+                    ImageCache.getWidth(d), ImageCache.getHeight(d));
+        }
     }
 
     //! 插入一个程序资源中的SVG图像(id=R.raw.name)，并指定图像的中心位置
@@ -536,8 +540,10 @@ public class ViewHelper {
         int id = ResourceUtil.getDrawableIDFromName(getContext(), name);
         name = ImageCache.BITMAP_PREFIX + name;
         final Drawable d = mView.getImageCache().addBitmap(getContext().getResources(), id, name);
-        return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
-                ImageCache.getHeight(d));
+        synchronized (mView.coreView()) {
+            return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
+                    ImageCache.getHeight(d));
+        }
     }
 
     //! 在默认位置插入一个程序资源中的位图图像(id=R.drawable.name)
@@ -550,8 +556,10 @@ public class ViewHelper {
         int id = ResourceUtil.getDrawableIDFromName(getContext(), name);
         name = ImageCache.BITMAP_PREFIX + name;
         final Drawable d = mView.getImageCache().addBitmap(getContext().getResources(), id, name);
-        return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc, ImageCache.getWidth(d),
-                ImageCache.getHeight(d));
+        synchronized (mView.coreView()) {
+            return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
+                    ImageCache.getWidth(d), ImageCache.getHeight(d));
+        }
     }
 
     //! 插入一个程序资源中的位图图像(id=R.drawable.name)，并指定图像的中心位置
@@ -569,8 +577,10 @@ public class ViewHelper {
         } else {
             d = mView.getImageCache().addBitmapFile(getContext().getResources(), filename, name);
         }
-        return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
-                ImageCache.getHeight(d));
+        synchronized (mView.coreView()) {
+            return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
+                    ImageCache.getHeight(d));
+        }
     }
 
     //! 返回图像文件的默认路径
