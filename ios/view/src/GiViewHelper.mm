@@ -8,7 +8,7 @@
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
-#define IOSLIBVERSION     2
+#define IOSLIBVERSION     3
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -427,7 +427,7 @@ static GiViewHelper *_sharedInstance = nil;
         || !path || ![self recreateDirectory:path]) {
         return NO;
     }
-    return [_view viewAdapter2]->startRecord([path UTF8String], GiViewAdapter::kUndo);
+    return [_view viewAdapter2]->startRecord(path, GiViewAdapter::kUndo);
 }
 
 - (void)stopUndoRecord {
@@ -459,10 +459,29 @@ static GiViewHelper *_sharedInstance = nil;
         || !path || ![self recreateDirectory:path]) {
         return NO;
     }
-    return [_view viewAdapter2]->startRecord([path UTF8String], GiViewAdapter::kRecord);
+    return [_view viewAdapter2]->startRecord(path, GiViewAdapter::kRecord);
 }
 
 - (void)stopRecord {
+    [_view viewAdapter2]->stopRecord(false);
+}
+
+- (BOOL)isPlaying {
+    return [_view coreView]->isPlaying();
+}
+
+- (BOOL)startPlay:(NSString *)path {
+    if ([_view coreView]->isPlaying() || !path) {
+        return NO;
+    }
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSLog(@"No recorded files in %@", path);
+        return NO;
+    }
+    return [_view viewAdapter2]->startRecord(path, GiViewAdapter::kPlay);
+}
+
+- (void)stopPlay {
     [_view viewAdapter2]->stopRecord(false);
 }
 

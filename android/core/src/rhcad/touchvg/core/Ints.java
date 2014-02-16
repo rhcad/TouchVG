@@ -43,8 +43,8 @@ public class Ints {
     this(touchvgJNI.new_Ints__SWIG_1(), true);
   }
 
-  public boolean setSize(int n) {
-    return touchvgJNI.Ints_setSize(swigCPtr, this, n);
+  public void setSize(int n) {
+    touchvgJNI.Ints_setSize(swigCPtr, this, n);
   }
 
   public int count() {

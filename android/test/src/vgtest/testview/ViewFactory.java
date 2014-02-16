@@ -44,6 +44,7 @@ public class ViewFactory {
         addItem("vgtest.testview.view.SFGraphView1", 64 | (2 << 1), "SFGraphView record line");
         addItem("vgtest.testview.view.SFGraphView1", 64 | 32 | (1 << 1), "SFGraphView record randShapes splines");
         addItem("vgtest.testview.view.SFGraphView1", 64 | 32 | (2 << 1), "SFGraphView record randShapes line");
+        addItem("vgtest.testview.view.SFGraphView1", 64, "SFGraphView play");
         addItem("vgtest.testview.view.SFGraphView1", 32 | 1, "SFGraphView select");
         addItem("vgtest.testview.view.SFGraphView1", 256 | 32 | 1, "SFGraphView select transparent");
         addItem("vgtest.testview.view.SFGraphView1", 256 | 32 | (1 << 1),
@@ -58,6 +59,7 @@ public class ViewFactory {
         addItem("vgtest.testview.view.GraphView1", 64 | (2 << 1), "StdGraphView record line");
         addItem("vgtest.testview.view.GraphView1", 64 | 32 | (1 << 1), "StdGraphView record randShapes splines");
         addItem("vgtest.testview.view.GraphView1", 64 | 32 | (2 << 1), "StdGraphView record randShapes line");
+        addItem("vgtest.testview.view.GraphView1", 64, "StdGraphView play");
         addItem("vgtest.testview.view.GraphView1", 32 | (4 << 1),
                 "StdGraphView hittest in democmds");
         addItem("vgtest.testview.view.GraphView1", 32 | 1, "StdGraphView select");

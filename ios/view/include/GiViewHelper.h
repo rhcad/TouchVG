@@ -69,6 +69,9 @@
 - (BOOL)isRecording;                        //!< 是否正在录屏
 - (BOOL)startRecord:(NSString *)path;       //!< 开始录屏，在主线程用
 - (void)stopRecord;                         //!< 停止录屏，在主线程用
+- (BOOL)isPlaying;                          //!< 是否正在播放
+- (BOOL)startPlay:(NSString *)path;         //!< 开始播放，在主线程用
+- (void)stopPlay;                           //!< 停止播放，在主线程用
 
 //! 在默认位置插入一个程序资源中的PNG图片(name.png)
 - (int)insertPNGFromResource:(NSString *)name;

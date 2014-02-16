@@ -14,15 +14,16 @@ import android.view.View;
 
 //! Android绘图手势识别类
 public class GestureListener extends SimpleOnGestureListener {
-    private static final int STOPPED = 0;
-    private static final int READY_MOVE = 1;
-    private static final int MOVING = 2;
-    private static final int END_MOVE = 3;
-    private static final int PRESS_MOVING = 4;
-    private static final int XY_COUNT = 20;
+    private static final int M_STOPPED = 0;
+    private static final int M_STARTED = 1;
+    private static final int M_READY_MOVE = 2;
+    private static final int M_MOVING = 3;
+    private static final int M_END_MOVE = 4;
+    private static final int M_PRESS_MOVING = 5;
+    private static final int XY_COUNT = 20;         // 待分发的移动轨迹点数*2
     private GiCoreView mCoreView;                   // 内核视图分发器
     private GiView mAdapter;                        // 视图回调适配器
-    private int mMoving = STOPPED;                  // 移动状态
+    private int mMoving = M_STOPPED;                // 移动状态
     private int mFingerCount;                       // 上一次的触摸点数
     private int mXYCount = 0;                       // mPoints值个数
     private float[] mPoints = new float[XY_COUNT];  // 待分发的移动轨迹
@@ -49,11 +50,11 @@ public class GestureListener extends SimpleOnGestureListener {
     }
 
     public void cancelDragging() {
-        if (mMoving == MOVING) {
-            mMoving = STOPPED;
+        if (mMoving == M_MOVING) {
+            mMoving = M_STOPPED;
             onMoved(GiGestureState.kGiGestureCancel, mFingerCount, 0, 0, 0, 0, false);
-        } else if (mMoving == PRESS_MOVING) {
-            mMoving = STOPPED;
+        } else if (mMoving == M_PRESS_MOVING) {
+            mMoving = M_STOPPED;
             mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePress,
                     GiGestureState.kGiGestureCancel, 0, 0);
         }
@@ -61,7 +62,7 @@ public class GestureListener extends SimpleOnGestureListener {
 
     @Override
     public boolean onDown(MotionEvent e) {
-        mMoving = STOPPED;
+        mMoving = M_STARTED;
         mXYCount = 0;
         if (e.getPointerCount() == 1) {
             mLastX = e.getX(0);
@@ -77,10 +78,10 @@ public class GestureListener extends SimpleOnGestureListener {
 
     @Override
     public boolean onScroll(MotionEvent downEv, MotionEvent e, float dx, float dy) {
-        if (mMoving == STOPPED) {
-            mMoving = READY_MOVE;
+        if (mMoving == M_STARTED) {
+            mMoving = M_READY_MOVE;
         }
-        return mMoving == READY_MOVE || mMoving == MOVING;
+        return mMoving == M_READY_MOVE || mMoving == M_MOVING;
     }
 
     public boolean onTouch(View v, MotionEvent e) {
@@ -93,9 +94,10 @@ public class GestureListener extends SimpleOnGestureListener {
         return false;   // to call GestureDetector.onTouchEvent
     }
 
-    public boolean onTouch(View v, int action, float x, float y) {
+    // ! 传递单指触摸事件，可用于拖放操作
+    public boolean onTouchDrag(View v, int action, float x, float y) {
         if (action == MotionEvent.ACTION_DOWN) {
-            mMoving = READY_MOVE;
+            mMoving = M_READY_MOVE;
             mXYCount = 0;
             mLastX = x;
             mLastY = y;
@@ -144,33 +146,33 @@ public class GestureListener extends SimpleOnGestureListener {
                 && Math.abs(mLastX2 - x2) < 1 && Math.abs(mLastY2 - y2) < 1) {
             return false;
         }
-        if (mMoving == READY_MOVE || (mMoving == STOPPED && fingerCount == 2)) {
+        if (mMoving == M_READY_MOVE || (mMoving == M_STARTED && fingerCount == 2)) {
             mFingerCount = fingerCount;
             mLastX = x1;
             mLastY = y1;
             mLastX2 = x2;
             mLastY2 = y2;
 
-            if (mMoving == STOPPED) {
-                mMoving = READY_MOVE;
+            if (mMoving == M_STARTED) {
+                mMoving = M_READY_MOVE;
             } else if (fingerCount == 1 && mXYCount > 0) {
-                mMoving = applyPendingPoints() ? MOVING : END_MOVE;
+                mMoving = applyPendingPoints() ? M_MOVING : M_END_MOVE;
             } else {
                 mMoving = (onMoved(GiGestureState.kGiGesturePossible, mFingerCount,
                                 x1, y1, x2, y2, false)
                         && onMoved(GiGestureState.kGiGestureBegan, mFingerCount,
-                                x1, y1, x2,y2, false)) ? MOVING : END_MOVE;
+                                x1, y1, x2,y2, false)) ? M_MOVING : M_END_MOVE;
             }
             mXYCount = 0;
-        } else if (mMoving == STOPPED && fingerCount == 1
+        } else if (mMoving == M_STARTED && fingerCount == 1
                 && mXYCount > 0 && mXYCount + 1 < XY_COUNT) {
             mPoints[mXYCount++] = x1;
             mPoints[mXYCount++] = y1;
-        } else if (mMoving == PRESS_MOVING) {
+        } else if (mMoving == M_PRESS_MOVING) {
             mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePress,
                     GiGestureState.kGiGestureMoved, x1, y1);
         }
-        if (mMoving != MOVING) {
+        if (mMoving != M_MOVING) {
             return false;
         }
 
@@ -199,17 +201,17 @@ public class GestureListener extends SimpleOnGestureListener {
 
     private boolean onTouchEnded(boolean submit, float x1, float y1, float x2, float y2) {
         if (submit && mXYCount > 2 && applyPendingPoints()) {
-            mMoving = MOVING;
+            mMoving = M_MOVING;
         }
         boolean ret = false;
-        if (mMoving == MOVING) {
+        if (mMoving == M_MOVING) {
             ret = onMoved(submit ? GiGestureState.kGiGestureEnded : GiGestureState.kGiGestureCancel,
                     mFingerCount, x1, y1, x2, y2, false);
-        } else if (mMoving == PRESS_MOVING) {
+        } else if (mMoving == M_PRESS_MOVING) {
             ret = mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePress,
                     submit ? GiGestureState.kGiGestureEnded : GiGestureState.kGiGestureCancel, 0, 0);
         }
-        mMoving = STOPPED;
+        mMoving = M_STOPPED;
         mFingerCount = 0;
 
         return ret;
@@ -235,13 +237,13 @@ public class GestureListener extends SimpleOnGestureListener {
 
     @Override
     public void onLongPress(MotionEvent e) {
-        if (mXYCount > 1
+        if (mXYCount > 1                        // onDown called
                 && mCoreView.onGesture(mAdapter, GiGestureType.kGiGesturePress,
                         GiGestureState.kGiGestureBegan, e.getX(), e.getY())) {
             mXYCount = 0;
-            mMoving = PRESS_MOVING;
-        } else if (mMoving == STOPPED) {    // onDown 后还未移动
-            mMoving = READY_MOVE;           // onTouch 中将开始移动
+            mMoving = M_PRESS_MOVING;
+        } else if (mMoving == M_STARTED) {      // onDown 后还未移动
+            mMoving = M_READY_MOVE;             // onTouch 中将开始移动
         }
     }
 
@@ -254,6 +256,7 @@ public class GestureListener extends SimpleOnGestureListener {
 
     // ! 传递单指轻击事件，可用于拖放操作
     public boolean onTap(float x, float y) {
+        mMoving = M_STOPPED;
         synchronized (mCoreView) {
             return mCoreView.onGesture(mAdapter, GiGestureType.kGiGestureTap,
                     GiGestureState.kGiGesturePossible, x, y)

@@ -43,8 +43,8 @@ public class Floats {
     this(touchvgJNI.new_Floats__SWIG_1(), true);
   }
 
-  public boolean setSize(int n) {
-    return touchvgJNI.Floats_setSize(swigCPtr, this, n);
+  public void setSize(int n) {
+    touchvgJNI.Floats_setSize(swigCPtr, this, n);
   }
 
   public int count() {

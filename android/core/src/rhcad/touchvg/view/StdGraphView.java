@@ -154,7 +154,6 @@ public class StdGraphView extends View implements GraphView {
         if (getWidth() < 2 || getHeight() < 2 || mRegenning) {
             return true;
         }
-
         try {
             if (mCachedBitmap == null) {
                 mCachedBitmap = Bitmap.createBitmap(getWidth(), getHeight(),
@@ -431,8 +430,8 @@ public class StdGraphView extends View implements GraphView {
     }
 
     @Override
-    public boolean onTouch(int action, float x, float y) {
-        return mGestureListener.onTouch(this, action, x, y);
+    public boolean onTouchDrag(int action, float x, float y) {
+        return mGestureListener.onTouchDrag(this, action, x, y);
     }
 
     @Override
@@ -454,22 +453,22 @@ public class StdGraphView extends View implements GraphView {
     }
 
     @Override
-    public void setOnCommandChangedListener(CommandChangedListener listener) {
+    public void setOnCommandChangedListener(OnCommandChangedListener listener) {
         mViewAdapter.setOnCommandChangedListener(listener);
     }
 
     @Override
-    public void setOnSelectionChangedListener(SelectionChangedListener listener) {
+    public void setOnSelectionChangedListener(OnSelectionChangedListener listener) {
         mViewAdapter.setOnSelectionChangedListener(listener);
     }
 
     @Override
-    public void setOnContentChangedListener(ContentChangedListener listener) {
+    public void setOnContentChangedListener(OnContentChangedListener listener) {
         mViewAdapter.setOnContentChangedListener(listener);
     }
 
     @Override
-    public void setOnDynamicChangedListener(DynamicChangedListener listener) {
+    public void setOnDynamicChangedListener(OnDynamicChangedListener listener) {
         mViewAdapter.setOnDynamicChangedListener(listener);
     }
 }

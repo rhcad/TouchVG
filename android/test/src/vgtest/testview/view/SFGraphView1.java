@@ -6,12 +6,17 @@ import rhcad.touchvg.view.SFGraphView;
 import rhcad.touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.ViewGroup;
 
 public class SFGraphView1 extends SFGraphView {
     protected static final String PATH = "mnt/sdcard/TouchVG/";
 
     public SFGraphView1(Context context) {
+        this(context, null);
+    }
+
+    public SFGraphView1(Context context, Bundle savedInstanceState) {
         super(context);
 
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");
@@ -20,8 +25,12 @@ public class SFGraphView1 extends SFGraphView {
         if ((flags & 32) != 0) {
             helper.addShapesForTest();
         }
-        if ((flags & 64) != 0) {
-            helper.startRecord(PATH + "record");
+        if (savedInstanceState == null) {
+            if (flags == 64) {
+                helper.startPlay(PATH + "record");
+            } else if ((flags & 64) != 0) {
+                helper.startRecord(PATH + "record");
+            }
         }
 
         flags = flags & 0x0F;

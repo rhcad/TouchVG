@@ -66,8 +66,6 @@
 }
 
 - (void)startRenderForPending {
-    _doc = 0;
-    _gs = 0;
     [self startRender_:YES];
 }
 
@@ -79,9 +77,8 @@
         _drawing = 0;
     }
     if (++_drawing == 1) {
-        UIView *mainView = _adapter->mainView();
         dispatch_async(_queue, ^{
-            CALayer *srcLayer = mainView.layer;
+            CALayer *srcLayer = _adapter->mainView().layer;
             
             if (!_layer) {
                 _layer = [[CALayer alloc]init];
@@ -359,11 +356,11 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (void)tearDown {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
     _adapter->stopRegen();
     _adapter->stopRecord(false);
     _adapter->stopRecord(true);
     self.gestureEnabled = NO;
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)undo {

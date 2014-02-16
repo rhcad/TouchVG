@@ -12805,7 +12805,17 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiPath_closeFigure(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_0(void * jarg1, unsigned int jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_0() {
+  void * jresult ;
+  GiGraphics *result = 0 ;
+  
+  result = (GiGraphics *)new GiGraphics();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_1(void * jarg1, unsigned int jarg2) {
   void * jresult ;
   GiTransform *arg1 = (GiTransform *) 0 ;
   bool arg2 ;
@@ -12819,7 +12829,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_0(void * jarg1, unsign
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_1(void * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_2(void * jarg1) {
   void * jresult ;
   GiTransform *arg1 = (GiTransform *) 0 ;
   GiGraphics *result = 0 ;
@@ -12831,7 +12841,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_1(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_2(void * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiGraphics__SWIG_3(void * jarg1) {
   void * jresult ;
   GiGraphics *arg1 = 0 ;
   GiGraphics *result = 0 ;
@@ -14227,17 +14237,13 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Ints__SWIG_1() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Ints_setSize(void * jarg1, int jarg2) {
-  unsigned int jresult ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Ints_setSize(void * jarg1, int jarg2) {
   mgvector< int > *arg1 = (mgvector< int > *) 0 ;
   int arg2 ;
-  bool result;
   
   arg1 = (mgvector< int > *)jarg1; 
   arg2 = (int)jarg2; 
-  result = (bool)(arg1)->setSize(arg2);
-  jresult = result; 
-  return jresult;
+  (arg1)->setSize(arg2);
 }
 
 
@@ -14323,17 +14329,13 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Floats__SWIG_1() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Floats_setSize(void * jarg1, int jarg2) {
-  unsigned int jresult ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Floats_setSize(void * jarg1, int jarg2) {
   mgvector< float > *arg1 = (mgvector< float > *) 0 ;
   int arg2 ;
-  bool result;
   
   arg1 = (mgvector< float > *)jarg1; 
   arg2 = (int)jarg2; 
-  result = (bool)(arg1)->setSize(arg2);
-  jresult = result; 
-  return jresult;
+  (arg1)->setSize(arg2);
 }
 
 
@@ -14419,17 +14421,13 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Chars__SWIG_1() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Chars_setSize(void * jarg1, int jarg2) {
-  unsigned int jresult ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Chars_setSize(void * jarg1, int jarg2) {
   mgvector< char > *arg1 = (mgvector< char > *) 0 ;
   int arg2 ;
-  bool result;
   
   arg1 = (mgvector< char > *)jarg1; 
   arg2 = (int)jarg2; 
-  result = (bool)(arg1)->setSize(arg2);
-  jresult = result; 
-  return jresult;
+  (arg1)->setSize(arg2);
 }
 
 
@@ -14515,17 +14513,13 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ConstShapes__SWIG_1() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConstShapes_setSize(void * jarg1, int jarg2) {
-  unsigned int jresult ;
+SWIGEXPORT void SWIGSTDCALL CSharp_ConstShapes_setSize(void * jarg1, int jarg2) {
   mgvector< MgShape const * > *arg1 = (mgvector< MgShape const * > *) 0 ;
   int arg2 ;
-  bool result;
   
   arg1 = (mgvector< MgShape const * > *)jarg1; 
   arg2 = (int)jarg2; 
-  result = (bool)(arg1)->setSize(arg2);
-  jresult = result; 
-  return jresult;
+  (arg1)->setSize(arg2);
 }
 
 
@@ -14611,17 +14605,13 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Shapes__SWIG_1() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Shapes_setSize(void * jarg1, int jarg2) {
-  unsigned int jresult ;
+SWIGEXPORT void SWIGSTDCALL CSharp_Shapes_setSize(void * jarg1, int jarg2) {
   mgvector< MgShape * > *arg1 = (mgvector< MgShape * > *) 0 ;
   int arg2 ;
-  bool result;
   
   arg1 = (mgvector< MgShape * > *)jarg1; 
   arg2 = (int)jarg2; 
-  result = (bool)(arg1)->setSize(arg2);
-  jresult = result; 
-  return jresult;
+  (arg1)->setSize(arg2);
 }
 
 
@@ -28671,6 +28661,42 @@ SWIGEXPORT void SWIGSTDCALL CSharp_MgCoreView_releaseShapes(long jarg1) {
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isDrawing(void * jarg1) {
+  unsigned int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  bool result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (bool)(arg1)->isDrawing();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isStopping(void * jarg1) {
+  unsigned int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  bool result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (bool)(arg1)->isStopping();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_stopDrawing(void * jarg1) {
+  int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (int)(arg1)->stopDrawing();
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isUndoRecording(void * jarg1) {
   unsigned int jresult ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
@@ -28752,92 +28778,6 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_canRedo(void * jarg1) {
   
   arg1 = (MgCoreView *)jarg1; 
   result = (bool)((MgCoreView const *)arg1)->canRedo();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_loadFirstFrame(void * jarg1) {
-  int jresult ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  int result;
-  
-  arg1 = (MgCoreView *)jarg1; 
-  result = (int)(arg1)->loadFirstFrame();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_loadNextFrame(void * jarg1, int jarg2) {
-  int jresult ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  int arg2 ;
-  int result;
-  
-  arg1 = (MgCoreView *)jarg1; 
-  arg2 = (int)jarg2; 
-  result = (int)(arg1)->loadNextFrame(arg2);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_loadPrevFrame(void * jarg1, int jarg2) {
-  int jresult ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  int arg2 ;
-  int result;
-  
-  arg1 = (MgCoreView *)jarg1; 
-  arg2 = (int)jarg2; 
-  result = (int)(arg1)->loadPrevFrame(arg2);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_MgCoreView_applyFrame(void * jarg1, int jarg2) {
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  int arg2 ;
-  
-  arg1 = (MgCoreView *)jarg1; 
-  arg2 = (int)jarg2; 
-  (arg1)->applyFrame(arg2);
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_getFrameIndex(void * jarg1) {
-  int jresult ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  int result;
-  
-  arg1 = (MgCoreView *)jarg1; 
-  result = (int)((MgCoreView const *)arg1)->getFrameIndex();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_getPlayingDocForEdit(void * jarg1) {
-  long jresult ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  long result;
-  
-  arg1 = (MgCoreView *)jarg1; 
-  result = (long)(arg1)->getPlayingDocForEdit();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_getDynamicShapesForEdit(void * jarg1) {
-  long jresult ;
-  MgCoreView *arg1 = (MgCoreView *) 0 ;
-  long result;
-  
-  arg1 = (MgCoreView *)jarg1; 
-  result = (long)(arg1)->getDynamicShapesForEdit();
   jresult = result; 
   return jresult;
 }
@@ -29493,30 +29433,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreView_destoryView(void * jarg1, void * j
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_isDrawing(void * jarg1) {
-  unsigned int jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  bool result;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  result = (bool)(arg1)->isDrawing();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_stopDrawing(void * jarg1) {
-  int jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  int result;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  result = (int)(arg1)->stopDrawing();
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreView_acquireGraphics(void * jarg1, void * jarg2) {
   long jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
@@ -29993,24 +29909,6 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_redo(void * jarg1, void * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_loadFrameIndex(char * jarg1, void * jarg2) {
-  unsigned int jresult ;
-  char *arg1 = (char *) 0 ;
-  mgvector< int > *arg2 = 0 ;
-  bool result;
-  
-  arg1 = (char *)jarg1; 
-  arg2 = (mgvector< int > *)jarg2;
-  if (!arg2) {
-    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "mgvector< int > & type is null", 0);
-    return 0;
-  } 
-  result = (bool)GiCoreView::loadFrameIndex((char const *)arg1,*arg2);
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_isPressDragging(void * jarg1) {
   unsigned int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
@@ -30090,6 +29988,42 @@ SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreView_acquireDynamicShapes(void * jarg1)
   
   arg1 = (GiCoreView *)jarg1; 
   result = (long)(arg1)->acquireDynamicShapes();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_isDrawing(void * jarg1) {
+  unsigned int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  bool result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  result = (bool)(arg1)->isDrawing();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_isStopping(void * jarg1) {
+  unsigned int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  bool result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  result = (bool)(arg1)->isStopping();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_stopDrawing(void * jarg1) {
+  int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  int result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  result = (int)(arg1)->stopDrawing();
   jresult = result; 
   return jresult;
 }
@@ -30176,92 +30110,6 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_canRedo(void * jarg1) {
   
   arg1 = (GiCoreView *)jarg1; 
   result = (bool)((GiCoreView const *)arg1)->canRedo();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_loadFirstFrame(void * jarg1) {
-  int jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  int result;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  result = (int)(arg1)->loadFirstFrame();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_loadNextFrame(void * jarg1, int jarg2) {
-  int jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  int arg2 ;
-  int result;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  arg2 = (int)jarg2; 
-  result = (int)(arg1)->loadNextFrame(arg2);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_loadPrevFrame(void * jarg1, int jarg2) {
-  int jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  int arg2 ;
-  int result;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  arg2 = (int)jarg2; 
-  result = (int)(arg1)->loadPrevFrame(arg2);
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreView_applyFrame(void * jarg1, int jarg2) {
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  int arg2 ;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  arg2 = (int)jarg2; 
-  (arg1)->applyFrame(arg2);
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_getFrameIndex(void * jarg1) {
-  int jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  int result;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  result = (int)((GiCoreView const *)arg1)->getFrameIndex();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreView_getPlayingDocForEdit(void * jarg1) {
-  long jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  long result;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  result = (long)(arg1)->getPlayingDocForEdit();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreView_getDynamicShapesForEdit(void * jarg1) {
-  long jresult ;
-  GiCoreView *arg1 = (GiCoreView *) 0 ;
-  long result;
-  
-  arg1 = (GiCoreView *)jarg1; 
-  result = (long)(arg1)->getDynamicShapesForEdit();
   jresult = result; 
   return jresult;
 }

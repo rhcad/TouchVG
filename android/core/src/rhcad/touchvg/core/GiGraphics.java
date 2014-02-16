@@ -35,16 +35,20 @@ public class GiGraphics {
     }
   }
 
+  public GiGraphics() {
+    this(touchvgJNI.new_GiGraphics__SWIG_0(), true);
+  }
+
   public GiGraphics(GiTransform xform, boolean needFreeXf) {
-    this(touchvgJNI.new_GiGraphics__SWIG_0(GiTransform.getCPtr(xform), xform, needFreeXf), true);
+    this(touchvgJNI.new_GiGraphics__SWIG_1(GiTransform.getCPtr(xform), xform, needFreeXf), true);
   }
 
   public GiGraphics(GiTransform xform) {
-    this(touchvgJNI.new_GiGraphics__SWIG_1(GiTransform.getCPtr(xform), xform), true);
+    this(touchvgJNI.new_GiGraphics__SWIG_2(GiTransform.getCPtr(xform), xform), true);
   }
 
   public GiGraphics(GiGraphics src) {
-    this(touchvgJNI.new_GiGraphics__SWIG_2(GiGraphics.getCPtr(src), src), true);
+    this(touchvgJNI.new_GiGraphics__SWIG_3(GiGraphics.getCPtr(src), src), true);
   }
 
   public static GiGraphics fromHandle(int h) {

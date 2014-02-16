@@ -14,47 +14,43 @@ public class ExampleActivity1 extends Activity {
     protected ViewHelper hlp = new ViewHelper();
     protected static final String PATH = "mnt/sdcard/TouchVG/";
     protected static final String VGFILE = PATH + "demo.vg";
-    protected static final String RESUME_FILE = PATH + "resume.vg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.createGraphView();
+        this.createGraphView(savedInstanceState);
         this.initButtons();
         hlp.setCommand("splines");
         hlp.setStrokeWidth(5);
 
-        hlp.startUndoRecord(PATH + "undo");
+        if (savedInstanceState == null) {
+            hlp.startUndoRecord(PATH + "undo");
+        }
     }
 
-    protected void createGraphView() {
+    protected void createGraphView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_example1);
         final ViewGroup layout = (ViewGroup) this.findViewById(R.id.frame);
         hlp.createGraphView(this, layout).setBackgroundColor(Color.WHITE);
     }
 
     @Override
+    public void onPause() {
+        new ViewHelper().onActivityPause();
+        super.onPause();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        if (hlp.saveToFile(RESUME_FILE)) {
-            outState.putString("file", RESUME_FILE);
-            outState.putString("cmd", hlp.getCommand());
-            outState.putBoolean("readOnly", hlp.cmdView().isReadOnly());
-        }
+        new ViewHelper().onSaveInstanceState(outState, PATH);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
-        final String filename = savedInstanceState.getString("file");
-        boolean readOnly = savedInstanceState.getBoolean("readOnly");
-
-        if (filename != null && hlp.loadFromFile(filename, readOnly)) {
-            hlp.setCommand(savedInstanceState.getString("cmd"));
-        }
+        new ViewHelper().onRestoreInstanceState(savedInstanceState);
     }
 
     protected void initButtons() {

@@ -248,7 +248,10 @@ static char _lastVgFile[256] = { 0 };
         
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
-        if (_testType & 64) {
+        if (_testType == 64) {
+            [[GiViewHelper sharedInstance:self] startPlay:[path stringByAppendingPathComponent:@"record"]];
+        }
+        else if (_testType & 64) {
             [[GiViewHelper sharedInstance:self] startRecord:[path stringByAppendingPathComponent:@"record"]];
         }
         [[GiViewHelper sharedInstance:self] startUndoRecord:[path stringByAppendingPathComponent:@"undo"]];

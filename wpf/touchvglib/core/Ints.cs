@@ -47,9 +47,8 @@ public class Ints : IDisposable {
   public Ints() : this(touchvgPINVOKE.new_Ints__SWIG_1(), true) {
   }
 
-  public bool setSize(int n) {
-    bool ret = touchvgPINVOKE.Ints_setSize(swigCPtr, n);
-    return ret;
+  public void setSize(int n) {
+    touchvgPINVOKE.Ints_setSize(swigCPtr, n);
   }
 
   public int count() {

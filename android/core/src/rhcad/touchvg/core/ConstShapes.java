@@ -43,8 +43,8 @@ public class ConstShapes {
     this(touchvgJNI.new_ConstShapes__SWIG_1(), true);
   }
 
-  public boolean setSize(int n) {
-    return touchvgJNI.ConstShapes_setSize(swigCPtr, this, n);
+  public void setSize(int n) {
+    touchvgJNI.ConstShapes_setSize(swigCPtr, this, n);
   }
 
   public int count() {

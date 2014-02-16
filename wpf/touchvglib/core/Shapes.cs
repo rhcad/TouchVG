@@ -47,9 +47,8 @@ public class Shapes : IDisposable {
   public Shapes() : this(touchvgPINVOKE.new_Shapes__SWIG_1(), true) {
   }
 
-  public bool setSize(int n) {
-    bool ret = touchvgPINVOKE.Shapes_setSize(swigCPtr, n);
-    return ret;
+  public void setSize(int n) {
+    touchvgPINVOKE.Shapes_setSize(swigCPtr, n);
   }
 
   public int count() {

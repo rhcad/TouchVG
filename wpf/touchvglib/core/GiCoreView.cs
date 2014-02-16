@@ -62,16 +62,6 @@ public class GiCoreView : MgCoreView {
     touchvgPINVOKE.GiCoreView_destoryView(swigCPtr, GiView.getCPtr(view));
   }
 
-  public bool isDrawing() {
-    bool ret = touchvgPINVOKE.GiCoreView_isDrawing(swigCPtr);
-    return ret;
-  }
-
-  public int stopDrawing() {
-    int ret = touchvgPINVOKE.GiCoreView_stopDrawing(swigCPtr);
-    return ret;
-  }
-
   public int acquireGraphics(GiView view) {
     int ret = touchvgPINVOKE.GiCoreView_acquireGraphics(swigCPtr, GiView.getCPtr(view));
     return ret;
@@ -216,12 +206,6 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public static bool loadFrameIndex(string path, Ints arr) {
-    bool ret = touchvgPINVOKE.GiCoreView_loadFrameIndex(path, Ints.getCPtr(arr));
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
   public override bool isPressDragging() {
     bool ret = touchvgPINVOKE.GiCoreView_isPressDragging(swigCPtr);
     return ret;
@@ -257,6 +241,21 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
+  public override bool isDrawing() {
+    bool ret = touchvgPINVOKE.GiCoreView_isDrawing(swigCPtr);
+    return ret;
+  }
+
+  public override bool isStopping() {
+    bool ret = touchvgPINVOKE.GiCoreView_isStopping(swigCPtr);
+    return ret;
+  }
+
+  public override int stopDrawing() {
+    int ret = touchvgPINVOKE.GiCoreView_stopDrawing(swigCPtr);
+    return ret;
+  }
+
   public override bool isUndoRecording() {
     bool ret = touchvgPINVOKE.GiCoreView_isUndoRecording(swigCPtr);
     return ret;
@@ -289,40 +288,6 @@ public class GiCoreView : MgCoreView {
 
   public override bool canRedo() {
     bool ret = touchvgPINVOKE.GiCoreView_canRedo(swigCPtr);
-    return ret;
-  }
-
-  public override int loadFirstFrame() {
-    int ret = touchvgPINVOKE.GiCoreView_loadFirstFrame(swigCPtr);
-    return ret;
-  }
-
-  public override int loadNextFrame(int index) {
-    int ret = touchvgPINVOKE.GiCoreView_loadNextFrame(swigCPtr, index);
-    return ret;
-  }
-
-  public override int loadPrevFrame(int index) {
-    int ret = touchvgPINVOKE.GiCoreView_loadPrevFrame(swigCPtr, index);
-    return ret;
-  }
-
-  public override void applyFrame(int flags) {
-    touchvgPINVOKE.GiCoreView_applyFrame(swigCPtr, flags);
-  }
-
-  public override int getFrameIndex() {
-    int ret = touchvgPINVOKE.GiCoreView_getFrameIndex(swigCPtr);
-    return ret;
-  }
-
-  public override int getPlayingDocForEdit() {
-    int ret = touchvgPINVOKE.GiCoreView_getPlayingDocForEdit(swigCPtr);
-    return ret;
-  }
-
-  public override int getDynamicShapesForEdit() {
-    int ret = touchvgPINVOKE.GiCoreView_getDynamicShapesForEdit(swigCPtr);
     return ret;
   }
 

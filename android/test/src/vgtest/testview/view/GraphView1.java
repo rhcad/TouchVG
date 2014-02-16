@@ -6,6 +6,7 @@ import rhcad.touchvg.view.StdGraphView;
 import rhcad.touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import democmds.core.DemoCmdsGate;
 
@@ -17,6 +18,10 @@ public class GraphView1 extends StdGraphView {
     }
 
     public GraphView1(Context context) {
+        this(context, null);
+    }
+
+    public GraphView1(Context context, Bundle savedInstanceState) {
         super(context);
 
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");
@@ -25,8 +30,12 @@ public class GraphView1 extends StdGraphView {
         if ((flags & 32) != 0) {
             hlp.addShapesForTest();
         }
-        if ((flags & 64) != 0) {
-            hlp.startRecord(PATH + "record");
+        if (savedInstanceState == null) {
+            if (flags == 64) {
+                hlp.startPlay(PATH + "record");
+            } else if ((flags & 64) != 0) {
+                hlp.startRecord(PATH + "record");
+            }
         }
 
         flags = flags & 0x0F;

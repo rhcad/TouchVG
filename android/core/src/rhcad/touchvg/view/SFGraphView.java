@@ -75,8 +75,9 @@ public class SFGraphView extends SurfaceView implements GraphView {
     }
 
     protected void initView(Context context) {
+        //setWillNotDraw(false);        // Avoid black screen
         getHolder().addCallback(new SurfaceCallback());
-        setZOrderMediaOverlay(true); // see setBackgroundColor
+        setZOrderMediaOverlay(true);    // see setBackgroundColor
 
         mGestureListener = new GestureListener(mCoreView, mViewAdapter);
         mGestureDetector = new GestureDetector(context, mGestureListener);
@@ -123,6 +124,15 @@ public class SFGraphView extends SurfaceView implements GraphView {
         mCoreView.destoryView(mViewAdapter);
         mViewAdapter.delete();
         mCoreView.delete();
+    }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+        if (mBackground != null) {
+            mBackground.draw(canvas);
+        } else {
+            canvas.drawColor(mBkColor, mBkColor == Color.TRANSPARENT ? Mode.CLEAR : Mode.SRC_OVER);
+        }
     }
 
     private int drawShapes(CanvasAdapter canvasAdapter) {
@@ -235,7 +245,8 @@ public class SFGraphView extends SurfaceView implements GraphView {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
             final Canvas canvas = holder.lockCanvas();
-            canvas.drawColor(mBkColor, mBkColor == Color.TRANSPARENT ? Mode.CLEAR : Mode.SRC_OVER);
+            boolean transparent = (mBkColor == Color.TRANSPARENT || mBackground != null);
+            canvas.drawColor(mBkColor, transparent ? Mode.CLEAR : Mode.SRC_OVER);
             holder.unlockCanvasAndPost(canvas);
 
             mRender = new RenderRunnable();
@@ -561,8 +572,8 @@ public class SFGraphView extends SurfaceView implements GraphView {
     }
 
     @Override
-    public boolean onTouch(int action, float x, float y) {
-        return mGestureListener.onTouch(this, action, x, y);
+    public boolean onTouchDrag(int action, float x, float y) {
+        return mGestureListener.onTouchDrag(this, action, x, y);
     }
 
     @Override
@@ -593,22 +604,22 @@ public class SFGraphView extends SurfaceView implements GraphView {
     }
 
     @Override
-    public void setOnCommandChangedListener(CommandChangedListener listener) {
+    public void setOnCommandChangedListener(OnCommandChangedListener listener) {
         mViewAdapter.setOnCommandChangedListener(listener);
     }
 
     @Override
-    public void setOnSelectionChangedListener(SelectionChangedListener listener) {
+    public void setOnSelectionChangedListener(OnSelectionChangedListener listener) {
         mViewAdapter.setOnSelectionChangedListener(listener);
     }
 
     @Override
-    public void setOnContentChangedListener(ContentChangedListener listener) {
+    public void setOnContentChangedListener(OnContentChangedListener listener) {
         mViewAdapter.setOnContentChangedListener(listener);
     }
 
     @Override
-    public void setOnDynamicChangedListener(DynamicChangedListener listener) {
+    public void setOnDynamicChangedListener(OnDynamicChangedListener listener) {
         mViewAdapter.setOnDynamicChangedListener(listener);
     }
 }

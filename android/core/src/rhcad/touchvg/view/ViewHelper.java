@@ -35,7 +35,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelper {
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 2;
+    private static final int JARVERSION = 3;
     private GraphView mView;
 
     static {
@@ -87,6 +87,15 @@ public class ViewHelper {
     //! 返回内核命令视图
     public MgView cmdView() {
         return MgView.fromHandle(cmdViewHandle());
+    }
+
+    //! 关闭视图
+    public void close() {
+        if (mView != null) {
+            mView.onPause();
+            ((ViewGroup)mView.getView().getParent()).removeAllViews();
+            mView = null;
+        }
     }
 
     //! 在指定的布局中创建SurfaceView绘图视图，并记下此视图
@@ -168,6 +177,8 @@ public class ViewHelper {
     //! 返回像素单位的线宽，总是为正数
     public int getStrokeWidth() {
         float w = mView.coreView().getContext(false).getLineWidth();
+        if (w < 0)
+            return Math.round(-w);
         return Math.round(mView.coreView().calcPenWidth(mView.viewAdapter(), w));
     }
 
@@ -313,8 +324,31 @@ public class ViewHelper {
         internalAdapter().stopRecord(false);
     }
 
+    //! 是否正在播放
+    public boolean isPlaying() {
+        return mView.coreView().isPlaying();
+    }
+
+    //! 开始播放
+    public boolean startPlay(String path) {
+        if (mView.coreView().isPlaying() || !new File(path).exists()) {
+            return false;
+        }
+        return internalAdapter().startRecord(path, BaseViewAdapter.START_PLAY);
+    }
+
+    //! 停止播放
+    public void stopPlay() {
+        internalAdapter().stopRecord(false);
+    }
+
     private BaseViewAdapter internalAdapter() {
         return (BaseViewAdapter)mView.viewAdapter();
+    }
+
+    //! 设置是否允许触摸交互
+    public void setGestureEnable(boolean enabled) {
+        mView.setGestureEnable(enabled);
     }
 
     //! 设置背景色，普通视图默认透明，SurfaceView默认白色背景
@@ -469,6 +503,7 @@ public class ViewHelper {
         if (path.exists()) {
             final File[] files = path.listFiles();
             if (files != null) {
+                int n = 0;
                 for (File f : files) {
                     if (f.isDirectory()) {
                         if (!deleteDirectory(f)) {
@@ -479,8 +514,13 @@ public class ViewHelper {
                         if (!f.delete()) {
                             Log.e(TAG, "Fail to delete file: " + f.getPath());
                             return false;
+                        } else {
+                            n++;
                         }
                     }
+                }
+                if (n > 0) {
+                    Log.i(TAG, n + " files deleted in " + path.getPath());
                 }
             }
         }
@@ -604,11 +644,12 @@ public class ViewHelper {
     //! 所属的Activity保存状态时调用
     public void onSaveInstanceState(Bundle outState, String path) {
         if (mView != null) {
-            final String filename = path + "/resume.vg";
+            final String filename = new File(path, "resume.vg").getPath();
             if (saveToFile(filename)) {
                 Log.d(TAG, "Auto save to " + filename);
                 outState.putString("resumevg", filename);
                 outState.putString("cmd", getCommand());
+                outState.putBoolean("readOnly", cmdView().isReadOnly());
             }
             mView = null;
         }
@@ -618,8 +659,9 @@ public class ViewHelper {
     public void onRestoreInstanceState(Bundle savedState) {
         if (mView != null) {
             final String filename = savedState.getString("resumevg");
+            boolean readOnly = savedState.getBoolean("readOnly");
 
-            if (loadFromFile(filename)) {
+            if (loadFromFile(filename, readOnly)) {
                 Log.d(TAG, "Auto load from " + filename);
                 setCommand(savedState.getString("cmd"));
             }

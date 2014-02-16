@@ -25,10 +25,17 @@ public class DummyActivity extends Activity {
         View view = null;
 
         try {
-            Class<?> c = Class.forName(bundle.getString("className"));
-            Constructor<?> c1 = c.getDeclaredConstructor(new Class[] { Context.class });
-            c1.setAccessible(true);
-            view = (View) c1.newInstance(new Object[] { this });
+            final Class<?> c = Class.forName(bundle.getString("className"));
+            try {
+                final Constructor<?> c2 = c.getDeclaredConstructor(
+                        new Class[] { Context.class, Bundle.class });
+                c2.setAccessible(true);
+                view = (View) c2.newInstance(new Object[] { this, savedInstanceState });
+            } catch (Exception e) {
+                final Constructor<?> c1 = c.getDeclaredConstructor(new Class[] { Context.class });
+                c1.setAccessible(true);
+                view = (View) c1.newInstance(new Object[] { this });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

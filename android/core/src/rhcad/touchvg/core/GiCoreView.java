@@ -59,14 +59,6 @@ public class GiCoreView extends MgCoreView {
     touchvgJNI.GiCoreView_destoryView(swigCPtr, this, GiView.getCPtr(view), view);
   }
 
-  public boolean isDrawing() {
-    return touchvgJNI.GiCoreView_isDrawing(swigCPtr, this);
-  }
-
-  public int stopDrawing() {
-    return touchvgJNI.GiCoreView_stopDrawing(swigCPtr, this);
-  }
-
   public int acquireGraphics(GiView view) {
     return touchvgJNI.GiCoreView_acquireGraphics(swigCPtr, this, GiView.getCPtr(view), view);
   }
@@ -187,10 +179,6 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_redo(swigCPtr, this, GiView.getCPtr(view), view);
   }
 
-  public static boolean loadFrameIndex(String path, Ints arr) {
-    return touchvgJNI.GiCoreView_loadFrameIndex(path, Ints.getCPtr(arr), arr);
-  }
-
   public boolean isPressDragging() {
     return touchvgJNI.GiCoreView_isPressDragging(swigCPtr, this);
   }
@@ -219,6 +207,18 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_acquireDynamicShapes(swigCPtr, this);
   }
 
+  public boolean isDrawing() {
+    return touchvgJNI.GiCoreView_isDrawing(swigCPtr, this);
+  }
+
+  public boolean isStopping() {
+    return touchvgJNI.GiCoreView_isStopping(swigCPtr, this);
+  }
+
+  public int stopDrawing() {
+    return touchvgJNI.GiCoreView_stopDrawing(swigCPtr, this);
+  }
+
   public boolean isUndoRecording() {
     return touchvgJNI.GiCoreView_isUndoRecording(swigCPtr, this);
   }
@@ -245,34 +245,6 @@ public class GiCoreView extends MgCoreView {
 
   public boolean canRedo() {
     return touchvgJNI.GiCoreView_canRedo(swigCPtr, this);
-  }
-
-  public int loadFirstFrame() {
-    return touchvgJNI.GiCoreView_loadFirstFrame(swigCPtr, this);
-  }
-
-  public int loadNextFrame(int index) {
-    return touchvgJNI.GiCoreView_loadNextFrame(swigCPtr, this, index);
-  }
-
-  public int loadPrevFrame(int index) {
-    return touchvgJNI.GiCoreView_loadPrevFrame(swigCPtr, this, index);
-  }
-
-  public void applyFrame(int flags) {
-    touchvgJNI.GiCoreView_applyFrame(swigCPtr, this, flags);
-  }
-
-  public int getFrameIndex() {
-    return touchvgJNI.GiCoreView_getFrameIndex(swigCPtr, this);
-  }
-
-  public int getPlayingDocForEdit() {
-    return touchvgJNI.GiCoreView_getPlayingDocForEdit(swigCPtr, this);
-  }
-
-  public int getDynamicShapesForEdit() {
-    return touchvgJNI.GiCoreView_getDynamicShapesForEdit(swigCPtr, this);
   }
 
   public String getCommand() {

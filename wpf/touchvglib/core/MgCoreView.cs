@@ -85,6 +85,21 @@ public class MgCoreView : IDisposable {
     touchvgPINVOKE.MgCoreView_releaseShapes(hShapes);
   }
 
+  public virtual bool isDrawing() {
+    bool ret = touchvgPINVOKE.MgCoreView_isDrawing(swigCPtr);
+    return ret;
+  }
+
+  public virtual bool isStopping() {
+    bool ret = touchvgPINVOKE.MgCoreView_isStopping(swigCPtr);
+    return ret;
+  }
+
+  public virtual int stopDrawing() {
+    int ret = touchvgPINVOKE.MgCoreView_stopDrawing(swigCPtr);
+    return ret;
+  }
+
   public virtual bool isUndoRecording() {
     bool ret = touchvgPINVOKE.MgCoreView_isUndoRecording(swigCPtr);
     return ret;
@@ -117,40 +132,6 @@ public class MgCoreView : IDisposable {
 
   public virtual bool canRedo() {
     bool ret = touchvgPINVOKE.MgCoreView_canRedo(swigCPtr);
-    return ret;
-  }
-
-  public virtual int loadFirstFrame() {
-    int ret = touchvgPINVOKE.MgCoreView_loadFirstFrame(swigCPtr);
-    return ret;
-  }
-
-  public virtual int loadNextFrame(int index) {
-    int ret = touchvgPINVOKE.MgCoreView_loadNextFrame(swigCPtr, index);
-    return ret;
-  }
-
-  public virtual int loadPrevFrame(int index) {
-    int ret = touchvgPINVOKE.MgCoreView_loadPrevFrame(swigCPtr, index);
-    return ret;
-  }
-
-  public virtual void applyFrame(int flags) {
-    touchvgPINVOKE.MgCoreView_applyFrame(swigCPtr, flags);
-  }
-
-  public virtual int getFrameIndex() {
-    int ret = touchvgPINVOKE.MgCoreView_getFrameIndex(swigCPtr);
-    return ret;
-  }
-
-  public virtual int getPlayingDocForEdit() {
-    int ret = touchvgPINVOKE.MgCoreView_getPlayingDocForEdit(swigCPtr);
-    return ret;
-  }
-
-  public virtual int getDynamicShapesForEdit() {
-    int ret = touchvgPINVOKE.MgCoreView_getDynamicShapesForEdit(swigCPtr);
     return ret;
   }
 

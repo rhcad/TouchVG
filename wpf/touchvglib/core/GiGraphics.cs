@@ -41,13 +41,16 @@ public class GiGraphics : IDisposable {
     }
   }
 
-  public GiGraphics(GiTransform xform, bool needFreeXf) : this(touchvgPINVOKE.new_GiGraphics__SWIG_0(GiTransform.getCPtr(xform), needFreeXf), true) {
+  public GiGraphics() : this(touchvgPINVOKE.new_GiGraphics__SWIG_0(), true) {
   }
 
-  public GiGraphics(GiTransform xform) : this(touchvgPINVOKE.new_GiGraphics__SWIG_1(GiTransform.getCPtr(xform)), true) {
+  public GiGraphics(GiTransform xform, bool needFreeXf) : this(touchvgPINVOKE.new_GiGraphics__SWIG_1(GiTransform.getCPtr(xform), needFreeXf), true) {
   }
 
-  public GiGraphics(GiGraphics src) : this(touchvgPINVOKE.new_GiGraphics__SWIG_2(GiGraphics.getCPtr(src)), true) {
+  public GiGraphics(GiTransform xform) : this(touchvgPINVOKE.new_GiGraphics__SWIG_2(GiTransform.getCPtr(xform)), true) {
+  }
+
+  public GiGraphics(GiGraphics src) : this(touchvgPINVOKE.new_GiGraphics__SWIG_3(GiGraphics.getCPtr(src)), true) {
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 

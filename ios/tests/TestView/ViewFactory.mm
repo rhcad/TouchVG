@@ -19,6 +19,9 @@ static UIViewController *_tmpController = nil;
     if ([view respondsToSelector:@selector(tearDown)]) {
         [view performSelector:@selector(tearDown)];
     }
+    while ([[self subviews] count] > 0) {
+        [[[self subviews] objectAtIndex:0] removeFromSuperview];
+    }
     [super removeFromSuperview];
 }
 
@@ -167,6 +170,7 @@ static UIView* addGraphView(NSMutableArray *arr, NSUInteger &i, NSUInteger index
             testGraphView(v2, type);
         }
         [wrapview addSubview:v];
+        [v RELEASE];
     }
     
     return wrapview;
@@ -227,6 +231,7 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addGraphView(arr, i, index, @"GiPaintView record line", frame, 64|4);
     addGraphView(arr, i, index, @"GiPaintView record randShapes splines", frame, 64|1|32);
     addGraphView(arr, i, index, @"GiPaintView record randShapes line", frame, 64|4|32);
+    addGraphView(arr, i, index, @"GiPaintView play", frame, 64);
     addGraphView(arr, i, index, @"GiPaintView hittest in democmds", frame, 6|32);
     addGraphView(arr, i, index, @"GiPaintView add images", frame, 7);
     addGraphView(arr, i, index, @"GiPaintView load images", frame, 8);

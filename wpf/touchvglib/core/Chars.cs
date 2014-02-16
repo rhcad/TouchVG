@@ -47,9 +47,8 @@ public class Chars : IDisposable {
   public Chars() : this(touchvgPINVOKE.new_Chars__SWIG_1(), true) {
   }
 
-  public bool setSize(int n) {
-    bool ret = touchvgPINVOKE.Chars_setSize(swigCPtr, n);
-    return ret;
+  public void setSize(int n) {
+    touchvgPINVOKE.Chars_setSize(swigCPtr, n);
   }
 
   public int count() {

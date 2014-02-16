@@ -273,20 +273,16 @@ SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_new_1Floats_1_1SWIG_11(J
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_Floats_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jboolean jresult = 0 ;
+SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_Floats_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   mgvector< float > *arg1 = (mgvector< float > *) 0 ;
   int arg2 ;
-  bool result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(mgvector< float > **)&jarg1; 
   arg2 = (int)jarg2; 
-  result = (bool)(arg1)->setSize(arg2);
-  jresult = (jboolean)result; 
-  return jresult;
+  (arg1)->setSize(arg2);
 }
 
 
@@ -390,20 +386,16 @@ SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_new_1Chars_1_1SWIG_11(JN
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_democmds_core_democmdsJNI_Chars_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jboolean jresult = 0 ;
+SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_Chars_1setSize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   mgvector< char > *arg1 = (mgvector< char > *) 0 ;
   int arg2 ;
-  bool result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(mgvector< char > **)&jarg1; 
   arg2 = (int)jarg2; 
-  result = (bool)(arg1)->setSize(arg2);
-  jresult = (jboolean)result; 
-  return jresult;
+  (arg1)->setSize(arg2);
 }
 
 

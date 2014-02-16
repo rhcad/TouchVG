@@ -9,10 +9,10 @@ import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
 import rhcad.touchvg.core.Ints;
 import rhcad.touchvg.view.GraphView;
-import rhcad.touchvg.view.GraphView.CommandChangedListener;
-import rhcad.touchvg.view.GraphView.ContentChangedListener;
-import rhcad.touchvg.view.GraphView.DynamicChangedListener;
-import rhcad.touchvg.view.GraphView.SelectionChangedListener;
+import rhcad.touchvg.view.GraphView.OnCommandChangedListener;
+import rhcad.touchvg.view.GraphView.OnContentChangedListener;
+import rhcad.touchvg.view.GraphView.OnDynamicChangedListener;
+import rhcad.touchvg.view.GraphView.OnSelectionChangedListener;
 
 //! 视图回调适配器
 public abstract class BaseViewAdapter extends GiView {
@@ -22,10 +22,10 @@ public abstract class BaseViewAdapter extends GiView {
     protected static final String TAG = "touchvg";
     private ContextAction mAction;
     private boolean mActionEnabled = true;
-    private ArrayList<CommandChangedListener> commandChangedListeners;
-    private ArrayList<SelectionChangedListener> selectionChangedListeners;
-    private ArrayList<ContentChangedListener> contentChangedListeners;
-    private ArrayList<DynamicChangedListener> dynamicChangedListeners;
+    private ArrayList<OnCommandChangedListener> commandChangedListeners;
+    private ArrayList<OnSelectionChangedListener> selectionChangedListeners;
+    private ArrayList<OnContentChangedListener> contentChangedListeners;
+    private ArrayList<OnDynamicChangedListener> dynamicChangedListeners;
     protected RecordRunnable mUndoing;
     protected RecordRunnable mRecorder;
     private boolean mDrawStopping = false;
@@ -74,7 +74,7 @@ public abstract class BaseViewAdapter extends GiView {
     @Override
     public void commandChanged() {
         if (commandChangedListeners != null) {
-            for (CommandChangedListener listener : commandChangedListeners) {
+            for (OnCommandChangedListener listener : commandChangedListeners) {
                 listener.onCommandChanged(getGraphView());
             }
         }
@@ -83,7 +83,7 @@ public abstract class BaseViewAdapter extends GiView {
     @Override
     public void selectionChanged() {
         if (selectionChangedListeners != null) {
-            for (SelectionChangedListener listener : selectionChangedListeners) {
+            for (OnSelectionChangedListener listener : selectionChangedListeners) {
                 listener.onSelectionChanged(getGraphView());
             }
         }
@@ -92,7 +92,7 @@ public abstract class BaseViewAdapter extends GiView {
     @Override
     public void contentChanged() {
         if (contentChangedListeners != null) {
-            for (ContentChangedListener listener : contentChangedListeners) {
+            for (OnContentChangedListener listener : contentChangedListeners) {
                 listener.onContentChanged(getGraphView());
             }
         }
@@ -101,33 +101,33 @@ public abstract class BaseViewAdapter extends GiView {
     @Override
     public void dynamicChanged() {
         if (dynamicChangedListeners != null) {
-            for (DynamicChangedListener listener : dynamicChangedListeners) {
+            for (OnDynamicChangedListener listener : dynamicChangedListeners) {
                 listener.onDynamicChanged(getGraphView());
             }
         }
     }
 
-    public void setOnCommandChangedListener(CommandChangedListener listener) {
+    public void setOnCommandChangedListener(OnCommandChangedListener listener) {
         if (this.commandChangedListeners == null)
-            this.commandChangedListeners = new ArrayList<CommandChangedListener>();
+            this.commandChangedListeners = new ArrayList<OnCommandChangedListener>();
         this.commandChangedListeners.add(listener);
     }
 
-    public void setOnSelectionChangedListener(SelectionChangedListener listener) {
+    public void setOnSelectionChangedListener(OnSelectionChangedListener listener) {
         if (this.selectionChangedListeners == null)
-            this.selectionChangedListeners = new ArrayList<SelectionChangedListener>();
+            this.selectionChangedListeners = new ArrayList<OnSelectionChangedListener>();
         this.selectionChangedListeners.add(listener);
     }
 
-    public void setOnContentChangedListener(ContentChangedListener listener) {
+    public void setOnContentChangedListener(OnContentChangedListener listener) {
         if (this.contentChangedListeners == null)
-            this.contentChangedListeners = new ArrayList<ContentChangedListener>();
+            this.contentChangedListeners = new ArrayList<OnContentChangedListener>();
         this.contentChangedListeners.add(listener);
     }
 
-    public void setOnDynamicChangedListener(DynamicChangedListener listener) {
+    public void setOnDynamicChangedListener(OnDynamicChangedListener listener) {
         if (this.dynamicChangedListeners == null)
-            this.dynamicChangedListeners = new ArrayList<DynamicChangedListener>();
+            this.dynamicChangedListeners = new ArrayList<OnDynamicChangedListener>();
         this.dynamicChangedListeners.add(listener);
     }
 
@@ -144,6 +144,19 @@ public abstract class BaseViewAdapter extends GiView {
         coreView().stopDrawing();
         stopRecord(true);
         stopRecord(false);
+    }
+
+    public void stopRecord(boolean forUndo) {
+        synchronized (coreView()) {
+            if (forUndo && mUndoing != null) {
+                mUndoing.stop();
+                mUndoing = null;
+            }
+            if (!forUndo && mRecorder != null) {
+                mRecorder.stop();
+                mRecorder = null;
+            }
+        }
     }
 
     public boolean startRecord(String path, int type) {
@@ -166,17 +179,6 @@ public abstract class BaseViewAdapter extends GiView {
         }
 
         return true;
-    }
-
-    public void stopRecord(boolean forUndo) {
-        if (forUndo && mUndoing != null) {
-            mUndoing.stop();
-            mUndoing = null;
-        }
-        if (!forUndo && mRecorder != null) {
-            mRecorder.stop();
-            mRecorder = null;
-        }
     }
 
     public void undo() {
@@ -251,13 +253,6 @@ public abstract class BaseViewAdapter extends GiView {
                     e.printStackTrace();
                 }
             }
-            mCoreView.stopRecord(mType == START_UNDO);
-            for (int i = 0; i < mPending.length; i++) {
-                if (mPending[i] != 0) {
-                    GiCoreView.releaseDoc(mPending[i + 1]);
-                    GiCoreView.releaseShapes(mPending[i + 2]);
-                }
-            }
             mCoreView = null;
         }
 
@@ -271,8 +266,20 @@ public abstract class BaseViewAdapter extends GiView {
                         e.printStackTrace();
                     }
                 }
-                if (!isStopping())
-                    process();
+                if (!isStopping()) {
+                    try {
+                        process();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            mCoreView.stopRecord(mType == START_UNDO);
+            for (int i = 0; i < mPending.length; i++) {
+                if (mPending[i] != 0) {
+                    GiCoreView.releaseDoc(mPending[i + 1]);
+                    GiCoreView.releaseShapes(mPending[i + 2]);
+                }
             }
             synchronized (mPending) {
                 mPending.notify();

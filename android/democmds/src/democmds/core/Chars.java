@@ -43,8 +43,8 @@ public class Chars {
     this(democmdsJNI.new_Chars__SWIG_1(), true);
   }
 
-  public boolean setSize(int n) {
-    return democmdsJNI.Chars_setSize(swigCPtr, this, n);
+  public void setSize(int n) {
+    democmdsJNI.Chars_setSize(swigCPtr, this, n);
   }
 
   public int count() {

@@ -43,8 +43,8 @@ public class Floats {
     this(democmdsJNI.new_Floats__SWIG_1(), true);
   }
 
-  public boolean setSize(int n) {
-    return democmdsJNI.Floats_setSize(swigCPtr, this, n);
+  public void setSize(int n) {
+    democmdsJNI.Floats_setSize(swigCPtr, this, n);
   }
 
   public int count() {

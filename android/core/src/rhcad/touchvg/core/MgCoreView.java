@@ -72,6 +72,18 @@ public class MgCoreView {
     touchvgJNI.MgCoreView_releaseShapes(hShapes);
   }
 
+  public boolean isDrawing() {
+    return touchvgJNI.MgCoreView_isDrawing(swigCPtr, this);
+  }
+
+  public boolean isStopping() {
+    return touchvgJNI.MgCoreView_isStopping(swigCPtr, this);
+  }
+
+  public int stopDrawing() {
+    return touchvgJNI.MgCoreView_stopDrawing(swigCPtr, this);
+  }
+
   public boolean isUndoRecording() {
     return touchvgJNI.MgCoreView_isUndoRecording(swigCPtr, this);
   }
@@ -98,34 +110,6 @@ public class MgCoreView {
 
   public boolean canRedo() {
     return touchvgJNI.MgCoreView_canRedo(swigCPtr, this);
-  }
-
-  public int loadFirstFrame() {
-    return touchvgJNI.MgCoreView_loadFirstFrame(swigCPtr, this);
-  }
-
-  public int loadNextFrame(int index) {
-    return touchvgJNI.MgCoreView_loadNextFrame(swigCPtr, this, index);
-  }
-
-  public int loadPrevFrame(int index) {
-    return touchvgJNI.MgCoreView_loadPrevFrame(swigCPtr, this, index);
-  }
-
-  public void applyFrame(int flags) {
-    touchvgJNI.MgCoreView_applyFrame(swigCPtr, this, flags);
-  }
-
-  public int getFrameIndex() {
-    return touchvgJNI.MgCoreView_getFrameIndex(swigCPtr, this);
-  }
-
-  public int getPlayingDocForEdit() {
-    return touchvgJNI.MgCoreView_getPlayingDocForEdit(swigCPtr, this);
-  }
-
-  public int getDynamicShapesForEdit() {
-    return touchvgJNI.MgCoreView_getDynamicShapesForEdit(swigCPtr, this);
   }
 
   public boolean isPressDragging() {

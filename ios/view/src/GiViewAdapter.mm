@@ -106,21 +106,18 @@ int GiViewAdapter::getAppendID(int index) const {
     return index < APPENDSIZE ? _appendIDs[index] : 0;
 }
 
-bool GiViewAdapter::startRecord(const char* path, RecordType type)
+bool GiViewAdapter::startRecord(NSString *path, RecordType type)
 {
     int i = type > kUndo ? 1 : 0;
     if (type < kUndo || type > kPlay || _recordQueue[i])
         return false;
     
     long doc = type < kPlay ? _coreView->acquireFrontDoc() : 0;
-    if (!_coreView->startRecord(path, doc, type == kUndo))
+    if (!_coreView->startRecord([path UTF8String], doc, type == kUndo))
         return NO;
     
     const char* labels[] = { "touchvg.undo", "touchvg.record", "touchvg.play" };
     _recordQueue[i] = dispatch_queue_create(labels[type], NULL);
-    
-    if (type == kPlay && _recordQueue[i] && getDynView()) {
-    }
     
     return true;
 }
@@ -150,9 +147,12 @@ void GiViewAdapter::redo() {
 void GiViewAdapter::stopRecord(bool forUndo)
 {
     int i = forUndo ? 0 : 1;
+    
     if (_recordQueue[i]) {
         dispatch_async(_recordQueue[i], ^{
-            _coreView->stopRecord(forUndo);
+            if (_view.window) {
+                _coreView->stopRecord(forUndo);
+            }
         });
         dispatch_release(_recordQueue[i]);
         _recordQueue[i] = NULL;
@@ -176,7 +176,7 @@ void GiViewAdapter::regenAll(bool changed) {
     bool loading = _coreView->isUndoLoading();
     if (isMainThread()) {
         regen_(changed, 0, loading);
-    } else {
+    } else if (_view.window) {
         dispatch_async(dispatch_get_main_queue(), ^{
             regen_(changed, 0, loading);
         });
@@ -184,7 +184,7 @@ void GiViewAdapter::regenAll(bool changed) {
 }
 
 void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
-    if (!_view.window) {
+    if (_coreView->isStopping() || !_view.window) {
         return;
     }
     
@@ -270,7 +270,7 @@ void GiViewAdapter::redraw_() {
 void GiViewAdapter::redraw() {
     if (isMainThread()) {
         redraw_();
-    } else {
+    } else if (_view.window) {
         dispatch_async(dispatch_get_main_queue(), ^{ redraw_(); });
     }
 }

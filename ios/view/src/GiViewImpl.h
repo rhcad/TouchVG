@@ -55,7 +55,7 @@ private:
     dispatch_queue_t _recordQueue[2];   //!< 录制队列
     
 public:
-    std::vector<id> delegates;  //!< GiPaintViewDelegate 观察者数组
+    std::vector<id> delegates;          //!< GiPaintViewDelegate 观察者数组
     struct {
         unsigned int didCommandChanged:1;
         unsigned int didSelectionChanged:1;
@@ -82,7 +82,7 @@ public:
     void undo();
     void redo();
     enum RecordType { kUndo, kRecord, kPlay };
-    bool startRecord(const char* path, RecordType type);
+    bool startRecord(NSString *path, RecordType type);
     void stopRecord(bool forUndo);
     
     virtual void regenAll(bool changed);
