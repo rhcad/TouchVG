@@ -15,13 +15,7 @@ static UIViewController *_tmpController = nil;
 @implementation GiWrapperView
 
 - (void)removeFromSuperview {
-    UIView *view = [[self subviews] count] > 0 ? [[self subviews] objectAtIndex:0] : nil;
-    if ([view respondsToSelector:@selector(tearDown)]) {
-        [view performSelector:@selector(tearDown)];
-    }
-    while ([[self subviews] count] > 0) {
-        [[[self subviews] objectAtIndex:0] removeFromSuperview];
-    }
+    [GiViewHelper removeSubviews:self];
     [super removeFromSuperview];
 }
 

@@ -50,13 +50,13 @@
     return _subview1 ? _subview1.superview : _subview2.superview;
 }
 
-- (BOOL)savePng:(NSString *)filename
+- (BOOL)exportPNG:(NSString *)filename
 {
     if (_subview1) {
-        return [_subview1 savePng:filename];
+        return [_subview1 exportPNG:filename];
     }
     else {
-        return [_subview2 savePng:filename];
+        return [_subview2 exportPNG:filename];
     }
 }
 

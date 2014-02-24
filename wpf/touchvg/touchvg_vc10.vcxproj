@@ -121,6 +121,8 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Swig generating...</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir "$(ProjectDir)..\touchvglib\core" -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\canvas" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\graph" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\test" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\view" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\storage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\geom" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shape" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdobserver" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbase" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbasic" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shapedoc" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\jsonstorage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdmgr" "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)touchvg_csharp_wrap.cpp;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

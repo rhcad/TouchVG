@@ -22,7 +22,7 @@ public:
     virtual ~GiCanvasAdapter();
     
     //! 在给定上下文上开始绘制
-    bool beginPaint(CGContextRef context);
+    bool beginPaint(CGContextRef context, bool fast = false);
     
     //! 结束绘制
     void endPaint();

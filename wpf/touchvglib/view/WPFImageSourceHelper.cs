@@ -25,11 +25,13 @@ namespace touchvg.view
                 return null;
             IntPtr ip = bitmap.GetHbitmap();
             BitmapSource bitmapSource = null;
-            try {
-                bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(ip, IntPtr.Zero, 
+            try
+            {
+                bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(ip, IntPtr.Zero,
                     Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
-            finally {
+            finally
+            {
                 DeleteObject(ip);
             }
             return bitmapSource;

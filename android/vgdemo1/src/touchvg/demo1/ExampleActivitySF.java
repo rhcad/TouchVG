@@ -2,6 +2,7 @@
 
 package touchvg.demo1;
 
+import rhcad.touchvg.view.GraphView;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ public class ExampleActivitySF extends ExampleActivity1 {
         setContentView(R.layout.activity_example1);
         final ViewGroup layout = (ViewGroup) this.findViewById(R.id.frame);
         hlp.createSurfaceView(this, layout).setBackgroundColor(Color.GRAY);
+    }
 
-        if (savedInstanceState == null) {
-            hlp.startRecord(PATH + "record");
-        }
+    @Override
+    public void onFirstRegen(GraphView view) {
+        super.onFirstRegen(view);
+        hlp.startRecord(PATH + "record");
     }
 }

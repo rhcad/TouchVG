@@ -2,6 +2,7 @@
 
 package touchvg.demo1;
 
+import rhcad.touchvg.view.GraphView;
 import rhcad.touchvg.view.ViewHelper;
 import android.app.Activity;
 import android.graphics.Color;
@@ -10,7 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-public class ExampleActivity1 extends Activity {
+public class ExampleActivity1 extends Activity implements GraphView.OnFirstRegenListener {
     protected ViewHelper hlp = new ViewHelper();
     protected static final String PATH = "mnt/sdcard/TouchVG/";
     protected static final String VGFILE = PATH + "demo.vg";
@@ -25,7 +26,7 @@ public class ExampleActivity1 extends Activity {
         hlp.setStrokeWidth(5);
 
         if (savedInstanceState == null) {
-            hlp.startUndoRecord(PATH + "undo");
+            hlp.getGraphView().setOnFirstRegenListener(this);
         }
     }
 
@@ -36,9 +37,21 @@ public class ExampleActivity1 extends Activity {
     }
 
     @Override
+    public void onDestroy() {
+        new ViewHelper().onActivityDestroy();
+        super.onDestroy();
+    }
+
+    @Override
     public void onPause() {
         new ViewHelper().onActivityPause();
         super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        new ViewHelper().onActivityResume();
+        super.onResume();
     }
 
     @Override
@@ -51,6 +64,10 @@ public class ExampleActivity1 extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         new ViewHelper().onRestoreInstanceState(savedInstanceState);
+    }
+
+    public void onFirstRegen(GraphView view) {
+        hlp.startUndoRecord(PATH + "undo");
     }
 
     protected void initButtons() {

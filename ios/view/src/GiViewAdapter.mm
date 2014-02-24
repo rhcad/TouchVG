@@ -22,7 +22,7 @@ static int getExtraImageCount() { int n = 0; while (EXTIMAGENAMES[n]) n++; retur
 
 //! Button class for showContextActions().
 @interface UIButtonAutoHide : UIButton
-@property (nonatomic,assign) GiPaintView *delegate;
+@property (nonatomic, WEAK) GiPaintView *delegate;
 @end
 
 @implementation UIButtonAutoHide
@@ -43,13 +43,16 @@ static int getExtraImageCount() { int n = 0; while (EXTIMAGENAMES[n]) n++; retur
 
 GiViewAdapter::GiViewAdapter(GiPaintView *mainView, GiCoreView *coreView)
     : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
-    , _actionEnabled(true), _oldAppendCount(0)
+    , _actionEnabled(true), _oldAppendCount(0), _regenCount(0), _render(nil)
 {
     _coreView = new GiCoreView(coreView);
     memset(&respondsTo, 0, sizeof(respondsTo));
     _imageCache = [[ImageCache alloc]init];
-    _render = [[GiLayerRender alloc]initWithAdapter:this];
     _recordQueue[0] = _recordQueue[1] = NULL;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        _render = [[GiLayerRender alloc]initWithAdapter:this];
+    }
     
     for (int i = 0; i < APPENDSIZE; i++)
         _appendIDs[i] = 0;
@@ -65,9 +68,8 @@ GiViewAdapter::~GiViewAdapter() {
 }
 
 void GiViewAdapter::clearCachedData() {
-    if (_buttonImages) {
-        [_buttonImages removeAllObjects];
-    }
+    [_buttonImages removeAllObjects];
+    [_render clearCachedData];
     _coreView->clearCachedData();
 }
 
@@ -86,17 +88,41 @@ void GiViewAdapter::beginRender() {
 }
 
 bool GiViewAdapter::renderInContext(CGContextRef ctx) {
-    if (![_render getLayer]) {
-        return false;
+    if (_render) {
+        if (![_render getLayer]) {
+            return false;
+        }
+        
+        [[_render getLayer] renderInContext:ctx];
+        
+        for (int i = 0, j = _oldAppendCount; i < APPENDSIZE; i++, j++) {
+            _appendIDs[i] = j < APPENDSIZE ? _appendIDs[j] : 0;
+        }
+        _oldAppendCount = 0;
+        [_render startRenderForPending];
     }
-    
-    [[_render getLayer] renderInContext:ctx];
-    
-    for (int i = 0, j = _oldAppendCount; i < APPENDSIZE; i++, j++) {
-        _appendIDs[i] = j < APPENDSIZE ? _appendIDs[j] : 0;
+    else {
+        GiCanvasAdapter canvas(imageCache());
+        __block long doc, gs;
+        
+        if (isMainThread()) {
+            doc = _coreView->acquireFrontDoc();
+            gs = _coreView->acquireGraphics(this);
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                doc = _coreView->acquireFrontDoc();
+                gs = _coreView->acquireGraphics(this);
+            });
+        }
+        if (canvas.beginPaint(ctx)) {
+            _coreView->drawAll(doc, gs, &canvas);
+            canvas.endPaint();
+        }
+        GiCoreView::releaseDoc(doc);
+        _coreView->releaseGraphics(gs);
+        for (int i = 0; i < APPENDSIZE; i++)
+            _appendIDs[i] = 0;
     }
-    _oldAppendCount = 0;
-    [_render startRenderForPending];
     [_dynview setNeedsDisplay];
     
     return true;
@@ -113,11 +139,16 @@ bool GiViewAdapter::startRecord(NSString *path, RecordType type)
         return false;
     
     long doc = type < kPlay ? _coreView->acquireFrontDoc() : 0;
+    if (type < kPlay && doc == 0) {
+        NSLog(@"Fail to record shapes due to no front doc");
+        return false;
+    }
     if (!_coreView->startRecord([path UTF8String], doc, type == kUndo))
-        return NO;
+        return false;
     
     const char* labels[] = { "touchvg.undo", "touchvg.record", "touchvg.play" };
     _recordQueue[i] = dispatch_queue_create(labels[type], NULL);
+    _recordStopping[i] = false;
     
     return true;
 }
@@ -149,6 +180,7 @@ void GiViewAdapter::stopRecord(bool forUndo)
     int i = forUndo ? 0 : 1;
     
     if (_recordQueue[i]) {
+        _recordStopping[i] = true;
         dispatch_async(_recordQueue[i], ^{
             if (_view.window) {
                 _coreView->stopRecord(forUndo);
@@ -188,29 +220,28 @@ void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
         return;
     }
     
-    long doc0 = 0, shapes0 = 0, doc1 = 0, shapes1 = 0;
+    long doc0 = 0, doc1 = 0, shapes1 = 0, docd = 0;
     
     if (!_coreView->isPlaying()) {
         if (loading) {
             doc1 = _coreView->acquireFrontDoc();
             shapes1 = _coreView->acquireDynamicShapes();
         } else {
-            if (changed && _coreView->submitBackDoc(this)) {
+            if (changed || _regenCount == 0) {
+                _coreView->submitBackDoc(this);
                 if (_recordQueue[0])
                     doc0 = _coreView->acquireFrontDoc();
                 if (_recordQueue[1])
                     doc1 = _coreView->acquireFrontDoc();
             }
             if (_coreView->submitDynamicShapes(this)) {
-                if (_recordQueue[0])
-                    shapes0 = _coreView->acquireDynamicShapes();
                 if (_recordQueue[1])
                     shapes1 = _coreView->acquireDynamicShapes();
             }
         }
     }
     
-    recordShapes(true, doc0, shapes0);
+    recordShapes(true, doc0, 0);
     recordShapes(false, doc1, shapes1);
     
     for (int i = 0; i < APPENDSIZE; i++) {
@@ -221,7 +252,15 @@ void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
             break;
         }
     }
-    [_render startRender:_coreView->acquireFrontDoc() :_coreView->acquireGraphics(this)];
+    if (_render) {
+        docd = _coreView->acquireFrontDoc();
+        [_render startRender:docd :_coreView->acquireGraphics(this)];
+    } else {
+        [_view setNeedsDisplay];
+    }
+    if ((doc0 || doc1 || docd) && ++_regenCount == 1) {
+        onFirstRegen();
+    }
 }
 
 void GiViewAdapter::regenAppend(int sid) {
@@ -234,6 +273,8 @@ void GiViewAdapter::regenAppend(int sid) {
 
 void GiViewAdapter::stopRegen() {
     _coreView->stopDrawing();
+    [_render stopRender];
+    _view = nil;
 }
 
 UIView *GiViewAdapter::getDynView() {
@@ -411,6 +452,9 @@ void GiViewAdapter::commandChanged() {
             [delegates[i] onCommandChanged:_view];
         }
     }
+    if ([_view respondsToSelector:@selector(onCommandChanged:)]) {
+        [_view performSelector:@selector(onCommandChanged:) withObject:_view];
+    }
 }
 
 void GiViewAdapter::selectionChanged() {
@@ -418,6 +462,9 @@ void GiViewAdapter::selectionChanged() {
         if ([delegates[i] respondsToSelector:@selector(onSelectionChanged:)]) {
             [delegates[i] onSelectionChanged:_view];
         }
+    }
+    if ([_view respondsToSelector:@selector(onSelectionChanged:)]) {
+        [_view performSelector:@selector(onSelectionChanged:) withObject:_view];
     }
 }
 
@@ -427,6 +474,9 @@ void GiViewAdapter::contentChanged() {
             [delegates[i] onContentChanged:_view];
         }
     }
+    if ([_view respondsToSelector:@selector(onContentChanged:)]) {
+        [_view performSelector:@selector(onContentChanged:) withObject:_view];
+    }
 }
 
 void GiViewAdapter::dynamicChanged() {
@@ -434,5 +484,20 @@ void GiViewAdapter::dynamicChanged() {
         if ([delegates[i] respondsToSelector:@selector(onDynamicChanged:)]) {
             [delegates[i] onDynamicChanged:_view];
         }
+    }
+    if ([_view respondsToSelector:@selector(onDynamicChanged:)]) {
+        [_view performSelector:@selector(onDynamicChanged:) withObject:_view];
+    }
+}
+
+void GiViewAdapter::onFirstRegen()
+{
+    for (size_t i = 0; i < delegates.size(); i++) {
+        if ([delegates[i] respondsToSelector:@selector(onFirstRegen:)]) {
+            [delegates[i] onFirstRegen:_view];
+        }
+    }
+    if ([_view respondsToSelector:@selector(onFirstRegen:)]) {
+        [_view performSelector:@selector(onFirstRegen:) withObject:_view];
     }
 }

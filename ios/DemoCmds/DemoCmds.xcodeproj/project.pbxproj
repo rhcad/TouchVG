@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AE2A3A4D178FC511000194AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3A4C178FC511000194AE /* Foundation.framework */; };
-		AE2A3B4C178FC7C1000194AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */; };
-		AE2A3B4E178FC7EB000194AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4D178FC7EB000194AE /* UIKit.framework */; };
 		AE97A1B3186D5A3700DFEA77 /* mgvector.h in Headers */ = {isa = PBXBuildFile; fileRef = AE97A188186D51CE00DFEA77 /* mgvector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEF6D1F918050FA9009E30CC /* cmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AEF6D18B18050FA9009E30CC /* cmds.cpp */; };
 		AEF6D1FA18050FA9009E30CC /* cmds.h in Headers */ = {isa = PBXBuildFile; fileRef = AEF6D18C18050FA9009E30CC /* cmds.h */; };
@@ -21,10 +18,7 @@
 
 /* Begin PBXFileReference section */
 		AE2A3A49178FC511000194AE /* libDemoCmds.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDemoCmds.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE2A3A4C178FC511000194AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE2A3A50178FC511000194AE /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		AE2A3B4D178FC7EB000194AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		AE97A152186D51CE00DFEA77 /* gicanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gicanvas.h; sourceTree = "<group>"; };
 		AE97A154186D51CE00DFEA77 /* mgaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgaction.h; sourceTree = "<group>"; };
 		AE97A155186D51CE00DFEA77 /* mgcmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgcmd.h; sourceTree = "<group>"; };
@@ -80,9 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE2A3B4E178FC7EB000194AE /* UIKit.framework in Frameworks */,
-				AE2A3B4C178FC7C1000194AE /* CoreGraphics.framework in Frameworks */,
-				AE2A3A4D178FC511000194AE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,9 +100,6 @@
 		AE2A3A4B178FC511000194AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AE2A3B4D178FC7EB000194AE /* UIKit.framework */,
-				AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */,
-				AE2A3A4C178FC511000194AE /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

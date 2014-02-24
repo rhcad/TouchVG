@@ -15,6 +15,6 @@
 @property(nonatomic, readonly) GiPaintView  *subview2;
 
 - (id)initWithFrame:(CGRect)frame withType:(int)type;
-- (BOOL)savePng:(NSString *)filename;
+- (BOOL)exportPNG:(NSString *)filename;
 
 @end

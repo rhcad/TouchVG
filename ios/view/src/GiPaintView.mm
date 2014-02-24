@@ -25,7 +25,7 @@
     long hShapes = coreView->acquireDynamicShapes();
     long hGs = coreView->acquireGraphics(_adapter);
     
-    if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
+    if (canvas.beginPaint(UIGraphicsGetCurrentContext(), true)) {
         for (int i = 0, sid = 0; (sid = _adapter->getAppendID(i)) != 0; i++) {
             coreView->drawAppend(hDoc, hGs, &canvas, sid);
         }
@@ -50,13 +50,33 @@
 }
 
 - (void)dealloc {
-    dispatch_release(_queue);
-    [_layer RELEASE];
     [super DEALLOC];
 }
 
 - (CALayer *)getLayer {
     return _layer;
+}
+
+- (void)stopRender {
+    if (_queue) {
+        dispatch_release(_queue);
+        _queue = NULL;
+    }
+    if (_layer) {
+        _layer.delegate = nil;
+        [_layer RELEASE];
+        _layer = nil;
+    }
+}
+
+- (void)clearCachedData {
+    if (_queue && _layer) {
+        dispatch_async(_queue, ^{
+            _layer.delegate = nil;
+            [_layer RELEASE];
+            _layer = nil;
+        });
+    }
 }
 
 - (void)startRender:(long)doc :(long)gs {
@@ -76,16 +96,17 @@
         }
         _drawing = 0;
     }
-    if (++_drawing == 1) {
+    
+    CALayer *srcLayer = _adapter->mainView().layer;
+    if (++_drawing == 1 && _queue && srcLayer) {
+        if (!_layer) {
+            _layer = [[CALayer alloc]init];
+            _layer.delegate = self;
+            _layer.contentsScale = srcLayer.contentsScale;
+            _layer.doubleSided = NO;
+            _layer.drawsAsynchronously = YES;
+        }
         dispatch_async(_queue, ^{
-            CALayer *srcLayer = _adapter->mainView().layer;
-            
-            if (!_layer) {
-                _layer = [[CALayer alloc]init];
-                _layer.delegate = self;
-                _layer.contentsScale = srcLayer.contentsScale;
-            }
-            
             _layer.frame = srcLayer.frame;
             _layer.position = srcLayer.position;
             [_layer setAffineTransform:[srcLayer affineTransform]];
@@ -100,7 +121,7 @@
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
     
-    if (!_doc) {
+    if (!_doc && !_gs) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             _adapter->beginRender();
             _doc = coreView->acquireFrontDoc();
@@ -137,12 +158,16 @@ GiColor CGColorToGiColor(CGColorRef color);
 @synthesize pinchRecognizer = _pinchRecognizer;
 @synthesize rotationRecognizer = _rotationRecognizer;
 @synthesize gestureEnabled = _gestureEnabled;
+@synthesize mainView = _mainView;
 @synthesize imageCache;
 
 #pragma mark - Respond to low-memory warnings
 + (void)initialize {
 	if (self == [GiPaintView class]) {  // Have to protect against subclasses calling this
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarningNotification:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveMemoryWarningNotification:)
+                                                     name:UIApplicationDidReceiveMemoryWarningNotification
+                                                   object:nil];
 	}
 }
 
@@ -153,6 +178,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 #pragma mark - createGraphView
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (_activePaintView == self)
         _activePaintView = nil;
     delete _adapter;
@@ -184,6 +210,11 @@ GiColor CGColorToGiColor(CGColorRef color);
         _activePaintView = self;                    // 设置为当前绘图视图
         [self initView:NULL :NULL];
         [self coreView]->onSize(_adapter, frame.size.width, frame.size.height);
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnteredBackground:)
+                                                     name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:)
+                                                     name:UIApplicationWillEnterForegroundNotification object:nil];
     }
     return self;
 }
@@ -192,6 +223,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     self = [super initWithFrame:frame];
     if (self) {
         [self initView:[refView viewAdapter] :[refView coreView]];
+        _mainView = refView;
     }
     return self;
 }
@@ -220,12 +252,21 @@ GiColor CGColorToGiColor(CGColorRef color);
     return v;
 }
 
+- (void)didEnteredBackground:(NSNotification*)notification {
+	[self clearCachedData];
+    _adapter->coreView()->onPause();
+}
+
+- (void)willEnterForeground:(NSNotification*)notification {
+    _adapter->coreView()->onResume();
+}
+
 #pragma mark - GiPaintView drawRect
 
 - (void)drawRect:(CGRect)rect {
     _adapter->coreView()->onSize(_adapter, self.bounds.size.width, self.bounds.size.height);
     if (!_adapter->renderInContext(UIGraphicsGetCurrentContext())) {
-        _adapter->regenAll(true);
+        _adapter->regenAll(_adapter->coreView()->getShapeCount() > 0);
     }
 }
 
@@ -261,11 +302,11 @@ GiColor CGColorToGiColor(CGColorRef color);
     return image;
 }
 
-- (BOOL)savePng:(NSString *)filename {
+- (BOOL)exportPNG:(NSString *)filename {
     UIImage *image = [self snapshot];
     BOOL ret = [UIImagePNGRepresentation(image) writeToFile:filename atomically:NO];
     if (ret) {
-        NSLog(@"savePng: %@, %d, %.0fx%.0f@%.0fx",
+        NSLog(@"exportPNG: %@, %d, %.0fx%.0f@%.0fx",
               filename, ret, image.size.width, image.size.height, image.scale);
     }
     return ret;
@@ -280,7 +321,7 @@ GiColor CGColorToGiColor(CGColorRef color);
             color = self.superview.superview.backgroundColor;
         }
     }
-    if (color) {
+    if (color && _adapter) {
         [self coreView]->setBkColor(_adapter, CGColorToGiColor(color.CGColor).getARGB());
     }
 }
@@ -357,10 +398,14 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 - (void)tearDown {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    _adapter->hideContextActions();
     _adapter->stopRegen();
     _adapter->stopRecord(false);
     _adapter->stopRecord(true);
     self.gestureEnabled = NO;
+    _mainView = nil;
+    if (_activePaintView == self)
+        _activePaintView = nil;
 }
 
 - (void)undo {

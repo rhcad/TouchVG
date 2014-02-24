@@ -8,7 +8,7 @@
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
-#define IOSLIBVERSION     3
+#define IOSLIBVERSION     4
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -85,6 +85,17 @@ static GiViewHelper *_sharedInstance = nil;
     refView = refView ? refView : [GiPaintView activeView];
     _view = [GiPaintView createMagnifierView:frame refView:refView parentView:parentView];
     return _view;
+}
+
++ (void)removeSubviews:(UIView *)owner {
+    for (UIView *view : [owner subviews]) {
+        if ([view respondsToSelector:@selector(tearDown)]) {
+            [view performSelector:@selector(tearDown)];
+        }
+    }
+    while ([[owner subviews] count] > 0) {
+        [[[owner subviews] objectAtIndex:[[owner subviews] count] - 1] removeFromSuperview];
+    }
 }
 
 - (long)cmdViewHandle {
@@ -324,8 +335,39 @@ static GiViewHelper *_sharedInstance = nil;
     return [_view snapshot];
 }
 
-- (BOOL)savePng:(NSString *)filename {
-    return [_view savePng:[GiViewHelper addExtension:filename :@".png"]];
+- (UIImage *)extentSnapshot:(CGFloat)space {
+    [_view hideContextActions];
+    
+    CGRect extent = [self displayExtent];
+    if (CGRectIsEmpty(extent))
+        return nil;
+    
+    extent = CGRectIntersection(_view.bounds, CGRectInset(extent, -space, -space));
+    if (CGRectIsEmpty(extent))
+        return nil;
+    
+    UIGraphicsBeginImageContextWithOptions(extent.size, _view.opaque, 0);
+    CGContextTranslateCTM(UIGraphicsGetCurrentContext(), -extent.origin.x, -extent.origin.y);
+    [_view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+- (BOOL)exportExtentAsPNG:(NSString *)filename space:(CGFloat)space {
+    UIImage *image = [self extentSnapshot:space];
+    BOOL ret = [UIImagePNGRepresentation(image) writeToFile:filename atomically:NO];
+    if (ret) {
+        NSLog(@"exportExtentAsPNG: %@, %d, %.0fx%.0f@%.0fx",
+              filename, ret, image.size.width, image.size.height, image.scale);
+    }
+    return ret;
+}
+
+- (BOOL)exportPNG:(NSString *)filename {
+    return [_view exportPNG:[GiViewHelper addExtension:filename :@".png"]];
 }
 
 - (BOOL)exportSVG:(NSString *)filename {
@@ -382,8 +424,16 @@ static GiViewHelper *_sharedInstance = nil;
     return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
 }
 
+- (BOOL)hasImageShape {
+    return [_view coreView]->hasImageShape();
+}
+
 - (void)setImagePath:(NSString *)path {
     [_view.imageCache setImagePath:path];
+}
+
+- (NSString *)getImagePath {
+    return [_view.imageCache getImagePath];
 }
 
 - (CALayer *)exportLayerTree:(BOOL)hidden {
@@ -422,16 +472,20 @@ static GiViewHelper *_sharedInstance = nil;
     return YES;
 }
 
+- (GiViewAdapter *)internalAdapter {
+    return [(_view.mainView ? _view.mainView : _view) viewAdapter2];
+}
+
 - (BOOL)startUndoRecord:(NSString *)path {
     if ([_view coreView]->isUndoRecording()
         || !path || ![self recreateDirectory:path]) {
         return NO;
     }
-    return [_view viewAdapter2]->startRecord(path, GiViewAdapter::kUndo);
+    return [self internalAdapter]->startRecord(path, GiViewAdapter::kUndo);
 }
 
 - (void)stopUndoRecord {
-    [_view viewAdapter2]->stopRecord(true);
+    [self internalAdapter]->stopRecord(true);
 }
 
 - (BOOL)canUndo {
@@ -443,11 +497,11 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (void)undo {
-    [_view viewAdapter2]->undo();
+    [self internalAdapter]->undo();
 }
 
 - (void)redo {
-    [_view viewAdapter2]->redo();
+    [self internalAdapter]->redo();
 }
 
 - (BOOL)isRecording {
@@ -459,11 +513,11 @@ static GiViewHelper *_sharedInstance = nil;
         || !path || ![self recreateDirectory:path]) {
         return NO;
     }
-    return [_view viewAdapter2]->startRecord(path, GiViewAdapter::kRecord);
+    return [self internalAdapter]->startRecord(path, GiViewAdapter::kRecord);
 }
 
 - (void)stopRecord {
-    [_view viewAdapter2]->stopRecord(false);
+    [self internalAdapter]->stopRecord(false);
 }
 
 - (BOOL)isPlaying {
@@ -478,11 +532,11 @@ static GiViewHelper *_sharedInstance = nil;
         NSLog(@"No recorded files in %@", path);
         return NO;
     }
-    return [_view viewAdapter2]->startRecord(path, GiViewAdapter::kPlay);
+    return [self internalAdapter]->startRecord(path, GiViewAdapter::kPlay);
 }
 
 - (void)stopPlay {
-    [_view viewAdapter2]->stopRecord(false);
+    [self internalAdapter]->stopRecord(false);
 }
 
 @end

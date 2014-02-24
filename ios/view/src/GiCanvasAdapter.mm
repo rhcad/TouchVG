@@ -24,7 +24,7 @@ CGContextRef GiCanvasAdapter::context()
     return _ctx;
 }
 
-bool GiCanvasAdapter::beginPaint(CGContextRef context)
+bool GiCanvasAdapter::beginPaint(CGContextRef context, bool fast)
 {
     if (_ctx || !context) {
         return false;
@@ -34,10 +34,10 @@ bool GiCanvasAdapter::beginPaint(CGContextRef context)
     _fill = false;
     _gradient = NULL;
     
-    CGContextSetShouldAntialias(_ctx, true);        // 两者都为true才反走样
-    CGContextSetAllowsAntialiasing(_ctx, true);
+    CGContextSetShouldAntialias(_ctx, !fast);       // 两者都为true才反走样
+    CGContextSetAllowsAntialiasing(_ctx, !fast);
     
-    CGContextSetFlatness(_ctx, 3);                  // 平滑度为3达到精确和速度的平衡点
+    CGContextSetFlatness(_ctx, fast ? 10 : 3);      // 平滑度为3达到精确和速度的平衡点
     
     CGContextSetLineCap(_ctx, kCGLineCapRound);     // 圆端
     CGContextSetLineJoin(_ctx, kCGLineJoinRound);   // 折线转角圆弧过渡

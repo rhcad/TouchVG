@@ -121,6 +121,8 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Swig generating...</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">swig.exe -c++ -csharp -namespace "democmds.core" -module democmds -outdir "$(ProjectDir)..\democmdslib\core" -o "$(ProjectDir)democmds_csharp_wrap.cpp" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include" -I"$(ProjectDir)..\..\core\democmds\gate" "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)democmds_csharp_wrap.cpp;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

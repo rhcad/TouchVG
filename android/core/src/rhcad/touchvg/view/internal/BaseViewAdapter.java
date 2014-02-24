@@ -2,8 +2,6 @@ package rhcad.touchvg.view.internal;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
@@ -12,7 +10,10 @@ import rhcad.touchvg.view.GraphView;
 import rhcad.touchvg.view.GraphView.OnCommandChangedListener;
 import rhcad.touchvg.view.GraphView.OnContentChangedListener;
 import rhcad.touchvg.view.GraphView.OnDynamicChangedListener;
+import rhcad.touchvg.view.GraphView.OnFirstRegenListener;
 import rhcad.touchvg.view.GraphView.OnSelectionChangedListener;
+import android.app.Activity;
+import android.util.Log;
 
 //! 视图回调适配器
 public abstract class BaseViewAdapter extends GiView {
@@ -26,9 +27,10 @@ public abstract class BaseViewAdapter extends GiView {
     private ArrayList<OnSelectionChangedListener> selectionChangedListeners;
     private ArrayList<OnContentChangedListener> contentChangedListeners;
     private ArrayList<OnDynamicChangedListener> dynamicChangedListeners;
+    private ArrayList<OnFirstRegenListener> firstRegenListeners;
     protected RecordRunnable mUndoing;
     protected RecordRunnable mRecorder;
-    private boolean mDrawStopping = false;
+    private int mRegenCount = 0;
 
     protected abstract GraphView getGraphView();
 
@@ -131,17 +133,39 @@ public abstract class BaseViewAdapter extends GiView {
         this.dynamicChangedListeners.add(listener);
     }
 
+    public void setOnFirstRegenListener(OnFirstRegenListener listener) {
+        if (this.firstRegenListeners == null)
+            this.firstRegenListeners = new ArrayList<OnFirstRegenListener>();
+        this.firstRegenListeners.add(listener);
+    }
+
+    public void onFirstRegen() {
+        if (++mRegenCount == 1) {
+            final Activity activity = (Activity) getGraphView().getView().getContext();
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (firstRegenListeners != null) {
+                        for (OnFirstRegenListener listener : firstRegenListeners) {
+                            listener.onFirstRegen(getGraphView());
+                        }
+                        firstRegenListeners.clear();
+                        firstRegenListeners = null;
+                    }
+                }
+            });
+        }
+    }
+
+    public int getRegenCount() {
+        return mRegenCount;
+    }
+
     private GiCoreView coreView() {
         return getGraphView().coreView();
     }
 
-    public boolean isStopping() {
-        return mDrawStopping;
-    }
-
     public void stop() {
-        mDrawStopping = true;
-        coreView().stopDrawing();
         stopRecord(true);
         stopRecord(false);
     }
@@ -160,11 +184,15 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     public boolean startRecord(String path, int type) {
-        if ((type == START_UNDO ? (mUndoing != null) : (mRecorder != null)) || mDrawStopping)
+        if ((type == START_UNDO ? (mUndoing != null) : (mRecorder != null)))
             return false;
 
         synchronized (coreView()) {
             int doc = type < START_PLAY ? coreView().acquireFrontDoc() : 0;
+            if (type < START_PLAY && doc == 0) {
+                Log.e(TAG, "Fail to record shapes due to no front doc");
+                return false;
+            }
             if (!coreView().startRecord(path, doc, type == START_UNDO))
                 return false;
         }
@@ -258,7 +286,7 @@ public abstract class BaseViewAdapter extends GiView {
 
         @Override
         public void run() {
-            while (!isStopping()) {
+            while (!mStopping) {
                 synchronized (this) {
                     try {
                         this.wait();
@@ -266,7 +294,7 @@ public abstract class BaseViewAdapter extends GiView {
                         e.printStackTrace();
                     }
                 }
-                if (!isStopping()) {
+                if (!mStopping) {
                     try {
                         process();
                     } catch (Exception e) {
@@ -287,15 +315,11 @@ public abstract class BaseViewAdapter extends GiView {
             Log.d(TAG, "RecordRunnable exit: " + mType);
         }
 
-        private boolean isStopping() {
-            return mStopping || mDrawStopping;
-        }
-
         protected void process() {
             int tick = 0, doc = 0, shapes = 0;
             boolean loop = true;
 
-            while (loop && !isStopping()) {
+            while (loop && !mStopping) {
                 synchronized (mPendingLock) {
                     while (loop) {
                         tick = mPending[0];

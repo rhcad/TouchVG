@@ -20,6 +20,7 @@
 - (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView;   //!< 创建普通图形视图，并记到本类
 - (GiPaintView *)createMagnifierView:(CGRect)frame refView:(GiPaintView *)refView
                           parentView:(UIView *)parentView;  //!< 创建放大镜视图(不需要额外释放)，并记到本类
++ (void)removeSubviews:(UIView *)owner;             //!< 关闭视图，用在拥有者的 removeFromSuperview 中
 - (long)cmdViewHandle;                              //!< 返回内核视图的句柄, MgView 指针
 
 @property(nonatomic, assign) NSString   *command;   //!< 当前命令名称
@@ -50,7 +51,9 @@
 - (void)clearShapes;                        //!< 清除所有图形
 
 - (UIImage *)snapshot;                      //!< 得到静态图形的快照，自动释放
-- (BOOL)savePng:(NSString *)filename;       //!< 保存静态图形的快照到PNG文件，自动改后缀名为.png
+- (UIImage *)extentSnapshot:(CGFloat)space; //!< 得到当前显示的静态图形快照，自动去掉周围空白
+- (BOOL)exportExtentAsPNG:(NSString *)filename space:(CGFloat)space; //!< 保存当前显示的静态图形快照
+- (BOOL)exportPNG:(NSString *)filename;     //!< 保存静态图形的快照到PNG文件，自动改后缀名为.png
 - (BOOL)exportSVG:(NSString *)filename;     //!< 导出静态图形到SVG文件，自动改后缀名为.svg
 - (CALayer *)exportLayerTree:(BOOL)hidden;  //!< 将静态图形转换到三级图层，第二级为每个图形的层，其下有CAShapeLayer
 
@@ -73,26 +76,17 @@
 - (BOOL)startPlay:(NSString *)path;         //!< 开始播放，在主线程用
 - (void)stopPlay;                           //!< 停止播放，在主线程用
 
-//! 在默认位置插入一个程序资源中的PNG图片(name.png)
-- (int)insertPNGFromResource:(NSString *)name;
+- (int)insertPNGFromResource:(NSString *)name;      //!< 在默认位置插入一个程序资源中的PNG图片(name.png)
+- (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt;   //!< 插入PNG图片(name.png)，并指定其中心位置
+- (int)insertSVGFromResource:(NSString *)name;      //!< 在默认位置插入一个程序资源中的SVG图片(name.svg)
+- (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt;   //!< 插入一个程序资源中的SVG图片(name.svg)
 
-//! 插入一个程序资源中的PNG图片(name.png)，并指定图片的中心位置
-- (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt;
-
-//! 在默认位置插入一个程序资源中的SVG图片(name.svg)
-- (int)insertSVGFromResource:(NSString *)name;
-
-//! 插入一个程序资源中的SVG图片(name.svg)，并指定图片的中心位置
-- (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt;
-
-//! 得到SVG文件的图像
-+ (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size;
++ (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size; //!< 得到SVG文件的图像
 + (NSString *)addExtension:(NSString *)filename :(NSString *)ext;
+- (int)insertImageFromFile:(NSString *)filename;    //!< 在默认位置插入一个PNG、JPEG或SVG等文件的图像
 
-//! 在默认位置插入一个PNG、JPEG或SVG等文件的图像
-- (int)insertImageFromFile:(NSString *)filename;
-
-//! 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
-- (void)setImagePath:(NSString *)path;
+- (BOOL)hasImageShape;                      //!< 返回是否有容纳图像的图形对象
+- (void)setImagePath:(NSString *)path;      //!< 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
+- (NSString *)getImagePath;                 //!< 返回图像文件的默认路径
 
 @end

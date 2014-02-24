@@ -35,7 +35,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelper {
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 3;
+    private static final int JARVERSION = 4;
     private GraphView mView;
 
     static {
@@ -87,15 +87,6 @@ public class ViewHelper {
     //! 返回内核命令视图
     public MgView cmdView() {
         return MgView.fromHandle(cmdViewHandle());
-    }
-
-    //! 关闭视图
-    public void close() {
-        if (mView != null) {
-            mView.onPause();
-            ((ViewGroup)mView.getView().getParent()).removeAllViews();
-            mView = null;
-        }
     }
 
     //! 在指定的布局中创建SurfaceView绘图视图，并记下此视图
@@ -259,6 +250,11 @@ public class ViewHelper {
         return mView.coreView().addShapesForTest();
     }
 
+    //! 释放临时缓存
+    public void clearCachedData() {
+        mView.coreView().clearCachedData();
+    }
+
     //! 放缩显示全部内容
     public boolean zoomToExtent() {
         return mView.coreView().zoomToExtent();
@@ -343,7 +339,7 @@ public class ViewHelper {
     }
 
     private BaseViewAdapter internalAdapter() {
-        return (BaseViewAdapter)mView.viewAdapter();
+        return (BaseViewAdapter)mView.getMainView().viewAdapter();
     }
 
     //! 设置是否允许触摸交互
@@ -361,34 +357,101 @@ public class ViewHelper {
         mView.setBackgroundDrawable(background);
     }
 
-    //! 得到静态图形的快照
+    //! 得到静态图形的快照，支持多线程
     public Bitmap snapshot(boolean transparent) {
-        return mView.snapshot(transparent);
+        final GiCoreView v = mView.coreView();
+        int doc, gs;
+
+        synchronized (v) {
+            doc = v.acquireFrontDoc();
+            gs = v.acquireGraphics(mView.viewAdapter());
+        }
+        try {
+            return mView.snapshot(doc, gs, transparent);
+        } finally {
+            GiCoreView.releaseDoc(doc);
+            v.releaseGraphics(gs);
+        }
     }
 
-    //! 保存静态图形的快照到PNG文件，自动添加后缀名.png
-    public boolean savePng(String filename, boolean transparent) {
-        final Bitmap bmp = mView.snapshot(transparent);
+    //! 得到当前显示的静态图形快照，自动去掉周围空白，支持多线程
+    public Bitmap extentSnapshot(int spaceAround, boolean transparent) {
+        final GiCoreView v = mView.coreView();
+        int doc, gs;
+
+        synchronized (v) {
+            doc = v.acquireFrontDoc();
+            gs = v.acquireGraphics(mView.viewAdapter());
+        }
+        try {
+            return extentSnapshot(doc, gs, spaceAround, transparent);
+        } finally {
+            GiCoreView.releaseDoc(doc);
+            v.releaseGraphics(gs);
+        }
+    }
+
+    private Bitmap extentSnapshot(int doc, int gs, int spaceAround, boolean transparent) {
+        final Rect extent = getDisplayExtent();
+
+        if (!extent.isEmpty()) {
+            extent.inset(-spaceAround, -spaceAround);
+            extent.intersect(0, 0, mView.getView().getWidth(), mView.getView().getHeight());
+        }
+        if (extent.isEmpty()) {
+            return null;
+        }
+
+        final Bitmap viewBitmap = mView.snapshot(doc, gs, transparent);
+        if (viewBitmap == null) {
+            return null;
+        }
+
+        if (extent.width() == mView.getView().getWidth()
+                && extent.height() == mView.getView().getHeight()) {
+            return viewBitmap;
+        }
+
+        final Bitmap realBitmap = Bitmap.createBitmap(viewBitmap, extent.left, extent.top,
+                extent.width(), extent.height());
+
+        viewBitmap.recycle();
+        return realBitmap;
+    }
+
+    //! 保存当前显示的静态图形快照(去掉周围空白)到PNG文件，自动添加后缀名.png，支持多线程
+    public boolean exportExtentAsPNG(String filename, int spaceAround) {
+        return savePNG(extentSnapshot(spaceAround, true), filename);
+    }
+
+    //! 保存静态图形的快照到PNG文件，自动添加后缀名.png，支持多线程
+    public boolean exportPNG(String filename, boolean transparent) {
+        return savePNG(snapshot(transparent), filename);
+    }
+
+    //! 保存静态图形的透明背景快照到PNG文件，自动添加后缀名.png，支持多线程
+    public boolean exportPNG(String filename) {
+        return savePNG(snapshot(true), filename);
+    }
+
+    private boolean savePNG(Bitmap bmp, String filename) {
         boolean ret = false;
 
-        if (bmp != null) {
+        if (bmp != null && filename != null && createDirectory(filename, false)) {
             synchronized (bmp) {
                 try {
                     filename = addExtension(filename, ".png");
                     final FileOutputStream os = new FileOutputStream(filename);
-                    ret = createDirectory(filename, false)
-                            && bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
+                    ret = bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
+                    Log.d(TAG, "savePNG: " + filename + ", " + ret + ", "
+                            + bmp.getWidth() + "x" + bmp.getHeight());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-        return ret;
-    }
 
-    //! 保存静态图形的透明背景快照到PNG文件，自动添加后缀名.png
-    public boolean savePng(String filename) {
-        return savePng(filename, true);
+        return ret;
     }
 
     //! 导出静态图形到SVG文件，自动添加后缀名.svg
@@ -437,20 +500,39 @@ public class ViewHelper {
         return new Rect();
     }
 
-    //! 返回选择包络框
-    public Rect getBoundingBox() {
+    //! 返回图形显示范围，支持多线程
+    public Rect getDisplayExtent(int doc, int gs) {
         final Floats box = new Floats(4);
-        if (mView.coreView().getDisplayExtent(box)) {
+        if (mView.coreView().getDisplayExtent(doc, gs, box)) {
             return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
                     Math.round(box.get(2)), Math.round(box.get(3)));
         }
         return new Rect();
     }
 
-    //! 得到图形的JSON内容
+    //! 返回选择包络框
+    public Rect getBoundingBox() {
+        final Floats box = new Floats(4);
+        if (mView.coreView().getBoundingBox(box)) {
+            return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
+                    Math.round(box.get(2)), Math.round(box.get(3)));
+        }
+        return new Rect();
+    }
+
+    //! 得到图形的JSON内容，支持多线程
     public String getContent() {
-        final String str = mView.coreView().getContent();
+        int doc;
+
+        synchronized (mView.coreView()) {
+            doc = mView.coreView().acquireFrontDoc();
+        }
+
+        final String str = mView.coreView().getContent(doc);
+
+        GiCoreView.releaseDoc(doc);
         mView.coreView().freeContent();
+
         return str;
     }
 
@@ -461,27 +543,36 @@ public class ViewHelper {
 
     //! 从JSON文件中加载图形，自动添加后缀名.vg
     public boolean loadFromFile(String vgfile) {
-        return mView != null && mView.coreView().loadFromFile(addExtension(vgfile, ".vg"));
+        vgfile = addExtension(vgfile, ".vg");
+        return mView != null && mView.coreView().loadFromFile(vgfile);
     }
 
     //! 从JSON文件中以只读方式加载图形，自动添加后缀名.vg
     public boolean loadFromFile(String vgfile, boolean readOnly) {
-        return mView != null
-                && mView.coreView().loadFromFile(addExtension(vgfile, ".vg"), readOnly);
+        vgfile = addExtension(vgfile, ".vg");
+        return mView != null && mView.coreView().loadFromFile(vgfile, readOnly);
     }
 
-    //! 保存图形到JSON文件，自动添加后缀名.vg
+    //! 保存图形到JSON文件，自动添加后缀名.vg，支持多线程
     public boolean saveToFile(String vgfile) {
         boolean ret = false;
+        int doc;
+
+        if (mView == null || vgfile == null)
+            return false;
+        synchronized (mView.coreView()) {
+            doc = mView.coreView().acquireFrontDoc();
+        }
 
         vgfile = addExtension(vgfile, ".vg");
-        if (mView == null) {
-        } else if (getShapeCount() == 0) {
+        if (mView.coreView().getShapeCount(doc) == 0) {
             final File f = new File(vgfile);
             ret = !f.exists() || f.delete();
         } else {
-            ret = createDirectory(vgfile, false) && mView.coreView().saveToFile(vgfile);
+            ret = createDirectory(vgfile, false) && mView.coreView().saveToFile(doc, vgfile);
         }
+
+        GiCoreView.releaseDoc(doc);
         return ret;
     }
 
@@ -623,6 +714,11 @@ public class ViewHelper {
         }
     }
 
+    //! 返回是否有容纳图像的图形对象
+    public boolean hasImageShape() {
+        return mView.coreView().hasImageShape();
+    }
+
     //! 返回图像文件的默认路径
     public String getImagePath() {
         return mView.getImageCache().getImagePath();
@@ -633,12 +729,34 @@ public class ViewHelper {
         mView.getImageCache().setImagePath(path);
     }
 
-    //! 所属的Activity暂停时调用
-    public void onActivityPause() {
+    //! 关闭视图
+    public void close() {
         if (mView != null) {
-            mView.onPause();
+            mView.stop();
+            if (mView.getView() != null) {
+                final ViewGroup parent = (ViewGroup)mView.getView().getParent();
+                if (parent != null)
+                    parent.removeAllViews();
+            }
             mView = null;
         }
+    }
+
+    //! 所属的Activity销毁前或关闭视图时调用
+    public void onActivityDestroy() {
+        if (mView != null) {
+            mView.stop();
+        }
+    }
+
+    //! 所属的Activity暂停时调用
+    public boolean onActivityPause() {
+        return mView != null && mView.onPause();
+    }
+
+    //! 所属的Activity恢复时调用
+    public boolean onActivityResume() {
+        return mView != null && mView.onResume();
     }
 
     //! 所属的Activity保存状态时调用
@@ -651,7 +769,6 @@ public class ViewHelper {
                 outState.putString("cmd", getCommand());
                 outState.putBoolean("readOnly", cmdView().isReadOnly());
             }
-            mView = null;
         }
     }
 
@@ -661,8 +778,9 @@ public class ViewHelper {
             final String filename = savedState.getString("resumevg");
             boolean readOnly = savedState.getBoolean("readOnly");
 
-            if (loadFromFile(filename, readOnly)) {
-                Log.d(TAG, "Auto load from " + filename);
+            if (filename != null) {
+                if (loadFromFile(filename, readOnly))
+                    Log.d(TAG, "Auto load from " + filename);
                 setCommand(savedState.getString("cmd"));
             }
         }

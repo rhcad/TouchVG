@@ -31,18 +31,19 @@ import android.view.View;
  */
 public class StdGraphView extends View implements GraphView {
     protected static final String TAG = "touchvg";
-    protected ImageCache mImageCache;           // 图像对象缓存
-    protected CanvasAdapter mCanvasAdapter;     // onDraw用的画布适配器
-    protected CanvasAdapter mCanvasRegen;       // regen用的画布适配器
-    protected StdViewAdapter mViewAdapter;      // 视图回调适配器
-    protected GiCoreView mCoreView;             // 内核视图分发器
-    protected GestureDetector mGestureDetector; // 手势识别器
-    protected GestureListener mGestureListener; // 手势识别实现
-    protected boolean mGestureEnable = true;    // 是否允许交互
-    private boolean mRegenning = false;         // 是否正在regenAll
-    private Bitmap mCachedBitmap;               // 缓存快照
-    private Bitmap mRegenBitmap;                // regen用的缓存位图
-    private int mBkColor = Color.TRANSPARENT;
+    protected ImageCache mImageCache;                       // 图像对象缓存
+    protected CanvasAdapter mCanvasAdapter;                 // onDraw用的画布适配器
+    protected CanvasAdapter mCanvasRegen;                   // 渲染线程用的画布适配器
+    protected StdViewAdapter mViewAdapter;                  // 视图回调适配器
+    protected GiCoreView mCoreView;                         // 内核视图分发器
+    protected GestureDetector mGestureDetector;             // 手势识别器
+    protected GestureListener mGestureListener;             // 手势识别实现
+    protected boolean mGestureEnable = true;                // 是否允许交互
+    private boolean mRegenning = false;                     // 是否正在regenAll
+    private Bitmap mCachedBitmap;                           // 缓存快照
+    private Bitmap mRegenBitmap;                            // 渲染线程用的缓存位图
+    private int mBkColor = Color.TRANSPARENT;               // 背景色
+    private GraphView mMainView;                            // 本视图为放大镜时对应的主视图
 
     static {
         System.loadLibrary("touchvg");
@@ -64,6 +65,7 @@ public class StdGraphView extends View implements GraphView {
     public StdGraphView(Context context, GraphView mainView) {
         super(context);
         createAdapter(context);
+        mMainView = mainView;
         mCoreView = new GiCoreView(mainView.coreView());
         mCoreView.createMagnifierView(mViewAdapter, mainView.viewAdapter());
         initView(context);
@@ -118,7 +120,7 @@ public class StdGraphView extends View implements GraphView {
     }
 
     private int drawShapes(Canvas canvas, CanvasAdapter adapter, boolean dyndraw) {
-        int n = 0, doc = 0, shapes, gs;
+        int doc = 0, shapes, gs;
 
         synchronized (mCoreView) {
             if (mCachedBitmap == null || !dyndraw)
@@ -126,7 +128,20 @@ public class StdGraphView extends View implements GraphView {
             shapes = dyndraw ? mCoreView.acquireDynamicShapes() : 0;
             gs = mCoreView.acquireGraphics(mViewAdapter);
         }
-        if (adapter.beginPaint(canvas)) {
+        try {
+            return drawShapes(doc, shapes, gs, canvas, adapter, dyndraw);
+        } finally {
+            GiCoreView.releaseDoc(doc);
+            GiCoreView.releaseShapes(shapes);
+            mCoreView.releaseGraphics(gs);
+        }
+    }
+
+    private int drawShapes(int doc, int shapes, int gs,
+            Canvas canvas, CanvasAdapter adapter, boolean dyndraw) {
+        int n = 0;
+
+        if (adapter.beginPaint(canvas, dyndraw)) {
             if (mCachedBitmap == null || !dyndraw) {
                 if (this.getBackground() != null) {
                     this.getBackground().draw(canvas);
@@ -143,9 +158,6 @@ public class StdGraphView extends View implements GraphView {
             }
             adapter.endPaint();
         }
-        GiCoreView.releaseDoc(doc);
-        GiCoreView.releaseShapes(shapes);
-        mCoreView.releaseGraphics(gs);
 
         return n;
     }
@@ -154,6 +166,7 @@ public class StdGraphView extends View implements GraphView {
         if (getWidth() < 2 || getHeight() < 2 || mRegenning) {
             return true;
         }
+
         try {
             if (mCachedBitmap == null) {
                 mCachedBitmap = Bitmap.createBitmap(getWidth(), getHeight(),
@@ -171,10 +184,11 @@ public class StdGraphView extends View implements GraphView {
             new Thread(new Runnable() {
                 public void run() {
                     Bitmap bmp = mRegenBitmap != null ? mRegenBitmap : mCachedBitmap;
+                    int count = -1;
                     try {
                         synchronized (bmp) {
                             bmp.eraseColor(mBkColor);
-                            drawShapes(new Canvas(bmp), mCanvasRegen, false);
+                            count = drawShapes(new Canvas(bmp), mCanvasRegen, false);
 
                             if (bmp == mRegenBitmap) {
                                 if (mCachedBitmap != null) {
@@ -183,12 +197,17 @@ public class StdGraphView extends View implements GraphView {
                                 mCachedBitmap = mRegenBitmap;
                             }
                         }
-                        postInvalidate();
+                        if (!mCoreView.isStopping()) {
+                            postInvalidate();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     mRegenBitmap = null;
                     mRegenning = false;
+                    if (count >= 0 && !mCoreView.isStopping()) {
+                        mViewAdapter.onFirstRegen();
+                    }
                 }
             }, "touchvg.regen").start();
         } else if (fromRegenAll) { // 视图太大，无法后台绘制，将直接在onDraw中显示
@@ -245,6 +264,7 @@ public class StdGraphView extends View implements GraphView {
             mGestureListener = null;
         }
         mGestureDetector = null;
+        mMainView = null;
 
         super.onDetachedFromWindow();
     }
@@ -274,15 +294,14 @@ public class StdGraphView extends View implements GraphView {
                     }
                 } else {
                     synchronized (mCoreView) {
-                        if (changed)
+                        if (changed || mViewAdapter.getRegenCount() == 0)
                             mCoreView.submitBackDoc(mViewAdapter);
                         mCoreView.submitDynamicShapes(mViewAdapter);
 
                         if (mUndoing != null) {
                             int tick0 = mCoreView.getRecordTick(true);
                             int doc0 = changed ? mCoreView.acquireFrontDoc() : 0;
-                            int shapes0 = mCoreView.acquireDynamicShapes();
-                            mUndoing.requestRecord(tick0, doc0, shapes0);
+                            mUndoing.requestRecord(tick0, doc0, 0);
                         }
                         if (mRecorder != null) {
                             int tick1 = mCoreView.getRecordTick(false);
@@ -319,8 +338,7 @@ public class StdGraphView extends View implements GraphView {
                     if (mUndoing != null) {
                         int tick0 = mCoreView.getRecordTick(true);
                         int doc0 = mCoreView.acquireFrontDoc();
-                        int shapes0 = mCoreView.acquireDynamicShapes();
-                        mUndoing.requestRecord(tick0, doc0, shapes0);
+                        mUndoing.requestRecord(tick0, doc0, 0);
                     }
                     if (mRecorder != null) {
                         int tick1 = mCoreView.getRecordTick(false);
@@ -383,6 +401,11 @@ public class StdGraphView extends View implements GraphView {
     }
 
     @Override
+    public GraphView getMainView() {
+        return mMainView != null ? mMainView : this;
+    }
+
+    @Override
     public View createDynamicShapeView(Context context) {
         return null;
     }
@@ -402,8 +425,18 @@ public class StdGraphView extends View implements GraphView {
     }
 
     @Override
-    public void onPause() {
+    public void stop() {
         mViewAdapter.stop();
+    }
+
+    @Override
+    public boolean onPause() {
+        return mCoreView.onPause();
+    }
+
+    @Override
+    public boolean onResume() {
+        return mCoreView.onResume();
     }
 
     @Override
@@ -453,6 +486,19 @@ public class StdGraphView extends View implements GraphView {
     }
 
     @Override
+    public Bitmap snapshot(int doc, int gs, boolean transparent) {
+        if (mCachedBitmap == null) {
+            mCachedBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+            synchronized (mCachedBitmap) {
+                mCoreView.onSize(mViewAdapter, getWidth(), getHeight());
+                mCachedBitmap.eraseColor(transparent ? Color.TRANSPARENT : mBkColor);
+                drawShapes(doc, 0, gs, new Canvas(mCachedBitmap), mCanvasAdapter, false);
+            }
+        }
+        return mCachedBitmap;
+    }
+
+    @Override
     public void setOnCommandChangedListener(OnCommandChangedListener listener) {
         mViewAdapter.setOnCommandChangedListener(listener);
     }
@@ -470,5 +516,10 @@ public class StdGraphView extends View implements GraphView {
     @Override
     public void setOnDynamicChangedListener(OnDynamicChangedListener listener) {
         mViewAdapter.setOnDynamicChangedListener(listener);
+    }
+
+    @Override
+    public void setOnFirstRegenListener(OnFirstRegenListener listener) {
+        mViewAdapter.setOnFirstRegenListener(listener);
     }
 }

@@ -2,6 +2,7 @@
 
 package vgtest.testview.view;
 
+import rhcad.touchvg.view.GraphView;
 import rhcad.touchvg.view.StdGraphView;
 import rhcad.touchvg.view.ViewHelper;
 import android.app.Activity;
@@ -10,7 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import democmds.core.DemoCmdsGate;
 
-public class GraphView1 extends StdGraphView {
+public class GraphView1 extends StdGraphView implements GraphView.OnFirstRegenListener {
     protected static final String PATH = "mnt/sdcard/TouchVG/";
 
     static {
@@ -30,12 +31,8 @@ public class GraphView1 extends StdGraphView {
         if ((flags & 32) != 0) {
             hlp.addShapesForTest();
         }
-        if (savedInstanceState == null) {
-            if (flags == 64) {
-                hlp.startPlay(PATH + "record");
-            } else if ((flags & 64) != 0) {
-                hlp.startRecord(PATH + "record");
-            }
+        if (savedInstanceState == null && (flags & 64) != 0) {
+            setOnFirstRegenListener(this);
         }
 
         flags = flags & 0x0F;
@@ -51,6 +48,17 @@ public class GraphView1 extends StdGraphView {
             int n = DemoCmdsGate.registerCmds(hlp.cmdViewHandle());
             hlp.setCommand("hittest");
             Log.d("Test", "DemoCmdsGate.registerCmds = " + n + ", " + hlp.getCommand());
+        }
+    }
+
+    public void onFirstRegen(GraphView view) {
+        int flags = ((Activity) getContext()).getIntent().getExtras().getInt("flags");
+        final ViewHelper helper = new ViewHelper(this);
+
+        if (flags == 64) {
+            helper.startPlay(PATH + "record");
+        } else if ((flags & 64) != 0) {
+            helper.startRecord(PATH + "record");
         }
     }
 }

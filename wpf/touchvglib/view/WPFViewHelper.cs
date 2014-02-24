@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Media;
 using System.Text;
 using touchvg.core;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace touchvg.view
 {
@@ -17,7 +19,8 @@ namespace touchvg.view
     {
         private static int LIB_RELEASE = 1; // TODO: 在本工程接口变化后增加此数
         private WPFGraphView View;
-        private GiCoreView CoreView { get { return this.View.CoreView; } }
+        private GiCoreView CoreView { get { return View.CoreView; } }
+        public GiView ViewAdapter { get { return View.ViewAdapter; } }
         public static WPFGraphView ActiveView { get { return WPFGraphView.ActiveView; } }
 
         public WPFViewHelper()
@@ -39,21 +42,25 @@ namespace touchvg.view
             }
         }
 
-        //! 返回本库的版本号, 1.0.cslibver.corelibver
-        public string Version { get {
-            return string.Format("1.0.%d.%d", LIB_RELEASE, GiCoreView.getVersion());
-        } }
+        //! 返回本库的版本号, 1.1.cslibver.corelibver
+        public string Version
+        {
+            get
+            {
+                return string.Format("1.1.%d.%d", LIB_RELEASE, GiCoreView.getVersion());
+            }
+        }
 
         //! 返回内核视图的句柄, MgView 指针
-        public int cmdViewHandle()
+        public int CmdViewHandle()
         {
             return CoreView.viewAdapterHandle();
         }
 
         //! 返回内核命令视图
-        public MgView cmdView()
+        public MgView CmdView()
         {
-            return MgView.fromHandle(cmdViewHandle());
+            return MgView.fromHandle(CmdViewHandle());
         }
 
         //! 当前命令名称
@@ -64,7 +71,7 @@ namespace touchvg.view
         }
 
         //! 指定名称和JSON串参数，启动命令
-        public bool setCommand(string name, string param)
+        public bool SetCommand(string name, string param)
         {
             return CoreView.setCommand(name, param);
         }
@@ -91,7 +98,7 @@ namespace touchvg.view
             get
             {
                 GiContext ctx = CoreView.getContext(false);
-                return (int)CoreView.calcPenWidth(View.ViewAdapter, ctx.getLineWidth());
+                return (int)CoreView.calcPenWidth(ViewAdapter, ctx.getLineWidth());
             }
             set
             {
@@ -217,7 +224,8 @@ namespace touchvg.view
         //! 图形显示范围
         public Rect DisplayExtent
         {
-            get {
+            get
+            {
                 Floats box = new Floats(4);
                 if (CoreView.getDisplayExtent(box))
                 {
@@ -231,7 +239,8 @@ namespace touchvg.view
         //! 选择包络框
         public Rect BoundingBox
         {
-            get {
+            get
+            {
                 Floats box = new Floats(4);
                 if (CoreView.getBoundingBox(box))
                 {
@@ -257,7 +266,7 @@ namespace touchvg.view
         //! 导出静态图形到SVG文件
         public bool ExportSVG(string filename)
         {
-            return CoreView.exportSVG(View.ViewAdapter, filename) > 0;
+            return CoreView.exportSVG(ViewAdapter, filename) > 0;
         }
 
         //! 放缩显示全部内容到视图区域
@@ -267,9 +276,9 @@ namespace touchvg.view
         }
 
         //! 放缩显示指定范围到视图区域
-        public bool ZoomToModel(float x, float y, double w, double h)
+        public bool ZoomToModel(float x, float y, float w, float h)
         {
-            return CoreView.zoomToModel(x, y, (float)w, (float)h);
+            return CoreView.zoomToModel(x, y, w, h);
         }
 
         //! 添加测试图形
@@ -293,12 +302,133 @@ namespace touchvg.view
         //! 保存图形到JSON文件
         public bool Save(string vgfile)
         {
+            try
+            {
+                var dir = new DirectoryInfo(vgfile).Parent;
+                if (!dir.Exists)
+                    dir.Create();
+            }
+            catch (IOException)
+            {
+                return false;
+            }
             return CoreView.saveToFile(vgfile);
         }
-        
+
         //! 清除所有图形
-        public void clearShapes() {
+        public void ClearShapes()
+        {
             CoreView.clear();
+        }
+
+        //! 得到静态图形的快照
+        public BitmapSource Snapshot()
+        {
+            int w = (int)View.MainCanvas.ActualWidth;
+            int h = (int)View.MainCanvas.ActualHeight;
+
+            RenderTargetBitmap bmp = new RenderTargetBitmap(
+                w, h, 96, 96, PixelFormats.Pbgra32);
+            bmp.Render(View.MainCanvas);
+
+            return bmp;
+        }
+
+        //! 保存静态图形的快照到PNG、JPG或GIF文件，其他后缀名则自动改为.png
+        public bool ExportPNG(string filename)
+        {
+            return SaveImage(Snapshot(), filename);
+        }
+
+        private bool SaveImage(BitmapSource image, string filename)
+        {
+            string ext = Path.GetExtension(filename).ToLower();
+            BitmapEncoder encoder;
+
+            if (ext == ".gif")
+            {
+                encoder = new GifBitmapEncoder();
+            }
+            else if (ext == ".png")
+            {
+                encoder = new PngBitmapEncoder();
+            }
+            else if (ext == ".jpg")
+            {
+                encoder = new JpegBitmapEncoder();
+            }
+            else
+            {
+                filename = Path.ChangeExtension(filename, ".png");
+                encoder = new PngBitmapEncoder();
+            }
+
+            try
+            {
+                encoder.Frames.Add(BitmapFrame.Create(image));
+
+                using (Stream stm = File.Create(filename))
+                {
+                    encoder.Save(stm);
+                }
+            }
+            catch (SystemException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        //! 开始Undo录制
+        public bool StartUndoRecord(string path)
+        {
+            if (CoreView.isUndoRecording())
+                return false;
+
+            try
+            {
+                var dir = new DirectoryInfo(path);
+                if (dir.Exists)
+                    dir.Delete(true);
+                dir.Create();
+            }
+            catch (IOException)
+            {
+                return false;
+            }
+
+            return CoreView.startRecord(path, CoreView.acquireFrontDoc(), true);
+        }
+
+        //! 停止Undo录制
+        public void StopUndoRecord()
+        {
+            CoreView.stopRecord(true);
+        }
+
+        //! 能否撤销
+        public bool CanUndo()
+        {
+            return CoreView.canUndo();
+        }
+
+        //! 能否重做
+        public bool CanRedo()
+        {
+            return CoreView.canRedo();
+        }
+
+        //! 撤销
+        public bool Undo()
+        {
+            return CoreView.undo(ViewAdapter);
+        }
+
+        //! 重做
+        public bool Redo()
+        {
+            return CoreView.redo(ViewAdapter);
         }
     }
 }

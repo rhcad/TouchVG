@@ -11,7 +11,8 @@ class GiViewAdapter;
 #endif
 
 //! 绘图消息的观察者协议
-/*! \ingroup GROUP_IOS
+/*! 也可以在 GiPaintView 派生类直接实现这些通知函数。
+    \ingroup GROUP_IOS
     \see GiPaintView
  */
 @protocol GiPaintViewDelegate <NSObject>
@@ -21,6 +22,7 @@ class GiViewAdapter;
 - (void)onSelectionChanged:(id)view;    //!< 图形选择集改变的通知
 - (void)onContentChanged:(id)view;      //!< 图形数据改变的通知
 - (void)onDynamicChanged:(id)view;      //!< 图形动态改变的通知
+- (void)onFirstRegen:(id)view;          //!< 第一次后台渲染结束的通知
 
 @end
 
@@ -40,6 +42,7 @@ class GiViewAdapter;
 @property(nonatomic, readonly) UIRotationGestureRecognizer *rotationRecognizer; //!< 双指旋转手势识别器
 @property(nonatomic)           BOOL gestureEnabled;     //!< 是否允许触摸交互
 @property(nonatomic, readonly) ImageCache           *imageCache;                //!< 图像对象缓存
+@property(nonatomic, readonly) GiPaintView          *mainView;                  //!< 放大镜对应的主视图
 
 //! 创建普通图形视图，并添加到父视图、设置为当前视图，不需要额外释放
 + (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView;
@@ -60,7 +63,7 @@ class GiViewAdapter;
 #endif
 
 - (UIImage *)snapshot;                      //!< 得到静态图形的快照，自动释放
-- (BOOL)savePng:(NSString *)filename;       //!< 保存静态图形的快照到PNG文件
+- (BOOL)exportPNG:(NSString *)filename;     //!< 保存静态图形的快照到PNG文件
 - (void)clearCachedData;                    //!< 释放临时数据内存
 - (void)tearDown;                           //!< 停止后台任务
 - (void)stopRecord:(BOOL)forUndo;           //!< 停止录制图形

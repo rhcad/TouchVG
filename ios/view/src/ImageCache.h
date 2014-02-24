@@ -20,5 +20,6 @@
 
 - (CGSize)addImageFromFile:(NSString *)filename :(NSString **)name;     //!< 在默认位置插入一个图像文件
 - (void)setImagePath:(NSString *)path;              //!< 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
+- (NSString *)getImagePath;                         //!< 返回图像文件的默认路径
 
 @end

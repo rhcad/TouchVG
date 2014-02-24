@@ -80,8 +80,9 @@ namespace WpfDemo
             this.cboLineStyle.SelectedIndex = 0;
 
             _helper = new WPFViewHelper(_view);
-            DemoCmds.registerCmds(_helper.cmdViewHandle());
+            DemoCmds.registerCmds(_helper.CmdViewHandle());
             _helper.Load("C:\\Test\\page.vg");
+            _helper.StartUndoRecord("C:\\Test\\undo");
             _helper.Command = "select";
         }
 
@@ -156,6 +157,17 @@ namespace WpfDemo
         {
             _helper.Save("C:\\Test\\page.vg");
             _helper.ExportSVG("C:\\Test\\page.svg");
+            _helper.ExportPNG("C:\\Test\\page.---");
+        }
+
+        private void undoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _helper.Undo();
+        }
+
+        private void redoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _helper.Redo();
         }
     }
 }

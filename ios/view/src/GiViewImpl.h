@@ -32,6 +32,8 @@ class GiViewAdapter;
 }
 
 - (id)initWithAdapter:(GiViewAdapter *)adapter;
+- (void)stopRender;
+- (void)clearCachedData;
 - (void)startRender:(long)doc :(long)gs;
 - (void)startRenderForPending;
 - (CALayer *)getLayer;
@@ -51,8 +53,10 @@ private:
     bool        _actionEnabled;         //!< 是否允许上下文操作
     int         _appendIDs[10];         //!< 还未来得及重构显示的新增图形的ID
     int         _oldAppendCount;        //!< 后台渲染前的待渲染新增图形数
+    int         _regenCount;            //!< 渲染次数
     GiLayerRender   *_render;           //!< 后台渲染对象
     dispatch_queue_t _recordQueue[2];   //!< 录制队列
+    __block bool    _recordStopping[2]; //!< 录制队列待停止
     
 public:
     std::vector<id> delegates;          //!< GiPaintViewDelegate 观察者数组
@@ -72,6 +76,7 @@ public:
     UIView *getDynView();
     void clearCachedData();
     void stopRegen();
+    void onFirstRegen();
     bool isMainThread() const;
     
     int getAppendCount() const;
@@ -112,7 +117,7 @@ private:
 };
 
 /*! \category GiPaintView()
- \brief GiPaintView 的内部数据定义
+    \brief GiPaintView 的内部数据定义
  */
 @interface GiPaintView()<UIGestureRecognizerDelegate> {
     GiViewAdapter   *_adapter;              //!< 视图回调适配器
@@ -139,7 +144,7 @@ private:
 @end
 
 /*! \category GiPaintView(GestureRecognizer)
- \brief GiPaintView 的手势响应实现部分
+    \brief GiPaintView 的手势响应实现部分
  */
 @interface GiPaintView(GestureRecognizer)
 

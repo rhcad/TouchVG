@@ -2,6 +2,7 @@
 
 package vgtest.testview.view;
 
+import rhcad.touchvg.view.GraphView;
 import rhcad.touchvg.view.SFGraphView;
 import rhcad.touchvg.view.ViewHelper;
 import android.app.Activity;
@@ -9,7 +10,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
-public class SFGraphView1 extends SFGraphView {
+public class SFGraphView1 extends SFGraphView implements GraphView.OnFirstRegenListener {
     protected static final String PATH = "mnt/sdcard/TouchVG/";
 
     public SFGraphView1(Context context) {
@@ -25,12 +26,8 @@ public class SFGraphView1 extends SFGraphView {
         if ((flags & 32) != 0) {
             helper.addShapesForTest();
         }
-        if (savedInstanceState == null) {
-            if (flags == 64) {
-                helper.startPlay(PATH + "record");
-            } else if ((flags & 64) != 0) {
-                helper.startRecord(PATH + "record");
-            }
+        if (savedInstanceState == null && (flags & 64) != 0) {
+            setOnFirstRegenListener(this);
         }
 
         flags = flags & 0x0F;
@@ -53,6 +50,17 @@ public class SFGraphView1 extends SFGraphView {
         if ((flags & 256) != 0) {
             ViewGroup layout = (ViewGroup) getParent();
             this.setBackgroundDrawable(layout.getBackground());
+        }
+    }
+
+    public void onFirstRegen(GraphView view) {
+        int flags = ((Activity) getContext()).getIntent().getExtras().getInt("flags");
+        final ViewHelper helper = new ViewHelper(this);
+
+        if (flags == 64) {
+            helper.startPlay(PATH + "record");
+        } else if ((flags & 64) != 0) {
+            helper.startRecord(PATH + "record");
         }
     }
 }

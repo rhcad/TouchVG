@@ -30,8 +30,6 @@ namespace touchvg.view
                 EndLineCap = PenLineCap.Round,
             };
             _pen.Freeze();
-            _brush = new SolidColorBrush(Colors.Transparent);
-            _brush.Freeze();
         }
 
         public override void Dispose()
@@ -53,17 +51,22 @@ namespace touchvg.view
         {
         }
 
+        private Color toColor(int argb)
+        {
+            return Color.FromArgb(
+                    (byte)((argb >> 24) & 0xFF),
+                    (byte)((argb >> 16) & 0xFF),
+                    (byte)((argb >> 8) & 0xFF),
+                    (byte)(argb & 0xFF));
+        }
+
         public override void setPen(int argb, float width, int style, float phase, float orgw)
         {
             _pen = _pen.Clone();
 
             if (argb != 0)
             {
-                (_pen.Brush as SolidColorBrush).Color = Color.FromArgb(
-                    (byte)((argb >> 24) & 0xFF),
-                    (byte)((argb >> 16) & 0xFF),
-                    (byte)((argb >> 8) & 0xFF),
-                    (byte)(argb & 0xFF));
+                (_pen.Brush as SolidColorBrush).Color = toColor(argb);
             }
             if (width > 0)
             {
@@ -102,15 +105,27 @@ namespace touchvg.view
 
         public override void setBrush(int argb, int style)
         {
-            if (style == 0 && _brush is SolidColorBrush)
+            byte alpha = (byte)(argb & 0xFF);
+
+            if (style == 0)
             {
-                _brush = _brush.Clone();
-                (_brush as SolidColorBrush).Color = Color.FromArgb(
-                        (byte)((argb >> 24) & 0xFF),
-                        (byte)((argb >> 16) & 0xFF),
-                        (byte)((argb >> 8) & 0xFF),
-                        (byte)(argb & 0xFF));
-                _brush.Freeze();
+                if (alpha == 0)
+                {
+                    _brush = null;
+                }
+                else
+                {
+                    if (_brush != null && _brush is SolidColorBrush)
+                    {
+                        _brush = _brush.Clone();
+                        (_brush as SolidColorBrush).Color = toColor(argb);
+                    }
+                    else
+                    {
+                        _brush = new SolidColorBrush(toColor(argb));
+                    }
+                    _brush.Freeze();
+                }
             }
         }
 

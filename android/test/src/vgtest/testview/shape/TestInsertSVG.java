@@ -85,7 +85,7 @@ public class TestInsertSVG extends LinearLayout {
         layout.addView(saveBtn, param);
         saveBtn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mHelper.savePng(PATH + "testsvg.png");
+                mHelper.exportPNG(PATH + "testsvg.png");
                 mHelper.saveToFile(PATH + "testsvg.vg");
             }
         });

@@ -66,9 +66,21 @@ public class DummyActivity extends Activity {
     }
 
     @Override
+    public void onDestroy() {
+        new ViewHelper().onActivityDestroy();
+        super.onDestroy();
+    }
+
+    @Override
     public void onPause() {
         new ViewHelper().onActivityPause();
         super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        new ViewHelper().onActivityResume();
+        super.onResume();
     }
 
     @Override

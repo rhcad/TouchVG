@@ -22,6 +22,9 @@ public interface GraphView {
     //! 返回视图回调适配器对象
     public View getView();
 
+    //! 本视图为放大镜时返回对应的主视图，否则返回自己
+    public GraphView getMainView();
+
     //! 创建动态绘图子视图
     public View createDynamicShapeView(Context context);
 
@@ -31,8 +34,14 @@ public interface GraphView {
     //! 释放临时缓存
     public void clearCachedData();
 
-    //! 所属的Activity暂停时调用
-    public void onPause();
+    //! 停止后台任务，所属的Activity销毁前可调用
+    public void stop();
+
+    //! 暂停后台任务，所属的Activity暂停时可调用
+    public boolean onPause();
+
+    //! 恢复后台任务，所属的Activity恢复时可调用
+    public boolean onResume();
 
     //! 是否允许上下文操作
     public void setContextActionEnabled(boolean enabled);
@@ -51,6 +60,9 @@ public interface GraphView {
 
     //! 得到静态图形的快照
     public Bitmap snapshot(boolean transparent);
+
+    //! 得到静态图形的快照，支持多线程
+    public Bitmap snapshot(int doc, int gs, boolean transparent);
 
     //! 当前命令改变的通知
     public interface OnCommandChangedListener {
@@ -72,6 +84,11 @@ public interface GraphView {
         void onDynamicChanged(GraphView view);
     }
 
+    //! 第一次后台渲染结束的通知
+    public interface OnFirstRegenListener {
+        void onFirstRegen(GraphView view);
+    }
+
     //! 添加当前命令改变的观察者
     public void setOnCommandChangedListener(OnCommandChangedListener listener);
 
@@ -83,4 +100,7 @@ public interface GraphView {
 
     //! 添加图形动态改变的观察者
     public void setOnDynamicChangedListener(OnDynamicChangedListener listener);
+
+    //! 添加第一次后台渲染结束的观察者
+    public void setOnFirstRegenListener(OnFirstRegenListener listener);
 }

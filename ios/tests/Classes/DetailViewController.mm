@@ -78,7 +78,7 @@
             self.view.backgroundColor = [UIColor whiteColor];
             break;
         case 2:
-            self.view.backgroundColor = [UIColor blackColor];
+            self.view.backgroundColor = [UIColor darkGrayColor];
             break;
     }
 
@@ -111,7 +111,7 @@
     static int order = 0;
     NSString *filename = [NSString stringWithFormat:@"%@/page%d.png", path, order++ % 10];
     
-    if ([obj performSelector:@selector(savePng:) withObject:filename]) {
+    if ([obj performSelector:@selector(exportPNG:) withObject:filename]) {
         NSString *msg = [NSString stringWithFormat:@"%@", 
                          [filename substringFromIndex:[filename length] - 19]];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Save" message:msg
@@ -127,7 +127,7 @@
     if ([_content.view respondsToSelector:@selector(save)]) {
         [_content.view performSelector:@selector(save)];
     }
-    else if ([_content.view respondsToSelector:@selector(savePng:)]) {
+    else if ([_content.view respondsToSelector:@selector(exportPNG:)]) {
         [self saveViewPng:_content.view];
     }
     else if ([_content.view.subviews count] > 0) {
@@ -135,7 +135,7 @@
         if ([sview respondsToSelector:@selector(save)]) {
             [sview performSelector:@selector(save)];
         }
-        else if ([sview respondsToSelector:@selector(savePng:)]) {
+        else if ([sview respondsToSelector:@selector(exportPNG:)]) {
             [self saveViewPng:sview];
         }
     }

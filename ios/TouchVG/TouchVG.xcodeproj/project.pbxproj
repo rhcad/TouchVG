@@ -36,6 +36,8 @@
 		02BD66A3189A1E9A00A4A444 /* GiShapeAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE037955181FA29B0049931F /* GiShapeAdapter.h */; };
 		AE037956181FA29B0049931F /* GiShapeAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE037955181FA29B0049931F /* GiShapeAdapter.h */; };
 		AE037959181FA2CD0049931F /* GiShapeAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE037958181FA2CD0049931F /* GiShapeAdapter.mm */; };
+		AE11A5DB18B328CF00B88366 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE11A5DA18B328CF00B88366 /* QuartzCore.framework */; };
+		AE11A5DC18B328DB00B88366 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE11A5DA18B328CF00B88366 /* QuartzCore.framework */; };
 		AE208E5718867EA500FE68E1 /* ImageCache.mm in Headers */ = {isa = PBXBuildFile; fileRef = AEC3381F180E28520029D7B3 /* ImageCache.mm */; };
 		AE208E5818867EA500FE68E1 /* GiViewAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = AE3A618017EE7CC600B23F69 /* GiViewAdapter.mm */; };
 		AE208E5918867EA500FE68E1 /* GiViewHelper.mm in Headers */ = {isa = PBXBuildFile; fileRef = AEF1B1D917E29D36005B5132 /* GiViewHelper.mm */; };
@@ -63,6 +65,7 @@
 		02BD66A8189A1E9A00A4A444 /* libTouchVG-SVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTouchVG-SVG.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE037955181FA29B0049931F /* GiShapeAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiShapeAdapter.h; path = ../../view/include/GiShapeAdapter.h; sourceTree = "<group>"; };
 		AE037958181FA2CD0049931F /* GiShapeAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiShapeAdapter.mm; path = ../../view/src/GiShapeAdapter.mm; sourceTree = "<group>"; };
+		AE11A5DA18B328CF00B88366 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AE2A3A49178FC511000194AE /* libTouchVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2A3A4C178FC511000194AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE2A3A50178FC511000194AE /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
@@ -154,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE11A5DC18B328DB00B88366 /* QuartzCore.framework in Frameworks */,
 				02BD6692189A1E9A00A4A444 /* UIKit.framework in Frameworks */,
 				02BD6693189A1E9A00A4A444 /* CoreGraphics.framework in Frameworks */,
 				02BD6694189A1E9A00A4A444 /* Foundation.framework in Frameworks */,
@@ -164,6 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE11A5DB18B328CF00B88366 /* QuartzCore.framework in Frameworks */,
 				AE2A3B4E178FC7EB000194AE /* UIKit.framework in Frameworks */,
 				AE2A3B4C178FC7C1000194AE /* CoreGraphics.framework in Frameworks */,
 				AE2A3A4D178FC511000194AE /* Foundation.framework in Frameworks */,
@@ -195,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				AE2A3B4D178FC7EB000194AE /* UIKit.framework */,
+				AE11A5DA18B328CF00B88366 /* QuartzCore.framework */,
 				AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */,
 				AE2A3A4C178FC511000194AE /* Foundation.framework */,
 			);

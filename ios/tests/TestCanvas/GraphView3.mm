@@ -57,6 +57,7 @@ static int machToMs(uint64_t start)
 - (void)dealloc
 {
     delete _canvas;
+    [super DEALLOC];
 }
 
 - (id)initWithFrame:(CGRect)frame withFlags:(int)t
@@ -359,9 +360,10 @@ static int machToMs(uint64_t start)
     _drawTimes++;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         while (!_canceled) {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_sync(dispatch_get_main_queue(), ^{
                 [self setNeedsDisplay];
             });
+            [NSThread sleepForTimeInterval:0];
         }
     });
 }

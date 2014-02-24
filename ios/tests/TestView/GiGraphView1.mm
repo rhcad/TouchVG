@@ -168,7 +168,7 @@ public:
     return _viewAdapter->snapshot();
 }
 
-- (BOOL)savePng:(NSString *)filename
+- (BOOL)exportPNG:(NSString *)filename
 {
     BOOL ret = NO;
     UIImage *image = [self snapshot];
@@ -220,14 +220,14 @@ static char _lastVgFile[256] = { 0 };
 
 @implementation GiGraphView2
 
-- (BOOL)savePng:(NSString *)filename
+- (BOOL)exportPNG:(NSString *)filename
 {
     NSString *vgfile = [[filename stringByDeletingPathExtension]
                         stringByAppendingPathExtension:@"vg"];
     [[GiViewHelper sharedInstance:self] saveToFile:vgfile];
     [[GiViewHelper sharedInstance] exportSVG:vgfile];
     strncpy(_lastVgFile, [vgfile UTF8String], sizeof(_lastVgFile));
-    return [super savePng:filename];
+    return [super exportPNG:filename];
 }
 
 + (NSString *)lastFileName
@@ -245,18 +245,20 @@ static char _lastVgFile[256] = { 0 };
     self = [super initWithFrame:frame];
     if (self) {
         _testType = type;
-        
-        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-        if (_testType == 64) {
-            [[GiViewHelper sharedInstance:self] startPlay:[path stringByAppendingPathComponent:@"record"]];
-        }
-        else if (_testType & 64) {
-            [[GiViewHelper sharedInstance:self] startRecord:[path stringByAppendingPathComponent:@"record"]];
-        }
-        [[GiViewHelper sharedInstance:self] startUndoRecord:[path stringByAppendingPathComponent:@"undo"]];
     }
     return self;
+}
+
+- (void)onFirstRegen:(id)view {
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                          NSUserDomainMask, YES) objectAtIndex:0];
+    if (_testType == 64) {
+        [[GiViewHelper sharedInstance] startPlay:[path stringByAppendingPathComponent:@"record"]];
+    }
+    else if (_testType & 64) {
+        [[GiViewHelper sharedInstance] startRecord:[path stringByAppendingPathComponent:@"record"]];
+    }
+    [[GiViewHelper sharedInstance] startUndoRecord:[path stringByAppendingPathComponent:@"undo"]];
 }
 
 @end

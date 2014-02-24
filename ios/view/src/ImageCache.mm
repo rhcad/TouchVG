@@ -179,4 +179,8 @@
     _path = [path copy];
 }
 
+- (NSString *)getImagePath {
+    return _path;
+}
+
 @end

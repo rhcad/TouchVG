@@ -27,7 +27,7 @@ public class ShapeView extends StdGraphView {
     public ShapeView(Context context) {
         super(context);
     }
-    
+
     @Override
     protected void createAdapter(Context context) {
         mImageCache = new ImageCache();
@@ -40,9 +40,9 @@ public class ShapeView extends StdGraphView {
                 v.setLayerType(View.LAYER_TYPE_SOFTWARE, null); // for drawPicture
                 v.setImageDrawable(new PictureDrawable(p));
                 v.setId(id);
-                
-                final LayoutParams params = new LayoutParams(
-                        LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+                final LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                        LayoutParams.WRAP_CONTENT);
                 params.leftMargin = Math.round(x);
                 params.topMargin = Math.round(y);
                 mShapeLayout.addView(v, params);
@@ -54,7 +54,7 @@ public class ShapeView extends StdGraphView {
     public void clearCachedData() {
         super.clearCachedData();
     }
-    
+
     @Override
     protected void onDetachedFromWindow() {
         mShapeLayout = null;
@@ -64,7 +64,7 @@ public class ShapeView extends StdGraphView {
         }
         super.onDetachedFromWindow();
     }
-    
+
     @Override
     protected void onDraw(Canvas canvas) {
         mCoreView.onSize(mViewAdapter, getWidth(), getHeight());
@@ -73,7 +73,7 @@ public class ShapeView extends StdGraphView {
             mCanvasAdapter.endPaint();
         }
     }
-    
+
     //! 查找指定ID的图形视图
     public View findShapeView(int id) {
         return mShapeLayout != null ? mShapeLayout.findViewById(id) : null;
@@ -97,12 +97,12 @@ public class ShapeView extends StdGraphView {
             mCoreView.drawAll(mViewAdapter, mRegenAdapter);
             f.addView(mShapeLayout);
         }
-        
+
         @Override
         public void regenAppend(int sid) {
             regenAll(true);
         }
-        
+
         @Override
         public void redraw() {
             synchronized (mCoreView) {

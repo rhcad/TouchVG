@@ -137,9 +137,17 @@ namespace touchvg.view
 
             public override void regenAll(bool changed)
             {
-                if (changed)
-                    CoreView.submitBackDoc(_owner.ViewAdapter);
-                CoreView.submitDynamicShapes(_owner.ViewAdapter);
+                if (!CoreView.isPlaying() && !CoreView.isUndoLoading())
+                {
+                    if (changed && CoreView.submitBackDoc(_owner.ViewAdapter)
+                        && CoreView.isUndoRecording())
+                    {
+                        CoreView.recordShapes(true,
+                            CoreView.getRecordTick(true),
+                            CoreView.acquireFrontDoc(), 0);
+                    }
+                    CoreView.submitDynamicShapes(_owner.ViewAdapter);
+                }
 
                 _owner.MainCanvas.InvalidateVisual();
                 _owner.TempCanvas.InvalidateVisual();
@@ -231,8 +239,8 @@ namespace touchvg.view
                     image.MouseDown += new MouseButtonEventHandler(image_MouseDown);
                     _owner.TempCanvas.Children.Add(image);
                     Canvas.SetLeft(image, buttonXY.get(2 * i) - image.Width / 2);
-                        Canvas.SetTop(image, buttonXY.get(2 * i + 1) - image.Height / 2);
-                        ActionImages.Add(image);
+                    Canvas.SetTop(image, buttonXY.get(2 * i + 1) - image.Height / 2);
+                    ActionImages.Add(image);
                     ActionImages.Add(image);
                 }
 

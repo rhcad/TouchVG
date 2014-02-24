@@ -8,6 +8,6 @@
 
 - (void)save;
 - (void)edit;
-- (BOOL)savePng:(NSString *)filename;
+- (BOOL)exportPNG:(NSString *)filename;
 
 @end
