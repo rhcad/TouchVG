@@ -2,16 +2,18 @@
 
 package vgtest.testview.view;
 
-import rhcad.touchvg.view.GraphView;
+import rhcad.touchvg.IGraphView;
+import rhcad.touchvg.IViewHelper;
+import rhcad.touchvg.ViewFactory;
 import rhcad.touchvg.view.StdGraphView;
-import rhcad.touchvg.view.ViewHelper;
+import vgtest.testview.TestFlags;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import democmds.core.DemoCmdsGate;
 
-public class GraphView1 extends StdGraphView implements GraphView.OnFirstRegenListener {
+public class GraphView1 extends StdGraphView implements IGraphView.OnFirstRegenListener {
     protected static final String PATH = "mnt/sdcard/TouchVG/";
 
     static {
@@ -23,42 +25,44 @@ public class GraphView1 extends StdGraphView implements GraphView.OnFirstRegenLi
     }
 
     public GraphView1(Context context, Bundle savedInstanceState) {
-        super(context);
+        super(context, savedInstanceState);
 
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");
-        final ViewHelper hlp = new ViewHelper(this);
+        final IViewHelper helper = ViewFactory.createHelper(this);
 
-        if ((flags & 32) != 0) {
-            hlp.addShapesForTest();
+        if ((flags & TestFlags.RAND_SHAPES) != 0) {
+            helper.addShapesForTest();
         }
-        if (savedInstanceState == null && (flags & 64) != 0) {
+        if (savedInstanceState == null && (flags & TestFlags.RECORD) != 0) {
             setOnFirstRegenListener(this);
         }
 
-        flags = flags & 0x0F;
-        if ((flags & 1) != 0) {
-            hlp.setCommand("select");
-        } else if ((flags >> 1) == 1) {
-            hlp.setCommand("splines");
-        } else if ((flags >> 1) == 2) {
-            hlp.setCommand("line");
-        } else if ((flags >> 1) == 3) {
-            hlp.setCommand("lines");
-        } else if ((flags >> 1) == 4) {
-            int n = DemoCmdsGate.registerCmds(hlp.cmdViewHandle());
-            hlp.setCommand("hittest");
-            Log.d("Test", "DemoCmdsGate.registerCmds = " + n + ", " + hlp.getCommand());
+        flags = flags & TestFlags.CMD_MASK;
+        if ((flags & TestFlags.SELECT_CMD) != 0) {
+            helper.setCommand("select");
+        } else if (flags == TestFlags.SPLINES_CMD) {
+            helper.setCommand("splines");
+        } else if (flags == TestFlags.LINE_CMD) {
+            helper.setCommand("line");
+        } else if (flags == TestFlags.LINES_CMD) {
+            helper.setCommand("lines");
+        } else if (flags == TestFlags.HITTEST_CMD) {
+            int n = DemoCmdsGate.registerCmds(helper.cmdViewHandle());
+            helper.setCommand("hittest");
+            Log.d("Test", "DemoCmdsGate.registerCmds = " + n + ", " + helper.getCommand());
         }
     }
 
-    public void onFirstRegen(GraphView view) {
+    public void onFirstRegen(IGraphView view) {
         int flags = ((Activity) getContext()).getIntent().getExtras().getInt("flags");
-        final ViewHelper helper = new ViewHelper(this);
+        final IViewHelper helper = ViewFactory.createHelper(view);
 
-        if (flags == 64) {
-            helper.startPlay(PATH + "record");
-        } else if ((flags & 64) != 0) {
-            helper.startRecord(PATH + "record");
+        if ((flags & TestFlags.RECORD) != 0) {
+            if ((flags & TestFlags.CMD_MASK) != 0) {
+                helper.startRecord(PATH + "record");
+            } else {
+                helper.startPlay(PATH + "record");
+            }
         }
     }
 }

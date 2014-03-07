@@ -2,8 +2,8 @@
 
 package touchvg.demo1;
 
-import rhcad.touchvg.view.GraphView;
-import rhcad.touchvg.view.GraphView.OnSelectionChangedListener;
+import rhcad.touchvg.IGraphView;
+import rhcad.touchvg.IGraphView.OnSelectionChangedListener;
 import rhcad.touchvg.view.ShapeView;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
@@ -24,7 +24,7 @@ public class AnimationActivity1 extends ExampleActivity1 {
         hlp.getGraphView().setContextActionEnabled(false);
         hlp.getGraphView().setOnSelectionChangedListener(new OnSelectionChangedListener() {
             @Override
-            public void onSelectionChanged(GraphView view) {
+            public void onSelectionChanged(IGraphView view) {
                 int id = hlp.getSelectedShapeID();
                 final View v = ((ShapeView) view).findShapeView(id);
                 if (v != null) {

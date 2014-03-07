@@ -43,15 +43,6 @@ public class MgCmdArcCSE extends MgCmdArc3P {
     this(touchvgJNI.new_MgCmdArcCSE__SWIG_1(), true);
   }
 
-  public static String Name() {
-    return touchvgJNI.MgCmdArcCSE_Name();
-  }
-
-  public static MgCommand Create() {
-    long cPtr = touchvgJNI.MgCmdArcCSE_Create();
-    return (cPtr == 0) ? null : new MgCommand(cPtr, false);
-  }
-
   public void release() {
     touchvgJNI.MgCmdArcCSE_release(swigCPtr, this);
   }

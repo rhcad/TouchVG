@@ -119,10 +119,6 @@ public class MgView {
     touchvgJNI.MgView_setNewShapeID(swigCPtr, this, sid);
   }
 
-  public String getCommandName() {
-    return touchvgJNI.MgView_getCommandName(swigCPtr, this);
-  }
-
   public MgCommand getCommand() {
     long cPtr = touchvgJNI.MgView_getCommand(swigCPtr, this);
     return (cPtr == 0) ? null : new MgCommand(cPtr, false);
@@ -141,6 +137,10 @@ public class MgView {
     return touchvgJNI.MgView_isReadOnly(swigCPtr, this);
   }
 
+  public boolean isCommand(String name) {
+    return touchvgJNI.MgView_isCommand(swigCPtr, this, name);
+  }
+
   public void regenAll(boolean changed) {
     touchvgJNI.MgView_regenAll(swigCPtr, this, changed);
   }
@@ -149,8 +149,12 @@ public class MgView {
     touchvgJNI.MgView_regenAppend(swigCPtr, this, sid);
   }
 
+  public void redraw(boolean changed) {
+    touchvgJNI.MgView_redraw__SWIG_0(swigCPtr, this, changed);
+  }
+
   public void redraw() {
-    touchvgJNI.MgView_redraw(swigCPtr, this);
+    touchvgJNI.MgView_redraw__SWIG_1(swigCPtr, this);
   }
 
   public boolean useFinger() {

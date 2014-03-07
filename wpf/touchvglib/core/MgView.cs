@@ -142,11 +142,6 @@ public class MgView : IDisposable {
     touchvgPINVOKE.MgView_setNewShapeID(swigCPtr, sid);
   }
 
-  public virtual string getCommandName() {
-    string ret = touchvgPINVOKE.MgView_getCommandName(swigCPtr);
-    return ret;
-  }
-
   public virtual MgCommand getCommand() {
     IntPtr cPtr = touchvgPINVOKE.MgView_getCommand(swigCPtr);
     MgCommand ret = (cPtr == IntPtr.Zero) ? null : new MgCommand(cPtr, false);
@@ -169,6 +164,11 @@ public class MgView : IDisposable {
     return ret;
   }
 
+  public virtual bool isCommand(string name) {
+    bool ret = touchvgPINVOKE.MgView_isCommand(swigCPtr, name);
+    return ret;
+  }
+
   public virtual void regenAll(bool changed) {
     touchvgPINVOKE.MgView_regenAll(swigCPtr, changed);
   }
@@ -177,8 +177,12 @@ public class MgView : IDisposable {
     touchvgPINVOKE.MgView_regenAppend(swigCPtr, sid);
   }
 
+  public virtual void redraw(bool changed) {
+    touchvgPINVOKE.MgView_redraw__SWIG_0(swigCPtr, changed);
+  }
+
   public virtual void redraw() {
-    touchvgPINVOKE.MgView_redraw(swigCPtr);
+    touchvgPINVOKE.MgView_redraw__SWIG_1(swigCPtr);
   }
 
   public virtual bool useFinger() {

@@ -99,6 +99,11 @@ public class GiContext : IDisposable {
     return ret;
   }
 
+  public float getExtraWidth() {
+    float ret = touchvgPINVOKE.GiContext_getExtraWidth(swigCPtr);
+    return ret;
+  }
+
   public bool isAutoScale() {
     bool ret = touchvgPINVOKE.GiContext_isAutoScale(swigCPtr);
     return ret;
@@ -106,6 +111,10 @@ public class GiContext : IDisposable {
 
   public void setLineWidth(float width, bool autoScale) {
     touchvgPINVOKE.GiContext_setLineWidth(swigCPtr, width, autoScale);
+  }
+
+  public void setExtraWidth(float pixels) {
+    touchvgPINVOKE.GiContext_setExtraWidth(swigCPtr, pixels);
   }
 
   public bool isNullLine() {
@@ -197,6 +206,23 @@ public class GiContext : IDisposable {
   public void setFillAlpha(int alpha) {
     touchvgPINVOKE.GiContext_setFillAlpha(swigCPtr, alpha);
   }
+
+  public static readonly int kSolidLine = touchvgPINVOKE.GiContext_kSolidLine_get();
+  public static readonly int kDashLine = touchvgPINVOKE.GiContext_kDashLine_get();
+  public static readonly int kDotLine = touchvgPINVOKE.GiContext_kDotLine_get();
+  public static readonly int kDashDot = touchvgPINVOKE.GiContext_kDashDot_get();
+  public static readonly int kDashDotdot = touchvgPINVOKE.GiContext_kDashDotdot_get();
+  public static readonly int kNullLine = touchvgPINVOKE.GiContext_kNullLine_get();
+  public static readonly int kCopyNone = touchvgPINVOKE.GiContext_kCopyNone_get();
+  public static readonly int kLineRGB = touchvgPINVOKE.GiContext_kLineRGB_get();
+  public static readonly int kLineAlpha = touchvgPINVOKE.GiContext_kLineAlpha_get();
+  public static readonly int kLineARGB = touchvgPINVOKE.GiContext_kLineARGB_get();
+  public static readonly int kLineWidth = touchvgPINVOKE.GiContext_kLineWidth_get();
+  public static readonly int kLineStyle = touchvgPINVOKE.GiContext_kLineStyle_get();
+  public static readonly int kFillRGB = touchvgPINVOKE.GiContext_kFillRGB_get();
+  public static readonly int kFillAlpha = touchvgPINVOKE.GiContext_kFillAlpha_get();
+  public static readonly int kFillARGB = touchvgPINVOKE.GiContext_kFillARGB_get();
+  public static readonly int kCopyAll = touchvgPINVOKE.GiContext_kCopyAll_get();
 
 }
 

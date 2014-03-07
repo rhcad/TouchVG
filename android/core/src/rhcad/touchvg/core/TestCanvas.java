@@ -103,4 +103,17 @@ public class TestCanvas {
     this(touchvgJNI.new_TestCanvas(), true);
   }
 
+  public final static int kRect = 0x01;
+  public final static int kLine = 0x02;
+  public final static int kTextAt = 0x04;
+  public final static int kEllipse = 0x08;
+  public final static int kQuadBezier = 0x10;
+  public final static int kCubicBezier = 0x20;
+  public final static int kPolygon = 0x40;
+  public final static int kClearRect = 0x80;
+  public final static int kClipPath = 0x100;
+  public final static int kHandle = 0x200;
+  public final static int kDynCurves = 0x400;
+  public final static int kClearPolygon = 0x80|0x40|0x02;
+
 }

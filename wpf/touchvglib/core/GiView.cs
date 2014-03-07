@@ -49,8 +49,8 @@ public class GiView : IDisposable {
     if (SwigDerivedClassHasMethod("regenAppend", swigMethodTypes1)) touchvgPINVOKE.GiView_regenAppendSwigExplicitGiView(swigCPtr, sid); else touchvgPINVOKE.GiView_regenAppend(swigCPtr, sid);
   }
 
-  public virtual void redraw() {
-    if (SwigDerivedClassHasMethod("redraw", swigMethodTypes2)) touchvgPINVOKE.GiView_redrawSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_redraw(swigCPtr);
+  public virtual void redraw(bool changed) {
+    if (SwigDerivedClassHasMethod("redraw", swigMethodTypes2)) touchvgPINVOKE.GiView_redrawSwigExplicitGiView(swigCPtr, changed); else touchvgPINVOKE.GiView_redraw(swigCPtr, changed);
   }
 
   public virtual bool useFinger() {
@@ -133,8 +133,8 @@ public class GiView : IDisposable {
     regenAppend(sid);
   }
 
-  private void SwigDirectorredraw() {
-    redraw();
+  private void SwigDirectorredraw(bool changed) {
+    redraw(changed);
   }
 
   private bool SwigDirectoruseFinger() {
@@ -171,7 +171,7 @@ public class GiView : IDisposable {
 
   public delegate void SwigDelegateGiView_0(bool changed);
   public delegate void SwigDelegateGiView_1(int sid);
-  public delegate void SwigDelegateGiView_2();
+  public delegate void SwigDelegateGiView_2(bool changed);
   public delegate bool SwigDelegateGiView_3();
   public delegate bool SwigDelegateGiView_4();
   public delegate bool SwigDelegateGiView_5(IntPtr actions, IntPtr buttonXY, float x, float y, float w, float h);
@@ -195,7 +195,7 @@ public class GiView : IDisposable {
 
   private static Type[] swigMethodTypes0 = new Type[] { typeof(bool) };
   private static Type[] swigMethodTypes1 = new Type[] { typeof(int) };
-  private static Type[] swigMethodTypes2 = new Type[] {  };
+  private static Type[] swigMethodTypes2 = new Type[] { typeof(bool) };
   private static Type[] swigMethodTypes3 = new Type[] {  };
   private static Type[] swigMethodTypes4 = new Type[] {  };
   private static Type[] swigMethodTypes5 = new Type[] { typeof(Ints), typeof(Floats), typeof(float), typeof(float), typeof(float), typeof(float) };

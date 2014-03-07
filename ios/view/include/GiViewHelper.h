@@ -7,6 +7,15 @@
 @class GiPaintView;
 @class CALayer;
 
+typedef NS_ENUM(int, GILineStyle) {
+    GILineStyleSolid,       //!< ----------
+    GILineStyleDash,        //!< － － － －
+    GILineStyleDot,         //!< ..........
+    GILineStyleDashDot,     //!< _._._._._
+    GILineStyleDashDotdot,  //!< _.._.._.._
+    GILineStyleNull         //!< Not draw.
+};
+
 //! iOS绘图视图辅助类
 /*! \ingroup GROUP_IOS
  */
@@ -26,7 +35,7 @@
 @property(nonatomic, assign) NSString   *command;   //!< 当前命令名称
 @property (nonatomic)         float     lineWidth;  //!< 线宽，正数表示毫米单位，零表示1像素宽，负数表示像素单位
 @property (nonatomic)         float     strokeWidth; //!< 像素单位的线宽，总是为正数
-@property (nonatomic)         int       lineStyle;  //!< 线型, 0-5:实线,虚线,点线,点划线,双点划线,空线
+@property (nonatomic)       GILineStyle lineStyle;  //!< 线型
 @property (nonatomic,assign)  UIColor   *lineColor; //!< 线条颜色，忽略透明度，clearColor或nil表示不画线条
 @property (nonatomic)         float     lineAlpha;  //!< 线条透明度, 0-1
 @property (nonatomic,assign)  UIColor   *fillColor; //!< 填充颜色，忽略透明度，clearColor或nil表示不填充
@@ -72,9 +81,13 @@
 - (BOOL)isRecording;                        //!< 是否正在录屏
 - (BOOL)startRecord:(NSString *)path;       //!< 开始录屏，在主线程用
 - (void)stopRecord;                         //!< 停止录屏，在主线程用
+- (BOOL)isPaused;                           //!< 是否已暂停
 - (BOOL)isPlaying;                          //!< 是否正在播放
 - (BOOL)startPlay:(NSString *)path;         //!< 开始播放，在主线程用
 - (void)stopPlay;                           //!< 停止播放，在主线程用
+- (BOOL)playPause;                          //!< 暂停播放
+- (BOOL)playResume;                         //!< 继续播放
+- (long)getPlayTicks;                       //!< 返回已播放或录制的毫秒数
 
 - (int)insertPNGFromResource:(NSString *)name;      //!< 在默认位置插入一个程序资源中的PNG图片(name.png)
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt;   //!< 插入PNG图片(name.png)，并指定其中心位置
@@ -86,6 +99,7 @@
 - (int)insertImageFromFile:(NSString *)filename;    //!< 在默认位置插入一个PNG、JPEG或SVG等文件的图像
 
 - (BOOL)hasImageShape;                      //!< 返回是否有容纳图像的图形对象
+- (int)findShapeByImageID:(NSString *)name;  //!< 查找指定名称的图像对应的图形对象ID
 - (void)setImagePath:(NSString *)path;      //!< 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
 - (NSString *)getImagePath;                 //!< 返回图像文件的默认路径
 

@@ -55,10 +55,6 @@ public class MgCommand {
     touchvgJNI.MgCommand_director_connect(this, swigCPtr, swigCMemOwn, true);
   }
 
-  public String getName() {
-    return touchvgJNI.MgCommand_getName(swigCPtr, this);
-  }
-
   public void release() {
     touchvgJNI.MgCommand_release(swigCPtr, this);
   }
@@ -125,11 +121,6 @@ public class MgCommand {
 
   public boolean doContextAction(MgMotion sender, int action) {
     return (getClass() == MgCommand.class) ? touchvgJNI.MgCommand_doContextAction(swigCPtr, this, MgMotion.getCPtr(sender), sender, action) : touchvgJNI.MgCommand_doContextActionSwigExplicitMgCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender, action);
-  }
-
-  public MgShape getShape(MgMotion sender) {
-    long cPtr = (getClass() == MgCommand.class) ? touchvgJNI.MgCommand_getShape(swigCPtr, this, MgMotion.getCPtr(sender), sender) : touchvgJNI.MgCommand_getShapeSwigExplicitMgCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender);
-    return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
 }

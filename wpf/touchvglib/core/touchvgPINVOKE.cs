@@ -1380,6 +1380,54 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_delete_GiColor")]
   public static extern void delete_GiColor(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kSolidLine_get")]
+  public static extern int GiContext_kSolidLine_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kDashLine_get")]
+  public static extern int GiContext_kDashLine_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kDotLine_get")]
+  public static extern int GiContext_kDotLine_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kDashDot_get")]
+  public static extern int GiContext_kDashDot_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kDashDotdot_get")]
+  public static extern int GiContext_kDashDotdot_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kNullLine_get")]
+  public static extern int GiContext_kNullLine_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kCopyNone_get")]
+  public static extern int GiContext_kCopyNone_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kLineRGB_get")]
+  public static extern int GiContext_kLineRGB_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kLineAlpha_get")]
+  public static extern int GiContext_kLineAlpha_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kLineARGB_get")]
+  public static extern int GiContext_kLineARGB_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kLineWidth_get")]
+  public static extern int GiContext_kLineWidth_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kLineStyle_get")]
+  public static extern int GiContext_kLineStyle_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kFillRGB_get")]
+  public static extern int GiContext_kFillRGB_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kFillAlpha_get")]
+  public static extern int GiContext_kFillAlpha_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kFillARGB_get")]
+  public static extern int GiContext_kFillARGB_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_kCopyAll_get")]
+  public static extern int GiContext_kCopyAll_get();
+
   [DllImport("touchvg", EntryPoint="CSharp_new_GiContext__SWIG_0")]
   public static extern IntPtr new_GiContext__SWIG_0();
 
@@ -1419,11 +1467,17 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_GiContext_getLineWidth")]
   public static extern float GiContext_getLineWidth(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_getExtraWidth")]
+  public static extern float GiContext_getExtraWidth(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_GiContext_isAutoScale")]
   public static extern bool GiContext_isAutoScale(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiContext_setLineWidth")]
   public static extern void GiContext_setLineWidth(HandleRef jarg1, float jarg2, bool jarg3);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiContext_setExtraWidth")]
+  public static extern void GiContext_setExtraWidth(HandleRef jarg1, float jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiContext_isNullLine")]
   public static extern bool GiContext_isNullLine(HandleRef jarg1);
@@ -1685,9 +1739,6 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_GiPath_getPoints")]
   public static extern IntPtr GiPath_getPoints(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiPath_getTypes")]
-  public static extern string GiPath_getTypes(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiPath_clear")]
   public static extern void GiPath_clear(HandleRef jarg1);
@@ -2491,10 +2542,13 @@ class touchvgPINVOKE {
   public static extern void MgShapes_clearCachedData(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_copyShapes__SWIG_0")]
-  public static extern int MgShapes_copyShapes__SWIG_0(HandleRef jarg1, HandleRef jarg2, bool jarg3);
+  public static extern int MgShapes_copyShapes__SWIG_0(HandleRef jarg1, HandleRef jarg2, bool jarg3, bool jarg4);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_copyShapes__SWIG_1")]
-  public static extern int MgShapes_copyShapes__SWIG_1(HandleRef jarg1, HandleRef jarg2);
+  public static extern int MgShapes_copyShapes__SWIG_1(HandleRef jarg1, HandleRef jarg2, bool jarg3);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgShapes_copyShapes__SWIG_2")]
+  public static extern int MgShapes_copyShapes__SWIG_2(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_addShape")]
   public static extern IntPtr MgShapes_addShape(HandleRef jarg1, HandleRef jarg2);
@@ -2516,6 +2570,9 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_bringToFront")]
   public static extern bool MgShapes_bringToFront(HandleRef jarg1, int jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgShapes_getParentShape")]
+  public static extern IntPtr MgShapes_getParentShape(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_getOwner")]
   public static extern IntPtr MgShapes_getOwner(HandleRef jarg1);
@@ -3570,9 +3627,6 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgImageShape_hitTest")]
   public static extern float MgImageShape_hitTest(HandleRef jarg1, HandleRef jarg2, float jarg3, HandleRef jarg4);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgImageShape_getName")]
-  public static extern string MgImageShape_getName(HandleRef jarg1);
-
   [DllImport("touchvg", EntryPoint="CSharp_MgImageShape_setName")]
   public static extern void MgImageShape_setName(HandleRef jarg1, string jarg2);
 
@@ -3939,8 +3993,8 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgGrid_snap")]
   public static extern int MgGrid_snap(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgGrid_valid")]
-  public static extern bool MgGrid_valid(HandleRef jarg1, float jarg2);
+  [DllImport("touchvg", EntryPoint="CSharp_MgGrid_isValid")]
+  public static extern bool MgGrid_isValid(HandleRef jarg1, float jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgActionDispatcher_showInSelect")]
   public static extern bool MgActionDispatcher_showInSelect(HandleRef jarg1, HandleRef jarg2, int jarg3, HandleRef jarg4, HandleRef jarg5);
@@ -4104,9 +4158,6 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgView_setNewShapeID")]
   public static extern void MgView_setNewShapeID(HandleRef jarg1, int jarg2);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgView_getCommandName")]
-  public static extern string MgView_getCommandName(HandleRef jarg1);
-
   [DllImport("touchvg", EntryPoint="CSharp_MgView_getCommand")]
   public static extern IntPtr MgView_getCommand(HandleRef jarg1);
 
@@ -4119,14 +4170,20 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgView_isReadOnly")]
   public static extern bool MgView_isReadOnly(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgView_isCommand")]
+  public static extern bool MgView_isCommand(HandleRef jarg1, string jarg2);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgView_regenAll")]
   public static extern void MgView_regenAll(HandleRef jarg1, bool jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgView_regenAppend")]
   public static extern void MgView_regenAppend(HandleRef jarg1, int jarg2);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgView_redraw")]
-  public static extern void MgView_redraw(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgView_redraw__SWIG_0")]
+  public static extern void MgView_redraw__SWIG_0(HandleRef jarg1, bool jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgView_redraw__SWIG_1")]
+  public static extern void MgView_redraw__SWIG_1(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgView_useFinger")]
   public static extern bool MgView_useFinger(HandleRef jarg1);
@@ -4308,9 +4365,6 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_delete_MgCommand")]
   public static extern void delete_MgCommand(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgCommand_getName")]
-  public static extern string MgCommand_getName(HandleRef jarg1);
-
   [DllImport("touchvg", EntryPoint="CSharp_MgCommand_release")]
   public static extern void MgCommand_release(HandleRef jarg1);
 
@@ -4407,14 +4461,8 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCommand_doContextActionSwigExplicitMgCommand")]
   public static extern bool MgCommand_doContextActionSwigExplicitMgCommand(HandleRef jarg1, HandleRef jarg2, int jarg3);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgCommand_getShape")]
-  public static extern IntPtr MgCommand_getShape(HandleRef jarg1, HandleRef jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCommand_getShapeSwigExplicitMgCommand")]
-  public static extern IntPtr MgCommand_getShapeSwigExplicitMgCommand(HandleRef jarg1, HandleRef jarg2);
-
   [DllImport("touchvg", EntryPoint="CSharp_MgCommand_director_connect")]
-  public static extern void MgCommand_director_connect(HandleRef jarg1, MgCommand.SwigDelegateMgCommand_0 delegate0, MgCommand.SwigDelegateMgCommand_1 delegate1, MgCommand.SwigDelegateMgCommand_2 delegate2, MgCommand.SwigDelegateMgCommand_3 delegate3, MgCommand.SwigDelegateMgCommand_4 delegate4, MgCommand.SwigDelegateMgCommand_5 delegate5, MgCommand.SwigDelegateMgCommand_6 delegate6, MgCommand.SwigDelegateMgCommand_7 delegate7, MgCommand.SwigDelegateMgCommand_8 delegate8, MgCommand.SwigDelegateMgCommand_9 delegate9, MgCommand.SwigDelegateMgCommand_10 delegate10, MgCommand.SwigDelegateMgCommand_11 delegate11, MgCommand.SwigDelegateMgCommand_12 delegate12, MgCommand.SwigDelegateMgCommand_13 delegate13, MgCommand.SwigDelegateMgCommand_14 delegate14, MgCommand.SwigDelegateMgCommand_15 delegate15, MgCommand.SwigDelegateMgCommand_16 delegate16, MgCommand.SwigDelegateMgCommand_17 delegate17);
+  public static extern void MgCommand_director_connect(HandleRef jarg1, MgCommand.SwigDelegateMgCommand_0 delegate0, MgCommand.SwigDelegateMgCommand_1 delegate1, MgCommand.SwigDelegateMgCommand_2 delegate2, MgCommand.SwigDelegateMgCommand_3 delegate3, MgCommand.SwigDelegateMgCommand_4 delegate4, MgCommand.SwigDelegateMgCommand_5 delegate5, MgCommand.SwigDelegateMgCommand_6 delegate6, MgCommand.SwigDelegateMgCommand_7 delegate7, MgCommand.SwigDelegateMgCommand_8 delegate8, MgCommand.SwigDelegateMgCommand_9 delegate9, MgCommand.SwigDelegateMgCommand_10 delegate10, MgCommand.SwigDelegateMgCommand_11 delegate11, MgCommand.SwigDelegateMgCommand_12 delegate12, MgCommand.SwigDelegateMgCommand_13 delegate13, MgCommand.SwigDelegateMgCommand_14 delegate14, MgCommand.SwigDelegateMgCommand_15 delegate15, MgCommand.SwigDelegateMgCommand_16 delegate16);
 
   [DllImport("touchvg", EntryPoint="CSharp_CmdObserver_onDocLoaded")]
   public static extern void CmdObserver_onDocLoaded(HandleRef jarg1, HandleRef jarg2);
@@ -4722,12 +4770,6 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCommandDraw_mouseHoverSwigExplicitMgCommandDraw")]
   public static extern bool MgCommandDraw_mouseHoverSwigExplicitMgCommandDraw(HandleRef jarg1, HandleRef jarg2);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgCommandDraw_getShape")]
-  public static extern IntPtr MgCommandDraw_getShape(HandleRef jarg1, HandleRef jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCommandDraw_getShapeSwigExplicitMgCommandDraw")]
-  public static extern IntPtr MgCommandDraw_getShapeSwigExplicitMgCommandDraw(HandleRef jarg1, HandleRef jarg2);
-
   [DllImport("touchvg", EntryPoint="CSharp_MgCommandDraw_getStep")]
   public static extern int MgCommandDraw_getStep(HandleRef jarg1);
 
@@ -4750,19 +4792,13 @@ class touchvgPINVOKE {
   public static extern IntPtr MgCommandDraw_snapPoint__SWIG_3(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCommandDraw_director_connect")]
-  public static extern void MgCommandDraw_director_connect(HandleRef jarg1, MgCommandDraw.SwigDelegateMgCommandDraw_0 delegate0, MgCommandDraw.SwigDelegateMgCommandDraw_1 delegate1, MgCommandDraw.SwigDelegateMgCommandDraw_2 delegate2, MgCommandDraw.SwigDelegateMgCommandDraw_3 delegate3, MgCommandDraw.SwigDelegateMgCommandDraw_4 delegate4, MgCommandDraw.SwigDelegateMgCommandDraw_5 delegate5, MgCommandDraw.SwigDelegateMgCommandDraw_6 delegate6, MgCommandDraw.SwigDelegateMgCommandDraw_7 delegate7, MgCommandDraw.SwigDelegateMgCommandDraw_8 delegate8, MgCommandDraw.SwigDelegateMgCommandDraw_9 delegate9, MgCommandDraw.SwigDelegateMgCommandDraw_10 delegate10, MgCommandDraw.SwigDelegateMgCommandDraw_11 delegate11, MgCommandDraw.SwigDelegateMgCommandDraw_12 delegate12, MgCommandDraw.SwigDelegateMgCommandDraw_13 delegate13, MgCommandDraw.SwigDelegateMgCommandDraw_14 delegate14, MgCommandDraw.SwigDelegateMgCommandDraw_15 delegate15, MgCommandDraw.SwigDelegateMgCommandDraw_16 delegate16, MgCommandDraw.SwigDelegateMgCommandDraw_17 delegate17, MgCommandDraw.SwigDelegateMgCommandDraw_18 delegate18, MgCommandDraw.SwigDelegateMgCommandDraw_19 delegate19, MgCommandDraw.SwigDelegateMgCommandDraw_20 delegate20);
+  public static extern void MgCommandDraw_director_connect(HandleRef jarg1, MgCommandDraw.SwigDelegateMgCommandDraw_0 delegate0, MgCommandDraw.SwigDelegateMgCommandDraw_1 delegate1, MgCommandDraw.SwigDelegateMgCommandDraw_2 delegate2, MgCommandDraw.SwigDelegateMgCommandDraw_3 delegate3, MgCommandDraw.SwigDelegateMgCommandDraw_4 delegate4, MgCommandDraw.SwigDelegateMgCommandDraw_5 delegate5, MgCommandDraw.SwigDelegateMgCommandDraw_6 delegate6, MgCommandDraw.SwigDelegateMgCommandDraw_7 delegate7, MgCommandDraw.SwigDelegateMgCommandDraw_8 delegate8, MgCommandDraw.SwigDelegateMgCommandDraw_9 delegate9, MgCommandDraw.SwigDelegateMgCommandDraw_10 delegate10, MgCommandDraw.SwigDelegateMgCommandDraw_11 delegate11, MgCommandDraw.SwigDelegateMgCommandDraw_12 delegate12, MgCommandDraw.SwigDelegateMgCommandDraw_13 delegate13, MgCommandDraw.SwigDelegateMgCommandDraw_14 delegate14, MgCommandDraw.SwigDelegateMgCommandDraw_15 delegate15, MgCommandDraw.SwigDelegateMgCommandDraw_16 delegate16, MgCommandDraw.SwigDelegateMgCommandDraw_17 delegate17, MgCommandDraw.SwigDelegateMgCommandDraw_18 delegate18, MgCommandDraw.SwigDelegateMgCommandDraw_19 delegate19);
 
   [DllImport("touchvg", EntryPoint="CSharp_new_MgCmdArc3P__SWIG_0")]
   public static extern IntPtr new_MgCmdArc3P__SWIG_0(string jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_new_MgCmdArc3P__SWIG_1")]
   public static extern IntPtr new_MgCmdArc3P__SWIG_1();
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdArc3P_Name")]
-  public static extern string MgCmdArc3P_Name();
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdArc3P_Create")]
-  public static extern IntPtr MgCmdArc3P_Create();
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdArc3P_release")]
   public static extern void MgCmdArc3P_release(HandleRef jarg1);
@@ -4791,12 +4827,6 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_new_MgCmdArcCSE__SWIG_1")]
   public static extern IntPtr new_MgCmdArcCSE__SWIG_1();
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdArcCSE_Name")]
-  public static extern string MgCmdArcCSE_Name();
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdArcCSE_Create")]
-  public static extern IntPtr MgCmdArcCSE_Create();
-
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdArcCSE_release")]
   public static extern void MgCmdArcCSE_release(HandleRef jarg1);
 
@@ -4812,12 +4842,6 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_new_MgCmdArcTan__SWIG_1")]
   public static extern IntPtr new_MgCmdArcTan__SWIG_1();
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdArcTan_Name")]
-  public static extern string MgCmdArcTan_Name();
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdArcTan_Create")]
-  public static extern IntPtr MgCmdArcTan_Create();
-
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdArcTan_release")]
   public static extern void MgCmdArcTan_release(HandleRef jarg1);
 
@@ -4829,12 +4853,6 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_new_MgCmdDrawRect__SWIG_1")]
   public static extern IntPtr new_MgCmdDrawRect__SWIG_1();
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdDrawRect_Name")]
-  public static extern string MgCmdDrawRect_Name();
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdDrawRect_Create")]
-  public static extern IntPtr MgCmdDrawRect_Create();
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdDrawRect_release")]
   public static extern void MgCmdDrawRect_release(HandleRef jarg1);
@@ -4882,13 +4900,10 @@ class touchvgPINVOKE {
   public static extern void delete_MgCmdDrawRect(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdDrawRect_director_connect")]
-  public static extern void MgCmdDrawRect_director_connect(HandleRef jarg1, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_0 delegate0, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_1 delegate1, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_2 delegate2, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_3 delegate3, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_4 delegate4, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_5 delegate5, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_6 delegate6, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_7 delegate7, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_8 delegate8, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_9 delegate9, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_10 delegate10, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_11 delegate11, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_12 delegate12, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_13 delegate13, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_14 delegate14, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_15 delegate15, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_16 delegate16, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_17 delegate17, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_18 delegate18, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_19 delegate19, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_20 delegate20, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_21 delegate21);
+  public static extern void MgCmdDrawRect_director_connect(HandleRef jarg1, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_0 delegate0, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_1 delegate1, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_2 delegate2, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_3 delegate3, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_4 delegate4, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_5 delegate5, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_6 delegate6, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_7 delegate7, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_8 delegate8, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_9 delegate9, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_10 delegate10, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_11 delegate11, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_12 delegate12, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_13 delegate13, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_14 delegate14, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_15 delegate15, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_16 delegate16, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_17 delegate17, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_18 delegate18, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_19 delegate19, MgCmdDrawRect.SwigDelegateMgCmdDrawRect_20 delegate20);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdManager_release")]
   public static extern void MgCmdManager_release(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCmdManager_getCommandName")]
-  public static extern string MgCmdManager_getCommandName(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdManager_getCommand")]
   public static extern IntPtr MgCmdManager_getCommand(HandleRef jarg1);
@@ -5119,10 +5134,10 @@ class touchvgPINVOKE {
   public static extern void GiView_regenAppendSwigExplicitGiView(HandleRef jarg1, int jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiView_redraw")]
-  public static extern void GiView_redraw(HandleRef jarg1);
+  public static extern void GiView_redraw(HandleRef jarg1, bool jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiView_redrawSwigExplicitGiView")]
-  public static extern void GiView_redrawSwigExplicitGiView(HandleRef jarg1);
+  public static extern void GiView_redrawSwigExplicitGiView(HandleRef jarg1, bool jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiView_useFinger")]
   public static extern bool GiView_useFinger(HandleRef jarg1);
@@ -5178,6 +5193,30 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_GiView_director_connect")]
   public static extern void GiView_director_connect(HandleRef jarg1, GiView.SwigDelegateGiView_0 delegate0, GiView.SwigDelegateGiView_1 delegate1, GiView.SwigDelegateGiView_2 delegate2, GiView.SwigDelegateGiView_3 delegate3, GiView.SwigDelegateGiView_4 delegate4, GiView.SwigDelegateGiView_5 delegate5, GiView.SwigDelegateGiView_6 delegate6, GiView.SwigDelegateGiView_7 delegate7, GiView.SwigDelegateGiView_8 delegate8, GiView.SwigDelegateGiView_9 delegate9, GiView.SwigDelegateGiView_10 delegate10);
 
+  [DllImport("touchvg", EntryPoint="CSharp_delete_MgFindImageCallback")]
+  public static extern void delete_MgFindImageCallback(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgFindImageCallback_onFindImage")]
+  public static extern void MgFindImageCallback_onFindImage(HandleRef jarg1, int jarg2, string jarg3);
+
+  [DllImport("touchvg", EntryPoint="CSharp_new_MgFindImageCallback")]
+  public static extern IntPtr new_MgFindImageCallback();
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgFindImageCallback_director_connect")]
+  public static extern void MgFindImageCallback_director_connect(HandleRef jarg1, MgFindImageCallback.SwigDelegateMgFindImageCallback_0 delegate0);
+
+  [DllImport("touchvg", EntryPoint="CSharp_delete_MgStringCallback")]
+  public static extern void delete_MgStringCallback(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgStringCallback_onGetString")]
+  public static extern void MgStringCallback_onGetString(HandleRef jarg1, string jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_new_MgStringCallback")]
+  public static extern IntPtr new_MgStringCallback();
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgStringCallback_director_connect")]
+  public static extern void MgStringCallback_director_connect(HandleRef jarg1, MgStringCallback.SwigDelegateMgStringCallback_0 delegate0);
+
   [DllImport("touchvg", EntryPoint="CSharp_delete_MgCoreView")]
   public static extern void delete_MgCoreView(HandleRef jarg1);
 
@@ -5229,8 +5268,11 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_isPlaying")]
   public static extern bool MgCoreView_isPlaying(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_isPaused")]
+  public static extern bool MgCoreView_isPaused(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getRecordTick")]
-  public static extern int MgCoreView_getRecordTick(HandleRef jarg1, bool jarg2);
+  public static extern int MgCoreView_getRecordTick(HandleRef jarg1, bool jarg2, int jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_isUndoLoading")]
   public static extern bool MgCoreView_isUndoLoading(HandleRef jarg1);
@@ -5241,17 +5283,35 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_canRedo")]
   public static extern bool MgCoreView_canRedo(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getPlayingTick")]
-  public static extern int MgCoreView_getPlayingTick(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getRedoIndex")]
+  public static extern int MgCoreView_getRedoIndex(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_loadFirstFrame")]
-  public static extern int MgCoreView_loadFirstFrame(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getRedoCount")]
+  public static extern int MgCoreView_getRedoCount(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_DOC_CHANGED_get")]
+  public static extern int MgCoreView_DOC_CHANGED_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_SHAPE_APPEND_get")]
+  public static extern int MgCoreView_SHAPE_APPEND_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_DYN_CHANGED_get")]
+  public static extern int MgCoreView_DYN_CHANGED_get();
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getPlayingTick")]
+  public static extern int MgCoreView_getPlayingTick(HandleRef jarg1, int jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_loadFirstFrame__SWIG_0")]
+  public static extern int MgCoreView_loadFirstFrame__SWIG_0(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_loadFirstFrame__SWIG_1")]
+  public static extern int MgCoreView_loadFirstFrame__SWIG_1(HandleRef jarg1, string jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_loadNextFrame")]
   public static extern int MgCoreView_loadNextFrame(HandleRef jarg1, int jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_loadPrevFrame")]
-  public static extern int MgCoreView_loadPrevFrame(HandleRef jarg1, int jarg2);
+  public static extern int MgCoreView_loadPrevFrame(HandleRef jarg1, int jarg2, int jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getFrameTick")]
   public static extern int MgCoreView_getFrameTick(HandleRef jarg1);
@@ -5275,7 +5335,7 @@ class touchvgPINVOKE {
   public static extern bool MgCoreView_isDrawingCommand(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getCommand")]
-  public static extern string MgCoreView_getCommand(HandleRef jarg1);
+  public static extern void MgCoreView_getCommand(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_setCommand__SWIG_0")]
   public static extern bool MgCoreView_setCommand__SWIG_0(HandleRef jarg1, string jarg2, string jarg3);
@@ -5347,16 +5407,16 @@ class touchvgPINVOKE {
   public static extern bool MgCoreView_saveShapes__SWIG_1(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getContent__SWIG_0")]
-  public static extern string MgCoreView_getContent__SWIG_0(HandleRef jarg1, int jarg2);
+  public static extern void MgCoreView_getContent__SWIG_0(HandleRef jarg1, int jarg2, HandleRef jarg3);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getContent__SWIG_1")]
+  public static extern void MgCoreView_getContent__SWIG_1(HandleRef jarg1, HandleRef jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_freeContent")]
   public static extern void MgCoreView_freeContent(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_setContent")]
   public static extern bool MgCoreView_setContent(HandleRef jarg1, string jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getContent__SWIG_1")]
-  public static extern string MgCoreView_getContent__SWIG_1(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_zoomToExtent")]
   public static extern bool MgCoreView_zoomToExtent(HandleRef jarg1);
@@ -5383,7 +5443,13 @@ class touchvgPINVOKE {
   public static extern int MgCoreView_addImageShape__SWIG_1(HandleRef jarg1, string jarg2, float jarg3, float jarg4, float jarg5, float jarg6);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_hasImageShape")]
-  public static extern bool MgCoreView_hasImageShape(HandleRef jarg1);
+  public static extern bool MgCoreView_hasImageShape(HandleRef jarg1, int jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_findShapeByImageID")]
+  public static extern int MgCoreView_findShapeByImageID(HandleRef jarg1, int jarg2, string jarg3);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_traverseImageShapes")]
+  public static extern int MgCoreView_traverseImageShapes(HandleRef jarg1, int jarg2, HandleRef jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getDisplayExtent__SWIG_0")]
   public static extern bool MgCoreView_getDisplayExtent__SWIG_0(HandleRef jarg1, HandleRef jarg2);
@@ -5400,26 +5466,20 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getBoundingBox__SWIG_2")]
   public static extern bool MgCoreView_getBoundingBox__SWIG_2(HandleRef jarg1, int jarg2, int jarg3, HandleRef jarg4, int jarg5);
 
-  [DllImport("touchvg", EntryPoint="CSharp_new_GiCoreView__SWIG_0")]
-  public static extern IntPtr new_GiCoreView__SWIG_0(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_new_GiCoreView__SWIG_1")]
-  public static extern IntPtr new_GiCoreView__SWIG_1();
-
-  [DllImport("touchvg", EntryPoint="CSharp_delete_GiCoreView")]
-  public static extern void delete_GiCoreView(HandleRef jarg1);
-
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_createView__SWIG_0")]
-  public static extern void GiCoreView_createView__SWIG_0(HandleRef jarg1, HandleRef jarg2, int jarg3);
+  public static extern IntPtr GiCoreView_createView__SWIG_0(HandleRef jarg1, int jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_createView__SWIG_1")]
-  public static extern void GiCoreView_createView__SWIG_1(HandleRef jarg1, HandleRef jarg2);
+  public static extern IntPtr GiCoreView_createView__SWIG_1(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_createMagnifierView")]
-  public static extern void GiCoreView_createMagnifierView(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3);
+  public static extern IntPtr GiCoreView_createMagnifierView(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_destoryView")]
   public static extern void GiCoreView_destoryView(HandleRef jarg1, HandleRef jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_release")]
+  public static extern void GiCoreView_release(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_acquireGraphics")]
   public static extern int GiCoreView_acquireGraphics(HandleRef jarg1, HandleRef jarg2);
@@ -5436,14 +5496,17 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_dynDraw__SWIG_0")]
   public static extern int GiCoreView_dynDraw__SWIG_0(HandleRef jarg1, int jarg2, int jarg3, HandleRef jarg4);
 
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_dynDraw__SWIG_1")]
+  public static extern int GiCoreView_dynDraw__SWIG_1(HandleRef jarg1, int jarg2, int jarg3, HandleRef jarg4, HandleRef jarg5);
+
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_drawAll__SWIG_1")]
   public static extern int GiCoreView_drawAll__SWIG_1(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_drawAppend__SWIG_1")]
   public static extern int GiCoreView_drawAppend__SWIG_1(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, int jarg4);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_dynDraw__SWIG_1")]
-  public static extern int GiCoreView_dynDraw__SWIG_1(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3);
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_dynDraw__SWIG_2")]
+  public static extern int GiCoreView_dynDraw__SWIG_2(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_setBkColor")]
   public static extern int GiCoreView_setBkColor(HandleRef jarg1, HandleRef jarg2, int jarg3);
@@ -5497,13 +5560,16 @@ class touchvgPINVOKE {
   public static extern int GiCoreView_exportSVG__SWIG_1(HandleRef jarg1, HandleRef jarg2, string jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_startRecord")]
-  public static extern bool GiCoreView_startRecord(HandleRef jarg1, string jarg2, int jarg3, bool jarg4);
+  public static extern bool GiCoreView_startRecord(HandleRef jarg1, string jarg2, int jarg3, bool jarg4, int jarg5);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_stopRecord")]
-  public static extern void GiCoreView_stopRecord(HandleRef jarg1, bool jarg2);
+  public static extern void GiCoreView_stopRecord(HandleRef jarg1, HandleRef jarg2, bool jarg3);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_recordShapes")]
-  public static extern bool GiCoreView_recordShapes(HandleRef jarg1, bool jarg2, int jarg3, int jarg4, int jarg5);
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_recordShapes__SWIG_0")]
+  public static extern bool GiCoreView_recordShapes__SWIG_0(HandleRef jarg1, bool jarg2, int jarg3, int jarg4, int jarg5);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_recordShapes__SWIG_1")]
+  public static extern bool GiCoreView_recordShapes__SWIG_1(HandleRef jarg1, bool jarg2, int jarg3, int jarg4, int jarg5, HandleRef jarg6);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_undo")]
   public static extern bool GiCoreView_undo(HandleRef jarg1, HandleRef jarg2);
@@ -5514,215 +5580,77 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadFrameIndex")]
   public static extern bool GiCoreView_loadFrameIndex(string jarg1, HandleRef jarg2);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadNextFrame__SWIG_0")]
-  public static extern int GiCoreView_loadNextFrame__SWIG_0(HandleRef jarg1, HandleRef jarg2);
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadNextFrame")]
+  public static extern int GiCoreView_loadNextFrame(HandleRef jarg1, HandleRef jarg2, int jarg3);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_skipExpireFrame")]
-  public static extern int GiCoreView_skipExpireFrame(HandleRef jarg1, HandleRef jarg2, int jarg3);
+  public static extern int GiCoreView_skipExpireFrame(HandleRef jarg1, HandleRef jarg2, int jarg3, int jarg4);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_frameNeedWait")]
-  public static extern bool GiCoreView_frameNeedWait(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isPaused")]
-  public static extern bool GiCoreView_isPaused(HandleRef jarg1);
+  public static extern bool GiCoreView_frameNeedWait(HandleRef jarg1, int jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_onPause")]
-  public static extern bool GiCoreView_onPause(HandleRef jarg1);
+  public static extern bool GiCoreView_onPause(HandleRef jarg1, int jarg2);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_onResume")]
-  public static extern bool GiCoreView_onResume(HandleRef jarg1);
+  public static extern bool GiCoreView_onResume(HandleRef jarg1, int jarg2);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isPressDragging")]
-  public static extern bool GiCoreView_isPressDragging(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_restoreRecord")]
+  public static extern bool GiCoreView_restoreRecord(HandleRef jarg1, int jarg2, string jarg3, int jarg4, int jarg5, int jarg6, int jarg7, int jarg8, int jarg9);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isDrawingCommand")]
-  public static extern bool GiCoreView_isDrawingCommand(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_new_MgPlaying")]
+  public static extern IntPtr new_MgPlaying();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_viewAdapterHandle")]
-  public static extern int GiCoreView_viewAdapterHandle(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_delete_MgPlaying")]
+  public static extern void delete_MgPlaying(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_backDoc")]
-  public static extern int GiCoreView_backDoc(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgPlaying_acquireShapes")]
+  public static extern int MgPlaying_acquireShapes(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_backShapes")]
-  public static extern int GiCoreView_backShapes(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgPlaying_releaseShapes")]
+  public static extern void MgPlaying_releaseShapes(int jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_acquireFrontDoc")]
-  public static extern int GiCoreView_acquireFrontDoc(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgPlaying_getShapesForEdit")]
+  public static extern int MgPlaying_getShapesForEdit(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_acquireDynamicShapes")]
-  public static extern int GiCoreView_acquireDynamicShapes(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_MgPlaying_submitShapes")]
+  public static extern void MgPlaying_submitShapes(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isDrawing")]
-  public static extern bool GiCoreView_isDrawing(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kRect_get")]
+  public static extern int TestCanvas_kRect_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isStopping")]
-  public static extern bool GiCoreView_isStopping(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kLine_get")]
+  public static extern int TestCanvas_kLine_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_stopDrawing__SWIG_0")]
-  public static extern int GiCoreView_stopDrawing__SWIG_0(HandleRef jarg1, bool jarg2);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kTextAt_get")]
+  public static extern int TestCanvas_kTextAt_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_stopDrawing__SWIG_1")]
-  public static extern int GiCoreView_stopDrawing__SWIG_1(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kEllipse_get")]
+  public static extern int TestCanvas_kEllipse_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isUndoRecording")]
-  public static extern bool GiCoreView_isUndoRecording(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kQuadBezier_get")]
+  public static extern int TestCanvas_kQuadBezier_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isRecording")]
-  public static extern bool GiCoreView_isRecording(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kCubicBezier_get")]
+  public static extern int TestCanvas_kCubicBezier_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isPlaying")]
-  public static extern bool GiCoreView_isPlaying(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kPolygon_get")]
+  public static extern int TestCanvas_kPolygon_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getRecordTick")]
-  public static extern int GiCoreView_getRecordTick(HandleRef jarg1, bool jarg2);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kClearRect_get")]
+  public static extern int TestCanvas_kClearRect_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_isUndoLoading")]
-  public static extern bool GiCoreView_isUndoLoading(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kClipPath_get")]
+  public static extern int TestCanvas_kClipPath_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_canUndo")]
-  public static extern bool GiCoreView_canUndo(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kHandle_get")]
+  public static extern int TestCanvas_kHandle_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_canRedo")]
-  public static extern bool GiCoreView_canRedo(HandleRef jarg1);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kDynCurves_get")]
+  public static extern int TestCanvas_kDynCurves_get();
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadFirstFrame")]
-  public static extern int GiCoreView_loadFirstFrame(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadNextFrame__SWIG_1")]
-  public static extern int GiCoreView_loadNextFrame__SWIG_1(HandleRef jarg1, int jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadPrevFrame")]
-  public static extern int GiCoreView_loadPrevFrame(HandleRef jarg1, int jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getFrameTick")]
-  public static extern int GiCoreView_getFrameTick(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getFrameIndex")]
-  public static extern int GiCoreView_getFrameIndex(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_applyFrame")]
-  public static extern void GiCoreView_applyFrame(HandleRef jarg1, int jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getPlayingDocForEdit")]
-  public static extern int GiCoreView_getPlayingDocForEdit(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getDynamicShapesForEdit")]
-  public static extern int GiCoreView_getDynamicShapesForEdit(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getCommand")]
-  public static extern string GiCoreView_getCommand(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_setCommand__SWIG_0")]
-  public static extern bool GiCoreView_setCommand__SWIG_0(HandleRef jarg1, string jarg2, string jarg3);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_setCommand__SWIG_1")]
-  public static extern bool GiCoreView_setCommand__SWIG_1(HandleRef jarg1, string jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_doContextAction")]
-  public static extern bool GiCoreView_doContextAction(HandleRef jarg1, int jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_clearCachedData")]
-  public static extern void GiCoreView_clearCachedData(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_addShapesForTest")]
-  public static extern int GiCoreView_addShapesForTest(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getShapeCount__SWIG_0")]
-  public static extern int GiCoreView_getShapeCount__SWIG_0(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getShapeCount__SWIG_1")]
-  public static extern int GiCoreView_getShapeCount__SWIG_1(HandleRef jarg1, int jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getChangeCount")]
-  public static extern int GiCoreView_getChangeCount(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getDrawCount")]
-  public static extern int GiCoreView_getDrawCount(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getSelectedShapeCount")]
-  public static extern int GiCoreView_getSelectedShapeCount(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getSelectedShapeType")]
-  public static extern int GiCoreView_getSelectedShapeType(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getSelectedShapeID")]
-  public static extern int GiCoreView_getSelectedShapeID(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_clear")]
-  public static extern void GiCoreView_clear(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadFromFile__SWIG_0")]
-  public static extern bool GiCoreView_loadFromFile__SWIG_0(HandleRef jarg1, string jarg2, bool jarg3);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadFromFile__SWIG_1")]
-  public static extern bool GiCoreView_loadFromFile__SWIG_1(HandleRef jarg1, string jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_saveToFile__SWIG_0")]
-  public static extern bool GiCoreView_saveToFile__SWIG_0(HandleRef jarg1, int jarg2, string jarg3, bool jarg4);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_saveToFile__SWIG_1")]
-  public static extern bool GiCoreView_saveToFile__SWIG_1(HandleRef jarg1, int jarg2, string jarg3);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadShapes__SWIG_0")]
-  public static extern bool GiCoreView_loadShapes__SWIG_0(HandleRef jarg1, HandleRef jarg2, bool jarg3);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_loadShapes__SWIG_1")]
-  public static extern bool GiCoreView_loadShapes__SWIG_1(HandleRef jarg1, HandleRef jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_saveShapes")]
-  public static extern bool GiCoreView_saveShapes(HandleRef jarg1, int jarg2, HandleRef jarg3);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getContent")]
-  public static extern string GiCoreView_getContent(HandleRef jarg1, int jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_freeContent")]
-  public static extern void GiCoreView_freeContent(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_setContent")]
-  public static extern bool GiCoreView_setContent(HandleRef jarg1, string jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_zoomToExtent")]
-  public static extern bool GiCoreView_zoomToExtent(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_zoomToModel")]
-  public static extern bool GiCoreView_zoomToModel(HandleRef jarg1, float jarg2, float jarg3, float jarg4, float jarg5);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getContext")]
-  public static extern IntPtr GiCoreView_getContext(HandleRef jarg1, bool jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_setContext__SWIG_0")]
-  public static extern void GiCoreView_setContext__SWIG_0(HandleRef jarg1, HandleRef jarg2, int jarg3, int jarg4);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_setContext__SWIG_1")]
-  public static extern void GiCoreView_setContext__SWIG_1(HandleRef jarg1, int jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_setContextEditing")]
-  public static extern void GiCoreView_setContextEditing(HandleRef jarg1, bool jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_addImageShape__SWIG_0")]
-  public static extern int GiCoreView_addImageShape__SWIG_0(HandleRef jarg1, string jarg2, float jarg3, float jarg4);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_addImageShape__SWIG_1")]
-  public static extern int GiCoreView_addImageShape__SWIG_1(HandleRef jarg1, string jarg2, float jarg3, float jarg4, float jarg5, float jarg6);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_hasImageShape")]
-  public static extern bool GiCoreView_hasImageShape(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getDisplayExtent__SWIG_0")]
-  public static extern bool GiCoreView_getDisplayExtent__SWIG_0(HandleRef jarg1, HandleRef jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getDisplayExtent__SWIG_1")]
-  public static extern bool GiCoreView_getDisplayExtent__SWIG_1(HandleRef jarg1, int jarg2, int jarg3, HandleRef jarg4);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getBoundingBox__SWIG_0")]
-  public static extern bool GiCoreView_getBoundingBox__SWIG_0(HandleRef jarg1, HandleRef jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getBoundingBox__SWIG_1")]
-  public static extern bool GiCoreView_getBoundingBox__SWIG_1(HandleRef jarg1, HandleRef jarg2, int jarg3);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_getBoundingBox__SWIG_2")]
-  public static extern bool GiCoreView_getBoundingBox__SWIG_2(HandleRef jarg1, int jarg2, int jarg3, HandleRef jarg4, int jarg5);
+  [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_kClearPolygon_get")]
+  public static extern int TestCanvas_kClearPolygon_get();
 
   [DllImport("touchvg", EntryPoint="CSharp_TestCanvas_initRand")]
   public static extern void TestCanvas_initRand();

@@ -2,15 +2,17 @@
 
 package vgtest.testview.view;
 
-import rhcad.touchvg.view.GraphView;
+import rhcad.touchvg.IGraphView;
+import rhcad.touchvg.IViewHelper;
+import rhcad.touchvg.ViewFactory;
 import rhcad.touchvg.view.SFGraphView;
-import rhcad.touchvg.view.ViewHelper;
+import vgtest.testview.TestFlags;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
-public class SFGraphView1 extends SFGraphView implements GraphView.OnFirstRegenListener {
+public class SFGraphView1 extends SFGraphView implements IGraphView.OnFirstRegenListener {
     protected static final String PATH = "mnt/sdcard/TouchVG/";
 
     public SFGraphView1(Context context) {
@@ -18,26 +20,26 @@ public class SFGraphView1 extends SFGraphView implements GraphView.OnFirstRegenL
     }
 
     public SFGraphView1(Context context, Bundle savedInstanceState) {
-        super(context);
+        super(context, savedInstanceState);
 
         int flags = ((Activity) context).getIntent().getExtras().getInt("flags");
-        final ViewHelper helper = new ViewHelper(this);
+        final IViewHelper helper = ViewFactory.createHelper(this);
 
-        if ((flags & 32) != 0) {
+        if ((flags & TestFlags.RAND_SHAPES) != 0) {
             helper.addShapesForTest();
         }
-        if (savedInstanceState == null && (flags & 64) != 0) {
+        if (savedInstanceState == null && (flags & TestFlags.RECORD) != 0) {
             setOnFirstRegenListener(this);
         }
 
-        flags = flags & 0x0F;
-        if ((flags & 1) != 0) {
+        flags = flags & TestFlags.CMD_MASK;
+        if ((flags & TestFlags.SELECT_CMD) != 0) {
             helper.setCommand("select");
-        } else if ((flags >> 1) == 1) {
+        } else if (flags == TestFlags.SPLINES_CMD) {
             helper.setCommand("splines");
-        } else if ((flags >> 1) == 2) {
+        } else if (flags == TestFlags.LINE_CMD) {
             helper.setCommand("line");
-        } else if ((flags >> 1) == 3) {
+        } else if (flags == TestFlags.LINES_CMD) {
             helper.setCommand("lines");
         }
     }
@@ -47,20 +49,22 @@ public class SFGraphView1 extends SFGraphView implements GraphView.OnFirstRegenL
         super.onAttachedToWindow();
 
         int flags = ((Activity) getContext()).getIntent().getExtras().getInt("flags");
-        if ((flags & 256) != 0) {
+        if ((flags & TestFlags.HAS_BACKDRAWABLE) != 0) {
             ViewGroup layout = (ViewGroup) getParent();
             this.setBackgroundDrawable(layout.getBackground());
         }
     }
 
-    public void onFirstRegen(GraphView view) {
+    public void onFirstRegen(IGraphView view) {
         int flags = ((Activity) getContext()).getIntent().getExtras().getInt("flags");
-        final ViewHelper helper = new ViewHelper(this);
+        final IViewHelper helper = ViewFactory.createHelper(view);
 
-        if (flags == 64) {
-            helper.startPlay(PATH + "record");
-        } else if ((flags & 64) != 0) {
-            helper.startRecord(PATH + "record");
+        if ((flags & TestFlags.RECORD) != 0) {
+            if ((flags & TestFlags.CMD_MASK) != 0) {
+                helper.startRecord(PATH + "record");
+            } else {
+                helper.startPlay(PATH + "record");
+            }
         }
     }
 }

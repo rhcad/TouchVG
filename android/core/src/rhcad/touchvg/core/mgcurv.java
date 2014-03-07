@@ -108,11 +108,11 @@ public class mgcurv {
   }
 
   public final static class SplineFlags {
-    public final static mgcurv.SplineFlags cubicTan1 = new mgcurv.SplineFlags("cubicTan1", touchvgJNI.mgcurv_cubicTan1_get());
-    public final static mgcurv.SplineFlags cubicArm1 = new mgcurv.SplineFlags("cubicArm1", touchvgJNI.mgcurv_cubicArm1_get());
-    public final static mgcurv.SplineFlags cubicTan2 = new mgcurv.SplineFlags("cubicTan2", touchvgJNI.mgcurv_cubicTan2_get());
-    public final static mgcurv.SplineFlags cubicArm2 = new mgcurv.SplineFlags("cubicArm2", touchvgJNI.mgcurv_cubicArm2_get());
-    public final static mgcurv.SplineFlags cubicLoop = new mgcurv.SplineFlags("cubicLoop", touchvgJNI.mgcurv_cubicLoop_get());
+    public final static mgcurv.SplineFlags cubicTan1 = new mgcurv.SplineFlags("cubicTan1", 1);
+    public final static mgcurv.SplineFlags cubicArm1 = new mgcurv.SplineFlags("cubicArm1", 2);
+    public final static mgcurv.SplineFlags cubicTan2 = new mgcurv.SplineFlags("cubicTan2", 4);
+    public final static mgcurv.SplineFlags cubicArm2 = new mgcurv.SplineFlags("cubicArm2", 8);
+    public final static mgcurv.SplineFlags cubicLoop = new mgcurv.SplineFlags("cubicLoop", 16);
 
     public final int swigValue() {
       return swigValue;

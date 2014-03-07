@@ -339,6 +339,7 @@
 					"-lTouchVG-SVG",
 					"-lDemoCmds",
 					"-lSVGKit-iOS.1.2.0pre",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "TestView-SVG";
 				PUBLIC_HEADERS_FOLDER_PATH = "";
@@ -354,6 +355,7 @@
 					"-lTouchVG-SVG",
 					"-lDemoCmds",
 					"-lSVGKit-iOS.1.2.0pre",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "TestView-SVG";
 				PUBLIC_HEADERS_FOLDER_PATH = "";

@@ -22,16 +22,12 @@ public class GiCoreView : MgCoreView {
     return (obj == null) ? new HandleRef(null, IntPtr.Zero) : obj.swigCPtr;
   }
 
-  ~GiCoreView() {
-    Dispose();
-  }
-
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          touchvgPINVOKE.delete_GiCoreView(swigCPtr);
+          throw new MethodAccessException("C++ destructor does not have public access");
         }
         swigCPtr = new HandleRef(null, IntPtr.Zero);
       }
@@ -40,26 +36,30 @@ public class GiCoreView : MgCoreView {
     }
   }
 
-  public GiCoreView(GiCoreView mainView) : this(touchvgPINVOKE.new_GiCoreView__SWIG_0(GiCoreView.getCPtr(mainView)), true) {
+  public static GiCoreView createView(GiView view, int type) {
+    IntPtr cPtr = touchvgPINVOKE.GiCoreView_createView__SWIG_0(GiView.getCPtr(view), type);
+    GiCoreView ret = (cPtr == IntPtr.Zero) ? null : new GiCoreView(cPtr, false);
+    return ret;
   }
 
-  public GiCoreView() : this(touchvgPINVOKE.new_GiCoreView__SWIG_1(), true) {
+  public static GiCoreView createView(GiView view) {
+    IntPtr cPtr = touchvgPINVOKE.GiCoreView_createView__SWIG_1(GiView.getCPtr(view));
+    GiCoreView ret = (cPtr == IntPtr.Zero) ? null : new GiCoreView(cPtr, false);
+    return ret;
   }
 
-  public void createView(GiView view, int type) {
-    touchvgPINVOKE.GiCoreView_createView__SWIG_0(swigCPtr, GiView.getCPtr(view), type);
-  }
-
-  public void createView(GiView view) {
-    touchvgPINVOKE.GiCoreView_createView__SWIG_1(swigCPtr, GiView.getCPtr(view));
-  }
-
-  public void createMagnifierView(GiView newview, GiView mainView) {
-    touchvgPINVOKE.GiCoreView_createMagnifierView(swigCPtr, GiView.getCPtr(newview), GiView.getCPtr(mainView));
+  public static GiCoreView createMagnifierView(GiView newview, GiCoreView mainView, GiView mainDevView) {
+    IntPtr cPtr = touchvgPINVOKE.GiCoreView_createMagnifierView(GiView.getCPtr(newview), GiCoreView.getCPtr(mainView), GiView.getCPtr(mainDevView));
+    GiCoreView ret = (cPtr == IntPtr.Zero) ? null : new GiCoreView(cPtr, false);
+    return ret;
   }
 
   public void destoryView(GiView view) {
     touchvgPINVOKE.GiCoreView_destoryView(swigCPtr, GiView.getCPtr(view));
+  }
+
+  public void release() {
+    touchvgPINVOKE.GiCoreView_release(swigCPtr);
   }
 
   public int acquireGraphics(GiView view) {
@@ -67,22 +67,28 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public void releaseGraphics(int hGs) {
-    touchvgPINVOKE.GiCoreView_releaseGraphics(swigCPtr, hGs);
+  public void releaseGraphics(int gs) {
+    touchvgPINVOKE.GiCoreView_releaseGraphics(swigCPtr, gs);
   }
 
-  public int drawAll(int hDoc, int hGs, GiCanvas canvas) {
-    int ret = touchvgPINVOKE.GiCoreView_drawAll__SWIG_0(swigCPtr, hDoc, hGs, GiCanvas.getCPtr(canvas));
+  public int drawAll(int doc, int gs, GiCanvas canvas) {
+    int ret = touchvgPINVOKE.GiCoreView_drawAll__SWIG_0(swigCPtr, doc, gs, GiCanvas.getCPtr(canvas));
     return ret;
   }
 
-  public int drawAppend(int hDoc, int hGs, GiCanvas canvas, int sid) {
-    int ret = touchvgPINVOKE.GiCoreView_drawAppend__SWIG_0(swigCPtr, hDoc, hGs, GiCanvas.getCPtr(canvas), sid);
+  public int drawAppend(int doc, int gs, GiCanvas canvas, int sid) {
+    int ret = touchvgPINVOKE.GiCoreView_drawAppend__SWIG_0(swigCPtr, doc, gs, GiCanvas.getCPtr(canvas), sid);
     return ret;
   }
 
-  public int dynDraw(int hShapes, int hGs, GiCanvas canvas) {
-    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_0(swigCPtr, hShapes, hGs, GiCanvas.getCPtr(canvas));
+  public int dynDraw(int shapes, int gs, GiCanvas canvas) {
+    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_0(swigCPtr, shapes, gs, GiCanvas.getCPtr(canvas));
+    return ret;
+  }
+
+  public int dynDraw(int shapes, int gs, GiCanvas canvas, Ints exts) {
+    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_1(swigCPtr, shapes, gs, GiCanvas.getCPtr(canvas), Ints.getCPtr(exts));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
@@ -97,7 +103,7 @@ public class GiCoreView : MgCoreView {
   }
 
   public int dynDraw(GiView view, GiCanvas canvas) {
-    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_1(swigCPtr, GiView.getCPtr(view), GiCanvas.getCPtr(canvas));
+    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_2(swigCPtr, GiView.getCPtr(view), GiCanvas.getCPtr(canvas));
     return ret;
   }
 
@@ -172,8 +178,8 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public int exportSVG(int hDoc, int hGs, string filename) {
-    int ret = touchvgPINVOKE.GiCoreView_exportSVG__SWIG_0(swigCPtr, hDoc, hGs, filename);
+  public int exportSVG(int doc, int gs, string filename) {
+    int ret = touchvgPINVOKE.GiCoreView_exportSVG__SWIG_0(swigCPtr, doc, gs, filename);
     return ret;
   }
 
@@ -182,17 +188,23 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public bool startRecord(string path, int doc, bool forUndo) {
-    bool ret = touchvgPINVOKE.GiCoreView_startRecord(swigCPtr, path, doc, forUndo);
+  public bool startRecord(string path, int doc, bool forUndo, int curTick) {
+    bool ret = touchvgPINVOKE.GiCoreView_startRecord(swigCPtr, path, doc, forUndo, curTick);
     return ret;
   }
 
-  public void stopRecord(bool forUndo) {
-    touchvgPINVOKE.GiCoreView_stopRecord(swigCPtr, forUndo);
+  public void stopRecord(GiView view, bool forUndo) {
+    touchvgPINVOKE.GiCoreView_stopRecord(swigCPtr, GiView.getCPtr(view), forUndo);
   }
 
   public bool recordShapes(bool forUndo, int tick, int doc, int shapes) {
-    bool ret = touchvgPINVOKE.GiCoreView_recordShapes(swigCPtr, forUndo, tick, doc, shapes);
+    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_0(swigCPtr, forUndo, tick, doc, shapes);
+    return ret;
+  }
+
+  public bool recordShapes(bool forUndo, int tick, int doc, int shapes, Ints exts) {
+    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_1(swigCPtr, forUndo, tick, doc, shapes, Ints.getCPtr(exts));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
@@ -212,354 +224,35 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public int loadNextFrame(Ints head) {
-    int ret = touchvgPINVOKE.GiCoreView_loadNextFrame__SWIG_0(swigCPtr, Ints.getCPtr(head));
+  public int loadNextFrame(Ints head, int curTick) {
+    int ret = touchvgPINVOKE.GiCoreView_loadNextFrame(swigCPtr, Ints.getCPtr(head), curTick);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int skipExpireFrame(Ints head, int index) {
-    int ret = touchvgPINVOKE.GiCoreView_skipExpireFrame(swigCPtr, Ints.getCPtr(head), index);
+  public int skipExpireFrame(Ints head, int index, int curTick) {
+    int ret = touchvgPINVOKE.GiCoreView_skipExpireFrame(swigCPtr, Ints.getCPtr(head), index, curTick);
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public bool frameNeedWait() {
-    bool ret = touchvgPINVOKE.GiCoreView_frameNeedWait(swigCPtr);
+  public bool frameNeedWait(int curTick) {
+    bool ret = touchvgPINVOKE.GiCoreView_frameNeedWait(swigCPtr, curTick);
     return ret;
   }
 
-  public bool isPaused() {
-    bool ret = touchvgPINVOKE.GiCoreView_isPaused(swigCPtr);
+  public bool onPause(int curTick) {
+    bool ret = touchvgPINVOKE.GiCoreView_onPause(swigCPtr, curTick);
     return ret;
   }
 
-  public bool onPause() {
-    bool ret = touchvgPINVOKE.GiCoreView_onPause(swigCPtr);
+  public bool onResume(int curTick) {
+    bool ret = touchvgPINVOKE.GiCoreView_onResume(swigCPtr, curTick);
     return ret;
   }
 
-  public bool onResume() {
-    bool ret = touchvgPINVOKE.GiCoreView_onResume(swigCPtr);
-    return ret;
-  }
-
-  public override bool isPressDragging() {
-    bool ret = touchvgPINVOKE.GiCoreView_isPressDragging(swigCPtr);
-    return ret;
-  }
-
-  public override bool isDrawingCommand() {
-    bool ret = touchvgPINVOKE.GiCoreView_isDrawingCommand(swigCPtr);
-    return ret;
-  }
-
-  public override int viewAdapterHandle() {
-    int ret = touchvgPINVOKE.GiCoreView_viewAdapterHandle(swigCPtr);
-    return ret;
-  }
-
-  public override int backDoc() {
-    int ret = touchvgPINVOKE.GiCoreView_backDoc(swigCPtr);
-    return ret;
-  }
-
-  public override int backShapes() {
-    int ret = touchvgPINVOKE.GiCoreView_backShapes(swigCPtr);
-    return ret;
-  }
-
-  public override int acquireFrontDoc() {
-    int ret = touchvgPINVOKE.GiCoreView_acquireFrontDoc(swigCPtr);
-    return ret;
-  }
-
-  public override int acquireDynamicShapes() {
-    int ret = touchvgPINVOKE.GiCoreView_acquireDynamicShapes(swigCPtr);
-    return ret;
-  }
-
-  public override bool isDrawing() {
-    bool ret = touchvgPINVOKE.GiCoreView_isDrawing(swigCPtr);
-    return ret;
-  }
-
-  public override bool isStopping() {
-    bool ret = touchvgPINVOKE.GiCoreView_isStopping(swigCPtr);
-    return ret;
-  }
-
-  public override int stopDrawing(bool stop) {
-    int ret = touchvgPINVOKE.GiCoreView_stopDrawing__SWIG_0(swigCPtr, stop);
-    return ret;
-  }
-
-  public override int stopDrawing() {
-    int ret = touchvgPINVOKE.GiCoreView_stopDrawing__SWIG_1(swigCPtr);
-    return ret;
-  }
-
-  public override bool isUndoRecording() {
-    bool ret = touchvgPINVOKE.GiCoreView_isUndoRecording(swigCPtr);
-    return ret;
-  }
-
-  public override bool isRecording() {
-    bool ret = touchvgPINVOKE.GiCoreView_isRecording(swigCPtr);
-    return ret;
-  }
-
-  public override bool isPlaying() {
-    bool ret = touchvgPINVOKE.GiCoreView_isPlaying(swigCPtr);
-    return ret;
-  }
-
-  public override int getRecordTick(bool forUndo) {
-    int ret = touchvgPINVOKE.GiCoreView_getRecordTick(swigCPtr, forUndo);
-    return ret;
-  }
-
-  public override bool isUndoLoading() {
-    bool ret = touchvgPINVOKE.GiCoreView_isUndoLoading(swigCPtr);
-    return ret;
-  }
-
-  public override bool canUndo() {
-    bool ret = touchvgPINVOKE.GiCoreView_canUndo(swigCPtr);
-    return ret;
-  }
-
-  public override bool canRedo() {
-    bool ret = touchvgPINVOKE.GiCoreView_canRedo(swigCPtr);
-    return ret;
-  }
-
-  public override int loadFirstFrame() {
-    int ret = touchvgPINVOKE.GiCoreView_loadFirstFrame(swigCPtr);
-    return ret;
-  }
-
-  public override int loadNextFrame(int index) {
-    int ret = touchvgPINVOKE.GiCoreView_loadNextFrame__SWIG_1(swigCPtr, index);
-    return ret;
-  }
-
-  public override int loadPrevFrame(int index) {
-    int ret = touchvgPINVOKE.GiCoreView_loadPrevFrame(swigCPtr, index);
-    return ret;
-  }
-
-  public override int getFrameTick() {
-    int ret = touchvgPINVOKE.GiCoreView_getFrameTick(swigCPtr);
-    return ret;
-  }
-
-  public override int getFrameIndex() {
-    int ret = touchvgPINVOKE.GiCoreView_getFrameIndex(swigCPtr);
-    return ret;
-  }
-
-  public override void applyFrame(int flags) {
-    touchvgPINVOKE.GiCoreView_applyFrame(swigCPtr, flags);
-  }
-
-  public override int getPlayingDocForEdit() {
-    int ret = touchvgPINVOKE.GiCoreView_getPlayingDocForEdit(swigCPtr);
-    return ret;
-  }
-
-  public override int getDynamicShapesForEdit() {
-    int ret = touchvgPINVOKE.GiCoreView_getDynamicShapesForEdit(swigCPtr);
-    return ret;
-  }
-
-  public override string getCommand() {
-    string ret = touchvgPINVOKE.GiCoreView_getCommand(swigCPtr);
-    return ret;
-  }
-
-  public override bool setCommand(string name, string arg1) {
-    bool ret = touchvgPINVOKE.GiCoreView_setCommand__SWIG_0(swigCPtr, name, arg1);
-    return ret;
-  }
-
-  public override bool setCommand(string name) {
-    bool ret = touchvgPINVOKE.GiCoreView_setCommand__SWIG_1(swigCPtr, name);
-    return ret;
-  }
-
-  public override bool doContextAction(int action) {
-    bool ret = touchvgPINVOKE.GiCoreView_doContextAction(swigCPtr, action);
-    return ret;
-  }
-
-  public override void clearCachedData() {
-    touchvgPINVOKE.GiCoreView_clearCachedData(swigCPtr);
-  }
-
-  public override int addShapesForTest() {
-    int ret = touchvgPINVOKE.GiCoreView_addShapesForTest(swigCPtr);
-    return ret;
-  }
-
-  public override int getShapeCount() {
-    int ret = touchvgPINVOKE.GiCoreView_getShapeCount__SWIG_0(swigCPtr);
-    return ret;
-  }
-
-  public override int getShapeCount(int hDoc) {
-    int ret = touchvgPINVOKE.GiCoreView_getShapeCount__SWIG_1(swigCPtr, hDoc);
-    return ret;
-  }
-
-  public override int getChangeCount() {
-    int ret = touchvgPINVOKE.GiCoreView_getChangeCount(swigCPtr);
-    return ret;
-  }
-
-  public override int getDrawCount() {
-    int ret = touchvgPINVOKE.GiCoreView_getDrawCount(swigCPtr);
-    return ret;
-  }
-
-  public override int getSelectedShapeCount() {
-    int ret = touchvgPINVOKE.GiCoreView_getSelectedShapeCount(swigCPtr);
-    return ret;
-  }
-
-  public override int getSelectedShapeType() {
-    int ret = touchvgPINVOKE.GiCoreView_getSelectedShapeType(swigCPtr);
-    return ret;
-  }
-
-  public override int getSelectedShapeID() {
-    int ret = touchvgPINVOKE.GiCoreView_getSelectedShapeID(swigCPtr);
-    return ret;
-  }
-
-  public override void clear() {
-    touchvgPINVOKE.GiCoreView_clear(swigCPtr);
-  }
-
-  public override bool loadFromFile(string vgfile, bool readOnly) {
-    bool ret = touchvgPINVOKE.GiCoreView_loadFromFile__SWIG_0(swigCPtr, vgfile, readOnly);
-    return ret;
-  }
-
-  public override bool loadFromFile(string vgfile) {
-    bool ret = touchvgPINVOKE.GiCoreView_loadFromFile__SWIG_1(swigCPtr, vgfile);
-    return ret;
-  }
-
-  public override bool saveToFile(int hDoc, string vgfile, bool pretty) {
-    bool ret = touchvgPINVOKE.GiCoreView_saveToFile__SWIG_0(swigCPtr, hDoc, vgfile, pretty);
-    return ret;
-  }
-
-  public override bool saveToFile(int hDoc, string vgfile) {
-    bool ret = touchvgPINVOKE.GiCoreView_saveToFile__SWIG_1(swigCPtr, hDoc, vgfile);
-    return ret;
-  }
-
-  public override bool loadShapes(MgStorage s, bool readOnly) {
-    bool ret = touchvgPINVOKE.GiCoreView_loadShapes__SWIG_0(swigCPtr, MgStorage.getCPtr(s), readOnly);
-    return ret;
-  }
-
-  public override bool loadShapes(MgStorage s) {
-    bool ret = touchvgPINVOKE.GiCoreView_loadShapes__SWIG_1(swigCPtr, MgStorage.getCPtr(s));
-    return ret;
-  }
-
-  public override bool saveShapes(int hDoc, MgStorage s) {
-    bool ret = touchvgPINVOKE.GiCoreView_saveShapes(swigCPtr, hDoc, MgStorage.getCPtr(s));
-    return ret;
-  }
-
-  public override string getContent(int hDoc) {
-    string ret = touchvgPINVOKE.GiCoreView_getContent(swigCPtr, hDoc);
-    return ret;
-  }
-
-  public override void freeContent() {
-    touchvgPINVOKE.GiCoreView_freeContent(swigCPtr);
-  }
-
-  public override bool setContent(string content) {
-    bool ret = touchvgPINVOKE.GiCoreView_setContent(swigCPtr, content);
-    return ret;
-  }
-
-  public override bool zoomToExtent() {
-    bool ret = touchvgPINVOKE.GiCoreView_zoomToExtent(swigCPtr);
-    return ret;
-  }
-
-  public override bool zoomToModel(float x, float y, float w, float h) {
-    bool ret = touchvgPINVOKE.GiCoreView_zoomToModel(swigCPtr, x, y, w, h);
-    return ret;
-  }
-
-  public override GiContext getContext(bool forChange) {
-    GiContext ret = new GiContext(touchvgPINVOKE.GiCoreView_getContext(swigCPtr, forChange), false);
-    return ret;
-  }
-
-  public override void setContext(GiContext ctx, int mask, int apply) {
-    touchvgPINVOKE.GiCoreView_setContext__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), mask, apply);
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public override void setContext(int mask) {
-    touchvgPINVOKE.GiCoreView_setContext__SWIG_1(swigCPtr, mask);
-  }
-
-  public override void setContextEditing(bool editing) {
-    touchvgPINVOKE.GiCoreView_setContextEditing(swigCPtr, editing);
-  }
-
-  public override int addImageShape(string name, float width, float height) {
-    int ret = touchvgPINVOKE.GiCoreView_addImageShape__SWIG_0(swigCPtr, name, width, height);
-    return ret;
-  }
-
-  public override int addImageShape(string name, float xc, float yc, float w, float h) {
-    int ret = touchvgPINVOKE.GiCoreView_addImageShape__SWIG_1(swigCPtr, name, xc, yc, w, h);
-    return ret;
-  }
-
-  public override bool hasImageShape() {
-    bool ret = touchvgPINVOKE.GiCoreView_hasImageShape(swigCPtr);
-    return ret;
-  }
-
-  public override bool getDisplayExtent(Floats box) {
-    bool ret = touchvgPINVOKE.GiCoreView_getDisplayExtent__SWIG_0(swigCPtr, Floats.getCPtr(box));
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public override bool getDisplayExtent(int hDoc, int hGs, Floats box) {
-    bool ret = touchvgPINVOKE.GiCoreView_getDisplayExtent__SWIG_1(swigCPtr, hDoc, hGs, Floats.getCPtr(box));
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public override bool getBoundingBox(Floats box) {
-    bool ret = touchvgPINVOKE.GiCoreView_getBoundingBox__SWIG_0(swigCPtr, Floats.getCPtr(box));
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public override bool getBoundingBox(Floats box, int shapeId) {
-    bool ret = touchvgPINVOKE.GiCoreView_getBoundingBox__SWIG_1(swigCPtr, Floats.getCPtr(box), shapeId);
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public override bool getBoundingBox(int hDoc, int hGs, Floats box, int shapeId) {
-    bool ret = touchvgPINVOKE.GiCoreView_getBoundingBox__SWIG_2(swigCPtr, hDoc, hGs, Floats.getCPtr(box), shapeId);
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+  public bool restoreRecord(int type, string path, int doc, int changeCount, int index, int count, int tick, int curTick) {
+    bool ret = touchvgPINVOKE.GiCoreView_restoreRecord(swigCPtr, type, path, doc, changeCount, index, count, tick, curTick);
     return ret;
   }
 

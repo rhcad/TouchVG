@@ -7,6 +7,23 @@
 class ViewAdapter1;
 class GiCoreView;
 
+enum kTestFlags {
+    kSplinesCmd = 1,
+    kSelectCmd  = 2,
+    kSelectLoad = 3,
+    kLineCmd    = 4,
+    kLinesCmd   = 5,
+    kHitTestCmd = 6,
+    kAddImages  = 7,
+    kLoadImages = 8,
+    kSVGImages  = 9,
+    kSVGPages   = 10,
+    kCmdMask    = 15,
+    kRandShapes = 32,
+    kRecord     = 64,
+    kPlayShapes = 64,
+};
+
 //! iOS测试绘图视图类
 @interface GiGraphView1 : UIView {
     ViewAdapter1    *_viewAdapter;
@@ -21,6 +38,7 @@ class GiCoreView;
 //! iOS测试绘图视图类
 @interface GiGraphView2 : GiPaintView {
     int     _testType;
+    UIButton    *_pauseBtn;
 }
 
 - (id)initWithFrame:(CGRect)frame withType:(int)type;

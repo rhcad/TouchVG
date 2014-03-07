@@ -7,6 +7,8 @@ package vgtest.testview;
 import java.util.ArrayList;
 import java.util.List;
 
+import rhcad.touchvg.core.TestCanvas;
+
 //! 测试视图的构造列表类
 public class ViewFactory {
 
@@ -35,44 +37,66 @@ public class ViewFactory {
         addItem("vgtest.testview.shape.TestDragView", 0, "TestDragView");
         addItem("vgtest.testview.shape.TestInsertSVG", 0, "TestInsertSVG");
 
-        addItem("vgtest.testview.view.SFGraphView1", 1 << 1, "SFGraphView splines");
-        addItem("vgtest.testview.view.SFGraphView1", 32 | (1 << 1), "SFGraphView randShapes splines");
-        addItem("vgtest.testview.view.SFGraphView1", 32 | (2 << 1), "SFGraphView randShapes line");
-        addItem("vgtest.testview.view.SFGraphView1", 2 << 1, "SFGraphView line");
-        addItem("vgtest.testview.view.SFGraphView1", 3 << 1, "SFGraphView lines");
-        addItem("vgtest.testview.view.SFGraphView1", 64 | (1 << 1), "SFGraphView record splines");
-        addItem("vgtest.testview.view.SFGraphView1", 64 | (2 << 1), "SFGraphView record line");
-        addItem("vgtest.testview.view.SFGraphView1", 64 | 32 | (1 << 1), "SFGraphView record randShapes splines");
-        addItem("vgtest.testview.view.SFGraphView1", 64 | 32 | (2 << 1), "SFGraphView record randShapes line");
-        addItem("vgtest.testview.view.SFGraphView1", 64, "SFGraphView play");
-        addItem("vgtest.testview.view.SFGraphView1", 32 | 1, "SFGraphView select");
-        addItem("vgtest.testview.view.SFGraphView1", 256 | 32 | 1, "SFGraphView select transparent");
-        addItem("vgtest.testview.view.SFGraphView1", 256 | 32 | (1 << 1),
-                "SFGraphView draw transparent");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.SPLINES_CMD, "SFGraphView splines");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.RAND_SHAPES | TestFlags.SPLINES_CMD,
+                "SFGraphView randShapes splines");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.RAND_SHAPES | TestFlags.LINE_CMD,
+                "SFGraphView randShapes line");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.LINE_CMD, "SFGraphView line");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.LINES_CMD, "SFGraphView lines");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD | TestFlags.SPLINES_CMD,
+                "SFGraphView record splines");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD | TestFlags.LINE_CMD,
+                "SFGraphView record line");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES
+                | TestFlags.SPLINES_CMD, "SFGraphView record randShapes splines");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES
+                | TestFlags.LINE_CMD, "SFGraphView record randShapes line");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.PLAY_SHAPES, "SFGraphView play");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES,
+                "SFGraphView randShapes play");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.RAND_SHAPES | TestFlags.SELECT_CMD,
+                "SFGraphView select");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.HAS_BACKDRAWABLE | TestFlags.RAND_SHAPES
+                | TestFlags.SELECT_CMD, "SFGraphView select transparent");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.HAS_BACKDRAWABLE | TestFlags.RAND_SHAPES
+                | TestFlags.SPLINES_CMD, "SFGraphView draw transparent");
 
-        addItem("vgtest.testview.view.GraphView1", 1 << 1, "StdGraphView splines");
-        addItem("vgtest.testview.view.GraphView1", 32 | (1 << 1), "StdGraphView randShapes splines");
-        addItem("vgtest.testview.view.GraphView1", 32 | (2 << 1), "StdGraphView randShapes line");
-        addItem("vgtest.testview.view.GraphView1", 2 << 1, "StdGraphView line");
-        addItem("vgtest.testview.view.GraphView1", 3 << 1, "StdGraphView lines");
-        addItem("vgtest.testview.view.GraphView1", 64 | (1 << 1), "StdGraphView record splines");
-        addItem("vgtest.testview.view.GraphView1", 64 | (2 << 1), "StdGraphView record line");
-        addItem("vgtest.testview.view.GraphView1", 64 | 32 | (1 << 1), "StdGraphView record randShapes splines");
-        addItem("vgtest.testview.view.GraphView1", 64 | 32 | (2 << 1), "StdGraphView record randShapes line");
-        addItem("vgtest.testview.view.GraphView1", 64, "StdGraphView play");
-        addItem("vgtest.testview.view.GraphView1", 32 | (4 << 1),
+        addItem("vgtest.testview.view.GraphView1", TestFlags.SPLINES_CMD, "StdGraphView splines");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RAND_SHAPES | TestFlags.SPLINES_CMD,
+                "StdGraphView randShapes splines");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RAND_SHAPES | TestFlags.LINE_CMD,
+                "StdGraphView randShapes line");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.LINE_CMD, "StdGraphView line");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.LINES_CMD, "StdGraphView lines");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD | TestFlags.SPLINES_CMD,
+                "StdGraphView record splines");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD | TestFlags.LINE_CMD,
+                "StdGraphView record line");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES
+                | TestFlags.SPLINES_CMD, "StdGraphView record randShapes splines");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES
+                | TestFlags.LINE_CMD, "StdGraphView record randShapes line");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.PLAY_SHAPES, "StdGraphView play");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES,
+                "StdGraphView randShapes play");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RAND_SHAPES | TestFlags.HITTEST_CMD,
                 "StdGraphView hittest in democmds");
-        addItem("vgtest.testview.view.GraphView1", 32 | 1, "StdGraphView select");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.RAND_SHAPES | TestFlags.SELECT_CMD,
+                "StdGraphView select");
 
-        addItem("vgtest.testview.view.TestMagnifier1", 1 << 1, "TestMagnifier");
-        addItem("vgtest.testview.view.TestMagnifier1", 16 | (1 << 1), "TestMagnifier, 2 views");
-        addItem("vgtest.testview.view.LargeView1", 1 << 1, "Scroll GraphView splines");
-        addItem("vgtest.testview.view.LargeView1", 2 << 1, "Scroll GraphView line");
-        addItem("vgtest.testview.view.LargeView1", 32 | 1, "Scroll GraphView select");
+        addItem("vgtest.testview.view.TestMagnifier1", TestFlags.SPLINES_CMD, "TestMagnifier");
+        addItem("vgtest.testview.view.TestMagnifier1", TestFlags.TWO_MAGVIEWS
+                | TestFlags.SPLINES_CMD, "TestMagnifier, 2 views");
+        addItem("vgtest.testview.view.LargeView1", TestFlags.SPLINES_CMD,
+                "Scroll GraphView splines");
+        addItem("vgtest.testview.view.LargeView1", TestFlags.LINE_CMD, "Scroll GraphView line");
+        addItem("vgtest.testview.view.LargeView1", TestFlags.RAND_SHAPES | TestFlags.SELECT_CMD,
+                "Scroll GraphView select");
 
         addItem("vgtest.testview.view.GraphView", 0, "TestOneView");
         addItem("vgtest.testview.view.TestDoubleViews", 1 | 0, "TestOneSurfaceView");
-        addItem("vgtest.testview.view.TestDoubleViews", 1 | 0 | 0x100000,
+        addItem("vgtest.testview.view.TestDoubleViews", 1 | 0 | TestFlags.MODEL_SURFACE,
                 "TestOneSurfaceView, back");
         addItem("vgtest.testview.view.GraphViewCached", 0, "GraphViewCached");
 
@@ -80,9 +104,9 @@ public class ViewFactory {
         addItem("vgtest.testview.view.TestDoubleViews", 1 | 2, "Test2Views, top surface+view");
         addItem("vgtest.testview.view.TestDoubleViews", 0 | 4, "Test2Views, std view+surface");
         addItem("vgtest.testview.view.TestDoubleViews", 1 | 4, "Test2Views, top surface+surface");
-        addItem("vgtest.testview.view.TestDoubleViews", 1 | 2 | 0x100000,
+        addItem("vgtest.testview.view.TestDoubleViews", 1 | 2 | TestFlags.MODEL_SURFACE,
                 "Test2Views, back surface+view");
-        addItem("vgtest.testview.view.TestDoubleViews", 1 | 4 | 0x100000,
+        addItem("vgtest.testview.view.TestDoubleViews", 1 | 4 | TestFlags.MODEL_SURFACE,
                 "Test2Views, back surface+surface");
         addItem("vgtest.testview.view.TestDoubleViews", 8 | 4, "Test2Views, cachedview+surface");
         addItem("vgtest.testview.view.TestDoubleViews", 8 | 2, "Test2Views, cachedview+view");
@@ -93,51 +117,57 @@ public class ViewFactory {
         addItem("vgtest.testview.view.LargeView2", 1 | 4, "Test2Views, scroll surface+surface");
         addItem("vgtest.testview.view.LargeView2", 0 | 0, "TestOneView, scroll");
         addItem("vgtest.testview.view.LargeView2", 1 | 0, "TestOneSurfaceView, scroll");
-        addItem("vgtest.testview.view.TestDoubleViews", 1 | 2 | 0x100000,
+        addItem("vgtest.testview.view.TestDoubleViews", 1 | 2 | TestFlags.MODEL_SURFACE,
                 "Test2Views, scroll back surface+view");
-        addItem("vgtest.testview.view.TestDoubleViews", 1 | 4 | 0x100000,
+        addItem("vgtest.testview.view.TestDoubleViews", 1 | 4 | TestFlags.MODEL_SURFACE,
                 "Test2Views, scroll back surface+surface");
         addItem("vgtest.testview.view.LargeView2", 8 | 4, "Test2Views, scroll cachedview+surface");
         addItem("vgtest.testview.view.LargeView2", 8 | 2, "Test2Views, scroll cachedview+surface");
 
-        addItem("vgtest.testview.canvas.GraphView1", 0x01, "testRect");
-        addItem("vgtest.testview.canvas.GraphView1", 0x02, "testLine");
-        addItem("vgtest.testview.canvas.GraphView1", 0x04, "testTextAt");
-        addItem("vgtest.testview.canvas.GraphView1", 0x08, "testEllipse");
-        addItem("vgtest.testview.canvas.GraphView1", 0x10, "testQuadBezier");
-        addItem("vgtest.testview.canvas.GraphView1", 0x20, "testCubicBezier");
-        addItem("vgtest.testview.canvas.GraphView1", 0x40, "testPolygon");
-        addItem("vgtest.testview.canvas.GraphView1", 0x80 | 0x40 | 0x02, "testClearRect");
-        addItem("vgtest.testview.canvas.GraphView1", 0x100, "testClipPath");
-        addItem("vgtest.testview.canvas.GraphView1", 0x200, "testHandle");
-        addItem("vgtest.testview.canvas.GraphView2", 0x400, "testDynCurves");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kRect, "testRect");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kLine, "testLine");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kTextAt, "testTextAt");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kEllipse, "testEllipse");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kQuadBezier, "testQuadBezier");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kCubicBezier, "testCubicBezier");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kPolygon, "testPolygon");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kClearRect | TestCanvas.kTextAt
+                | TestCanvas.kLine, "testClearRect");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kClipPath, "testClipPath");
+        addItem("vgtest.testview.canvas.GraphView1", TestCanvas.kHandle, "testHandle");
+        addItem("vgtest.testview.canvas.GraphView2", TestCanvas.kDynCurves, "testDynCurves");
 
-        addItem("vgtest.testview.canvas.SurfaceView1", 0x20, "testCubicBezier in SurfaceView");
-        addItem("vgtest.testview.canvas.SurfaceView1", 0x80 | 0x40 | 0x02,
+        addItem("vgtest.testview.canvas.SurfaceView1", TestCanvas.kCubicBezier,
+                "testCubicBezier in SurfaceView");
+        addItem("vgtest.testview.canvas.SurfaceView1", TestCanvas.kClearPolygon,
                 "testClearRect in SurfaceView");
-        addItem("vgtest.testview.canvas.SurfaceView2", 0x20,
+        addItem("vgtest.testview.canvas.SurfaceView2", TestCanvas.kCubicBezier,
                 "testCubicBezier in SurfaceView with thread");
-        addItem("vgtest.testview.canvas.SurfaceView2", 0x02, "testLine in SurfaceView with thread");
-        addItem("vgtest.testview.canvas.SurfaceView2", 0x400,
+        addItem("vgtest.testview.canvas.SurfaceView2", TestCanvas.kLine,
+                "testLine in SurfaceView with thread");
+        addItem("vgtest.testview.canvas.SurfaceView2", TestCanvas.kDynCurves,
                 "testDynCurves in SurfaceView with touch");
-        addItem("vgtest.testview.canvas.SurfaceView3", 0x400,
+        addItem("vgtest.testview.canvas.SurfaceView3", TestCanvas.kDynCurves,
                 "testDynCurves in SurfaceView with thread");
-        addItem("vgtest.testview.canvas.SurfaceView3", 0x400 | 0x1000,
-                "testDynCurves(OPAQUE) with thread");
+        addItem("vgtest.testview.canvas.SurfaceView3", TestCanvas.kDynCurves
+                | TestFlags.OPAQUE_VIEW, "testDynCurves(OPAQUE) with thread");
 
-        addItem("vgtest.testview.canvas.LargeView1", 0x04 | 0x10000, "testTextAt in large view");
-        addItem("vgtest.testview.canvas.LargeView1", 0x04 | 0x20000,
-                "testTextAt in large surface view");
-        addItem("vgtest.testview.canvas.LargeView1", 0x20 | 0x10000,
-                "testCubicBezier in large view");
-        addItem("vgtest.testview.canvas.LargeView1", 0x20 | 0x20000,
-                "testCubicBezier in large surface view");
-        addItem("vgtest.testview.canvas.LargeView1", 0x200 | 0x10000, "testHandle in large view");
-        addItem("vgtest.testview.canvas.LargeView1", 0x200 | 0x20000,
-                "testHandle in large surface view");
-        addItem("vgtest.testview.canvas.LargeView1", 0x400 | 0x10000, "testDynCurves in large view");
-        addItem("vgtest.testview.canvas.LargeView1", 0x400 | 0x20000,
-                "testDynCurves in large surface view");
+        addItem("vgtest.testview.canvas.LargeView1", TestCanvas.kTextAt | TestFlags.LARGE_VIEW,
+                "testTextAt in large view");
+        addItem("vgtest.testview.canvas.LargeView1", TestCanvas.kTextAt
+                | TestFlags.LARGE_SURFACEVIEW, "testTextAt in large surface view");
+        addItem("vgtest.testview.canvas.LargeView1",
+                TestCanvas.kCubicBezier | TestFlags.LARGE_VIEW, "testCubicBezier in large view");
+        addItem("vgtest.testview.canvas.LargeView1", TestCanvas.kCubicBezier
+                | TestFlags.LARGE_SURFACEVIEW, "testCubicBezier in large surface view");
+        addItem("vgtest.testview.canvas.LargeView1", TestCanvas.kHandle | TestFlags.LARGE_VIEW,
+                "testHandle in large view");
+        addItem("vgtest.testview.canvas.LargeView1", TestCanvas.kHandle
+                | TestFlags.LARGE_SURFACEVIEW, "testHandle in large surface view");
+        addItem("vgtest.testview.canvas.LargeView1", TestCanvas.kDynCurves | TestFlags.LARGE_VIEW,
+                "testDynCurves in large view");
+        addItem("vgtest.testview.canvas.LargeView1", TestCanvas.kDynCurves
+                | TestFlags.LARGE_SURFACEVIEW, "testDynCurves in large surface view");
     }
 
     private static void addItem(String id, int flags, String title) {

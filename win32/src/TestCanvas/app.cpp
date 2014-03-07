@@ -63,7 +63,7 @@ static void regen(HWND hwnd);
 static void dyndraw(GiCanvas* canvas);
 
 GiGdipCanvas    _canvas;
-int             _tests = 0x400;
+int             _tests = TestCanvas::kDynCurves;
 POINTS          _pt = { 0, 0 };
 
 // 主窗口的消息处理函数
@@ -109,7 +109,7 @@ void ondraw(HWND hwnd)
         if (!_canvas.drawCachedBitmap()) {      // 显示上次保存的内容
             _canvas.clearWindow();              // 使用背景色清除显示
             TestCanvas::test(&_canvas, _tests); // 绘制测试图形
-            if ((_tests & 0x400) == 0)          // not testDynCurves
+            if ((_tests & TestCanvas::kDynCurves) == 0)
                 _canvas.saveCachedBitmap();     // 缓存显示的内容
         }
         dyndraw(&_canvas);                      // 绘制动态图形
@@ -136,8 +136,8 @@ void regen(HWND hwnd)
 
 void switchTest(HWND hwnd)
 {
-    int a[] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 
-        0x80 | 0x40 | 0x02, 0x100, 0x200, 0x400 };
+    int a[] = { TestCanvas::kRect, TestCanvas::kLine, TestCanvas::kTextAt, TestCanvas::kEllipse, TestCanvas::kQuadBezier, TestCanvas::kCubicBezier, TestCanvas::kClearRect, 
+        TestCanvas::kClearRect | TestCanvas::kPolygon | TestCanvas::kLine, TestCanvas::kClipPath, TestCanvas::kHandle, TestCanvas::kDynCurves };
     int n = sizeof(a)/sizeof(a[0]);
     int i = n;
 

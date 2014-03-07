@@ -110,6 +110,19 @@ public class TestCanvas : IDisposable {
   public TestCanvas() : this(touchvgPINVOKE.new_TestCanvas(), true) {
   }
 
+  public static readonly int kRect = touchvgPINVOKE.TestCanvas_kRect_get();
+  public static readonly int kLine = touchvgPINVOKE.TestCanvas_kLine_get();
+  public static readonly int kTextAt = touchvgPINVOKE.TestCanvas_kTextAt_get();
+  public static readonly int kEllipse = touchvgPINVOKE.TestCanvas_kEllipse_get();
+  public static readonly int kQuadBezier = touchvgPINVOKE.TestCanvas_kQuadBezier_get();
+  public static readonly int kCubicBezier = touchvgPINVOKE.TestCanvas_kCubicBezier_get();
+  public static readonly int kPolygon = touchvgPINVOKE.TestCanvas_kPolygon_get();
+  public static readonly int kClearRect = touchvgPINVOKE.TestCanvas_kClearRect_get();
+  public static readonly int kClipPath = touchvgPINVOKE.TestCanvas_kClipPath_get();
+  public static readonly int kHandle = touchvgPINVOKE.TestCanvas_kHandle_get();
+  public static readonly int kDynCurves = touchvgPINVOKE.TestCanvas_kDynCurves_get();
+  public static readonly int kClearPolygon = touchvgPINVOKE.TestCanvas_kClearPolygon_get();
+
 }
 
 }

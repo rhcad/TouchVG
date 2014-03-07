@@ -2,7 +2,7 @@
 
 package touchvg.demo1;
 
-import rhcad.touchvg.view.GraphView;
+import rhcad.touchvg.IGraphView;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -17,7 +17,7 @@ public class ExampleActivitySF extends ExampleActivity1 {
     }
 
     @Override
-    public void onFirstRegen(GraphView view) {
+    public void onFirstRegen(IGraphView view) {
         super.onFirstRegen(view);
         hlp.startRecord(PATH + "record");
     }

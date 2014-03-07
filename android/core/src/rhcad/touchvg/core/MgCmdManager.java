@@ -39,10 +39,6 @@ public class MgCmdManager {
     touchvgJNI.MgCmdManager_release(swigCPtr, this);
   }
 
-  public String getCommandName() {
-    return touchvgJNI.MgCmdManager_getCommandName(swigCPtr, this);
-  }
-
   public MgCommand getCommand() {
     long cPtr = touchvgJNI.MgCmdManager_getCommand(swigCPtr, this);
     return (cPtr == 0) ? null : new MgCommand(cPtr, false);

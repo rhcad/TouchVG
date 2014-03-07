@@ -5,6 +5,12 @@
 
 class GiCanvasAdapter;
 
+enum TestFlags {
+    kWithDynView    = 0x10000,
+    kWithLargeView  = 0x20000,
+    kWithThread     = 0x40000,
+};
+
 //! 测试绘图的视图类
 @interface GraphView3 : UIView {
     GiCanvasAdapter  *_canvas;

@@ -87,12 +87,20 @@ public class GiContext {
     return touchvgJNI.GiContext_getLineWidth(swigCPtr, this);
   }
 
+  public float getExtraWidth() {
+    return touchvgJNI.GiContext_getExtraWidth(swigCPtr, this);
+  }
+
   public boolean isAutoScale() {
     return touchvgJNI.GiContext_isAutoScale(swigCPtr, this);
   }
 
   public void setLineWidth(float width, boolean autoScale) {
     touchvgJNI.GiContext_setLineWidth(swigCPtr, this, width, autoScale);
+  }
+
+  public void setExtraWidth(float pixels) {
+    touchvgJNI.GiContext_setExtraWidth(swigCPtr, this, pixels);
   }
 
   public boolean isNullLine() {
@@ -174,5 +182,22 @@ public class GiContext {
   public void setFillAlpha(int alpha) {
     touchvgJNI.GiContext_setFillAlpha(swigCPtr, this, alpha);
   }
+
+  public final static int kSolidLine = 0;
+  public final static int kDashLine = kSolidLine + 1;
+  public final static int kDotLine = kDashLine + 1;
+  public final static int kDashDot = kDotLine + 1;
+  public final static int kDashDotdot = kDashDot + 1;
+  public final static int kNullLine = kDashDotdot + 1;
+  public final static int kCopyNone = 0;
+  public final static int kLineRGB = 0x01;
+  public final static int kLineAlpha = 0x02;
+  public final static int kLineARGB = 0x03;
+  public final static int kLineWidth = 0x04;
+  public final static int kLineStyle = 0x08;
+  public final static int kFillRGB = 0x10;
+  public final static int kFillAlpha = 0x20;
+  public final static int kFillARGB = 0x30;
+  public final static int kCopyAll = 0xFF;
 
 }

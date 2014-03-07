@@ -78,11 +78,6 @@ public class GiPath : IDisposable {
     return ret;
   }
 
-  public string getTypes() {
-    string ret = touchvgPINVOKE.GiPath_getTypes(swigCPtr);
-    return ret;
-  }
-
   public void clear() {
     touchvgPINVOKE.GiPath_clear(swigCPtr);
   }

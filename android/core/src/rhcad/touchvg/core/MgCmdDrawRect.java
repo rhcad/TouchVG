@@ -60,15 +60,6 @@ public class MgCmdDrawRect extends MgCommandDraw {
     touchvgJNI.MgCmdDrawRect_director_connect(this, swigCPtr, swigCMemOwn, true);
   }
 
-  public static String Name() {
-    return touchvgJNI.MgCmdDrawRect_Name();
-  }
-
-  public static MgCommand Create() {
-    long cPtr = touchvgJNI.MgCmdDrawRect_Create();
-    return (cPtr == 0) ? null : new MgCommand(cPtr, false);
-  }
-
   public void release() {
     if (getClass() == MgCmdDrawRect.class) touchvgJNI.MgCmdDrawRect_release(swigCPtr, this); else touchvgJNI.MgCmdDrawRect_releaseSwigExplicitMgCmdDrawRect(swigCPtr, this);
   }

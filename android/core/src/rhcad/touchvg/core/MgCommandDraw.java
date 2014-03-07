@@ -133,11 +133,6 @@ public class MgCommandDraw extends MgCommand {
     return (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_mouseHover(swigCPtr, this, MgMotion.getCPtr(sender), sender) : touchvgJNI.MgCommandDraw_mouseHoverSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }
 
-  public MgShape getShape(MgMotion sender) {
-    long cPtr = (getClass() == MgCommandDraw.class) ? touchvgJNI.MgCommandDraw_getShape(swigCPtr, this, MgMotion.getCPtr(sender), sender) : touchvgJNI.MgCommandDraw_getShapeSwigExplicitMgCommandDraw(swigCPtr, this, MgMotion.getCPtr(sender), sender);
-    return (cPtr == 0) ? null : new MgShape(cPtr, false);
-  }
-
   public int getStep() {
     return touchvgJNI.MgCommandDraw_getStep(swigCPtr, this);
   }

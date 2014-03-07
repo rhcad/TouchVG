@@ -39,52 +39,52 @@ static void testGraphView(GiPaintView *v, int type)
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                           NSUserDomainMask, YES) objectAtIndex:0];
     
-    if (type & 32) {
+    if (type & kRandShapes) {
         [hlp addShapesForTest];
     }
-    type = type & 0x0F;
+    type = type & kCmdMask;
     
-    if (type == 1) {
+    if (type == kSplinesCmd) {
         hlp.command = @"splines";
         hlp.strokeWidth = 3;
     }
-    else if (type == 2) {
+    else if (type == kSelectCmd) {
         hlp.command = @"select";
     }
-    else if (type == 3) {
+    else if (type == kSelectLoad) {
         [hlp loadFromFile:[GiGraphView2 lastFileName]];
         hlp.command = @"select";
     }
-    else if (type == 4) {
+    else if (type == kLineCmd) {
         hlp.command = @"line";
-        hlp.lineStyle = 1;
+        hlp.lineStyle = GILineStyleDash;
     }
-    else if (type == 5) {
+    else if (type == kLinesCmd) {
         hlp.command = @"lines";
-        hlp.lineStyle = 2;
+        hlp.lineStyle = GILineStyleDot;
         hlp.strokeWidth = 5;
     }
-    else if (type == 6) {
+    else if (type == kHitTestCmd) {
         DemoCmdsGate::registerCmds([hlp cmdViewHandle]);
         hlp.command = @"hittest";
     }
-    else if (type == 7) {
+    else if (type == kAddImages) {
         [hlp insertPNGFromResource:@"app72"];
         [hlp insertPNGFromResource:@"app57" center:CGPointMake(200, 100)];
         
         [hlp insertImageFromFile:[path stringByAppendingPathComponent:@"page0.png"]];
     }
-    else if (type == 8) {
+    else if (type == kLoadImages) {
         [hlp setImagePath:path];
         [hlp loadFromFile:[GiGraphView2 lastFileName]];
         hlp.command = @"select";
     }
-    else if (type == 9) {
+    else if (type == kSVGImages) {
         [hlp insertSVGFromResource:@"fonts" center:CGPointMake(200, 100)];
         [hlp insertImageFromFile:[path stringByAppendingPathComponent:@"test.svg"]];
         [hlp setImagePath:path];
     }
-    else if (type == 10) {
+    else if (type == kSVGPages) {
         NSString *files[] = { @"page0.svg", @"page1.svg", @"page2.svg", @"page3.svg", nil };
         float x = 10;
         for (int i = 0; files[i]; i++) {
@@ -214,29 +214,31 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addGraphView(arr, i, index, @"Empty view", frame, -1);
     addGraphView(arr, i, index, @"GiGraphView1", frame, 0);
     addLargeView1(arr, i, index, @"GiGraphView1 in large view", frame, 0);
-    addGraphView(arr, i, index, @"GiPaintView splines", frame, 1);
-    addGraphView(arr, i, index, @"GiPaintView randShapes splines", frame, 1|32);
-    addGraphView(arr, i, index, @"GiPaintView randShapes line", frame, 4|32);
-    addGraphView(arr, i, index, @"GiPaintView select", frame, 2|32);
-    addGraphView(arr, i, index, @"GiPaintView zoom", frame, 32);
-    addGraphView(arr, i, index, @"GiPaintView line", frame, 4);
-    addGraphView(arr, i, index, @"GiPaintView lines", frame, 5);
-    addGraphView(arr, i, index, @"GiPaintView record splines", frame, 64|1);
-    addGraphView(arr, i, index, @"GiPaintView record line", frame, 64|4);
-    addGraphView(arr, i, index, @"GiPaintView record randShapes splines", frame, 64|1|32);
-    addGraphView(arr, i, index, @"GiPaintView record randShapes line", frame, 64|4|32);
-    addGraphView(arr, i, index, @"GiPaintView play", frame, 64);
-    addGraphView(arr, i, index, @"GiPaintView hittest in democmds", frame, 6|32);
-    addGraphView(arr, i, index, @"GiPaintView add images", frame, 7);
-    addGraphView(arr, i, index, @"GiPaintView load images", frame, 8);
-    addGraphView(arr, i, index, @"GiPaintView SVG images", frame, 9);
-    addGraphView(arr, i, index, @"GiPaintView SVG pages", frame, 10);
-    addGraphView(arr, i, index, @"GiPaintView select randShapes", frame, 2|32);
-    addGraphView(arr, i, index, @"GiPaintView select loadShapes", frame, 3);
-    addLargeView1(arr, i, index, @"GiPaintView in large view", frame, 1);
-    addLargeView1(arr, i, index, @"GiPaintView draw in large view", frame, 4|32);
-    addLargeView1(arr, i, index, @"GiPaintView SVG pages in large view", frame, 10);
-    testMagnifierView(arr, i, index, @"MagnifierView", frame, 1);
+    addGraphView(arr, i, index, @"GiPaintView splines", frame, kSplinesCmd);
+    addGraphView(arr, i, index, @"GiPaintView randShapes splines", frame, kSplinesCmd|kRandShapes);
+    addGraphView(arr, i, index, @"GiPaintView randShapes line", frame, kLineCmd|kRandShapes);
+    addGraphView(arr, i, index, @"GiPaintView select", frame, kSelectCmd|kRandShapes);
+    addGraphView(arr, i, index, @"GiPaintView zoom", frame, kRandShapes);
+    addGraphView(arr, i, index, @"GiPaintView line", frame, kLineCmd);
+    addGraphView(arr, i, index, @"GiPaintView lines", frame, kLinesCmd);
+    addGraphView(arr, i, index, @"GiPaintView record splines", frame, kRecord|kSplinesCmd);
+    addGraphView(arr, i, index, @"GiPaintView record line", frame, kRecord|kLineCmd);
+    addGraphView(arr, i, index, @"GiPaintView record randShapes splines",
+                 frame, kRecord|kSplinesCmd|kRandShapes);
+    addGraphView(arr, i, index, @"GiPaintView record randShapes line",
+                 frame, kRecord|kLineCmd|kRandShapes);
+    addGraphView(arr, i, index, @"GiPaintView play", frame, kPlayShapes);
+    addGraphView(arr, i, index, @"GiPaintView hittest in democmds", frame, kHitTestCmd|kRandShapes);
+    addGraphView(arr, i, index, @"GiPaintView add images", frame, kAddImages);
+    addGraphView(arr, i, index, @"GiPaintView load images", frame, kLoadImages);
+    addGraphView(arr, i, index, @"GiPaintView SVG images", frame, kSVGImages);
+    addGraphView(arr, i, index, @"GiPaintView SVG pages", frame, kSVGPages);
+    addGraphView(arr, i, index, @"GiPaintView select randShapes", frame, kSelectCmd|kRandShapes);
+    addGraphView(arr, i, index, @"GiPaintView select loadShapes", frame, kSelectLoad);
+    addLargeView1(arr, i, index, @"GiPaintView in large view", frame, kSplinesCmd);
+    addLargeView1(arr, i, index, @"GiPaintView draw in large view", frame, kLineCmd|kRandShapes);
+    addLargeView1(arr, i, index, @"GiPaintView SVG pages in large view", frame, kSVGPages);
+    testMagnifierView(arr, i, index, @"MagnifierView", frame, kSplinesCmd);
     addAnimatedPathView1(arr, i, index, @"AnimatedPathView1", frame, 0);
 }
 

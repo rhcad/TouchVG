@@ -1,5 +1,5 @@
 /**
- * \file ViewHelper.java
+ * \file ViewHelperImpl.java
  * \brief Android绘图视图辅助类
  * Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
  */
@@ -10,13 +10,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Locale;
 
+import rhcad.touchvg.IGraphView;
+import rhcad.touchvg.IViewHelper;
 import rhcad.touchvg.core.CmdObserver;
 import rhcad.touchvg.core.Floats;
-import rhcad.touchvg.core.GiContextBits;
+import rhcad.touchvg.core.GiContext;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.MgView;
 import rhcad.touchvg.view.internal.BaseViewAdapter;
+import rhcad.touchvg.view.internal.BaseViewAdapter.StringCallback;
 import rhcad.touchvg.view.internal.ImageCache;
+import rhcad.touchvg.view.internal.LogHelper;
 import rhcad.touchvg.view.internal.ResourceUtil;
 import rhcad.touchvg.view.internal.ViewUtil;
 import android.content.Context;
@@ -33,54 +37,54 @@ import android.view.ViewGroup.LayoutParams;
  * \ingroup GROUP_ANDROID
  * Android绘图视图辅助类
  */
-public class ViewHelper {
+public class ViewHelperImpl implements IViewHelper{
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 4;
-    private GraphView mView;
+    private static final int JARVERSION = 5;
+    private BaseGraphView mView;
 
     static {
         System.loadLibrary("touchvg");
-        Log.i(TAG, "TouchVG V" + getVersion());
+        Log.i(TAG, "TouchVG V1.1." + JARVERSION + "." + GiCoreView.getVersion());
     }
 
-    //! 返回绘图包的版本号，1.1.jarver.sover
-    public static String getVersion() {
+    @Override
+    public String getVersion() {
         return String.format(Locale.US, "1.1.%d.%d", JARVERSION, GiCoreView.getVersion());
     }
 
     //! 指定视图的构造函数
-    public ViewHelper(GraphView view) {
-        mView = view;
+    public ViewHelperImpl(IGraphView view) {
+        mView = (BaseGraphView)view;
     }
 
     //! 获取当前活动视图的默认构造函数
-    public ViewHelper() {
-        mView = ViewUtil.activeView;
+    public ViewHelperImpl() {
+        mView = ViewUtil.activeView();
     }
 
-    //! 返回当前激活视图
-    public static GraphView activeView() {
-        return ViewUtil.activeView;
+    @Override
+    public IGraphView activeView() {
+        return ViewUtil.activeView();
     }
 
-    //! 得到要操作的视图
-    public GraphView getGraphView() {
+    @Override
+    public IGraphView getGraphView() {
         return mView;
     }
 
-    //! 得到要操作的视图
+    @Override
     public View getView() {
-        return mView.getView();
+        return mView != null ? mView.getView() : null;
     }
 
-    //! 返回视图上下文
+    @Override
     public Context getContext() {
-        return mView.getView().getContext();
+        return mView != null ? mView.getView().getContext() : null;
     }
 
-    //! 返回内核视图的句柄, MgView 指针
+    @Override
     public int cmdViewHandle() {
-        final GiCoreView v = mView.coreView();
+        final GiCoreView v = mView != null ? mView.coreView() : null;
         return v != null ? v.viewAdapterHandle() : 0;
     }
 
@@ -89,24 +93,34 @@ public class ViewHelper {
         return MgView.fromHandle(cmdViewHandle());
     }
 
-    //! 在指定的布局中创建SurfaceView绘图视图，并记下此视图
+    @Override
     public ViewGroup createSurfaceView(Context context, ViewGroup layout) {
-        final SFGraphView view = new SFGraphView(context);
+        return createSurfaceView(context, layout, null);
+    }
+
+    @Override
+    public ViewGroup createSurfaceView(Context context, ViewGroup layout, Bundle savedState) {
+        final SFGraphView view = new SFGraphView(context, savedState);
         mView = view;
         layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         createDynamicShapeView(context, layout, view);
         return layout;
     }
 
-    //! 在指定的布局（建议为FrameLayout）中创建普通绘图视图，并记下此视图
+    @Override
     public ViewGroup createGraphView(Context context, ViewGroup layout) {
-        final StdGraphView view = new StdGraphView(context);
+        return createGraphView(context, layout, null);
+    }
+
+    @Override
+    public ViewGroup createGraphView(Context context, ViewGroup layout, Bundle savedState) {
+        final StdGraphView view = new StdGraphView(context, savedState);
         mView = view;
         layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         return layout;
     }
 
-    //! 在指定的布局（建议为FrameLayout）中创建 ShapeView 绘图视图，并记下此视图
+    @Override
     public ViewGroup createShapeView(Context context, ViewGroup layout) {
         ShapeView view = new ShapeView(context);
         mView = view;
@@ -114,16 +128,17 @@ public class ViewHelper {
         return layout;
     }
 
-    //! 在指定的布局中创建放大镜视图，并记下此视图
-    public ViewGroup createMagnifierView(Context context, ViewGroup layout, GraphView mainView) {
-        final SFGraphView view = new SFGraphView(context, mainView != null ? mainView : mView);
+    @Override
+    public ViewGroup createMagnifierView(Context context, ViewGroup layout, IGraphView mainView) {
+        final SFGraphView view = new SFGraphView(context,
+                (BaseGraphView) (mainView != null ? mainView : mView));
         mView = view;
         layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         createDynamicShapeView(context, layout, view);
         return layout;
     }
 
-    private void createDynamicShapeView(Context context, ViewGroup layout, GraphView view) {
+    private void createDynamicShapeView(Context context, ViewGroup layout, IGraphView view) {
         final View dynview = view.createDynamicShapeView(context);
         if (dynview != null) {
             layout.addView(dynview, new LayoutParams(LayoutParams.MATCH_PARENT,
@@ -131,41 +146,51 @@ public class ViewHelper {
         }
     }
 
-    //! 设置额外的上下文操作按钮的图像ID数组，其动作序号从40起
-    public static void setExtraContextImages(Context context, int[] ids) {
+    @Override
+    public void setExtraContextImages(Context context, int[] ids) {
         ResourceUtil.setExtraContextImages(context, ids);
     }
 
-    //! 得到当前命令名称
+    @Override
     public String getCommand() {
-        final GiCoreView v = mView.coreView();
-        return v != null ? v.getCommand() : "";
+        final BaseViewAdapter adapter = internalAdapter();
+        return adapter != null ? adapter.getCommand() : "";
     }
 
-    //! 启动指定名称的命令(可用的命令名在LogCat中会打印出来，例如“registerCommand 11:lines”中的“lines”)
+    @Override
     public boolean setCommand(String name) {
-        final GiCoreView v = mView.coreView();
-        return v != null && v.setCommand(name);
+        boolean ret = false;
+
+        if (mView != null) {
+            ret = mView.coreView().setCommand(name);
+            Log.d(TAG, "setCommand " + name + ": " + ret);
+        }
+        return ret;
     }
 
-    //! 启动指定名称的命令，并指定JSON串的命令初始化参数
+    @Override
     public boolean setCommand(String name, String params) {
-        final GiCoreView v = mView.coreView();
-        return v != null && v.setCommand(name, params);
+        boolean ret = false;
+
+        if (mView != null) {
+            ret = mView.coreView().setCommand(name, params);
+            Log.d(TAG, "setCommand " + name + params + ": " + ret);
+        }
+        return ret;
     }
 
-    //! 返回线宽，正数表示单位为0.01毫米，零表示1像素宽，负数表示单位为像素
+    @Override
     public int getLineWidth() {
         return Math.round(mView.coreView().getContext(false).getLineWidth());
     }
 
-    //! 设置线宽，正数表示单位为0.01毫米，零表示1像素宽，负数表示单位为像素
+    @Override
     public void setLineWidth(int w) {
         mView.coreView().getContext(true).setLineWidth(w, true);
-        mView.coreView().setContext(GiContextBits.kContextLineWidth.swigValue());
+        mView.coreView().setContext(GiContext.kLineWidth);
     }
 
-    //! 返回像素单位的线宽，总是为正数
+    @Override
     public int getStrokeWidth() {
         float w = mView.coreView().getContext(false).getLineWidth();
         if (w < 0)
@@ -173,191 +198,240 @@ public class ViewHelper {
         return Math.round(mView.coreView().calcPenWidth(mView.viewAdapter(), w));
     }
 
-    //! 设置像素单位的线宽，总是为正数
+    @Override
     public void setStrokeWidth(int w) {
         mView.coreView().getContext(true).setLineWidth(-Math.abs(w), true);
-        mView.coreView().setContext(GiContextBits.kContextLineWidth.swigValue());
+        mView.coreView().setContext(GiContext.kLineWidth);
     }
 
-    public static final int MAX_LINESTYLE = 5; //!< 线型最大值, 0-5:实线,虚线,点线,点划线,双点划线,空线
-
-    //! 返回线型, 0-5(MAX_LINESTYLE):实线,虚线,点线,点划线,双点划线,空线
+    @Override
     public int getLineStyle() {
         return mView.coreView().getContext(false).getLineStyle();
     }
 
-    //! 设置线型, 0-5:实线,虚线,点线,点划线,双点划线,空线
+    @Override
     public void setLineStyle(int style) {
         mView.coreView().getContext(true).setLineStyle(style);
-        mView.coreView().setContext(GiContextBits.kContextLineStyle.swigValue());
+        mView.coreView().setContext(GiContext.kLineStyle);
     }
 
-    //! 返回线条颜色，忽略透明度分量，0 表示不画线条
+    @Override
     public int getLineColor() {
         return mView.coreView().getContext(false).getLineColor().getARGB();
     }
 
-    //! 设置线条颜色，忽略透明度分量，0 表示不画线条
+    @Override
     public void setLineColor(int argb) {
         mView.coreView().getContext(true).setLineARGB(argb);
-        mView.coreView().setContext(
-                argb == 0 ? GiContextBits.kContextLineARGB.swigValue()
-                        : GiContextBits.kContextLineRGB.swigValue());
+        mView.coreView().setContext(argb == 0 ? GiContext.kLineARGB : GiContext.kLineRGB);
     }
 
-    //! 返回线条透明度, 0-255
+    @Override
     public int getLineAlpha() {
         return mView.coreView().getContext(false).getLineColor().getA();
     }
 
-    //! 设置线条透明度, 0-255
+    @Override
     public void setLineAlpha(int alpha) {
         mView.coreView().getContext(true).setLineAlpha(alpha);
-        mView.coreView().setContext(GiContextBits.kContextLineAlpha.swigValue());
+        mView.coreView().setContext(GiContext.kLineAlpha);
     }
 
-    //! 返回填充颜色，忽略透明度分量，0 表示不填充
+    @Override
     public int getFillColor() {
         return mView.coreView().getContext(false).getFillColor().getARGB();
     }
 
-    //! 设置填充颜色，忽略透明度分量，0 表示不填充
+    @Override
     public void setFillColor(int argb) {
         mView.coreView().getContext(true).setFillARGB(argb);
-        mView.coreView().setContext(
-                argb == 0 ? GiContextBits.kContextFillARGB.swigValue()
-                        : GiContextBits.kContextFillRGB.swigValue());
+        mView.coreView().setContext(argb == 0 ? GiContext.kFillARGB : GiContext.kFillRGB);
     }
 
-    //! 返回填充透明度, 0-255
+    @Override
     public int getFillAlpha() {
         return mView.coreView().getContext(false).getFillColor().getA();
     }
 
-    //! 设置填充透明度, 0-255
+    @Override
     public void setFillAlpha(int alpha) {
         mView.coreView().getContext(true).setFillAlpha(alpha);
-        mView.coreView().setContext(GiContextBits.kContextFillAlpha.swigValue());
+        mView.coreView().setContext(GiContext.kFillAlpha);
     }
 
-    //! 绘图属性是否正在动态修改. 拖动时先设为true，然后改变绘图属性，完成后设为false.
+    @Override
     public void setContextEditing(boolean editing) {
         mView.coreView().setContextEditing(editing);
     }
 
-    //! 添加测试图形
+    @Override
     public int addShapesForTest() {
-        return mView.coreView().addShapesForTest();
+        final LogHelper log = new LogHelper();
+        return log.r(mView.coreView().addShapesForTest());
     }
 
-    //! 释放临时缓存
+    @Override
     public void clearCachedData() {
         mView.coreView().clearCachedData();
     }
 
-    //! 放缩显示全部内容
+    @Override
     public boolean zoomToExtent() {
         return mView.coreView().zoomToExtent();
     }
 
-    //! 放缩显示指定范围到视图区域
+    @Override
     public boolean zoomToModel(float x, float y, float w, float h) {
         return mView.coreView().zoomToModel(x, y, w, h);
     }
 
-    //! 开始Undo录制
+    @Override
     public boolean startUndoRecord(String path) {
-        if (mView.coreView().isUndoRecording()
+        final BaseViewAdapter adapter = internalAdapter();
+
+        if (adapter == null
+                || adapter.getSavedState() != null
+                || mView.coreView().isUndoRecording()
                 || !deleteDirectory(new File(path))
                 || !createDirectory(path, true)) {
             return false;
         }
-        return internalAdapter().startRecord(path, BaseViewAdapter.START_UNDO);
+        return adapter.startRecord(path, BaseViewAdapter.START_UNDO);
     }
 
-    //! 停止Undo录制
+    @Override
     public void stopUndoRecord() {
-        internalAdapter().stopRecord(true);
+        final BaseViewAdapter adapter = internalAdapter();
+        if (adapter != null) {
+            adapter.stopRecord(true);
+        }
     }
 
-    //! 能否撤销
+    @Override
     public boolean canUndo() {
-        return mView.coreView().canUndo();
+        return mView != null && mView.coreView().canUndo();
     }
 
-    //! 能否重做
+    @Override
     public boolean canRedo() {
-        return mView.coreView().canRedo();
+        return mView != null && mView.coreView().canRedo();
     }
 
-    //! 撤销
+    @Override
     public void undo() {
-        internalAdapter().undo();
+        final BaseViewAdapter adapter = internalAdapter();
+        if (adapter != null) {
+            adapter.undo();
+        }
     }
 
-    //! 重做
+    @Override
     public void redo() {
-        internalAdapter().redo();
+        final BaseViewAdapter adapter = internalAdapter();
+        if (adapter != null) {
+            adapter.redo();
+        }
     }
 
-    //! 是否正在录屏
+    @Override
     public boolean isRecording() {
-        return mView.coreView().isRecording();
+        return mView != null && mView.coreView().isRecording();
     }
 
-    //! 开始录屏
+    @Override
     public boolean startRecord(String path) {
-        if (mView.coreView().isRecording()
+        final BaseViewAdapter adapter = internalAdapter();
+
+        if (adapter == null
+                || adapter.getSavedState() != null
+                || mView.coreView().isRecording()
                 || !deleteDirectory(new File(path))
                 || !createDirectory(path, true)) {
             return false;
         }
-        return internalAdapter().startRecord(path, BaseViewAdapter.START_RECORD);
+        return adapter.startRecord(path, BaseViewAdapter.START_RECORD);
     }
 
-    //! 停止录屏
+    @Override
     public void stopRecord() {
-        internalAdapter().stopRecord(false);
+        final BaseViewAdapter adapter = internalAdapter();
+        if (adapter != null) {
+            adapter.stopRecord(false);
+        }
     }
 
-    //! 是否正在播放
+    @Override
+    public boolean isPaused() {
+        return mView != null && mView.coreView().isPaused();
+    }
+
+    @Override
     public boolean isPlaying() {
-        return mView.coreView().isPlaying();
+        return mView != null && mView.coreView().isPlaying();
     }
 
-    //! 开始播放
+    @Override
     public boolean startPlay(String path) {
-        if (mView.coreView().isPlaying() || !new File(path).exists()) {
+        final BaseViewAdapter adapter = internalAdapter();
+
+        if (adapter == null
+                || adapter.getSavedState() != null
+                || mView.coreView().isPlaying()
+                || !new File(path).exists()) {
             return false;
         }
-        return internalAdapter().startRecord(path, BaseViewAdapter.START_PLAY);
+        return adapter.startPlay(path);
     }
 
-    //! 停止播放
+    @Override
     public void stopPlay() {
-        internalAdapter().stopRecord(false);
+        final BaseViewAdapter adapter = internalAdapter();
+        if (adapter != null) {
+            adapter.stopRecord(false);
+        }
+    }
+
+    @Override
+    public boolean playPause() {
+        return mView != null && mView.coreView().onPause(BaseViewAdapter.getTick());
+    }
+
+    @Override
+    public boolean playResume() {
+        return mView != null && mView.coreView().onResume(BaseViewAdapter.getTick());
+    }
+
+    @Override
+    public int getPlayTicks() {
+        return mView.coreView().getRecordTick(false, BaseViewAdapter.getTick());
     }
 
     private BaseViewAdapter internalAdapter() {
-        return (BaseViewAdapter)mView.getMainView().viewAdapter();
+        if (mView == null || mView.getMainView() == null)
+            return null;
+        return (BaseViewAdapter)((BaseGraphView)mView.getMainView()).viewAdapter();
     }
 
-    //! 设置是否允许触摸交互
+    @Override
     public void setGestureEnable(boolean enabled) {
         mView.setGestureEnable(enabled);
     }
 
-    //! 设置背景色，普通视图默认透明，SurfaceView默认白色背景
+    @Override
     public void setBackgroundColor(int color) {
-        getView().setBackgroundColor(color);
+        if (mView != null) {
+            getView().setBackgroundColor(color);
+        }
     }
 
-    //! 设置背景图，SurfaceView不透明时使用
+    @Override
     public void setBackgroundDrawable(Drawable background) {
-        mView.setBackgroundDrawable(background);
+        if (mView != null) {
+            mView.setBackgroundDrawable(background);
+        }
     }
 
-    //! 得到静态图形的快照，支持多线程
+    @Override
     public Bitmap snapshot(boolean transparent) {
         final GiCoreView v = mView.coreView();
         int doc, gs;
@@ -367,14 +441,17 @@ public class ViewHelper {
             gs = v.acquireGraphics(mView.viewAdapter());
         }
         try {
-            return mView.snapshot(doc, gs, transparent);
+            final LogHelper log = new LogHelper();
+            final Bitmap bitmap = mView.snapshot(doc, gs, transparent);
+            log.r(bitmap != null ? bitmap.getByteCount() : 0);
+            return bitmap;
         } finally {
             GiCoreView.releaseDoc(doc);
             v.releaseGraphics(gs);
         }
     }
 
-    //! 得到当前显示的静态图形快照，自动去掉周围空白，支持多线程
+    @Override
     public Bitmap extentSnapshot(int spaceAround, boolean transparent) {
         final GiCoreView v = mView.coreView();
         int doc, gs;
@@ -392,6 +469,7 @@ public class ViewHelper {
     }
 
     private Bitmap extentSnapshot(int doc, int gs, int spaceAround, boolean transparent) {
+        final LogHelper log = new LogHelper();
         final Rect extent = getDisplayExtent();
 
         if (!extent.isEmpty()) {
@@ -409,6 +487,7 @@ public class ViewHelper {
 
         if (extent.width() == mView.getView().getWidth()
                 && extent.height() == mView.getView().getHeight()) {
+            log.r(viewBitmap.getByteCount());
             return viewBitmap;
         }
 
@@ -416,26 +495,28 @@ public class ViewHelper {
                 extent.width(), extent.height());
 
         viewBitmap.recycle();
+        log.r(realBitmap.getByteCount());
         return realBitmap;
     }
 
-    //! 保存当前显示的静态图形快照(去掉周围空白)到PNG文件，自动添加后缀名.png，支持多线程
+    @Override
     public boolean exportExtentAsPNG(String filename, int spaceAround) {
         return savePNG(extentSnapshot(spaceAround, true), filename);
     }
 
-    //! 保存静态图形的快照到PNG文件，自动添加后缀名.png，支持多线程
+    @Override
     public boolean exportPNG(String filename, boolean transparent) {
         return savePNG(snapshot(transparent), filename);
     }
 
-    //! 保存静态图形的透明背景快照到PNG文件，自动添加后缀名.png，支持多线程
+    @Override
     public boolean exportPNG(String filename) {
         return savePNG(snapshot(true), filename);
     }
 
     private boolean savePNG(Bitmap bmp, String filename) {
         boolean ret = false;
+        final LogHelper log = new LogHelper();
 
         if (bmp != null && filename != null && createDirectory(filename, false)) {
             synchronized (bmp) {
@@ -451,46 +532,47 @@ public class ViewHelper {
             }
         }
 
-        return ret;
+        return log.r(ret);
     }
 
-    //! 导出静态图形到SVG文件，自动添加后缀名.svg
+    @Override
     public boolean exportSVG(String filename) {
+        final LogHelper log = new LogHelper();
         filename = addExtension(filename, ".svg");
-        return mView.coreView().exportSVG(mView.viewAdapter(), filename) > 0;
+        return log.r(mView.coreView().exportSVG(mView.viewAdapter(), filename) > 0);
     }
 
-    //! 返回图形总数
+    @Override
     public int getShapeCount() {
         return mView.coreView().getShapeCount();
     }
 
-    //! 返回选中的图形个数
+    @Override
     public int getSelectedCount() {
         return mView.coreView().getSelectedShapeCount();
     }
 
-    //! 返回选中的图形的类型, MgShapeType
+    @Override
     public int getSelectedType() {
         return mView.coreView().getSelectedShapeType();
     }
 
-    //! 返回当前选中的图形的ID，选中多个时只取第一个
+    @Override
     public int getSelectedShapeID() {
         return mView.coreView().getSelectedShapeID();
     }
 
-    //! 返回图形改变次数，可用于检查是否需要保存
+    @Override
     public int getChangeCount() {
         return mView.coreView().getChangeCount();
     }
 
-    //! 返回图形改变次数，可用于检查是否需要保存
+    @Override
     public int getDrawCount() {
         return mView.coreView().getDrawCount();
     }
 
-    //! 返回图形显示范围
+    @Override
     public Rect getDisplayExtent() {
         final Floats box = new Floats(4);
         if (mView.coreView().getDisplayExtent(box)) {
@@ -500,7 +582,7 @@ public class ViewHelper {
         return new Rect();
     }
 
-    //! 返回图形显示范围，支持多线程
+    @Override
     public Rect getDisplayExtent(int doc, int gs) {
         final Floats box = new Floats(4);
         if (mView.coreView().getDisplayExtent(doc, gs, box)) {
@@ -510,7 +592,7 @@ public class ViewHelper {
         return new Rect();
     }
 
-    //! 返回选择包络框
+    @Override
     public Rect getBoundingBox() {
         final Floats box = new Floats(4);
         if (mView.coreView().getBoundingBox(box)) {
@@ -520,63 +602,67 @@ public class ViewHelper {
         return new Rect();
     }
 
-    //! 得到图形的JSON内容，支持多线程
-    public String getContent() {
-        int doc;
-
+    private int acquireFrontDoc() {
         synchronized (mView.coreView()) {
-            doc = mView.coreView().acquireFrontDoc();
+            return mView.coreView().acquireFrontDoc();
         }
+    }
 
-        final String str = mView.coreView().getContent(doc);
+    @Override
+    public String getContent() {
+        final LogHelper log = new LogHelper();
+        int doc = acquireFrontDoc();
+        final StringCallback c = new StringCallback();
 
+        mView.coreView().getContent(doc, c);
         GiCoreView.releaseDoc(doc);
         mView.coreView().freeContent();
 
-        return str;
+        return log.r(c.toString());
     }
 
-    //! 从JSON内容中加载图形
+    @Override
     public boolean setContent(String content) {
-        return mView.coreView().setContent(content);
+        final LogHelper log = new LogHelper();
+        return log.r(mView.coreView().setContent(content));
     }
 
-    //! 从JSON文件中加载图形，自动添加后缀名.vg
+    @Override
     public boolean loadFromFile(String vgfile) {
-        vgfile = addExtension(vgfile, ".vg");
-        return mView != null && mView.coreView().loadFromFile(vgfile);
+        return loadFromFile(vgfile, false);
     }
 
-    //! 从JSON文件中以只读方式加载图形，自动添加后缀名.vg
+    @Override
     public boolean loadFromFile(String vgfile, boolean readOnly) {
+        final LogHelper log = new LogHelper();
         vgfile = addExtension(vgfile, ".vg");
-        return mView != null && mView.coreView().loadFromFile(vgfile, readOnly);
+        return log.r(mView != null && mView.coreView().loadFromFile(vgfile, readOnly));
     }
 
-    //! 保存图形到JSON文件，自动添加后缀名.vg，支持多线程
+    @Override
     public boolean saveToFile(String vgfile) {
-        boolean ret = false;
-        int doc;
-
         if (mView == null || vgfile == null)
             return false;
-        synchronized (mView.coreView()) {
-            doc = mView.coreView().acquireFrontDoc();
-        }
 
-        vgfile = addExtension(vgfile, ".vg");
-        if (mView.coreView().getShapeCount(doc) == 0) {
-            final File f = new File(vgfile);
-            ret = !f.exists() || f.delete();
-        } else {
-            ret = createDirectory(vgfile, false) && mView.coreView().saveToFile(doc, vgfile);
-        }
-
+        int doc = acquireFrontDoc();
+        boolean ret = saveToFile(vgfile, doc);
         GiCoreView.releaseDoc(doc);
         return ret;
     }
 
-    //! 清除所有图形
+    private boolean saveToFile(String vgfile, int doc) {
+        final LogHelper log = new LogHelper();
+        vgfile = addExtension(vgfile, ".vg");
+        if (mView.coreView().getShapeCount(doc) == 0) {
+            final File f = new File(vgfile);
+            return log.r(!f.exists() || f.delete());
+        } else {
+            return log.r(createDirectory(vgfile, false)
+                    && mView.coreView().saveToFile(doc, vgfile));
+        }
+    }
+
+    @Override
     public void clearShapes() {
         mView.coreView().clear();
     }
@@ -611,7 +697,7 @@ public class ViewHelper {
                     }
                 }
                 if (n > 0) {
-                    Log.i(TAG, n + " files deleted in " + path.getPath());
+                    Log.d(TAG, n + " files deleted in " + path.getPath());
                 }
             }
         }
@@ -634,7 +720,7 @@ public class ViewHelper {
         return true;
     }
 
-    //! 在默认位置插入一个程序资源中的SVG图像(id=R.raw.name)
+    @Override
     public int insertSVGFromResource(String name) {
         int id = ResourceUtil.getResIDFromName(getContext(), "raw", name);
         name = ImageCache.SVG_PREFIX + name;
@@ -645,12 +731,12 @@ public class ViewHelper {
         }
     }
 
-    //! 在默认位置插入一个程序资源中的SVG图像(id=R.raw.name)
+    @Override
     public int insertSVGFromResource(int id) {
         return insertSVGFromResource(ResourceUtil.getResName(getContext(), id));
     }
 
-    //! 插入一个程序资源中的SVG图像(id=R.raw.name)，并指定图像的中心位置
+    @Override
     public int insertSVGFromResource(String name, int xc, int yc) {
         int id = ResourceUtil.getResIDFromName(getContext(), "raw", name);
         name = ImageCache.SVG_PREFIX + name;
@@ -661,12 +747,12 @@ public class ViewHelper {
         }
     }
 
-    //! 插入一个程序资源中的SVG图像(id=R.raw.name)，并指定图像的中心位置
+    @Override
     public int insertSVGFromResource(int id, int xc, int yc) {
         return insertSVGFromResource(ResourceUtil.getResName(getContext(), id), xc, yc);
     }
 
-    //! 在默认位置插入一个程序资源中的位图图像(id=R.drawable.name)
+    @Override
     public int insertBitmapFromResource(String name) {
         int id = ResourceUtil.getDrawableIDFromName(getContext(), name);
         name = ImageCache.BITMAP_PREFIX + name;
@@ -677,12 +763,12 @@ public class ViewHelper {
         }
     }
 
-    //! 在默认位置插入一个程序资源中的位图图像(id=R.drawable.name)
+    @Override
     public int insertBitmapFromResource(int id) {
         return insertBitmapFromResource(ResourceUtil.getResName(getContext(), id));
     }
 
-    //! 插入一个程序资源中的位图图像(id=R.drawable.name)，并指定图像的中心位置
+    @Override
     public int insertBitmapFromResource(String name, int xc, int yc) {
         int id = ResourceUtil.getDrawableIDFromName(getContext(), name);
         name = ImageCache.BITMAP_PREFIX + name;
@@ -693,13 +779,18 @@ public class ViewHelper {
         }
     }
 
-    //! 插入一个程序资源中的位图图像(id=R.drawable.name)，并指定图像的中心位置
+    @Override
     public int insertBitmapFromResource(int id, int xc, int yc) {
         return insertBitmapFromResource(ResourceUtil.getResName(getContext(), id), xc, yc);
     }
 
-    //! 在默认位置插入一个PNG、JPEG或SVG等文件的图像
+    @Override
     public int insertImageFromFile(String filename) {
+        final BaseViewAdapter adapter = internalAdapter();
+
+        if (adapter == null || filename == null)
+            return 0;
+
         String name = filename.substring(filename.lastIndexOf('/') + 1).toLowerCase(Locale.US);
         Drawable d;
 
@@ -708,33 +799,53 @@ public class ViewHelper {
         } else {
             d = mView.getImageCache().addBitmapFile(getContext().getResources(), filename, name);
         }
-        synchronized (mView.coreView()) {
-            return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
-                    ImageCache.getHeight(d));
+        if (d != null) {
+            final String destPath = adapter.getRecordPath();
+            if (destPath != null) {
+                ImageCache.copyFileTo(filename, destPath);
+            }
+            synchronized (mView.coreView()) {
+                int w = ImageCache.getWidth(d);
+                int h = ImageCache.getHeight(d);
+                return mView.coreView().addImageShape(name, w, h);
+            }
         }
+        return 0;
     }
 
-    //! 返回是否有容纳图像的图形对象
+    @Override
     public boolean hasImageShape() {
-        return mView.coreView().hasImageShape();
+        int doc = acquireFrontDoc();
+        boolean ret = mView.coreView().hasImageShape(doc);
+        GiCoreView.releaseDoc(doc);
+        return ret;
     }
 
-    //! 返回图像文件的默认路径
+    @Override
+    public int findShapeByImageID(String name) {
+        int doc = acquireFrontDoc();
+        int ret = mView.coreView().findShapeByImageID(doc, name);
+        GiCoreView.releaseDoc(doc);
+        return ret;
+    }
+
+    @Override
     public String getImagePath() {
         return mView.getImageCache().getImagePath();
     }
 
-    //! 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
+    @Override
     public void setImagePath(String path) {
         mView.getImageCache().setImagePath(path);
     }
 
-    //! 关闭视图
+    @Override
     public void close() {
         if (mView != null) {
+            mView.onPause();
             mView.stop();
             if (mView.getView() != null) {
-                final ViewGroup parent = (ViewGroup)mView.getView().getParent();
+                final ViewGroup parent = (ViewGroup) mView.getView().getParent();
                 if (parent != null)
                     parent.removeAllViews();
             }
@@ -742,47 +853,95 @@ public class ViewHelper {
         }
     }
 
-    //! 所属的Activity销毁前或关闭视图时调用
-    public void onActivityDestroy() {
-        if (mView != null) {
-            mView.stop();
+    @Override
+    public void onDestroy() {
+        final Context context = getContext();
+        for (BaseGraphView view : ViewUtil.views()) {
+            if (view.getView().getContext() == context) {
+                view.stop();
+            }
         }
     }
 
-    //! 所属的Activity暂停时调用
-    public boolean onActivityPause() {
-        return mView != null && mView.onPause();
+    @Override
+    public boolean onPause() {
+        Log.d(TAG, "onPause");
+        final Context context = getContext();
+        boolean ret = false;
+
+        for (BaseGraphView view : ViewUtil.views()) {
+            if (view.getView().getContext() == context) {
+                ret = view.onPause() || ret;
+            }
+        }
+        return ret;
     }
 
-    //! 所属的Activity恢复时调用
-    public boolean onActivityResume() {
-        return mView != null && mView.onResume();
+    @Override
+    public boolean onResume() {
+        Log.d(TAG, "onResume");
+        final Context context = getContext();
+        boolean ret = false;
+
+        for (BaseGraphView view : ViewUtil.views()) {
+            if (view.getView().getContext() == context) {
+                ret = view.onResume() || ret;
+            }
+        }
+        return ret;
     }
 
-    //! 所属的Activity保存状态时调用
+    @Override
     public void onSaveInstanceState(Bundle outState, String path) {
-        if (mView != null) {
-            final String filename = new File(path, "resume.vg").getPath();
-            if (saveToFile(filename)) {
-                Log.d(TAG, "Auto save to " + filename);
-                outState.putString("resumevg", filename);
-                outState.putString("cmd", getCommand());
-                outState.putBoolean("readOnly", cmdView().isReadOnly());
+        final BaseViewAdapter adapter = internalAdapter();
+
+        if (adapter != null) {
+            final LogHelper log = new LogHelper();
+            Bundle state = adapter.getSavedState();
+
+            if (state == null) {
+                final String filename = new File(path, "resume.vg").getPath();
+                final String playFile = new File(path, "playresume.vg").getPath();
+
+                state = new Bundle();
+                adapter.onSaveInstanceState(state);
+                if (mView.coreView().isPlaying()) {
+                    if (saveToFile(playFile)) {
+                        Log.d(TAG, "Auto save playing shapes to " + playFile);
+                        state.putString("playFile", playFile);
+                    }
+                    if (saveToFile(filename, mView.coreView().backDoc())) {
+                        Log.d(TAG, "Auto save to " + filename);
+                        state.putString("bakFile", filename);
+                    }
+                } else {
+                    if (saveToFile(filename)) {
+                        Log.d(TAG, "Auto save to " + filename);
+                        state.putString("bakFile", filename);
+                    }
+                }
+                state.putBoolean("readOnly", cmdView().isReadOnly());
             }
+            outState.putBundle("vg", state);
+            log.r();
         }
     }
 
-    //! 所属的Activity恢复状态时调用
+    @Override
     public void onRestoreInstanceState(Bundle savedState) {
-        if (mView != null) {
-            final String filename = savedState.getString("resumevg");
-            boolean readOnly = savedState.getBoolean("readOnly");
+        final BaseViewAdapter adapter = internalAdapter();
+        final Bundle state = savedState.getBundle("vg");
 
-            if (filename != null) {
-                if (loadFromFile(filename, readOnly))
-                    Log.d(TAG, "Auto load from " + filename);
-                setCommand(savedState.getString("cmd"));
+        if (adapter != null && state != null) {
+            final LogHelper log = new LogHelper();
+            final String filename = state.getString("bakFile");
+            boolean readOnly = state.getBoolean("readOnly");
+
+            if (filename != null && loadFromFile(filename, readOnly)) {
+                Log.d(TAG, "Auto load from " + filename);
             }
+            adapter.onRestoreInstanceState(state);
+            log.r();
         }
     }
 

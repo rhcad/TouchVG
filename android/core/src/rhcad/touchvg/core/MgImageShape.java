@@ -153,10 +153,6 @@ public class MgImageShape extends MgBaseRect {
     return touchvgJNI.MgImageShape_hitTest(swigCPtr, this, Point2d.getCPtr(pt), pt, tol, MgHitResult.getCPtr(res), res);
   }
 
-  public String getName() {
-    return touchvgJNI.MgImageShape_getName(swigCPtr, this);
-  }
-
   public void setName(String name) {
     touchvgJNI.MgImageShape_setName(swigCPtr, this, name);
   }

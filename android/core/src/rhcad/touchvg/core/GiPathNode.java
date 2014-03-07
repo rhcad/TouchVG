@@ -9,10 +9,10 @@
 package rhcad.touchvg.core;
 
 public final class GiPathNode {
-  public final static GiPathNode kGiCloseFigure = new GiPathNode("kGiCloseFigure", touchvgJNI.kGiCloseFigure_get());
-  public final static GiPathNode kGiLineTo = new GiPathNode("kGiLineTo", touchvgJNI.kGiLineTo_get());
-  public final static GiPathNode kGiBeziersTo = new GiPathNode("kGiBeziersTo", touchvgJNI.kGiBeziersTo_get());
-  public final static GiPathNode kGiMoveTo = new GiPathNode("kGiMoveTo", touchvgJNI.kGiMoveTo_get());
+  public final static GiPathNode kGiCloseFigure = new GiPathNode("kGiCloseFigure", 1);
+  public final static GiPathNode kGiLineTo = new GiPathNode("kGiLineTo", 2);
+  public final static GiPathNode kGiBeziersTo = new GiPathNode("kGiBeziersTo", 4);
+  public final static GiPathNode kGiMoveTo = new GiPathNode("kGiMoveTo", 6);
 
   public final int swigValue() {
     return swigValue;

@@ -45,11 +45,6 @@ public class MgCommand : IDisposable {
     SwigDirectorConnect();
   }
 
-  public string getName() {
-    string ret = touchvgPINVOKE.MgCommand_getName(swigCPtr);
-    return ret;
-  }
-
   public virtual void release() {
     touchvgPINVOKE.MgCommand_release(swigCPtr);
   }
@@ -134,12 +129,6 @@ public class MgCommand : IDisposable {
     return ret;
   }
 
-  public virtual MgShape getShape(MgMotion sender) {
-    IntPtr cPtr = (SwigDerivedClassHasMethod("getShape", swigMethodTypes17) ? touchvgPINVOKE.MgCommand_getShapeSwigExplicitMgCommand(swigCPtr, MgMotion.getCPtr(sender)) : touchvgPINVOKE.MgCommand_getShape(swigCPtr, MgMotion.getCPtr(sender)));
-    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
-    return ret;
-  }
-
   private void SwigDirectorConnect() {
     if (SwigDerivedClassHasMethod("release", swigMethodTypes0))
       swigDelegate0 = new SwigDelegateMgCommand_0(SwigDirectorrelease);
@@ -175,9 +164,7 @@ public class MgCommand : IDisposable {
       swigDelegate15 = new SwigDelegateMgCommand_15(SwigDirectorisFloatingCommand);
     if (SwigDerivedClassHasMethod("doContextAction", swigMethodTypes16))
       swigDelegate16 = new SwigDelegateMgCommand_16(SwigDirectordoContextAction);
-    if (SwigDerivedClassHasMethod("getShape", swigMethodTypes17))
-      swigDelegate17 = new SwigDelegateMgCommand_17(SwigDirectorgetShape);
-    touchvgPINVOKE.MgCommand_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17);
+    touchvgPINVOKE.MgCommand_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16);
   }
 
   private bool SwigDerivedClassHasMethod(string methodName, Type[] methodTypes) {
@@ -254,10 +241,6 @@ public class MgCommand : IDisposable {
     return doContextAction((sender == IntPtr.Zero) ? null : new MgMotion(sender, false), action);
   }
 
-  private IntPtr SwigDirectorgetShape(IntPtr sender) {
-    return MgShape.getCPtr(getShape((sender == IntPtr.Zero) ? null : new MgMotion(sender, false))).Handle;
-  }
-
   public delegate void SwigDelegateMgCommand_0();
   public delegate bool SwigDelegateMgCommand_1(IntPtr sender);
   public delegate bool SwigDelegateMgCommand_2(IntPtr sender, IntPtr s);
@@ -275,7 +258,6 @@ public class MgCommand : IDisposable {
   public delegate bool SwigDelegateMgCommand_14();
   public delegate bool SwigDelegateMgCommand_15();
   public delegate bool SwigDelegateMgCommand_16(IntPtr sender, int action);
-  public delegate IntPtr SwigDelegateMgCommand_17(IntPtr sender);
 
   private SwigDelegateMgCommand_0 swigDelegate0;
   private SwigDelegateMgCommand_1 swigDelegate1;
@@ -294,7 +276,6 @@ public class MgCommand : IDisposable {
   private SwigDelegateMgCommand_14 swigDelegate14;
   private SwigDelegateMgCommand_15 swigDelegate15;
   private SwigDelegateMgCommand_16 swigDelegate16;
-  private SwigDelegateMgCommand_17 swigDelegate17;
 
   private static Type[] swigMethodTypes0 = new Type[] {  };
   private static Type[] swigMethodTypes1 = new Type[] { typeof(MgMotion) };
@@ -313,7 +294,6 @@ public class MgCommand : IDisposable {
   private static Type[] swigMethodTypes14 = new Type[] {  };
   private static Type[] swigMethodTypes15 = new Type[] {  };
   private static Type[] swigMethodTypes16 = new Type[] { typeof(MgMotion), typeof(int) };
-  private static Type[] swigMethodTypes17 = new Type[] { typeof(MgMotion) };
 }
 
 }

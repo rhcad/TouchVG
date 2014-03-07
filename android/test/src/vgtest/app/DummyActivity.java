@@ -4,8 +4,10 @@ package vgtest.app;
 
 import java.lang.reflect.Constructor;
 
-import rhcad.touchvg.view.GraphView;
-import rhcad.touchvg.view.ViewHelper;
+import rhcad.touchvg.IGraphView;
+import rhcad.touchvg.IViewHelper;
+import rhcad.touchvg.ViewFactory;
+import vgtest.testview.TestFlags;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.FrameLayout;
 
 public class DummyActivity extends Activity {
     private static final String FILEPATH = "mnt/sdcard/TouchVG";
+    private IViewHelper mHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class DummyActivity extends Activity {
             e.printStackTrace();
         }
 
-        if ((flags & 0x100000) != 0) { // 有底部SurfaceView
+        if ((flags & TestFlags.MODEL_SURFACE) != 0) {
             this.setContentView(view);
         } else {
             // LinearLayout layout = new LinearLayout(this);
@@ -54,8 +57,8 @@ public class DummyActivity extends Activity {
                         LayoutParams.MATCH_PARENT);
                 layout.addView(view, params);
 
-                if (view instanceof GraphView) {
-                    final View dynview = ((GraphView) view).createDynamicShapeView(this);
+                if (view instanceof IGraphView) {
+                    final View dynview = ((IGraphView) view).createDynamicShapeView(this);
                     if (dynview != null) {
                         layout.addView(dynview, params);
                     }
@@ -63,35 +66,36 @@ public class DummyActivity extends Activity {
             }
         }
         this.setTitle(bundle.getString("title"));
+        mHelper = ViewFactory.createHelper();
     }
 
     @Override
     public void onDestroy() {
-        new ViewHelper().onActivityDestroy();
+        mHelper.onDestroy();
         super.onDestroy();
     }
 
     @Override
     public void onPause() {
-        new ViewHelper().onActivityPause();
+        mHelper.onPause();
         super.onPause();
     }
 
     @Override
     public void onResume() {
-        new ViewHelper().onActivityResume();
+        mHelper.onResume();
         super.onResume();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        new ViewHelper().onSaveInstanceState(outState, FILEPATH);
+        mHelper.onSaveInstanceState(outState, FILEPATH);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        new ViewHelper().onRestoreInstanceState(savedInstanceState);
+        mHelper.onRestoreInstanceState(savedInstanceState);
     }
 }

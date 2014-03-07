@@ -142,12 +142,16 @@ public class MgShapes extends MgObject {
     touchvgJNI.MgShapes_clearCachedData(swigCPtr, this);
   }
 
+  public int copyShapes(MgShapes src, boolean deeply, boolean needClear) {
+    return touchvgJNI.MgShapes_copyShapes__SWIG_0(swigCPtr, this, MgShapes.getCPtr(src), src, deeply, needClear);
+  }
+
   public int copyShapes(MgShapes src, boolean deeply) {
-    return touchvgJNI.MgShapes_copyShapes__SWIG_0(swigCPtr, this, MgShapes.getCPtr(src), src, deeply);
+    return touchvgJNI.MgShapes_copyShapes__SWIG_1(swigCPtr, this, MgShapes.getCPtr(src), src, deeply);
   }
 
   public int copyShapes(MgShapes src) {
-    return touchvgJNI.MgShapes_copyShapes__SWIG_1(swigCPtr, this, MgShapes.getCPtr(src), src);
+    return touchvgJNI.MgShapes_copyShapes__SWIG_2(swigCPtr, this, MgShapes.getCPtr(src), src);
   }
 
   public MgShape addShape(MgShape src) {
@@ -177,6 +181,11 @@ public class MgShapes extends MgObject {
 
   public boolean bringToFront(int sid) {
     return touchvgJNI.MgShapes_bringToFront(swigCPtr, this, sid);
+  }
+
+  public static MgShape getParentShape(MgShape shape) {
+    long cPtr = touchvgJNI.MgShapes_getParentShape(MgShape.getCPtr(shape), shape);
+    return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
   public MgObject getOwner() {

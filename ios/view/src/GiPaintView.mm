@@ -185,21 +185,12 @@ GiColor CGColorToGiColor(CGColorRef color);
     [super DEALLOC];
 }
 
-- (void)initView:(GiView*)mainView :(GiCoreView*)coreView {
+- (void)initView {
     self.opaque = NO;                               // 透明背景
     self.multipleTouchEnabled = YES;                // 检测多个触点
     
     GiCoreView::setScreenDpi(giGetScreenDpi());
     [self setupGestureRecognizers];
-    
-    if (mainView && coreView) {
-        _adapter = new GiViewAdapter(self, coreView);
-        coreView->createMagnifierView(_adapter, mainView);
-    }
-    else {
-        _adapter = new GiViewAdapter(self, NULL);
-        _adapter->coreView()->createView(_adapter);
-    }
     _adapter->coreView()->setPenWidthRange(_adapter, 0.5f, -1);
 }
 
@@ -208,8 +199,9 @@ GiColor CGColorToGiColor(CGColorRef color);
     if (self) {
         self.autoresizingMask = 0xFF;               // 自动适应大小
         _activePaintView = self;                    // 设置为当前绘图视图
-        [self initView:NULL :NULL];
-        [self coreView]->onSize(_adapter, frame.size.width, frame.size.height);
+        _adapter = new GiViewAdapter(self, NULL);
+        _adapter->coreView()->onSize(_adapter, frame.size.width, frame.size.height);
+        [self initView];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnteredBackground:)
                                                      name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -222,10 +214,20 @@ GiColor CGColorToGiColor(CGColorRef color);
 - (id)initWithFrame:(CGRect)frame :(GiPaintView *)refView {
     self = [super initWithFrame:frame];
     if (self) {
-        [self initView:[refView viewAdapter] :[refView coreView]];
         _mainView = refView;
+        _adapter = new GiViewAdapter(self, [refView viewAdapter2]);
+        _adapter->coreView()->onSize(_adapter, frame.size.width, frame.size.height);
+        [self initView];
     }
     return self;
+}
+
+- (void) setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    if (_adapter) {
+        _adapter->coreView()->onSize(_adapter, frame.size.width, frame.size.height);
+        _adapter->regenAll(false);
+    }
 }
 
 + (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView {
@@ -254,11 +256,11 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 - (void)didEnteredBackground:(NSNotification*)notification {
 	[self clearCachedData];
-    _adapter->coreView()->onPause();
+    _adapter->coreView()->onPause(getTickCount());
 }
 
 - (void)willEnterForeground:(NSNotification*)notification {
-    _adapter->coreView()->onResume();
+    _adapter->coreView()->onResume(getTickCount());
 }
 
 #pragma mark - GiPaintView drawRect
@@ -526,8 +528,8 @@ GiColor CGColorToGiColor(CGColorRef color);
     _ignorePt = pt;
 }
 
-- (void)redrawForDelay {
-    _adapter->redraw();
+- (void)redrawForDelay:(id)changed {
+    _adapter->redraw(!!changed);
 }
 
 - (void)onContextActionsDisplay:(NSMutableArray *)buttons {

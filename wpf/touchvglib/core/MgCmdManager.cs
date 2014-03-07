@@ -45,11 +45,6 @@ public class MgCmdManager : IDisposable {
     touchvgPINVOKE.MgCmdManager_release(swigCPtr);
   }
 
-  public virtual string getCommandName() {
-    string ret = touchvgPINVOKE.MgCmdManager_getCommandName(swigCPtr);
-    return ret;
-  }
-
   public virtual MgCommand getCommand() {
     IntPtr cPtr = touchvgPINVOKE.MgCmdManager_getCommand(swigCPtr);
     MgCommand ret = (cPtr == IntPtr.Zero) ? null : new MgCommand(cPtr, false);

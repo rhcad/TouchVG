@@ -9,6 +9,9 @@
 
 @implementation ImageCache
 
+@synthesize imagePath;
+@synthesize playPath;
+
 - (id)init {
     self = [super init];
     if (self) {
@@ -32,13 +35,20 @@
         else if ([name hasPrefix:@"svg:"]) {
             [self addSVGFromResource:[name substringFromIndex:4] :&name];
         }
-        else if (_path) {
-            [self addImageFromFile:[_path stringByAppendingPathComponent:name] :&name];
+        else {
+            if ([self addImageFromPath:self.playPath :&name].width < 1) {
+                [self addImageFromPath:self.imagePath :&name];
+            }
         }
         image = [_images objectForKey:name];
     }
     
     return image;
+}
+
+- (CGSize)addImageFromPath:(NSString *)path :(NSString**)name {
+    path = path ? [path stringByAppendingPathComponent:*name] : path;
+    return path ? [self addImageFromFile:path :name] : CGSizeZero;
 }
 
 - (CGSize)getImageSize:(NSString *)name {
@@ -173,14 +183,6 @@
     }
     
     return size;
-}
-
-- (void)setImagePath:(NSString *)path {
-    _path = [path copy];
-}
-
-- (NSString *)getImagePath {
-    return _path;
 }
 
 @end

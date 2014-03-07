@@ -73,13 +73,11 @@
     <Compile Include="core\GiCanvas.cs" />
     <Compile Include="core\GiColor.cs" />
     <Compile Include="core\GiContext.cs" />
-    <Compile Include="core\GiContextBits.cs" />
     <Compile Include="core\GiCoreView.cs" />
     <Compile Include="core\GiGestureState.cs" />
     <Compile Include="core\GiGestureType.cs" />
     <Compile Include="core\GiGraphics.cs" />
     <Compile Include="core\GiHandleTypes.cs" />
-    <Compile Include="core\GiLineStyle.cs" />
     <Compile Include="core\GiMouseHelper.cs" />
     <Compile Include="core\GiPath.cs" />
     <Compile Include="core\GiPathNode.cs" />
@@ -109,6 +107,7 @@
     <Compile Include="core\mgcurv.cs" />
     <Compile Include="core\MgDiamond.cs" />
     <Compile Include="core\MgEllipse.cs" />
+    <Compile Include="core\MgFindImageCallback.cs" />
     <Compile Include="core\MgGestureState.cs" />
     <Compile Include="core\MgGrid.cs" />
     <Compile Include="core\MgGroup.cs" />
@@ -123,6 +122,7 @@
     <Compile Include="core\mgnear.cs" />
     <Compile Include="core\MgObject.cs" />
     <Compile Include="core\MgParallel.cs" />
+    <Compile Include="core\MgPlaying.cs" />
     <Compile Include="core\MgRect.cs" />
     <Compile Include="core\MgRoundRect.cs" />
     <Compile Include="core\MgSelection.cs" />
@@ -138,6 +138,7 @@
     <Compile Include="core\MgSnapType.cs" />
     <Compile Include="core\MgSplines.cs" />
     <Compile Include="core\MgStorage.cs" />
+    <Compile Include="core\MgStringCallback.cs" />
     <Compile Include="core\MgView.cs" />
     <Compile Include="core\Point2d.cs" />
     <Compile Include="core\RECT_2D.cs" />

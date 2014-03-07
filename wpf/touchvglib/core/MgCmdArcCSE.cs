@@ -46,17 +46,6 @@ public class MgCmdArcCSE : MgCmdArc3P {
   public MgCmdArcCSE() : this(touchvgPINVOKE.new_MgCmdArcCSE__SWIG_1(), true) {
   }
 
-  public new static string Name() {
-    string ret = touchvgPINVOKE.MgCmdArcCSE_Name();
-    return ret;
-  }
-
-  public new static MgCommand Create() {
-    IntPtr cPtr = touchvgPINVOKE.MgCmdArcCSE_Create();
-    MgCommand ret = (cPtr == IntPtr.Zero) ? null : new MgCommand(cPtr, false);
-    return ret;
-  }
-
   public override void release() {
     touchvgPINVOKE.MgCmdArcCSE_release(swigCPtr);
   }

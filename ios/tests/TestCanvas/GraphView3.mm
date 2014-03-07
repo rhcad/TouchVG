@@ -70,7 +70,7 @@ static int machToMs(uint64_t start)
         _flags = t;
         _canvas = new GiCanvasAdapter();
         _dynview = self;
-        if (_flags & 0x10000) {                     // 使用内嵌视图来绘制动态图形
+        if (_flags & kWithDynView) {                // 使用内嵌视图来绘制动态图形
             _dynview = [[DynGraphView3 alloc]initWithFrame:self.bounds];
             [self addSubview:_dynview];             // 添加到本静态图形视图中
         }
@@ -102,7 +102,7 @@ static int machToMs(uint64_t start)
     canvas->setPen(0, _lineWidth, _lineStyle, 0, 0);
     canvas->setBrush(_useFill ? 0x4400ff00 : 0, 0);
     
-    if (_flags & 0x20000) {     // in scroll view
+    if (_flags & kWithLargeView) {  // in scroll view
         TestCanvas::test(canvas, _flags, 200);
     }
     else {
@@ -123,13 +123,13 @@ static int machToMs(uint64_t start)
     }
     
     int drawTime = machToMs(start);
-    bool inthread = ((_flags & 0x40000) != 0);
+    bool inthread = ((_flags & kWithThread) != 0);
     
     [self showDrawnTime:drawTime logging:!inthread];
     if (_drawTimes > 0) {
         _drawTimes++;
     }
-    if (inthread && _testOrder >= 0 && (_flags & 0x400) == 0) {
+    if (inthread && _testOrder >= 0 && (_flags & TestCanvas::kDynCurves) == 0) {
         if (_testOrder == 0) {
             NSLog(@"\torder\tantiAlias\tfill\tstyle\tflatness\twidth\ttime(ms)");
         }

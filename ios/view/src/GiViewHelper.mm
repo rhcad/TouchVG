@@ -8,7 +8,7 @@
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
-#define IOSLIBVERSION     4
+#define IOSLIBVERSION     5
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -129,7 +129,7 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (void)setLineWidth:(float)value {
     [_view coreView]->getContext(true).setLineWidth(value > 1e-6f ? value / 100.f : value, true);
-    [_view coreView]->setContext(kContextLineWidth);
+    [_view coreView]->setContext(GiContext::kLineWidth);
 }
 
 - (float)strokeWidth {
@@ -139,16 +139,16 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (void)setStrokeWidth:(float)value {
     [_view coreView]->getContext(true).setLineWidth(-fabsf(value), true);
-    [_view coreView]->setContext(kContextLineWidth);
+    [_view coreView]->setContext(GiContext::kLineWidth);
 }
 
-- (int)lineStyle {
-    return [_view coreView]->getContext(false).getLineStyle();
+- (GILineStyle)lineStyle {
+    return (GILineStyle)[_view coreView]->getContext(false).getLineStyle();
 }
 
-- (void)setLineStyle:(int)value {
+- (void)setLineStyle:(GILineStyle)value {
     [_view coreView]->getContext(true).setLineStyle(value);
-    [_view coreView]->setContext(kContextLineStyle);
+    [_view coreView]->setContext(GiContext::kLineStyle);
 }
 
 - (UIColor *)GiColorToUIColor:(GiColor)c {
@@ -180,7 +180,7 @@ static GiViewHelper *_sharedInstance = nil;
 - (void)setLineColor:(UIColor *)value {
     GiColor c = value ? CGColorToGiColor(value.CGColor) : GiColor::Invalid();
     [_view coreView]->getContext(true).setLineColor(c);
-    [_view coreView]->setContext(c.a ? kContextLineRGB : kContextLineARGB);
+    [_view coreView]->setContext(c.a ? GiContext::kLineRGB : GiContext::kLineARGB);
 }
 
 - (float)lineAlpha {
@@ -189,7 +189,7 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (void)setLineAlpha:(float)value {
     [_view coreView]->getContext(true).setLineAlpha((int)lroundf(value * 255.f));
-    [_view coreView]->setContext(kContextLineAlpha);
+    [_view coreView]->setContext(GiContext::kLineAlpha);
 }
 
 - (UIColor *)fillColor {
@@ -200,7 +200,7 @@ static GiViewHelper *_sharedInstance = nil;
 - (void)setFillColor:(UIColor *)value {
     GiColor c = value ? CGColorToGiColor(value.CGColor) : GiColor::Invalid();
     [_view coreView]->getContext(true).setFillColor(c);
-    [_view coreView]->setContext(c.a ? kContextFillRGB : kContextFillARGB);
+    [_view coreView]->setContext(c.a ? GiContext::kFillRGB : GiContext::kFillARGB);
 }
 
 - (float)fillAlpha {
@@ -209,14 +209,14 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (void)setFillAlpha:(float)value {
     [_view coreView]->getContext(true).setFillAlpha((int)lroundf(value * 255.f));
-    [_view coreView]->setContext(kContextFillAlpha);
+    [_view coreView]->setContext(GiContext::kFillAlpha);
 }
 
 - (void)setContextEditing:(BOOL)editing {
     [_view coreView]->setContextEditing(editing);
 }
 
-- (NSString *)content {
+- (long)acquireFrontDoc {
     __block long hDoc;
     if ([_view viewAdapter2]->isMainThread()) {
         hDoc = [_view coreView]->acquireFrontDoc();
@@ -225,6 +225,11 @@ static GiViewHelper *_sharedInstance = nil;
             hDoc = [_view coreView]->acquireFrontDoc();
         });
     }
+    return hDoc;
+}
+
+- (NSString *)content {
+    long hDoc = [self acquireFrontDoc];
     const char* str = [_view coreView]->getContent(hDoc);
     NSString * ret = [NSString stringWithCString:str encoding:NSUTF8StringEncoding];
     [_view coreView]->freeContent();
@@ -301,15 +306,7 @@ static GiViewHelper *_sharedInstance = nil;
 - (BOOL)saveToFile:(NSString *)vgfile {
     BOOL ret = NO;
     NSFileManager *fm = [NSFileManager defaultManager];
-    __block long hDoc;
-    
-    if ([_view viewAdapter2]->isMainThread()) {
-        hDoc = [_view coreView]->acquireFrontDoc();
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            hDoc = [_view coreView]->acquireFrontDoc();
-        });
-    }
+    long hDoc = [self acquireFrontDoc];
     
     vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
     if ([_view coreView]->getShapeCount(hDoc) > 0) {
@@ -421,11 +418,30 @@ static GiViewHelper *_sharedInstance = nil;
 - (int)insertImageFromFile:(NSString *)filename {
     NSString *name = nil;
     CGSize size = [_view.imageCache addImageFromFile:filename :&name];
+    
+    if (size.width > 0.5f) {
+        NSString *dest = [_view.imageCache.playPath stringByAppendingPathComponent:name];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        
+        if (dest && ![fm fileExistsAtPath:dest]) {
+            [fm copyItemAtPath:filename toPath:dest error:nil];
+        }
+    }
     return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
 }
 
 - (BOOL)hasImageShape {
-    return [_view coreView]->hasImageShape();
+    long hDoc = [self acquireFrontDoc];
+    bool ret = [_view coreView]->hasImageShape(hDoc);
+    [_view coreView]->releaseDoc(hDoc);
+    return ret;
+}
+
+- (int)findShapeByImageID:(NSString *)name {
+    long hDoc = [self acquireFrontDoc];
+    int ret = [_view coreView]->findShapeByImageID(hDoc, [name UTF8String]);
+    [_view coreView]->releaseDoc(hDoc);
+    return ret;
 }
 
 - (void)setImagePath:(NSString *)path {
@@ -433,7 +449,7 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (NSString *)getImagePath {
-    return [_view.imageCache getImagePath];
+    return _view.imageCache.imagePath;
 }
 
 - (CALayer *)exportLayerTree:(BOOL)hidden {
@@ -520,8 +536,24 @@ static GiViewHelper *_sharedInstance = nil;
     [self internalAdapter]->stopRecord(false);
 }
 
+- (BOOL)isPaused {
+    return [_view coreView]->isPaused();
+}
+
 - (BOOL)isPlaying {
     return [_view coreView]->isPlaying();
+}
+
+- (BOOL)playPause {
+    return [_view coreView]->onPause(getTickCount());
+}
+
+- (BOOL)playResume {
+    return [_view coreView]->onResume(getTickCount());
+}
+
+- (long)getPlayTicks {
+    return [_view coreView]->getRecordTick(false, getTickCount());
 }
 
 - (BOOL)startPlay:(NSString *)path {

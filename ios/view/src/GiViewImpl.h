@@ -40,6 +40,8 @@ class GiViewAdapter;
 
 @end
 
+int getTickCount();
+
 //! iOS绘图视图适配器
 class GiViewAdapter : public GiView
 {
@@ -57,6 +59,7 @@ private:
     GiLayerRender   *_render;           //!< 后台渲染对象
     dispatch_queue_t _recordQueue[2];   //!< 录制队列
     __block bool    _recordStopping[2]; //!< 录制队列待停止
+    mgvector<int>   _frameIndex;        //!< 帧索引
     
 public:
     std::vector<id> delegates;          //!< GiPaintViewDelegate 观察者数组
@@ -67,7 +70,7 @@ public:
         unsigned int didDynamicChanged:1;
     } respondsTo;
     
-    GiViewAdapter(GiPaintView *mainView, GiCoreView *coreView);
+    GiViewAdapter(GiPaintView *mainView, GiViewAdapter *refView);
     virtual ~GiViewAdapter();
     
     GiCoreView *coreView() { return _coreView; }
@@ -92,7 +95,7 @@ public:
     
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);
-    virtual void redraw();
+    virtual void redraw(bool changed);
     virtual bool isContextActionsVisible();
     virtual bool showContextActions(const mgvector<int>& actions,
                                     const mgvector<float>& buttonXY,
@@ -112,7 +115,7 @@ public:
 private:
     void setContextButton(UIButton *btn, NSString *caption, NSString *imageName);
     void regen_(bool changed, int sid, bool loading = false);
-    void redraw_();
+    void redraw_(bool changed);
     void recordShapes(bool forUndo, long doc, long shapes);
 };
 
@@ -157,7 +160,7 @@ private:
 - (void)dispatchTapPending;
 
 - (void)ignoreTouch:(CGPoint)pt :(UIView *)handledButton;
-- (void)redrawForDelay;
+- (void)redrawForDelay:(id)changed;
 - (void)onContextActionsDisplay:(NSMutableArray *)buttons;
 
 @end

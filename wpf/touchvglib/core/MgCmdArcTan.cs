@@ -46,17 +46,6 @@ public class MgCmdArcTan : MgCmdArc3P {
   public MgCmdArcTan() : this(touchvgPINVOKE.new_MgCmdArcTan__SWIG_1(), true) {
   }
 
-  public new static string Name() {
-    string ret = touchvgPINVOKE.MgCmdArcTan_Name();
-    return ret;
-  }
-
-  public new static MgCommand Create() {
-    IntPtr cPtr = touchvgPINVOKE.MgCmdArcTan_Create();
-    MgCommand ret = (cPtr == IntPtr.Zero) ? null : new MgCommand(cPtr, false);
-    return ret;
-  }
-
   public override void release() {
     touchvgPINVOKE.MgCmdArcTan_release(swigCPtr);
   }

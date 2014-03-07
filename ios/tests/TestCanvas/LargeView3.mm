@@ -3,6 +3,7 @@
 
 #import "LargeView3.h"
 #import "GraphView3.h"
+#include "testcanvas.h"
 
 @implementation LargeView3
 
@@ -11,7 +12,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         float w = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 1024 : 2048;
-        if (t & 0x400) {    // testDynCurves
+        if (t & TestCanvas::kDynCurves) {
             _subview = [[GraphView4 alloc]initWithFrame:CGRectMake(0, 0, w, w) withFlags:t];
         }
         else {

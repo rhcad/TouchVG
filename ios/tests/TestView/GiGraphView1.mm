@@ -29,13 +29,12 @@ private:
     
 public:
     ViewAdapter1(UIView *mainView) : _view(mainView), _dynview(nil), _tmpshot(nil) {
-        _coreView = new GiCoreView(NULL);
-        _coreView->createView(this, 0);
+        _coreView = GiCoreView::createView(this, 0);
     }
     
     virtual ~ViewAdapter1() {
         if (_coreView) {
-            delete _coreView;
+            _coreView->release();
             _coreView = NULL;
         }
     }
@@ -84,7 +83,7 @@ public:
         [_dynview setNeedsDisplay];
     }
     
-    virtual void redraw() {
+    virtual void redraw(bool changed) {
         _coreView->submitDynamicShapes(this);
         if (!_dynview && _view) {       // 自动创建动态图形视图
             _dynview = [[IosTempView1 alloc]initWithFrame:_view.frame :this];
@@ -252,13 +251,36 @@ static char _lastVgFile[256] = { 0 };
 - (void)onFirstRegen:(id)view {
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                           NSUserDomainMask, YES) objectAtIndex:0];
-    if (_testType == 64) {
+    if (_testType == kPlayShapes) {
+        _pauseBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 50, 100, 32)];
+        _pauseBtn.showsTouchWhenHighlighted = YES;
+        _pauseBtn.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.8];
+        [_pauseBtn setTitleColor:[UIColor blackColor] forState: UIControlStateNormal];
+        [_pauseBtn addTarget:self action:@selector(onPause) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_pauseBtn];
+        [_pauseBtn RELEASE];
+        
         [[GiViewHelper sharedInstance] startPlay:[path stringByAppendingPathComponent:@"record"]];
     }
-    else if (_testType & 64) {
+    else if (_testType & kRecord) {
         [[GiViewHelper sharedInstance] startRecord:[path stringByAppendingPathComponent:@"record"]];
     }
     [[GiViewHelper sharedInstance] startUndoRecord:[path stringByAppendingPathComponent:@"undo"]];
+}
+
+- (void)onPlayFrame:(id)view {
+    long ticks = [[GiViewHelper sharedInstance] getPlayTicks];
+    NSString *text = [NSString stringWithFormat:@"%02ld:%02ld.%03ld",
+                      ticks / 60000, ticks / 1000 % 60, ticks % 1000];
+    [_pauseBtn setTitle:text forState: UIControlStateNormal];
+}
+
+- (void)onPause {
+    if ([[GiViewHelper sharedInstance] isPaused]) {
+        [[GiViewHelper sharedInstance] playResume];
+    } else {
+        [[GiViewHelper sharedInstance] playPause];
+    }
 }
 
 @end

@@ -20,10 +20,12 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
+import android.util.Log;
 import android.view.View;
 
 //! Android画布适配器类
 public class CanvasAdapter extends GiCanvas {
+    private static final String TAG = "touchvg";
     private Path mPath;
     private Paint mPen = new Paint();
     private Paint mBrush = new Paint();
@@ -49,6 +51,10 @@ public class CanvasAdapter extends GiCanvas {
     public CanvasAdapter(View view, ImageCache cache) {
         this.mView = view;
         this.mCache = cache;
+    }
+
+    protected void finalize() {
+        Log.d(TAG, "CanvasAdapter finalize");
     }
 
     @Override

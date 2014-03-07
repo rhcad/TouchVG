@@ -5,8 +5,7 @@
 
 ViewAdapter::ViewAdapter() : _hwnd(NULL)
 {
-    _coreView = new GiCoreView();
-    _coreView->createView(this);
+    _coreView = GiCoreView::createView(this);
     _helper = new GiMouseHelper(this, _coreView);
 }
 
@@ -14,7 +13,7 @@ ViewAdapter::~ViewAdapter()
 {
     delete _helper;
     _coreView->destoryView(this);
-    delete _coreView;
+    _coreView->release();
 }
 
 void ViewAdapter::regenAll(bool changed)

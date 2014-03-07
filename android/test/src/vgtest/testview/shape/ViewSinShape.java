@@ -5,6 +5,8 @@ package vgtest.testview.shape;
 import java.util.ArrayList;
 import java.util.List;
 
+import rhcad.touchvg.IViewHelper;
+import rhcad.touchvg.ViewFactory;
 import rhcad.touchvg.core.CmdObserverDefault;
 import rhcad.touchvg.core.ConstShapes;
 import rhcad.touchvg.core.GiContext;
@@ -23,7 +25,6 @@ import rhcad.touchvg.core.MgShapeFactory;
 import rhcad.touchvg.core.MgSplines;
 import rhcad.touchvg.core.MgStorage;
 import rhcad.touchvg.core.Point2d;
-import rhcad.touchvg.view.ViewHelper;
 import vgtest.app.R;
 import android.content.Context;
 import android.graphics.Color;
@@ -34,7 +35,7 @@ import android.widget.LinearLayout;
 
 //! 测试自定义图形类的测试视图类
 public class ViewSinShape extends LinearLayout {
-    protected ViewHelper mHelper = new ViewHelper();
+    protected IViewHelper mHelper = ViewFactory.createHelper();
     private MyCmdObserver mObserver = new MyCmdObserver();
     private static final int[] MYIMAGEIDS = { R.drawable.demo_switch };
 
@@ -48,8 +49,8 @@ public class ViewSinShape extends LinearLayout {
         addView(mHelper.createGraphView(context, layout), new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        ViewHelper.setExtraContextImages(context, MYIMAGEIDS);
-        mHelper.registerCmdObserver(mObserver);
+        mHelper.setExtraContextImages(context, MYIMAGEIDS);
+        ViewFactory.registerCmdObserver(mHelper, mObserver);
     }
 
     protected void createButtons(Context context) {
@@ -164,7 +165,7 @@ public class ViewSinShape extends LinearLayout {
         @Override
         public boolean click(MgMotion sender) {
             super.click(sender); // 看能否点中已有图形
-            if (sender.getView().getCommandName().equals(NAME)) { // 没退出命令
+            if (sender.getView().isCommand(NAME)) { // 没退出命令
                 dynshape().shape().setHandlePoint(0, snapPoint(sender), 0);
                 addShape(sender);
             }

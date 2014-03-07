@@ -284,13 +284,12 @@ public:
     virtual bool isDrawingCommand();
     virtual bool isFloatingCommand();
     virtual bool doContextAction(MgMotion const *sender, int action);
-    virtual MgShape const *getShape(MgMotion const *sender);
 public:
     bool swig_overrides(int n) {
-      return (n < 18 ? swig_override[n] : false);
+      return (n < 17 ? swig_override[n] : false);
     }
 protected:
-    bool swig_override[18];
+    bool swig_override[17];
 };
 
 class SwigDirector_CmdObserverDefault : public CmdObserverDefault, public Swig::Director {
@@ -350,7 +349,6 @@ public:
     virtual bool isDrawingCommand();
     virtual bool isFloatingCommand();
     virtual bool doContextAction(MgMotion const *sender, int action);
-    virtual MgShape const *getShape(MgMotion const *sender);
     virtual int getShapeType();
     virtual int getMaxStep();
     virtual int getMaxStepSwigPublic() {
@@ -362,10 +360,10 @@ public:
     }
 public:
     bool swig_overrides(int n) {
-      return (n < 21 ? swig_override[n] : false);
+      return (n < 20 ? swig_override[n] : false);
     }
 protected:
-    bool swig_override[21];
+    bool swig_override[20];
 };
 
 class SwigDirector_MgCmdDrawRect : public MgCmdDrawRect, public Swig::Director {
@@ -391,7 +389,6 @@ public:
     virtual bool isDrawingCommand();
     virtual bool isFloatingCommand();
     virtual bool doContextAction(MgMotion const *sender, int action);
-    virtual MgShape const *getShape(MgMotion const *sender);
     virtual int getShapeType();
     virtual int getMaxStep();
     virtual int getMaxStepSwigPublic() {
@@ -407,10 +404,10 @@ public:
     }
 public:
     bool swig_overrides(int n) {
-      return (n < 22 ? swig_override[n] : false);
+      return (n < 21 ? swig_override[n] : false);
     }
 protected:
-    bool swig_override[22];
+    bool swig_override[21];
 };
 
 class SwigDirector_GiView : public GiView, public Swig::Director {
@@ -421,7 +418,7 @@ public:
     virtual ~SwigDirector_GiView();
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);
-    virtual void redraw();
+    virtual void redraw(bool changed);
     virtual bool useFinger();
     virtual bool isContextActionsVisible();
     virtual bool showContextActions(mgvector< int > const &actions, mgvector< float > const &buttonXY, float x, float y, float w, float h);
@@ -436,6 +433,36 @@ public:
     }
 protected:
     bool swig_override[11];
+};
+
+struct SwigDirector_MgFindImageCallback : public MgFindImageCallback, public Swig::Director {
+
+public:
+    void swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global);
+    SwigDirector_MgFindImageCallback(JNIEnv *jenv);
+    virtual ~SwigDirector_MgFindImageCallback();
+    virtual void onFindImage(int sid, char const *name);
+public:
+    bool swig_overrides(int n) {
+      return (n < 1 ? swig_override[n] : false);
+    }
+protected:
+    bool swig_override[1];
+};
+
+struct SwigDirector_MgStringCallback : public MgStringCallback, public Swig::Director {
+
+public:
+    void swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global);
+    SwigDirector_MgStringCallback(JNIEnv *jenv);
+    virtual ~SwigDirector_MgStringCallback();
+    virtual void onGetString(char const *text);
+public:
+    bool swig_overrides(int n) {
+      return (n < 1 ? swig_override[n] : false);
+    }
+protected:
+    bool swig_override[1];
 };
 
 

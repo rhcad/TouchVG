@@ -43,15 +43,6 @@ public class MgCmdArcTan extends MgCmdArc3P {
     this(touchvgJNI.new_MgCmdArcTan__SWIG_1(), true);
   }
 
-  public static String Name() {
-    return touchvgJNI.MgCmdArcTan_Name();
-  }
-
-  public static MgCommand Create() {
-    long cPtr = touchvgJNI.MgCmdArcTan_Create();
-    return (cPtr == 0) ? null : new MgCommand(cPtr, false);
-  }
-
   public void release() {
     touchvgJNI.MgCmdArcTan_release(swigCPtr, this);
   }

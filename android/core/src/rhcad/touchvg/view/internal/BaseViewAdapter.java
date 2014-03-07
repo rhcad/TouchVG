@@ -2,17 +2,20 @@ package rhcad.touchvg.view.internal;
 
 import java.util.ArrayList;
 
+import rhcad.touchvg.IGraphView.OnCommandChangedListener;
+import rhcad.touchvg.IGraphView.OnContentChangedListener;
+import rhcad.touchvg.IGraphView.OnDynamicChangedListener;
+import rhcad.touchvg.IGraphView.OnFirstRegenListener;
+import rhcad.touchvg.IGraphView.OnSelectionChangedListener;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
 import rhcad.touchvg.core.Ints;
-import rhcad.touchvg.view.GraphView;
-import rhcad.touchvg.view.GraphView.OnCommandChangedListener;
-import rhcad.touchvg.view.GraphView.OnContentChangedListener;
-import rhcad.touchvg.view.GraphView.OnDynamicChangedListener;
-import rhcad.touchvg.view.GraphView.OnFirstRegenListener;
-import rhcad.touchvg.view.GraphView.OnSelectionChangedListener;
+import rhcad.touchvg.core.MgFindImageCallback;
+import rhcad.touchvg.core.MgStringCallback;
+import rhcad.touchvg.view.BaseGraphView;
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 
 //! 视图回调适配器
@@ -28,20 +31,49 @@ public abstract class BaseViewAdapter extends GiView {
     private ArrayList<OnContentChangedListener> contentChangedListeners;
     private ArrayList<OnDynamicChangedListener> dynamicChangedListeners;
     private ArrayList<OnFirstRegenListener> firstRegenListeners;
-    protected RecordRunnable mUndoing;
+    protected UndoRunnable mUndoing;
     protected RecordRunnable mRecorder;
     private int mRegenCount = 0;
+    private Bundle mSavedState;
 
-    protected abstract GraphView getGraphView();
+    protected abstract BaseGraphView getGraphView();
 
     protected abstract ContextAction createContextAction();
 
     public synchronized void delete() {
+        Log.d(TAG, "delete BaseViewAdapter " + getCPtr(this));
         if (mAction != null) {
             mAction.release();
             mAction = null;
         }
+        if (commandChangedListeners != null)
+            commandChangedListeners.clear();
+        if (selectionChangedListeners != null)
+            selectionChangedListeners.clear();
+        if (contentChangedListeners != null)
+            contentChangedListeners.clear();
+        if (dynamicChangedListeners != null)
+            dynamicChangedListeners.clear();
+        if (firstRegenListeners != null)
+            firstRegenListeners.clear();
+
         super.delete();
+    }
+
+    protected void finalize() {
+        Log.d(TAG, "BaseViewAdapter finalize");
+    }
+
+    public BaseViewAdapter(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mSavedState = savedInstanceState.getBundle("vg");
+            mSavedState = mSavedState != null ? mSavedState : savedInstanceState;
+        }
+        Log.d(TAG, "new BaseViewAdapter " + getCPtr(this) + " restore=" + (mSavedState != null));
+    }
+
+    public Bundle getSavedState() {
+        return mSavedState;
     }
 
     public void removeContextButtons() {
@@ -51,7 +83,14 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     public void setContextActionEnabled(boolean enabled) {
+        if (!enabled && isContextActionsVisible()) {
+            hideContextActions();
+        }
         mActionEnabled = enabled;
+    }
+
+    public void hideContextActions() {
+        showContextActions(null, null, 0, 0, 0, 0);
     }
 
     @Override
@@ -76,36 +115,60 @@ public abstract class BaseViewAdapter extends GiView {
     @Override
     public void commandChanged() {
         if (commandChangedListeners != null) {
-            for (OnCommandChangedListener listener : commandChangedListeners) {
-                listener.onCommandChanged(getGraphView());
-            }
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    removeCallbacks(this);
+                    for (OnCommandChangedListener listener : commandChangedListeners) {
+                        listener.onCommandChanged(getGraphView());
+                    }
+                }
+            });
         }
     }
 
     @Override
     public void selectionChanged() {
         if (selectionChangedListeners != null) {
-            for (OnSelectionChangedListener listener : selectionChangedListeners) {
-                listener.onSelectionChanged(getGraphView());
-            }
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    removeCallbacks(this);
+                    for (OnSelectionChangedListener listener : selectionChangedListeners) {
+                        listener.onSelectionChanged(getGraphView());
+                    }
+                }
+            }, 50);
         }
     }
 
     @Override
     public void contentChanged() {
         if (contentChangedListeners != null) {
-            for (OnContentChangedListener listener : contentChangedListeners) {
-                listener.onContentChanged(getGraphView());
-            }
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    removeCallbacks(this);
+                    for (OnContentChangedListener listener : contentChangedListeners) {
+                        listener.onContentChanged(getGraphView());
+                    }
+                }
+            }, 50);
         }
     }
 
     @Override
     public void dynamicChanged() {
         if (dynamicChangedListeners != null) {
-            for (OnDynamicChangedListener listener : dynamicChangedListeners) {
-                listener.onDynamicChanged(getGraphView());
-            }
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    removeCallbacks(this);
+                    for (OnDynamicChangedListener listener : dynamicChangedListeners) {
+                        listener.onDynamicChanged(getGraphView());
+                    }
+                }
+            }, 50);
         }
     }
 
@@ -139,18 +202,35 @@ public abstract class BaseViewAdapter extends GiView {
         this.firstRegenListeners.add(listener);
     }
 
+    private Activity getActivity() {
+        return (Activity) getGraphView().getView().getContext();
+    }
+
+    private void removeCallbacks(Runnable r) {
+        getGraphView().getView().removeCallbacks(r);
+    }
+
+    private boolean postDelayed(Runnable action, long delayMillis) {
+        return getGraphView().getView().postDelayed(action, delayMillis);
+    }
+
     public void onFirstRegen() {
         if (++mRegenCount == 1) {
-            final Activity activity = (Activity) getGraphView().getView().getContext();
-            activity.runOnUiThread(new Runnable() {
+            getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Log.d(TAG, "onFirstRegen restore=" + (mSavedState != null));
+                    removeCallbacks(this);
                     if (firstRegenListeners != null) {
                         for (OnFirstRegenListener listener : firstRegenListeners) {
                             listener.onFirstRegen(getGraphView());
                         }
                         firstRegenListeners.clear();
                         firstRegenListeners = null;
+                    }
+                    if (mSavedState != null) {
+                        restoreRecordState(mSavedState);
+                        mSavedState = null;
                     }
                 }
             });
@@ -174,17 +254,34 @@ public abstract class BaseViewAdapter extends GiView {
         synchronized (coreView()) {
             if (forUndo && mUndoing != null) {
                 mUndoing.stop();
-                mUndoing = null;
             }
             if (!forUndo && mRecorder != null) {
                 mRecorder.stop();
-                mRecorder = null;
             }
         }
     }
 
+    private boolean onStopped(ShapeRunnable r) {
+        if (mUndoing == r)
+            mUndoing = null;
+        if (mRecorder == r)
+            mRecorder = null;
+        return coreView() != null;
+    }
+
+    private boolean isRecording(int type) {
+        switch (type) {
+            case START_UNDO: return mUndoing != null;
+            default: return mRecorder != null;
+        }
+    }
+
+    public static int getTick() {
+        return ShapeRunnable.getTick();
+    }
+
     public boolean startRecord(String path, int type) {
-        if ((type == START_UNDO ? (mUndoing != null) : (mRecorder != null)))
+        if (isRecording(type))
             return false;
 
         synchronized (coreView()) {
@@ -193,162 +290,236 @@ public abstract class BaseViewAdapter extends GiView {
                 Log.e(TAG, "Fail to record shapes due to no front doc");
                 return false;
             }
-            if (!coreView().startRecord(path, doc, type == START_UNDO))
+            if (type == START_RECORD) {
+                coreView().traverseImageShapes(doc, new ImageFinder(
+                        getGraphView().getImageCache().getImagePath(), path));
+            }
+            if (!coreView().startRecord(path, doc, type == START_UNDO, getTick()))
                 return false;
         }
 
         if (type == START_UNDO) {
-            mUndoing = new RecordRunnable(type);
+            mUndoing = new UndoRunnable(this, path);
             new Thread(mUndoing, "touchvg.undo").start();
-        } else {
-            mRecorder = new RecordRunnable(type);
-            final String name = type == START_PLAY ? "touchvg.play" : "touchvg.record";
-            new Thread(mRecorder, name).start();
+        } else if (type == START_RECORD) {
+            mRecorder = new RecordRunnable(this, path);
+            new Thread(mRecorder, "touchvg.record").start();
         }
 
         return true;
     }
 
+    private static class ImageFinder extends MgFindImageCallback {
+        private String fromPath, toPath;
+        public int count = 0;
+
+        public ImageFinder(String fromPath, String toPath) {
+            this.fromPath = fromPath;
+            this.toPath = toPath;
+        }
+
+        @Override
+        public void onFindImage(int sid, String name) {
+            if (ImageCache.copyFileTo(fromPath, name, toPath)) {
+                Log.d(TAG, ++count + " image files copied: " + name);
+            }
+        }
+    }
+
+    public boolean startPlay(String path) {
+        hideContextActions();
+        if (startRecord(path, START_PLAY)) {
+        }
+        return false;
+    }
+
+    public String getRecordPath() {
+        return mRecorder != null ? mRecorder.getPath() : null;
+    }
+
     public void undo() {
         if (mUndoing != null) {
-            mUndoing.requestRecord(RecordRunnable.UNDO);
+            hideContextActions();
+            mUndoing.requestRecord(UndoRunnable.UNDO);
         }
     }
 
     public void redo() {
         if (mUndoing != null) {
-            mUndoing.requestRecord(RecordRunnable.REDO);
+            hideContextActions();
+            mUndoing.requestRecord(UndoRunnable.REDO);
         }
     }
 
-    protected class RecordRunnable implements Runnable {
-        private int mType;
-        private GiCoreView mCoreView;
-        protected boolean mStopping = false;
-        protected int[] mPending = new int[60]; // {tick,doc,shapes}
-        protected int[] mPendingLock = new int[1];
-        public static final int UNDO = 0xFFFFFF10;
-        public static final int REDO = 0xFFFFFF20;
+    public static class StringCallback extends MgStringCallback {
+        private String text;
 
-        public RecordRunnable(int type) {
-            this.mType = type;
-            this.mCoreView = coreView();
-        }
-
-        public int getType() {
-            return mType;
-        }
-
-        public void requestRecord() {
-            synchronized (this) {
-                this.notify();
-            }
-        }
-
-        public void requestRecord(int command) {
-            requestRecord(command, 0, 0);
-        }
-
-        public void requestRecord(int tick, int doc, int shapes) {
-            synchronized (mPendingLock) {
-                int i = 0;
-                for (; i < mPending.length && mPending[i] != 0; i += 3) {
-                }
-                if (i + 2 < mPending.length) {
-                    mPending[i] = tick;
-                    mPending[i + 1] = doc;
-                    mPending[i + 2] = shapes;
-                } else {
-                    GiCoreView.releaseDoc(doc);
-                    GiCoreView.releaseShapes(shapes);
-                    tick = 0;
-                    doc = 0;
-                    shapes = 0;
-                }
-            }
-            if (tick != 0) {
-                requestRecord();
-            }
-        }
-
-        public void stop() {
-            mStopping = true;
-            requestRecord();
-            synchronized (mPending) {
-                try {
-                    mPending.wait(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            mCoreView = null;
+        @Override
+        public void onGetString(String text) {
+            this.text = text;
         }
 
         @Override
-        public void run() {
-            while (!mStopping) {
-                synchronized (this) {
-                    try {
-                        this.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (!mStopping) {
-                    try {
-                        process();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+        public String toString() {
+            delete();
+            return text;
+        }
+    }
+
+    public String getCommand() {
+        final StringCallback c = new StringCallback();
+        coreView().getCommand(c);
+        return c.toString();
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        final GiCoreView cv = coreView();
+
+        outState.putString("cmdName", getCommand());
+        outState.putString("imagePath", getGraphView().getImageCache().getImagePath());
+
+        if (mUndoing != null) {
+            outState.putString("undoPath", mUndoing.getPath());
+            outState.putInt("undoIndex", cv.getRedoIndex());
+            outState.putInt("undoCount", cv.getRedoCount());
+            outState.putInt("undoTick", cv.getRecordTick(true, getTick()));
+            outState.putInt("changeCount", cv.getChangeCount());
+        }
+        if (mRecorder != null) {
+            outState.putString("recordPath", mRecorder.getPath());
+            outState.putInt("frameIndex", cv.getFrameIndex());
+            outState.putInt("recordTick", cv.getRecordTick(false, getTick()));
+        }
+    }
+
+    public void onRestoreInstanceState(Bundle savedState) {
+        coreView().setCommand(savedState.getString("cmdName"));
+        getGraphView().getImageCache().setImagePath(savedState.getString("imagePath"));
+    }
+
+    private void restoreRecordState(Bundle savedState) {
+        final GiCoreView cv = coreView();
+        final String undoPath = savedState.getString("undoPath");
+        final String recordPath = savedState.getString("recordPath");
+
+        if (undoPath != null && mUndoing == null) {
+            int index = savedState.getInt("undoIndex");
+            int count = savedState.getInt("undoCount");
+            int tick = savedState.getInt("undoTick");
+            int changeCount = savedState.getInt("changeCount");
+            boolean ret;
+
+            synchronized (cv) {
+                int doc = coreView().acquireFrontDoc();
+                ret = doc != 0
+                        && cv.restoreRecord(0, undoPath, doc, changeCount, index,
+                                count, tick, getTick());
             }
-            mCoreView.stopRecord(mType == START_UNDO);
-            for (int i = 0; i < mPending.length; i++) {
-                if (mPending[i] != 0) {
-                    GiCoreView.releaseDoc(mPending[i + 1]);
-                    GiCoreView.releaseShapes(mPending[i + 2]);
-                }
+            if (ret) {
+                mUndoing = new UndoRunnable(this, undoPath);
+                new Thread(mUndoing, "touchvg.undo").start();
             }
-            synchronized (mPending) {
-                mPending.notify();
-            }
-            Log.d(TAG, "RecordRunnable exit: " + mType);
         }
 
-        protected void process() {
-            int tick = 0, doc = 0, shapes = 0;
-            boolean loop = true;
+        if (recordPath != null && mRecorder == null) {
+            int index = savedState.getInt("frameIndex");
+            int tick = savedState.getInt("recordTick");
+            boolean playing = savedState.getBoolean("playing");
+            boolean ret;
 
-            while (loop && !mStopping) {
-                synchronized (mPendingLock) {
-                    while (loop) {
-                        tick = mPending[0];
-                        doc = mPending[1];
-                        shapes = mPending[2];
-
-                        for (int i = 3; i < mPending.length; i++) {
-                            mPending[i - 3] = mPending[i];
-                            mPending[i] = 0;
-                        }
-                        loop = (doc == 0 && shapes != 0 && mPending[0] != 0);
-                        if (loop) {
-                            GiCoreView.releaseShapes(shapes);
-                        }
+            synchronized (cv) {
+                final LogHelper log = new LogHelper("" + coreView().backDoc());
+                int doc = playing ? 0 : coreView().acquireFrontDoc();
+                ret = (playing || doc != 0)
+                        && cv.restoreRecord(playing ? 2 : 1, recordPath, doc, 0, index, 0,
+                                tick, getTick());
+                if (ret) {
+                    if (playing) {
+                    } else {
+                        mRecorder = new RecordRunnable(this, recordPath);
+                        new Thread(mRecorder, "touchvg.record").start();
                     }
                 }
-                if (tick == UNDO) {
-                    synchronized (mCoreView) {
-                        mCoreView.undo(BaseViewAdapter.this);
-                    }
-                } else if (tick == REDO) {
-                    synchronized (mCoreView) {
-                        mCoreView.redo(BaseViewAdapter.this);
-                    }
-                } else {
-                    mCoreView.recordShapes(mType == START_UNDO, tick, doc, shapes);
-                }
+                log.r(ret);
+            }
+        }
+    }
 
-                loop = (mPending[0] != 0);
+    protected static class UndoRunnable extends ShapeRunnable {
+        private BaseViewAdapter mViewAdapter;
+        public static final int UNDO = 0xFFFFFF10;
+        public static final int REDO = 0xFFFFFF20;
+
+        public UndoRunnable(BaseViewAdapter viewAdapter, String path) {
+            super(path, START_UNDO, viewAdapter.coreView());
+            this.mViewAdapter = viewAdapter;
+        }
+
+        @Override
+        protected boolean stopRecord() {
+            synchronized (GiCoreView.class) {
+                boolean ret = mViewAdapter.onStopped(this);
+                if (ret) {
+                    synchronized (mCoreView) {
+                        mCoreView.stopRecord(mViewAdapter, true);
+                    }
+                }
+                return ret;
+            }
+        }
+
+        @Override
+        protected void afterStopped(boolean normal) {
+            mViewAdapter = null;
+        }
+
+        @Override
+        protected void process(int tick, int doc, int shapes) {
+            if (tick == UNDO) {
+                synchronized (mCoreView) {
+                    mCoreView.undo(mViewAdapter);
+                }
+            } else if (tick == REDO) {
+                synchronized (mCoreView) {
+                    mCoreView.redo(mViewAdapter);
+                }
+            } else if (!mCoreView.recordShapes(true, tick, doc, shapes)) {
+                Log.e(TAG, "Fail to record shapes for undoing, tick=" + tick + ", doc=" + doc);
+            }
+        }
+    }
+
+    protected static class RecordRunnable extends ShapeRunnable {
+        protected BaseViewAdapter mViewAdapter;
+
+        public RecordRunnable(BaseViewAdapter viewAdapter, String path) {
+            super(path, START_RECORD, viewAdapter.coreView());
+            this.mViewAdapter = viewAdapter;
+        }
+
+        @Override
+        protected boolean stopRecord() {
+            synchronized (GiCoreView.class) {
+                boolean ret = mViewAdapter.onStopped(this);
+                if (ret) {
+                    synchronized (mCoreView) {
+                        mCoreView.stopRecord(mViewAdapter, false);
+                    }
+                }
+                return ret;
+            }
+        }
+
+        @Override
+        protected void afterStopped(boolean normal) {
+            mViewAdapter = null;
+        }
+
+        @Override
+        protected void process(int tick, int doc, int shapes) {
+            if (!mCoreView.recordShapes(false, tick, doc, shapes)) {
+                Log.e(TAG, "Fail to record shapes for playing, tick=" + tick
+                        + ", doc=" + doc + ", shapes=" + shapes);
             }
         }
     }

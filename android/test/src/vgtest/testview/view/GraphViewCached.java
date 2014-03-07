@@ -32,8 +32,7 @@ public class GraphViewCached extends View {
         super(context);
         mCanvasAdapter = new CanvasAdapter(this);
         mViewAdapter = new ViewAdapter();
-        mCoreView = new GiCoreView(null);
-        mCoreView.createView(mViewAdapter, 0);
+        mCoreView = GiCoreView.createView(mViewAdapter, 0);
 
         DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
         GiCoreView.setScreenDpi(dm.densityDpi);
@@ -194,9 +193,10 @@ public class GraphViewCached extends View {
         }
 
         @Override
-        public void redraw() {
+        public void redraw(boolean changed) {
             synchronized (mCoreView) {
-                mCoreView.submitDynamicShapes(mViewAdapter);
+                if (changed)
+                    mCoreView.submitDynamicShapes(mViewAdapter);
             }
             if (mDynDrawView != null) {
                 mDynDrawView.doDraw();

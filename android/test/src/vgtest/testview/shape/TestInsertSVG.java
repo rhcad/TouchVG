@@ -2,7 +2,8 @@
 
 package vgtest.testview.shape;
 
-import rhcad.touchvg.view.ViewHelper;
+import rhcad.touchvg.IViewHelper;
+import rhcad.touchvg.ViewFactory;
 import vgtest.app.R;
 import android.content.Context;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.LinearLayout;
 
 //! 测试插入SVG图形的视图类
 public class TestInsertSVG extends LinearLayout {
-    private ViewHelper mHelper = new ViewHelper();
+    private IViewHelper mHelper = ViewFactory.createHelper();
     private static final String PATH = "mnt/sdcard/TouchVG/";
 
     public TestInsertSVG(Context context) {

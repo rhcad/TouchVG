@@ -36,9 +36,8 @@ namespace touchvg.view
         //! 构造普通绘图视图
         public WPFGraphView(Panel container)
         {
-            this.CoreView = new GiCoreView();
             this._view = new WPFViewAdapter(this);
-            this.CoreView.createView(this._view);
+            this.CoreView = GiCoreView.createView(this._view);
             init(container);
             ActiveView = this;
         }
@@ -46,9 +45,8 @@ namespace touchvg.view
         //! 构造放大镜绘图视图
         public WPFGraphView(WPFGraphView mainView, Panel container)
         {
-            this.CoreView = new GiCoreView(mainView.CoreView);
             this._view = new WPFViewAdapter(this);
-            this.CoreView.createMagnifierView(this._view, mainView.ViewAdapter);
+            this.CoreView = GiCoreView.createMagnifierView(this._view, mainView.CoreView, mainView.ViewAdapter);
             init(container);
         }
 
@@ -115,6 +113,11 @@ namespace touchvg.view
             }
         }
 
+        public static int getTick()
+        {
+            return (int)(DateTime.Now.Ticks / 10000);
+        }
+
         //! WPF绘图视图适配器类
         private class WPFViewAdapter : GiView
         {
@@ -143,8 +146,8 @@ namespace touchvg.view
                         && CoreView.isUndoRecording())
                     {
                         CoreView.recordShapes(true,
-                            CoreView.getRecordTick(true),
-                            CoreView.acquireFrontDoc(), 0);
+                            CoreView.getRecordTick(true, getTick()),
+                            CoreView.acquireFrontDoc(), 0, 0);
                     }
                     CoreView.submitDynamicShapes(_owner.ViewAdapter);
                 }
@@ -158,9 +161,10 @@ namespace touchvg.view
                 regenAll(true);
             }
 
-            public override void redraw()
+            public override void redraw(bool changed)
             {
-                CoreView.submitDynamicShapes(_owner.ViewAdapter);
+                if (changed)
+                    CoreView.submitDynamicShapes(_owner.ViewAdapter);
                 _owner.TempCanvas.InvalidateVisual();
             }
 

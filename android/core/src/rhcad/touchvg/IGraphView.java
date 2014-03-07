@@ -1,35 +1,27 @@
-// Copyright (c) 2014, https://github.com/rhcad/touchvg
+/**
+ * \file IGraphView.java
+ * \brief 绘图视图接口
+ * Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
+ */
 
-package rhcad.touchvg.view;
+package rhcad.touchvg;
 
-import rhcad.touchvg.core.GiCoreView;
-import rhcad.touchvg.core.GiView;
-import rhcad.touchvg.view.internal.ImageCache;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
 //! 绘图视图接口
-public interface GraphView {
-
-    //! 返回内核视图分发器对象
-    public GiCoreView coreView();
-
-    //! 返回视图回调适配器对象
-    public GiView viewAdapter();
+public interface IGraphView {
 
     //! 返回视图回调适配器对象
     public View getView();
 
     //! 本视图为放大镜时返回对应的主视图，否则返回自己
-    public GraphView getMainView();
+    public IGraphView getMainView();
 
     //! 创建动态绘图子视图
     public View createDynamicShapeView(Context context);
-
-    //! 返回图像对象缓存
-    public ImageCache getImageCache();
 
     //! 释放临时缓存
     public void clearCachedData();
@@ -66,27 +58,27 @@ public interface GraphView {
 
     //! 当前命令改变的通知
     public interface OnCommandChangedListener {
-        void onCommandChanged(GraphView view);
+        void onCommandChanged(IGraphView view);
     }
 
     //! 图形选择集改变的通知
     public interface OnSelectionChangedListener {
-        void onSelectionChanged(GraphView view);
+        void onSelectionChanged(IGraphView view);
     }
 
     //! 图形数据改变的通知
     public interface OnContentChangedListener {
-        void onContentChanged(GraphView view);
+        void onContentChanged(IGraphView view);
     }
 
     //! 图形动态改变的通知
     public interface OnDynamicChangedListener {
-        void onDynamicChanged(GraphView view);
+        void onDynamicChanged(IGraphView view);
     }
 
     //! 第一次后台渲染结束的通知
     public interface OnFirstRegenListener {
-        void onFirstRegen(GraphView view);
+        void onFirstRegen(IGraphView view);
     }
 
     //! 添加当前命令改变的观察者

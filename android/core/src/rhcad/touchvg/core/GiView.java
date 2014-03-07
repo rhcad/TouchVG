@@ -58,8 +58,8 @@ public class GiView {
     if (getClass() == GiView.class) touchvgJNI.GiView_regenAppend(swigCPtr, this, sid); else touchvgJNI.GiView_regenAppendSwigExplicitGiView(swigCPtr, this, sid);
   }
 
-  public void redraw() {
-    if (getClass() == GiView.class) touchvgJNI.GiView_redraw(swigCPtr, this); else touchvgJNI.GiView_redrawSwigExplicitGiView(swigCPtr, this);
+  public void redraw(boolean changed) {
+    if (getClass() == GiView.class) touchvgJNI.GiView_redraw(swigCPtr, this, changed); else touchvgJNI.GiView_redrawSwigExplicitGiView(swigCPtr, this, changed);
   }
 
   public boolean useFinger() {

@@ -6,6 +6,7 @@ package vgtest.testview.view;
 
 import rhcad.touchvg.view.SFGraphView;
 import rhcad.touchvg.view.StdGraphView;
+import vgtest.testview.TestFlags;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -31,7 +32,7 @@ public class TestMagnifier1 extends LinearLayout {
         addView(magView, param);
         magView.setBackgroundColor(Color.GREEN);
 
-        if ((flags & 16) != 0) {
+        if ((flags & TestFlags.TWO_MAGVIEWS) != 0) {
             final SFGraphView1 view2 = new SFGraphView1(context);
             addView(view2, param);
             addView(view2.createDynamicShapeView(context), param);

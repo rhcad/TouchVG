@@ -193,8 +193,8 @@ public class MgGrid : MgBaseRect {
     return ret;
   }
 
-  public bool valid(float tol) {
-    bool ret = touchvgPINVOKE.MgGrid_valid(swigCPtr, tol);
+  public bool isValid(float tol) {
+    bool ret = touchvgPINVOKE.MgGrid_isValid(swigCPtr, tol);
     return ret;
   }
 

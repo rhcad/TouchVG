@@ -9,29 +9,29 @@
 package rhcad.touchvg.core;
 
 public final class MgShapeType {
-  public final static MgShapeType kMgShapeMultiType = new MgShapeType("kMgShapeMultiType", touchvgJNI.kMgShapeMultiType_get());
-  public final static MgShapeType kMgShapeNone = new MgShapeType("kMgShapeNone", touchvgJNI.kMgShapeNone_get());
-  public final static MgShapeType kMgShapeList = new MgShapeType("kMgShapeList", touchvgJNI.kMgShapeList_get());
-  public final static MgShapeType kMgShapeWrapper = new MgShapeType("kMgShapeWrapper", touchvgJNI.kMgShapeWrapper_get());
-  public final static MgShapeType kMgShapeBase = new MgShapeType("kMgShapeBase", touchvgJNI.kMgShapeBase_get());
-  public final static MgShapeType kMgShapeBaseRect = new MgShapeType("kMgShapeBaseRect", touchvgJNI.kMgShapeBaseRect_get());
-  public final static MgShapeType kMgShapeBaseLines = new MgShapeType("kMgShapeBaseLines", touchvgJNI.kMgShapeBaseLines_get());
-  public final static MgShapeType kMgShapeComposite = new MgShapeType("kMgShapeComposite", touchvgJNI.kMgShapeComposite_get());
-  public final static MgShapeType kMgShapeLayer = new MgShapeType("kMgShapeLayer", touchvgJNI.kMgShapeLayer_get());
-  public final static MgShapeType kMgShapeDoc = new MgShapeType("kMgShapeDoc", touchvgJNI.kMgShapeDoc_get());
-  public final static MgShapeType kMgShapeGroup = new MgShapeType("kMgShapeGroup", touchvgJNI.kMgShapeGroup_get());
-  public final static MgShapeType kMgShapeLine = new MgShapeType("kMgShapeLine", touchvgJNI.kMgShapeLine_get());
-  public final static MgShapeType kMgShapeRect = new MgShapeType("kMgShapeRect", touchvgJNI.kMgShapeRect_get());
-  public final static MgShapeType kMgShapeEllipse = new MgShapeType("kMgShapeEllipse", touchvgJNI.kMgShapeEllipse_get());
-  public final static MgShapeType kMgShapeRoundRect = new MgShapeType("kMgShapeRoundRect", touchvgJNI.kMgShapeRoundRect_get());
-  public final static MgShapeType kMgShapeDiamond = new MgShapeType("kMgShapeDiamond", touchvgJNI.kMgShapeDiamond_get());
-  public final static MgShapeType kMgShapeLines = new MgShapeType("kMgShapeLines", touchvgJNI.kMgShapeLines_get());
-  public final static MgShapeType kMgShapeSplines = new MgShapeType("kMgShapeSplines", touchvgJNI.kMgShapeSplines_get());
-  public final static MgShapeType kMgShapeParallel = new MgShapeType("kMgShapeParallel", touchvgJNI.kMgShapeParallel_get());
-  public final static MgShapeType kMgShapeImage = new MgShapeType("kMgShapeImage", touchvgJNI.kMgShapeImage_get());
-  public final static MgShapeType kMgShapeArc = new MgShapeType("kMgShapeArc", touchvgJNI.kMgShapeArc_get());
-  public final static MgShapeType kMgShapeGrid = new MgShapeType("kMgShapeGrid", touchvgJNI.kMgShapeGrid_get());
-  public final static MgShapeType kMgShapeRecord = new MgShapeType("kMgShapeRecord", touchvgJNI.kMgShapeRecord_get());
+  public final static MgShapeType kMgShapeMultiType = new MgShapeType("kMgShapeMultiType", 9999);
+  public final static MgShapeType kMgShapeNone = new MgShapeType("kMgShapeNone", 0);
+  public final static MgShapeType kMgShapeList = new MgShapeType("kMgShapeList", 1);
+  public final static MgShapeType kMgShapeWrapper = new MgShapeType("kMgShapeWrapper", 2);
+  public final static MgShapeType kMgShapeBase = new MgShapeType("kMgShapeBase", 3);
+  public final static MgShapeType kMgShapeBaseRect = new MgShapeType("kMgShapeBaseRect", 4);
+  public final static MgShapeType kMgShapeBaseLines = new MgShapeType("kMgShapeBaseLines", 5);
+  public final static MgShapeType kMgShapeComposite = new MgShapeType("kMgShapeComposite", 6);
+  public final static MgShapeType kMgShapeLayer = new MgShapeType("kMgShapeLayer", 7);
+  public final static MgShapeType kMgShapeDoc = new MgShapeType("kMgShapeDoc", 8);
+  public final static MgShapeType kMgShapeGroup = new MgShapeType("kMgShapeGroup", 9);
+  public final static MgShapeType kMgShapeLine = new MgShapeType("kMgShapeLine", 10);
+  public final static MgShapeType kMgShapeRect = new MgShapeType("kMgShapeRect", 11);
+  public final static MgShapeType kMgShapeEllipse = new MgShapeType("kMgShapeEllipse", 12);
+  public final static MgShapeType kMgShapeRoundRect = new MgShapeType("kMgShapeRoundRect", 13);
+  public final static MgShapeType kMgShapeDiamond = new MgShapeType("kMgShapeDiamond", 14);
+  public final static MgShapeType kMgShapeLines = new MgShapeType("kMgShapeLines", 15);
+  public final static MgShapeType kMgShapeSplines = new MgShapeType("kMgShapeSplines", 16);
+  public final static MgShapeType kMgShapeParallel = new MgShapeType("kMgShapeParallel", 17);
+  public final static MgShapeType kMgShapeImage = new MgShapeType("kMgShapeImage", 18);
+  public final static MgShapeType kMgShapeArc = new MgShapeType("kMgShapeArc", 19);
+  public final static MgShapeType kMgShapeGrid = new MgShapeType("kMgShapeGrid", 20);
+  public final static MgShapeType kMgShapeRecord = new MgShapeType("kMgShapeRecord", 30);
 
   public final int swigValue() {
     return swigValue;

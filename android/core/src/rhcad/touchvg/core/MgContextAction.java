@@ -9,27 +9,27 @@
 package rhcad.touchvg.core;
 
 public final class MgContextAction {
-  public final static MgContextAction kMgActionInvalid = new MgContextAction("kMgActionInvalid", touchvgJNI.kMgActionInvalid_get());
-  public final static MgContextAction kMgActionSelAll = new MgContextAction("kMgActionSelAll", touchvgJNI.kMgActionSelAll_get());
-  public final static MgContextAction kMgActionSelReset = new MgContextAction("kMgActionSelReset", touchvgJNI.kMgActionSelReset_get());
-  public final static MgContextAction kMgActionDraw = new MgContextAction("kMgActionDraw", touchvgJNI.kMgActionDraw_get());
-  public final static MgContextAction kMgActionCancel = new MgContextAction("kMgActionCancel", touchvgJNI.kMgActionCancel_get());
-  public final static MgContextAction kMgActionDelete = new MgContextAction("kMgActionDelete", touchvgJNI.kMgActionDelete_get());
-  public final static MgContextAction kMgActionClone = new MgContextAction("kMgActionClone", touchvgJNI.kMgActionClone_get());
-  public final static MgContextAction kMgActionFixedLength = new MgContextAction("kMgActionFixedLength", touchvgJNI.kMgActionFixedLength_get());
-  public final static MgContextAction kMgActionFreeLength = new MgContextAction("kMgActionFreeLength", touchvgJNI.kMgActionFreeLength_get());
-  public final static MgContextAction kMgActionLocked = new MgContextAction("kMgActionLocked", touchvgJNI.kMgActionLocked_get());
-  public final static MgContextAction kMgActionUnlocked = new MgContextAction("kMgActionUnlocked", touchvgJNI.kMgActionUnlocked_get());
-  public final static MgContextAction kMgActionEditVertex = new MgContextAction("kMgActionEditVertex", touchvgJNI.kMgActionEditVertex_get());
-  public final static MgContextAction kMgActionHideVertex = new MgContextAction("kMgActionHideVertex", touchvgJNI.kMgActionHideVertex_get());
-  public final static MgContextAction kMgActionClosed = new MgContextAction("kMgActionClosed", touchvgJNI.kMgActionClosed_get());
-  public final static MgContextAction kMgActionOpened = new MgContextAction("kMgActionOpened", touchvgJNI.kMgActionOpened_get());
-  public final static MgContextAction kMgActionAddVertex = new MgContextAction("kMgActionAddVertex", touchvgJNI.kMgActionAddVertex_get());
-  public final static MgContextAction kMgActionDelVertex = new MgContextAction("kMgActionDelVertex", touchvgJNI.kMgActionDelVertex_get());
-  public final static MgContextAction kMgActionGroup = new MgContextAction("kMgActionGroup", touchvgJNI.kMgActionGroup_get());
-  public final static MgContextAction kMgActionUngroup = new MgContextAction("kMgActionUngroup", touchvgJNI.kMgActionUngroup_get());
-  public final static MgContextAction kMgActionOverturn = new MgContextAction("kMgActionOverturn", touchvgJNI.kMgActionOverturn_get());
-  public final static MgContextAction kMgActionCustomized = new MgContextAction("kMgActionCustomized", touchvgJNI.kMgActionCustomized_get());
+  public final static MgContextAction kMgActionInvalid = new MgContextAction("kMgActionInvalid", 0);
+  public final static MgContextAction kMgActionSelAll = new MgContextAction("kMgActionSelAll", 1);
+  public final static MgContextAction kMgActionSelReset = new MgContextAction("kMgActionSelReset", 2);
+  public final static MgContextAction kMgActionDraw = new MgContextAction("kMgActionDraw", 3);
+  public final static MgContextAction kMgActionCancel = new MgContextAction("kMgActionCancel", 4);
+  public final static MgContextAction kMgActionDelete = new MgContextAction("kMgActionDelete", 5);
+  public final static MgContextAction kMgActionClone = new MgContextAction("kMgActionClone", 6);
+  public final static MgContextAction kMgActionFixedLength = new MgContextAction("kMgActionFixedLength", 7);
+  public final static MgContextAction kMgActionFreeLength = new MgContextAction("kMgActionFreeLength", 8);
+  public final static MgContextAction kMgActionLocked = new MgContextAction("kMgActionLocked", 9);
+  public final static MgContextAction kMgActionUnlocked = new MgContextAction("kMgActionUnlocked", 10);
+  public final static MgContextAction kMgActionEditVertex = new MgContextAction("kMgActionEditVertex", 11);
+  public final static MgContextAction kMgActionHideVertex = new MgContextAction("kMgActionHideVertex", 12);
+  public final static MgContextAction kMgActionClosed = new MgContextAction("kMgActionClosed", 13);
+  public final static MgContextAction kMgActionOpened = new MgContextAction("kMgActionOpened", 14);
+  public final static MgContextAction kMgActionAddVertex = new MgContextAction("kMgActionAddVertex", 15);
+  public final static MgContextAction kMgActionDelVertex = new MgContextAction("kMgActionDelVertex", 16);
+  public final static MgContextAction kMgActionGroup = new MgContextAction("kMgActionGroup", 17);
+  public final static MgContextAction kMgActionUngroup = new MgContextAction("kMgActionUngroup", 18);
+  public final static MgContextAction kMgActionOverturn = new MgContextAction("kMgActionOverturn", 19);
+  public final static MgContextAction kMgActionCustomized = new MgContextAction("kMgActionCustomized", 100);
 
   public final int swigValue() {
     return swigValue;

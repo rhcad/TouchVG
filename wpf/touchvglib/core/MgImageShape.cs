@@ -187,11 +187,6 @@ public class MgImageShape : MgBaseRect {
     return ret;
   }
 
-  public string getName() {
-    string ret = touchvgPINVOKE.MgImageShape_getName(swigCPtr);
-    return ret;
-  }
-
   public void setName(string name) {
     touchvgPINVOKE.MgImageShape_setName(swigCPtr, name);
   }

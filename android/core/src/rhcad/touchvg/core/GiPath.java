@@ -68,10 +68,6 @@ public class GiPath {
     return (cPtr == 0) ? null : new Point2d(cPtr, false);
   }
 
-  public String getTypes() {
-    return touchvgJNI.GiPath_getTypes(swigCPtr, this);
-  }
-
   public void clear() {
     touchvgJNI.GiPath_clear(swigCPtr, this);
   }

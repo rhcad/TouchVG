@@ -173,13 +173,18 @@ public class MgShapes : MgObject {
     touchvgPINVOKE.MgShapes_clearCachedData(swigCPtr);
   }
 
+  public int copyShapes(MgShapes src, bool deeply, bool needClear) {
+    int ret = touchvgPINVOKE.MgShapes_copyShapes__SWIG_0(swigCPtr, MgShapes.getCPtr(src), deeply, needClear);
+    return ret;
+  }
+
   public int copyShapes(MgShapes src, bool deeply) {
-    int ret = touchvgPINVOKE.MgShapes_copyShapes__SWIG_0(swigCPtr, MgShapes.getCPtr(src), deeply);
+    int ret = touchvgPINVOKE.MgShapes_copyShapes__SWIG_1(swigCPtr, MgShapes.getCPtr(src), deeply);
     return ret;
   }
 
   public int copyShapes(MgShapes src) {
-    int ret = touchvgPINVOKE.MgShapes_copyShapes__SWIG_1(swigCPtr, MgShapes.getCPtr(src));
+    int ret = touchvgPINVOKE.MgShapes_copyShapes__SWIG_2(swigCPtr, MgShapes.getCPtr(src));
     return ret;
   }
 
@@ -216,6 +221,12 @@ public class MgShapes : MgObject {
 
   public bool bringToFront(int sid) {
     bool ret = touchvgPINVOKE.MgShapes_bringToFront(swigCPtr, sid);
+    return ret;
+  }
+
+  public static MgShape getParentShape(MgShape shape) {
+    IntPtr cPtr = touchvgPINVOKE.MgShapes_getParentShape(MgShape.getCPtr(shape));
+    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
     return ret;
   }
 

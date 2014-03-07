@@ -60,16 +60,16 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_acquireFrontDoc(swigCPtr, this);
   }
 
-  public static void releaseDoc(int hDoc) {
-    touchvgJNI.MgCoreView_releaseDoc(hDoc);
+  public static void releaseDoc(int doc) {
+    touchvgJNI.MgCoreView_releaseDoc(doc);
   }
 
   public int acquireDynamicShapes() {
     return touchvgJNI.MgCoreView_acquireDynamicShapes(swigCPtr, this);
   }
 
-  public static void releaseShapes(int hShapes) {
-    touchvgJNI.MgCoreView_releaseShapes(hShapes);
+  public static void releaseShapes(int shapes) {
+    touchvgJNI.MgCoreView_releaseShapes(shapes);
   }
 
   public boolean isDrawing() {
@@ -100,8 +100,12 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_isPlaying(swigCPtr, this);
   }
 
-  public int getRecordTick(boolean forUndo) {
-    return touchvgJNI.MgCoreView_getRecordTick(swigCPtr, this, forUndo);
+  public boolean isPaused() {
+    return touchvgJNI.MgCoreView_isPaused(swigCPtr, this);
+  }
+
+  public int getRecordTick(boolean forUndo, int curTick) {
+    return touchvgJNI.MgCoreView_getRecordTick(swigCPtr, this, forUndo, curTick);
   }
 
   public boolean isUndoLoading() {
@@ -116,20 +120,32 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_canRedo(swigCPtr, this);
   }
 
-  public int getPlayingTick() {
-    return touchvgJNI.MgCoreView_getPlayingTick(swigCPtr, this);
+  public int getRedoIndex() {
+    return touchvgJNI.MgCoreView_getRedoIndex(swigCPtr, this);
+  }
+
+  public int getRedoCount() {
+    return touchvgJNI.MgCoreView_getRedoCount(swigCPtr, this);
+  }
+
+  public int getPlayingTick(int curTick) {
+    return touchvgJNI.MgCoreView_getPlayingTick(swigCPtr, this, curTick);
   }
 
   public int loadFirstFrame() {
-    return touchvgJNI.MgCoreView_loadFirstFrame(swigCPtr, this);
+    return touchvgJNI.MgCoreView_loadFirstFrame__SWIG_0(swigCPtr, this);
+  }
+
+  public int loadFirstFrame(String file) {
+    return touchvgJNI.MgCoreView_loadFirstFrame__SWIG_1(swigCPtr, this, file);
   }
 
   public int loadNextFrame(int index) {
     return touchvgJNI.MgCoreView_loadNextFrame(swigCPtr, this, index);
   }
 
-  public int loadPrevFrame(int index) {
-    return touchvgJNI.MgCoreView_loadPrevFrame(swigCPtr, this, index);
+  public int loadPrevFrame(int index, int curTick) {
+    return touchvgJNI.MgCoreView_loadPrevFrame(swigCPtr, this, index, curTick);
   }
 
   public int getFrameTick() {
@@ -160,8 +176,8 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_isDrawingCommand(swigCPtr, this);
   }
 
-  public String getCommand() {
-    return touchvgJNI.MgCoreView_getCommand(swigCPtr, this);
+  public void getCommand(MgStringCallback c) {
+    touchvgJNI.MgCoreView_getCommand(swigCPtr, this, MgStringCallback.getCPtr(c), c);
   }
 
   public boolean setCommand(String name, String params) {
@@ -188,8 +204,8 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_getShapeCount__SWIG_0(swigCPtr, this);
   }
 
-  public int getShapeCount(int hDoc) {
-    return touchvgJNI.MgCoreView_getShapeCount__SWIG_1(swigCPtr, this, hDoc);
+  public int getShapeCount(int doc) {
+    return touchvgJNI.MgCoreView_getShapeCount__SWIG_1(swigCPtr, this, doc);
   }
 
   public int getChangeCount() {
@@ -224,12 +240,12 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_loadFromFile__SWIG_1(swigCPtr, this, vgfile);
   }
 
-  public boolean saveToFile(int hDoc, String vgfile, boolean pretty) {
-    return touchvgJNI.MgCoreView_saveToFile__SWIG_0(swigCPtr, this, hDoc, vgfile, pretty);
+  public boolean saveToFile(int doc, String vgfile, boolean pretty) {
+    return touchvgJNI.MgCoreView_saveToFile__SWIG_0(swigCPtr, this, doc, vgfile, pretty);
   }
 
-  public boolean saveToFile(int hDoc, String vgfile) {
-    return touchvgJNI.MgCoreView_saveToFile__SWIG_1(swigCPtr, this, hDoc, vgfile);
+  public boolean saveToFile(int doc, String vgfile) {
+    return touchvgJNI.MgCoreView_saveToFile__SWIG_1(swigCPtr, this, doc, vgfile);
   }
 
   public boolean saveToFile(String vgfile, boolean pretty) {
@@ -248,16 +264,20 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_loadShapes__SWIG_1(swigCPtr, this, MgStorage.getCPtr(s), s);
   }
 
-  public boolean saveShapes(int hDoc, MgStorage s) {
-    return touchvgJNI.MgCoreView_saveShapes__SWIG_0(swigCPtr, this, hDoc, MgStorage.getCPtr(s), s);
+  public boolean saveShapes(int doc, MgStorage s) {
+    return touchvgJNI.MgCoreView_saveShapes__SWIG_0(swigCPtr, this, doc, MgStorage.getCPtr(s), s);
   }
 
   public boolean saveShapes(MgStorage s) {
     return touchvgJNI.MgCoreView_saveShapes__SWIG_1(swigCPtr, this, MgStorage.getCPtr(s), s);
   }
 
-  public String getContent(int hDoc) {
-    return touchvgJNI.MgCoreView_getContent__SWIG_0(swigCPtr, this, hDoc);
+  public void getContent(int doc, MgStringCallback c) {
+    touchvgJNI.MgCoreView_getContent__SWIG_0(swigCPtr, this, doc, MgStringCallback.getCPtr(c), c);
+  }
+
+  public void getContent(MgStringCallback c) {
+    touchvgJNI.MgCoreView_getContent__SWIG_1(swigCPtr, this, MgStringCallback.getCPtr(c), c);
   }
 
   public void freeContent() {
@@ -266,10 +286,6 @@ public class MgCoreView {
 
   public boolean setContent(String content) {
     return touchvgJNI.MgCoreView_setContent(swigCPtr, this, content);
-  }
-
-  public String getContent() {
-    return touchvgJNI.MgCoreView_getContent__SWIG_1(swigCPtr, this);
   }
 
   public boolean zoomToExtent() {
@@ -304,16 +320,24 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_addImageShape__SWIG_1(swigCPtr, this, name, xc, yc, w, h);
   }
 
-  public boolean hasImageShape() {
-    return touchvgJNI.MgCoreView_hasImageShape(swigCPtr, this);
+  public boolean hasImageShape(int doc) {
+    return touchvgJNI.MgCoreView_hasImageShape(swigCPtr, this, doc);
+  }
+
+  public int findShapeByImageID(int doc, String name) {
+    return touchvgJNI.MgCoreView_findShapeByImageID(swigCPtr, this, doc, name);
+  }
+
+  public int traverseImageShapes(int doc, MgFindImageCallback c) {
+    return touchvgJNI.MgCoreView_traverseImageShapes(swigCPtr, this, doc, MgFindImageCallback.getCPtr(c), c);
   }
 
   public boolean getDisplayExtent(Floats box) {
     return touchvgJNI.MgCoreView_getDisplayExtent__SWIG_0(swigCPtr, this, Floats.getCPtr(box), box);
   }
 
-  public boolean getDisplayExtent(int hDoc, int hGs, Floats box) {
-    return touchvgJNI.MgCoreView_getDisplayExtent__SWIG_1(swigCPtr, this, hDoc, hGs, Floats.getCPtr(box), box);
+  public boolean getDisplayExtent(int doc, int hGs, Floats box) {
+    return touchvgJNI.MgCoreView_getDisplayExtent__SWIG_1(swigCPtr, this, doc, hGs, Floats.getCPtr(box), box);
   }
 
   public boolean getBoundingBox(Floats box) {
@@ -324,53 +348,12 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_getBoundingBox__SWIG_1(swigCPtr, this, Floats.getCPtr(box), box, shapeId);
   }
 
-  public boolean getBoundingBox(int hDoc, int hGs, Floats box, int shapeId) {
-    return touchvgJNI.MgCoreView_getBoundingBox__SWIG_2(swigCPtr, this, hDoc, hGs, Floats.getCPtr(box), box, shapeId);
+  public boolean getBoundingBox(int doc, int hGs, Floats box, int shapeId) {
+    return touchvgJNI.MgCoreView_getBoundingBox__SWIG_2(swigCPtr, this, doc, hGs, Floats.getCPtr(box), box, shapeId);
   }
 
-  public final static class FrameChangeType {
-    public final static MgCoreView.FrameChangeType DOC_CHANGED = new MgCoreView.FrameChangeType("DOC_CHANGED", touchvgJNI.MgCoreView_DOC_CHANGED_get());
-    public final static MgCoreView.FrameChangeType SHAPE_APPEND = new MgCoreView.FrameChangeType("SHAPE_APPEND", touchvgJNI.MgCoreView_SHAPE_APPEND_get());
-    public final static MgCoreView.FrameChangeType DYN_CHANGED = new MgCoreView.FrameChangeType("DYN_CHANGED", touchvgJNI.MgCoreView_DYN_CHANGED_get());
-
-    public final int swigValue() {
-      return swigValue;
-    }
-
-    public String toString() {
-      return swigName;
-    }
-
-    public static FrameChangeType swigToEnum(int swigValue) {
-      if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
-        return swigValues[swigValue];
-      for (int i = 0; i < swigValues.length; i++)
-        if (swigValues[i].swigValue == swigValue)
-          return swigValues[i];
-      throw new IllegalArgumentException("No enum " + FrameChangeType.class + " with value " + swigValue);
-    }
-
-    private FrameChangeType(String swigName) {
-      this.swigName = swigName;
-      this.swigValue = swigNext++;
-    }
-
-    private FrameChangeType(String swigName, int swigValue) {
-      this.swigName = swigName;
-      this.swigValue = swigValue;
-      swigNext = swigValue+1;
-    }
-
-    private FrameChangeType(String swigName, FrameChangeType swigEnum) {
-      this.swigName = swigName;
-      this.swigValue = swigEnum.swigValue;
-      swigNext = this.swigValue+1;
-    }
-
-    private static FrameChangeType[] swigValues = { DOC_CHANGED, SHAPE_APPEND, DYN_CHANGED };
-    private static int swigNext = 0;
-    private final int swigValue;
-    private final String swigName;
-  }
+  public final static int DOC_CHANGED = 1;
+  public final static int SHAPE_APPEND = 2;
+  public final static int DYN_CHANGED = 4;
 
 }

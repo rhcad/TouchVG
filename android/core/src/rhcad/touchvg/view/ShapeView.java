@@ -11,6 +11,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Picture;
 import android.graphics.drawable.PictureDrawable;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -29,10 +30,10 @@ public class ShapeView extends StdGraphView {
     }
 
     @Override
-    protected void createAdapter(Context context) {
+    protected void createAdapter(Context context, Bundle savedInstanceState) {
         mImageCache = new ImageCache();
         mCanvasAdapter = new CanvasAdapter(this, mImageCache);
-        mViewAdapter = new ShapeViewAdapter();
+        mViewAdapter = new ShapeViewAdapter(savedInstanceState);
         mRegenAdapter = new PictureAdapter(this, mImageCache, new PictureCreated() {
             @Override
             public void onPictureCreated(Picture p, float x, float y, int id) {
@@ -81,6 +82,11 @@ public class ShapeView extends StdGraphView {
 
     //! 视图回调适配器
     protected class ShapeViewAdapter extends StdViewAdapter {
+
+        public ShapeViewAdapter(Bundle savedInstanceState) {
+            super(savedInstanceState);
+        }
+
         @Override
         public void regenAll(boolean changed) {
             synchronized (mCoreView) {
@@ -104,9 +110,11 @@ public class ShapeView extends StdGraphView {
         }
 
         @Override
-        public void redraw() {
-            synchronized (mCoreView) {
-                mCoreView.submitDynamicShapes(mViewAdapter);
+        public void redraw(boolean changed) {
+            if (changed) {
+                synchronized (mCoreView) {
+                    mCoreView.submitDynamicShapes(mViewAdapter);
+                }
             }
         }
     }

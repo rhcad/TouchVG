@@ -4,6 +4,7 @@
 #import "GraphView3.h"
 #import "LargeView3.h"
 #import "BasicAnimationView.h"
+#include "testcanvas.h"
 
 static UIViewController *_tmpController = nil;
 
@@ -75,27 +76,35 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     
     //addGraphView(arr, i, index, @"GiGraphView3", frame);
     
-    addView3(arr, i, index, @"testRect", 0x01, frame);
-    addView3(arr, i, index, @"testLine", 0x02, frame);
-    addView3(arr, i, index, @"testTextAt", 0x04, frame);
-    addView3(arr, i, index, @"testEllipse", 0x08, frame);
-    addView3(arr, i, index, @"testQuadBezier", 0x10, frame);
-    addView3(arr, i, index, @"testCubicBezier", 0x20, frame);
-    addView3(arr, i, index, @"testPolygon", 0x40, frame);
-    addView3(arr, i, index, @"testClearRect", 0x80|0x40|0x02, frame);
-    addView3(arr, i, index, @"testClipPath", 0x100, frame);
-    addView3(arr, i, index, @"testHandle", 0x200, frame);
-    addView3(arr, i, index, @"testDynCurves", 0x400, frame);
-    addView3(arr, i, index, @"testBeziers with dynview", 0x20|0x10000, frame);
+    addView3(arr, i, index, @"testRect", TestCanvas::kRect, frame);
+    addView3(arr, i, index, @"testLine", TestCanvas::kLine, frame);
+    addView3(arr, i, index, @"testTextAt", TestCanvas::kTextAt, frame);
+    addView3(arr, i, index, @"testEllipse", TestCanvas::kEllipse, frame);
+    addView3(arr, i, index, @"testQuadBezier", TestCanvas::kQuadBezier, frame);
+    addView3(arr, i, index, @"testCubicBezier", TestCanvas::kCubicBezier, frame);
+    addView3(arr, i, index, @"testPolygon", TestCanvas::kPolygon, frame);
+    addView3(arr, i, index, @"testClearRect", TestCanvas::kClearPolygon, frame);
+    addView3(arr, i, index, @"testClipPath", TestCanvas::kClipPath, frame);
+    addView3(arr, i, index, @"testHandle", TestCanvas::kHandle, frame);
+    addView3(arr, i, index, @"testDynCurves", TestCanvas::kDynCurves, frame);
+    addView3(arr, i, index, @"testBeziers with dynview",
+             TestCanvas::kCubicBezier|kWithDynView, frame);
     
-    addView2(arr, i, index, @"testDynCurves with thread", 0x400|0x40000, frame);
-    addView2(arr, i, index, @"testCubicBezier with thread", 0x20|0x40000, frame);
-    addView2(arr, i, index, @"testEllipse with thread", 0x08|0x40000, frame);
+    addView2(arr, i, index, @"testDynCurves with thread",
+             TestCanvas::kDynCurves|kWithThread, frame);
+    addView2(arr, i, index, @"testCubicBezier with thread",
+             TestCanvas::kCubicBezier|kWithThread, frame);
+    addView2(arr, i, index, @"testEllipse with thread",
+             TestCanvas::kEllipse|kWithThread, frame);
     
-    addLargeView3(arr, i, index, @"testTextAt in large view", 0x04|0x20000, frame);
-    addLargeView3(arr, i, index, @"testCubicBezier in large view", 0x20|0x20000, frame);
-    addLargeView3(arr, i, index, @"testHandle in large view", 0x200|0x20000, frame);
-    addLargeView3(arr, i, index, @"testDynCurves in large view", 0x400|0x20000, frame);
+    addLargeView3(arr, i, index, @"testTextAt in large view",
+                  TestCanvas::kTextAt|kWithLargeView, frame);
+    addLargeView3(arr, i, index, @"testCubicBezier in large view",
+                  TestCanvas::kCubicBezier|kWithLargeView, frame);
+    addLargeView3(arr, i, index, @"testHandle in large view",
+                  TestCanvas::kHandle|kWithLargeView, frame);
+    addLargeView3(arr, i, index, @"testDynCurves in large view",
+                  TestCanvas::kDynCurves|kWithLargeView, frame);
     
     BasicAnimationView *baview = nil;
     if (!arr && index == i++) {

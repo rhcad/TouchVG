@@ -157,8 +157,8 @@ public class MgGrid extends MgBaseRect {
     return touchvgJNI.MgGrid_snap(swigCPtr, this, Point2d.getCPtr(pnt), pnt, Point2d.getCPtr(dist), dist);
   }
 
-  public boolean valid(float tol) {
-    return touchvgJNI.MgGrid_valid(swigCPtr, this, tol);
+  public boolean isValid(float tol) {
+    return touchvgJNI.MgGrid_isValid(swigCPtr, this, tol);
   }
 
 }

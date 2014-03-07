@@ -63,10 +63,25 @@ namespace touchvg.view
             return MgView.fromHandle(CmdViewHandle());
         }
 
+        public class StringCallback : MgStringCallback
+        {
+            private string text;
+
+            public override void onGetString(string text)
+            {
+                this.text = text;
+            }
+
+            public override string ToString()
+            {
+                return text;
+            }
+        }
+
         //! 当前命令名称
         public string Command
         {
-            get { return CoreView.getCommand(); }
+            get { StringCallback c = new StringCallback(); CoreView.getCommand(c); return c.ToString(); }
             set { CoreView.setCommand(value); }
         }
 
@@ -88,7 +103,7 @@ namespace touchvg.view
             {
                 CoreView.getContext(true).setLineWidth(
                     value > 0 ? (float)value * 10.0f : value, true);
-                CoreView.setContext((int)GiContextBits.kContextLineWidth);
+                CoreView.setContext(GiContext.kLineWidth);
             }
         }
 
@@ -104,7 +119,7 @@ namespace touchvg.view
             {
                 CoreView.getContext(true).setLineWidth(
                     -Math.Abs((float)value), true);
-                CoreView.setContext((int)GiContextBits.kContextLineWidth);
+                CoreView.setContext(GiContext.kLineWidth);
             }
         }
 
@@ -115,7 +130,7 @@ namespace touchvg.view
             set
             {
                 CoreView.getContext(true).setLineStyle(value);
-                CoreView.setContext((int)GiContextBits.kContextLineStyle);
+                CoreView.setContext(GiContext.kLineStyle);
             }
         }
 
@@ -132,9 +147,9 @@ namespace touchvg.view
                 CoreView.getContext(true).setLineColor(
                     value.R, value.G, value.B, value.A);
                 if (value.A > 0)
-                    CoreView.setContext((int)GiContextBits.kContextLineRGB);
+                    CoreView.setContext(GiContext.kLineRGB);
                 else
-                    CoreView.setContext((int)GiContextBits.kContextLineARGB);
+                    CoreView.setContext(GiContext.kLineARGB);
             }
         }
 
@@ -145,7 +160,7 @@ namespace touchvg.view
             set
             {
                 CoreView.getContext(true).setLineAlpha(value);
-                CoreView.setContext((int)GiContextBits.kContextLineAlpha);
+                CoreView.setContext(GiContext.kLineAlpha);
             }
         }
 
@@ -162,9 +177,9 @@ namespace touchvg.view
                 CoreView.getContext(true).setFillColor(
                     value.R, value.G, value.B, value.A);
                 if (value.A > 0)
-                    CoreView.setContext((int)GiContextBits.kContextFillRGB);
+                    CoreView.setContext(GiContext.kFillRGB);
                 else
-                    CoreView.setContext((int)GiContextBits.kContextFillARGB);
+                    CoreView.setContext(GiContext.kFillARGB);
             }
         }
 
@@ -175,7 +190,7 @@ namespace touchvg.view
             set
             {
                 CoreView.getContext(true).setFillAlpha(value);
-                CoreView.setContext((int)GiContextBits.kContextFillAlpha);
+                CoreView.setContext(GiContext.kFillAlpha);
             }
         }
 
@@ -256,9 +271,10 @@ namespace touchvg.view
         {
             get
             {
-                string ret = CoreView.getContent();
+                StringCallback c = new StringCallback();
+                CoreView.getContent(c);
                 CoreView.freeContent();
-                return ret;
+                return c.ToString();
             }
             set { CoreView.setContent(value); }
         }
@@ -398,13 +414,14 @@ namespace touchvg.view
                 return false;
             }
 
-            return CoreView.startRecord(path, CoreView.acquireFrontDoc(), true);
+            return CoreView.startRecord(path, CoreView.acquireFrontDoc(),
+                true, WPFGraphView.getTick());
         }
 
         //! 停止Undo录制
         public void StopUndoRecord()
         {
-            CoreView.stopRecord(true);
+            CoreView.stopRecord(ViewAdapter, true);
         }
 
         //! 能否撤销

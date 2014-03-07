@@ -4,6 +4,7 @@
 
 package vgtest.testview.view;
 
+import vgtest.testview.TestFlags;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -49,7 +50,7 @@ public class TestDoubleViews extends FrameLayout {
         } else { // 主视图使用SurfaceView
             final GraphSfView view = new GraphSfView(context);
 
-            if ((flags & 0x100000) == 0) { // 不是底部视图
+            if ((flags & TestFlags.MODEL_SURFACE) == 0) {
                 view.setBackgroundColor(Color.TRANSPARENT);
             }
             addView(view, params);
