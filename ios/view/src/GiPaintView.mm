@@ -1,6 +1,6 @@
 //! \file GiPaintView.mm
 //! \brief 实现iOS绘图视图类 GiPaintView
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
 #import "GiViewImpl.h"
 #import "ImageCache.h"
@@ -21,19 +21,22 @@
 - (void)drawRect:(CGRect)rect {
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
-    long hDoc = _adapter->getAppendCount() > 0 ? coreView->acquireFrontDoc() : 0;
-    long hShapes = coreView->acquireDynamicShapes();
-    long hGs = coreView->acquireGraphics(_adapter);
+    long doc = _adapter->getAppendCount() > 0 ? coreView->acquireFrontDoc() : 0;
+    long shapes = coreView->acquireDynamicShapes();
+    long gs = coreView->acquireGraphics(_adapter);
+    mgvector<int> exts;
     
-    if (canvas.beginPaint(UIGraphicsGetCurrentContext(), true)) {
+    if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
         for (int i = 0, sid = 0; (sid = _adapter->getAppendID(i)) != 0; i++) {
-            coreView->drawAppend(hDoc, hGs, &canvas, sid);
+            coreView->drawAppend(doc, gs, &canvas, sid);
         }
-        coreView->dynDraw(hShapes, hGs, &canvas);
+        _adapter->acquirePlayings(exts);
+        coreView->dynDraw(shapes, gs, &canvas, &exts);
         canvas.endPaint();
     }
-    GiCoreView::releaseShapes(hShapes);
-    coreView->releaseGraphics(hGs);
+    GiCoreView::releaseDoc(doc);
+    GiCoreView::releaseShapes(shapes);
+    coreView->releaseGraphics(gs);
 }
 
 @end
@@ -80,9 +83,14 @@
 }
 
 - (void)startRender:(long)doc :(long)gs {
-    _doc = doc;
-    _gs = gs;
-    [self startRender_:NO];
+    if (_doc || _gs) {
+        GiCoreView::releaseDoc(doc);
+        _adapter->coreView()->releaseGraphics(gs);
+    } else {
+        _doc = doc;
+        _gs = gs;
+        [self startRender_:NO];
+    }
 }
 
 - (void)startRenderForPending {
@@ -133,12 +141,12 @@
         coreView->drawAll(_doc, _gs, &canvas);
         canvas.endPaint();
     }
-    GiCoreView::releaseDoc(_doc);
-    coreView->releaseGraphics(_gs);
-    _doc = 0;
-    _gs = 0;
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        GiCoreView::releaseDoc(_doc);
+        coreView->releaseGraphics(_gs);
+        _doc = 0;
+        _gs = 0;
         [_adapter->mainView() setNeedsDisplay];
         --_drawing;
     });
@@ -518,24 +526,6 @@ GiColor CGColorToGiColor(CGColorRef color);
     [super touchesEnded:touches withEvent:event];
 }
 
-- (void)ignoreTouch:(CGPoint)pt :(UIView *)handledButton {
-    if (handledButton) {
-        _buttonHandled = YES;
-    }
-    if (CGPointEqualToPoint(_ignorePt, pt) && _adapter->isContextActionsVisible()) {
-        [self performSelector:@selector(hideContextActions) withObject:nil afterDelay:1];
-    }
-    _ignorePt = pt;
-}
-
-- (void)redrawForDelay:(id)changed {
-    _adapter->redraw(!!changed);
-}
-
-- (void)onContextActionsDisplay:(NSMutableArray *)buttons {
-    _buttonHandled = NO;
-}
-
 // 手势即将开始，在 touchesBegan 后发生，即将调用本类的相应手势响应函数
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)recognizer {
     if (_points.empty()) {
@@ -701,6 +691,28 @@ GiColor CGColorToGiColor(CGColorRef color);
             && [self gesturePost:sender]
             && _adapter->dispatchGesture(kGiGesturePress, (GiGestureState)sender.state,
                                          [sender locationInView:sender.view]));
+}
+
+@end
+
+@implementation GiPaintView(GestureInternel)
+
+- (void)ignoreTouch:(CGPoint)pt :(UIView *)handledButton {
+    if (handledButton) {
+        _buttonHandled = YES;
+    }
+    if (CGPointEqualToPoint(_ignorePt, pt) && _adapter->isContextActionsVisible()) {
+        [self performSelector:@selector(hideContextActions) withObject:nil afterDelay:1];
+    }
+    _ignorePt = pt;
+}
+
+- (void)redrawForDelay:(id)changed {
+    _adapter->redraw(!!changed);
+}
+
+- (void)onContextActionsDisplay:(NSMutableArray *)buttons {
+    _buttonHandled = NO;
 }
 
 @end

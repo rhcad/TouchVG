@@ -1,11 +1,12 @@
 //! \file GiViewHelper.h
 //! \brief 定义iOS绘图视图辅助类 GiViewHelper
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
 #import <UIKit/UIKit.h>
 
 @class GiPaintView;
 @class CALayer;
+@protocol GiPlayProvider;
 
 typedef NS_ENUM(int, GILineStyle) {
     GILineStyleSolid,       //!< ----------
@@ -70,6 +71,7 @@ typedef NS_ENUM(int, GILineStyle) {
 - (BOOL)zoomToModel:(CGRect)rect;           //!< 放缩显示指定范围到视图区域
 - (int)addShapesForTest;                    //!< 添加测试图形
 - (void)clearCachedData;                    //!< 释放临时数据内存
+- (CGPoint)displayToModel:(CGPoint)point;   //!< 视图坐标转为模型坐标
 
 - (BOOL)startUndoRecord:(NSString *)path;   //!< 开始Undo录制，在主线程用
 - (void)stopUndoRecord;                     //!< 停止Undo录制，在主线程用
@@ -88,6 +90,8 @@ typedef NS_ENUM(int, GILineStyle) {
 - (BOOL)playPause;                          //!< 暂停播放
 - (BOOL)playResume;                         //!< 继续播放
 - (long)getPlayTicks;                       //!< 返回已播放或录制的毫秒数
+- (BOOL)addPlayProvider:(id<GiPlayProvider>)p tag:(int)tag;  //!< 添加一个播放项
+- (int)playProviderCount;                   //!< 返回播放项的个数
 
 - (int)insertPNGFromResource:(NSString *)name;      //!< 在默认位置插入一个程序资源中的PNG图片(name.png)
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt;   //!< 插入PNG图片(name.png)，并指定其中心位置

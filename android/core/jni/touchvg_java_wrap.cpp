@@ -8926,7 +8926,7 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_Vector2d_1isEqual
 }
 
 
-SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_Vector2d_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jfloat jarg2, jfloat jarg3) {
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_Vector2d_1set_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jfloat jarg2, jfloat jarg3) {
   jlong jresult = 0 ;
   Vector2d *arg1 = (Vector2d *) 0 ;
   float arg2 ;
@@ -8940,6 +8940,28 @@ SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_Vector2d_1set(JNIEnv
   arg2 = (float)jarg2; 
   arg3 = (float)jarg3; 
   result = (Vector2d *) &(arg1)->set(arg2,arg3);
+  *(Vector2d **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_Vector2d_1set_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
+  Vector2d *arg1 = (Vector2d *) 0 ;
+  Vector2d *arg2 = 0 ;
+  Vector2d *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(Vector2d **)&jarg1; 
+  arg2 = *(Vector2d **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Vector2d const & reference is null");
+    return 0;
+  } 
+  result = (Vector2d *) &(arg1)->set((Vector2d const &)*arg2);
   *(Vector2d **)&jresult = result; 
   return jresult;
 }
@@ -9813,7 +9835,7 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_Point2d_1isEqualT
 }
 
 
-SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_Point2d_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jfloat jarg2, jfloat jarg3) {
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_Point2d_1set_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jfloat jarg2, jfloat jarg3) {
   jlong jresult = 0 ;
   Point2d *arg1 = (Point2d *) 0 ;
   float arg2 ;
@@ -9827,6 +9849,28 @@ SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_Point2d_1set(JNIEnv 
   arg2 = (float)jarg2; 
   arg3 = (float)jarg3; 
   result = (Point2d *) &(arg1)->set(arg2,arg3);
+  *(Point2d **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_Point2d_1set_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
+  Point2d *arg1 = (Point2d *) 0 ;
+  Point2d *arg2 = 0 ;
+  Point2d *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(Point2d **)&jarg1; 
+  arg2 = *(Point2d **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Point2d const & reference is null");
+    return 0;
+  } 
+  result = (Point2d *) &(arg1)->set((Point2d const &)*arg2);
   *(Point2d **)&jresult = result; 
   return jresult;
 }
@@ -19495,6 +19539,42 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_Ints_1setSize(JNIEnv 
 }
 
 
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1Ints_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2) {
+  jlong jresult = 0 ;
+  int arg1 ;
+  int arg2 ;
+  mgvector< int > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (mgvector< int > *)new mgvector< int >(arg1,arg2);
+  *(mgvector< int > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1Ints_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2, jint jarg3, jint jarg4) {
+  jlong jresult = 0 ;
+  int arg1 ;
+  int arg2 ;
+  int arg3 ;
+  int arg4 ;
+  mgvector< int > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (int)jarg4; 
+  result = (mgvector< int > *)new mgvector< int >(arg1,arg2,arg3,arg4);
+  *(mgvector< int > **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_Ints_1count(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   mgvector< int > *arg1 = (mgvector< int > *) 0 ;
@@ -19605,6 +19685,42 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_Floats_1setSize(JNIEn
   arg1 = *(mgvector< float > **)&jarg1; 
   arg2 = (int)jarg2; 
   (arg1)->setSize(arg2);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1Floats_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jfloat jarg1, jfloat jarg2) {
+  jlong jresult = 0 ;
+  float arg1 ;
+  float arg2 ;
+  mgvector< float > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (float)jarg1; 
+  arg2 = (float)jarg2; 
+  result = (mgvector< float > *)new mgvector< float >(arg1,arg2);
+  *(mgvector< float > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1Floats_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jfloat jarg1, jfloat jarg2, jfloat jarg3, jfloat jarg4) {
+  jlong jresult = 0 ;
+  float arg1 ;
+  float arg2 ;
+  float arg3 ;
+  float arg4 ;
+  mgvector< float > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (float)jarg1; 
+  arg2 = (float)jarg2; 
+  arg3 = (float)jarg3; 
+  arg4 = (float)jarg4; 
+  result = (mgvector< float > *)new mgvector< float >(arg1,arg2,arg3,arg4);
+  *(mgvector< float > **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -19721,6 +19837,42 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_Chars_1setSize(JNIEnv
 }
 
 
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1Chars_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jchar jarg1, jchar jarg2) {
+  jlong jresult = 0 ;
+  char arg1 ;
+  char arg2 ;
+  mgvector< char > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (char)jarg1; 
+  arg2 = (char)jarg2; 
+  result = (mgvector< char > *)new mgvector< char >(arg1,arg2);
+  *(mgvector< char > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1Chars_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jchar jarg1, jchar jarg2, jchar jarg3, jchar jarg4) {
+  jlong jresult = 0 ;
+  char arg1 ;
+  char arg2 ;
+  char arg3 ;
+  char arg4 ;
+  mgvector< char > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (char)jarg1; 
+  arg2 = (char)jarg2; 
+  arg3 = (char)jarg3; 
+  arg4 = (char)jarg4; 
+  result = (mgvector< char > *)new mgvector< char >(arg1,arg2,arg3,arg4);
+  *(mgvector< char > **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_Chars_1count(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   mgvector< char > *arg1 = (mgvector< char > *) 0 ;
@@ -19831,6 +19983,48 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_ConstShapes_1setSize(
   arg1 = *(mgvector< MgShape const * > **)&jarg1; 
   arg2 = (int)jarg2; 
   (arg1)->setSize(arg2);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1ConstShapes_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
+  MgShape *arg1 = (MgShape *) 0 ;
+  MgShape *arg2 = (MgShape *) 0 ;
+  mgvector< MgShape const * > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(MgShape **)&jarg1; 
+  arg2 = *(MgShape **)&jarg2; 
+  result = (mgvector< MgShape const * > *)new mgvector< MgShape const * >((MgShape const *)arg1,(MgShape const *)arg2);
+  *(mgvector< MgShape const * > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1ConstShapes_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
+  jlong jresult = 0 ;
+  MgShape *arg1 = (MgShape *) 0 ;
+  MgShape *arg2 = (MgShape *) 0 ;
+  MgShape *arg3 = (MgShape *) 0 ;
+  MgShape *arg4 = (MgShape *) 0 ;
+  mgvector< MgShape const * > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  (void)jarg3_;
+  (void)jarg4_;
+  arg1 = *(MgShape **)&jarg1; 
+  arg2 = *(MgShape **)&jarg2; 
+  arg3 = *(MgShape **)&jarg3; 
+  arg4 = *(MgShape **)&jarg4; 
+  result = (mgvector< MgShape const * > *)new mgvector< MgShape const * >((MgShape const *)arg1,(MgShape const *)arg2,(MgShape const *)arg3,(MgShape const *)arg4);
+  *(mgvector< MgShape const * > **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -19947,6 +20141,48 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_Shapes_1setSize(JNIEn
   arg1 = *(mgvector< MgShape * > **)&jarg1; 
   arg2 = (int)jarg2; 
   (arg1)->setSize(arg2);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1Shapes_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jlong jresult = 0 ;
+  MgShape *arg1 = (MgShape *) 0 ;
+  MgShape *arg2 = (MgShape *) 0 ;
+  mgvector< MgShape * > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(MgShape **)&jarg1; 
+  arg2 = *(MgShape **)&jarg2; 
+  result = (mgvector< MgShape * > *)new mgvector< MgShape * >(arg1,arg2);
+  *(mgvector< MgShape * > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1Shapes_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
+  jlong jresult = 0 ;
+  MgShape *arg1 = (MgShape *) 0 ;
+  MgShape *arg2 = (MgShape *) 0 ;
+  MgShape *arg3 = (MgShape *) 0 ;
+  MgShape *arg4 = (MgShape *) 0 ;
+  mgvector< MgShape * > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  (void)jarg3_;
+  (void)jarg4_;
+  arg1 = *(MgShape **)&jarg1; 
+  arg2 = *(MgShape **)&jarg2; 
+  arg3 = *(MgShape **)&jarg3; 
+  arg4 = *(MgShape **)&jarg4; 
+  result = (mgvector< MgShape * > *)new mgvector< MgShape * >(arg1,arg2,arg3,arg4);
+  *(mgvector< MgShape * > **)&jresult = result; 
+  return jresult;
 }
 
 
@@ -22013,6 +22249,21 @@ SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1cloneShape
 }
 
 
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1shallowCopy(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  MgShapes *arg1 = (MgShapes *) 0 ;
+  MgShapes *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgShapes **)&jarg1; 
+  result = (MgShapes *)((MgShapes const *)arg1)->shallowCopy();
+  *(MgShapes **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1create_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   MgObject *arg1 = (MgObject *) 0 ;
@@ -22533,7 +22784,27 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1addShap
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1updateShape(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1updateShape_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jboolean jarg3) {
+  jboolean jresult = 0 ;
+  MgShapes *arg1 = (MgShapes *) 0 ;
+  MgShape *arg2 = (MgShape *) 0 ;
+  bool arg3 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(MgShapes **)&jarg1; 
+  arg2 = *(MgShape **)&jarg2; 
+  arg3 = jarg3 ? true : false; 
+  result = (bool)(arg1)->updateShape(arg2,arg3);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1updateShape_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jboolean jresult = 0 ;
   MgShapes *arg1 = (MgShapes *) 0 ;
   MgShape *arg2 = (MgShape *) 0 ;
@@ -22548,6 +22819,24 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1updateS
   result = (bool)(arg1)->updateShape(arg2);
   jresult = (jboolean)result; 
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapes_1transform(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  MgShapes *arg1 = (MgShapes *) 0 ;
+  Matrix2d *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(MgShapes **)&jarg1; 
+  arg2 = *(Matrix2d **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Matrix2d const & reference is null");
+    return ;
+  } 
+  (arg1)->transform((Matrix2d const &)*arg2);
 }
 
 
@@ -36638,6 +36927,21 @@ SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapeDoc_1cloneDoc
 }
 
 
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapeDoc_1shallowCopy(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  MgShapeDoc *arg1 = (MgShapeDoc *) 0 ;
+  MgShapeDoc *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgShapeDoc **)&jarg1; 
+  result = (MgShapeDoc *)((MgShapeDoc const *)arg1)->shallowCopy();
+  *(MgShapeDoc **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapeDoc_1copyShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jboolean jarg3) {
   jint jresult = 0 ;
   MgShapeDoc *arg1 = (MgShapeDoc *) 0 ;
@@ -39059,6 +39363,28 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1getBo
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1displayToModel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jboolean jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  mgvector< float > *arg2 = 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = *(mgvector< float > **)&jarg2;
+  if (!arg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "mgvector< float > & reference is null");
+    return 0;
+  } 
+  result = (bool)(arg1)->displayToModel(*arg2);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1createView_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   GiView *arg1 = (GiView *) 0 ;
@@ -39242,7 +39568,7 @@ SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1dynDraw_1
   long arg2 ;
   long arg3 ;
   GiCanvas *arg4 = (GiCanvas *) 0 ;
-  mgvector< int > *arg5 = 0 ;
+  mgvector< int > *arg5 = (mgvector< int > *) 0 ;
   int result;
   
   (void)jenv;
@@ -39254,12 +39580,8 @@ SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1dynDraw_1
   arg2 = (long)jarg2; 
   arg3 = (long)jarg3; 
   arg4 = *(GiCanvas **)&jarg4; 
-  arg5 = *(mgvector< int > **)&jarg5;
-  if (!arg5) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "mgvector< int > const & reference is null");
-    return 0;
-  } 
-  result = (int)(arg1)->dynDraw(arg2,arg3,arg4,(mgvector< int > const &)*arg5);
+  arg5 = *(mgvector< int > **)&jarg5; 
+  result = (int)(arg1)->dynDraw(arg2,arg3,arg4,(mgvector< int > const *)arg5);
   jresult = (jint)result; 
   return jresult;
 }
@@ -39743,7 +40065,7 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1recor
   long arg3 ;
   long arg4 ;
   long arg5 ;
-  mgvector< int > *arg6 = 0 ;
+  mgvector< int > *arg6 = (mgvector< int > *) 0 ;
   bool result;
   
   (void)jenv;
@@ -39755,12 +40077,8 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1recor
   arg3 = (long)jarg3; 
   arg4 = (long)jarg4; 
   arg5 = (long)jarg5; 
-  arg6 = *(mgvector< int > **)&jarg6;
-  if (!arg6) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "mgvector< int > const & reference is null");
-    return 0;
-  } 
-  result = (bool)(arg1)->recordShapes(arg2,arg3,arg4,arg5,(mgvector< int > const &)*arg6);
+  arg6 = *(mgvector< int > **)&jarg6; 
+  result = (bool)(arg1)->recordShapes(arg2,arg3,arg4,arg5,(mgvector< int > const *)arg6);
   jresult = (jboolean)result; 
   return jresult;
 }
@@ -39965,13 +40283,15 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreView_1resto
 }
 
 
-SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1MgPlaying(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1MgPlaying(JNIEnv *jenv, jclass jcls, jint jarg1) {
   jlong jresult = 0 ;
+  int arg1 ;
   MgPlaying *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (MgPlaying *)new MgPlaying();
+  arg1 = (int)jarg1; 
+  result = (MgPlaying *)new MgPlaying(arg1);
   *(MgPlaying **)&jresult = result; 
   return jresult;
 }
@@ -39984,6 +40304,21 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_delete_1MgPlaying(JNI
   (void)jcls;
   arg1 = *(MgPlaying **)&jarg1; 
   delete arg1;
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgPlaying_1getTag(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  MgPlaying *arg1 = (MgPlaying *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgPlaying **)&jarg1; 
+  result = (int)((MgPlaying const *)arg1)->getTag();
+  jresult = (jint)result; 
+  return jresult;
 }
 
 
@@ -40012,16 +40347,18 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgPlaying_1releaseSha
 }
 
 
-SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgPlaying_1getShapesForEdit(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgPlaying_1getShapesForEdit(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
   jint jresult = 0 ;
   MgPlaying *arg1 = (MgPlaying *) 0 ;
+  bool arg2 ;
   long result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(MgPlaying **)&jarg1; 
-  result = (long)(arg1)->getShapesForEdit();
+  arg2 = jarg2 ? true : false; 
+  result = (long)(arg1)->getShapesForEdit(arg2);
   jresult = (jint)result; 
   return jresult;
 }
@@ -40035,6 +40372,32 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgPlaying_1submitShap
   (void)jarg1_;
   arg1 = *(MgPlaying **)&jarg1; 
   (arg1)->submitShapes();
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgPlaying_1stop(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  MgPlaying *arg1 = (MgPlaying *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgPlaying **)&jarg1; 
+  (arg1)->stop();
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgPlaying_1isStopping(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  MgPlaying *arg1 = (MgPlaying *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgPlaying **)&jarg1; 
+  result = (bool)((MgPlaying const *)arg1)->isStopping();
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 

@@ -51,6 +51,12 @@ public class Ints : IDisposable {
     touchvgPINVOKE.Ints_setSize(swigCPtr, n);
   }
 
+  public Ints(int v1, int v2) : this(touchvgPINVOKE.new_Ints__SWIG_2(v1, v2), true) {
+  }
+
+  public Ints(int v1, int v2, int v3, int v4) : this(touchvgPINVOKE.new_Ints__SWIG_3(v1, v2, v3, v4), true) {
+  }
+
   public int count() {
     int ret = touchvgPINVOKE.Ints_count(swigCPtr);
     return ret;

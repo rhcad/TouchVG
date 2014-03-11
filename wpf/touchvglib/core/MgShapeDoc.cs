@@ -47,6 +47,12 @@ public class MgShapeDoc : MgObject {
     return ret;
   }
 
+  public MgShapeDoc shallowCopy() {
+    IntPtr cPtr = touchvgPINVOKE.MgShapeDoc_shallowCopy(swigCPtr);
+    MgShapeDoc ret = (cPtr == IntPtr.Zero) ? null : new MgShapeDoc(cPtr, false);
+    return ret;
+  }
+
   public int copyShapes(MgShapeDoc src, bool deeply) {
     int ret = touchvgPINVOKE.MgShapeDoc_copyShapes(swigCPtr, MgShapeDoc.getCPtr(src), deeply);
     return ret;

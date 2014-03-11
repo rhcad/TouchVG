@@ -6,8 +6,10 @@
 
 package rhcad.touchvg;
 
+import rhcad.touchvg.IGraphView.PlayProvider;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -130,6 +132,9 @@ public interface IViewHelper {
     //! 放缩显示指定范围到视图区域
     public boolean zoomToModel(float x, float y, float w, float h);
 
+    //! 视图坐标转为模型坐标
+    public PointF displayToModel(float x, float y);
+
     //! 开始Undo录制
     public boolean startUndoRecord(String path);
 
@@ -177,6 +182,12 @@ public interface IViewHelper {
 
     //! 返回已播放或录制的相对毫秒数
     public int getPlayTicks();
+
+    //! 添加播放源
+    public boolean addPlayProvider(PlayProvider p, int tag, Object extra);
+
+    //! 返回播放项的个数
+    public int getPlayProviderCount();
 
     //! 设置是否允许触摸交互
     public void setGestureEnable(boolean enabled);

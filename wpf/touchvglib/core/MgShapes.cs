@@ -47,6 +47,12 @@ public class MgShapes : MgObject {
     return ret;
   }
 
+  public MgShapes shallowCopy() {
+    IntPtr cPtr = touchvgPINVOKE.MgShapes_shallowCopy(swigCPtr);
+    MgShapes ret = (cPtr == IntPtr.Zero) ? null : new MgShapes(cPtr, false);
+    return ret;
+  }
+
   public static MgShapes create(MgObject owner, int index) {
     IntPtr cPtr = touchvgPINVOKE.MgShapes_create__SWIG_0(MgObject.getCPtr(owner), index);
     MgShapes ret = (cPtr == IntPtr.Zero) ? null : new MgShapes(cPtr, false);
@@ -200,9 +206,19 @@ public class MgShapes : MgObject {
     return ret;
   }
 
-  public bool updateShape(MgShape shape) {
-    bool ret = touchvgPINVOKE.MgShapes_updateShape(swigCPtr, MgShape.getCPtr(shape));
+  public bool updateShape(MgShape shape, bool force) {
+    bool ret = touchvgPINVOKE.MgShapes_updateShape__SWIG_0(swigCPtr, MgShape.getCPtr(shape), force);
     return ret;
+  }
+
+  public bool updateShape(MgShape shape) {
+    bool ret = touchvgPINVOKE.MgShapes_updateShape__SWIG_1(swigCPtr, MgShape.getCPtr(shape));
+    return ret;
+  }
+
+  public void transform(Matrix2d mat) {
+    touchvgPINVOKE.MgShapes_transform(swigCPtr, Matrix2d.getCPtr(mat));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
   public bool removeShape(int sid) {

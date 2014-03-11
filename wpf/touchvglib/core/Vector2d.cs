@@ -219,7 +219,13 @@ public class Vector2d : IDisposable {
   }
 
   public Vector2d set(float xx, float yy) {
-    Vector2d ret = new Vector2d(touchvgPINVOKE.Vector2d_set(swigCPtr, xx, yy), false);
+    Vector2d ret = new Vector2d(touchvgPINVOKE.Vector2d_set__SWIG_0(swigCPtr, xx, yy), false);
+    return ret;
+  }
+
+  public Vector2d set(Vector2d v) {
+    Vector2d ret = new Vector2d(touchvgPINVOKE.Vector2d_set__SWIG_1(swigCPtr, Vector2d.getCPtr(v)), false);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 

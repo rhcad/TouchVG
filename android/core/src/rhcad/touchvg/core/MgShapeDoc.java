@@ -40,6 +40,11 @@ public class MgShapeDoc extends MgObject {
     return (cPtr == 0) ? null : new MgShapeDoc(cPtr, false);
   }
 
+  public MgShapeDoc shallowCopy() {
+    long cPtr = touchvgJNI.MgShapeDoc_shallowCopy(swigCPtr, this);
+    return (cPtr == 0) ? null : new MgShapeDoc(cPtr, false);
+  }
+
   public int copyShapes(MgShapeDoc src, boolean deeply) {
     return touchvgJNI.MgShapeDoc_copyShapes(swigCPtr, this, MgShapeDoc.getCPtr(src), src, deeply);
   }

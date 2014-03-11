@@ -1,6 +1,6 @@
 //! \file GiViewHelper.mm
 //! \brief 实现iOS绘图视图辅助类 GiViewHelper
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
 #import "GiViewHelper.h"
 #import "GiViewImpl.h"
@@ -8,7 +8,7 @@
 #include "GiShapeAdapter.h"
 #include "gicoreview.h"
 
-#define IOSLIBVERSION     5
+#define IOSLIBVERSION     6
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -374,6 +374,13 @@ static GiViewHelper *_sharedInstance = nil;
     return ret >= 0;
 }
 
+- (CGPoint)displayToModel:(CGPoint)point {
+    mgvector<float> pt(point.x, point.y);
+    if ([_view coreView]->displayToModel(pt))
+        point = CGPointMake(pt.get(0), pt.get(1));
+    return point;
+}
+
 - (BOOL)zoomToExtent {
     return [_view coreView]->zoomToExtent();
 }
@@ -569,6 +576,14 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (void)stopPlay {
     [self internalAdapter]->stopRecord(false);
+}
+
+- (BOOL)addPlayProvider:(id<GiPlayProvider>)p tag:(int)tag {
+    return p && [self internalAdapter]->addPlayProvider(p, tag);
+}
+
+- (int)playProviderCount {
+    return [self internalAdapter]->playProviderCount();
 }
 
 @end

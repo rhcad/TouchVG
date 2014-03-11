@@ -18,25 +18,25 @@ public class LogHelper {
     }
 
     public void r() {
-        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return")).toString());
         level--;
+        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return")).toString());
     }
 
     public boolean r(boolean ret) {
-        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return " + ret)).toString());
         level--;
+        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return " + ret)).toString());
         return ret;
     }
 
     public int r(int ret) {
-        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return " + ret)).toString());
         level--;
+        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return " + ret)).toString());
         return ret;
     }
 
     public String r(String ret) {
-        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return")).toString());
         level--;
+        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return")).toString());
         return ret;
     }
 

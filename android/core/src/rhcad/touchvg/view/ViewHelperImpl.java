@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.util.Locale;
 
 import rhcad.touchvg.IGraphView;
+import rhcad.touchvg.IGraphView.PlayProvider;
 import rhcad.touchvg.IViewHelper;
 import rhcad.touchvg.core.CmdObserver;
 import rhcad.touchvg.core.Floats;
@@ -25,6 +26,7 @@ import rhcad.touchvg.view.internal.ResourceUtil;
 import rhcad.touchvg.view.internal.ViewUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -39,7 +41,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelperImpl implements IViewHelper{
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 5;
+    private static final int JARVERSION = 6;
     private BaseGraphView mView;
 
     static {
@@ -286,6 +288,14 @@ public class ViewHelperImpl implements IViewHelper{
     }
 
     @Override
+    public PointF displayToModel(float x, float y) {
+        final Floats pt = new Floats(x, y);
+        if (mView.coreView().displayToModel(pt))
+            return new PointF(pt.get(0), pt.get(1));
+        return null;
+    }
+
+    @Override
     public boolean startUndoRecord(String path) {
         final BaseViewAdapter adapter = internalAdapter();
 
@@ -296,7 +306,7 @@ public class ViewHelperImpl implements IViewHelper{
                 || !createDirectory(path, true)) {
             return false;
         }
-        return adapter.startRecord(path, BaseViewAdapter.START_UNDO);
+        return adapter.startUndoRecord(path);
     }
 
     @Override
@@ -349,7 +359,7 @@ public class ViewHelperImpl implements IViewHelper{
                 || !createDirectory(path, true)) {
             return false;
         }
-        return adapter.startRecord(path, BaseViewAdapter.START_RECORD);
+        return adapter.startRecord(path);
     }
 
     @Override
@@ -404,6 +414,18 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public int getPlayTicks() {
         return mView.coreView().getRecordTick(false, BaseViewAdapter.getTick());
+    }
+
+    @Override
+    public boolean addPlayProvider(PlayProvider p, int tag, Object extra) {
+        final BaseViewAdapter adapter = internalAdapter();
+        return adapter != null && p != null && adapter.addPlayProvider(p, tag, extra);
+    }
+
+    @Override
+    public int getPlayProviderCount() {
+        final BaseViewAdapter adapter = internalAdapter();
+        return adapter != null ? adapter.getPlayProviderCount() : 0;
     }
 
     private BaseViewAdapter internalAdapter() {
@@ -895,7 +917,9 @@ public class ViewHelperImpl implements IViewHelper{
     public void onSaveInstanceState(Bundle outState, String path) {
         final BaseViewAdapter adapter = internalAdapter();
 
-        if (adapter != null) {
+        if (adapter == null) {
+            Log.w(TAG, "onSaveInstanceState fail due to no view adapter");
+        } else {
             final LogHelper log = new LogHelper();
             Bundle state = adapter.getSavedState();
 
@@ -942,6 +966,8 @@ public class ViewHelperImpl implements IViewHelper{
             }
             adapter.onRestoreInstanceState(state);
             log.r();
+        } else {
+            Log.w(TAG, "onRestoreInstanceState fail, state:" + (state != null));
         }
     }
 

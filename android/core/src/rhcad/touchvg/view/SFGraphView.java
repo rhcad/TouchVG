@@ -34,7 +34,7 @@ import android.view.View;
  * Graphics view with media overlay surface placed behind its window.
  * It uses a surface view placed on top of its window to draw dynamic shapes.
  */
-public class SFGraphView extends SurfaceView implements BaseGraphView {
+public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNotify {
     protected static final String TAG = "touchvg";
     protected GiCoreView mCoreView;
     protected SFViewAdapter mViewAdapter;
@@ -103,7 +103,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView {
         mSurfaceCallback = new SurfaceCallback(this);
         getHolder().addCallback(mSurfaceCallback);
 
-        mGestureListener = new GestureListener(mCoreView, mViewAdapter);
+        mGestureListener = new GestureListener(mCoreView, mViewAdapter, this);
         mGestureDetector = new GestureDetector(context, mGestureListener);
         ResourceUtil.setContextImages(context);
 
@@ -471,7 +471,8 @@ public class SFGraphView extends SurfaceView implements BaseGraphView {
                                 mView.mCoreView.drawAppend(doc, gs, mView.mDynDrawCanvas, sid);
                             }
                         }
-                        mView.mCoreView.dynDraw(shapes, gs, mView.mDynDrawCanvas);
+                        mView.mCoreView.dynDraw(shapes, gs, mView.mDynDrawCanvas,
+                                mView.mViewAdapter.acquirePlayings());
                     } finally {
                         GiCoreView.releaseDoc(doc);
                         GiCoreView.releaseShapes(shapes);
@@ -800,5 +801,25 @@ public class SFGraphView extends SurfaceView implements BaseGraphView {
     @Override
     public void setOnFirstRegenListener(OnFirstRegenListener listener) {
         mViewAdapter.setOnFirstRegenListener(listener);
+    }
+
+    @Override
+    public void setOnPlayEndedListener(OnPlayEndedListener listener) {
+        mViewAdapter.setOnPlayEndedListener(listener);
+    }
+
+    @Override
+    public boolean onPreLongPress(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onPreSingleTap(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onPreDoubleTap(MotionEvent e) {
+        return false;
     }
 }

@@ -51,6 +51,12 @@ public class Chars : IDisposable {
     democmdsPINVOKE.Chars_setSize(swigCPtr, n);
   }
 
+  public Chars(char v1, char v2) : this(democmdsPINVOKE.new_Chars__SWIG_2(v1, v2), true) {
+  }
+
+  public Chars(char v1, char v2, char v3, char v4) : this(democmdsPINVOKE.new_Chars__SWIG_3(v1, v2, v3, v4), true) {
+  }
+
   public int count() {
     int ret = democmdsPINVOKE.Chars_count(swigCPtr);
     return ret;

@@ -76,7 +76,8 @@ public class touchvgJNI {
   public final static native boolean Vector2d_isZeroVector__SWIG_1(long jarg1, Vector2d jarg1_);
   public final static native boolean Vector2d_isEqualTo__SWIG_0(long jarg1, Vector2d jarg1_, long jarg2, Vector2d jarg2_, long jarg3, Tol jarg3_);
   public final static native boolean Vector2d_isEqualTo__SWIG_1(long jarg1, Vector2d jarg1_, long jarg2, Vector2d jarg2_);
-  public final static native long Vector2d_set(long jarg1, Vector2d jarg1_, float jarg2, float jarg3);
+  public final static native long Vector2d_set__SWIG_0(long jarg1, Vector2d jarg1_, float jarg2, float jarg3);
+  public final static native long Vector2d_set__SWIG_1(long jarg1, Vector2d jarg1_, long jarg2, Vector2d jarg2_);
   public final static native long Vector2d_setAngleLength(long jarg1, Vector2d jarg1_, float jarg2, float jarg3);
   public final static native long Vector2d_setLength(long jarg1, Vector2d jarg1_, float jarg2);
   public final static native long Vector2d_scaledVector(long jarg1, Vector2d jarg1_, float jarg2);
@@ -119,7 +120,8 @@ public class touchvgJNI {
   public final static native float Point2d_distanceSquare(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_);
   public final static native boolean Point2d_isEqualTo__SWIG_0(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_, long jarg3, Tol jarg3_);
   public final static native boolean Point2d_isEqualTo__SWIG_1(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_);
-  public final static native long Point2d_set(long jarg1, Point2d jarg1_, float jarg2, float jarg3);
+  public final static native long Point2d_set__SWIG_0(long jarg1, Point2d jarg1_, float jarg2, float jarg3);
+  public final static native long Point2d_set__SWIG_1(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_);
   public final static native long Point2d_polarPoint(long jarg1, Point2d jarg1_, float jarg2, float jarg3);
   public final static native long Point2d_rulerPoint__SWIG_0(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_, float jarg3);
   public final static native long Point2d_rulerPoint__SWIG_1(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_, float jarg3, float jarg4);
@@ -602,6 +604,8 @@ public class touchvgJNI {
   public final static native long new_Ints__SWIG_0(int jarg1);
   public final static native long new_Ints__SWIG_1();
   public final static native void Ints_setSize(long jarg1, Ints jarg1_, int jarg2);
+  public final static native long new_Ints__SWIG_2(int jarg1, int jarg2);
+  public final static native long new_Ints__SWIG_3(int jarg1, int jarg2, int jarg3, int jarg4);
   public final static native int Ints_count(long jarg1, Ints jarg1_);
   public final static native int Ints_get(long jarg1, Ints jarg1_, int jarg2);
   public final static native void Ints_set__SWIG_0(long jarg1, Ints jarg1_, int jarg2, int jarg3);
@@ -610,6 +614,8 @@ public class touchvgJNI {
   public final static native long new_Floats__SWIG_0(int jarg1);
   public final static native long new_Floats__SWIG_1();
   public final static native void Floats_setSize(long jarg1, Floats jarg1_, int jarg2);
+  public final static native long new_Floats__SWIG_2(float jarg1, float jarg2);
+  public final static native long new_Floats__SWIG_3(float jarg1, float jarg2, float jarg3, float jarg4);
   public final static native int Floats_count(long jarg1, Floats jarg1_);
   public final static native float Floats_get(long jarg1, Floats jarg1_, int jarg2);
   public final static native void Floats_set__SWIG_0(long jarg1, Floats jarg1_, int jarg2, float jarg3);
@@ -618,6 +624,8 @@ public class touchvgJNI {
   public final static native long new_Chars__SWIG_0(int jarg1);
   public final static native long new_Chars__SWIG_1();
   public final static native void Chars_setSize(long jarg1, Chars jarg1_, int jarg2);
+  public final static native long new_Chars__SWIG_2(char jarg1, char jarg2);
+  public final static native long new_Chars__SWIG_3(char jarg1, char jarg2, char jarg3, char jarg4);
   public final static native int Chars_count(long jarg1, Chars jarg1_);
   public final static native char Chars_get(long jarg1, Chars jarg1_, int jarg2);
   public final static native void Chars_set__SWIG_0(long jarg1, Chars jarg1_, int jarg2, char jarg3);
@@ -626,6 +634,8 @@ public class touchvgJNI {
   public final static native long new_ConstShapes__SWIG_0(int jarg1);
   public final static native long new_ConstShapes__SWIG_1();
   public final static native void ConstShapes_setSize(long jarg1, ConstShapes jarg1_, int jarg2);
+  public final static native long new_ConstShapes__SWIG_2(long jarg1, MgShape jarg1_, long jarg2, MgShape jarg2_);
+  public final static native long new_ConstShapes__SWIG_3(long jarg1, MgShape jarg1_, long jarg2, MgShape jarg2_, long jarg3, MgShape jarg3_, long jarg4, MgShape jarg4_);
   public final static native int ConstShapes_count(long jarg1, ConstShapes jarg1_);
   public final static native long ConstShapes_get(long jarg1, ConstShapes jarg1_, int jarg2);
   public final static native void ConstShapes_set__SWIG_0(long jarg1, ConstShapes jarg1_, int jarg2, long jarg3, MgShape jarg3_);
@@ -634,6 +644,8 @@ public class touchvgJNI {
   public final static native long new_Shapes__SWIG_0(int jarg1);
   public final static native long new_Shapes__SWIG_1();
   public final static native void Shapes_setSize(long jarg1, Shapes jarg1_, int jarg2);
+  public final static native long new_Shapes__SWIG_2(long jarg1, MgShape jarg1_, long jarg2, MgShape jarg2_);
+  public final static native long new_Shapes__SWIG_3(long jarg1, MgShape jarg1_, long jarg2, MgShape jarg2_, long jarg3, MgShape jarg3_, long jarg4, MgShape jarg4_);
   public final static native int Shapes_count(long jarg1, Shapes jarg1_);
   public final static native long Shapes_get(long jarg1, Shapes jarg1_, int jarg2);
   public final static native void Shapes_set__SWIG_0(long jarg1, Shapes jarg1_, int jarg2, long jarg3, MgShape jarg3_);
@@ -757,6 +769,7 @@ public class touchvgJNI {
   public final static native void delete_MgShapeFactory(long jarg1);
   public final static native int MgShapes_Type();
   public final static native long MgShapes_cloneShapes(long jarg1, MgShapes jarg1_);
+  public final static native long MgShapes_shallowCopy(long jarg1, MgShapes jarg1_);
   public final static native long MgShapes_create__SWIG_0(long jarg1, MgObject jarg1_, int jarg2);
   public final static native long MgShapes_create__SWIG_1(long jarg1, MgObject jarg1_);
   public final static native long MgShapes_create__SWIG_2();
@@ -785,7 +798,9 @@ public class touchvgJNI {
   public final static native int MgShapes_copyShapes__SWIG_2(long jarg1, MgShapes jarg1_, long jarg2, MgShapes jarg2_);
   public final static native long MgShapes_addShape(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
   public final static native boolean MgShapes_addShapeDirect(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
-  public final static native boolean MgShapes_updateShape(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
+  public final static native boolean MgShapes_updateShape__SWIG_0(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_, boolean jarg3);
+  public final static native boolean MgShapes_updateShape__SWIG_1(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
+  public final static native void MgShapes_transform(long jarg1, MgShapes jarg1_, long jarg2, Matrix2d jarg2_);
   public final static native boolean MgShapes_removeShape(long jarg1, MgShapes jarg1_, int jarg2);
   public final static native boolean MgShapes_moveShapeTo(long jarg1, MgShapes jarg1_, int jarg2, long jarg3, MgShapes jarg3_);
   public final static native void MgShapes_copyShapesTo(long jarg1, MgShapes jarg1_, long jarg2, MgShapes jarg2_);
@@ -1613,6 +1628,7 @@ public class touchvgJNI {
   public final static native boolean MgLayer_isKindOf(long jarg1, MgLayer jarg1_, int jarg2);
   public final static native int MgShapeDoc_Type();
   public final static native long MgShapeDoc_cloneDoc(long jarg1, MgShapeDoc jarg1_);
+  public final static native long MgShapeDoc_shallowCopy(long jarg1, MgShapeDoc jarg1_);
   public final static native int MgShapeDoc_copyShapes(long jarg1, MgShapeDoc jarg1_, long jarg2, MgShapeDoc jarg2_, boolean jarg3);
   public final static native long MgShapeDoc_createDoc();
   public final static native boolean MgShapeDoc_save(long jarg1, MgShapeDoc jarg1_, long jarg2, MgStorage jarg2_, int jarg3);
@@ -1762,6 +1778,7 @@ public class touchvgJNI {
   public final static native boolean MgCoreView_getBoundingBox__SWIG_0(long jarg1, MgCoreView jarg1_, long jarg2, Floats jarg2_);
   public final static native boolean MgCoreView_getBoundingBox__SWIG_1(long jarg1, MgCoreView jarg1_, long jarg2, Floats jarg2_, int jarg3);
   public final static native boolean MgCoreView_getBoundingBox__SWIG_2(long jarg1, MgCoreView jarg1_, int jarg2, int jarg3, long jarg4, Floats jarg4_, int jarg5);
+  public final static native boolean MgCoreView_displayToModel(long jarg1, MgCoreView jarg1_, long jarg2, Floats jarg2_);
   public final static native long GiCoreView_createView__SWIG_0(long jarg1, GiView jarg1_, int jarg2);
   public final static native long GiCoreView_createView__SWIG_1(long jarg1, GiView jarg1_);
   public final static native long GiCoreView_createMagnifierView(long jarg1, GiView jarg1_, long jarg2, GiCoreView jarg2_, long jarg3, GiView jarg3_);
@@ -1806,12 +1823,15 @@ public class touchvgJNI {
   public final static native boolean GiCoreView_onPause(long jarg1, GiCoreView jarg1_, int jarg2);
   public final static native boolean GiCoreView_onResume(long jarg1, GiCoreView jarg1_, int jarg2);
   public final static native boolean GiCoreView_restoreRecord(long jarg1, GiCoreView jarg1_, int jarg2, String jarg3, int jarg4, int jarg5, int jarg6, int jarg7, int jarg8, int jarg9);
-  public final static native long new_MgPlaying();
+  public final static native long new_MgPlaying(int jarg1);
   public final static native void delete_MgPlaying(long jarg1);
+  public final static native int MgPlaying_getTag(long jarg1, MgPlaying jarg1_);
   public final static native int MgPlaying_acquireShapes(long jarg1, MgPlaying jarg1_);
   public final static native void MgPlaying_releaseShapes(int jarg1);
-  public final static native int MgPlaying_getShapesForEdit(long jarg1, MgPlaying jarg1_);
+  public final static native int MgPlaying_getShapesForEdit(long jarg1, MgPlaying jarg1_, boolean jarg2);
   public final static native void MgPlaying_submitShapes(long jarg1, MgPlaying jarg1_);
+  public final static native void MgPlaying_stop(long jarg1, MgPlaying jarg1_);
+  public final static native boolean MgPlaying_isStopping(long jarg1, MgPlaying jarg1_);
   public final static native void TestCanvas_initRand();
   public final static native int TestCanvas_randInt(int jarg1, int jarg2);
   public final static native float TestCanvas_randFloat(float jarg1, float jarg2);

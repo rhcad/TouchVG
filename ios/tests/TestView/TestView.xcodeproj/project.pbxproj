@@ -33,6 +33,8 @@
 		AE252D30181FCB0700884B5C /* pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE252D2F181FCB0700884B5C /* pencil@2x.png */; };
 		AE3341B516ECBDBE00F0E517 /* CalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3341B416ECBDBE00F0E517 /* CalloutView.m */; };
 		AE34D03717F91762004BC88B /* TouchVG.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE34D03617F91762004BC88B /* TouchVG.bundle */; };
+		AE3726EE18C9C53200B756C1 /* GiGraphView2.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE3726ED18C9C53200B756C1 /* GiGraphView2.mm */; };
+		AE3726EF18C9C53200B756C1 /* GiGraphView2.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE3726ED18C9C53200B756C1 /* GiGraphView2.mm */; };
 		AE3B01151811064D0004AAC7 /* fonts.svg in Resources */ = {isa = PBXBuildFile; fileRef = AE3B01141811064D0004AAC7 /* fonts.svg */; };
 		AE4E6F0616129337006CAA5C /* ViewFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE4E6F0416129337006CAA5C /* ViewFactory.mm */; };
 		AE53750E177D26980050CC4F /* GiGraphView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE53750D177D26980050CC4F /* GiGraphView1.mm */; };
@@ -60,6 +62,7 @@
 		AE3341B316ECBDBE00F0E517 /* CalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutView.h; sourceTree = "<group>"; };
 		AE3341B416ECBDBE00F0E517 /* CalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalloutView.m; sourceTree = "<group>"; };
 		AE34D03617F91762004BC88B /* TouchVG.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TouchVG.bundle; path = ../Resources/TouchVG.bundle; sourceTree = "<group>"; };
+		AE3726ED18C9C53200B756C1 /* GiGraphView2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiGraphView2.mm; sourceTree = "<group>"; };
 		AE3B01141811064D0004AAC7 /* fonts.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fonts.svg; sourceTree = "<group>"; };
 		AE3B011C18110A610004AAC7 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		AE4E6F0416129337006CAA5C /* ViewFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewFactory.mm; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 				AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */,
 				AE53750C177D26980050CC4F /* GiGraphView1.h */,
 				AE53750D177D26980050CC4F /* GiGraphView1.mm */,
+				AE3726ED18C9C53200B756C1 /* GiGraphView2.mm */,
 				AEADC21D16EB570800484962 /* LargeView1.h */,
 				AEADC21E16EB570800484962 /* LargeView1.mm */,
 				AE4E6F0416129337006CAA5C /* ViewFactory.mm */,
@@ -308,6 +312,7 @@
 				02FDBE98189DD22A0038C91F /* LargeView1.mm in Sources */,
 				02FDBE99189DD22A0038C91F /* CalloutView.m in Sources */,
 				02FDBE9A189DD22A0038C91F /* GiGraphView1.mm in Sources */,
+				AE3726EF18C9C53200B756C1 /* GiGraphView2.mm in Sources */,
 				02FDBE9B189DD22A0038C91F /* AnimatedPathView1.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,6 +329,7 @@
 				AEADC21F16EB570800484962 /* LargeView1.mm in Sources */,
 				AE3341B516ECBDBE00F0E517 /* CalloutView.m in Sources */,
 				AE53750E177D26980050CC4F /* GiGraphView1.mm in Sources */,
+				AE3726EE18C9C53200B756C1 /* GiGraphView2.mm in Sources */,
 				AE252D2B181FC93300884B5C /* AnimatedPathView1.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

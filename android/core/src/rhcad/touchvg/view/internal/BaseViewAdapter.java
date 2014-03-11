@@ -6,7 +6,9 @@ import rhcad.touchvg.IGraphView.OnCommandChangedListener;
 import rhcad.touchvg.IGraphView.OnContentChangedListener;
 import rhcad.touchvg.IGraphView.OnDynamicChangedListener;
 import rhcad.touchvg.IGraphView.OnFirstRegenListener;
+import rhcad.touchvg.IGraphView.OnPlayEndedListener;
 import rhcad.touchvg.IGraphView.OnSelectionChangedListener;
+import rhcad.touchvg.IGraphView.PlayProvider;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
@@ -20,9 +22,6 @@ import android.util.Log;
 
 //! 视图回调适配器
 public abstract class BaseViewAdapter extends GiView {
-    public static final int START_UNDO = 1;
-    public static final int START_RECORD = 2;
-    public static final int START_PLAY = 3;
     protected static final String TAG = "touchvg";
     private ContextAction mAction;
     private boolean mActionEnabled = true;
@@ -202,15 +201,18 @@ public abstract class BaseViewAdapter extends GiView {
         this.firstRegenListeners.add(listener);
     }
 
-    private Activity getActivity() {
+    public void setOnPlayEndedListener(OnPlayEndedListener listener) {
+    }
+
+    public Activity getActivity() {
         return (Activity) getGraphView().getView().getContext();
     }
 
-    private void removeCallbacks(Runnable r) {
+    public void removeCallbacks(Runnable r) {
         getGraphView().getView().removeCallbacks(r);
     }
 
-    private boolean postDelayed(Runnable action, long delayMillis) {
+    public boolean postDelayed(Runnable action, long delayMillis) {
         return getGraphView().getView().postDelayed(action, delayMillis);
     }
 
@@ -241,7 +243,7 @@ public abstract class BaseViewAdapter extends GiView {
         return mRegenCount;
     }
 
-    private GiCoreView coreView() {
+    public GiCoreView coreView() {
         return getGraphView().coreView();
     }
 
@@ -261,7 +263,7 @@ public abstract class BaseViewAdapter extends GiView {
         }
     }
 
-    private boolean onStopped(ShapeRunnable r) {
+    public boolean onStopped(ShapeRunnable r) {
         if (mUndoing == r)
             mUndoing = null;
         if (mRecorder == r)
@@ -269,43 +271,44 @@ public abstract class BaseViewAdapter extends GiView {
         return coreView() != null;
     }
 
-    private boolean isRecording(int type) {
-        switch (type) {
-            case START_UNDO: return mUndoing != null;
-            default: return mRecorder != null;
-        }
-    }
-
     public static int getTick() {
         return ShapeRunnable.getTick();
     }
 
-    public boolean startRecord(String path, int type) {
-        if (isRecording(type))
+    public boolean startUndoRecord(String path) {
+        if (mUndoing != null || !startRecordCore(path, UndoRunnable.TYPE))
             return false;
 
+        mUndoing = new UndoRunnable(this, path);
+        new Thread(mUndoing, "touchvg.undo").start();
+
+        return true;
+    }
+
+    public boolean startRecord(String path) {
+        if (mRecorder != null || !startRecordCore(path, RecordRunnable.TYPE))
+            return false;
+
+        mRecorder = new RecordRunnable(this, path);
+        new Thread(mRecorder, "touchvg.record").start();
+
+        return true;
+    }
+
+    private boolean startRecordCore(String path, int type) {
         synchronized (coreView()) {
-            int doc = type < START_PLAY ? coreView().acquireFrontDoc() : 0;
-            if (type < START_PLAY && doc == 0) {
+            int doc = coreView().acquireFrontDoc();
+            if (doc == 0) {
                 Log.e(TAG, "Fail to record shapes due to no front doc");
                 return false;
             }
-            if (type == START_RECORD) {
-                coreView().traverseImageShapes(doc, new ImageFinder(
-                        getGraphView().getImageCache().getImagePath(), path));
+            if (type == RecordRunnable.TYPE) {
+                coreView().traverseImageShapes(doc,
+                        new ImageFinder(getGraphView().getImageCache().getImagePath(), path));
             }
-            if (!coreView().startRecord(path, doc, type == START_UNDO, getTick()))
+            if (!coreView().startRecord(path, doc, type == UndoRunnable.TYPE, getTick()))
                 return false;
         }
-
-        if (type == START_UNDO) {
-            mUndoing = new UndoRunnable(this, path);
-            new Thread(mUndoing, "touchvg.undo").start();
-        } else if (type == START_RECORD) {
-            mRecorder = new RecordRunnable(this, path);
-            new Thread(mRecorder, "touchvg.record").start();
-        }
-
         return true;
     }
 
@@ -327,14 +330,27 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     public boolean startPlay(String path) {
-        hideContextActions();
-        if (startRecord(path, START_PLAY)) {
-        }
         return false;
+    }
+
+    public boolean addPlayProvider(PlayProvider p, int tag, Object extra) {
+        return false;
+    }
+
+    public int getPlayProviderCount() {
+        return 0;
+    }
+
+    public Ints acquirePlayings() {
+        return null;
     }
 
     public String getRecordPath() {
         return mRecorder != null ? mRecorder.getPath() : null;
+    }
+
+    public String getPlayPath() {
+        return null;
     }
 
     public void undo() {
@@ -434,92 +450,12 @@ public abstract class BaseViewAdapter extends GiView {
                         && cv.restoreRecord(playing ? 2 : 1, recordPath, doc, 0, index, 0,
                                 tick, getTick());
                 if (ret) {
-                    if (playing) {
-                    } else {
+                    if (!playing) {
                         mRecorder = new RecordRunnable(this, recordPath);
                         new Thread(mRecorder, "touchvg.record").start();
                     }
                 }
                 log.r(ret);
-            }
-        }
-    }
-
-    protected static class UndoRunnable extends ShapeRunnable {
-        private BaseViewAdapter mViewAdapter;
-        public static final int UNDO = 0xFFFFFF10;
-        public static final int REDO = 0xFFFFFF20;
-
-        public UndoRunnable(BaseViewAdapter viewAdapter, String path) {
-            super(path, START_UNDO, viewAdapter.coreView());
-            this.mViewAdapter = viewAdapter;
-        }
-
-        @Override
-        protected boolean stopRecord() {
-            synchronized (GiCoreView.class) {
-                boolean ret = mViewAdapter.onStopped(this);
-                if (ret) {
-                    synchronized (mCoreView) {
-                        mCoreView.stopRecord(mViewAdapter, true);
-                    }
-                }
-                return ret;
-            }
-        }
-
-        @Override
-        protected void afterStopped(boolean normal) {
-            mViewAdapter = null;
-        }
-
-        @Override
-        protected void process(int tick, int doc, int shapes) {
-            if (tick == UNDO) {
-                synchronized (mCoreView) {
-                    mCoreView.undo(mViewAdapter);
-                }
-            } else if (tick == REDO) {
-                synchronized (mCoreView) {
-                    mCoreView.redo(mViewAdapter);
-                }
-            } else if (!mCoreView.recordShapes(true, tick, doc, shapes)) {
-                Log.e(TAG, "Fail to record shapes for undoing, tick=" + tick + ", doc=" + doc);
-            }
-        }
-    }
-
-    protected static class RecordRunnable extends ShapeRunnable {
-        protected BaseViewAdapter mViewAdapter;
-
-        public RecordRunnable(BaseViewAdapter viewAdapter, String path) {
-            super(path, START_RECORD, viewAdapter.coreView());
-            this.mViewAdapter = viewAdapter;
-        }
-
-        @Override
-        protected boolean stopRecord() {
-            synchronized (GiCoreView.class) {
-                boolean ret = mViewAdapter.onStopped(this);
-                if (ret) {
-                    synchronized (mCoreView) {
-                        mCoreView.stopRecord(mViewAdapter, false);
-                    }
-                }
-                return ret;
-            }
-        }
-
-        @Override
-        protected void afterStopped(boolean normal) {
-            mViewAdapter = null;
-        }
-
-        @Override
-        protected void process(int tick, int doc, int shapes) {
-            if (!mCoreView.recordShapes(false, tick, doc, shapes)) {
-                Log.e(TAG, "Fail to record shapes for playing, tick=" + tick
-                        + ", doc=" + doc + ", shapes=" + shapes);
             }
         }
     }

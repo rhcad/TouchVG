@@ -13,6 +13,8 @@ public class democmdsJNI {
   public final static native long new_Floats__SWIG_0(int jarg1);
   public final static native long new_Floats__SWIG_1();
   public final static native void Floats_setSize(long jarg1, Floats jarg1_, int jarg2);
+  public final static native long new_Floats__SWIG_2(float jarg1, float jarg2);
+  public final static native long new_Floats__SWIG_3(float jarg1, float jarg2, float jarg3, float jarg4);
   public final static native int Floats_count(long jarg1, Floats jarg1_);
   public final static native float Floats_get(long jarg1, Floats jarg1_, int jarg2);
   public final static native void Floats_set__SWIG_0(long jarg1, Floats jarg1_, int jarg2, float jarg3);
@@ -21,6 +23,8 @@ public class democmdsJNI {
   public final static native long new_Chars__SWIG_0(int jarg1);
   public final static native long new_Chars__SWIG_1();
   public final static native void Chars_setSize(long jarg1, Chars jarg1_, int jarg2);
+  public final static native long new_Chars__SWIG_2(char jarg1, char jarg2);
+  public final static native long new_Chars__SWIG_3(char jarg1, char jarg2, char jarg3, char jarg4);
   public final static native int Chars_count(long jarg1, Chars jarg1_);
   public final static native char Chars_get(long jarg1, Chars jarg1_, int jarg2);
   public final static native void Chars_set__SWIG_0(long jarg1, Chars jarg1_, int jarg2, char jarg3);

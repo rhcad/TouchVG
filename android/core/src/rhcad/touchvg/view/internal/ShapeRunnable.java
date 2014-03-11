@@ -8,10 +8,10 @@ public class ShapeRunnable implements Runnable {
     protected static final String TAG = "touchvg";
     protected String mPath;
     protected int mType;
-    protected GiCoreView mCoreView;
     protected boolean mStopping = false;
+    protected GiCoreView mCoreView;
+    private Object mMonitor = new Object();
     protected int[] mPending = new int[60]; // {tick,doc,shapes}
-    protected int[] mPendingLock = new int[1];
 
     public ShapeRunnable(String path, int type, GiCoreView coreView) {
         this.mPath = path;
@@ -23,10 +23,6 @@ public class ShapeRunnable implements Runnable {
         Log.d(TAG, "ShapeRunnable finalize, type=" + mType);
     }
 
-    public static int getTick() {
-        return (int)SystemClock.elapsedRealtime();
-    }
-
     public String getPath() {
         return mPath;
     }
@@ -35,18 +31,36 @@ public class ShapeRunnable implements Runnable {
         return mType;
     }
 
-    public void requestRecord() {
+    public static int getTick() {
+        return (int) SystemClock.elapsedRealtime();
+    }
+
+    public final void stop() {
+        final LogHelper log = new LogHelper();
+        mStopping = true;
+        requestProcess();
+        synchronized (mMonitor) {
+            try {
+                mMonitor.wait(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        log.r();
+    }
+
+    public final void requestProcess() {
         synchronized (this) {
             this.notify();
         }
     }
 
-    public void requestRecord(int command) {
+    public final void requestRecord(int command) {
         requestRecord(command, 0, 0);
     }
 
-    public void requestRecord(int tick, int doc, int shapes) {
-        synchronized (mPendingLock) {
+    public final void requestRecord(int tick, int doc, int shapes) {
+        synchronized (mPending) {
             int i = 0;
             for (; i < mPending.length && mPending[i] != 0; i += 3) {
             }
@@ -63,25 +77,11 @@ public class ShapeRunnable implements Runnable {
             }
         }
         if (tick != 0) {
-            requestRecord();
+            requestProcess();
         }
     }
 
-    public void stop() {
-        final LogHelper log = new LogHelper();
-        mStopping = true;
-        requestRecord();
-        synchronized (mPending) {
-            try {
-                mPending.wait(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        log.r();
-    }
-
-    protected boolean stopRecord() {
+    protected boolean beforeStopped() {
         return true;
     }
 
@@ -93,46 +93,40 @@ public class ShapeRunnable implements Runnable {
 
     @Override
     public void run() {
-        while (!mStopping) {
-            synchronized (this) {
-                try {
-                    this.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (!mStopping) {
-                try {
-                    process();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        while (!mStopping && waitProcess()) {
+            try {
+                process();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
-        boolean normal = stopRecord();
-
-        for (int i = 0; i < mPending.length; i++) {
-            if (mPending[i] != 0) {
-                GiCoreView.releaseDoc(mPending[i + 1]);
-                GiCoreView.releaseShapes(mPending[i + 2]);
-            }
-        }
+        boolean normal = beforeStopped();
         afterStopped(normal);
-        mCoreView = null;
+        cleanup();
 
-        synchronized (mPending) {
-            mPending.notify();
+        synchronized (mMonitor) {
+            mMonitor.notify();
         }
-        Log.d(TAG, "RecordRunnable exit, type=" + mType);
     }
 
-    protected void process() {
+    private boolean waitProcess() {
+        synchronized (this) {
+            try {
+                this.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return !mStopping;
+    }
+
+    private void process() {
         int tick = 0, doc = 0, shapes = 0;
         boolean loop = true;
 
         while (loop && !mStopping && mCoreView != null) {
-            synchronized (mPendingLock) {
+            synchronized (mPending) {
                 while (loop) {
                     tick = mPending[0];
                     doc = mPending[1];
@@ -151,5 +145,16 @@ public class ShapeRunnable implements Runnable {
             process(tick, doc, shapes);
             loop = (mPending[0] != 0);
         }
+    }
+
+    private void cleanup() {
+        for (int i = 0; i < mPending.length; i++) {
+            if (mPending[i] != 0) {
+                GiCoreView.releaseDoc(mPending[i + 1]);
+                GiCoreView.releaseShapes(mPending[i + 2]);
+            }
+        }
+        mCoreView = null;
+        Log.d(TAG, "RecordRunnable exit, type=" + mType);
     }
 }

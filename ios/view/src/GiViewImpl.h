@@ -1,6 +1,6 @@
 //! \file GiViewImpl.h
 //! \brief 定义iOS绘图视图类的内部实现接口
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
 #import "GiPaintView.h"
 #include "GiCanvasAdapter.h"
@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 class GiViewAdapter;
+@protocol GiPlayProvider;
 
 //! 动态图形的绘图视图类
 /*! \class IosTempView
@@ -59,7 +60,6 @@ private:
     GiLayerRender   *_render;           //!< 后台渲染对象
     dispatch_queue_t _recordQueue[2];   //!< 录制队列
     __block bool    _recordStopping[2]; //!< 录制队列待停止
-    mgvector<int>   _frameIndex;        //!< 帧索引
     
 public:
     std::vector<id> delegates;          //!< GiPaintViewDelegate 观察者数组
@@ -92,6 +92,10 @@ public:
     enum RecordType { kUndo, kRecord, kPlay };
     bool startRecord(NSString *path, RecordType type);
     void stopRecord(bool forUndo);
+    bool addPlayProvider(id<GiPlayProvider> p, int tag);
+    bool acquirePlayings(mgvector<int>& exts);
+    void stopPlayings();
+    int playProviderCount();
     
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);
@@ -146,18 +150,10 @@ private:
 
 @end
 
-/*! \category GiPaintView(GestureRecognizer)
+/*! \category GiPaintView(GestureInternel)
     \brief GiPaintView 的手势响应实现部分
  */
-@interface GiPaintView(GestureRecognizer)
-
-- (void)setupGestureRecognizers;
-- (BOOL)panHandler:(UIGestureRecognizer *)sender;
-- (BOOL)tapHandler:(UITapGestureRecognizer *)sender;
-- (BOOL)twoTapsHandler:(UITapGestureRecognizer *)sender;
-- (BOOL)pressHandler:(UILongPressGestureRecognizer *)sender;
-- (void)delayTap;
-- (void)dispatchTapPending;
+@interface GiPaintView(GestureInternel)
 
 - (void)ignoreTouch:(CGPoint)pt :(UIView *)handledButton;
 - (void)redrawForDelay:(id)changed;

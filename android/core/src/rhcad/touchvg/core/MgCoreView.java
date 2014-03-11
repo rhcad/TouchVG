@@ -336,8 +336,8 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_getDisplayExtent__SWIG_0(swigCPtr, this, Floats.getCPtr(box), box);
   }
 
-  public boolean getDisplayExtent(int doc, int hGs, Floats box) {
-    return touchvgJNI.MgCoreView_getDisplayExtent__SWIG_1(swigCPtr, this, doc, hGs, Floats.getCPtr(box), box);
+  public boolean getDisplayExtent(int doc, int gs, Floats box) {
+    return touchvgJNI.MgCoreView_getDisplayExtent__SWIG_1(swigCPtr, this, doc, gs, Floats.getCPtr(box), box);
   }
 
   public boolean getBoundingBox(Floats box) {
@@ -348,8 +348,12 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_getBoundingBox__SWIG_1(swigCPtr, this, Floats.getCPtr(box), box, shapeId);
   }
 
-  public boolean getBoundingBox(int doc, int hGs, Floats box, int shapeId) {
-    return touchvgJNI.MgCoreView_getBoundingBox__SWIG_2(swigCPtr, this, doc, hGs, Floats.getCPtr(box), box, shapeId);
+  public boolean getBoundingBox(int doc, int gs, Floats box, int shapeId) {
+    return touchvgJNI.MgCoreView_getBoundingBox__SWIG_2(swigCPtr, this, doc, gs, Floats.getCPtr(box), box, shapeId);
+  }
+
+  public boolean displayToModel(Floats d) {
+    return touchvgJNI.MgCoreView_displayToModel(swigCPtr, this, Floats.getCPtr(d), d);
   }
 
   public final static int DOC_CHANGED = 1;

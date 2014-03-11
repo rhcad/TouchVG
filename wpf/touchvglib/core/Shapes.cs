@@ -51,6 +51,12 @@ public class Shapes : IDisposable {
     touchvgPINVOKE.Shapes_setSize(swigCPtr, n);
   }
 
+  public Shapes(MgShape v1, MgShape v2) : this(touchvgPINVOKE.new_Shapes__SWIG_2(MgShape.getCPtr(v1), MgShape.getCPtr(v2)), true) {
+  }
+
+  public Shapes(MgShape v1, MgShape v2, MgShape v3, MgShape v4) : this(touchvgPINVOKE.new_Shapes__SWIG_3(MgShape.getCPtr(v1), MgShape.getCPtr(v2), MgShape.getCPtr(v3), MgShape.getCPtr(v4)), true) {
+  }
+
   public int count() {
     int ret = touchvgPINVOKE.Shapes_count(swigCPtr);
     return ret;

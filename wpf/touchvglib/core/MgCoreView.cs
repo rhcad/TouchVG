@@ -407,8 +407,8 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual bool getDisplayExtent(int doc, int hGs, Floats box) {
-    bool ret = touchvgPINVOKE.MgCoreView_getDisplayExtent__SWIG_1(swigCPtr, doc, hGs, Floats.getCPtr(box));
+  public virtual bool getDisplayExtent(int doc, int gs, Floats box) {
+    bool ret = touchvgPINVOKE.MgCoreView_getDisplayExtent__SWIG_1(swigCPtr, doc, gs, Floats.getCPtr(box));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -425,8 +425,14 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual bool getBoundingBox(int doc, int hGs, Floats box, int shapeId) {
-    bool ret = touchvgPINVOKE.MgCoreView_getBoundingBox__SWIG_2(swigCPtr, doc, hGs, Floats.getCPtr(box), shapeId);
+  public virtual bool getBoundingBox(int doc, int gs, Floats box, int shapeId) {
+    bool ret = touchvgPINVOKE.MgCoreView_getBoundingBox__SWIG_2(swigCPtr, doc, gs, Floats.getCPtr(box), shapeId);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public virtual bool displayToModel(Floats d) {
+    bool ret = touchvgPINVOKE.MgCoreView_displayToModel(swigCPtr, Floats.getCPtr(d));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

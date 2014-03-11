@@ -35,8 +35,12 @@ public class MgPlaying {
     }
   }
 
-  public MgPlaying() {
-    this(touchvgJNI.new_MgPlaying(), true);
+  public MgPlaying(int tag) {
+    this(touchvgJNI.new_MgPlaying(tag), true);
+  }
+
+  public int getTag() {
+    return touchvgJNI.MgPlaying_getTag(swigCPtr, this);
   }
 
   public int acquireShapes() {
@@ -47,12 +51,20 @@ public class MgPlaying {
     touchvgJNI.MgPlaying_releaseShapes(shapes);
   }
 
-  public int getShapesForEdit() {
-    return touchvgJNI.MgPlaying_getShapesForEdit(swigCPtr, this);
+  public int getShapesForEdit(boolean needClear) {
+    return touchvgJNI.MgPlaying_getShapesForEdit(swigCPtr, this, needClear);
   }
 
   public void submitShapes() {
     touchvgJNI.MgPlaying_submitShapes(swigCPtr, this);
+  }
+
+  public void stop() {
+    touchvgJNI.MgPlaying_stop(swigCPtr, this);
+  }
+
+  public boolean isStopping() {
+    return touchvgJNI.MgPlaying_isStopping(swigCPtr, this);
   }
 
 }

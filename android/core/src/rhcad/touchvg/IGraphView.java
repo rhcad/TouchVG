@@ -58,27 +58,41 @@ public interface IGraphView {
 
     //! 当前命令改变的通知
     public interface OnCommandChangedListener {
-        void onCommandChanged(IGraphView view);
+        public void onCommandChanged(IGraphView view);
     }
 
     //! 图形选择集改变的通知
     public interface OnSelectionChangedListener {
-        void onSelectionChanged(IGraphView view);
+        public void onSelectionChanged(IGraphView view);
     }
 
     //! 图形数据改变的通知
     public interface OnContentChangedListener {
-        void onContentChanged(IGraphView view);
+        public void onContentChanged(IGraphView view);
     }
 
     //! 图形动态改变的通知
     public interface OnDynamicChangedListener {
-        void onDynamicChanged(IGraphView view);
+        public void onDynamicChanged(IGraphView view);
+    }
+
+    //! 播放结束的通知
+    public interface OnPlayEndedListener {
+        //! 播放完成，待用户结束播放
+        public boolean onPlayWillEnd(IGraphView view);
+        //! 播放结束
+        public void onPlayEnded(IGraphView view);
+    }
+
+    //! 播放源接口
+    public interface PlayProvider {
+        public int provideFrame(IGraphView view, int tag, Object extra, int hShapes, int tick, int lastTick);
+        public void onPlayEnded(IGraphView view, int tag, Object extra);
     }
 
     //! 第一次后台渲染结束的通知
     public interface OnFirstRegenListener {
-        void onFirstRegen(IGraphView view);
+        public void onFirstRegen(IGraphView view);
     }
 
     //! 添加当前命令改变的观察者
@@ -95,4 +109,7 @@ public interface IGraphView {
 
     //! 添加第一次后台渲染结束的观察者
     public void setOnFirstRegenListener(OnFirstRegenListener listener);
+
+    //! 添加播放结束的观察者
+    public void setOnPlayEndedListener(OnPlayEndedListener listener);
 }

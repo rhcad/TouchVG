@@ -47,6 +47,14 @@ public class Chars {
     touchvgJNI.Chars_setSize(swigCPtr, this, n);
   }
 
+  public Chars(char v1, char v2) {
+    this(touchvgJNI.new_Chars__SWIG_2(v1, v2), true);
+  }
+
+  public Chars(char v1, char v2, char v3, char v4) {
+    this(touchvgJNI.new_Chars__SWIG_3(v1, v2, v3, v4), true);
+  }
+
   public int count() {
     return touchvgJNI.Chars_count(swigCPtr, this);
   }

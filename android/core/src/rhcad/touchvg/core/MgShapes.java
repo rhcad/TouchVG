@@ -40,6 +40,11 @@ public class MgShapes extends MgObject {
     return (cPtr == 0) ? null : new MgShapes(cPtr, false);
   }
 
+  public MgShapes shallowCopy() {
+    long cPtr = touchvgJNI.MgShapes_shallowCopy(swigCPtr, this);
+    return (cPtr == 0) ? null : new MgShapes(cPtr, false);
+  }
+
   public static MgShapes create(MgObject owner, int index) {
     long cPtr = touchvgJNI.MgShapes_create__SWIG_0(MgObject.getCPtr(owner), owner, index);
     return (cPtr == 0) ? null : new MgShapes(cPtr, false);
@@ -163,8 +168,16 @@ public class MgShapes extends MgObject {
     return touchvgJNI.MgShapes_addShapeDirect(swigCPtr, this, MgShape.getCPtr(shape), shape);
   }
 
+  public boolean updateShape(MgShape shape, boolean force) {
+    return touchvgJNI.MgShapes_updateShape__SWIG_0(swigCPtr, this, MgShape.getCPtr(shape), shape, force);
+  }
+
   public boolean updateShape(MgShape shape) {
-    return touchvgJNI.MgShapes_updateShape(swigCPtr, this, MgShape.getCPtr(shape), shape);
+    return touchvgJNI.MgShapes_updateShape__SWIG_1(swigCPtr, this, MgShape.getCPtr(shape), shape);
+  }
+
+  public void transform(Matrix2d mat) {
+    touchvgJNI.MgShapes_transform(swigCPtr, this, Matrix2d.getCPtr(mat), mat);
   }
 
   public boolean removeShape(int sid) {

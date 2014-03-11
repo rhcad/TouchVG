@@ -51,6 +51,8 @@
 		AE2A3A6D178FC617000194AE /* GiCanvasAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE2A3A6B178FC617000194AE /* GiCanvasAdapter.mm */; };
 		AE2A3B4C178FC7C1000194AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */; };
 		AE2A3B4E178FC7EB000194AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4D178FC7EB000194AE /* UIKit.framework */; };
+		AE3726EB18C9B21C00B756C1 /* GiPlayProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = AE3726EA18C9B21C00B756C1 /* GiPlayProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AE3726EC18C9B21C00B756C1 /* GiPlayProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = AE3726EA18C9B21C00B756C1 /* GiPlayProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE3A618117EE7CC600B23F69 /* GiViewAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE3A618017EE7CC600B23F69 /* GiViewAdapter.mm */; };
 		AEC33820180E28520029D7B3 /* ImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = AEC3381E180E28520029D7B3 /* ImageCache.h */; };
 		AEC33821180E28520029D7B3 /* ImageCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEC3381F180E28520029D7B3 /* ImageCache.mm */; };
@@ -75,6 +77,7 @@
 		AE2A3A6B178FC617000194AE /* GiCanvasAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiCanvasAdapter.mm; path = ../../view/src/GiCanvasAdapter.mm; sourceTree = "<group>"; };
 		AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AE2A3B4D178FC7EB000194AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		AE3726EA18C9B21C00B756C1 /* GiPlayProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiPlayProvider.h; path = ../../view/include/GiPlayProvider.h; sourceTree = "<group>"; };
 		AE3A618017EE7CC600B23F69 /* GiViewAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GiViewAdapter.mm; path = ../../view/src/GiViewAdapter.mm; sourceTree = "<group>"; };
 		AE97A0FD186D4BF900DFEA77 /* gicanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gicanvas.h; sourceTree = "<group>"; };
 		AE97A0FF186D4BF900DFEA77 /* mgaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgaction.h; sourceTree = "<group>"; };
@@ -436,6 +439,7 @@
 			children = (
 				02A4C40F1888838700F5188B /* ARCMacro.h */,
 				AEF1B1D717E29D2C005B5132 /* GiViewHelper.h */,
+				AE3726EA18C9B21C00B756C1 /* GiPlayProvider.h */,
 				AE2A3A65178FC608000194AE /* GiPaintView.h */,
 				AE2A3A66178FC608000194AE /* GiCanvasAdapter.h */,
 				AE037955181FA29B0049931F /* GiShapeAdapter.h */,
@@ -466,6 +470,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE3726EC18C9B21C00B756C1 /* GiPlayProvider.h in Headers */,
 				02BD6696189A1E9A00A4A444 /* GiViewHelper.h in Headers */,
 				02BD6697189A1E9A00A4A444 /* GiPaintView.h in Headers */,
 				02BD6698189A1E9A00A4A444 /* GiCanvasAdapter.h in Headers */,
@@ -487,6 +492,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE3726EB18C9B21C00B756C1 /* GiPlayProvider.h in Headers */,
 				AEF1B1D817E29D2C005B5132 /* GiViewHelper.h in Headers */,
 				AE2A3A67178FC608000194AE /* GiPaintView.h in Headers */,
 				AE2A3A68178FC608000194AE /* GiCanvasAdapter.h in Headers */,

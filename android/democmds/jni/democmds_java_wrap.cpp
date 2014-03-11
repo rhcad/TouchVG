@@ -286,6 +286,42 @@ SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_Floats_1setSize(JNIEnv *j
 }
 
 
+SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_new_1Floats_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jfloat jarg1, jfloat jarg2) {
+  jlong jresult = 0 ;
+  float arg1 ;
+  float arg2 ;
+  mgvector< float > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (float)jarg1; 
+  arg2 = (float)jarg2; 
+  result = (mgvector< float > *)new mgvector< float >(arg1,arg2);
+  *(mgvector< float > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_new_1Floats_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jfloat jarg1, jfloat jarg2, jfloat jarg3, jfloat jarg4) {
+  jlong jresult = 0 ;
+  float arg1 ;
+  float arg2 ;
+  float arg3 ;
+  float arg4 ;
+  mgvector< float > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (float)jarg1; 
+  arg2 = (float)jarg2; 
+  arg3 = (float)jarg3; 
+  arg4 = (float)jarg4; 
+  result = (mgvector< float > *)new mgvector< float >(arg1,arg2,arg3,arg4);
+  *(mgvector< float > **)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jint JNICALL Java_democmds_core_democmdsJNI_Floats_1count(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   mgvector< float > *arg1 = (mgvector< float > *) 0 ;
@@ -396,6 +432,42 @@ SWIGEXPORT void JNICALL Java_democmds_core_democmdsJNI_Chars_1setSize(JNIEnv *je
   arg1 = *(mgvector< char > **)&jarg1; 
   arg2 = (int)jarg2; 
   (arg1)->setSize(arg2);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_new_1Chars_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jchar jarg1, jchar jarg2) {
+  jlong jresult = 0 ;
+  char arg1 ;
+  char arg2 ;
+  mgvector< char > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (char)jarg1; 
+  arg2 = (char)jarg2; 
+  result = (mgvector< char > *)new mgvector< char >(arg1,arg2);
+  *(mgvector< char > **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_democmds_core_democmdsJNI_new_1Chars_1_1SWIG_13(JNIEnv *jenv, jclass jcls, jchar jarg1, jchar jarg2, jchar jarg3, jchar jarg4) {
+  jlong jresult = 0 ;
+  char arg1 ;
+  char arg2 ;
+  char arg3 ;
+  char arg4 ;
+  mgvector< char > *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (char)jarg1; 
+  arg2 = (char)jarg2; 
+  arg3 = (char)jarg3; 
+  arg4 = (char)jarg4; 
+  result = (mgvector< char > *)new mgvector< char >(arg1,arg2,arg3,arg4);
+  *(mgvector< char > **)&jresult = result; 
+  return jresult;
 }
 
 

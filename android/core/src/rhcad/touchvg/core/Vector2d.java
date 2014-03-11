@@ -172,7 +172,11 @@ public class Vector2d {
   }
 
   public Vector2d set(float xx, float yy) {
-    return new Vector2d(touchvgJNI.Vector2d_set(swigCPtr, this, xx, yy), false);
+    return new Vector2d(touchvgJNI.Vector2d_set__SWIG_0(swigCPtr, this, xx, yy), false);
+  }
+
+  public Vector2d set(Vector2d v) {
+    return new Vector2d(touchvgJNI.Vector2d_set__SWIG_1(swigCPtr, this, Vector2d.getCPtr(v), v), false);
   }
 
   public Vector2d setAngleLength(float angle, float len) {

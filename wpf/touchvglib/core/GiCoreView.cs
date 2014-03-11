@@ -88,7 +88,6 @@ public class GiCoreView : MgCoreView {
 
   public int dynDraw(int shapes, int gs, GiCanvas canvas, Ints exts) {
     int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_1(swigCPtr, shapes, gs, GiCanvas.getCPtr(canvas), Ints.getCPtr(exts));
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
@@ -204,7 +203,6 @@ public class GiCoreView : MgCoreView {
 
   public bool recordShapes(bool forUndo, int tick, int doc, int shapes, Ints exts) {
     bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_1(swigCPtr, forUndo, tick, doc, shapes, Ints.getCPtr(exts));
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 

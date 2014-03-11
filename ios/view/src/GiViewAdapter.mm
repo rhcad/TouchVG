@@ -1,9 +1,11 @@
 //! \file GiViewAdapter.mm
 //! \brief 实现iOS绘图视图适配器 GiViewAdapter
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
 #import "GiViewImpl.h"
 #import "ImageCache.h"
+#import "GiPlayProvider.h"
+#include <algorithm>
 
 static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"取消",
     @"删除", @"克隆", @"定长", @"不定长", @"锁定", @"解锁", @"编辑", @"返回",
@@ -214,11 +216,13 @@ void GiViewAdapter::stopRecord(bool forUndo)
     
     if (_recordQueue[i]) {
         _recordStopping[i] = true;
-        dispatch_async(_recordQueue[i], ^{
-            if (_view.window) {
-                _coreView->stopRecord(this, forUndo);
-            }
-        });
+        if (_view && _view.window) {
+            dispatch_async(_recordQueue[i], ^{
+                if (_view && _view.window && _coreView) {
+                    _coreView->stopRecord(this, forUndo);
+                }
+            });
+        }
         dispatch_release(_recordQueue[i]);
         _recordQueue[i] = NULL;
     }
@@ -231,10 +235,39 @@ void GiViewAdapter::recordShapes(bool forUndo, long doc, long shapes)
         long tick = _coreView->getRecordTick(forUndo, getTickCount());
         dispatch_async(_recordQueue[i], ^{
             if (_view.window) {
-                _coreView->recordShapes(forUndo, tick, doc, shapes);
+                bool ret;
+                if (!forUndo) {
+                    mgvector<int> exts;
+                    acquirePlayings(exts);
+                    ret = _coreView->recordShapes(forUndo, tick, doc, shapes, &exts);
+                } else {
+                    ret = _coreView->recordShapes(forUndo, tick, doc, shapes);
+                }
+                if (!ret) {
+                    NSLog(@"Fail to record shapes, forUndo=%d, doc=%ld, shapes=%ld", forUndo, doc, shapes);
+                }
             }
         });
     }
+}
+
+bool GiViewAdapter::addPlayProvider(id<GiPlayProvider> p, int tag)
+{
+    return false;
+}
+
+bool GiViewAdapter::acquirePlayings(mgvector<int>& exts)
+{
+    return false;
+}
+
+void GiViewAdapter::stopPlayings()
+{
+}
+
+int GiViewAdapter::playProviderCount()
+{
+    return 0;
 }
 
 void GiViewAdapter::regenAll(bool changed) {
@@ -312,6 +345,7 @@ void GiViewAdapter::regenAppend(int sid) {
 
 void GiViewAdapter::stopRegen() {
     _coreView->stopDrawing();
+    stopPlayings();
     [_render stopRender];
     _view = nil;
 }

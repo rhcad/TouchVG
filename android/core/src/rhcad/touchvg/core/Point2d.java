@@ -128,7 +128,11 @@ public class Point2d {
   }
 
   public Point2d set(float xx, float yy) {
-    return new Point2d(touchvgJNI.Point2d_set(swigCPtr, this, xx, yy), false);
+    return new Point2d(touchvgJNI.Point2d_set__SWIG_0(swigCPtr, this, xx, yy), false);
+  }
+
+  public Point2d set(Point2d pnt) {
+    return new Point2d(touchvgJNI.Point2d_set__SWIG_1(swigCPtr, this, Point2d.getCPtr(pnt), pnt), false);
   }
 
   public Point2d polarPoint(float angle, float dist) {

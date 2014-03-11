@@ -1,6 +1,6 @@
 //! \file GiPaintView.h
 //! \brief 定义iOS绘图视图类 GiPaintView
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
 #import <UIKit/UIKit.h>
 
@@ -23,6 +23,9 @@ class GiViewAdapter;
 - (void)onContentChanged:(id)view;      //!< 图形数据改变的通知
 - (void)onDynamicChanged:(id)view;      //!< 图形动态改变的通知
 - (void)onFirstRegen:(id)view;          //!< 第一次后台渲染结束的通知
+- (void)onPlayFrame:(id)view;           //!< 播放一帧的通知
+- (void)onPlayWillEnd:(id)view;         //!< 播放完成，待用户结束播放
+- (void)onPlayEnded:(id)view;           //!< 播放结束的通知
 
 @end
 
@@ -41,6 +44,7 @@ class GiViewAdapter;
 @property(nonatomic, readonly) UIPinchGestureRecognizer *pinchRecognizer;       //!< 双指放缩手势识别器
 @property(nonatomic, readonly) UIRotationGestureRecognizer *rotationRecognizer; //!< 双指旋转手势识别器
 @property(nonatomic)           BOOL gestureEnabled;     //!< 是否允许触摸交互
+
 @property(nonatomic, readonly) ImageCache           *imageCache;                //!< 图像对象缓存
 @property(nonatomic, readonly) GiPaintView          *mainView;                  //!< 放大镜对应的主视图
 
@@ -74,5 +78,20 @@ class GiViewAdapter;
 
 - (void)addDelegate:(id<GiPaintViewDelegate>)d;     //!< 增加绘图消息观察者
 - (void)removeDelegate:(id<GiPaintViewDelegate>)d;  //!< 去掉绘图消息观察者
+
+@end
+
+/*! \category GiPaintView(GestureRecognizer)
+    \brief GiPaintView 的手势响应函数部分
+ */
+@interface GiPaintView(GestureRecognizer)
+
+- (void)setupGestureRecognizers;                                //!< 设置手势识别器
+- (BOOL)panHandler:(UIGestureRecognizer *)sender;               //!< 拖动手势识别响应
+- (BOOL)tapHandler:(UITapGestureRecognizer *)sender;            //!< 单指点击手势响应
+- (BOOL)twoTapsHandler:(UITapGestureRecognizer *)sender;        //!< 单指双击手势响应
+- (BOOL)pressHandler:(UILongPressGestureRecognizer *)sender;    //!< 单指长按手势响应
+- (void)delayTap;                                               //!< 延时响应点击手势
+- (void)dispatchTapPending;                                     //!< 分发挂起的单击手势
 
 @end

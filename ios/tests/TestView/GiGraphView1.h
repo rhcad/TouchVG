@@ -22,6 +22,7 @@ enum kTestFlags {
     kRandShapes = 32,
     kRecord     = 64,
     kPlayShapes = 64,
+    kProvider   = 128,
 };
 
 //! iOS测试绘图视图类
@@ -39,6 +40,7 @@ enum kTestFlags {
 @interface GiGraphView2 : GiPaintView {
     int     _testType;
     UIButton    *_pauseBtn;
+    UIGestureRecognizer *_recognizer;
 }
 
 - (id)initWithFrame:(CGRect)frame withType:(int)type;

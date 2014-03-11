@@ -159,7 +159,13 @@ public class Point2d : IDisposable {
   }
 
   public Point2d set(float xx, float yy) {
-    Point2d ret = new Point2d(touchvgPINVOKE.Point2d_set(swigCPtr, xx, yy), false);
+    Point2d ret = new Point2d(touchvgPINVOKE.Point2d_set__SWIG_0(swigCPtr, xx, yy), false);
+    return ret;
+  }
+
+  public Point2d set(Point2d pnt) {
+    Point2d ret = new Point2d(touchvgPINVOKE.Point2d_set__SWIG_1(swigCPtr, Point2d.getCPtr(pnt)), false);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
