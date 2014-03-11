@@ -35,6 +35,8 @@ public class GestureListener extends SimpleOnGestureListener {
     private float mLastY;
     private float mLastX2;
     private float mLastY2;
+    private long mDownTime = 0;
+    private long mTouchTime;
 
     public GestureListener(GiCoreView coreView, GiView adapter, Object view) {
         mCoreView = coreView;
@@ -82,6 +84,7 @@ public class GestureListener extends SimpleOnGestureListener {
         }
         mLastX2 = mLastX;
         mLastY2 = mLastY;
+        mDownTime = e.getDownTime();
 
         return true;
     }
@@ -100,6 +103,7 @@ public class GestureListener extends SimpleOnGestureListener {
         float x2 = e.getPointerCount() > 1 ? e.getX(1) : x1;
         float y2 = e.getPointerCount() > 1 ? e.getY(1) : y1;
 
+        mTouchTime = e.getEventTime();
         onTouch_(v, e.getActionMasked(), e.getPointerCount(), x1, y1, x2, y2);
         return false;   // to call GestureDetector.onTouchEvent
     }
@@ -189,16 +193,21 @@ public class GestureListener extends SimpleOnGestureListener {
         boolean ret = false;
 
         if (mFingerCount != fingerCount) {
-            if (onMoved(GiGestureState.kGiGesturePossible, fingerCount, x1, y1, x2, y2, true)) {
-                if (mFingerCount == 1) { // 单指变为双指
-                    ret = onMoved(GiGestureState.kGiGestureEnded, mFingerCount,
-                            mLastX, mLastY, 0, 0, true);
-                } else {
-                    ret = onMoved(GiGestureState.kGiGestureEnded, mFingerCount,
-                            x1, y1, x2, y2, true);
+            if (mFingerCount == 1) {                // 单指变为双指
+                if (mTouchTime - mDownTime < 800) { // 双指先后触到屏
+                    ret = onMoved(GiGestureState.kGiGestureCancel, 1, mLastX, mLastY, 0, 0, true);
+                } else {                            // 单指移动一段时间后变为双指
+                    ret = onMoved(GiGestureState.kGiGestureEnded, 1, mLastX, mLastY, 0, 0, true);
                 }
-                mFingerCount = fingerCount;
-                ret = onMoved(GiGestureState.kGiGestureBegan, mFingerCount, x1, y1, x2, y2, true);
+                if (onMoved(GiGestureState.kGiGesturePossible, fingerCount, x1, y1, x2, y2, true)) {
+                    mFingerCount = fingerCount;
+                    ret = onMoved(GiGestureState.kGiGestureBegan, fingerCount, x1, y1, x2, y2, true);
+                } else {
+                    mMoving = M_END_MOVE;
+                }
+            } else {                                // 不允许双指变为单指
+                mMoving = M_END_MOVE;
+                ret = onMoved(GiGestureState.kGiGestureEnded, mFingerCount, x1, y1, x2, y2, true);
             }
         } else {
             ret = onMoved(GiGestureState.kGiGestureMoved, mFingerCount, x1, y1, x2, y2, false);
