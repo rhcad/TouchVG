@@ -81,6 +81,7 @@ public:
     void stopRegen();
     void onFirstRegen();
     bool isMainThread() const;
+    long acquireFrontDoc();
     
     int getAppendCount() const;
     void beginRender();

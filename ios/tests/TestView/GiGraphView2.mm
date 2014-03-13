@@ -135,12 +135,13 @@ static char _lastVgFile[256] = { 0 };
 }
 
 - (BOOL)pressHandler:(UILongPressGestureRecognizer *)sender {
-    if ([[GiViewHelper sharedInstance] playProviderCount] == 0) {
+    GiViewHelper *helper = [GiViewHelper sharedInstance];
+    
+    if ([helper playProviderCount] == 0) {
         return [super pressHandler:sender];
     }
     if (sender.state == UIGestureRecognizerStateBegan) {
         _recognizer = sender;
-        GiViewHelper *helper = [GiViewHelper sharedInstance];
         [helper addPlayProvider:self tag:[helper playProviderCount] + 1];
         _recognizer = nil;
     }

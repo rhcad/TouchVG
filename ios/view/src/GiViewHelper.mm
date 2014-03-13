@@ -219,10 +219,10 @@ static GiViewHelper *_sharedInstance = nil;
 - (long)acquireFrontDoc {
     __block long hDoc;
     if ([_view viewAdapter2]->isMainThread()) {
-        hDoc = [_view coreView]->acquireFrontDoc();
+        hDoc = [_view viewAdapter2]->acquireFrontDoc();
     } else {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            hDoc = [_view coreView]->acquireFrontDoc();
+            hDoc = [_view viewAdapter2]->acquireFrontDoc();
         });
     }
     return hDoc;
@@ -468,11 +468,11 @@ static GiViewHelper *_sharedInstance = nil;
     __block long hDoc, hGs;
     
     if ([_view viewAdapter2]->isMainThread()) {
-        hDoc = [_view coreView]->acquireFrontDoc();
+        hDoc = [_view viewAdapter2]->acquireFrontDoc();
         hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
     } else {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            hDoc = [_view coreView]->acquireFrontDoc();
+            hDoc = [_view viewAdapter2]->acquireFrontDoc();
             hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
         });
     }

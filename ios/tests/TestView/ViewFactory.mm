@@ -191,7 +191,7 @@ static void addAnimatedPathView1(NSMutableArray *arr, NSUInteger &i, NSUInteger 
         view = [[AnimatedPathView1 alloc]initWithFrame:frame];
         
         GiPaintView *v = [[GiPaintView alloc]initWithFrame:frame];
-        GiViewHelper *hlp = [GiViewHelper sharedInstance];
+        GiViewHelper *hlp = [GiViewHelper sharedInstance:v];
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                               NSUserDomainMask, YES) objectAtIndex:0];
         [hlp setImagePath:path];

@@ -112,11 +112,11 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
         __block long doc, gs;
         
         if (isMainThread()) {
-            doc = _coreView->acquireFrontDoc();
+            doc = acquireFrontDoc();
             gs = doc ? _coreView->acquireGraphics(this) : 0;
         } else {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                doc = _coreView->acquireFrontDoc();
+                doc = acquireFrontDoc();
                 gs = doc ? _coreView->acquireGraphics(this) : 0;
             });
         }
@@ -391,6 +391,17 @@ bool GiViewAdapter::isMainThread() const {
     return dispatch_get_current_queue() == dispatch_get_main_queue();
 }
 
+long GiViewAdapter::acquireFrontDoc() {
+    long doc = _coreView->acquireFrontDoc();
+    
+    if (!doc && isMainThread()) {
+        _coreView->submitBackDoc(this);
+        doc = _coreView->acquireFrontDoc();
+    }
+    
+    return doc;
+}
+
 bool GiViewAdapter::dispatchGesture(GiGestureType type, GiGestureState state, CGPoint pt) {
     return _coreView->onGesture(this, type, state, pt.x, pt.y);
 }
@@ -529,42 +540,48 @@ void GiViewAdapter::commandChanged() {
 }
 
 void GiViewAdapter::selectionChanged() {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 50 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-        for (size_t i = 0; i < delegates.size() && respondsTo.didSelectionChanged; i++) {
-            if ([delegates[i] respondsToSelector:@selector(onSelectionChanged:)]) {
-                [delegates[i] onSelectionChanged:_view];
+    if (respondsTo.didSelectionChanged || [_view respondsToSelector:@selector(onSelectionChanged:)]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 50 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            for (size_t i = 0; i < delegates.size() && respondsTo.didSelectionChanged; i++) {
+                if ([delegates[i] respondsToSelector:@selector(onSelectionChanged:)]) {
+                    [delegates[i] onSelectionChanged:_view];
+                }
             }
-        }
-        if ([_view respondsToSelector:@selector(onSelectionChanged:)]) {
-            [_view performSelector:@selector(onSelectionChanged:) withObject:_view];
-        }
-    });
+            if ([_view respondsToSelector:@selector(onSelectionChanged:)]) {
+                [_view performSelector:@selector(onSelectionChanged:) withObject:_view];
+            }
+        });
+    }
 }
 
 void GiViewAdapter::contentChanged() {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 50 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-        for (size_t i = 0; i < delegates.size() && respondsTo.didContentChanged; i++) {
-            if ([delegates[i] respondsToSelector:@selector(onContentChanged:)]) {
-                [delegates[i] onContentChanged:_view];
+    if (respondsTo.didContentChanged || [_view respondsToSelector:@selector(onContentChanged:)]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 50 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            for (size_t i = 0; i < delegates.size() && respondsTo.didContentChanged; i++) {
+                if ([delegates[i] respondsToSelector:@selector(onContentChanged:)]) {
+                    [delegates[i] onContentChanged:_view];
+                }
             }
-        }
-        if ([_view respondsToSelector:@selector(onContentChanged:)]) {
-            [_view performSelector:@selector(onContentChanged:) withObject:_view];
-        }
-    });
+            if ([_view respondsToSelector:@selector(onContentChanged:)]) {
+                [_view performSelector:@selector(onContentChanged:) withObject:_view];
+            }
+        });
+    }
 }
 
 void GiViewAdapter::dynamicChanged() {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 50 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-        for (size_t i = 0; i < delegates.size() && respondsTo.didDynamicChanged; i++) {
-            if ([delegates[i] respondsToSelector:@selector(onDynamicChanged:)]) {
-                [delegates[i] onDynamicChanged:_view];
+    if (respondsTo.didDynamicChanged || [_view respondsToSelector:@selector(onDynamicChanged:)]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 50 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            for (size_t i = 0; i < delegates.size() && respondsTo.didDynamicChanged; i++) {
+                if ([delegates[i] respondsToSelector:@selector(onDynamicChanged:)]) {
+                    [delegates[i] onDynamicChanged:_view];
+                }
             }
-        }
-        if ([_view respondsToSelector:@selector(onDynamicChanged:)]) {
-            [_view performSelector:@selector(onDynamicChanged:) withObject:_view];
-        }
-    });
+            if ([_view respondsToSelector:@selector(onDynamicChanged:)]) {
+                [_view performSelector:@selector(onDynamicChanged:) withObject:_view];
+            }
+        });
+    }
 }
 
 void GiViewAdapter::onFirstRegen()
