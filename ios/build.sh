@@ -1,6 +1,7 @@
 #!/bin/sh
 # Type './build.sh' to make iOS libraries.
 
+iphoneos71=`xcodebuild -showsdks | grep -i iphoneos7.1`
 iphoneos70=`xcodebuild -showsdks | grep -i iphoneos7.0`
 iphoneos61=`xcodebuild -showsdks | grep -i iphoneos6.1`
 iphoneos51=`xcodebuild -showsdks | grep -i iphoneos5.1`
@@ -8,6 +9,12 @@ iphoneos43=`xcodebuild -showsdks | grep -i iphoneos4.3`
 corepath=../thirdparty/TouchVGCore/ios/TouchVGCore
 SVG_path=../thirdparty/SVGKit
 
+if [ -n "$iphoneos71" ]; then
+    xcodebuild -project TouchVG/TouchVG.xcodeproj -sdk iphoneos7.1 -configuration Release -alltargets
+    xcodebuild -project DemoCmds/DemoCmds.xcodeproj -sdk iphoneos7.1 -configuration Release
+    xcodebuild -project $corepath/TouchVGCore.xcodeproj -sdk iphoneos7.1 -configuration Release
+    xcodebuild -project $SVG_path/SVGKit-iOS.xcodeproj -sdk iphoneos7.1 -configuration Release
+else
 if [ -n "$iphoneos70" ]; then
     xcodebuild -project TouchVG/TouchVG.xcodeproj -sdk iphoneos7.0 -configuration Release -alltargets
     xcodebuild -project DemoCmds/DemoCmds.xcodeproj -sdk iphoneos7.0 -configuration Release
@@ -29,6 +36,7 @@ if [ -n "$iphoneos43" ]; then
     xcodebuild -project TouchVG/TouchVG.xcodeproj -sdk iphoneos4.3 -configuration Release
     xcodebuild -project DemoCmds/DemoCmds.xcodeproj -sdk iphoneos4.3 -configuration Release
     xcodebuild -project $corepath/TouchVGCore.xcodeproj -sdk iphoneos4.3 -configuration Release
+fi
 fi
 fi
 fi
