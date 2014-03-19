@@ -65,7 +65,8 @@ typedef NS_ENUM(int, GILineStyle) {
 - (BOOL)exportExtentAsPNG:(NSString *)filename space:(CGFloat)space; //!< 保存当前显示的静态图形快照
 - (BOOL)exportPNG:(NSString *)filename;     //!< 保存静态图形的快照到PNG文件，自动改后缀名为.png
 - (BOOL)exportSVG:(NSString *)filename;     //!< 导出静态图形到SVG文件，自动改后缀名为.svg
-- (CALayer *)exportLayerTree:(BOOL)hidden;  //!< 将静态图形转换到三级图层，第二级为每个图形的层，其下有CAShapeLayer
+- (CALayer *)exportLayerTree:(BOOL)hidden;  //!< 将静态图形转换到三级层，第二级为每个图形的层，其下有CAShapeLayer
+- (CALayer *)exportLayers;                  //!< 将静态图形转换为二级层，第二级为多个CAShapeLayer
 
 - (BOOL)zoomToExtent;                       //!< 放缩显示全部内容
 - (BOOL)zoomToModel:(CGRect)rect;           //!< 放缩显示指定范围到视图区域
@@ -98,12 +99,18 @@ typedef NS_ENUM(int, GILineStyle) {
 - (int)insertSVGFromResource:(NSString *)name;      //!< 在默认位置插入一个程序资源中的SVG图片(name.svg)
 - (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt;   //!< 插入一个程序资源中的SVG图片(name.svg)
 
+- (int)insertSprite:(NSString *)format count:(int)count
+              delay:(int)ms repeatCount:(int)rcount tag:(int)tag;    //!< 在默认位置插入帧动画精灵
+- (int)insertSprite:(NSString *)format count:(int)count
+              delay:(int)ms repeatCount:(int)rcount
+                tag:(int)tag center:(CGPoint)pt;    //!< 插入帧动画精灵，并指定其中心位置
+
 + (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size; //!< 得到SVG文件的图像
 + (NSString *)addExtension:(NSString *)filename :(NSString *)ext;
 - (int)insertImageFromFile:(NSString *)filename;    //!< 在默认位置插入一个PNG、JPEG或SVG等文件的图像
 
 - (BOOL)hasImageShape;                      //!< 返回是否有容纳图像的图形对象
-- (int)findShapeByImageID:(NSString *)name;  //!< 查找指定名称的图像对应的图形对象ID
+- (int)findShapeByImageID:(NSString *)name; //!< 查找指定名称的图像对应的图形对象ID
 - (void)setImagePath:(NSString *)path;      //!< 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
 - (NSString *)getImagePath;                 //!< 返回图像文件的默认路径
 

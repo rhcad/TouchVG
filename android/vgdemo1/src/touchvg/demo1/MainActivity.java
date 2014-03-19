@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 public class MainActivity extends ListActivity {
     private static final String[] VIEWS = new String[] {
-        "ExampleActivity1", "ExampleActivitySF", "AnimationActivity1", };
+        "ExampleActivity1", "ExampleActivitySF", };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

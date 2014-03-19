@@ -228,8 +228,6 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addGraphView(arr, i, index, @"GiPaintView record randShapes line",
                  frame, kRecord|kLineCmd|kRandShapes);
     addGraphView(arr, i, index, @"GiPaintView play", frame, kPlayShapes);
-    addGraphView(arr, i, index, @"GiPaintView provider", frame, kSplinesCmd|kProvider);
-    addGraphView(arr, i, index, @"GiPaintView provider record", frame, kSplinesCmd|kProvider|kRecord);
     addGraphView(arr, i, index, @"GiPaintView hittest in democmds", frame, kHitTestCmd|kRandShapes);
     addGraphView(arr, i, index, @"GiPaintView add images", frame, kAddImages);
     addGraphView(arr, i, index, @"GiPaintView load images", frame, kLoadImages);

@@ -10,6 +10,7 @@ import rhcad.touchvg.ViewFactory;
 import vgtest.testview.TestFlags;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -67,6 +68,18 @@ public class DummyActivity extends Activity {
         }
         this.setTitle(bundle.getString("title"));
         mHelper = ViewFactory.createHelper();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        int orientation = this.getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        }
+        else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+        }
     }
 
     @Override

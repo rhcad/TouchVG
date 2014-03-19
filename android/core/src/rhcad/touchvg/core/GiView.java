@@ -94,6 +94,10 @@ public class GiView {
     if (getClass() == GiView.class) touchvgJNI.GiView_viewChanged(swigCPtr, this, GiView.getCPtr(oldview), oldview); else touchvgJNI.GiView_viewChangedSwigExplicitGiView(swigCPtr, this, GiView.getCPtr(oldview), oldview);
   }
 
+  public void shapeDeleted(int sid) {
+    if (getClass() == GiView.class) touchvgJNI.GiView_shapeDeleted(swigCPtr, this, sid); else touchvgJNI.GiView_shapeDeletedSwigExplicitGiView(swigCPtr, this, sid);
+  }
+
   public GiView() {
     this(touchvgJNI.new_GiView(), true);
     touchvgJNI.GiView_director_connect(this, swigCPtr, swigCMemOwn, true);

@@ -112,6 +112,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
         GiCoreView.setScreenDpi(dm.densityDpi, dm.density);
 
         this.setOnTouchListener(new OnTouchListener() {
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                     activateView();

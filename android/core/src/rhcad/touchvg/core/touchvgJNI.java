@@ -1685,6 +1685,8 @@ public class touchvgJNI {
   public final static native void GiView_dynamicChangedSwigExplicitGiView(long jarg1, GiView jarg1_);
   public final static native void GiView_viewChanged(long jarg1, GiView jarg1_, long jarg2, GiView jarg2_);
   public final static native void GiView_viewChangedSwigExplicitGiView(long jarg1, GiView jarg1_, long jarg2, GiView jarg2_);
+  public final static native void GiView_shapeDeleted(long jarg1, GiView jarg1_, int jarg2);
+  public final static native void GiView_shapeDeletedSwigExplicitGiView(long jarg1, GiView jarg1_, int jarg2);
   public final static native long new_GiView();
   public final static native void GiView_director_connect(GiView obj, long cptr, boolean mem_own, boolean weak_global);
   public final static native void GiView_change_ownership(GiView obj, long cptr, boolean take_or_release);
@@ -2643,6 +2645,9 @@ public class touchvgJNI {
   }
   public static void SwigDirector_GiView_viewChanged(GiView self, long oldview) {
     self.viewChanged((oldview == 0) ? null : new GiView(oldview, false));
+  }
+  public static void SwigDirector_GiView_shapeDeleted(GiView self, int sid) {
+    self.shapeDeleted(sid);
   }
   public static void SwigDirector_MgFindImageCallback_onFindImage(MgFindImageCallback self, int sid, String name) {
     self.onFindImage(sid, name);

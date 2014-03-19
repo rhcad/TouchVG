@@ -418,7 +418,7 @@ namespace Swig {
 namespace Swig {
   namespace {
     jclass jclass_touchvgJNI = NULL;
-    jmethodID director_methids[257];
+    jmethodID director_methids[258];
   }
 }
 
@@ -7709,6 +7709,27 @@ void SwigDirector_GiView::viewChanged(GiView *oldview) {
   if (swigjobj) jenv->DeleteLocalRef(swigjobj);
 }
 
+void SwigDirector_GiView::shapeDeleted(int sid) {
+  JNIEnvWrapper swigjnienv(this) ;
+  JNIEnv * jenv = swigjnienv.getJNIEnv() ;
+  jobject swigjobj = (jobject) NULL ;
+  jint jsid  ;
+  
+  if (!swig_override[11]) {
+    GiView::shapeDeleted(sid);
+    return;
+  }
+  swigjobj = swig_get_self(jenv);
+  if (swigjobj && jenv->IsSameObject(swigjobj, NULL) == JNI_FALSE) {
+    jsid = (jint) sid;
+    jenv->CallStaticVoidMethod(Swig::jclass_touchvgJNI, Swig::director_methids[255], swigjobj, jsid);
+    if (jenv->ExceptionCheck() == JNI_TRUE) return ;
+  } else {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object");
+  }
+  if (swigjobj) jenv->DeleteLocalRef(swigjobj);
+}
+
 void SwigDirector_GiView::swig_connect_director(JNIEnv *jenv, jobject jself, jclass jcls, bool swig_mem_own, bool weak_global) {
   static struct {
     const char *mname;
@@ -7747,6 +7768,9 @@ void SwigDirector_GiView::swig_connect_director(JNIEnv *jenv, jobject jself, jcl
     },
     {
       "viewChanged", "(Lrhcad/touchvg/core/GiView;)V", NULL 
+    },
+    {
+      "shapeDeleted", "(I)V", NULL 
     }
   };
   
@@ -7759,7 +7783,7 @@ void SwigDirector_GiView::swig_connect_director(JNIEnv *jenv, jobject jself, jcl
       baseclass = (jclass) jenv->NewGlobalRef(baseclass);
     }
     bool derived = (jenv->IsSameObject(baseclass, jcls) ? false : true);
-    for (int i = 0; i < 11; ++i) {
+    for (int i = 0; i < 12; ++i) {
       if (!methods[i].base_methid) {
         methods[i].base_methid = jenv->GetMethodID(baseclass, methods[i].mname, methods[i].mdesc);
         if (!methods[i].base_methid) return;
@@ -7802,7 +7826,7 @@ void SwigDirector_MgFindImageCallback::onFindImage(int sid, char const *name) {
       jname = jenv->NewStringUTF((const char *)name);
       if (!jname) return ;
     }
-    jenv->CallStaticVoidMethod(Swig::jclass_touchvgJNI, Swig::director_methids[255], swigjobj, jsid, jname);
+    jenv->CallStaticVoidMethod(Swig::jclass_touchvgJNI, Swig::director_methids[256], swigjobj, jsid, jname);
     if (jenv->ExceptionCheck() == JNI_TRUE) return ;
   } else {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object");
@@ -7871,7 +7895,7 @@ void SwigDirector_MgStringCallback::onGetString(char const *text) {
       jtext = jenv->NewStringUTF((const char *)text);
       if (!jtext) return ;
     }
-    jenv->CallStaticVoidMethod(Swig::jclass_touchvgJNI, Swig::director_methids[256], swigjobj, jtext);
+    jenv->CallStaticVoidMethod(Swig::jclass_touchvgJNI, Swig::director_methids[257], swigjobj, jtext);
     if (jenv->ExceptionCheck() == JNI_TRUE) return ;
   } else {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object");
@@ -37817,6 +37841,32 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiView_1viewChangedSw
 }
 
 
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiView_1shapeDeleted(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  GiView *arg1 = (GiView *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiView **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->shapeDeleted(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiView_1shapeDeletedSwigExplicitGiView(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  GiView *arg1 = (GiView *) 0 ;
+  int arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiView **)&jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->GiView::shapeDeleted(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_new_1GiView(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   GiView *result = 0 ;
@@ -40865,7 +40915,7 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_swig_1module_1init(JN
   static struct {
     const char *method;
     const char *signature;
-  } methods[257] = {
+  } methods[258] = {
     {
       "SwigDirector_GiCanvas_setPen", "(Lrhcad/touchvg/core/GiCanvas;IFIFF)V" 
     },
@@ -41630,6 +41680,9 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_swig_1module_1init(JN
     },
     {
       "SwigDirector_GiView_viewChanged", "(Lrhcad/touchvg/core/GiView;J)V" 
+    },
+    {
+      "SwigDirector_GiView_shapeDeleted", "(Lrhcad/touchvg/core/GiView;I)V" 
     },
     {
       "SwigDirector_MgFindImageCallback_onFindImage", "(Lrhcad/touchvg/core/MgFindImageCallback;ILjava/lang/String;)V" 

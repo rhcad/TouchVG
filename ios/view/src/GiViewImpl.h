@@ -9,11 +9,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 class GiViewAdapter;
-@protocol GiPlayProvider;
 
 //! 动态图形的绘图视图类
-/*! \class IosTempView
- */
 @interface IosTempView : UIView {
     GiViewAdapter   *_adapter;
 }
@@ -93,10 +90,6 @@ public:
     enum RecordType { kUndo, kRecord, kPlay };
     bool startRecord(NSString *path, RecordType type);
     void stopRecord(bool forUndo);
-    bool addPlayProvider(id<GiPlayProvider> p, int tag);
-    bool acquirePlayings(mgvector<int>& exts);
-    void stopPlayings();
-    int playProviderCount();
     
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);

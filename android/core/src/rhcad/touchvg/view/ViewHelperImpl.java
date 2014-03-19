@@ -124,9 +124,6 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public ViewGroup createShapeView(Context context, ViewGroup layout) {
-        ShapeView view = new ShapeView(context);
-        mView = view;
-        layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         return layout;
     }
 

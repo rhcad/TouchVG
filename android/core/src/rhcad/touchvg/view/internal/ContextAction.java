@@ -80,6 +80,7 @@ public class ContextAction {
 
         btn.setId(action);
         btn.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View v) {
                 int action = v.getId();
                 removeButtonLayout();
@@ -87,6 +88,7 @@ public class ContextAction {
             }
         });
         btn.setOnTouchListener(new OnTouchListener() {
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mView.getParent().requestDisallowInterceptTouchEvent(
                         event.getActionMasked() != MotionEvent.ACTION_UP);

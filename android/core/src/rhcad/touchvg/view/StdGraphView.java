@@ -100,6 +100,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
         }
 
         this.setOnTouchListener(new OnTouchListener() {
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                     activateView();

@@ -4671,7 +4671,19 @@ void SwigDirector_GiView::viewChanged(GiView *oldview) {
   }
 }
 
-void SwigDirector_GiView::swig_connect_director(SWIG_Callback0_t callbackregenAll, SWIG_Callback1_t callbackregenAppend, SWIG_Callback2_t callbackredraw, SWIG_Callback3_t callbackuseFinger, SWIG_Callback4_t callbackisContextActionsVisible, SWIG_Callback5_t callbackshowContextActions, SWIG_Callback6_t callbackcommandChanged, SWIG_Callback7_t callbackselectionChanged, SWIG_Callback8_t callbackcontentChanged, SWIG_Callback9_t callbackdynamicChanged, SWIG_Callback10_t callbackviewChanged) {
+void SwigDirector_GiView::shapeDeleted(int sid) {
+  int jsid  ;
+  
+  if (!swig_callbackshapeDeleted) {
+    GiView::shapeDeleted(sid);
+    return;
+  } else {
+    jsid = sid;
+    swig_callbackshapeDeleted(jsid);
+  }
+}
+
+void SwigDirector_GiView::swig_connect_director(SWIG_Callback0_t callbackregenAll, SWIG_Callback1_t callbackregenAppend, SWIG_Callback2_t callbackredraw, SWIG_Callback3_t callbackuseFinger, SWIG_Callback4_t callbackisContextActionsVisible, SWIG_Callback5_t callbackshowContextActions, SWIG_Callback6_t callbackcommandChanged, SWIG_Callback7_t callbackselectionChanged, SWIG_Callback8_t callbackcontentChanged, SWIG_Callback9_t callbackdynamicChanged, SWIG_Callback10_t callbackviewChanged, SWIG_Callback11_t callbackshapeDeleted) {
   swig_callbackregenAll = callbackregenAll;
   swig_callbackregenAppend = callbackregenAppend;
   swig_callbackredraw = callbackredraw;
@@ -4683,6 +4695,7 @@ void SwigDirector_GiView::swig_connect_director(SWIG_Callback0_t callbackregenAl
   swig_callbackcontentChanged = callbackcontentChanged;
   swig_callbackdynamicChanged = callbackdynamicChanged;
   swig_callbackviewChanged = callbackviewChanged;
+  swig_callbackshapeDeleted = callbackshapeDeleted;
 }
 
 void SwigDirector_GiView::swig_init_callbacks() {
@@ -4697,6 +4710,7 @@ void SwigDirector_GiView::swig_init_callbacks() {
   swig_callbackcontentChanged = 0;
   swig_callbackdynamicChanged = 0;
   swig_callbackviewChanged = 0;
+  swig_callbackshapeDeleted = 0;
 }
 
 SwigDirector_MgFindImageCallback::SwigDirector_MgFindImageCallback() : MgFindImageCallback(), Swig::Director() {
@@ -28838,6 +28852,26 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GiView_viewChangedSwigExplicitGiView(void * j
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_GiView_shapeDeleted(void * jarg1, int jarg2) {
+  GiView *arg1 = (GiView *) 0 ;
+  int arg2 ;
+  
+  arg1 = (GiView *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->shapeDeleted(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiView_shapeDeletedSwigExplicitGiView(void * jarg1, int jarg2) {
+  GiView *arg1 = (GiView *) 0 ;
+  int arg2 ;
+  
+  arg1 = (GiView *)jarg1; 
+  arg2 = (int)jarg2; 
+  (arg1)->GiView::shapeDeleted(arg2);
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiView() {
   void * jresult ;
   GiView *result = 0 ;
@@ -28848,11 +28882,11 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiView() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GiView_director_connect(void *objarg, SwigDirector_GiView::SWIG_Callback0_t callback0, SwigDirector_GiView::SWIG_Callback1_t callback1, SwigDirector_GiView::SWIG_Callback2_t callback2, SwigDirector_GiView::SWIG_Callback3_t callback3, SwigDirector_GiView::SWIG_Callback4_t callback4, SwigDirector_GiView::SWIG_Callback5_t callback5, SwigDirector_GiView::SWIG_Callback6_t callback6, SwigDirector_GiView::SWIG_Callback7_t callback7, SwigDirector_GiView::SWIG_Callback8_t callback8, SwigDirector_GiView::SWIG_Callback9_t callback9, SwigDirector_GiView::SWIG_Callback10_t callback10) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GiView_director_connect(void *objarg, SwigDirector_GiView::SWIG_Callback0_t callback0, SwigDirector_GiView::SWIG_Callback1_t callback1, SwigDirector_GiView::SWIG_Callback2_t callback2, SwigDirector_GiView::SWIG_Callback3_t callback3, SwigDirector_GiView::SWIG_Callback4_t callback4, SwigDirector_GiView::SWIG_Callback5_t callback5, SwigDirector_GiView::SWIG_Callback6_t callback6, SwigDirector_GiView::SWIG_Callback7_t callback7, SwigDirector_GiView::SWIG_Callback8_t callback8, SwigDirector_GiView::SWIG_Callback9_t callback9, SwigDirector_GiView::SWIG_Callback10_t callback10, SwigDirector_GiView::SWIG_Callback11_t callback11) {
   GiView *obj = (GiView *)objarg;
   SwigDirector_GiView *director = dynamic_cast<SwigDirector_GiView *>(obj);
   if (director) {
-    director->swig_connect_director(callback0, callback1, callback2, callback3, callback4, callback5, callback6, callback7, callback8, callback9, callback10);
+    director->swig_connect_director(callback0, callback1, callback2, callback3, callback4, callback5, callback6, callback7, callback8, callback9, callback10, callback11);
   }
 }
 

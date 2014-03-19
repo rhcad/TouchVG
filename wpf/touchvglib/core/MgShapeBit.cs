@@ -16,7 +16,9 @@ public enum MgShapeBit {
   kMgRotateDisnable,
   kMgShapeLocked,
   kMgNoSnap,
-  kMgNoAction
+  kMgNoAction,
+  kMgNoClone,
+  kMgHideContent
 }
 
 }

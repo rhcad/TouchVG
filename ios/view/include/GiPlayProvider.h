@@ -14,6 +14,7 @@ struct GiFrame {
     int tick;
     int lastTick;
     id  extra;
+    long backShapes;
 };
 typedef struct GiFrame GiFrame;
 
@@ -22,5 +23,10 @@ typedef struct GiFrame GiFrame;
 - (BOOL)initProvider:(GiFrame *)frame;
 - (int)provideFrame:(GiFrame)frame;
 - (void)onProvideEnded:(GiFrame)frame;
+
+@optional
+
+- (void)beforeSubmitShapes:(GiFrame)frame;
+- (void)onBackDocChanged:(GiFrame)frame;
 
 @end

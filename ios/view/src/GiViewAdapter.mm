@@ -4,7 +4,6 @@
 
 #import "GiViewImpl.h"
 #import "ImageCache.h"
-#import "GiPlayProvider.h"
 #include <algorithm>
 
 static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"取消",
@@ -133,6 +132,10 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
         _coreView->releaseGraphics(gs);
         for (int i = 0; i < APPENDSIZE; i++)
             _appendIDs[i] = 0;
+        
+        if (isMainThread() && ++_regenCount == 1) {
+            onFirstRegen();
+        }
     }
     [_dynview setNeedsDisplay];
     
@@ -235,39 +238,13 @@ void GiViewAdapter::recordShapes(bool forUndo, long doc, long shapes)
         long tick = _coreView->getRecordTick(forUndo, getTickCount());
         dispatch_async(_recordQueue[i], ^{
             if (_view.window) {
-                bool ret;
-                if (!forUndo) {
-                    mgvector<int> exts;
-                    acquirePlayings(exts);
-                    ret = _coreView->recordShapes(forUndo, tick, doc, shapes, &exts);
-                } else {
-                    ret = _coreView->recordShapes(forUndo, tick, doc, shapes);
-                }
+                bool ret = _coreView->recordShapes(forUndo, tick, doc, shapes);
                 if (!ret) {
                     NSLog(@"Fail to record shapes, forUndo=%d, doc=%ld, shapes=%ld", forUndo, doc, shapes);
                 }
             }
         });
     }
-}
-
-bool GiViewAdapter::addPlayProvider(id<GiPlayProvider> p, int tag)
-{
-    return false;
-}
-
-bool GiViewAdapter::acquirePlayings(mgvector<int>& exts)
-{
-    return false;
-}
-
-void GiViewAdapter::stopPlayings()
-{
-}
-
-int GiViewAdapter::playProviderCount()
-{
-    return 0;
 }
 
 void GiViewAdapter::regenAll(bool changed) {
@@ -345,7 +322,6 @@ void GiViewAdapter::regenAppend(int sid) {
 
 void GiViewAdapter::stopRegen() {
     _coreView->stopDrawing();
-    stopPlayings();
     [_render stopRender];
     _view = nil;
 }

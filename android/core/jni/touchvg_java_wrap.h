@@ -427,12 +427,13 @@ public:
     virtual void contentChanged();
     virtual void dynamicChanged();
     virtual void viewChanged(GiView *oldview);
+    virtual void shapeDeleted(int sid);
 public:
     bool swig_overrides(int n) {
-      return (n < 11 ? swig_override[n] : false);
+      return (n < 12 ? swig_override[n] : false);
     }
 protected:
-    bool swig_override[11];
+    bool swig_override[12];
 };
 
 struct SwigDirector_MgFindImageCallback : public MgFindImageCallback, public Swig::Director {

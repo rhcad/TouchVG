@@ -6,6 +6,7 @@
 #import "ImageCache.h"
 
 #pragma mark - IosTempView
+
 @implementation IosTempView
 
 - (id)initView:(CGRect)frame :(GiViewAdapter *)adapter {
@@ -24,14 +25,12 @@
     long doc = _adapter->getAppendCount() > 0 ? coreView->acquireFrontDoc() : 0;
     long shapes = coreView->acquireDynamicShapes();
     long gs = coreView->acquireGraphics(_adapter);
-    mgvector<int> exts;
     
-    if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
+    if (canvas.beginPaint(UIGraphicsGetCurrentContext(), true)) {
         for (int i = 0, sid = 0; (sid = _adapter->getAppendID(i)) != 0; i++) {
             coreView->drawAppend(doc, gs, &canvas, sid);
         }
-        _adapter->acquirePlayings(exts);
-        coreView->dynDraw(shapes, gs, &canvas, &exts);
+        coreView->dynDraw(shapes, gs, &canvas);
         canvas.endPaint();
     }
     GiCoreView::releaseDoc(doc);
@@ -40,6 +39,8 @@
 }
 
 @end
+
+#pragma mark - GiLayerRender
 
 @implementation GiLayerRender
 
@@ -650,7 +651,11 @@ GiColor CGColorToGiColor(CGColorRef color);
     
     _tapCount = 1;      // 标记待分发
     _tapPoint = pt;     // 记下点击松开的位置
-    [self performSelector:@selector(delayTap) withObject:nil afterDelay:0.5];   // 延时分发
+    if (_twoTapsRecognizer && _twoTapsRecognizer.enabled) {
+        [self performSelector:@selector(delayTap) withObject:nil afterDelay:0.5];   // 延时分发
+    } else {
+        [self delayTap];
+    }
     
     return [self gesturePost:sender];
 }

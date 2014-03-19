@@ -5,8 +5,6 @@
 #import "GiViewHelper.h"
 #import "GiViewImpl.h"
 #import "ImageCache.h"
-#include "GiShapeAdapter.h"
-#include "gicoreview.h"
 
 #define IOSLIBVERSION     6
 extern NSString* EXTIMAGENAMES[];
@@ -217,23 +215,23 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (long)acquireFrontDoc {
-    __block long hDoc;
+    __block long doc;
     if ([_view viewAdapter2]->isMainThread()) {
-        hDoc = [_view viewAdapter2]->acquireFrontDoc();
+        doc = [_view viewAdapter2]->acquireFrontDoc();
     } else {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            hDoc = [_view viewAdapter2]->acquireFrontDoc();
+            doc = [_view viewAdapter2]->acquireFrontDoc();
         });
     }
-    return hDoc;
+    return doc;
 }
 
 - (NSString *)content {
-    long hDoc = [self acquireFrontDoc];
-    const char* str = [_view coreView]->getContent(hDoc);
+    long doc = [self acquireFrontDoc];
+    const char* str = [_view coreView]->getContent(doc);
     NSString * ret = [NSString stringWithCString:str encoding:NSUTF8StringEncoding];
     [_view coreView]->freeContent();
-    [_view coreView]->releaseDoc(hDoc);
+    [_view coreView]->releaseDoc(doc);
     return ret;
 }
 
@@ -306,20 +304,20 @@ static GiViewHelper *_sharedInstance = nil;
 - (BOOL)saveToFile:(NSString *)vgfile {
     BOOL ret = NO;
     NSFileManager *fm = [NSFileManager defaultManager];
-    long hDoc = [self acquireFrontDoc];
+    long doc = [self acquireFrontDoc];
     
     vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
-    if ([_view coreView]->getShapeCount(hDoc) > 0) {
+    if ([_view coreView]->getShapeCount(doc) > 0) {
         if (![fm fileExistsAtPath:vgfile]) {
             [fm createFileAtPath:vgfile contents:[NSData data] attributes:nil];
         }
-        ret = [_view coreView]->saveToFile(hDoc, [vgfile UTF8String]);
+        ret = [_view coreView]->saveToFile(doc, [vgfile UTF8String]);
         NSLog(@"GiViewHelper saveToFile: %@, %d", vgfile, ret);
     } else {
         ret = [fm removeItemAtPath:vgfile error:nil];
         NSLog(@"GiViewHelper removeItemAtPath: %@, %d", vgfile, ret);
     }
-    [_view coreView]->releaseDoc(hDoc);
+    [_view coreView]->releaseDoc(doc);
     
     return ret;
 }
@@ -438,16 +436,16 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (BOOL)hasImageShape {
-    long hDoc = [self acquireFrontDoc];
-    bool ret = [_view coreView]->hasImageShape(hDoc);
-    [_view coreView]->releaseDoc(hDoc);
+    long doc = [self acquireFrontDoc];
+    bool ret = [_view coreView]->hasImageShape(doc);
+    [_view coreView]->releaseDoc(doc);
     return ret;
 }
 
 - (int)findShapeByImageID:(NSString *)name {
-    long hDoc = [self acquireFrontDoc];
-    int ret = [_view coreView]->findShapeByImageID(hDoc, [name UTF8String]);
-    [_view coreView]->releaseDoc(hDoc);
+    long doc = [self acquireFrontDoc];
+    int ret = [_view coreView]->findShapeByImageID(doc, [name UTF8String]);
+    [_view coreView]->releaseDoc(doc);
     return ret;
 }
 
@@ -460,27 +458,11 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (CALayer *)exportLayerTree:(BOOL)hidden {
-    CALayer *rootLayer = [CALayer layer];
-    rootLayer.frame = _view.bounds;
-    
-    GiShapeCallback shapeCallback(rootLayer, hidden);
-    GiShapeAdapter adapter(&shapeCallback);
-    __block long hDoc, hGs;
-    
-    if ([_view viewAdapter2]->isMainThread()) {
-        hDoc = [_view viewAdapter2]->acquireFrontDoc();
-        hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            hDoc = [_view viewAdapter2]->acquireFrontDoc();
-            hGs = [_view coreView]->acquireGraphics([_view viewAdapter]);
-        });
-    }
-    [_view coreView]->drawAll(hDoc, hGs, &adapter);
-    GiCoreView::releaseDoc(hDoc);
-    [_view coreView]->releaseGraphics(hGs);
-    
-    return rootLayer;
+    return nil;
+}
+
+- (CALayer *)exportLayers {
+    return nil;
 }
 
 - (BOOL)recreateDirectory:(NSString *)path {
@@ -579,11 +561,22 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (BOOL)addPlayProvider:(id<GiPlayProvider>)p tag:(int)tag {
-    return p && [self internalAdapter]->addPlayProvider(p, tag);
+    return NO;
 }
 
 - (int)playProviderCount {
-    return [self internalAdapter]->playProviderCount();
+    return 0;
+}
+
+- (int)insertSprite:(NSString *)format count:(int)count
+              delay:(int)ms repeatCount:(int)rcount tag:(int)tag {
+    return 0;
+}
+
+- (int)insertSprite:(NSString *)format count:(int)count
+              delay:(int)ms repeatCount:(int)rcount
+                tag:(int)tag center:(CGPoint)pt {
+    return 0;
 }
 
 @end
