@@ -46,16 +46,16 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 + (void)initialize {
-	if (!_sharedInstance) {
-		_sharedInstance = [[GiViewHelper alloc] init];
-	}
+    if (!_sharedInstance) {
+        _sharedInstance = [[GiViewHelper alloc] init];
+    }
 }
 
 + (GiViewHelper *)sharedInstance {
     if (!_sharedInstance.view) {
         _sharedInstance.view = [GiPaintView activeView];
     }
-	return _sharedInstance;
+    return _sharedInstance;
 }
 
 + (GiViewHelper *)sharedInstance:(GiPaintView *)view {

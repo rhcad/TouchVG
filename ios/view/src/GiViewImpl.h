@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 class GiViewAdapter;
+@class GiMagnifierView;
 
 //! 动态图形的绘图视图类
 @interface IosTempView : UIView {
@@ -123,13 +124,14 @@ private:
 @interface GiPaintView()<UIGestureRecognizerDelegate> {
     GiViewAdapter   *_adapter;              //!< 视图回调适配器
     
-    UIPanGestureRecognizer *_panRecognizer;             //!< 拖动手势识别器
-    UITapGestureRecognizer *_tapRecognizer;             //!< 单指点击手势识别器
-    UITapGestureRecognizer *_twoTapsRecognizer;         //!< 单指双击手势识别器
+    UIPanGestureRecognizer  *_panRecognizer;            //!< 拖动手势识别器
+    UITapGestureRecognizer  *_tapRecognizer;            //!< 单指点击手势识别器
+    UITapGestureRecognizer  *_twoTapsRecognizer;        //!< 单指双击手势识别器
     UILongPressGestureRecognizer *_pressRecognizer;     //!< 单指长按手势识别器
-    UIPinchGestureRecognizer *_pinchRecognizer;         //!< 双指放缩手势识别器
+    UIPinchGestureRecognizer    *_pinchRecognizer;      //!< 双指放缩手势识别器
     UIRotationGestureRecognizer *_rotationRecognizer;   //!< 双指旋转手势识别器
-    BOOL                    _gestureEnabled;
+    BOOL                    _gestureEnabled;            //!< 手势可用性
+    GiMagnifierView         *_magnifierView;            //!< 手指跟随放大镜
     
     std::vector<CGPoint>    _points;        //!< 手势生效前的轨迹
     CGPoint                 _startPt;       //!< 开始位置

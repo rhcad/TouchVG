@@ -19,10 +19,10 @@
     if (!shapeLayer) {
         shapeLayer = [[CAShapeLayer alloc]init];
         
-        shapeLayer.fillColor = nil;	
-        shapeLayer.strokeColor = [UIColor blackColor].CGColor;	
-        shapeLayer.lineWidth = 7;	
-        shapeLayer.bounds = CGRectMake(0, 0, 2 * radius, 2 * radius);	
+        shapeLayer.fillColor = nil;
+        shapeLayer.strokeColor = [UIColor blackColor].CGColor;
+        shapeLayer.lineWidth = 7;
+        shapeLayer.bounds = CGRectMake(0, 0, 2 * radius, 2 * radius);
         shapeLayer.path = [UIBezierPath bezierPathWithRect:shapeLayer.bounds].CGPath;
         shapeLayer.position = pt;
         

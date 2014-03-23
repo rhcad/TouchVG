@@ -94,11 +94,11 @@ UIViewController *createTestView(NSUInteger index, CGRect frame);
     UIViewController *controller;
     
     if (ISPHONE) {
-	    if (!_detailViewController) {
-	        _detailViewController = [[DetailViewController alloc] init];
+        if (!_detailViewController) {
+            _detailViewController = [[DetailViewController alloc] init];
             [self setNavigationButtons];
-	    }
-	    controller = createTestView(indexPath.row, _detailViewController.view.bounds);
+        }
+        controller = createTestView(indexPath.row, _detailViewController.view.bounds);
         [self.navigationController pushViewController:_detailViewController animated:YES];
     }
     else {

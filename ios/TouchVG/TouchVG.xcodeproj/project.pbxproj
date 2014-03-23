@@ -38,6 +38,10 @@
 		AE208E5918867EA500FE68E1 /* GiViewHelper.mm in Headers */ = {isa = PBXBuildFile; fileRef = AEF1B1D917E29D36005B5132 /* GiViewHelper.mm */; };
 		AE208E5A18867EA500FE68E1 /* GiPaintView.mm in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A6A178FC617000194AE /* GiPaintView.mm */; };
 		AE208E5B18867EA500FE68E1 /* GiCanvasAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A6B178FC617000194AE /* GiCanvasAdapter.mm */; };
+		AE272B6418DBF99E0085A530 /* GiMagnifierView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE272B6218DBF99E0085A530 /* GiMagnifierView.m */; };
+		AE272B6518DBF99E0085A530 /* GiMagnifierView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE272B6218DBF99E0085A530 /* GiMagnifierView.m */; };
+		AE272B6618DBF99E0085A530 /* GiMagnifierView.h in Headers */ = {isa = PBXBuildFile; fileRef = AE272B6318DBF99E0085A530 /* GiMagnifierView.h */; };
+		AE272B6718DBF99E0085A530 /* GiMagnifierView.h in Headers */ = {isa = PBXBuildFile; fileRef = AE272B6318DBF99E0085A530 /* GiMagnifierView.h */; };
 		AE2A3A4D178FC511000194AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3A4C178FC511000194AE /* Foundation.framework */; };
 		AE2A3A67178FC608000194AE /* GiPaintView.h in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A65178FC608000194AE /* GiPaintView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AE2A3A68178FC608000194AE /* GiCanvasAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = AE2A3A66178FC608000194AE /* GiCanvasAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -60,6 +64,8 @@
 		02A4C40F1888838700F5188B /* ARCMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARCMacro.h; path = ../../view/include/ARCMacro.h; sourceTree = "<group>"; };
 		02BD66A8189A1E9A00A4A444 /* libTouchVG-SVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTouchVG-SVG.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE11A5DA18B328CF00B88366 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AE272B6218DBF99E0085A530 /* GiMagnifierView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GiMagnifierView.m; path = ../../view/src/GiMagnifierView.m; sourceTree = "<group>"; };
+		AE272B6318DBF99E0085A530 /* GiMagnifierView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GiMagnifierView.h; path = ../../view/src/GiMagnifierView.h; sourceTree = "<group>"; };
 		AE2A3A49178FC511000194AE /* libTouchVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2A3A4C178FC511000194AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AE2A3A50178FC511000194AE /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
@@ -441,6 +447,8 @@
 		AEF1B1DC17E29D7D005B5132 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				AE272B6218DBF99E0085A530 /* GiMagnifierView.m */,
+				AE272B6318DBF99E0085A530 /* GiMagnifierView.h */,
 				024FCF5B188A5272000B0C41 /* GiDpiUtil.mm */,
 				AEC3381E180E28520029D7B3 /* ImageCache.h */,
 				AEC3381F180E28520029D7B3 /* ImageCache.mm */,
@@ -624,6 +632,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE272B6518DBF99E0085A530 /* GiMagnifierView.m in Sources */,
 				02BD668A189A1E9A00A4A444 /* GiPaintView.mm in Sources */,
 				02BD668B189A1E9A00A4A444 /* GiCanvasAdapter.mm in Sources */,
 				02BD668C189A1E9A00A4A444 /* GiViewHelper.mm in Sources */,
@@ -637,6 +646,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE272B6418DBF99E0085A530 /* GiMagnifierView.m in Sources */,
 				AE2A3A6C178FC617000194AE /* GiPaintView.mm in Sources */,
 				AE2A3A6D178FC617000194AE /* GiCanvasAdapter.mm in Sources */,
 				AEF1B1DA17E29D36005B5132 /* GiViewHelper.mm in Sources */,

@@ -303,6 +303,23 @@ namespace touchvg.view
             return CoreView.addShapesForTest();
         }
 
+        //! 视图坐标转为模型坐标
+        public bool DisplayToModel(Point pt)
+        {
+            Floats p = new Floats((float)pt.X, (float)pt.Y);
+            bool ret = CoreView.displayToModel(p);
+
+            pt.X = p.get(0);
+            pt.Y = p.get(1);
+            return ret;
+        }
+
+        //! 返回显示比例
+        public float GetViewScale()
+        {
+            return CmdView().xform().getViewScale();
+        }
+
         //! 从JSON文件中加载图形
         public bool Load(string vgfile)
         {

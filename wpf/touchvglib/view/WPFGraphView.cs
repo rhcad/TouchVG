@@ -147,7 +147,7 @@ namespace touchvg.view
                     {
                         CoreView.recordShapes(true,
                             CoreView.getRecordTick(true, getTick()),
-                            CoreView.acquireFrontDoc(), 0, 0);
+                            CoreView.acquireFrontDoc(), 0);
                     }
                     CoreView.submitDynamicShapes(_owner.ViewAdapter);
                 }

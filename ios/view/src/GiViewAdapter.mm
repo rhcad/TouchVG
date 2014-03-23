@@ -30,12 +30,12 @@ static int getExtraImageCount() { int n = 0; while (EXTIMAGENAMES[n]) n++; retur
 @synthesize delegate;
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-	BOOL ret = [super pointInside:point withEvent:event];
+    BOOL ret = [super pointInside:point withEvent:event];
     CGPoint pt = [self.window convertPoint:point fromView:self];
     
     [delegate ignoreTouch:pt :ret ? self : nil];
     
-	return ret;
+    return ret;
 }
 
 @end

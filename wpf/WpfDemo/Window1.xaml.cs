@@ -169,5 +169,10 @@ namespace WpfDemo
         {
             _helper.Redo();
         }
+
+        private void zoomExtentBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _helper.ZoomToExtent();
+        }
     }
 }

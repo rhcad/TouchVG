@@ -30,11 +30,11 @@ static CalloutView* _view = nil;
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-	BOOL ret = [super pointInside:point withEvent:event];
-	if (!ret) {
-		[self removeFromSuperview];
+    BOOL ret = [super pointInside:point withEvent:event];
+    if (!ret) {
+        [self removeFromSuperview];
     }
-	return ret;
+    return ret;
 }
 
 @end

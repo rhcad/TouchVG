@@ -4,6 +4,7 @@
 
 #import "GiViewImpl.h"
 #import "ImageCache.h"
+#import "GiMagnifierView.h"
 
 #pragma mark - IosTempView
 
@@ -172,16 +173,16 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 #pragma mark - Respond to low-memory warnings
 + (void)initialize {
-	if (self == [GiPaintView class]) {  // Have to protect against subclasses calling this
+    if (self == [GiPaintView class]) {  // Have to protect against subclasses calling this
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didReceiveMemoryWarningNotification:)
                                                      name:UIApplicationDidReceiveMemoryWarningNotification
                                                    object:nil];
-	}
+    }
 }
 
 + (void)didReceiveMemoryWarningNotification:(NSNotification*)notification {
-	[_activePaintView clearCachedData];
+    [_activePaintView clearCachedData];
 }
 
 #pragma mark - createGraphView
@@ -264,7 +265,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (void)didEnteredBackground:(NSNotification*)notification {
-	[self clearCachedData];
+    [self clearCachedData];
     _adapter->coreView()->onPause(getTickCount());
 }
 
@@ -564,6 +565,21 @@ GiColor CGColorToGiColor(CGColorRef color);
 - (BOOL)gestureCheck:(UIGestureRecognizer*)sender {
     _gestureRecognized = (sender.state == UIGestureRecognizerStateBegan
                           || sender.state == UIGestureRecognizerStateChanged);
+    
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        if (!_magnifierView) {
+            _magnifierView = [[GiMagnifierView alloc]init];
+            _magnifierView.viewToMagnify = self.superview.superview;
+            [_magnifierView.viewToMagnify.superview addSubview:_magnifierView];
+            NSAssert(_magnifierView.window, @"Fail to add magnifier view");
+            [_magnifierView RELEASE];
+        }
+        _magnifierView.touchPoint = [sender locationInView:_magnifierView.viewToMagnify];
+    }
+    else if (sender.state == UIGestureRecognizerStateChanged) {
+        _magnifierView.touchPoint = [sender locationInView:_magnifierView.viewToMagnify];
+    }
+    
     return _gestureEnabled;
 }
 
@@ -574,6 +590,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     else if (sender.state >= UIGestureRecognizerStateEnded) {
         _touchCount = 0;
         _points.clear();
+        [_magnifierView hide];
     }
     
     return YES;

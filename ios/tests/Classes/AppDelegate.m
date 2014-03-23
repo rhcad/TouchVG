@@ -30,9 +30,9 @@
         
         DetailViewController *detailController = [[DetailViewController alloc] init];
         UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailController];
-    	
-    	_masterController.detailViewController = detailController;
-    	
+        
+        _masterController.detailViewController = detailController;
+        
         _splitViewController = [[UISplitViewController alloc] init];
         _splitViewController.delegate = detailController;
         _splitViewController.viewControllers = [NSArray arrayWithObjects:_navigationController, detailNavigationController, nil];
