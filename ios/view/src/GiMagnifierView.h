@@ -12,6 +12,7 @@
 @property (nonatomic) BOOL followFinger;
 @property (nonatomic) CGFloat scale;
 
+- (void)show;
 - (void)hide;
 
 @end

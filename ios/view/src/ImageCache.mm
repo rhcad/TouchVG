@@ -20,9 +20,13 @@
     return self;
 }
 
+- (void)dealloc {
+    [_images RELEASE];
+    [super DEALLOC];
+}
+
 - (void)clearCachedData {
     [_images removeAllObjects];
-    [_images RELEASE];
 }
 
 - (UIImage *)loadImage:(NSString *)name {

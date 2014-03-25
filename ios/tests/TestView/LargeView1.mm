@@ -60,4 +60,9 @@
     }
 }
 
+- (void)removeFromSuperview {
+    [[self viewForZoomingInScrollView:nil] removeFromSuperview];
+    [super removeFromSuperview];
+}
+
 @end

@@ -10,7 +10,7 @@
 
 //! 动态图形的绘图视图类
 @interface IosTempView1 : UIView {
-    ViewAdapter1    *_viewAdapter;
+    ViewAdapter1    *_adapter;
 }
 
 - (id)initWithFrame:(CGRect)frame :(ViewAdapter1 *)viewAdapter;
@@ -41,6 +41,10 @@ public:
     
     GiCoreView *coreView() {
         return _coreView;
+    }
+    
+    UIView *getDynView() {
+        return _dynview;
     }
     
     UIImage *snapshot() {
@@ -100,7 +104,7 @@ public:
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _viewAdapter = viewAdapter;
+        _adapter = viewAdapter;
         self.opaque = NO;                           // 透明背景
         self.userInteractionEnabled = NO;           // 禁止交互，避免影响主视图显示
     }
@@ -112,7 +116,7 @@ public:
     GiCanvasAdapter canvas;
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext())) {
-        _viewAdapter->coreView()->dynDraw(_viewAdapter, &canvas);
+        _adapter->coreView()->dynDraw(_adapter, &canvas);
         canvas.endPaint();
     }
 }
@@ -123,7 +127,7 @@ public:
 
 - (void)dealloc
 {
-    delete _viewAdapter;
+    delete _adapter;
     [super DEALLOC];
 }
 
@@ -133,10 +137,10 @@ public:
     if (self) {
         self.opaque = NO;                           // 透明背景
         self.autoresizingMask = 0xFF;               // 自动适应大小
-        _viewAdapter = new ViewAdapter1(self);
+        _adapter = new ViewAdapter1(self);
         
         GiCoreView::setScreenDpi(giGetScreenDpi());
-        [self coreView]->onSize(_viewAdapter, frame.size.width, frame.size.height);
+        [self coreView]->onSize(_adapter, frame.size.width, frame.size.height);
     }
     return self;
 }
@@ -147,24 +151,29 @@ public:
     GiCanvasAdapter canvas;
     GiCoreView* coreView = [self coreView];
     
-    coreView->onSize(_viewAdapter, self.bounds.size.width, self.bounds.size.height);
+    coreView->onSize(_adapter, self.bounds.size.width, self.bounds.size.height);
     
     if (canvas.beginPaint(context)) {
-        if (!_viewAdapter->drawAppend(&canvas)) {
-            coreView->drawAll(_viewAdapter, &canvas);
+        if (!_adapter->drawAppend(&canvas)) {
+            coreView->drawAll(_adapter, &canvas);
         }
         canvas.endPaint();
     }
 }
 
+- (void)removeFromSuperview {
+    [_adapter->getDynView() removeFromSuperview];
+    [super removeFromSuperview];
+}
+
 - (GiCoreView *)coreView
 {
-    return _viewAdapter->coreView();
+    return _adapter->coreView();
 }
 
 - (UIImage *)snapshot
 {
-    return _viewAdapter->snapshot();
+    return _adapter->snapshot();
 }
 
 - (BOOL)exportPNG:(NSString *)filename
@@ -187,7 +196,7 @@ public:
     UITouch *touch = [touches anyObject];
     CGPoint pt = [touch locationInView:touch.view];
     
-    [self coreView]->onGesture(_viewAdapter, kGiGesturePan,
+    [self coreView]->onGesture(_adapter, kGiGesturePan,
                                kGiGestureBegan, pt.x, pt.y);
 }
 
@@ -198,7 +207,7 @@ public:
     UITouch *touch = [touches anyObject];
     CGPoint pt = [touch locationInView:touch.view];
     
-    [self coreView]->onGesture(_viewAdapter, kGiGesturePan,
+    [self coreView]->onGesture(_adapter, kGiGesturePan,
                                kGiGestureMoved, pt.x, pt.y);
 }
 
@@ -209,7 +218,7 @@ public:
     UITouch *touch = [touches anyObject];
     CGPoint pt = [touch locationInView:touch.view];
     
-    [self coreView]->onGesture(_viewAdapter, kGiGesturePan,
+    [self coreView]->onGesture(_adapter, kGiGesturePan,
                                kGiGestureEnded, pt.x, pt.y);
 }
 

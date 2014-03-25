@@ -61,6 +61,9 @@ public interface IViewHelper {
     //! 得到当前命令名称
     public String getCommand();
 
+    //! 当前是否为指定名称的命令
+    public boolean isCommand(String name);
+
     //! 启动指定名称的命令(可用的命令名在LogCat中会打印出来，例如“registerCommand 11:lines”中的“lines”)
     public boolean setCommand(String name);
 

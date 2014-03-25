@@ -29431,6 +29431,20 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isDrawingCommand(void * ja
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isCommand(void * jarg1, char * jarg2) {
+  unsigned int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  char *arg2 = (char *) 0 ;
+  bool result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  arg2 = (char *)jarg2; 
+  result = (bool)(arg1)->isCommand((char const *)arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_MgCoreView_getCommand(void * jarg1, void * jarg2) {
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   MgStringCallback *arg2 = (MgStringCallback *) 0 ;

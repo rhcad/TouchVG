@@ -1736,6 +1736,7 @@ public class touchvgJNI {
   public final static native int MgCoreView_getDynamicShapesForEdit(long jarg1, MgCoreView jarg1_);
   public final static native boolean MgCoreView_isPressDragging(long jarg1, MgCoreView jarg1_);
   public final static native boolean MgCoreView_isDrawingCommand(long jarg1, MgCoreView jarg1_);
+  public final static native boolean MgCoreView_isCommand(long jarg1, MgCoreView jarg1_, String jarg2);
   public final static native void MgCoreView_getCommand(long jarg1, MgCoreView jarg1_, long jarg2, MgStringCallback jarg2_);
   public final static native boolean MgCoreView_setCommand__SWIG_0(long jarg1, MgCoreView jarg1_, String jarg2, String jarg3);
   public final static native boolean MgCoreView_setCommand__SWIG_1(long jarg1, MgCoreView jarg1_, String jarg2);

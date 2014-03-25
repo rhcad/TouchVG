@@ -176,6 +176,10 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_isDrawingCommand(swigCPtr, this);
   }
 
+  public boolean isCommand(String name) {
+    return touchvgJNI.MgCoreView_isCommand(swigCPtr, this, name);
+  }
+
   public void getCommand(MgStringCallback c) {
     touchvgJNI.MgCoreView_getCommand(swigCPtr, this, MgStringCallback.getCPtr(c), c);
   }

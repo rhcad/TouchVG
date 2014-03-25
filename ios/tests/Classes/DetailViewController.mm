@@ -50,17 +50,19 @@
 {
     if (_content) {
         [_content.view removeFromSuperview];
+        _content.view = nil;
+        [_content RELEASE];
     }
-    _content = c;
+    _content = [c RETAIN];
     if (_content) {
+        UIView *view = _content.view;
         CGRect barframe = self.navigationController.navigationBar.frame;
         CGFloat y = barframe.origin.y + barframe.size.height;
-        _content.view.frame = CGRectMake(0, y,
-                                         self.view.bounds.size.width,
-                                         self.view.bounds.size.height - y);
-        [self.view addSubview:_content.view];
-        _content.view.autoresizingMask = 0xFF;
-        [_content.view setNeedsDisplay];
+        view.frame = CGRectMake(0, y, self.view.bounds.size.width,
+                                self.view.bounds.size.height - y);
+        [self.view addSubview:view];
+        view.autoresizingMask = 0xFF;
+        [view setNeedsDisplay];
     }
     self.title = _content ? _content.title : @"Detail";
 }

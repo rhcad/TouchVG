@@ -74,7 +74,7 @@ public:
     GiCoreView *coreView() { return _coreView; }
     ImageCache *imageCache() { return _imageCache; }
     UIView *mainView() { return _view; }
-    UIView *getDynView();
+    UIView *getDynView(bool autoCreate);
     void clearCachedData();
     void stopRegen();
     void onFirstRegen();
@@ -124,6 +124,7 @@ private:
 @interface GiPaintView()<UIGestureRecognizerDelegate> {
     GiViewAdapter   *_adapter;              //!< 视图回调适配器
     
+    UIGestureRecognizer     *_recognizers[7];
     UIPanGestureRecognizer  *_panRecognizer;            //!< 拖动手势识别器
     UITapGestureRecognizer  *_tapRecognizer;            //!< 单指点击手势识别器
     UITapGestureRecognizer  *_twoTapsRecognizer;        //!< 单指双击手势识别器

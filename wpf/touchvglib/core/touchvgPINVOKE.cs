@@ -5388,6 +5388,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_isDrawingCommand")]
   public static extern bool MgCoreView_isDrawingCommand(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_isCommand")]
+  public static extern bool MgCoreView_isCommand(HandleRef jarg1, string jarg2);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getCommand")]
   public static extern void MgCoreView_getCommand(HandleRef jarg1, HandleRef jarg2);
 

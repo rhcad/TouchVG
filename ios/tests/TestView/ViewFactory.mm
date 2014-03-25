@@ -9,25 +9,13 @@
 
 static UIViewController *_tmpController = nil;
 
-@interface GiWrapperView : UIView
-@end
-
-@implementation GiWrapperView
-
-- (void)removeFromSuperview {
-    [GiViewHelper removeSubviews:self];
-    [super removeFromSuperview];
-}
-
-@end
-
 static void addView(NSMutableArray *arr, NSString* title, UIView* view)
 {
     if (arr) {
         [arr addObject:title];
     }
     else if (view) {
-        _tmpController = [[UIViewController alloc] init];
+        _tmpController = [[[UIViewController alloc] init] AUTORELEASE];
         _tmpController.title = title;
         _tmpController.view = view;
     }
@@ -137,6 +125,7 @@ static void addLargeView1(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
         view = [[LargeView1 alloc]initWithFrame:frame withType:type];
     }
     addView(arr, title, view);
+    [view RELEASE];
     
     if (view && type != 0) {
         testGraphView(view.subview2, type);
@@ -146,28 +135,22 @@ static void addLargeView1(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
 static UIView* addGraphView(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
                             NSString* title, CGRect frame, int type)
 {
-    UIView *v, *wrapview = nil;
+    UIView *v = nil;
     
-    if (!arr && index == i++) {
-        wrapview = [[GiWrapperView alloc]initWithFrame:frame];
-        wrapview.opaque = NO;
-    }
-    addView(arr, title, wrapview);
-    
-    if (wrapview && type >= 0) {
+    if (!arr && index == i++ && type >= 0) {
         if (type == 0) {
-            v = [[GiGraphView1 alloc]initWithFrame:wrapview.bounds];
+            v = [[GiGraphView1 alloc]initWithFrame:frame];
         }
         else {
-            GiGraphView2 *v2 = [[GiGraphView2 alloc]initWithFrame:wrapview.bounds withType:type];
+            GiGraphView2 *v2 = [[GiGraphView2 alloc]initWithFrame:frame withType:type];
             v = v2;
             testGraphView(v2, type);
         }
-        [wrapview addSubview:v];
-        [v RELEASE];
     }
+    addView(arr, title, v);
+    [v RELEASE];
     
-    return wrapview;
+    return v;
 }
 
 static void testMagnifierView(NSMutableArray *arr, NSUInteger &i, NSUInteger index,

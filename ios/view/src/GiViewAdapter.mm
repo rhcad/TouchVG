@@ -68,6 +68,7 @@ GiViewAdapter::~GiViewAdapter() {
     [_buttonImages RELEASE];
     [_imageCache RELEASE];
     [_render RELEASE];
+    [_dynview RELEASE];
     _coreView->destoryView(this);
     _coreView->release();
     _coreView = NULL;
@@ -219,13 +220,11 @@ void GiViewAdapter::stopRecord(bool forUndo)
     
     if (_recordQueue[i]) {
         _recordStopping[i] = true;
-        if (_view && _view.window) {
-            dispatch_async(_recordQueue[i], ^{
-                if (_view && _view.window && _coreView) {
-                    _coreView->stopRecord(this, forUndo);
-                }
-            });
-        }
+        dispatch_async(_recordQueue[i], ^{
+            if (_coreView) {
+                _coreView->stopRecord(this, forUndo);
+            }
+        });
         dispatch_release(_recordQueue[i]);
         _recordQueue[i] = NULL;
     }
@@ -324,20 +323,24 @@ void GiViewAdapter::stopRegen() {
     _coreView->stopDrawing();
     [_render stopRender];
     _view = nil;
+    if (_dynview) {
+        [_dynview removeFromSuperview];
+        [_dynview RELEASE];
+        _dynview = nil;
+    }
 }
 
-UIView *GiViewAdapter::getDynView() {
-    if (!_dynview && _view && _view.window) {
+UIView *GiViewAdapter::getDynView(bool autoCreate) {
+    if (autoCreate && !_dynview && _view && _view.window) {
         _dynview = [[IosTempView alloc]initView:_view.frame :this];
         _dynview.autoresizingMask = _view.autoresizingMask;
         [_view.superview addSubview:_dynview];
-        [_dynview RELEASE];
     }
     return _dynview;
 }
 
 void GiViewAdapter::redraw_(bool changed) {
-    if (getDynView()) {
+    if (getDynView(true)) {
         if (!_coreView->isPlaying()) {
             if (changed) {
                 _coreView->submitDynamicShapes(this);

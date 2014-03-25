@@ -91,6 +91,12 @@ namespace touchvg.view
             return CoreView.setCommand(name, param);
         }
 
+        //! 当前是否为指定名称的命令
+        public bool isCommand(string name)
+        {
+            return CoreView.isCommand(name);
+        }
+
         //! 线宽，正数表示0.1毫米单位，零表示1像素宽，负数表示像素单位
         public int LineWidth
         {

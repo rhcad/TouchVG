@@ -157,6 +157,11 @@ public class ViewHelperImpl implements IViewHelper{
     }
 
     @Override
+    public boolean isCommand(String name) {
+        return mView != null && mView.coreView().isCommand(name);
+    }
+
+    @Override
     public boolean setCommand(String name) {
         boolean ret = false;
 

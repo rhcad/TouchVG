@@ -67,6 +67,10 @@ static GiViewHelper *_sharedInstance = nil;
     return _sharedInstance ? nil : [super init];
 }
 
+- (void)dealloc {
+    [super DEALLOC];
+}
+
 + (GiPaintView *)activeView {
     return [GiPaintView activeView];
 }
@@ -87,6 +91,7 @@ static GiViewHelper *_sharedInstance = nil;
 
 + (void)removeSubviews:(UIView *)owner {
     for (UIView *view : [owner subviews]) {
+        [GiViewHelper removeSubviews:view];
         if ([view respondsToSelector:@selector(tearDown)]) {
             [view performSelector:@selector(tearDown)];
         }
@@ -110,6 +115,10 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (BOOL)setCommand:(NSString *)name withParam:(NSString *)param {
     return [_view coreView]->setCommand([name UTF8String], [param UTF8String]);
+}
+
+- (BOOL)isCommand:(const char*)name {
+    return [_view coreView]->isCommand(name);
 }
 
 + (void)setExtraContextImages:(NSArray *)names {

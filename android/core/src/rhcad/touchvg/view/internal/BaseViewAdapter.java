@@ -30,6 +30,7 @@ public abstract class BaseViewAdapter extends GiView {
     private ArrayList<OnContentChangedListener> contentChangedListeners;
     private ArrayList<OnDynamicChangedListener> dynamicChangedListeners;
     private ArrayList<OnFirstRegenListener> firstRegenListeners;
+    private ArrayList<OnPlayEndedListener> playEndedListeners;
     protected UndoRunnable mUndoing;
     protected RecordRunnable mRecorder;
     private int mRegenCount = 0;
@@ -55,6 +56,8 @@ public abstract class BaseViewAdapter extends GiView {
             dynamicChangedListeners.clear();
         if (firstRegenListeners != null)
             firstRegenListeners.clear();
+        if (playEndedListeners != null)
+            playEndedListeners.clear();
 
         super.delete();
     }
@@ -202,6 +205,9 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     public void setOnPlayEndedListener(OnPlayEndedListener listener) {
+        if (this.playEndedListeners == null)
+            this.playEndedListeners = new ArrayList<OnPlayEndedListener>();
+        this.playEndedListeners.add(listener);
     }
 
     public Activity getActivity() {
@@ -330,6 +336,7 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     public boolean startPlay(String path) {
+        hideContextActions();
         return false;
     }
 

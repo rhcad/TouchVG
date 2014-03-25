@@ -10,6 +10,10 @@
 
 @implementation IosTempView
 
+- (void)dealloc {
+    [super DEALLOC];
+}
+
 - (id)initView:(CGRect)frame :(GiViewAdapter *)adapter {
     self = [super initWithFrame:frame];
     if (self) {
@@ -144,11 +148,11 @@
         canvas.endPaint();
     }
     
+    GiCoreView::releaseDoc(_doc);
+    coreView->releaseGraphics(_gs);
+    _doc = 0;
+    _gs = 0;
     dispatch_async(dispatch_get_main_queue(), ^{
-        GiCoreView::releaseDoc(_doc);
-        coreView->releaseGraphics(_gs);
-        _doc = 0;
-        _gs = 0;
         [_adapter->mainView() setNeedsDisplay];
         --_drawing;
     });
@@ -344,19 +348,15 @@ GiColor CGColorToGiColor(CGColorRef color);
 }
 
 - (void)setGestureEnabled:(BOOL)enabled {
-    UIGestureRecognizer *recognizers[] = {
-        _pinchRecognizer, _rotationRecognizer, _panRecognizer,
-        _tapRecognizer, _twoTapsRecognizer, _pressRecognizer, nil
-    };
-    for (int i = 0; recognizers[i]; i++) {
-        recognizers[i].enabled = enabled;
+    for (int i = 0; _recognizers[i]; i++) {
+        _recognizers[i].enabled = enabled;
     }
     _gestureEnabled = enabled;
     self.userInteractionEnabled = enabled;
 }
 
 - (UIView *)dynamicShapeView {
-    return _adapter->getDynView();
+    return _adapter->getDynView(false);
 }
 
 - (void)activiteView {
@@ -414,7 +414,17 @@ GiColor CGColorToGiColor(CGColorRef color);
     _adapter->stopRegen();
     _adapter->stopRecord(false);
     _adapter->stopRecord(true);
+    if (_magnifierView) {
+        [_magnifierView hide];
+        [_magnifierView RELEASE];
+        _magnifierView = nil;
+    }
     self.gestureEnabled = NO;
+    for (int i = 0; _recognizers[i]; i++) {
+        [self removeGestureRecognizer:_recognizers[i]];
+        [_recognizers[i] RELEASE];
+        _recognizers[i] = nil;
+    }
     _mainView = nil;
     if (_activePaintView == self)
         _activePaintView = nil;
@@ -438,38 +448,38 @@ GiColor CGColorToGiColor(CGColorRef color);
 @implementation GiPaintView(GestureRecognizer)
 
 - (void)setupGestureRecognizers {
-    UIGestureRecognizer *recognizers[7];
     int i = 0;
     
     _gestureEnabled = self.userInteractionEnabled;
     if (!_gestureEnabled)
         return;
     
-    recognizers[i++] = _pinchRecognizer =
+    _recognizers[i++] = _pinchRecognizer =
     [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
     
-    recognizers[i++] = _rotationRecognizer =
+    _recognizers[i++] = _rotationRecognizer =
     [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
     
-    recognizers[i++] = _panRecognizer =
+    _recognizers[i++] = _panRecognizer =
     [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
     _panRecognizer.maximumNumberOfTouches = 2;                      // 允许单指拖动变为双指拖动
     
-    recognizers[i++] = _tapRecognizer =
+    _recognizers[i++] = _tapRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandler:)];
     [_tapRecognizer requireGestureRecognizerToFail:_panRecognizer]; // 不是拖动才算点击
     
-    recognizers[i++] = _twoTapsRecognizer =
+    _recognizers[i++] = _twoTapsRecognizer =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(twoTapsHandler:)];
     _twoTapsRecognizer.numberOfTapsRequired = 2;
     
-    recognizers[i++] = _pressRecognizer =
+    _recognizers[i++] = _pressRecognizer =
     [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressHandler:)];
     _pressRecognizer.minimumPressDuration = 1;
     
+    _recognizers[i] = nil;
     for (i--; i >= 0; i--) {
-        recognizers[i].delegate = self;
-        [self addGestureRecognizer:recognizers[i]];
+        _recognizers[i].delegate = self;
+        [self addGestureRecognizer:_recognizers[i]];
     }
 }
 
@@ -566,14 +576,18 @@ GiColor CGColorToGiColor(CGColorRef color);
     _gestureRecognized = (sender.state == UIGestureRecognizerStateBegan
                           || sender.state == UIGestureRecognizerStateChanged);
     
-    if (sender.state == UIGestureRecognizerStateBegan) {
+    if (sender.state == UIGestureRecognizerStateBegan && [sender numberOfTouches] == 1) {
         if (!_magnifierView) {
             _magnifierView = [[GiMagnifierView alloc]init];
-            _magnifierView.viewToMagnify = self.superview.superview;
-            [_magnifierView.viewToMagnify.superview addSubview:_magnifierView];
-            NSAssert(_magnifierView.window, @"Fail to add magnifier view");
-            [_magnifierView RELEASE];
+            _magnifierView.followFinger = ![self coreView]->isCommand("splines");
+            for (UIView *v = self.superview; v; v = v.superview) {
+                if (v.backgroundColor && v.backgroundColor != [UIColor clearColor]) {
+                    _magnifierView.viewToMagnify = v;
+                    break;
+                }
+            }
         }
+        [_magnifierView show];
         _magnifierView.touchPoint = [sender locationInView:_magnifierView.viewToMagnify];
     }
     else if (sender.state == UIGestureRecognizerStateChanged) {

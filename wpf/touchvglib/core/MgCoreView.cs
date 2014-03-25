@@ -214,6 +214,11 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
+  public virtual bool isCommand(string name) {
+    bool ret = touchvgPINVOKE.MgCoreView_isCommand(swigCPtr, name);
+    return ret;
+  }
+
   public void getCommand(MgStringCallback c) {
     touchvgPINVOKE.MgCoreView_getCommand(swigCPtr, MgStringCallback.getCPtr(c));
   }

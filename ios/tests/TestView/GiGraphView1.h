@@ -26,7 +26,7 @@ enum kTestFlags {
 
 //! iOS测试绘图视图类
 @interface GiGraphView1 : UIView {
-    ViewAdapter1    *_viewAdapter;
+    ViewAdapter1    *_adapter;
 }
 
 - (GiCoreView *)coreView;               //!< 得到跨平台内核视图
@@ -37,7 +37,7 @@ enum kTestFlags {
 
 //! iOS测试绘图视图类
 @interface GiGraphView2 : GiPaintView {
-    int     _testType;
+    int         _testType;
     UIButton    *_undoBtn;
     UIButton    *_redoBtn;
     UIButton    *_pauseBtn;
