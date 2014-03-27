@@ -4,7 +4,7 @@
 > 
 > 作者：张云贵 <rhcad@hotmail.com> 开源协议：LGPL 2.1，见 LICENSE 文件描述。
 
-![iphone1](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/iphone1.png)  ![iphone2](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/iphone2.png)  ![android1](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/android1.png)
+![iphone1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone1.png)  ![iphone2](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone2.png)  ![android1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/android1.png)
 
 TouchVG 的功能
 --------------
@@ -55,9 +55,9 @@ TouchVG 的功能
 
 捐款
 -------
-> 如果您在使用后感到满意，或者希望增加特别的功能、获得更多技术支持，请[为TouchVG项目捐款](https://me.alipay.com/rhcad)，也可扫下面的二维码捐款，以支持作者不断完善此项目。
+> 如果您在使用后感到满意，或者希望增加特别的功能、获得更多技术支持，请[为TouchVG项目捐款](https://me.alipay.com/rhcad)，也可在支付宝客户端中扫下面的二维码捐款，以鼓励作者不断完善此项目。
 
-> ![Yu_E_Bao](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/yuebao.png)
+> ![Yu_E_Bao](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/yuebao.png)
 
 
 Android编译说明
