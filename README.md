@@ -4,7 +4,7 @@
 > 
 > 作者：张云贵 <rhcad@hotmail.com> 开源协议：LGPL 2.1，见 LICENSE 文件描述。
 
-![iphone1](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/iphone1.png) ![iphone2](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/iphone2.png)  ![android1](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/android1.png)
+![iphone1](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/iphone1.png)  ![iphone2](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/iphone2.png)  ![android1](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/android1.png)
 
 TouchVG 的功能
 --------------
@@ -112,7 +112,7 @@ WPF编译说明
   
 其他编译说明
 ------------
-> 还可在Linux、MinGW、Mac OS X下编译静态库，或为 Python、Perl、Java 等应用编译动态库。
+> 还可在 Linux、MinGW、Mac OS X 下编译静态库，或为 Python、Perl、Java 等应用编译动态库。
 
 > 进入`core`目录，该目录下有 Makefile 文件，运行下列 make 指令：
 
