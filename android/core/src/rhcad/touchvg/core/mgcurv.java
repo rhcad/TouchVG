@@ -55,6 +55,10 @@ public class mgcurv {
     return touchvgJNI.mgcurv_fitCurve(knotCount, Point2d.getCPtr(knots), knots, Vector2d.getCPtr(knotvs), knotvs, count, Point2d.getCPtr(pts), pts, tol);
   }
 
+  public static void quadBezierToCubic(Point2d quad, Point2d cubic) {
+    touchvgJNI.mgcurv_quadBezierToCubic(Point2d.getCPtr(quad), quad, Point2d.getCPtr(cubic), cubic);
+  }
+
   public static void ellipse90ToBezier(Point2d frompt, Point2d topt, Point2d ctrpt1, Point2d ctrpt2) {
     touchvgJNI.mgcurv_ellipse90ToBezier(Point2d.getCPtr(frompt), frompt, Point2d.getCPtr(topt), topt, Point2d.getCPtr(ctrpt1), ctrpt1, Point2d.getCPtr(ctrpt2), ctrpt2);
   }

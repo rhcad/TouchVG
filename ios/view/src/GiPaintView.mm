@@ -173,6 +173,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 @synthesize rotationRecognizer = _rotationRecognizer;
 @synthesize gestureEnabled = _gestureEnabled;
 @synthesize mainView = _mainView;
+@synthesize viewToMagnify;
 @synthesize imageCache;
 
 #pragma mark - Respond to low-memory warnings
@@ -576,21 +577,17 @@ GiColor CGColorToGiColor(CGColorRef color);
     _gestureRecognized = (sender.state == UIGestureRecognizerStateBegan
                           || sender.state == UIGestureRecognizerStateChanged);
     
-    if (sender.state == UIGestureRecognizerStateBegan && [sender numberOfTouches] == 1) {
+    if (sender.state == UIGestureRecognizerStateBegan
+        && [sender numberOfTouches] == 1 && self.viewToMagnify) {
         if (!_magnifierView) {
             _magnifierView = [[GiMagnifierView alloc]init];
             _magnifierView.followFinger = ![self coreView]->isCommand("splines");
-            for (UIView *v = self.superview; v; v = v.superview) {
-                if (v.backgroundColor && v.backgroundColor != [UIColor clearColor]) {
-                    _magnifierView.viewToMagnify = v;
-                    break;
-                }
-            }
+            _magnifierView.viewToMagnify = self.viewToMagnify;
         }
         [_magnifierView show];
         _magnifierView.touchPoint = [sender locationInView:_magnifierView.viewToMagnify];
     }
-    else if (sender.state == UIGestureRecognizerStateChanged) {
+    else if (sender.state == UIGestureRecognizerStateChanged && _magnifierView) {
         _magnifierView.touchPoint = [sender locationInView:_magnifierView.viewToMagnify];
     }
     

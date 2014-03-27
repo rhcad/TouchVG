@@ -70,6 +70,9 @@ public interface IViewHelper {
     //! 启动指定名称的命令，并指定JSON串的命令初始化参数
     public boolean setCommand(String name, String params);
 
+    //! 切换到下一命令
+    public boolean switchCommand();
+
     //! 返回线宽，正数表示单位为0.01毫米，零表示1像素宽，负数表示单位为像素
     public int getLineWidth();
 

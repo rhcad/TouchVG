@@ -41,7 +41,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelperImpl implements IViewHelper{
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 6;
+    private static final int JARVERSION = 7;
     private BaseGraphView mView;
 
     static {
@@ -181,6 +181,11 @@ public class ViewHelperImpl implements IViewHelper{
             Log.d(TAG, "setCommand " + name + params + ": " + ret);
         }
         return ret;
+    }
+
+    @Override
+    public boolean switchCommand() {
+        return mView != null && mView.coreView().switchCommand();
     }
 
     @Override

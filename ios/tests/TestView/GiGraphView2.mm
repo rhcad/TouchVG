@@ -41,7 +41,7 @@ static char _lastVgFile[256] = { 0 };
 }
 
 - (void)onFirstRegen:(id)view {
-    GiViewHelper *helper = [GiViewHelper sharedInstance];
+    GiViewHelper *helper = [GiViewHelper sharedInstance:self];
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                           NSUserDomainMask, YES) objectAtIndex:0];
     if (_testType == kPlayShapes) {
@@ -60,6 +60,14 @@ static char _lastVgFile[256] = { 0 };
     }
     [helper startUndoRecord:[path stringByAppendingPathComponent:@"undo"]];
     [self addUndoRedoButton];
+    if (_testType & kCmdMask) {
+        for (UIView *v = self.superview; v; v = v.superview) {
+            if (v.backgroundColor && v.backgroundColor != [UIColor clearColor]) {
+                self.viewToMagnify = v;
+                break;
+            }
+        }
+    }
 }
 
 - (void)layoutSubviews {
@@ -95,7 +103,7 @@ static char _lastVgFile[256] = { 0 };
 }
 
 - (void)onPause {
-    if ([[GiViewHelper sharedInstance] isPaused]) {
+    if ([[GiViewHelper sharedInstance:self] isPaused]) {
         [[GiViewHelper sharedInstance] playResume];
     } else {
         [[GiViewHelper sharedInstance] playPause];
@@ -103,9 +111,24 @@ static char _lastVgFile[256] = { 0 };
 }
 
 - (void)onContentChanged:(id)view {
-    GiViewHelper *helper = [GiViewHelper sharedInstance];
+    GiViewHelper *helper = [GiViewHelper sharedInstance:self];
     _undoBtn.backgroundColor = [helper canUndo] ? [UIColor grayColor] : [UIColor clearColor];
     _redoBtn.backgroundColor = [helper canRedo] ? [UIColor grayColor] : [UIColor clearColor];
 }
 
+- (BOOL)twoTapsHandler:(UITapGestureRecognizer *)sender {
+    if (_testType & kSwitchCmd) {
+        if (sender.state < UIGestureRecognizerStateEnded)
+            return YES;
+        [[GiViewHelper sharedInstance:self] switchCommand];
+        
+        [[[[UIAlertView alloc] initWithTitle:@"Switch command"
+                                     message:[GiViewHelper sharedInstance].command
+                                    delegate:nil
+                           cancelButtonTitle:@"OK"
+                           otherButtonTitles:nil] AUTORELEASE]show];
+        return YES;
+    }
+    return [super twoTapsHandler:sender];
+}
 @end

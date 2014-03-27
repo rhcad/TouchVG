@@ -62,6 +62,11 @@ public class MgCmdManager : IDisposable {
     return ret;
   }
 
+  public virtual bool switchCommand(MgMotion sender) {
+    bool ret = touchvgPINVOKE.MgCmdManager_switchCommand(swigCPtr, MgMotion.getCPtr(sender));
+    return ret;
+  }
+
   public virtual bool cancel(MgMotion sender) {
     bool ret = touchvgPINVOKE.MgCmdManager_cancel(swigCPtr, MgMotion.getCPtr(sender));
     return ret;

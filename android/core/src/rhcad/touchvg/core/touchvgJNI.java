@@ -305,6 +305,7 @@ public class touchvgJNI {
   public final static native float mgcurv_lengthOfBezier(long jarg1, Point2d jarg1_, float jarg2);
   public final static native void mgcurv_bezier4P(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_, long jarg3, Point2d jarg3_, long jarg4, Point2d jarg4_, long jarg5, Point2d jarg5_, long jarg6, Point2d jarg6_);
   public final static native int mgcurv_fitCurve(int jarg1, long jarg2, Point2d jarg2_, long jarg3, Vector2d jarg3_, int jarg4, long jarg5, Point2d jarg5_, float jarg6);
+  public final static native void mgcurv_quadBezierToCubic(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_);
   public final static native void mgcurv_ellipse90ToBezier(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_, long jarg3, Point2d jarg3_, long jarg4, Point2d jarg4_);
   public final static native void mgcurv_ellipseToBezier(long jarg1, Point2d jarg1_, long jarg2, Point2d jarg2_, float jarg3, float jarg4);
   public final static native void mgcurv_roundRectToBeziers(long jarg1, Point2d jarg1_, long jarg2, Box2d jarg2_, float jarg3, float jarg4);
@@ -1593,6 +1594,7 @@ public class touchvgJNI {
   public final static native long MgCmdManager_getCommand(long jarg1, MgCmdManager jarg1_);
   public final static native long MgCmdManager_findCommand(long jarg1, MgCmdManager jarg1_, String jarg2);
   public final static native boolean MgCmdManager_setCommand(long jarg1, MgCmdManager jarg1_, long jarg2, MgMotion jarg2_, String jarg3, long jarg4, MgStorage jarg4_);
+  public final static native boolean MgCmdManager_switchCommand(long jarg1, MgCmdManager jarg1_, long jarg2, MgMotion jarg2_);
   public final static native boolean MgCmdManager_cancel(long jarg1, MgCmdManager jarg1_, long jarg2, MgMotion jarg2_);
   public final static native void MgCmdManager_unloadCommands(long jarg1, MgCmdManager jarg1_);
   public final static native int MgCmdManager_getNewShapeID(long jarg1, MgCmdManager jarg1_);
@@ -1740,6 +1742,7 @@ public class touchvgJNI {
   public final static native void MgCoreView_getCommand(long jarg1, MgCoreView jarg1_, long jarg2, MgStringCallback jarg2_);
   public final static native boolean MgCoreView_setCommand__SWIG_0(long jarg1, MgCoreView jarg1_, String jarg2, String jarg3);
   public final static native boolean MgCoreView_setCommand__SWIG_1(long jarg1, MgCoreView jarg1_, String jarg2);
+  public final static native boolean MgCoreView_switchCommand(long jarg1, MgCoreView jarg1_);
   public final static native boolean MgCoreView_doContextAction(long jarg1, MgCoreView jarg1_, int jarg2);
   public final static native void MgCoreView_clearCachedData(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_addShapesForTest(long jarg1, MgCoreView jarg1_);

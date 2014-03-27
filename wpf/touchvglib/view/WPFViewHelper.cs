@@ -91,6 +91,12 @@ namespace touchvg.view
             return CoreView.setCommand(name, param);
         }
 
+        //! 切换到下一命令
+        public bool SwitchCommand()
+        {
+            return CoreView.switchCommand();
+        }
+
         //! 当前是否为指定名称的命令
         public bool isCommand(string name)
         {

@@ -192,6 +192,10 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_setCommand__SWIG_1(swigCPtr, this, name);
   }
 
+  public boolean switchCommand() {
+    return touchvgJNI.MgCoreView_switchCommand(swigCPtr, this);
+  }
+
   public boolean doContextAction(int action) {
     return touchvgJNI.MgCoreView_doContextAction(swigCPtr, this, action);
   }

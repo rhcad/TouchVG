@@ -47,6 +47,7 @@ class GiViewAdapter;
 
 @property(nonatomic, readonly) ImageCache           *imageCache;                //!< 图像对象缓存
 @property(nonatomic, readonly) GiPaintView          *mainView;                  //!< 放大镜对应的主视图
+@property(nonatomic, assign)   UIView               *viewToMagnify;             //!< 待放大的视图
 
 //! 创建普通图形视图，并添加到父视图、设置为当前视图，不需要额外释放
 + (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView;

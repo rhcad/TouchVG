@@ -1077,6 +1077,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_mgcurv_fitCurve")]
   public static extern int mgcurv_fitCurve(int jarg1, HandleRef jarg2, HandleRef jarg3, int jarg4, HandleRef jarg5, float jarg6);
 
+  [DllImport("touchvg", EntryPoint="CSharp_mgcurv_quadBezierToCubic")]
+  public static extern void mgcurv_quadBezierToCubic(HandleRef jarg1, HandleRef jarg2);
+
   [DllImport("touchvg", EntryPoint="CSharp_mgcurv_ellipse90ToBezier")]
   public static extern void mgcurv_ellipse90ToBezier(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, HandleRef jarg4);
 
@@ -4959,6 +4962,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdManager_setCommand")]
   public static extern bool MgCmdManager_setCommand(HandleRef jarg1, HandleRef jarg2, string jarg3, HandleRef jarg4);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgCmdManager_switchCommand")]
+  public static extern bool MgCmdManager_switchCommand(HandleRef jarg1, HandleRef jarg2);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgCmdManager_cancel")]
   public static extern bool MgCmdManager_cancel(HandleRef jarg1, HandleRef jarg2);
 
@@ -5399,6 +5405,9 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_setCommand__SWIG_1")]
   public static extern bool MgCoreView_setCommand__SWIG_1(HandleRef jarg1, string jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_switchCommand")]
+  public static extern bool MgCoreView_switchCommand(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_doContextAction")]
   public static extern bool MgCoreView_doContextAction(HandleRef jarg1, int jarg2);

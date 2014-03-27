@@ -9266,6 +9266,16 @@ SWIGEXPORT int SWIGSTDCALL CSharp_mgcurv_fitCurve(int jarg1, void * jarg2, void 
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_mgcurv_quadBezierToCubic(void * jarg1, void * jarg2) {
+  Point2d *arg1 ;
+  Point2d *arg2 ;
+  
+  arg1 = (Point2d *)jarg1; 
+  arg2 = (Point2d *)jarg2; 
+  mgcurv::quadBezierToCubic((Point2d const (*))arg1,arg2);
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_mgcurv_ellipse90ToBezier(void * jarg1, void * jarg2, void * jarg3, void * jarg4) {
   Point2d *arg1 = 0 ;
   Point2d *arg2 = 0 ;
@@ -27706,6 +27716,20 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCmdManager_setCommand(void * jarg1,
 }
 
 
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCmdManager_switchCommand(void * jarg1, void * jarg2) {
+  unsigned int jresult ;
+  MgCmdManager *arg1 = (MgCmdManager *) 0 ;
+  MgMotion *arg2 = (MgMotion *) 0 ;
+  bool result;
+  
+  arg1 = (MgCmdManager *)jarg1; 
+  arg2 = (MgMotion *)jarg2; 
+  result = (bool)(arg1)->switchCommand((MgMotion const *)arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCmdManager_cancel(void * jarg1, void * jarg2) {
   unsigned int jresult ;
   MgCmdManager *arg1 = (MgCmdManager *) 0 ;
@@ -29480,6 +29504,18 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_setCommand__SWIG_1(void * 
   arg1 = (MgCoreView *)jarg1; 
   arg2 = (char *)jarg2; 
   result = (bool)(arg1)->setCommand((char const *)arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_switchCommand(void * jarg1) {
+  unsigned int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  bool result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (bool)(arg1)->switchCommand();
   jresult = result; 
   return jresult;
 }

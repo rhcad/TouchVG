@@ -21,98 +21,115 @@ static void addView(NSMutableArray *arr, NSString* title, UIView* view)
     }
 }
 
+static void testSVGPages(GiPaintView *v, GiViewHelper *hlp, NSString *path)
+{
+    NSString *files[] = { @"page0.svg", @"page1.svg", @"page2.svg", @"page3.svg", nil };
+    float x = 10;
+    
+    for (int i = 0; files[i]; i++) {
+        NSString *filename = [path stringByAppendingPathComponent:files[i]];
+        UIImage *image = [GiViewHelper getImageFromSVGFile:filename maxSize:CGSizeMake(200, 200)];
+        if (!image)
+            break;
+        
+        CGSize size = image.size;
+        float y = 20;
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
+        imageView.frame = CGRectMake(x, y, size.width, size.height);
+        imageView.layer.borderColor = [UIColor redColor].CGColor;
+        imageView.layer.borderWidth = 2;
+        [v addSubview:imageView];
+        [imageView RELEASE];
+        y += size.height + 2;
+        
+        [hlp createGraphView:CGRectMake(x, y, size.width, size.height) :v];
+        if ([hlp loadFromFile:filename]) {
+            [GiViewHelper activeView].layer.borderColor = [UIColor blueColor].CGColor;
+            [GiViewHelper activeView].layer.borderWidth = 2;
+        }
+        y += size.height + 2;
+        
+        image = [[UIImage alloc]initWithContentsOfFile:[GiViewHelper addExtension:filename :@".png"]];
+        if (image) {
+            imageView = [[UIImageView alloc]initWithImage:image];
+            imageView.frame = CGRectMake(x, y, size.width, size.height);
+            imageView.layer.borderColor = [UIColor greenColor].CGColor;
+            imageView.layer.borderWidth = 2;
+            [v addSubview:imageView];
+            [imageView RELEASE];
+            [image RELEASE];
+        }
+        y += size.height + 2;
+        
+        x += size.width + 2;
+    }
+}
+
 static void testGraphView(GiPaintView *v, int type)
 {
     GiViewHelper *hlp = [GiViewHelper sharedInstance:v];
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                           NSUserDomainMask, YES) objectAtIndex:0];
-    
     if (type & kRandShapes) {
         [hlp addShapesForTest];
     }
-    type = type & kCmdMask;
     
-    if (type == kSplinesCmd) {
-        hlp.command = @"splines";
-        hlp.strokeWidth = 3;
-    }
-    else if (type == kSelectCmd) {
-        hlp.command = @"select";
-    }
-    else if (type == kSelectLoad) {
-        [hlp loadFromFile:[GiGraphView2 lastFileName]];
-        hlp.command = @"select";
-    }
-    else if (type == kLineCmd) {
-        hlp.command = @"line";
-        hlp.lineStyle = GILineStyleDash;
-    }
-    else if (type == kLinesCmd) {
-        hlp.command = @"lines";
-        hlp.lineStyle = GILineStyleDot;
-        hlp.strokeWidth = 5;
-    }
-    else if (type == kHitTestCmd) {
-        DemoCmdsGate::registerCmds([hlp cmdViewHandle]);
-        hlp.command = @"hittest";
-    }
-    else if (type == kAddImages) {
-        [hlp insertPNGFromResource:@"app72"];
-        [hlp insertPNGFromResource:@"app57" center:CGPointMake(200, 100)];
-        
-        [hlp insertImageFromFile:[path stringByAppendingPathComponent:@"page0.png"]];
-    }
-    else if (type == kLoadImages) {
-        [hlp setImagePath:path];
-        [hlp loadFromFile:[GiGraphView2 lastFileName]];
-        hlp.command = @"select";
-    }
-    else if (type == kSVGImages) {
-        [hlp insertSVGFromResource:@"fonts" center:CGPointMake(200, 100)];
-        [hlp insertImageFromFile:[path stringByAppendingPathComponent:@"test.svg"]];
-        [hlp setImagePath:path];
-    }
-    else if (type == kSVGPages) {
-        NSString *files[] = { @"page0.svg", @"page1.svg", @"page2.svg", @"page3.svg", nil };
-        float x = 10;
-        for (int i = 0; files[i]; i++) {
-            NSString *filename = [path stringByAppendingPathComponent:files[i]];
-            UIImage *image = [GiViewHelper getImageFromSVGFile:filename maxSize:CGSizeMake(200, 200)];
-            if (!image)
-                break;
+    switch (type & kCmdMask) {
+        case kSplinesCmd:
+            hlp.command = @"splines";
+            hlp.strokeWidth = 3;
+            break;
             
-            CGSize size = image.size;
-            float y = 20;
+        case kSelectCmd:
+            hlp.command = @"select";
+            break;
             
-            UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
-            imageView.frame = CGRectMake(x, y, size.width, size.height);
-            imageView.layer.borderColor = [UIColor redColor].CGColor;
-            imageView.layer.borderWidth = 2;
-            [v addSubview:imageView];
-            [imageView RELEASE];
-            y += size.height + 2;
+        case kSelectLoad:
+            [hlp loadFromFile:[GiGraphView2 lastFileName]];
+            hlp.command = @"select";
+            break;
             
-            [hlp createGraphView:CGRectMake(x, y, size.width, size.height) :v];
-            if ([hlp loadFromFile:filename]) {
-                [GiViewHelper activeView].layer.borderColor = [UIColor blueColor].CGColor;
-                [GiViewHelper activeView].layer.borderWidth = 2;
+        case kLineCmd:
+            hlp.command = @"line";
+            hlp.lineStyle = GILineStyleDash;
+            break;
+            
+        case kLinesCmd:
+            hlp.command = @"lines";
+            hlp.lineStyle = GILineStyleDot;
+            hlp.strokeWidth = 5;
+            break;
+            
+        case kHitTestCmd:
+            DemoCmdsGate::registerCmds([hlp cmdViewHandle]);
+            hlp.command = @"hittest";
+            if (!(type & kRandShapes)) {
+                [hlp loadFromFile:[GiGraphView2 lastFileName]];
             }
-            y += size.height + 2;
+            break;
             
-            image = [[UIImage alloc]initWithContentsOfFile:[GiViewHelper addExtension:filename :@".png"]];
-            if (image) {
-                imageView = [[UIImageView alloc]initWithImage:image];
-                imageView.frame = CGRectMake(x, y, size.width, size.height);
-                imageView.layer.borderColor = [UIColor greenColor].CGColor;
-                imageView.layer.borderWidth = 2;
-                [v addSubview:imageView];
-                [imageView RELEASE];
-                [image RELEASE];
-            }
-            y += size.height + 2;
+        case kAddImages:
+            [hlp insertPNGFromResource:@"app72"];
+            [hlp insertPNGFromResource:@"app57" center:CGPointMake(200, 100)];
+            [hlp insertImageFromFile:[path stringByAppendingPathComponent:@"page0.png"]];
+            break;
             
-            x += size.width + 2;
-        }
+        case kLoadImages:
+            [hlp setImagePath:path];
+            [hlp loadFromFile:[GiGraphView2 lastFileName]];
+            hlp.command = @"select";
+            break;
+            
+        case kSVGImages:
+            [hlp insertSVGFromResource:@"fonts" center:CGPointMake(200, 100)];
+            [hlp insertImageFromFile:[path stringByAppendingPathComponent:@"test.svg"]];
+            [hlp setImagePath:path];
+            break;
+            
+        case kSVGPages:
+            testSVGPages(v, hlp, path);
+            break;
     }
 }
 
@@ -204,6 +221,8 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addGraphView(arr, i, index, @"GiPaintView zoom", frame, kRandShapes);
     addGraphView(arr, i, index, @"GiPaintView line", frame, kLineCmd);
     addGraphView(arr, i, index, @"GiPaintView lines", frame, kLinesCmd);
+    addGraphView(arr, i, index, @"GiPaintView switch command", frame, kSwitchCmd);
+    addGraphView(arr, i, index, @"GiPaintView switch hittest", frame, kSwitchCmd|kHitTestCmd);
     addGraphView(arr, i, index, @"GiPaintView record splines", frame, kRecord|kSplinesCmd);
     addGraphView(arr, i, index, @"GiPaintView record line", frame, kRecord|kLineCmd);
     addGraphView(arr, i, index, @"GiPaintView record randShapes splines",

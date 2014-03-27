@@ -6,7 +6,7 @@
 #import "GiViewImpl.h"
 #import "ImageCache.h"
 
-#define IOSLIBVERSION     6
+#define IOSLIBVERSION     7
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -115,6 +115,10 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (BOOL)setCommand:(NSString *)name withParam:(NSString *)param {
     return [_view coreView]->setCommand([name UTF8String], [param UTF8String]);
+}
+
+- (BOOL)switchCommand {
+    return [_view coreView]->switchCommand();
 }
 
 - (BOOL)isCommand:(const char*)name {

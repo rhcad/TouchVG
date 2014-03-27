@@ -42,6 +42,8 @@ public class ViewFactory {
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RAND_LINE, "SFGraphView randShapes line");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.LINE_CMD, "SFGraphView line");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.LINES_CMD, "SFGraphView lines");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.SWITCH_CMD, "SFGraphView switch command");
+        addItem("vgtest.testview.view.SFGraphView1", TestFlags.SWITCH_CMD|TestFlags.HITTEST_CMD, "SFGraphView switch hittest in democmds");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD_SPLINES, "SFGraphView record splines");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD_LINE, "SFGraphView record line");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD_SPLINES_RAND, "SFGraphView record randShapes splines");
@@ -67,7 +69,8 @@ public class ViewFactory {
         addItem("vgtest.testview.view.GraphView1", TestFlags.PROVIDER | TestFlags.SPLINES_CMD, "StdGraphView provider");
         addItem("vgtest.testview.view.GraphView1", TestFlags.PROVIDER | TestFlags.RECORD_SPLINES, "StdGraphView provider record");
         addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES, "StdGraphView randShapes play");
-        addItem("vgtest.testview.view.GraphView1", TestFlags.RAND_SHAPES | TestFlags.HITTEST_CMD, "StdGraphView hittest in democmds");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.SWITCH_CMD, "StdGraphView switch command");
+        addItem("vgtest.testview.view.GraphView1", TestFlags.SWITCH_CMD|TestFlags.HITTEST_CMD, "StdGraphView switch hittest in democmds");
         addItem("vgtest.testview.view.GraphView1", TestFlags.RAND_SELECT, "StdGraphView select");
 
         addItem("vgtest.testview.view.TestMagnifier1", TestFlags.SPLINES_CMD, "TestMagnifier");

@@ -53,6 +53,10 @@ public class MgCmdManager {
     return touchvgJNI.MgCmdManager_setCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender, name, MgStorage.getCPtr(s), s);
   }
 
+  public boolean switchCommand(MgMotion sender) {
+    return touchvgJNI.MgCmdManager_switchCommand(swigCPtr, this, MgMotion.getCPtr(sender), sender);
+  }
+
   public boolean cancel(MgMotion sender) {
     return touchvgJNI.MgCmdManager_cancel(swigCPtr, this, MgMotion.getCPtr(sender), sender);
   }

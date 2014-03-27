@@ -13384,6 +13384,22 @@ SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_mgcurv_1fitCurve(JNIE
 }
 
 
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_mgcurv_1quadBezierToCubic(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  Point2d *arg1 ;
+  Point2d *arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(Point2d **)&jarg1; 
+  arg2 = *(Point2d **)&jarg2; 
+  mgcurv::quadBezierToCubic((Point2d const (*))arg1,arg2);
+  
+  
+}
+
+
 SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_mgcurv_1ellipse90ToBezier(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
   Point2d *arg1 = 0 ;
   Point2d *arg2 = 0 ;
@@ -36387,6 +36403,24 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCmdManager_1set
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCmdManager_1switchCommand(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  jboolean jresult = 0 ;
+  MgCmdManager *arg1 = (MgCmdManager *) 0 ;
+  MgMotion *arg2 = (MgMotion *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(MgCmdManager **)&jarg1; 
+  arg2 = *(MgMotion **)&jarg2; 
+  result = (bool)(arg1)->switchCommand((MgMotion const *)arg2);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCmdManager_1cancel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   jboolean jresult = 0 ;
   MgCmdManager *arg1 = (MgCmdManager *) 0 ;
@@ -38647,6 +38681,21 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1setCo
   result = (bool)(arg1)->setCommand((char const *)arg2);
   jresult = (jboolean)result; 
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1switchCommand(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  result = (bool)(arg1)->switchCommand();
+  jresult = (jboolean)result; 
   return jresult;
 }
 

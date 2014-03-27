@@ -65,6 +65,10 @@ public class mgcurv : IDisposable {
     return ret;
   }
 
+  public static void quadBezierToCubic(Point2d quad, Point2d cubic) {
+    touchvgPINVOKE.mgcurv_quadBezierToCubic(Point2d.getCPtr(quad), Point2d.getCPtr(cubic));
+  }
+
   public static void ellipse90ToBezier(Point2d frompt, Point2d topt, Point2d ctrpt1, Point2d ctrpt2) {
     touchvgPINVOKE.mgcurv_ellipse90ToBezier(Point2d.getCPtr(frompt), Point2d.getCPtr(topt), Point2d.getCPtr(ctrpt1), Point2d.getCPtr(ctrpt2));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();

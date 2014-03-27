@@ -1,13 +1,14 @@
 package vgtest.testview;
 
 public class TestFlags {
-    public final static int SPLINES_CMD = 1 << 1;
-    public final static int LINE_CMD = 2 << 1;
-    public final static int LINES_CMD = 3 << 1;
-    public final static int HITTEST_CMD = 4 << 1;
-    public final static int SELECT_CMD = 1;
+    public final static int SPLINES_CMD = 1;
+    public final static int SELECT_CMD = 2;
+    public final static int LINE_CMD = 4;
+    public final static int LINES_CMD = 5;
+    public final static int HITTEST_CMD = 6;
+    public final static int CMD_MASK = 7;
+    public final static int SWITCH_CMD = 8;
     public final static int TWO_MAGVIEWS = 16;
-    public final static int CMD_MASK = 15;
     public final static int RAND_SHAPES = 32;
     public final static int RAND_SPLINES = RAND_SHAPES | SPLINES_CMD;
     public final static int RAND_LINE = RAND_SHAPES | LINE_CMD;

@@ -233,6 +233,11 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
+  public virtual bool switchCommand() {
+    bool ret = touchvgPINVOKE.MgCoreView_switchCommand(swigCPtr);
+    return ret;
+  }
+
   public virtual bool doContextAction(int action) {
     bool ret = touchvgPINVOKE.MgCoreView_doContextAction(swigCPtr, action);
     return ret;

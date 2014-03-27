@@ -11,6 +11,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 import democmds.core.DemoCmdsGate;
 
 public class GraphView1 extends StdGraphView implements IGraphView.OnFirstRegenListener {
@@ -38,7 +40,7 @@ public class GraphView1 extends StdGraphView implements IGraphView.OnFirstRegenL
         }
 
         flags = flags & TestFlags.CMD_MASK;
-        if ((flags & TestFlags.SELECT_CMD) != 0) {
+        if (flags == TestFlags.SELECT_CMD) {
             helper.setCommand("select");
         } else if (flags == TestFlags.SPLINES_CMD) {
             helper.setCommand("splines");
@@ -51,6 +53,20 @@ public class GraphView1 extends StdGraphView implements IGraphView.OnFirstRegenL
             helper.setCommand("hittest");
             Log.d("Test", "DemoCmdsGate.registerCmds = " + n + ", " + helper.getCommand());
         }
+    }
+
+    @Override
+    public boolean onPreDoubleTap(MotionEvent e) {
+        int flags = ((Activity) getContext()).getIntent().getExtras().getInt("flags");
+        final IViewHelper helper = ViewFactory.createHelper(this);
+
+        if ((flags & TestFlags.SWITCH_CMD) != 0) {
+            helper.switchCommand();
+            Toast.makeText(getContext(), helper.getCommand(), Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return false;
     }
 
     public void onFirstRegen(IGraphView view) {

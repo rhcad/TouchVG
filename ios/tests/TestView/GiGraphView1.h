@@ -19,6 +19,7 @@ enum kTestFlags {
     kSVGImages  = 9,
     kSVGPages   = 10,
     kCmdMask    = 15,
+    kSwitchCmd  = 16,
     kRandShapes = 32,
     kRecord     = 64,
     kPlayShapes = 64,

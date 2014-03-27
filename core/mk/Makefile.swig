@@ -3,7 +3,7 @@
 
 SOURCES ?=$(wildcard *.cpp)
 OBJDIR0  =._$(SWIG_TYPE)o/
-OBJDIR   =._$(SWIG_TYPE)o/o/o/
+OBJDIR   =._$(SWIG_TYPE)o/o/o/o/
 OBJS     =$(addprefix $(OBJDIR), $(SOURCES:.cpp=$(OBJEXT)))
 
 # SWIG_TYPE == ?
@@ -170,13 +170,8 @@ $(OBJDIR)%$(OBJEXT): %.cxx
 	-@mkdir -vp $(OBJDIR)
 	$(CPP) $(subst -Wall ,,$(subst -W4 ,,$(CPPFLAGS))) $(INCLUDES) -c $< $(OFLAG)$@
 
-HAS_PUBSRC      :=$(shell echo $(SOURCES)|grep -i pub_src)
-
 $(OBJDIR)%.d: %.cpp
 	-@mkdir -vp $(OBJDIR)
-ifdef HAS_PUBSRC
-	-@mkdir -vp $(OBJDIR0)pub_src
-endif
 	-@mkdir -vp $(OBJDIR)$(dir $<)
 	@echo Generating $@ from $<; $(DEPEND_CC) $@ $(INCLUDES) $<
 

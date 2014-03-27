@@ -4,6 +4,8 @@
 > 
 > 作者：张云贵 <rhcad@hotmail.com> 开源协议：LGPL 2.1，见 LICENSE 文件描述。
 
+![iphone1](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/iphone1.png) ![iphone2](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/iphone2.png)  ![android1](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/android1.png)
+
 TouchVG 的功能
 --------------
 > 支持多点触摸或鼠标的交互绘图方式，可以无级放缩或平移显示矢量图形、图像、[SVG](http://zh.wikipedia.org/wiki/SVG)。
@@ -24,7 +26,7 @@ TouchVG 的功能
 
 > 支持多模块的扩展机制，可构建数字教育、动态几何、图文笔记、会议白板等多种行业绘图模块。
 
-> 更多说明将在TouchVG的 [在线文档](https://github.com/rhcad/touchvg-doc) 中补充。
+> 更多说明将在TouchVG的 [在线文档](https://github.com/rhcad/touchvg-doc) 中补充，可看[最新功能的屏幕录像](http://www.soku.com/search_video/q_touchvg)。
 
 引用的开源框架
 --------------
@@ -53,7 +55,9 @@ TouchVG 的功能
 
 捐款
 -------
-> 如果您在使用后感到满意，或者希望增加特别的功能、获得更多技术支持，请[为TouchVG项目捐款](https://me.alipay.com/rhcad)，以支持作者不断完善此项目。
+> 如果您在使用后感到满意，或者希望增加特别的功能、获得更多技术支持，请[为TouchVG项目捐款](https://me.alipay.com/rhcad)，也可扫下面的二维码捐款，以支持作者不断完善此项目。
+
+> ![Yu_E_Bao](http://git.oschina.net/rhcad/TouchVG/raw/master/doc/images/yuebao.png)
 
 
 Android编译说明
