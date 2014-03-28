@@ -249,6 +249,7 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (void)setContent:(NSString *)value {
+    [_view.imageCache clearCachedData];
     [_view coreView]->setContent([value UTF8String]);
 }
 
@@ -305,11 +306,13 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r {
+    [_view.imageCache clearCachedData];
     vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
     return [_view coreView]->loadFromFile([vgfile UTF8String], r);
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile {
+    [_view.imageCache clearCachedData];
     vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
     return [_view coreView]->loadFromFile([vgfile UTF8String]);
 }
@@ -337,6 +340,7 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (void)clearShapes {
     [_view coreView]->clear();
+    [_view.imageCache clearCachedData];
 }
 
 - (UIImage *)snapshot {

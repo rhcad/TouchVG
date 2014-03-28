@@ -645,7 +645,6 @@ public class ViewHelperImpl implements IViewHelper{
 
         mView.coreView().getContent(doc, c);
         GiCoreView.releaseDoc(doc);
-        mView.coreView().freeContent();
 
         return log.r(c.toString());
     }
@@ -653,6 +652,7 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public boolean setContent(String content) {
         final LogHelper log = new LogHelper();
+        mView.getImageCache().clear();
         return log.r(mView.coreView().setContent(content));
     }
 
@@ -663,9 +663,12 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public boolean loadFromFile(String vgfile, boolean readOnly) {
+        if (mView == null)
+            return false;
         final LogHelper log = new LogHelper();
         vgfile = addExtension(vgfile, ".vg");
-        return log.r(mView != null && mView.coreView().loadFromFile(vgfile, readOnly));
+        mView.getImageCache().clear();
+        return log.r(mView.coreView().loadFromFile(vgfile, readOnly));
     }
 
     @Override
@@ -693,6 +696,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void clearShapes() {
+        mView.getImageCache().clear();
         mView.coreView().clear();
     }
 

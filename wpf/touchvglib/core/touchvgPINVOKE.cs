@@ -5376,6 +5376,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getFrameTick")]
   public static extern int MgCoreView_getFrameTick(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getFrameFlags")]
+  public static extern int MgCoreView_getFrameFlags(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getFrameIndex")]
   public static extern int MgCoreView_getFrameIndex(HandleRef jarg1);
 
@@ -5628,8 +5631,11 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_exportSVG__SWIG_1")]
   public static extern int GiCoreView_exportSVG__SWIG_1(HandleRef jarg1, HandleRef jarg2, string jarg3);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_startRecord")]
-  public static extern bool GiCoreView_startRecord(HandleRef jarg1, string jarg2, int jarg3, bool jarg4, int jarg5);
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_startRecord__SWIG_0")]
+  public static extern bool GiCoreView_startRecord__SWIG_0(HandleRef jarg1, string jarg2, int jarg3, bool jarg4, int jarg5, HandleRef jarg6);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_startRecord__SWIG_1")]
+  public static extern bool GiCoreView_startRecord__SWIG_1(HandleRef jarg1, string jarg2, int jarg3, bool jarg4, int jarg5);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_stopRecord")]
   public static extern void GiCoreView_stopRecord(HandleRef jarg1, HandleRef jarg2, bool jarg3);
@@ -5638,7 +5644,10 @@ class touchvgPINVOKE {
   public static extern bool GiCoreView_recordShapes__SWIG_0(HandleRef jarg1, bool jarg2, int jarg3, int jarg4, int jarg5);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_recordShapes__SWIG_1")]
-  public static extern bool GiCoreView_recordShapes__SWIG_1(HandleRef jarg1, bool jarg2, int jarg3, int jarg4, int jarg5, HandleRef jarg6);
+  public static extern bool GiCoreView_recordShapes__SWIG_1(HandleRef jarg1, bool jarg2, int jarg3, int jarg4, int jarg5, HandleRef jarg6, HandleRef jarg7);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_recordShapes__SWIG_2")]
+  public static extern bool GiCoreView_recordShapes__SWIG_2(HandleRef jarg1, bool jarg2, int jarg3, int jarg4, int jarg5, HandleRef jarg6);
 
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreView_undo")]
   public static extern bool GiCoreView_undo(HandleRef jarg1, HandleRef jarg2);

@@ -152,6 +152,10 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_getFrameTick(swigCPtr, this);
   }
 
+  public int getFrameFlags() {
+    return touchvgJNI.MgCoreView_getFrameFlags(swigCPtr, this);
+  }
+
   public int getFrameIndex() {
     return touchvgJNI.MgCoreView_getFrameIndex(swigCPtr, this);
   }

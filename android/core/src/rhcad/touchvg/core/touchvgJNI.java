@@ -1732,6 +1732,7 @@ public class touchvgJNI {
   public final static native int MgCoreView_loadNextFrame(long jarg1, MgCoreView jarg1_, int jarg2);
   public final static native int MgCoreView_loadPrevFrame(long jarg1, MgCoreView jarg1_, int jarg2, int jarg3);
   public final static native int MgCoreView_getFrameTick(long jarg1, MgCoreView jarg1_);
+  public final static native int MgCoreView_getFrameFlags(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_getFrameIndex(long jarg1, MgCoreView jarg1_);
   public final static native void MgCoreView_applyFrame(long jarg1, MgCoreView jarg1_, int jarg2);
   public final static native int MgCoreView_getPlayingDocForEdit(long jarg1, MgCoreView jarg1_);
@@ -1816,10 +1817,12 @@ public class touchvgJNI {
   public final static native int GiCoreView_getVersion();
   public final static native int GiCoreView_exportSVG__SWIG_0(long jarg1, GiCoreView jarg1_, int jarg2, int jarg3, String jarg4);
   public final static native int GiCoreView_exportSVG__SWIG_1(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, String jarg3);
-  public final static native boolean GiCoreView_startRecord(long jarg1, GiCoreView jarg1_, String jarg2, int jarg3, boolean jarg4, int jarg5);
+  public final static native boolean GiCoreView_startRecord__SWIG_0(long jarg1, GiCoreView jarg1_, String jarg2, int jarg3, boolean jarg4, int jarg5, long jarg6, MgStringCallback jarg6_);
+  public final static native boolean GiCoreView_startRecord__SWIG_1(long jarg1, GiCoreView jarg1_, String jarg2, int jarg3, boolean jarg4, int jarg5);
   public final static native void GiCoreView_stopRecord(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_, boolean jarg3);
   public final static native boolean GiCoreView_recordShapes__SWIG_0(long jarg1, GiCoreView jarg1_, boolean jarg2, int jarg3, int jarg4, int jarg5);
-  public final static native boolean GiCoreView_recordShapes__SWIG_1(long jarg1, GiCoreView jarg1_, boolean jarg2, int jarg3, int jarg4, int jarg5, long jarg6, Ints jarg6_);
+  public final static native boolean GiCoreView_recordShapes__SWIG_1(long jarg1, GiCoreView jarg1_, boolean jarg2, int jarg3, int jarg4, int jarg5, long jarg6, Ints jarg6_, long jarg7, MgStringCallback jarg7_);
+  public final static native boolean GiCoreView_recordShapes__SWIG_2(long jarg1, GiCoreView jarg1_, boolean jarg2, int jarg3, int jarg4, int jarg5, long jarg6, Ints jarg6_);
   public final static native boolean GiCoreView_undo(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
   public final static native boolean GiCoreView_redo(long jarg1, GiCoreView jarg1_, long jarg2, GiView jarg2_);
   public final static native boolean GiCoreView_loadFrameIndex(String jarg1, long jarg2, Ints jarg2_);

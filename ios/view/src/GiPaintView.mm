@@ -577,17 +577,18 @@ GiColor CGColorToGiColor(CGColorRef color);
     _gestureRecognized = (sender.state == UIGestureRecognizerStateBegan
                           || sender.state == UIGestureRecognizerStateChanged);
     
-    if (sender.state == UIGestureRecognizerStateBegan
-        && [sender numberOfTouches] == 1 && self.viewToMagnify) {
+    if (sender.state == UIGestureRecognizerStateBegan && [sender numberOfTouches] == 1
+        && self.viewToMagnify && ![self coreView]->isCommand("splines")) {
         if (!_magnifierView) {
             _magnifierView = [[GiMagnifierView alloc]init];
-            _magnifierView.followFinger = ![self coreView]->isCommand("splines");
+            _magnifierView.followFinger = YES;
             _magnifierView.viewToMagnify = self.viewToMagnify;
         }
         [_magnifierView show];
         _magnifierView.touchPoint = [sender locationInView:_magnifierView.viewToMagnify];
     }
-    else if (sender.state == UIGestureRecognizerStateChanged && _magnifierView) {
+    else if (sender.state == UIGestureRecognizerStateChanged
+             && _magnifierView && _magnifierView.window) {
         _magnifierView.touchPoint = [sender locationInView:_magnifierView.viewToMagnify];
     }
     

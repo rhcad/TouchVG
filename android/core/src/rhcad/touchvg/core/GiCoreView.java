@@ -158,8 +158,12 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_exportSVG__SWIG_1(swigCPtr, this, GiView.getCPtr(view), view, filename);
   }
 
+  public boolean startRecord(String path, int doc, boolean forUndo, int curTick, MgStringCallback c) {
+    return touchvgJNI.GiCoreView_startRecord__SWIG_0(swigCPtr, this, path, doc, forUndo, curTick, MgStringCallback.getCPtr(c), c);
+  }
+
   public boolean startRecord(String path, int doc, boolean forUndo, int curTick) {
-    return touchvgJNI.GiCoreView_startRecord(swigCPtr, this, path, doc, forUndo, curTick);
+    return touchvgJNI.GiCoreView_startRecord__SWIG_1(swigCPtr, this, path, doc, forUndo, curTick);
   }
 
   public void stopRecord(GiView view, boolean forUndo) {
@@ -170,8 +174,12 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_recordShapes__SWIG_0(swigCPtr, this, forUndo, tick, doc, shapes);
   }
 
+  public boolean recordShapes(boolean forUndo, int tick, int doc, int shapes, Ints exts, MgStringCallback c) {
+    return touchvgJNI.GiCoreView_recordShapes__SWIG_1(swigCPtr, this, forUndo, tick, doc, shapes, Ints.getCPtr(exts), exts, MgStringCallback.getCPtr(c), c);
+  }
+
   public boolean recordShapes(boolean forUndo, int tick, int doc, int shapes, Ints exts) {
-    return touchvgJNI.GiCoreView_recordShapes__SWIG_1(swigCPtr, this, forUndo, tick, doc, shapes, Ints.getCPtr(exts), exts);
+    return touchvgJNI.GiCoreView_recordShapes__SWIG_2(swigCPtr, this, forUndo, tick, doc, shapes, Ints.getCPtr(exts), exts);
   }
 
   public boolean undo(GiView view) {

@@ -187,8 +187,13 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
+  public bool startRecord(string path, int doc, bool forUndo, int curTick, MgStringCallback c) {
+    bool ret = touchvgPINVOKE.GiCoreView_startRecord__SWIG_0(swigCPtr, path, doc, forUndo, curTick, MgStringCallback.getCPtr(c));
+    return ret;
+  }
+
   public bool startRecord(string path, int doc, bool forUndo, int curTick) {
-    bool ret = touchvgPINVOKE.GiCoreView_startRecord(swigCPtr, path, doc, forUndo, curTick);
+    bool ret = touchvgPINVOKE.GiCoreView_startRecord__SWIG_1(swigCPtr, path, doc, forUndo, curTick);
     return ret;
   }
 
@@ -201,8 +206,13 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
+  public bool recordShapes(bool forUndo, int tick, int doc, int shapes, Ints exts, MgStringCallback c) {
+    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_1(swigCPtr, forUndo, tick, doc, shapes, Ints.getCPtr(exts), MgStringCallback.getCPtr(c));
+    return ret;
+  }
+
   public bool recordShapes(bool forUndo, int tick, int doc, int shapes, Ints exts) {
-    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_1(swigCPtr, forUndo, tick, doc, shapes, Ints.getCPtr(exts));
+    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_2(swigCPtr, forUndo, tick, doc, shapes, Ints.getCPtr(exts));
     return ret;
   }
 

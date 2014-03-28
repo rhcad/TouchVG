@@ -29385,6 +29385,18 @@ SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_getFrameTick(void * jarg1) {
 }
 
 
+SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_getFrameFlags(void * jarg1) {
+  int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (int)(arg1)->getFrameFlags();
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_getFrameIndex(void * jarg1) {
   int jresult ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
@@ -30617,7 +30629,29 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreView_exportSVG__SWIG_1(void * jarg1, voi
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_startRecord(void * jarg1, char * jarg2, long jarg3, unsigned int jarg4, long jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_startRecord__SWIG_0(void * jarg1, char * jarg2, long jarg3, unsigned int jarg4, long jarg5, void * jarg6) {
+  unsigned int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  char *arg2 = (char *) 0 ;
+  long arg3 ;
+  bool arg4 ;
+  long arg5 ;
+  MgStringCallback *arg6 = (MgStringCallback *) 0 ;
+  bool result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = (char *)jarg2; 
+  arg3 = (long)jarg3; 
+  arg4 = jarg4 ? true : false; 
+  arg5 = (long)jarg5; 
+  arg6 = (MgStringCallback *)jarg6; 
+  result = (bool)(arg1)->startRecord((char const *)arg2,arg3,arg4,arg5,arg6);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_startRecord__SWIG_1(void * jarg1, char * jarg2, long jarg3, unsigned int jarg4, long jarg5) {
   unsigned int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -30669,7 +30703,31 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_recordShapes__SWIG_0(void 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_recordShapes__SWIG_1(void * jarg1, unsigned int jarg2, long jarg3, long jarg4, long jarg5, void * jarg6) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_recordShapes__SWIG_1(void * jarg1, unsigned int jarg2, long jarg3, long jarg4, long jarg5, void * jarg6, void * jarg7) {
+  unsigned int jresult ;
+  GiCoreView *arg1 = (GiCoreView *) 0 ;
+  bool arg2 ;
+  long arg3 ;
+  long arg4 ;
+  long arg5 ;
+  mgvector< int > *arg6 = (mgvector< int > *) 0 ;
+  MgStringCallback *arg7 = (MgStringCallback *) 0 ;
+  bool result;
+  
+  arg1 = (GiCoreView *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  arg3 = (long)jarg3; 
+  arg4 = (long)jarg4; 
+  arg5 = (long)jarg5; 
+  arg6 = (mgvector< int > *)jarg6; 
+  arg7 = (MgStringCallback *)jarg7; 
+  result = (bool)(arg1)->recordShapes(arg2,arg3,arg4,arg5,(mgvector< int > const *)arg6,arg7);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiCoreView_recordShapes__SWIG_2(void * jarg1, unsigned int jarg2, long jarg3, long jarg4, long jarg5, void * jarg6) {
   unsigned int jresult ;
   GiCoreView *arg1 = (GiCoreView *) 0 ;
   bool arg2 ;

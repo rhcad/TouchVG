@@ -185,6 +185,11 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
+  public virtual int getFrameFlags() {
+    int ret = touchvgPINVOKE.MgCoreView_getFrameFlags(swigCPtr);
+    return ret;
+  }
+
   public virtual int getFrameIndex() {
     int ret = touchvgPINVOKE.MgCoreView_getFrameIndex(swigCPtr);
     return ret;

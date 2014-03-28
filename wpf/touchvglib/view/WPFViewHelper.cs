@@ -285,7 +285,6 @@ namespace touchvg.view
             {
                 StringCallback c = new StringCallback();
                 CoreView.getContent(c);
-                CoreView.freeContent();
                 return c.ToString();
             }
             set { CoreView.setContent(value); }
