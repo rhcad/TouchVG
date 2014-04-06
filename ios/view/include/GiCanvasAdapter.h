@@ -8,7 +8,7 @@
 #include "gicanvas.h"
 #include <CoreGraphics/CoreGraphics.h>
 
-@class ImageCache;
+@class GiImageCache;
 
 int giGetScreenDpi();
 
@@ -18,7 +18,7 @@ int giGetScreenDpi();
 class GiCanvasAdapter : public GiCanvas
 {
 public:
-    GiCanvasAdapter(ImageCache *cache = (ImageCache *)0);
+    GiCanvasAdapter(GiImageCache *cache = (GiImageCache *)0);
     virtual ~GiCanvasAdapter();
     
     //! 在给定上下文上开始绘制
@@ -59,7 +59,7 @@ public:
 private:
     CGContextRef    _ctx;
     bool            _fill;
-    ImageCache      *_cache;
+    GiImageCache      *_cache;
     CGGradientRef   _gradient0;
     CGGradientRef   _gradient;
 };

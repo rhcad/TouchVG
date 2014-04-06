@@ -160,26 +160,6 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public virtual int loadFirstFrame() {
-    int ret = touchvgPINVOKE.MgCoreView_loadFirstFrame__SWIG_0(swigCPtr);
-    return ret;
-  }
-
-  public virtual int loadFirstFrame(string file) {
-    int ret = touchvgPINVOKE.MgCoreView_loadFirstFrame__SWIG_1(swigCPtr, file);
-    return ret;
-  }
-
-  public virtual int loadNextFrame(int index) {
-    int ret = touchvgPINVOKE.MgCoreView_loadNextFrame(swigCPtr, index);
-    return ret;
-  }
-
-  public virtual int loadPrevFrame(int index, int curTick) {
-    int ret = touchvgPINVOKE.MgCoreView_loadPrevFrame(swigCPtr, index, curTick);
-    return ret;
-  }
-
   public virtual int getFrameTick() {
     int ret = touchvgPINVOKE.MgCoreView_getFrameTick(swigCPtr);
     return ret;
@@ -192,20 +172,6 @@ public class MgCoreView : IDisposable {
 
   public virtual int getFrameIndex() {
     int ret = touchvgPINVOKE.MgCoreView_getFrameIndex(swigCPtr);
-    return ret;
-  }
-
-  public virtual void applyFrame(int flags) {
-    touchvgPINVOKE.MgCoreView_applyFrame(swigCPtr, flags);
-  }
-
-  public virtual int getPlayingDocForEdit() {
-    int ret = touchvgPINVOKE.MgCoreView_getPlayingDocForEdit(swigCPtr);
-    return ret;
-  }
-
-  public virtual int getDynamicShapesForEdit() {
-    int ret = touchvgPINVOKE.MgCoreView_getDynamicShapesForEdit(swigCPtr);
     return ret;
   }
 

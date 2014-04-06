@@ -74,11 +74,7 @@ public class GraphView1 extends StdGraphView implements IGraphView.OnFirstRegenL
         final IViewHelper helper = ViewFactory.createHelper(view);
 
         if ((flags & TestFlags.RECORD) != 0) {
-            if ((flags & TestFlags.CMD_MASK) != 0) {
-                helper.startRecord(PATH + "record");
-            } else {
-                helper.startPlay(PATH + "record");
-            }
+            helper.startRecord(PATH + "record");
         }
     }
 }

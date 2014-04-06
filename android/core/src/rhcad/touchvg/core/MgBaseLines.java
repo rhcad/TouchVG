@@ -78,6 +78,10 @@ public class MgBaseLines extends MgBaseShape {
     return touchvgJNI.MgBaseLines_maxEdgeIndex(swigCPtr, this);
   }
 
+  public boolean isIncrementFrom(MgBaseLines src) {
+    return touchvgJNI.MgBaseLines_isIncrementFrom(swigCPtr, this, MgBaseLines.getCPtr(src), src);
+  }
+
   protected MgBaseLines() {
     this(touchvgJNI.new_MgBaseLines(), true);
     touchvgJNI.MgBaseLines_director_connect(this, swigCPtr, swigCMemOwn, true);

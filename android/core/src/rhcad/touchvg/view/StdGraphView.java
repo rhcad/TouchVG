@@ -7,6 +7,7 @@ package rhcad.touchvg.view;
 import rhcad.touchvg.IGraphView;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
+import rhcad.touchvg.core.Ints;
 import rhcad.touchvg.view.internal.BaseViewAdapter;
 import rhcad.touchvg.view.internal.ContextAction;
 import rhcad.touchvg.view.internal.GestureListener;
@@ -128,25 +129,27 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     }
 
     private int drawShapes(Canvas canvas, CanvasAdapter adapter, boolean dyndraw) {
-        int doc = 0, shapes, gs;
+        int doc = 0, gs;
+        Ints shapes = new Ints();
 
         synchronized (mCoreView) {
             if (mCachedBitmap == null || !dyndraw)
                 doc = mCoreView.acquireFrontDoc();
-            shapes = dyndraw ? mCoreView.acquireDynamicShapes() : 0;
             gs = mCoreView.acquireGraphics(mViewAdapter);
+            mCoreView.acquireDynamicShapesArray(shapes);
         }
         try {
-            return drawShapes(doc, shapes, gs, canvas, adapter, dyndraw);
+            return drawShapes(doc, gs, shapes, canvas, adapter, dyndraw);
         } finally {
             GiCoreView.releaseDoc(doc);
-            GiCoreView.releaseShapes(shapes);
+            GiCoreView.releaseShapesArray(shapes);
+            shapes.delete();
             mCoreView.releaseGraphics(gs);
         }
     }
 
-    private int drawShapes(int doc, int shapes, int gs,
-            Canvas canvas, CanvasAdapter adapter, boolean dyndraw) {
+    private int drawShapes(int doc, int gs, Ints shapes, Canvas canvas,
+            CanvasAdapter adapter, boolean dyndraw) {
         int n = 0;
 
         if (adapter.beginPaint(canvas, dyndraw)) {
@@ -162,7 +165,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
                 }
             }
             if (dyndraw) {
-                mCoreView.dynDraw(shapes, gs, adapter, mViewAdapter.acquirePlayings());
+                mCoreView.dynDraw(shapes, gs, adapter);
             }
             adapter.endPaint();
         }
@@ -489,7 +492,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
             synchronized (mCachedBitmap) {
                 mCoreView.onSize(mViewAdapter, getWidth(), getHeight());
                 mCachedBitmap.eraseColor(transparent ? Color.TRANSPARENT : mBkColor);
-                drawShapes(doc, 0, gs, new Canvas(mCachedBitmap), mCanvasAdapter, false);
+                drawShapes(doc, gs, null, new Canvas(mCachedBitmap), mCanvasAdapter, false);
             }
         }
         return mCachedBitmap;
@@ -518,11 +521,6 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     @Override
     public void setOnFirstRegenListener(OnFirstRegenListener listener) {
         mViewAdapter.setOnFirstRegenListener(listener);
-    }
-
-    @Override
-    public void setOnPlayEndedListener(OnPlayEndedListener listener) {
-        mViewAdapter.setOnPlayEndedListener(listener);
     }
 
     @Override

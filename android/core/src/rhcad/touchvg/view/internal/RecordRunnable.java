@@ -20,7 +20,7 @@ public class RecordRunnable extends ShapeRunnable {
             boolean ret = mViewAdapter.onStopped(this);
             if (ret) {
                 synchronized (mCoreView) {
-                    mCoreView.stopRecord(mViewAdapter, false);
+                    mCoreView.stopRecord(false);
                 }
             }
             return ret;
@@ -34,8 +34,7 @@ public class RecordRunnable extends ShapeRunnable {
 
     @Override
     protected void process(int tick, int doc, int shapes) {
-        if (!mCoreView.recordShapes(false, tick, doc, shapes,
-                mViewAdapter.acquirePlayings())) {
+        if (!mCoreView.recordShapes(false, tick, doc, shapes)) {
             Log.e(TAG, "Fail to record shapes for playing, tick=" + tick
                     + ", doc=" + doc + ", shapes=" + shapes);
         }

@@ -77,6 +77,12 @@ public class MgBaseLines : MgBaseShape {
     return ret;
   }
 
+  public bool isIncrementFrom(MgBaseLines src) {
+    bool ret = touchvgPINVOKE.MgBaseLines_isIncrementFrom(swigCPtr, MgBaseLines.getCPtr(src));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   protected MgBaseLines() : this(touchvgPINVOKE.new_MgBaseLines(), true) {
     SwigDirectorConnect();
   }

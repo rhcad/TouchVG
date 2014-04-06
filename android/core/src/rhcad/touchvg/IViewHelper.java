@@ -6,7 +6,6 @@
 
 package rhcad.touchvg;
 
-import rhcad.touchvg.IGraphView.PlayProvider;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
@@ -48,9 +47,6 @@ public interface IViewHelper {
 
     //! 在指定的布局（建议为FrameLayout）中创建普通绘图视图，在onCreate(Bundle)或onRestoreInstanceState(Bundle)中调用
     public ViewGroup createGraphView(Context context, ViewGroup layout, Bundle savedState);
-
-    //! 在指定的布局（建议为FrameLayout）中创建 ShapeView 绘图视图，并记下此视图
-    public ViewGroup createShapeView(Context context, ViewGroup layout);
 
     //! 在指定的布局中创建放大镜视图，并记下此视图
     public ViewGroup createMagnifierView(Context context, ViewGroup layout, IGraphView mainView);
@@ -174,26 +170,8 @@ public interface IViewHelper {
     //! 是否正在播放
     public boolean isPlaying();
 
-    //! 开始播放
-    public boolean startPlay(String path);
-
-    //! 停止播放
-    public void stopPlay();
-
-    //! 暂停播放
-    public boolean playPause();
-
-    //! 继续播放
-    public boolean playResume();
-
-    //! 返回已播放或录制的相对毫秒数
-    public int getPlayTicks();
-
-    //! 添加播放源
-    public boolean addPlayProvider(PlayProvider p, int tag, Object extra);
-
-    //! 返回播放项的个数
-    public int getPlayProviderCount();
+    //! 返回已录制的相对毫秒数
+    public int getRecordTicks();
 
     //! 设置是否允许触摸交互
     public void setGestureEnable(boolean enabled);

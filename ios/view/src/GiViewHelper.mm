@@ -4,9 +4,10 @@
 
 #import "GiViewHelper.h"
 #import "GiViewImpl.h"
-#import "ImageCache.h"
+#import "GiImageCache.h"
+#include "gicoreview.h"
 
-#define IOSLIBVERSION     7
+#define IOSLIBVERSION     8
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -228,15 +229,7 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (long)acquireFrontDoc {
-    __block long doc;
-    if ([_view viewAdapter2]->isMainThread()) {
-        doc = [_view viewAdapter2]->acquireFrontDoc();
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            doc = [_view viewAdapter2]->acquireFrontDoc();
-        });
-    }
-    return doc;
+    return [_view viewAdapter2]->acquireFrontDoc();
 }
 
 - (NSString *)content {
@@ -406,7 +399,9 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (int)addShapesForTest {
-    return [_view coreView]->addShapesForTest();
+    @synchronized([_view viewAdapter2]->locker()) {
+        return [_view coreView]->addShapesForTest();
+    }
 }
 
 - (void)clearCachedData {
@@ -415,26 +410,34 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (int)insertPNGFromResource:(NSString *)name {
     CGSize size = [_view.imageCache addPNGFromResource:name :&name];
-    return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
+    @synchronized([_view viewAdapter2]->locker()) {
+        return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
+    }
 }
 
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt {
     CGSize size = [_view.imageCache addPNGFromResource:name :&name];
-    return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
+    @synchronized([_view viewAdapter2]->locker()) {
+        return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
+    }
 }
 
 - (int)insertSVGFromResource:(NSString *)name {
     CGSize size = [_view.imageCache addSVGFromResource:name :&name];
-    return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
+    @synchronized([_view viewAdapter2]->locker()) {
+        return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
+    }
 }
 
 - (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt {
     CGSize size = [_view.imageCache addSVGFromResource:name :&name];
-    return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
+    @synchronized([_view viewAdapter2]->locker()) {
+        return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
+    }
 }
 
 + (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size {
-    return [ImageCache getImageFromSVGFile:filename maxSize:size];
+    return [GiImageCache getImageFromSVGFile:filename maxSize:size];
 }
 
 - (int)insertImageFromFile:(NSString *)filename {
@@ -449,7 +452,9 @@ static GiViewHelper *_sharedInstance = nil;
             [fm copyItemAtPath:filename toPath:dest error:nil];
         }
     }
-    return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
+    @synchronized([_view viewAdapter2]->locker()) {
+        return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
+    }
 }
 
 - (BOOL)hasImageShape {
@@ -474,14 +479,6 @@ static GiViewHelper *_sharedInstance = nil;
     return _view.imageCache.imagePath;
 }
 
-- (CALayer *)exportLayerTree:(BOOL)hidden {
-    return nil;
-}
-
-- (CALayer *)exportLayers {
-    return nil;
-}
-
 - (BOOL)recreateDirectory:(NSString *)path {
     NSFileManager *fm = [NSFileManager defaultManager];
     [fm removeItemAtPath:path error:nil];
@@ -503,7 +500,7 @@ static GiViewHelper *_sharedInstance = nil;
         || !path || ![self recreateDirectory:path]) {
         return NO;
     }
-    return [self internalAdapter]->startRecord(path, GiViewAdapter::kUndo);
+    return [self internalAdapter]->startRecord(path, true);
 }
 
 - (void)stopUndoRecord {
@@ -535,7 +532,7 @@ static GiViewHelper *_sharedInstance = nil;
         || !path || ![self recreateDirectory:path]) {
         return NO;
     }
-    return [self internalAdapter]->startRecord(path, GiViewAdapter::kRecord);
+    return [self internalAdapter]->startRecord(path, false);
 }
 
 - (void)stopRecord {
@@ -560,40 +557,6 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (long)getPlayTicks {
     return [_view coreView]->getRecordTick(false, getTickCount());
-}
-
-- (BOOL)startPlay:(NSString *)path {
-    if ([_view coreView]->isPlaying() || !path) {
-        return NO;
-    }
-    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSLog(@"No recorded files in %@", path);
-        return NO;
-    }
-    return [self internalAdapter]->startRecord(path, GiViewAdapter::kPlay);
-}
-
-- (void)stopPlay {
-    [self internalAdapter]->stopRecord(false);
-}
-
-- (BOOL)addPlayProvider:(id<GiPlayProvider>)p tag:(int)tag {
-    return NO;
-}
-
-- (int)playProviderCount {
-    return 0;
-}
-
-- (int)insertSprite:(NSString *)format count:(int)count
-              delay:(int)ms repeatCount:(int)rcount tag:(int)tag {
-    return 0;
-}
-
-- (int)insertSprite:(NSString *)format count:(int)count
-              delay:(int)ms repeatCount:(int)rcount
-                tag:(int)tag center:(CGPoint)pt {
-    return 0;
 }
 
 @end

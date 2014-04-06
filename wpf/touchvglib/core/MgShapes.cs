@@ -201,8 +201,13 @@ public class MgShapes : MgObject {
     return ret;
   }
 
+  public bool addShapeDirect(MgShape shape, bool force) {
+    bool ret = touchvgPINVOKE.MgShapes_addShapeDirect__SWIG_0(swigCPtr, MgShape.getCPtr(shape), force);
+    return ret;
+  }
+
   public bool addShapeDirect(MgShape shape) {
-    bool ret = touchvgPINVOKE.MgShapes_addShapeDirect(swigCPtr, MgShape.getCPtr(shape));
+    bool ret = touchvgPINVOKE.MgShapes_addShapeDirect__SWIG_1(swigCPtr, MgShape.getCPtr(shape));
     return ret;
   }
 

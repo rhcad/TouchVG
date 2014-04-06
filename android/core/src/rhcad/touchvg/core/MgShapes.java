@@ -164,8 +164,12 @@ public class MgShapes extends MgObject {
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
+  public boolean addShapeDirect(MgShape shape, boolean force) {
+    return touchvgJNI.MgShapes_addShapeDirect__SWIG_0(swigCPtr, this, MgShape.getCPtr(shape), shape, force);
+  }
+
   public boolean addShapeDirect(MgShape shape) {
-    return touchvgJNI.MgShapes_addShapeDirect(swigCPtr, this, MgShape.getCPtr(shape), shape);
+    return touchvgJNI.MgShapes_addShapeDirect__SWIG_1(swigCPtr, this, MgShape.getCPtr(shape), shape);
   }
 
   public boolean updateShape(MgShape shape, boolean force) {

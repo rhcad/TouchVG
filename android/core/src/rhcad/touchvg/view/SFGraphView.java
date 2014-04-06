@@ -5,6 +5,7 @@ package rhcad.touchvg.view;
 import rhcad.touchvg.IGraphView;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
+import rhcad.touchvg.core.Ints;
 import rhcad.touchvg.view.internal.BaseViewAdapter;
 import rhcad.touchvg.view.internal.ContextAction;
 import rhcad.touchvg.view.internal.GestureListener;
@@ -458,26 +459,28 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
             try {
                 canvas = mHolder.lockCanvas();
                 if (mView.mDynDrawCanvas.beginPaint(canvas)) {
-                    int doc, shapes, gs;
+                    int doc, gs;
+                    Ints shapes = new Ints();
+                    final GiCoreView coreView = mView.mCoreView;
 
-                    synchronized (mView.mCoreView) {
-                        doc = mAppendShapeIDs[0] != 0 ? mView.mCoreView.acquireFrontDoc() : 0;
-                        shapes = mView.mCoreView.acquireDynamicShapes();
-                        gs = mView.mCoreView.acquireGraphics(mView.mViewAdapter);
+                    synchronized (coreView) {
+                        doc = mAppendShapeIDs[0] != 0 ? coreView.acquireFrontDoc() : 0;
+                        gs = coreView.acquireGraphics(mView.mViewAdapter);
+                        coreView.acquireDynamicShapesArray(shapes);
                     }
                     try {
                         canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
                         for (int sid : mAppendShapeIDs) {
                             if (sid != 0) {
-                                mView.mCoreView.drawAppend(doc, gs, mView.mDynDrawCanvas, sid);
+                                coreView.drawAppend(doc, gs, mView.mDynDrawCanvas, sid);
                             }
                         }
-                        mView.mCoreView.dynDraw(shapes, gs, mView.mDynDrawCanvas,
-                                mView.mViewAdapter.acquirePlayings());
+                        coreView.dynDraw(shapes, gs, mView.mDynDrawCanvas);
                     } finally {
                         GiCoreView.releaseDoc(doc);
-                        GiCoreView.releaseShapes(shapes);
-                        mView.mCoreView.releaseGraphics(gs);
+                        GiCoreView.releaseShapesArray(shapes);
+                        shapes.delete();
+                        coreView.releaseGraphics(gs);
                         mView.mDynDrawCanvas.endPaint();
                     }
                 }
@@ -802,11 +805,6 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     @Override
     public void setOnFirstRegenListener(OnFirstRegenListener listener) {
         mViewAdapter.setOnFirstRegenListener(listener);
-    }
-
-    @Override
-    public void setOnPlayEndedListener(OnPlayEndedListener listener) {
-        mViewAdapter.setOnPlayEndedListener(listener);
     }
 
     @Override

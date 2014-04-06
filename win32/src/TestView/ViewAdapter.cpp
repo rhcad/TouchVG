@@ -31,7 +31,7 @@ void ViewAdapter::regenAppend(int)
     regenAll(true);
 }
 
-void ViewAdapter::redraw()
+void ViewAdapter::redraw(bool)
 {
     _coreView->submitDynamicShapes(this);
 

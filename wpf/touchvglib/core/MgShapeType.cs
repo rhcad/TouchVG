@@ -31,7 +31,8 @@ public enum MgShapeType {
   kMgShapeImage = 18,
   kMgShapeArc = 19,
   kMgShapeGrid = 20,
-  kMgShapeRecord = 30
+  kMgShapeRecord = 30,
+  kMgShapeDot = 31
 }
 
 }

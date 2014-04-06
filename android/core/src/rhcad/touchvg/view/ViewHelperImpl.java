@@ -11,7 +11,6 @@ import java.io.FileOutputStream;
 import java.util.Locale;
 
 import rhcad.touchvg.IGraphView;
-import rhcad.touchvg.IGraphView.PlayProvider;
 import rhcad.touchvg.IViewHelper;
 import rhcad.touchvg.core.CmdObserver;
 import rhcad.touchvg.core.Floats;
@@ -41,7 +40,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelperImpl implements IViewHelper{
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 7;
+    private static final int JARVERSION = 8;
     private BaseGraphView mView;
 
     static {
@@ -119,11 +118,6 @@ public class ViewHelperImpl implements IViewHelper{
         final StdGraphView view = new StdGraphView(context, savedState);
         mView = view;
         layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        return layout;
-    }
-
-    @Override
-    public ViewGroup createShapeView(Context context, ViewGroup layout) {
         return layout;
     }
 
@@ -388,51 +382,8 @@ public class ViewHelperImpl implements IViewHelper{
     }
 
     @Override
-    public boolean startPlay(String path) {
-        final BaseViewAdapter adapter = internalAdapter();
-
-        if (adapter == null
-                || adapter.getSavedState() != null
-                || mView.coreView().isPlaying()
-                || !new File(path).exists()) {
-            return false;
-        }
-        return adapter.startPlay(path);
-    }
-
-    @Override
-    public void stopPlay() {
-        final BaseViewAdapter adapter = internalAdapter();
-        if (adapter != null) {
-            adapter.stopRecord(false);
-        }
-    }
-
-    @Override
-    public boolean playPause() {
-        return mView != null && mView.coreView().onPause(BaseViewAdapter.getTick());
-    }
-
-    @Override
-    public boolean playResume() {
-        return mView != null && mView.coreView().onResume(BaseViewAdapter.getTick());
-    }
-
-    @Override
-    public int getPlayTicks() {
+    public int getRecordTicks() {
         return mView.coreView().getRecordTick(false, BaseViewAdapter.getTick());
-    }
-
-    @Override
-    public boolean addPlayProvider(PlayProvider p, int tag, Object extra) {
-        final BaseViewAdapter adapter = internalAdapter();
-        return adapter != null && p != null && adapter.addPlayProvider(p, tag, extra);
-    }
-
-    @Override
-    public int getPlayProviderCount() {
-        final BaseViewAdapter adapter = internalAdapter();
-        return adapter != null ? adapter.getPlayProviderCount() : 0;
     }
 
     private BaseViewAdapter internalAdapter() {

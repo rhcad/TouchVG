@@ -1,13 +1,13 @@
-//! \file ImageCache.mm
-//! \brief 实现图像对象缓存类 ImageCache
+//! \file GiGiImageCache.mm
+//! \brief 实现图像对象缓存类 GiImageCache
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
-#import "ImageCache.h"
+#import "GiImageCache.h"
 #ifdef USE_SVGKIT
 #import "SVGKImage.h"
 #endif
 
-@implementation ImageCache
+@implementation GiImageCache
 
 @synthesize imagePath;
 @synthesize playPath;
@@ -22,6 +22,7 @@
 
 - (void)dealloc {
     [_images RELEASE];
+    [_sprites RELEASE];
     [super DEALLOC];
 }
 
@@ -29,7 +30,18 @@
     [_images removeAllObjects];
 }
 
+- (void)setCurrentImage:(NSString *)spriteName newName:(NSString *)name {
+    if (!_sprites) {
+        _sprites = [[NSMutableDictionary alloc]init];
+    }
+    [_sprites setObject:name forKey:spriteName];
+}
+
 - (UIImage *)loadImage:(NSString *)name {
+    if (name && [name rangeOfString:@"%d."].location != NSNotFound) {   // tag$png:prefix%d.png
+        name = [_sprites objectForKey:name];
+    }
+    
     UIImage *image = name ? [_images objectForKey:name] : nil;
     
     if (!image && name && [name length] > 1) {
@@ -103,7 +115,7 @@
 #ifdef USE_SVGKIT
         NSString *resname = [name stringByAppendingString:@".svg"];
         @try {
-            UIImage *image = [ImageCache renderSVG:[SVGKImage imageNamed:resname]];
+            UIImage *image = [GiImageCache renderSVG:[SVGKImage imageNamed:resname]];
             
             if (image && image.size.width > 1) {
                 [_images setObject:image forKey:*key];
@@ -128,7 +140,7 @@
     
     @try {
         svgimg = [[SVGKImage alloc]initWithContentsOfFile:filename];
-        image = [ImageCache renderSVG:svgimg];
+        image = [GiImageCache renderSVG:svgimg];
     }
     @catch (NSException *e) {
         NSLog(@"Fail to parse SVG file due to %@: %@", [e name], filename);
@@ -161,7 +173,7 @@
             SVGKImage* svgimg = nil;
             @try {
                 svgimg = [[SVGKImage alloc]initWithContentsOfFile:filename];
-                image = [ImageCache renderSVG:svgimg];
+                image = [GiImageCache renderSVG:svgimg];
             }
             @catch (NSException *e) {
                 NSLog(@"Fail to parse SVG file due to %@: %@", [e name], filename);

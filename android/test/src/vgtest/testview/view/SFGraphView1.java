@@ -36,19 +36,8 @@ public class SFGraphView1 extends SFGraphView implements IGraphView.OnFirstRegen
         if ((flags & TestFlags.RAND_SHAPES) != 0) {
             helper.addShapesForTest();
         }
-        if (savedInstanceState == null && (flags & (TestFlags.RECORD | TestFlags.PROVIDER)) != 0) {
+        if (savedInstanceState == null && (flags & TestFlags.RECORD) != 0) {
             setOnFirstRegenListener(this);
-        }
-        if ((flags & TestFlags.RECORD) != 0) {
-            this.setOnPlayEndedListener(new OnPlayEndedListener() {
-                public boolean onPlayWillEnd(IGraphView view) {
-                    return false;
-                }
-
-                public void onPlayEnded(IGraphView view) {
-                    Toast.makeText(getContext(), "Play has ended.", Toast.LENGTH_SHORT).show();
-                }
-            });
         }
 
         flags = flags & TestFlags.CMD_MASK;
@@ -98,14 +87,7 @@ public class SFGraphView1 extends SFGraphView implements IGraphView.OnFirstRegen
         final IViewHelper helper = ViewFactory.createHelper(view);
 
         if ((flags & TestFlags.RECORD) != 0) {
-            if ((flags & TestFlags.CMD_MASK) != 0) {
-                helper.startRecord(PATH + "record");
-            } else {
-                helper.startPlay(PATH + "record");
-            }
-        }
-        if ((flags & TestFlags.PROVIDER) != 0) {
-            //helper.addPlayProvider(new MyPlayProvider(), 1, new Point2d());
+            helper.startRecord(PATH + "record");
         }
     }
 }

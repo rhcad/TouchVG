@@ -76,20 +76,6 @@ public interface IGraphView {
         public void onDynamicChanged(IGraphView view);
     }
 
-    //! 播放结束的通知
-    public interface OnPlayEndedListener {
-        //! 播放完成，待用户结束播放
-        public boolean onPlayWillEnd(IGraphView view);
-        //! 播放结束
-        public void onPlayEnded(IGraphView view);
-    }
-
-    //! 播放源接口
-    public interface PlayProvider {
-        public int provideFrame(IGraphView view, int tag, Object extra, int hShapes, int tick, int lastTick);
-        public void onPlayEnded(IGraphView view, int tag, Object extra);
-    }
-
     //! 第一次后台渲染结束的通知
     public interface OnFirstRegenListener {
         public void onFirstRegen(IGraphView view);
@@ -109,7 +95,4 @@ public interface IGraphView {
 
     //! 添加第一次后台渲染结束的观察者
     public void setOnFirstRegenListener(OnFirstRegenListener listener);
-
-    //! 添加播放结束的观察者
-    public void setOnPlayEndedListener(OnPlayEndedListener listener);
 }

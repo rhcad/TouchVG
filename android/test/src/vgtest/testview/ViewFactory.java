@@ -48,9 +48,6 @@ public class ViewFactory {
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD_LINE, "SFGraphView record line");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD_SPLINES_RAND, "SFGraphView record randShapes splines");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD_LINE_RAND, "SFGraphView record randShapes line");
-        addItem("vgtest.testview.view.SFGraphView1", TestFlags.PLAY_SHAPES, "SFGraphView play");
-        addItem("vgtest.testview.view.SFGraphView1", TestFlags.PROVIDER | TestFlags.SPLINES_CMD, "SFGraphView provider");
-        addItem("vgtest.testview.view.SFGraphView1", TestFlags.PROVIDER | TestFlags.RECORD_SPLINES, "SFGraphView provider record");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES, "SFGraphView randShapes play");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.RAND_SELECT, "SFGraphView select");
         addItem("vgtest.testview.view.SFGraphView1", TestFlags.HAS_BACKDRAWABLE | TestFlags.RAND_SELECT, "SFGraphView select transparent");
@@ -65,9 +62,6 @@ public class ViewFactory {
         addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD_LINE, "StdGraphView record line");
         addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD_SPLINES_RAND, "StdGraphView record randShapes splines");
         addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD_LINE_RAND, "StdGraphView record randShapes line");
-        addItem("vgtest.testview.view.GraphView1", TestFlags.PLAY_SHAPES, "StdGraphView play");
-        addItem("vgtest.testview.view.GraphView1", TestFlags.PROVIDER | TestFlags.SPLINES_CMD, "StdGraphView provider");
-        addItem("vgtest.testview.view.GraphView1", TestFlags.PROVIDER | TestFlags.RECORD_SPLINES, "StdGraphView provider record");
         addItem("vgtest.testview.view.GraphView1", TestFlags.RECORD | TestFlags.RAND_SHAPES, "StdGraphView randShapes play");
         addItem("vgtest.testview.view.GraphView1", TestFlags.SWITCH_CMD, "StdGraphView switch command");
         addItem("vgtest.testview.view.GraphView1", TestFlags.SWITCH_CMD|TestFlags.HITTEST_CMD, "StdGraphView switch hittest in democmds");

@@ -62,8 +62,28 @@ public class GiCoreView extends MgCoreView {
     touchvgJNI.GiCoreView_releaseGraphics(swigCPtr, this, gs);
   }
 
+  public int acquireFrontDocs(Ints docs) {
+    return touchvgJNI.GiCoreView_acquireFrontDocs(swigCPtr, this, Ints.getCPtr(docs), docs);
+  }
+
+  public static void releaseDocs(Ints docs) {
+    touchvgJNI.GiCoreView_releaseDocs(Ints.getCPtr(docs), docs);
+  }
+
+  public int acquireDynamicShapesArray(Ints shapes) {
+    return touchvgJNI.GiCoreView_acquireDynamicShapesArray(swigCPtr, this, Ints.getCPtr(shapes), shapes);
+  }
+
+  public static void releaseShapesArray(Ints shapes) {
+    touchvgJNI.GiCoreView_releaseShapesArray(Ints.getCPtr(shapes), shapes);
+  }
+
   public int drawAll(int doc, int gs, GiCanvas canvas) {
     return touchvgJNI.GiCoreView_drawAll__SWIG_0(swigCPtr, this, doc, gs, GiCanvas.getCPtr(canvas), canvas);
+  }
+
+  public int drawAll(Ints docs, int gs, GiCanvas canvas) {
+    return touchvgJNI.GiCoreView_drawAll__SWIG_1(swigCPtr, this, Ints.getCPtr(docs), docs, gs, GiCanvas.getCPtr(canvas), canvas);
   }
 
   public int drawAppend(int doc, int gs, GiCanvas canvas, int sid) {
@@ -74,12 +94,12 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_dynDraw__SWIG_0(swigCPtr, this, shapes, gs, GiCanvas.getCPtr(canvas), canvas);
   }
 
-  public int dynDraw(int shapes, int gs, GiCanvas canvas, Ints exts) {
-    return touchvgJNI.GiCoreView_dynDraw__SWIG_1(swigCPtr, this, shapes, gs, GiCanvas.getCPtr(canvas), canvas, Ints.getCPtr(exts), exts);
+  public int dynDraw(Ints shapes, int gs, GiCanvas canvas) {
+    return touchvgJNI.GiCoreView_dynDraw__SWIG_1(swigCPtr, this, Ints.getCPtr(shapes), shapes, gs, GiCanvas.getCPtr(canvas), canvas);
   }
 
   public int drawAll(GiView view, GiCanvas canvas) {
-    return touchvgJNI.GiCoreView_drawAll__SWIG_1(swigCPtr, this, GiView.getCPtr(view), view, GiCanvas.getCPtr(canvas), canvas);
+    return touchvgJNI.GiCoreView_drawAll__SWIG_2(swigCPtr, this, GiView.getCPtr(view), view, GiCanvas.getCPtr(canvas), canvas);
   }
 
   public int drawAppend(GiView view, GiCanvas canvas, int sid) {
@@ -166,8 +186,8 @@ public class GiCoreView extends MgCoreView {
     return touchvgJNI.GiCoreView_startRecord__SWIG_1(swigCPtr, this, path, doc, forUndo, curTick);
   }
 
-  public void stopRecord(GiView view, boolean forUndo) {
-    touchvgJNI.GiCoreView_stopRecord(swigCPtr, this, GiView.getCPtr(view), view, forUndo);
+  public void stopRecord(boolean forUndo) {
+    touchvgJNI.GiCoreView_stopRecord(swigCPtr, this, forUndo);
   }
 
   public boolean recordShapes(boolean forUndo, int tick, int doc, int shapes) {
@@ -188,22 +208,6 @@ public class GiCoreView extends MgCoreView {
 
   public boolean redo(GiView view) {
     return touchvgJNI.GiCoreView_redo(swigCPtr, this, GiView.getCPtr(view), view);
-  }
-
-  public static boolean loadFrameIndex(String path, Ints arr) {
-    return touchvgJNI.GiCoreView_loadFrameIndex(path, Ints.getCPtr(arr), arr);
-  }
-
-  public int loadNextFrame(Ints head, int curTick) {
-    return touchvgJNI.GiCoreView_loadNextFrame(swigCPtr, this, Ints.getCPtr(head), head, curTick);
-  }
-
-  public int skipExpireFrame(Ints head, int index, int curTick) {
-    return touchvgJNI.GiCoreView_skipExpireFrame(swigCPtr, this, Ints.getCPtr(head), head, index, curTick);
-  }
-
-  public boolean frameNeedWait(int curTick) {
-    return touchvgJNI.GiCoreView_frameNeedWait(swigCPtr, this, curTick);
   }
 
   public boolean onPause(int curTick) {

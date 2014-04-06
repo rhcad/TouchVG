@@ -449,7 +449,7 @@ namespace touchvg.view
         //! 停止Undo录制
         public void StopUndoRecord()
         {
-            CoreView.stopRecord(ViewAdapter, true);
+            CoreView.stopRecord(true);
         }
 
         //! 能否撤销

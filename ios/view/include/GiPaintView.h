@@ -2,7 +2,7 @@
 //! \brief 定义iOS绘图视图类 GiPaintView
 // Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
-#import <UIKit/UIKit.h>
+#import "GiPaintViewDelegate.h"
 
 #ifdef __cplusplus
 class GiCoreView;
@@ -10,26 +10,7 @@ class GiView;
 class GiViewAdapter;
 #endif
 
-//! 绘图消息的观察者协议
-/*! 也可以在 GiPaintView 派生类直接实现这些通知函数。
-    \ingroup GROUP_IOS
-    \see GiPaintView
- */
-@protocol GiPaintViewDelegate <NSObject>
-@optional
-
-- (void)onCommandChanged:(id)view;      //!< 当前命令改变的通知
-- (void)onSelectionChanged:(id)view;    //!< 图形选择集改变的通知
-- (void)onContentChanged:(id)view;      //!< 图形数据改变的通知
-- (void)onDynamicChanged:(id)view;      //!< 图形动态改变的通知
-- (void)onFirstRegen:(id)view;          //!< 第一次后台渲染结束的通知
-- (void)onPlayFrame:(id)view;           //!< 播放一帧的通知
-- (void)onPlayWillEnd:(id)view;         //!< 播放完成，待用户结束播放
-- (void)onPlayEnded:(id)view;           //!< 播放结束的通知
-
-@end
-
-@class ImageCache;
+@class GiImageCache;
 
 //! iOS绘图视图类
 /*! \ingroup GROUP_IOS
@@ -45,7 +26,7 @@ class GiViewAdapter;
 @property(nonatomic, readonly) UIRotationGestureRecognizer *rotationRecognizer; //!< 双指旋转手势识别器
 @property(nonatomic)           BOOL gestureEnabled;     //!< 是否允许触摸交互
 
-@property(nonatomic, readonly) ImageCache           *imageCache;                //!< 图像对象缓存
+@property(nonatomic, readonly) GiImageCache         *imageCache;                //!< 图像对象缓存
 @property(nonatomic, readonly) GiPaintView          *mainView;                  //!< 放大镜对应的主视图
 @property(nonatomic, assign)   UIView               *viewToMagnify;             //!< 待放大的视图
 

@@ -3,7 +3,6 @@
 
 #import "GiGraphView1.h"
 #import "LargeView1.h"
-#import "AnimatedPathView1.h"
 #import "GiViewHelper.h"
 #include "DemoCmds.h"
 
@@ -182,31 +181,6 @@ static void testMagnifierView(NSMutableArray *arr, NSUInteger &i, NSUInteger ind
     }
 }
 
-static void addAnimatedPathView1(NSMutableArray *arr, NSUInteger &i, NSUInteger index,
-                                 NSString* title, CGRect frame, int type)
-{
-    AnimatedPathView1 *view = nil;
-    
-    if (!arr && index == i++) {
-        view = [[AnimatedPathView1 alloc]initWithFrame:frame];
-        
-        GiPaintView *v = [[GiPaintView alloc]initWithFrame:frame];
-        GiViewHelper *hlp = [GiViewHelper sharedInstance:v];
-        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                              NSUserDomainMask, YES) objectAtIndex:0];
-        [hlp setImagePath:path];
-        [hlp loadFromFile:[GiGraphView2 lastFileName]];
-        if (hlp.shapeCount == 0) {
-            [hlp addShapesForTest];
-        }
-        
-        [view setupDrawingLayer:[hlp exportLayerTree:YES]];
-        [view startAnimation];
-        [v RELEASE];
-    }
-    addView(arr, title, view);
-}
-
 static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
 {
     NSUInteger i = 0;
@@ -229,7 +203,6 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
                  frame, kRecord|kSplinesCmd|kRandShapes);
     addGraphView(arr, i, index, @"GiPaintView record randShapes line",
                  frame, kRecord|kLineCmd|kRandShapes);
-    addGraphView(arr, i, index, @"GiPaintView play", frame, kPlayShapes);
     addGraphView(arr, i, index, @"GiPaintView hittest in democmds", frame, kHitTestCmd|kRandShapes);
     addGraphView(arr, i, index, @"GiPaintView add images", frame, kAddImages);
     addGraphView(arr, i, index, @"GiPaintView load images", frame, kLoadImages);
@@ -241,7 +214,6 @@ static void gatherTestView(NSMutableArray *arr, NSUInteger index, CGRect frame)
     addLargeView1(arr, i, index, @"GiPaintView draw in large view", frame, kLineCmd|kRandShapes);
     addLargeView1(arr, i, index, @"GiPaintView SVG pages in large view", frame, kSVGPages);
     testMagnifierView(arr, i, index, @"MagnifierView", frame, kSplinesCmd);
-    addAnimatedPathView1(arr, i, index, @"AnimatedPathView1", frame, 0);
 }
 
 void getTestViewTitles(NSMutableArray *arr)

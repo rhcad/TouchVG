@@ -9,7 +9,16 @@
 
 static char _lastVgFile[256] = { 0 };
 
+@interface GiGraphView2()
+@property(nonatomic, STRONG) NSMutableArray  *layers;
+@property(nonatomic, STRONG) CAShapeLayer *shapeLayer;
+@property(nonatomic, STRONG) CALayer *curLayer;
+
+@end
+
 @implementation GiGraphView2
+@synthesize layers = _layers;
+@synthesize shapeLayer, curLayer;
 
 - (BOOL)exportPNG:(NSString *)filename
 {
@@ -44,22 +53,20 @@ static char _lastVgFile[256] = { 0 };
     GiViewHelper *helper = [GiViewHelper sharedInstance:self];
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                           NSUserDomainMask, YES) objectAtIndex:0];
-    if (_testType == kPlayShapes) {
-        _pauseBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 50, 100, 32)];
+    if (_testType & kRecord) {
+        _pauseBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 50, 120, 32)];
         _pauseBtn.showsTouchWhenHighlighted = YES;
         _pauseBtn.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.8];
         [_pauseBtn setTitleColor:[UIColor blackColor] forState: UIControlStateNormal];
-        [_pauseBtn addTarget:self action:@selector(onPause) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_pauseBtn];
         [_pauseBtn RELEASE];
-        
-        [helper startPlay:[path stringByAppendingPathComponent:@"record"]];
     }
     else if (_testType & kRecord) {
         [helper startRecord:[path stringByAppendingPathComponent:@"record"]];
     }
     [helper startUndoRecord:[path stringByAppendingPathComponent:@"undo"]];
     [self addUndoRedoButton];
+    
     if (_testType & kCmdMask) {
         for (UIView *v = self.superview; v; v = v.superview) {
             if (v.backgroundColor && v.backgroundColor != [UIColor clearColor]) {
@@ -102,6 +109,15 @@ static char _lastVgFile[256] = { 0 };
     [self layoutButtons];
 }
 
+- (void)onShapesRecorded:(NSDictionary *)info {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        long ticks = [info[@"tick"] longValue];
+        NSString *text = [NSString stringWithFormat:@"%03d %2ld:%02ld.%03ld",
+                          [info[@"index"] intValue], ticks / 60000, ticks / 1000 % 60, ticks % 1000];
+        [_pauseBtn setTitle:text forState: UIControlStateNormal];
+    });
+}
+
 - (void)onPause {
     if ([[GiViewHelper sharedInstance:self] isPaused]) {
         [[GiViewHelper sharedInstance] playResume];
@@ -112,6 +128,7 @@ static char _lastVgFile[256] = { 0 };
 
 - (void)onContentChanged:(id)view {
     GiViewHelper *helper = [GiViewHelper sharedInstance:self];
+    
     _undoBtn.backgroundColor = [helper canUndo] ? [UIColor grayColor] : [UIColor clearColor];
     _redoBtn.backgroundColor = [helper canRedo] ? [UIColor grayColor] : [UIColor clearColor];
 }
@@ -131,4 +148,61 @@ static char _lastVgFile[256] = { 0 };
     }
     return [super twoTapsHandler:sender];
 }
+
+- (void)startPlayKeyFrames {
+    self.shapeLayer = [CAShapeLayer layer];
+    self.shapeLayer.frame = self.bounds;
+    [self.layer addSublayer:self.shapeLayer];
+    [self playKeyFrame];
+}
+
+- (void)playKeyFrame
+{
+    NSUInteger i = 0;
+    CAShapeLayer *nowLayer;
+    CAShapeLayer *nextLayer;
+    
+    if (self.curLayer) {
+        for (; i < [_layers count] && [_layers objectAtIndex:i] != curLayer; i++) {
+        }
+    }
+    self.curLayer = i < [_layers count] ? [_layers objectAtIndex:i] : nil;
+    if (!self.curLayer) {
+        return;
+    }
+    nowLayer = [curLayer.sublayers lastObject];
+    self.shapeLayer.strokeColor = nowLayer.strokeColor;
+    self.shapeLayer.fillColor = nowLayer.fillColor;
+    self.shapeLayer.lineWidth = nowLayer.lineWidth;
+    self.shapeLayer.lineDashPhase = nowLayer.lineDashPhase;
+    self.shapeLayer.lineDashPattern = nowLayer.lineDashPattern;
+    self.shapeLayer.lineCap = nowLayer.lineCap;
+    
+    self.curLayer = i + 1 < [_layers count] ? [_layers objectAtIndex:i + 1] : nil;
+    if (!self.curLayer) {
+        [self.shapeLayer removeFromSuperlayer];
+        self.shapeLayer = nil;
+        return;
+    }
+    nextLayer = [curLayer.sublayers lastObject];
+    
+    CABasicAnimation* pathAnim = [CABasicAnimation animationWithKeyPath: @"path"];
+    pathAnim.fromValue = (__bridge id)nowLayer.path;
+    pathAnim.toValue = (__bridge id)nextLayer.path;
+    
+    CABasicAnimation* frameAnim = [CABasicAnimation animationWithKeyPath: @"frame"];
+    frameAnim.fromValue = [NSValue valueWithCGRect:nowLayer.frame];
+    frameAnim.toValue = [NSValue valueWithCGRect:nextLayer.frame];
+    
+    CAAnimationGroup *anims = [CAAnimationGroup animation];
+    anims.animations = @[pathAnim, frameAnim];
+    anims.duration = 0.5;
+    anims.delegate = self;
+    [self.shapeLayer addAnimation:anims forKey:nil];
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    [self performSelector:@selector(playKeyFrame) withObject:nil afterDelay:0];
+}
+
 @end

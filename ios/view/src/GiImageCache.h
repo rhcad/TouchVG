@@ -1,12 +1,13 @@
-//! \file ImageCache.h
-//! \brief 定义图像对象缓存类 ImageCache
+//! \file GiImageCache.h
+//! \brief 定义图像对象缓存类 GiImageCache
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import <UIKit/UIKit.h>
 
 //! 图像对象缓存类
-@interface ImageCache : NSObject {
+@interface GiImageCache : NSObject {
     NSMutableDictionary *_images;
+    NSMutableDictionary *_sprites;
 }
 
 @property (nonatomic, STRONG) NSString  *imagePath; //!< 图像文件的默认路径(可以没有末尾的分隔符)
@@ -22,5 +23,8 @@
 
 - (CGSize)addImageFromPath:(NSString *)path :(NSString**)name;          //!< 在默认位置插入一个图像文件
 - (CGSize)addImageFromFile:(NSString *)filename :(NSString **)name;     //!< 在默认位置插入一个图像文件
+
+//! Convert <tag>$png:<prefix>%d.png to png:<prefix><num>.png
+- (void)setCurrentImage:(NSString *)spriteName newName:(NSString *)name;
 
 @end

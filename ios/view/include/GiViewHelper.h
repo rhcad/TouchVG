@@ -5,8 +5,6 @@
 #import <UIKit/UIKit.h>
 
 @class GiPaintView;
-@class CALayer;
-@protocol GiPlayProvider;
 
 typedef NS_ENUM(int, GILineStyle) {
     GILineStyleSolid,       //!< ----------
@@ -67,8 +65,6 @@ typedef NS_ENUM(int, GILineStyle) {
 - (BOOL)exportExtentAsPNG:(NSString *)filename space:(CGFloat)space; //!< 保存当前显示的静态图形快照
 - (BOOL)exportPNG:(NSString *)filename;     //!< 保存静态图形的快照到PNG文件，自动改后缀名为.png
 - (BOOL)exportSVG:(NSString *)filename;     //!< 导出静态图形到SVG文件，自动改后缀名为.svg
-- (CALayer *)exportLayerTree:(BOOL)hidden;  //!< 将静态图形转换到三级层，第二级为每个图形的层，其下有CAShapeLayer
-- (CALayer *)exportLayers;                  //!< 将静态图形转换为二级层，第二级为多个CAShapeLayer
 
 - (BOOL)zoomToExtent;                       //!< 放缩显示全部内容
 - (BOOL)zoomToModel:(CGRect)rect;           //!< 放缩显示指定范围到视图区域
@@ -88,24 +84,14 @@ typedef NS_ENUM(int, GILineStyle) {
 - (void)stopRecord;                         //!< 停止录屏，在主线程用
 - (BOOL)isPaused;                           //!< 是否已暂停
 - (BOOL)isPlaying;                          //!< 是否正在播放
-- (BOOL)startPlay:(NSString *)path;         //!< 开始播放，在主线程用
-- (void)stopPlay;                           //!< 停止播放，在主线程用
 - (BOOL)playPause;                          //!< 暂停播放
 - (BOOL)playResume;                         //!< 继续播放
 - (long)getPlayTicks;                       //!< 返回已播放或录制的毫秒数
-- (BOOL)addPlayProvider:(id<GiPlayProvider>)p tag:(int)tag;  //!< 添加一个播放项
-- (int)playProviderCount;                   //!< 返回播放项的个数
 
 - (int)insertPNGFromResource:(NSString *)name;      //!< 在默认位置插入一个程序资源中的PNG图片(name.png)
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt;   //!< 插入PNG图片(name.png)，并指定其中心位置
 - (int)insertSVGFromResource:(NSString *)name;      //!< 在默认位置插入一个程序资源中的SVG图片(name.svg)
 - (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt;   //!< 插入一个程序资源中的SVG图片(name.svg)
-
-- (int)insertSprite:(NSString *)format count:(int)count
-              delay:(int)ms repeatCount:(int)rcount tag:(int)tag;    //!< 在默认位置插入帧动画精灵
-- (int)insertSprite:(NSString *)format count:(int)count
-              delay:(int)ms repeatCount:(int)rcount
-                tag:(int)tag center:(CGPoint)pt;    //!< 插入帧动画精灵，并指定其中心位置
 
 + (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size; //!< 得到SVG文件的图像
 + (NSString *)addExtension:(NSString *)filename :(NSString *)ext;

@@ -3,12 +3,12 @@
 // Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
 #import "GiViewImpl.h"
-#import "ImageCache.h"
+#import "GiImageCache.h"
 #import "GiMagnifierView.h"
 
-#pragma mark - IosTempView
+#pragma mark - GiDynDrawView
 
-@implementation IosTempView
+@implementation GiDynDrawView
 
 - (void)dealloc {
     [super DEALLOC];
@@ -27,9 +27,14 @@
 - (void)drawRect:(CGRect)rect {
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
-    long doc = _adapter->getAppendCount() > 0 ? coreView->acquireFrontDoc() : 0;
-    long shapes = coreView->acquireDynamicShapes();
-    long gs = coreView->acquireGraphics(_adapter);
+    long doc, gs;
+    mgvector<int> shapes;
+    
+    @synchronized(_adapter->locker()) {
+        doc = _adapter->getAppendCount() > 0 ? coreView->acquireFrontDoc() : 0;
+        gs = coreView->acquireGraphics(_adapter);
+        coreView->acquireDynamicShapesArray(shapes);
+    }
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext(), true)) {
         for (int i = 0, sid = 0; (sid = _adapter->getAppendID(i)) != 0; i++) {
@@ -39,8 +44,10 @@
         canvas.endPaint();
     }
     GiCoreView::releaseDoc(doc);
-    GiCoreView::releaseShapes(shapes);
+    GiCoreView::releaseShapesArray(shapes);
     coreView->releaseGraphics(gs);
+    
+    _adapter->onDynDrawEnded();
 }
 
 @end
@@ -62,8 +69,13 @@
     [super DEALLOC];
 }
 
-- (CALayer *)getLayer {
-    return _layer;
+- (BOOL)renderInContext:(CGContextRef)ctx {
+    if (_layer && _queue) {
+        dispatch_sync(_queue, ^{
+            [_layer renderInContext:ctx];
+        });
+    }
+    return _layer && _queue;
 }
 
 - (void)stopRender {
@@ -88,12 +100,14 @@
     }
 }
 
-- (void)startRender:(long)doc :(long)gs {
-    if (_doc || _gs) {
-        GiCoreView::releaseDoc(doc);
+- (void)startRender:(mgvector<int>*)docs :(long)gs {
+    if (_docs || _gs) {
         _adapter->coreView()->releaseGraphics(gs);
+        GiCoreView::releaseDocs(*docs);
+        delete docs;
+        ++_drawing;     // pending
     } else {
-        _doc = doc;
+        _docs = docs;
         _gs = gs;
         [self startRender_:NO];
     }
@@ -135,23 +149,26 @@
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
     
-    if (!_doc && !_gs) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+    if (!_docs && !_gs) {
+        @synchronized(_adapter->locker()) {
             _adapter->beginRender();
-            _doc = coreView->acquireFrontDoc();
+            _docs = new mgvector<int>;
+            coreView->acquireFrontDocs(*_docs);
             _gs = coreView->acquireGraphics(_adapter);
-        });
+        }
     }
     if (canvas.beginPaint(ctx)) {
         CGContextClearRect(ctx, _adapter->mainView().bounds);
-        coreView->drawAll(_doc, _gs, &canvas);
+        coreView->drawAll(*_docs, _gs, &canvas);
         canvas.endPaint();
     }
     
-    GiCoreView::releaseDoc(_doc);
+    GiCoreView::releaseDocs(*_docs);
+    delete _docs;
+    _docs = NULL;
     coreView->releaseGraphics(_gs);
-    _doc = 0;
     _gs = 0;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [_adapter->mainView() setNeedsDisplay];
         --_drawing;
@@ -283,7 +300,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 - (void)drawRect:(CGRect)rect {
     _adapter->coreView()->onSize(_adapter, self.bounds.size.width, self.bounds.size.height);
     if (!_adapter->renderInContext(UIGraphicsGetCurrentContext())) {
-        _adapter->regenAll(_adapter->coreView()->getShapeCount() > 0);
+        _adapter->regenAll(false);
     }
 }
 
@@ -303,7 +320,7 @@ GiColor CGColorToGiColor(CGColorRef color);
     return _adapter->coreView();
 }
 
-- (ImageCache *)imageCache {
+- (GiImageCache *)imageCache {
     return _adapter->imageCache();
 }
 
@@ -374,6 +391,9 @@ GiColor CGColorToGiColor(CGColorRef color);
         _adapter->respondsTo.didSelectionChanged |= [d respondsToSelector:@selector(onSelectionChanged:)];
         _adapter->respondsTo.didContentChanged |= [d respondsToSelector:@selector(onContentChanged:)];
         _adapter->respondsTo.didDynamicChanged |= [d respondsToSelector:@selector(onDynamicChanged:)];
+        _adapter->respondsTo.didDynDrawEnded |= [d respondsToSelector:@selector(onDynDrawEnded:)];
+        _adapter->respondsTo.didShapesRecorded |= [d respondsToSelector:@selector(onShapesRecorded:)];
+        _adapter->respondsTo.didShapeDeleted |= [d respondsToSelector:@selector(onShapeDeleted:)];
     }
 }
 
@@ -401,7 +421,9 @@ GiColor CGColorToGiColor(CGColorRef color);
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(hideContextActions) object:nil];
     _adapter->hideContextActions();
-    [self coreView]->doContextAction(action);
+    @synchronized(_adapter->locker()) {
+        [self coreView]->doContextAction(action);
+    }
 }
 
 - (void)removeFromSuperview {
@@ -577,8 +599,12 @@ GiColor CGColorToGiColor(CGColorRef color);
     _gestureRecognized = (sender.state == UIGestureRecognizerStateBegan
                           || sender.state == UIGestureRecognizerStateChanged);
     
-    if (sender.state == UIGestureRecognizerStateBegan && [sender numberOfTouches] == 1
-        && self.viewToMagnify && ![self coreView]->isCommand("splines")) {
+    if (sender.state == UIGestureRecognizerStateBegan
+        && [sender numberOfTouches] == 1
+        && self.viewToMagnify
+        && !self.mainView
+        && ![self coreView]->isCommand("splines"))
+    {
         if (!_magnifierView) {
             _magnifierView = [[GiMagnifierView alloc]init];
             _magnifierView.followFinger = YES;

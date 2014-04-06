@@ -53,7 +53,12 @@ public class MgShape : MgObject {
   }
 
   public virtual void setContext(GiContext ctx, int mask) {
-    touchvgPINVOKE.MgShape_setContext(swigCPtr, GiContext.getCPtr(ctx), mask);
+    touchvgPINVOKE.MgShape_setContext__SWIG_0(swigCPtr, GiContext.getCPtr(ctx), mask);
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void setContext(GiContext ctx) {
+    touchvgPINVOKE.MgShape_setContext__SWIG_1(swigCPtr, GiContext.getCPtr(ctx));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 

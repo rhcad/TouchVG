@@ -12,7 +12,7 @@ class GiViewAdapter;
 @class GiMagnifierView;
 
 //! 动态图形的绘图视图类
-@interface IosTempView : UIView {
+@interface GiDynDrawView : UIView {
     GiViewAdapter   *_adapter;
 }
 
@@ -25,7 +25,7 @@ class GiViewAdapter;
     CALayer         *_layer;
     GiViewAdapter   *_adapter;
     __block long    _drawing;
-    __block long    _doc;
+    __block mgvector<int>* _docs;
     __block long    _gs;
     dispatch_queue_t _queue;
 }
@@ -33,9 +33,9 @@ class GiViewAdapter;
 - (id)initWithAdapter:(GiViewAdapter *)adapter;
 - (void)stopRender;
 - (void)clearCachedData;
-- (void)startRender:(long)doc :(long)gs;
+- (void)startRender:(mgvector<int>*)docs :(long)gs;
 - (void)startRenderForPending;
-- (CALayer *)getLayer;
+- (BOOL)renderInContext:(CGContextRef)ctx;
 
 @end
 
@@ -45,18 +45,19 @@ int getTickCount();
 class GiViewAdapter : public GiView
 {
 private:
-    GiPaintView *_view;                 //!< 静态图形视图, GiPaintView
-    UIView      *_dynview;              //!< 动态图形视图, IosTempView
-    GiCoreView  *_coreView;             //!< 内核视图分发器
-    NSMutableArray *_buttons;           //!< 上下文按钮的数组
+    GiPaintView     *_view;             //!< 静态图形视图
+    GiDynDrawView   *_dynview;          //!< 动态图形视图
+    GiCoreView      *_core;             //!< 内核视图分发器
+    NSRecursiveLock *_lock;             //!< 内核对象临界区
+    NSMutableArray  *_buttons;          //!< 上下文按钮的数组
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
-    ImageCache  *_imageCache;           //!< 图像对象缓存
-    bool        _actionEnabled;         //!< 是否允许上下文操作
-    int         _appendIDs[10];         //!< 还未来得及重构显示的新增图形的ID
-    int         _oldAppendCount;        //!< 后台渲染前的待渲染新增图形数
-    int         _regenCount;            //!< 渲染次数
+    GiImageCache    *_imageCache;       //!< 图像对象缓存
+    bool            _actionEnabled;     //!< 是否允许上下文操作
+    int             _appendIDs[10];     //!< 还未来得及重构显示的新增图形的ID
+    int             _oldAppendCount;    //!< 后台渲染前的待渲染新增图形数
+    int             _regenCount;        //!< 渲染次数
     GiLayerRender   *_render;           //!< 后台渲染对象
-    dispatch_queue_t _recordQueue[2];   //!< 录制队列
+    dispatch_queue_t _queues[2];        //!< 录制队列
     __block bool    _recordStopping[2]; //!< 录制队列待停止
     
 public:
@@ -66,20 +67,24 @@ public:
         unsigned int didSelectionChanged:1;
         unsigned int didContentChanged:1;
         unsigned int didDynamicChanged:1;
+        unsigned int didDynDrawEnded:1;
+        unsigned int didShapesRecorded:1;
+        unsigned int didShapeDeleted:1;
     } respondsTo;
     
     GiViewAdapter(GiPaintView *mainView, GiViewAdapter *refView);
     virtual ~GiViewAdapter();
     
-    GiCoreView *coreView() { return _coreView; }
-    ImageCache *imageCache() { return _imageCache; }
+    GiCoreView *coreView() { return _core; }
+    GiImageCache *imageCache() { return _imageCache; }
     UIView *mainView() { return _view; }
     UIView *getDynView(bool autoCreate);
     void clearCachedData();
     void stopRegen();
     void onFirstRegen();
     bool isMainThread() const;
-    long acquireFrontDoc();
+    long acquireFrontDoc(long* gs = NULL);
+    id<NSLocking> locker() { return _lock; }
     
     int getAppendCount() const;
     void beginRender();
@@ -88,9 +93,11 @@ public:
     
     void undo();
     void redo();
-    enum RecordType { kUndo, kRecord, kPlay };
-    bool startRecord(NSString *path, RecordType type);
+    bool startRecord(NSString *path, bool forUndo);
     void stopRecord(bool forUndo);
+    bool hasShapesRecorded();
+    void onShapesRecorded(NSDictionary *info);
+    void onDynDrawEnded();
     
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);
@@ -106,6 +113,7 @@ public:
     virtual void selectionChanged();
     virtual void contentChanged();
     virtual void dynamicChanged();
+    virtual void shapeDeleted(int sid);
     
     bool dispatchGesture(GiGestureType type, GiGestureState state, CGPoint pt);
     bool dispatchPan(GiGestureState state, CGPoint pt, bool switchGesture = false);
@@ -113,8 +121,9 @@ public:
     
 private:
     void setContextButton(UIButton *btn, NSString *caption, NSString *imageName);
+    int  regenLocked(bool changed, int sid, bool loading, long& doc0,
+                     long& doc1, long& shapes1, long& gs, mgvector<int>*& docs);
     void regen_(bool changed, int sid, bool loading = false);
-    void redraw_(bool changed);
     void recordShapes(bool forUndo, long doc, long shapes);
 };
 
@@ -125,13 +134,6 @@ private:
     GiViewAdapter   *_adapter;              //!< 视图回调适配器
     
     UIGestureRecognizer     *_recognizers[7];
-    UIPanGestureRecognizer  *_panRecognizer;            //!< 拖动手势识别器
-    UITapGestureRecognizer  *_tapRecognizer;            //!< 单指点击手势识别器
-    UITapGestureRecognizer  *_twoTapsRecognizer;        //!< 单指双击手势识别器
-    UILongPressGestureRecognizer *_pressRecognizer;     //!< 单指长按手势识别器
-    UIPinchGestureRecognizer    *_pinchRecognizer;      //!< 双指放缩手势识别器
-    UIRotationGestureRecognizer *_rotationRecognizer;   //!< 双指旋转手势识别器
-    BOOL                    _gestureEnabled;            //!< 手势可用性
     GiMagnifierView         *_magnifierView;            //!< 手指跟随放大镜
     
     std::vector<CGPoint>    _points;        //!< 手势生效前的轨迹

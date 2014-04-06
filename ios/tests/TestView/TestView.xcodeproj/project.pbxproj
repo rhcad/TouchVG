@@ -15,7 +15,6 @@
 		02FDBE98189DD22A0038C91F /* LargeView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AEADC21E16EB570800484962 /* LargeView1.mm */; };
 		02FDBE99189DD22A0038C91F /* CalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3341B416ECBDBE00F0E517 /* CalloutView.m */; };
 		02FDBE9A189DD22A0038C91F /* GiGraphView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE53750D177D26980050CC4F /* GiGraphView1.mm */; };
-		02FDBE9B189DD22A0038C91F /* AnimatedPathView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */; };
 		02FDBE9E189DD22A0038C91F /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AE3B011C18110A610004AAC7 /* libxml2.dylib */; };
 		02FDBEA0189DD22A0038C91F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE815F341718EDCB006BC607 /* QuartzCore.framework */; };
 		02FDBEA1189DD22A0038C91F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF2D52A160964BA00DDB7F2 /* UIKit.framework */; };
@@ -29,7 +28,6 @@
 		02FDBEAA189DD22A0038C91F /* pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE252D2F181FCB0700884B5C /* pencil@2x.png */; };
 		AE03795E181FB31E0049931F /* pencil.png in Resources */ = {isa = PBXBuildFile; fileRef = AE03795D181FB31E0049931F /* pencil.png */; };
 		AE11A5DE18B32D8D00B88366 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE11A5DD18B32D8D00B88366 /* CoreText.framework */; };
-		AE252D2B181FC93300884B5C /* AnimatedPathView1.mm in Sources */ = {isa = PBXBuildFile; fileRef = AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */; };
 		AE252D30181FCB0700884B5C /* pencil@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AE252D2F181FCB0700884B5C /* pencil@2x.png */; };
 		AE3341B516ECBDBE00F0E517 /* CalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE3341B416ECBDBE00F0E517 /* CalloutView.m */; };
 		AE34D03717F91762004BC88B /* TouchVG.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AE34D03617F91762004BC88B /* TouchVG.bundle */; };
@@ -55,8 +53,6 @@
 		02FDBEAE189DD22A0038C91F /* TestView-SVG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TestView-SVG.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE03795D181FB31E0049931F /* pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil.png; sourceTree = "<group>"; };
 		AE11A5DD18B32D8D00B88366 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		AE252D29181FC93300884B5C /* AnimatedPathView1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedPathView1.h; sourceTree = "<group>"; };
-		AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AnimatedPathView1.mm; sourceTree = "<group>"; };
 		AE252D2F181FCB0700884B5C /* pencil@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pencil@2x.png"; sourceTree = "<group>"; };
 		AE2F18EC18429B8D000981AD /* TestView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestView.h; sourceTree = "<group>"; };
 		AE3341B316ECBDBE00F0E517 /* CalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalloutView.h; sourceTree = "<group>"; };
@@ -119,8 +115,6 @@
 		AE0762FD160AAE3A00518207 /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				AE252D29181FC93300884B5C /* AnimatedPathView1.h */,
-				AE252D2A181FC93300884B5C /* AnimatedPathView1.mm */,
 				AE53750C177D26980050CC4F /* GiGraphView1.h */,
 				AE53750D177D26980050CC4F /* GiGraphView1.mm */,
 				AE3726ED18C9C53200B756C1 /* GiGraphView2.mm */,
@@ -313,7 +307,6 @@
 				02FDBE99189DD22A0038C91F /* CalloutView.m in Sources */,
 				02FDBE9A189DD22A0038C91F /* GiGraphView1.mm in Sources */,
 				AE3726EF18C9C53200B756C1 /* GiGraphView2.mm in Sources */,
-				02FDBE9B189DD22A0038C91F /* AnimatedPathView1.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,7 +323,6 @@
 				AE3341B516ECBDBE00F0E517 /* CalloutView.m in Sources */,
 				AE53750E177D26980050CC4F /* GiGraphView1.mm in Sources */,
 				AE3726EE18C9C53200B756C1 /* GiGraphView2.mm in Sources */,
-				AE252D2B181FC93300884B5C /* AnimatedPathView1.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

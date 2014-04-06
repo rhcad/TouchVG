@@ -32,6 +32,7 @@ public final class MgShapeType {
   public final static MgShapeType kMgShapeArc = new MgShapeType("kMgShapeArc", 19);
   public final static MgShapeType kMgShapeGrid = new MgShapeType("kMgShapeGrid", 20);
   public final static MgShapeType kMgShapeRecord = new MgShapeType("kMgShapeRecord", 30);
+  public final static MgShapeType kMgShapeDot = new MgShapeType("kMgShapeDot", 31);
 
   public final int swigValue() {
     return swigValue;
@@ -67,7 +68,7 @@ public final class MgShapeType {
     swigNext = this.swigValue+1;
   }
 
-  private static MgShapeType[] swigValues = { kMgShapeMultiType, kMgShapeNone, kMgShapeList, kMgShapeWrapper, kMgShapeBase, kMgShapeBaseRect, kMgShapeBaseLines, kMgShapeComposite, kMgShapeLayer, kMgShapeDoc, kMgShapeGroup, kMgShapeLine, kMgShapeRect, kMgShapeEllipse, kMgShapeRoundRect, kMgShapeDiamond, kMgShapeLines, kMgShapeSplines, kMgShapeParallel, kMgShapeImage, kMgShapeArc, kMgShapeGrid, kMgShapeRecord };
+  private static MgShapeType[] swigValues = { kMgShapeMultiType, kMgShapeNone, kMgShapeList, kMgShapeWrapper, kMgShapeBase, kMgShapeBaseRect, kMgShapeBaseLines, kMgShapeComposite, kMgShapeLayer, kMgShapeDoc, kMgShapeGroup, kMgShapeLine, kMgShapeRect, kMgShapeEllipse, kMgShapeRoundRect, kMgShapeDiamond, kMgShapeLines, kMgShapeSplines, kMgShapeParallel, kMgShapeImage, kMgShapeArc, kMgShapeGrid, kMgShapeRecord, kMgShapeDot };
   private static int swigNext = 0;
   private final int swigValue;
   private final String swigName;

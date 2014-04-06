@@ -71,8 +71,36 @@ public class GiCoreView : MgCoreView {
     touchvgPINVOKE.GiCoreView_releaseGraphics(swigCPtr, gs);
   }
 
+  public int acquireFrontDocs(Ints docs) {
+    int ret = touchvgPINVOKE.GiCoreView_acquireFrontDocs(swigCPtr, Ints.getCPtr(docs));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static void releaseDocs(Ints docs) {
+    touchvgPINVOKE.GiCoreView_releaseDocs(Ints.getCPtr(docs));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public int acquireDynamicShapesArray(Ints shapes) {
+    int ret = touchvgPINVOKE.GiCoreView_acquireDynamicShapesArray(swigCPtr, Ints.getCPtr(shapes));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static void releaseShapesArray(Ints shapes) {
+    touchvgPINVOKE.GiCoreView_releaseShapesArray(Ints.getCPtr(shapes));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public int drawAll(int doc, int gs, GiCanvas canvas) {
     int ret = touchvgPINVOKE.GiCoreView_drawAll__SWIG_0(swigCPtr, doc, gs, GiCanvas.getCPtr(canvas));
+    return ret;
+  }
+
+  public int drawAll(Ints docs, int gs, GiCanvas canvas) {
+    int ret = touchvgPINVOKE.GiCoreView_drawAll__SWIG_1(swigCPtr, Ints.getCPtr(docs), gs, GiCanvas.getCPtr(canvas));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
@@ -86,13 +114,14 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public int dynDraw(int shapes, int gs, GiCanvas canvas, Ints exts) {
-    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_1(swigCPtr, shapes, gs, GiCanvas.getCPtr(canvas), Ints.getCPtr(exts));
+  public int dynDraw(Ints shapes, int gs, GiCanvas canvas) {
+    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_1(swigCPtr, Ints.getCPtr(shapes), gs, GiCanvas.getCPtr(canvas));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public int drawAll(GiView view, GiCanvas canvas) {
-    int ret = touchvgPINVOKE.GiCoreView_drawAll__SWIG_1(swigCPtr, GiView.getCPtr(view), GiCanvas.getCPtr(canvas));
+    int ret = touchvgPINVOKE.GiCoreView_drawAll__SWIG_2(swigCPtr, GiView.getCPtr(view), GiCanvas.getCPtr(canvas));
     return ret;
   }
 
@@ -197,8 +226,8 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public void stopRecord(GiView view, bool forUndo) {
-    touchvgPINVOKE.GiCoreView_stopRecord(swigCPtr, GiView.getCPtr(view), forUndo);
+  public void stopRecord(bool forUndo) {
+    touchvgPINVOKE.GiCoreView_stopRecord(swigCPtr, forUndo);
   }
 
   public bool recordShapes(bool forUndo, int tick, int doc, int shapes) {
@@ -223,29 +252,6 @@ public class GiCoreView : MgCoreView {
 
   public bool redo(GiView view) {
     bool ret = touchvgPINVOKE.GiCoreView_redo(swigCPtr, GiView.getCPtr(view));
-    return ret;
-  }
-
-  public static bool loadFrameIndex(string path, Ints arr) {
-    bool ret = touchvgPINVOKE.GiCoreView_loadFrameIndex(path, Ints.getCPtr(arr));
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public int loadNextFrame(Ints head, int curTick) {
-    int ret = touchvgPINVOKE.GiCoreView_loadNextFrame(swigCPtr, Ints.getCPtr(head), curTick);
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public int skipExpireFrame(Ints head, int index, int curTick) {
-    int ret = touchvgPINVOKE.GiCoreView_skipExpireFrame(swigCPtr, Ints.getCPtr(head), index, curTick);
-    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public bool frameNeedWait(int curTick) {
-    bool ret = touchvgPINVOKE.GiCoreView_frameNeedWait(swigCPtr, curTick);
     return ret;
   }
 

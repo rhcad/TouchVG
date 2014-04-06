@@ -22,7 +22,7 @@ public class UndoRunnable extends ShapeRunnable {
             boolean ret = mViewAdapter.onStopped(this);
             if (ret) {
                 synchronized (mCoreView) {
-                    mCoreView.stopRecord(mViewAdapter, true);
+                    mCoreView.stopRecord(true);
                 }
             }
             return ret;

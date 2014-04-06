@@ -45,7 +45,11 @@ public class MgShape extends MgObject {
   }
 
   public void setContext(GiContext ctx, int mask) {
-    touchvgJNI.MgShape_setContext(swigCPtr, this, GiContext.getCPtr(ctx), ctx, mask);
+    touchvgJNI.MgShape_setContext__SWIG_0(swigCPtr, this, GiContext.getCPtr(ctx), ctx, mask);
+  }
+
+  public void setContext(GiContext ctx) {
+    touchvgJNI.MgShape_setContext__SWIG_1(swigCPtr, this, GiContext.getCPtr(ctx), ctx);
   }
 
   public MgBaseShape shape() {

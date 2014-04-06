@@ -2,7 +2,7 @@
 //! \brief 实现画布适配器类 GiCanvasAdapter
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
-#import "ImageCache.h"
+#import "GiImageCache.h"
 #include "GiCanvasAdapter.h"
 
 static const float patDash[]      = { 4, 2, 0 };
@@ -11,7 +11,7 @@ static const float patDashDot[]   = { 10, 2, 2, 2, 0 };
 static const float dashDotdot[]   = { 20, 2, 2, 2, 2, 2, 0 };
 const float* const GiCanvasAdapter::LINEDASH[] = { NULL, patDash, patDot, patDashDot, dashDotdot };
 
-GiCanvasAdapter::GiCanvasAdapter(ImageCache *cache) : _ctx(NULL), _cache(cache), _gradient0(NULL)
+GiCanvasAdapter::GiCanvasAdapter(GiImageCache *cache) : _ctx(NULL), _cache(cache), _gradient0(NULL)
 {
 }
 

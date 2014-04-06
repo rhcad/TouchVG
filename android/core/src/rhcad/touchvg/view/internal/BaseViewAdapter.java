@@ -6,9 +6,7 @@ import rhcad.touchvg.IGraphView.OnCommandChangedListener;
 import rhcad.touchvg.IGraphView.OnContentChangedListener;
 import rhcad.touchvg.IGraphView.OnDynamicChangedListener;
 import rhcad.touchvg.IGraphView.OnFirstRegenListener;
-import rhcad.touchvg.IGraphView.OnPlayEndedListener;
 import rhcad.touchvg.IGraphView.OnSelectionChangedListener;
-import rhcad.touchvg.IGraphView.PlayProvider;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
@@ -30,7 +28,6 @@ public abstract class BaseViewAdapter extends GiView {
     private ArrayList<OnContentChangedListener> contentChangedListeners;
     private ArrayList<OnDynamicChangedListener> dynamicChangedListeners;
     private ArrayList<OnFirstRegenListener> firstRegenListeners;
-    private ArrayList<OnPlayEndedListener> playEndedListeners;
     protected UndoRunnable mUndoing;
     protected RecordRunnable mRecorder;
     private int mRegenCount = 0;
@@ -56,8 +53,6 @@ public abstract class BaseViewAdapter extends GiView {
             dynamicChangedListeners.clear();
         if (firstRegenListeners != null)
             firstRegenListeners.clear();
-        if (playEndedListeners != null)
-            playEndedListeners.clear();
 
         super.delete();
     }
@@ -204,12 +199,6 @@ public abstract class BaseViewAdapter extends GiView {
         this.firstRegenListeners.add(listener);
     }
 
-    public void setOnPlayEndedListener(OnPlayEndedListener listener) {
-        if (this.playEndedListeners == null)
-            this.playEndedListeners = new ArrayList<OnPlayEndedListener>();
-        this.playEndedListeners.add(listener);
-    }
-
     public Activity getActivity() {
         return (Activity) getGraphView().getView().getContext();
     }
@@ -335,29 +324,8 @@ public abstract class BaseViewAdapter extends GiView {
         }
     }
 
-    public boolean startPlay(String path) {
-        hideContextActions();
-        return false;
-    }
-
-    public boolean addPlayProvider(PlayProvider p, int tag, Object extra) {
-        return false;
-    }
-
-    public int getPlayProviderCount() {
-        return 0;
-    }
-
-    public Ints acquirePlayings() {
-        return null;
-    }
-
     public String getRecordPath() {
         return mRecorder != null ? mRecorder.getPath() : null;
-    }
-
-    public String getPlayPath() {
-        return null;
     }
 
     public void undo() {

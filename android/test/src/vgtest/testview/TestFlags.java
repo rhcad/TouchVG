@@ -18,9 +18,7 @@ public class TestFlags {
     public final static int RECORD_LINE = RECORD | LINE_CMD;
     public final static int RECORD_SPLINES_RAND = RECORD | SPLINES_CMD | RAND_SHAPES;
     public final static int RECORD_LINE_RAND = RECORD | LINE_CMD | RAND_SHAPES;
-    public final static int PLAY_SHAPES = 64;
     public final static int HAS_BACKDRAWABLE = 128;
-    public final static int PROVIDER = 256;
 
     public final static int OPAQUE_VIEW = 0x1000;
     public final static int LARGE_VIEW = 0x10000;

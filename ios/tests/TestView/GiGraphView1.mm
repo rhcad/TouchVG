@@ -9,7 +9,7 @@
 #include "gicoreview.h"
 
 //! 动态图形的绘图视图类
-@interface IosTempView1 : UIView {
+@interface GiDynDrawView1 : UIView {
     ViewAdapter1    *_adapter;
 }
 
@@ -23,24 +23,24 @@ class ViewAdapter1 : public GiView
 private:
     UIView      *_view;
     UIView      *_dynview;
-    GiCoreView  *_coreView;
+    GiCoreView  *_core;
     UIImage     *_tmpshot;
     int         _sid;
     
 public:
     ViewAdapter1(UIView *mainView) : _view(mainView), _dynview(nil), _tmpshot(nil) {
-        _coreView = GiCoreView::createView(this, 0);
+        _core = GiCoreView::createView(this, 0);
     }
     
     virtual ~ViewAdapter1() {
-        if (_coreView) {
-            _coreView->release();
-            _coreView = NULL;
+        if (_core) {
+            _core->release();
+            _core = NULL;
         }
     }
     
     GiCoreView *coreView() {
-        return _coreView;
+        return _core;
     }
     
     UIView *getDynView() {
@@ -61,7 +61,7 @@ public:
         if (_tmpshot) {
             [_tmpshot drawAtPoint:CGPointZero];
             _tmpshot = nil;
-            ret = _coreView->drawAppend(this, canvas, _sid);
+            ret = _core->drawAppend(this, canvas, _sid);
         }
         return ret;
     }
@@ -69,17 +69,17 @@ public:
     virtual void regenAll(bool changed) {
         if (changed) {
             _sid = 0;
-            _coreView->submitBackDoc(this);
+            _core->submitBackDoc(this);
         }
-        _coreView->submitDynamicShapes(this);
+        _core->submitDynamicShapes(this);
         [_view setNeedsDisplay];
         [_dynview setNeedsDisplay];
     }
     
     virtual void regenAppend(int sid) {
         _sid = sid;
-        _coreView->submitBackDoc(this);
-        _coreView->submitDynamicShapes(this);
+        _core->submitBackDoc(this);
+        _core->submitDynamicShapes(this);
         _tmpshot = nil;                 // renderInContext可能会调用drawRect
         _tmpshot = snapshot();
         
@@ -88,9 +88,9 @@ public:
     }
     
     virtual void redraw(bool changed) {
-        _coreView->submitDynamicShapes(this);
+        _core->submitDynamicShapes(this);
         if (!_dynview && _view) {       // 自动创建动态图形视图
-            _dynview = [[IosTempView1 alloc]initWithFrame:_view.frame :this];
+            _dynview = [[GiDynDrawView1 alloc]initWithFrame:_view.frame :this];
             _dynview.autoresizingMask = _view.autoresizingMask;
             [_view.superview addSubview:_dynview];
         }
@@ -98,7 +98,7 @@ public:
     }
 };
 
-@implementation IosTempView1
+@implementation GiDynDrawView1
 
 - (id)initWithFrame:(CGRect)frame :(ViewAdapter1 *)viewAdapter
 {

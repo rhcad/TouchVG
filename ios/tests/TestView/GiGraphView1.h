@@ -22,7 +22,6 @@ enum kTestFlags {
     kSwitchCmd  = 16,
     kRandShapes = 32,
     kRecord     = 64,
-    kPlayShapes = 64,
 };
 
 //! iOS测试绘图视图类
@@ -39,6 +38,7 @@ enum kTestFlags {
 //! iOS测试绘图视图类
 @interface GiGraphView2 : GiPaintView {
     int         _testType;
+    int         _frameIndex;
     UIButton    *_undoBtn;
     UIButton    *_redoBtn;
     UIButton    *_pauseBtn;

@@ -30,6 +30,9 @@ TouchVG 的功能
 
 引用的开源框架
 --------------
+
+> 矢量绘图内核框架 [TouchVGCore](https://github.com/rhcad/TouchVGCore) (LGPL)。
+
 > Larva Labs 的 Android SVG 解析框架 [svg-android](https://github.com/japgolly/svg-android) (Apache License 2.0)。
 
 > iOS SVG 解析框架 [SVGKit](https://github.com/SVGKit/SVGKit) (MIT)。
@@ -51,11 +54,15 @@ TouchVG 的功能
 
 意见和建议
 ----------
-> 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/rhcad/touchvg/issues)。
+> 讨论群：QQ 192093613，欢迎加入讨论和分享，可描二维码加入：
+> 
+> ![QQ](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/qq.png)
+> 
+> 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/rhcad/touchvg/issues)，当然可以使用中文写。
 
 捐款
 -------
-> 如果您在使用后感到满意，或者希望增加特别的功能、获得更多技术支持，请[为TouchVG项目捐款](https://me.alipay.com/rhcad)，也可在支付宝客户端中扫下面的二维码捐款，以鼓励作者不断完善此项目。
+> 如果您在使用后感到满意，或者希望增加特别的功能、获得更多技术支持，请[为TouchVG项目捐款](https://me.alipay.com/rhcad)，也可在支付宝客户端中扫下面的二维码捐款（不超过100元），以鼓励作者不断完善此项目。
 
 > ![Yu_E_Bao](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/yuebao.png)
 

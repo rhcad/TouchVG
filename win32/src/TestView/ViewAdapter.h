@@ -29,7 +29,7 @@ public:
 
     virtual void regenAll(bool changed);
     virtual void regenAppend(int sid);
-    virtual void redraw();
+    virtual void redraw(bool changed);
     virtual bool useFinger() { return false; }
 
 private:
