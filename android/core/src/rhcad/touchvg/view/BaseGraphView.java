@@ -1,3 +1,5 @@
+//! \file BaseGraphView.java
+//! \brief 绘图视图接口
 // Copyright (c) 2014, https://github.com/rhcad/touchvg
 
 package rhcad.touchvg.view;

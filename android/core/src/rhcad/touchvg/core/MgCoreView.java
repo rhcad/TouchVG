@@ -340,8 +340,4 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_displayToModel(swigCPtr, this, Floats.getCPtr(d), d);
   }
 
-  public final static int DOC_CHANGED = 1;
-  public final static int SHAPE_APPEND = 2;
-  public final static int DYN_CHANGED = 4;
-
 }

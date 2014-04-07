@@ -5211,6 +5211,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgShapeDoc_findShape")]
   public static extern IntPtr MgShapeDoc_findShape(HandleRef jarg1, int jarg2);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgShapeDoc_getLastShape")]
+  public static extern IntPtr MgShapeDoc_getLastShape(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgShapeDoc_getCurrentShapes")]
   public static extern IntPtr MgShapeDoc_getCurrentShapes(HandleRef jarg1);
 
@@ -5450,15 +5453,6 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getRedoCount")]
   public static extern int MgCoreView_getRedoCount(HandleRef jarg1);
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_DOC_CHANGED_get")]
-  public static extern int MgCoreView_DOC_CHANGED_get();
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_SHAPE_APPEND_get")]
-  public static extern int MgCoreView_SHAPE_APPEND_get();
-
-  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_DYN_CHANGED_get")]
-  public static extern int MgCoreView_DYN_CHANGED_get();
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_getPlayingTick")]
   public static extern int MgCoreView_getPlayingTick(HandleRef jarg1, int jarg2);

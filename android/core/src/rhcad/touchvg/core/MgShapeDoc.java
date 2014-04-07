@@ -95,6 +95,11 @@ public class MgShapeDoc extends MgObject {
     return (cPtr == 0) ? null : new MgShape(cPtr, false);
   }
 
+  public MgShape getLastShape() {
+    long cPtr = touchvgJNI.MgShapeDoc_getLastShape(swigCPtr, this);
+    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  }
+
   public MgShapes getCurrentShapes() {
     long cPtr = touchvgJNI.MgShapeDoc_getCurrentShapes(swigCPtr, this);
     return (cPtr == 0) ? null : new MgShapes(cPtr, false);

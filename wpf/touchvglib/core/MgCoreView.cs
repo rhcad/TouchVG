@@ -418,10 +418,6 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
-  public static readonly int DOC_CHANGED = touchvgPINVOKE.MgCoreView_DOC_CHANGED_get();
-  public static readonly int SHAPE_APPEND = touchvgPINVOKE.MgCoreView_SHAPE_APPEND_get();
-  public static readonly int DYN_CHANGED = touchvgPINVOKE.MgCoreView_DYN_CHANGED_get();
-
 }
 
 }

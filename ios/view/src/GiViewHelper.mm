@@ -5,7 +5,6 @@
 #import "GiViewHelper.h"
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
-#include "gicoreview.h"
 
 #define IOSLIBVERSION     8
 extern NSString* EXTIMAGENAMES[];

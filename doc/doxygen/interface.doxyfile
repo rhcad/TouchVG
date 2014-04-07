@@ -590,11 +590,10 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = ../../core/include \
-                         ../../core/include \
+INPUT                  = ../../thirdparty/TouchVGCore/core/include \
                          ../../win32/include \
                          ../../ios/view/include \
-                         ../../android/core/src/touchvg/view \
+                         ../../android/core/src/rhcad/touchvg/view \
                          ../../wpf/touchvglib/view \
                          MainPage.txt
 
@@ -627,9 +626,13 @@ RECURSIVE              = YES
 # excluded from the INPUT source files. This way you can easily exclude a 
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
-EXCLUDE                = ../../android/core/src/touchvg/view/internal \
-                         ../../core/include/test \
-                         ../../core/include/mglog.h
+EXCLUDE                = ../../android/core/src/rhcad/touchvg/view/internal \
+                         ../../thirdparty/TouchVGCore/core/include/record \
+                         ../../thirdparty/TouchVGCore/core/include/test \
+                         ../../thirdparty/TouchVGCore/core/include/mglog.h \
+                         ../../android/core/src/rhcad/touchvg/package-info.java \
+                         ../../android/core/src/rhcad/touchvg/view/package-info.java \
+                         ../../ios/view/include/ARCMacro.h
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or 
 # directories that are symbolic links (a Unix filesystem feature) are excluded 
@@ -925,7 +928,7 @@ CHM_FILE               = ../TouchVG.chm
 # the HTML help compiler (hhc.exe). If non-empty doxygen will try to run 
 # the HTML help compiler on the generated index.hhp.
 
-HHC_LOCATION           = "D:/Soft/HTML Help Workshop/hhc.exe"
+HHC_LOCATION           = "C:/Tools/HTML Help Workshop/hhc.exe"
 
 # If the GENERATE_HTMLHELP tag is set to YES, the GENERATE_CHI flag 
 # controls if a separate .chi index file is generated (YES) or that 
@@ -1588,7 +1591,7 @@ DOT_IMAGE_FORMAT       = png
 # The tag DOT_PATH can be used to specify the path where the dot tool can be 
 # found. If left blank, it is assumed the dot tool can be found in the path.
 
-DOT_PATH               = D:/Soft/Graphviz/bin
+DOT_PATH               = C:/Tools/Graphviz/bin
 
 # The DOTFILE_DIRS tag can be used to specify one or more directories that 
 # contain dot files that are included in the documentation (see the 

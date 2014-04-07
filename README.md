@@ -31,7 +31,7 @@ TouchVG 的功能
 引用的开源框架
 --------------
 
-> 矢量绘图内核框架 [TouchVGCore](https://github.com/rhcad/TouchVGCore) (LGPL)。
+> 矢量绘图内核框架 [TouchVGCore](https://github.com/rhcad/TouchVGCore) (LGPL)，附[架构图](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/core_modules.svg)。
 
 > Larva Labs 的 Android SVG 解析框架 [svg-android](https://github.com/japgolly/svg-android) (Apache License 2.0)。
 

@@ -709,8 +709,8 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is 
 # run.
 
-EXCLUDE                = ../all.tmp/touchvg/json_src/rapidjson \
-                         ../all.tmp/touchvg/json/rapidjson \
+EXCLUDE                = ../all.tmp/touchvg/jsonstorage_src/rapidjson \
+                         ../all.tmp/touchvg/jsonstorage/rapidjson \
                          ../all.tmp/touchvg/export/simple_svg.hpp \
                          ../all.tmp/touchvg/export_src/simple_svg.hpp \
                          ../all.tmp/touchvg/iosview_src/SVGKImage.h \
@@ -1035,7 +1035,7 @@ CHM_FILE               = ../TouchVGAll.chm
 # the HTML help compiler (hhc.exe). If non-empty doxygen will try to run 
 # the HTML help compiler on the generated index.hhp.
 
-HHC_LOCATION           = "D:/Soft/HTML Help Workshop/hhc.exe"
+HHC_LOCATION           = "C:/Tools/HTML Help Workshop/hhc.exe"
 
 # If the GENERATE_HTMLHELP tag is set to YES, the GENERATE_CHI flag 
 # controls if a separate .chi index file is generated (YES) or that 
@@ -1754,7 +1754,7 @@ INTERACTIVE_SVG        = NO
 # The tag DOT_PATH can be used to specify the path where the dot tool can be 
 # found. If left blank, it is assumed the dot tool can be found in the path.
 
-DOT_PATH               = D:/Soft/Graphviz/bin
+DOT_PATH               = C:/Tools/Graphviz/bin
 
 # The DOTFILE_DIRS tag can be used to specify one or more directories that 
 # contain dot files that are included in the documentation (see the 

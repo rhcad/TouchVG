@@ -1677,6 +1677,7 @@ public class touchvgJNI {
   public final static native long MgShapeDoc_getExtent(long jarg1, MgShapeDoc jarg1_);
   public final static native int MgShapeDoc_getShapeCount(long jarg1, MgShapeDoc jarg1_);
   public final static native long MgShapeDoc_findShape(long jarg1, MgShapeDoc jarg1_, int jarg2);
+  public final static native long MgShapeDoc_getLastShape(long jarg1, MgShapeDoc jarg1_);
   public final static native long MgShapeDoc_getCurrentShapes(long jarg1, MgShapeDoc jarg1_);
   public final static native boolean MgShapeDoc_setCurrentShapes(long jarg1, MgShapeDoc jarg1_, long jarg2, MgShapes jarg2_);
   public final static native long MgShapeDoc_getCurrentLayer(long jarg1, MgShapeDoc jarg1_);

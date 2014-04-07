@@ -24,7 +24,7 @@
 - (CGSize)addImageFromPath:(NSString *)path :(NSString**)name;          //!< 在默认位置插入一个图像文件
 - (CGSize)addImageFromFile:(NSString *)filename :(NSString **)name;     //!< 在默认位置插入一个图像文件
 
-//! Convert <tag>$png:<prefix>%d.png to png:<prefix><num>.png
+//! Convert tag$png:prefix%d.png to png:prefixnum.png
 - (void)setCurrentImage:(NSString *)spriteName newName:(NSString *)name;
 
 @end

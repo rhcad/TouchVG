@@ -1,12 +1,10 @@
-// GiPlayProvider.h
-// TouchVG
-//
-// Created by Zhang Yungui on 14-3-7.
+//! \file GiPlayProvider.h
+//! \brief Define GiPlayProvider protocol
 // Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
-//
 
 #import <Foundation/Foundation.h>
 
+//! Animation frame info.
 struct GiFrame {
     id  view;
     int tag;
@@ -18,6 +16,7 @@ struct GiFrame {
 };
 typedef struct GiFrame GiFrame;
 
+//! Animation content provider protocol.
 @protocol GiPlayProvider <NSObject>
 
 - (BOOL)initProvider:(GiFrame *)frame;

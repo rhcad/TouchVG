@@ -1,3 +1,5 @@
+//! \file SFGraphView.java
+//! \brief Graphics view with media overlay surface placed behind its window.
 // Copyright (c) 2014, https://github.com/rhcad/touchvg
 
 package rhcad.touchvg.view;

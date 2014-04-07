@@ -28830,6 +28830,18 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_MgShapeDoc_findShape(void * jarg1, int jarg
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_MgShapeDoc_getLastShape(void * jarg1) {
+  void * jresult ;
+  MgShapeDoc *arg1 = (MgShapeDoc *) 0 ;
+  MgShape *result = 0 ;
+  
+  arg1 = (MgShapeDoc *)jarg1; 
+  result = (MgShape *)((MgShapeDoc const *)arg1)->getLastShape();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_MgShapeDoc_getCurrentShapes(void * jarg1) {
   void * jresult ;
   MgShapeDoc *arg1 = (MgShapeDoc *) 0 ;
@@ -29746,36 +29758,6 @@ SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_getRedoCount(void * jarg1) {
   
   arg1 = (MgCoreView *)jarg1; 
   result = (int)((MgCoreView const *)arg1)->getRedoCount();
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_DOC_CHANGED_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)MgCoreView::DOC_CHANGED;
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_SHAPE_APPEND_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)MgCoreView::SHAPE_APPEND;
-  jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT int SWIGSTDCALL CSharp_MgCoreView_DYN_CHANGED_get() {
-  int jresult ;
-  int result;
-  
-  result = (int)MgCoreView::DYN_CHANGED;
   jresult = result; 
   return jresult;
 }

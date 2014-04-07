@@ -114,6 +114,12 @@ public class MgShapeDoc : MgObject {
     return ret;
   }
 
+  public MgShape getLastShape() {
+    IntPtr cPtr = touchvgPINVOKE.MgShapeDoc_getLastShape(swigCPtr);
+    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
+    return ret;
+  }
+
   public MgShapes getCurrentShapes() {
     IntPtr cPtr = touchvgPINVOKE.MgShapeDoc_getCurrentShapes(swigCPtr);
     MgShapes ret = (cPtr == IntPtr.Zero) ? null : new MgShapes(cPtr, false);

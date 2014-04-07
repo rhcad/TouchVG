@@ -1,8 +1,6 @@
-/**
- * \file IGraphView.java
- * \brief 绘图视图接口
- * Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
- */
+//! \file IGraphView.java
+//! \brief 绘图视图接口
+// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 
 package rhcad.touchvg;
 

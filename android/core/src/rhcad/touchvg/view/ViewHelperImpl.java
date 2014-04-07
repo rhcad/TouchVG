@@ -1,8 +1,6 @@
-/**
- * \file ViewHelperImpl.java
- * \brief Android绘图视图辅助类
- * Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
- */
+//! \file ViewHelperImpl.java
+//! \brief Android绘图视图辅助类
+// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 package rhcad.touchvg.view;
 
