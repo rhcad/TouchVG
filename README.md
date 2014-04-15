@@ -6,6 +6,8 @@
 
 ![iphone1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone1.png)  ![iphone2](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone2.png)  ![android1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/android1.png)
 
+![modules](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/modules.png)
+
 TouchVG 的功能
 --------------
 > 支持多点触摸或鼠标的交互绘图方式，可以无级放缩或平移显示矢量图形、图像、[SVG](http://zh.wikipedia.org/wiki/SVG)。
@@ -59,13 +61,6 @@ TouchVG 的功能
 > ![QQ](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/qq.png)
 > 
 > 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/rhcad/touchvg/issues)，当然可以使用中文写。
-
-捐款
--------
-> 如果您在使用后感到满意，或者希望增加特别的功能、获得更多技术支持，请[为TouchVG项目捐款](https://me.alipay.com/rhcad)，也可在支付宝客户端中扫下面的二维码捐款（不超过100元），以鼓励作者不断完善此项目。
-
-> ![Yu_E_Bao](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/yuebao.png)
-
 
 Android编译说明
 ---------------
