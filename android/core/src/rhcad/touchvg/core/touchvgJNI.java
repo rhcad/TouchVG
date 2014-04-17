@@ -1395,6 +1395,7 @@ public class touchvgJNI {
   public final static native boolean MgView_shapeCanUngroup(long jarg1, MgView jarg1_, long jarg2, MgShape jarg2_);
   public final static native void MgView_shapeMoved(long jarg1, MgView jarg1_, long jarg2, MgShape jarg2_, int jarg3);
   public final static native boolean MgView_isContextActionsVisible(long jarg1, MgView jarg1_);
+  public final static native void MgView_hideContextActions(long jarg1, MgView jarg1_);
   public final static native void MgMotion_view_set(long jarg1, MgMotion jarg1_, long jarg2, MgView jarg2_);
   public final static native long MgMotion_view_get(long jarg1, MgMotion jarg1_);
   public final static native void MgMotion_gestureType_set(long jarg1, MgMotion jarg1_, int jarg2);
@@ -1712,6 +1713,8 @@ public class touchvgJNI {
   public final static native boolean GiView_isContextActionsVisibleSwigExplicitGiView(long jarg1, GiView jarg1_);
   public final static native boolean GiView_showContextActions(long jarg1, GiView jarg1_, long jarg2, Ints jarg2_, long jarg3, Floats jarg3_, float jarg4, float jarg5, float jarg6, float jarg7);
   public final static native boolean GiView_showContextActionsSwigExplicitGiView(long jarg1, GiView jarg1_, long jarg2, Ints jarg2_, long jarg3, Floats jarg3_, float jarg4, float jarg5, float jarg6, float jarg7);
+  public final static native void GiView_hideContextActions(long jarg1, GiView jarg1_);
+  public final static native void GiView_hideContextActionsSwigExplicitGiView(long jarg1, GiView jarg1_);
   public final static native void GiView_commandChanged(long jarg1, GiView jarg1_);
   public final static native void GiView_commandChangedSwigExplicitGiView(long jarg1, GiView jarg1_);
   public final static native void GiView_selectionChanged(long jarg1, GiView jarg1_);
@@ -2658,6 +2661,9 @@ public class touchvgJNI {
   }
   public static boolean SwigDirector_GiView_showContextActions(GiView self, long actions, long buttonXY, float x, float y, float w, float h) {
     return self.showContextActions(new Ints(actions, false), new Floats(buttonXY, false), x, y, w, h);
+  }
+  public static void SwigDirector_GiView_hideContextActions(GiView self) {
+    self.hideContextActions();
   }
   public static void SwigDirector_GiView_commandChanged(GiView self) {
     self.commandChanged();

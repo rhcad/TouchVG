@@ -39,8 +39,6 @@ class GiViewAdapter;
 
 @end
 
-int getTickCount();
-
 //! iOS绘图视图适配器
 class GiViewAdapter : public GiView
 {
@@ -106,7 +104,7 @@ public:
     virtual bool showContextActions(const mgvector<int>& actions,
                                     const mgvector<float>& buttonXY,
                                     float x, float y, float w, float h);
-    void hideContextActions();
+    virtual void hideContextActions();
     void setContextActionEnabled(bool enabled) { _actionEnabled = enabled; }
     
     virtual void commandChanged();

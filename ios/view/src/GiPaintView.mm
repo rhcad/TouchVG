@@ -192,6 +192,7 @@ GiColor CGColorToGiColor(CGColorRef color);
 @synthesize mainView = _mainView;
 @synthesize viewToMagnify;
 @synthesize imageCache;
+@synthesize delegates;
 
 #pragma mark - Respond to low-memory warnings
 + (void)initialize {
@@ -324,6 +325,10 @@ GiColor CGColorToGiColor(CGColorRef color);
     return _adapter->imageCache();
 }
 
+- (id<NSLocking>)locker {
+    return _adapter->locker();
+}
+
 - (UIImage *)snapshot {
     [self hideContextActions];
     
@@ -373,14 +378,21 @@ GiColor CGColorToGiColor(CGColorRef color);
     self.userInteractionEnabled = enabled;
 }
 
-- (UIView *)dynamicShapeView {
-    return _adapter->getDynView(false);
+- (UIView *)dynamicShapeView:(BOOL)create {
+    return _adapter->getDynView(!!create);
 }
 
 - (void)activiteView {
     if (_activePaintView != self) {
         _activePaintView = self;
     }
+}
+
+- (NSArray *)delegates {
+    NSMutableArray *arr = [NSMutableArray array];
+    for (size_t i = 0; i < _adapter->delegates.size(); i++)
+        [arr addObject:_adapter->delegates[i]];
+    return arr;
 }
 
 - (void)addDelegate:(id<GiPaintViewDelegate>)d {

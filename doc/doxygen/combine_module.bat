@@ -17,12 +17,15 @@ xcopy ..\..\thirdparty\TouchVGCore\core\src\export\*.* %destpath%\export\ /Y
 xcopy ..\..\thirdparty\TouchVGCore\core\src\record\*.* %destpath%\record\ /Y
 xcopy ..\..\thirdparty\TouchVGCore\core\src\view\*.* %destpath%\view\ /Y
 
+xcopy ..\..\thirdparty\TouchVGPlay\core\include\play\*.* %destpath%\play\ /Y
+xcopy ..\..\thirdparty\TouchVGPlay\core\src\play\*.* %destpath%\play\ /Y
+
 xcopy ..\..\core\democmds\gate\*.* %destpath%\democmds\ /Y
 xcopy ..\..\core\democmds\cmds\*.* %destpath%\democmds\ /Y
 
-rem del /Q/S %destpath%\cmdobserver
+del /Q/S %destpath%\cmdobserver
 rem del /Q/S %destpath%\canvas
-rem del /Q/S %destpath%\storage
+del /Q/S %destpath%\storage
 
 xcopy ..\..\win32\include\canvas\*.* %destpath%\winview\ /Y
 xcopy ..\..\win32\src\canvas\*.* %destpath%\winview\ /Y

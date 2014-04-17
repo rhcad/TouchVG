@@ -29,6 +29,7 @@ class GiViewAdapter;
 @property(nonatomic, readonly) GiImageCache         *imageCache;                //!< 图像对象缓存
 @property(nonatomic, readonly) GiPaintView          *mainView;                  //!< 放大镜对应的主视图
 @property(nonatomic, assign)   UIView               *viewToMagnify;             //!< 待放大的视图
+@property(nonatomic, readonly) NSArray              *delegates;                 //!< GiPaintViewDelegate
 
 //! 创建普通图形视图，并添加到父视图、设置为当前视图，不需要额外释放
 + (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView;
@@ -40,7 +41,9 @@ class GiViewAdapter;
 
 + (GiPaintView *)activeView;                //!< 得到当前激活的绘图视图
 - (void)activiteView;                       //!< 设置为当前活动视图，触摸时自动调用
-- (UIView *)dynamicShapeView;               //!< 动态图形视图
+- (UIView *)dynamicShapeView:(BOOL)create;  //!< 动态图形视图
+
+- (id<NSLocking>)locker;                    //!< 返回显示锁定对象
 
 #ifdef __cplusplus
 - (GiView *)viewAdapter;                    //!< 得到视图适配器对象, GiViewAdapter
@@ -77,3 +80,5 @@ class GiViewAdapter;
 - (void)dispatchTapPending;                                     //!< 分发挂起的单击手势
 
 @end
+
+int getTickCount();

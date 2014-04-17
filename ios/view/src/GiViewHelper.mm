@@ -59,7 +59,9 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 + (GiViewHelper *)sharedInstance:(GiPaintView *)view {
-    _sharedInstance.view = view;
+    if (_sharedInstance.view != view) {
+        _sharedInstance.view = view;
+    }
     return _sharedInstance;
 }
 
@@ -398,7 +400,7 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (int)addShapesForTest {
-    @synchronized([_view viewAdapter2]->locker()) {
+    @synchronized([_view locker]) {
         return [_view coreView]->addShapesForTest();
     }
 }
@@ -409,28 +411,28 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (int)insertPNGFromResource:(NSString *)name {
     CGSize size = [_view.imageCache addPNGFromResource:name :&name];
-    @synchronized([_view viewAdapter2]->locker()) {
+    @synchronized([_view locker]) {
         return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
     }
 }
 
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt {
     CGSize size = [_view.imageCache addPNGFromResource:name :&name];
-    @synchronized([_view viewAdapter2]->locker()) {
+    @synchronized([_view locker]) {
         return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
     }
 }
 
 - (int)insertSVGFromResource:(NSString *)name {
     CGSize size = [_view.imageCache addSVGFromResource:name :&name];
-    @synchronized([_view viewAdapter2]->locker()) {
+    @synchronized([_view locker]) {
         return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
     }
 }
 
 - (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt {
     CGSize size = [_view.imageCache addSVGFromResource:name :&name];
-    @synchronized([_view viewAdapter2]->locker()) {
+    @synchronized([_view locker]) {
         return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
     }
 }
@@ -451,7 +453,7 @@ static GiViewHelper *_sharedInstance = nil;
             [fm copyItemAtPath:filename toPath:dest error:nil];
         }
     }
-    @synchronized([_view viewAdapter2]->locker()) {
+    @synchronized([_view locker]) {
         return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
     }
 }

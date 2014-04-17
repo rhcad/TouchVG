@@ -213,4 +213,8 @@ public class MgView {
     return touchvgJNI.MgView_isContextActionsVisible(swigCPtr, this);
   }
 
+  public void hideContextActions() {
+    touchvgJNI.MgView_hideContextActions(swigCPtr, this);
+  }
+
 }

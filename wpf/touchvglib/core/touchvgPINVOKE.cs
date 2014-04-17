@@ -4377,6 +4377,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgView_isContextActionsVisible")]
   public static extern bool MgView_isContextActionsVisible(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgView_hideContextActions")]
+  public static extern void MgView_hideContextActions(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgMotion_view_set")]
   public static extern void MgMotion_view_set(HandleRef jarg1, HandleRef jarg2);
 
@@ -5316,6 +5319,12 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_GiView_showContextActionsSwigExplicitGiView")]
   public static extern bool GiView_showContextActionsSwigExplicitGiView(HandleRef jarg1, HandleRef jarg2, HandleRef jarg3, float jarg4, float jarg5, float jarg6, float jarg7);
 
+  [DllImport("touchvg", EntryPoint="CSharp_GiView_hideContextActions")]
+  public static extern void GiView_hideContextActions(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiView_hideContextActionsSwigExplicitGiView")]
+  public static extern void GiView_hideContextActionsSwigExplicitGiView(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_GiView_commandChanged")]
   public static extern void GiView_commandChanged(HandleRef jarg1);
 
@@ -5356,7 +5365,7 @@ class touchvgPINVOKE {
   public static extern IntPtr new_GiView();
 
   [DllImport("touchvg", EntryPoint="CSharp_GiView_director_connect")]
-  public static extern void GiView_director_connect(HandleRef jarg1, GiView.SwigDelegateGiView_0 delegate0, GiView.SwigDelegateGiView_1 delegate1, GiView.SwigDelegateGiView_2 delegate2, GiView.SwigDelegateGiView_3 delegate3, GiView.SwigDelegateGiView_4 delegate4, GiView.SwigDelegateGiView_5 delegate5, GiView.SwigDelegateGiView_6 delegate6, GiView.SwigDelegateGiView_7 delegate7, GiView.SwigDelegateGiView_8 delegate8, GiView.SwigDelegateGiView_9 delegate9, GiView.SwigDelegateGiView_10 delegate10, GiView.SwigDelegateGiView_11 delegate11);
+  public static extern void GiView_director_connect(HandleRef jarg1, GiView.SwigDelegateGiView_0 delegate0, GiView.SwigDelegateGiView_1 delegate1, GiView.SwigDelegateGiView_2 delegate2, GiView.SwigDelegateGiView_3 delegate3, GiView.SwigDelegateGiView_4 delegate4, GiView.SwigDelegateGiView_5 delegate5, GiView.SwigDelegateGiView_6 delegate6, GiView.SwigDelegateGiView_7 delegate7, GiView.SwigDelegateGiView_8 delegate8, GiView.SwigDelegateGiView_9 delegate9, GiView.SwigDelegateGiView_10 delegate10, GiView.SwigDelegateGiView_11 delegate11, GiView.SwigDelegateGiView_12 delegate12);
 
   [DllImport("touchvg", EntryPoint="CSharp_delete_MgFindImageCallback")]
   public static extern void delete_MgFindImageCallback(HandleRef jarg1);

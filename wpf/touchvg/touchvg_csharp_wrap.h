@@ -889,6 +889,7 @@ public:
     virtual bool useFinger();
     virtual bool isContextActionsVisible();
     virtual bool showContextActions(mgvector< int > const &actions, mgvector< float > const &buttonXY, float x, float y, float w, float h);
+    virtual void hideContextActions();
     virtual void commandChanged();
     virtual void selectionChanged();
     virtual void contentChanged();
@@ -906,9 +907,10 @@ public:
     typedef void (SWIGSTDCALL* SWIG_Callback7_t)();
     typedef void (SWIGSTDCALL* SWIG_Callback8_t)();
     typedef void (SWIGSTDCALL* SWIG_Callback9_t)();
-    typedef void (SWIGSTDCALL* SWIG_Callback10_t)(void *);
-    typedef void (SWIGSTDCALL* SWIG_Callback11_t)(int);
-    void swig_connect_director(SWIG_Callback0_t callbackregenAll, SWIG_Callback1_t callbackregenAppend, SWIG_Callback2_t callbackredraw, SWIG_Callback3_t callbackuseFinger, SWIG_Callback4_t callbackisContextActionsVisible, SWIG_Callback5_t callbackshowContextActions, SWIG_Callback6_t callbackcommandChanged, SWIG_Callback7_t callbackselectionChanged, SWIG_Callback8_t callbackcontentChanged, SWIG_Callback9_t callbackdynamicChanged, SWIG_Callback10_t callbackviewChanged, SWIG_Callback11_t callbackshapeDeleted);
+    typedef void (SWIGSTDCALL* SWIG_Callback10_t)();
+    typedef void (SWIGSTDCALL* SWIG_Callback11_t)(void *);
+    typedef void (SWIGSTDCALL* SWIG_Callback12_t)(int);
+    void swig_connect_director(SWIG_Callback0_t callbackregenAll, SWIG_Callback1_t callbackregenAppend, SWIG_Callback2_t callbackredraw, SWIG_Callback3_t callbackuseFinger, SWIG_Callback4_t callbackisContextActionsVisible, SWIG_Callback5_t callbackshowContextActions, SWIG_Callback6_t callbackhideContextActions, SWIG_Callback7_t callbackcommandChanged, SWIG_Callback8_t callbackselectionChanged, SWIG_Callback9_t callbackcontentChanged, SWIG_Callback10_t callbackdynamicChanged, SWIG_Callback11_t callbackviewChanged, SWIG_Callback12_t callbackshapeDeleted);
 
 private:
     SWIG_Callback0_t swig_callbackregenAll;
@@ -917,12 +919,13 @@ private:
     SWIG_Callback3_t swig_callbackuseFinger;
     SWIG_Callback4_t swig_callbackisContextActionsVisible;
     SWIG_Callback5_t swig_callbackshowContextActions;
-    SWIG_Callback6_t swig_callbackcommandChanged;
-    SWIG_Callback7_t swig_callbackselectionChanged;
-    SWIG_Callback8_t swig_callbackcontentChanged;
-    SWIG_Callback9_t swig_callbackdynamicChanged;
-    SWIG_Callback10_t swig_callbackviewChanged;
-    SWIG_Callback11_t swig_callbackshapeDeleted;
+    SWIG_Callback6_t swig_callbackhideContextActions;
+    SWIG_Callback7_t swig_callbackcommandChanged;
+    SWIG_Callback8_t swig_callbackselectionChanged;
+    SWIG_Callback9_t swig_callbackcontentChanged;
+    SWIG_Callback10_t swig_callbackdynamicChanged;
+    SWIG_Callback11_t swig_callbackviewChanged;
+    SWIG_Callback12_t swig_callbackshapeDeleted;
     void swig_init_callbacks();
 };
 

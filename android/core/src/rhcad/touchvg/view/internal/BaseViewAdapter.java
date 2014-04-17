@@ -86,10 +86,6 @@ public abstract class BaseViewAdapter extends GiView {
         mActionEnabled = enabled;
     }
 
-    public void hideContextActions() {
-        showContextActions(null, null, 0, 0, 0, 0);
-    }
-
     @Override
     public boolean isContextActionsVisible() {
         return mAction != null && mAction.isVisible();
@@ -107,6 +103,13 @@ public abstract class BaseViewAdapter extends GiView {
             mAction = createContextAction();
         }
         return mAction.showActions(getGraphView().getView().getContext(), actions, xy);
+    }
+
+    @Override
+    public void hideContextActions() {
+        if (mAction != null) {
+            mAction.removeButtonLayout();
+        }
     }
 
     @Override

@@ -422,6 +422,7 @@ public:
     virtual bool useFinger();
     virtual bool isContextActionsVisible();
     virtual bool showContextActions(mgvector< int > const &actions, mgvector< float > const &buttonXY, float x, float y, float w, float h);
+    virtual void hideContextActions();
     virtual void commandChanged();
     virtual void selectionChanged();
     virtual void contentChanged();
@@ -430,10 +431,10 @@ public:
     virtual void shapeDeleted(int sid);
 public:
     bool swig_overrides(int n) {
-      return (n < 12 ? swig_override[n] : false);
+      return (n < 13 ? swig_override[n] : false);
     }
 protected:
-    bool swig_override[12];
+    bool swig_override[13];
 };
 
 struct SwigDirector_MgFindImageCallback : public MgFindImageCallback, public Swig::Director {

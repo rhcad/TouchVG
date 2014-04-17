@@ -69,28 +69,32 @@ public class GiView : IDisposable {
     return ret;
   }
 
+  public virtual void hideContextActions() {
+    if (SwigDerivedClassHasMethod("hideContextActions", swigMethodTypes6)) touchvgPINVOKE.GiView_hideContextActionsSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_hideContextActions(swigCPtr);
+  }
+
   public virtual void commandChanged() {
-    if (SwigDerivedClassHasMethod("commandChanged", swigMethodTypes6)) touchvgPINVOKE.GiView_commandChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_commandChanged(swigCPtr);
+    if (SwigDerivedClassHasMethod("commandChanged", swigMethodTypes7)) touchvgPINVOKE.GiView_commandChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_commandChanged(swigCPtr);
   }
 
   public virtual void selectionChanged() {
-    if (SwigDerivedClassHasMethod("selectionChanged", swigMethodTypes7)) touchvgPINVOKE.GiView_selectionChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_selectionChanged(swigCPtr);
+    if (SwigDerivedClassHasMethod("selectionChanged", swigMethodTypes8)) touchvgPINVOKE.GiView_selectionChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_selectionChanged(swigCPtr);
   }
 
   public virtual void contentChanged() {
-    if (SwigDerivedClassHasMethod("contentChanged", swigMethodTypes8)) touchvgPINVOKE.GiView_contentChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_contentChanged(swigCPtr);
+    if (SwigDerivedClassHasMethod("contentChanged", swigMethodTypes9)) touchvgPINVOKE.GiView_contentChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_contentChanged(swigCPtr);
   }
 
   public virtual void dynamicChanged() {
-    if (SwigDerivedClassHasMethod("dynamicChanged", swigMethodTypes9)) touchvgPINVOKE.GiView_dynamicChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_dynamicChanged(swigCPtr);
+    if (SwigDerivedClassHasMethod("dynamicChanged", swigMethodTypes10)) touchvgPINVOKE.GiView_dynamicChangedSwigExplicitGiView(swigCPtr); else touchvgPINVOKE.GiView_dynamicChanged(swigCPtr);
   }
 
   public virtual void viewChanged(GiView oldview) {
-    if (SwigDerivedClassHasMethod("viewChanged", swigMethodTypes10)) touchvgPINVOKE.GiView_viewChangedSwigExplicitGiView(swigCPtr, GiView.getCPtr(oldview)); else touchvgPINVOKE.GiView_viewChanged(swigCPtr, GiView.getCPtr(oldview));
+    if (SwigDerivedClassHasMethod("viewChanged", swigMethodTypes11)) touchvgPINVOKE.GiView_viewChangedSwigExplicitGiView(swigCPtr, GiView.getCPtr(oldview)); else touchvgPINVOKE.GiView_viewChanged(swigCPtr, GiView.getCPtr(oldview));
   }
 
   public virtual void shapeDeleted(int sid) {
-    if (SwigDerivedClassHasMethod("shapeDeleted", swigMethodTypes11)) touchvgPINVOKE.GiView_shapeDeletedSwigExplicitGiView(swigCPtr, sid); else touchvgPINVOKE.GiView_shapeDeleted(swigCPtr, sid);
+    if (SwigDerivedClassHasMethod("shapeDeleted", swigMethodTypes12)) touchvgPINVOKE.GiView_shapeDeletedSwigExplicitGiView(swigCPtr, sid); else touchvgPINVOKE.GiView_shapeDeleted(swigCPtr, sid);
   }
 
   public GiView() : this(touchvgPINVOKE.new_GiView(), true) {
@@ -110,19 +114,21 @@ public class GiView : IDisposable {
       swigDelegate4 = new SwigDelegateGiView_4(SwigDirectorisContextActionsVisible);
     if (SwigDerivedClassHasMethod("showContextActions", swigMethodTypes5))
       swigDelegate5 = new SwigDelegateGiView_5(SwigDirectorshowContextActions);
-    if (SwigDerivedClassHasMethod("commandChanged", swigMethodTypes6))
-      swigDelegate6 = new SwigDelegateGiView_6(SwigDirectorcommandChanged);
-    if (SwigDerivedClassHasMethod("selectionChanged", swigMethodTypes7))
-      swigDelegate7 = new SwigDelegateGiView_7(SwigDirectorselectionChanged);
-    if (SwigDerivedClassHasMethod("contentChanged", swigMethodTypes8))
-      swigDelegate8 = new SwigDelegateGiView_8(SwigDirectorcontentChanged);
-    if (SwigDerivedClassHasMethod("dynamicChanged", swigMethodTypes9))
-      swigDelegate9 = new SwigDelegateGiView_9(SwigDirectordynamicChanged);
-    if (SwigDerivedClassHasMethod("viewChanged", swigMethodTypes10))
-      swigDelegate10 = new SwigDelegateGiView_10(SwigDirectorviewChanged);
-    if (SwigDerivedClassHasMethod("shapeDeleted", swigMethodTypes11))
-      swigDelegate11 = new SwigDelegateGiView_11(SwigDirectorshapeDeleted);
-    touchvgPINVOKE.GiView_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11);
+    if (SwigDerivedClassHasMethod("hideContextActions", swigMethodTypes6))
+      swigDelegate6 = new SwigDelegateGiView_6(SwigDirectorhideContextActions);
+    if (SwigDerivedClassHasMethod("commandChanged", swigMethodTypes7))
+      swigDelegate7 = new SwigDelegateGiView_7(SwigDirectorcommandChanged);
+    if (SwigDerivedClassHasMethod("selectionChanged", swigMethodTypes8))
+      swigDelegate8 = new SwigDelegateGiView_8(SwigDirectorselectionChanged);
+    if (SwigDerivedClassHasMethod("contentChanged", swigMethodTypes9))
+      swigDelegate9 = new SwigDelegateGiView_9(SwigDirectorcontentChanged);
+    if (SwigDerivedClassHasMethod("dynamicChanged", swigMethodTypes10))
+      swigDelegate10 = new SwigDelegateGiView_10(SwigDirectordynamicChanged);
+    if (SwigDerivedClassHasMethod("viewChanged", swigMethodTypes11))
+      swigDelegate11 = new SwigDelegateGiView_11(SwigDirectorviewChanged);
+    if (SwigDerivedClassHasMethod("shapeDeleted", swigMethodTypes12))
+      swigDelegate12 = new SwigDelegateGiView_12(SwigDirectorshapeDeleted);
+    touchvgPINVOKE.GiView_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12);
   }
 
   private bool SwigDerivedClassHasMethod(string methodName, Type[] methodTypes) {
@@ -153,6 +159,10 @@ public class GiView : IDisposable {
 
   private bool SwigDirectorshowContextActions(IntPtr actions, IntPtr buttonXY, float x, float y, float w, float h) {
     return showContextActions(new Ints(actions, false), new Floats(buttonXY, false), x, y, w, h);
+  }
+
+  private void SwigDirectorhideContextActions() {
+    hideContextActions();
   }
 
   private void SwigDirectorcommandChanged() {
@@ -189,8 +199,9 @@ public class GiView : IDisposable {
   public delegate void SwigDelegateGiView_7();
   public delegate void SwigDelegateGiView_8();
   public delegate void SwigDelegateGiView_9();
-  public delegate void SwigDelegateGiView_10(IntPtr oldview);
-  public delegate void SwigDelegateGiView_11(int sid);
+  public delegate void SwigDelegateGiView_10();
+  public delegate void SwigDelegateGiView_11(IntPtr oldview);
+  public delegate void SwigDelegateGiView_12(int sid);
 
   private SwigDelegateGiView_0 swigDelegate0;
   private SwigDelegateGiView_1 swigDelegate1;
@@ -204,6 +215,7 @@ public class GiView : IDisposable {
   private SwigDelegateGiView_9 swigDelegate9;
   private SwigDelegateGiView_10 swigDelegate10;
   private SwigDelegateGiView_11 swigDelegate11;
+  private SwigDelegateGiView_12 swigDelegate12;
 
   private static Type[] swigMethodTypes0 = new Type[] { typeof(bool) };
   private static Type[] swigMethodTypes1 = new Type[] { typeof(int) };
@@ -215,8 +227,9 @@ public class GiView : IDisposable {
   private static Type[] swigMethodTypes7 = new Type[] {  };
   private static Type[] swigMethodTypes8 = new Type[] {  };
   private static Type[] swigMethodTypes9 = new Type[] {  };
-  private static Type[] swigMethodTypes10 = new Type[] { typeof(GiView) };
-  private static Type[] swigMethodTypes11 = new Type[] { typeof(int) };
+  private static Type[] swigMethodTypes10 = new Type[] {  };
+  private static Type[] swigMethodTypes11 = new Type[] { typeof(GiView) };
+  private static Type[] swigMethodTypes12 = new Type[] { typeof(int) };
 }
 
 }

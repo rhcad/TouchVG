@@ -1,4 +1,4 @@
-//! \file GiGiImageCache.mm
+//! \file GiImageCache.mm
 //! \brief 实现图像对象缓存类 GiImageCache
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 

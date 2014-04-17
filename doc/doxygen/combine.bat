@@ -17,6 +17,9 @@ xcopy ..\..\thirdparty\TouchVGCore\core\src\export\*.* %destpath%\export_src\ /Y
 xcopy ..\..\thirdparty\TouchVGCore\core\src\record\*.* %destpath%\record_src\ /Y
 xcopy ..\..\thirdparty\TouchVGCore\core\src\view\*.* %destpath%\view_src\ /Y
 
+xcopy ..\..\thirdparty\TouchVGPlay\core\include\play\*.* %destpath%\play\ /Y
+xcopy ..\..\thirdparty\TouchVGPlay\core\src\play\*.* %destpath%\play_src\ /Y
+
 xcopy ..\..\core\democmds\gate\*.* %destpath%\democmds\ /Y
 xcopy ..\..\core\democmds\cmds\*.* %destpath%\democmds\ /Y
 

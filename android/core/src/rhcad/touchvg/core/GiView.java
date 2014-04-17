@@ -74,6 +74,10 @@ public class GiView {
     return (getClass() == GiView.class) ? touchvgJNI.GiView_showContextActions(swigCPtr, this, Ints.getCPtr(actions), actions, Floats.getCPtr(buttonXY), buttonXY, x, y, w, h) : touchvgJNI.GiView_showContextActionsSwigExplicitGiView(swigCPtr, this, Ints.getCPtr(actions), actions, Floats.getCPtr(buttonXY), buttonXY, x, y, w, h);
   }
 
+  public void hideContextActions() {
+    if (getClass() == GiView.class) touchvgJNI.GiView_hideContextActions(swigCPtr, this); else touchvgJNI.GiView_hideContextActionsSwigExplicitGiView(swigCPtr, this);
+  }
+
   public void commandChanged() {
     if (getClass() == GiView.class) touchvgJNI.GiView_commandChanged(swigCPtr, this); else touchvgJNI.GiView_commandChangedSwigExplicitGiView(swigCPtr, this);
   }

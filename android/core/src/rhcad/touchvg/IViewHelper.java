@@ -1,4 +1,4 @@
-//! \file ViewHelper.java
+//! \file IViewHelper.java
 //! \brief Android绘图视图辅助类
 // Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
 

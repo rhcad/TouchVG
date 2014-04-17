@@ -9,16 +9,7 @@
 
 static char _lastVgFile[256] = { 0 };
 
-@interface GiGraphView2()
-@property(nonatomic, STRONG) NSMutableArray  *layers;
-@property(nonatomic, STRONG) CAShapeLayer *shapeLayer;
-@property(nonatomic, STRONG) CALayer *curLayer;
-
-@end
-
 @implementation GiGraphView2
-@synthesize layers = _layers;
-@synthesize shapeLayer, curLayer;
 
 - (BOOL)exportPNG:(NSString *)filename
 {
@@ -148,61 +139,4 @@ static char _lastVgFile[256] = { 0 };
     }
     return [super twoTapsHandler:sender];
 }
-
-- (void)startPlayKeyFrames {
-    self.shapeLayer = [CAShapeLayer layer];
-    self.shapeLayer.frame = self.bounds;
-    [self.layer addSublayer:self.shapeLayer];
-    [self playKeyFrame];
-}
-
-- (void)playKeyFrame
-{
-    NSUInteger i = 0;
-    CAShapeLayer *nowLayer;
-    CAShapeLayer *nextLayer;
-    
-    if (self.curLayer) {
-        for (; i < [_layers count] && [_layers objectAtIndex:i] != curLayer; i++) {
-        }
-    }
-    self.curLayer = i < [_layers count] ? [_layers objectAtIndex:i] : nil;
-    if (!self.curLayer) {
-        return;
-    }
-    nowLayer = [curLayer.sublayers lastObject];
-    self.shapeLayer.strokeColor = nowLayer.strokeColor;
-    self.shapeLayer.fillColor = nowLayer.fillColor;
-    self.shapeLayer.lineWidth = nowLayer.lineWidth;
-    self.shapeLayer.lineDashPhase = nowLayer.lineDashPhase;
-    self.shapeLayer.lineDashPattern = nowLayer.lineDashPattern;
-    self.shapeLayer.lineCap = nowLayer.lineCap;
-    
-    self.curLayer = i + 1 < [_layers count] ? [_layers objectAtIndex:i + 1] : nil;
-    if (!self.curLayer) {
-        [self.shapeLayer removeFromSuperlayer];
-        self.shapeLayer = nil;
-        return;
-    }
-    nextLayer = [curLayer.sublayers lastObject];
-    
-    CABasicAnimation* pathAnim = [CABasicAnimation animationWithKeyPath: @"path"];
-    pathAnim.fromValue = (__bridge id)nowLayer.path;
-    pathAnim.toValue = (__bridge id)nextLayer.path;
-    
-    CABasicAnimation* frameAnim = [CABasicAnimation animationWithKeyPath: @"frame"];
-    frameAnim.fromValue = [NSValue valueWithCGRect:nowLayer.frame];
-    frameAnim.toValue = [NSValue valueWithCGRect:nextLayer.frame];
-    
-    CAAnimationGroup *anims = [CAAnimationGroup animation];
-    anims.animations = @[pathAnim, frameAnim];
-    anims.duration = 0.5;
-    anims.delegate = self;
-    [self.shapeLayer addAnimation:anims forKey:nil];
-}
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    [self performSelector:@selector(playKeyFrame) withObject:nil afterDelay:0];
-}
-
 @end

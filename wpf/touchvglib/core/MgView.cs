@@ -250,6 +250,10 @@ public class MgView : IDisposable {
     return ret;
   }
 
+  public virtual void hideContextActions() {
+    touchvgPINVOKE.MgView_hideContextActions(swigCPtr);
+  }
+
 }
 
 }
