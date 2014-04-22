@@ -2,11 +2,12 @@
 
 TouchVG is a lightweight 2D vector drawing framework mainly using C++ for iOS, Android and Windows.
 
-Features described in [README-cn.md](https://github.com/touchvg/touchvg/blob/master/README-cn.md) and [Online document](https://github.com/touchvg/touchvg.github.io). Welcome to help translate the contents Introduction.
+Features described in [README-cn.md](README-cn.md)
+and [Online document](https://github.com/touchvg/touchvg.github.io). Welcome to help translate the contents Introduction.
 
-![modules](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/modules.png)
+![modules](/doc/images/modules.png)
 
-![iphone1](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/iphone1.png) | ![android1](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/android1.png) | ![iphone2](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/iphone2.png)
+![iphone1](/doc/images/iphone1.png) | ![android1](/doc/images/android1.png) | ![iphone2](/doc/images/iphone2.png)
 
 ## License
 
@@ -21,13 +22,14 @@ This is an open source [LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl
 - [SWIG](https://github.com/swig/swig) (GPL): Use the tool to generate the glue code for Java and C#.
 - [iOS-Universal-Library-Template](https://github.com/michaeltyson/iOS-Universal-Library-Template): Use it to create static library project.
 - Algorithms: [NearestPoint.c](http://tog.acm.org/resources/GraphicsGems/gems/NearestPoint.c), 
-[Bound box](http://processingjs.nihongoresources.com/bezierinfo/#bounds), 
+[Bezier's bound box](http://processingjs.nihongoresources.com/bezierinfo/#bounds), 
 [The intersection of two circles](http://blog.csdn.net/cyg0810/article/details/7765894), 
-[Position judgment](http://orion.math.iastate.edu/burkardt/c_src/orourke/tri.c) and [Fitting digitized curves](https://github.com/erich666/GraphicsGems/blob/master/gems/FitCurves.c).
+[Position judgment](http://orion.math.iastate.edu/burkardt/c_src/orourke/tri.c)
+ and [Fitting digitized curves](https://github.com/erich666/GraphicsGems/blob/master/gems/FitCurves.c).
 
 ## How to Contribute
 
-Contributors and sponsors are welcome. You may translate, [commit issues](https://github.com/touchvg/touchvg/issues), suggestions or pull requests on the Github site.
+Contributors and sponsors are welcome. You may translate, commit issues or pull requests on this Github site.
 To contribute, please follow the branching model outlined here: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
 
 ## Contributors

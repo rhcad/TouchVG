@@ -4,63 +4,59 @@
 > 
 > 作者：张云贵 <rhcad@hotmail.com> 开源协议：LGPL 2.1，见 LICENSE 文件描述。
 
-![iphone1](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/iphone1.png)  ![iphone2](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/iphone2.png)  ![android1](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/android1.png)
+![iphone1](/doc/images/iphone1.png)  ![iphone2](/doc/images/iphone2.png)  ![android1](/doc/images/android1.png)
 
-![modules](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/modules.png)
+![modules](/doc/images/modules.png)
 
 TouchVG 的功能
 --------------
-> 支持多点触摸或鼠标的交互绘图方式，可以无级放缩或平移显示矢量图形、图像、[SVG](http://zh.wikipedia.org/wiki/SVG)。
+- 支持多点触摸或鼠标的交互绘图方式，可以无级放缩或平移显示矢量图形、图像、SVG。
 
-> 高性能绘图、快速手绘光滑曲线形状，在 iOS 上支持 CALayer 后台渲染和动态并行渲染，在 Android 上支持 SurfaceView 异步渲染。
+- 高性能绘图、快速手绘光滑曲线形状，在 iOS 上支持 CALayer 后台渲染和动态并行渲染，在 Android 上支持 SurfaceView 异步渲染。
 
-> 除了基本的15余种矢量图形类型外，可使用C++或Java等来扩充更多的图形类型。
+- 除了基本的15余种矢量图形类型外，可使用C++或Java等来扩充更多的图形类型。
 
-> 除了基本的20余种选择和绘图命令外，还可使用C++、Java等扩充更多的交互命令。
+- 除了基本的20余种选择和绘图命令外，还可使用C++、Java等扩充更多的交互命令。
 
-> 可以交互式修改图形的线宽、颜色等属性，可以进行放缩变形、克隆等图形操作。
+- 可以交互式修改图形的线宽、颜色等属性，可以进行放缩变形、克隆等图形操作。
 
-> 支持JSON等格式的图形序列化操作，允许扩充XML、数据库等其他序列化适配器。
+- 支持JSON等格式的图形序列化操作，允许扩充XML、数据库等其他序列化适配器。
 
-> 导出 SVG 矢量格式图片、PNG 透明背景图片。
+- 导出 SVG 矢量格式图片、PNG 透明背景图片。
 
-> 无限步 Undo/Redo 记忆，轻数据量的矢量录屏和回放。
+- 无限步 Undo/Redo 记忆，轻数据量的矢量录屏和回放。
 
-> 支持多模块的扩展机制，可构建数字教育、动态几何、图文笔记、会议白板等多种行业绘图模块。
+- 支持多模块的扩展机制，可构建数字教育、动态几何、图文笔记、会议白板等多种行业绘图模块。
 
-> 更多说明将在TouchVG的 [在线文档](https://github.com/touchvg/touchvg.github.io) 中补充，可看[最新功能的屏幕录像](http://www.soku.com/search_video/q_touchvg)。
+- 更多说明将在TouchVG的 [在线文档](https://github.com/touchvg/touchvg.github.io) 中补充，可看[最新功能的屏幕录像](http://www.soku.com/search_video/q_touchvg)。
 
 引用的开源框架
 --------------
 
-> 矢量绘图内核框架 [TouchVGCore](https://github.com/touchvg/vgcore) (LGPL)，附[架构图](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/core_modules.png)。
+- 矢量绘图内核框架 [TouchVGCore](https://github.com/touchvg/vgcore) (LGPL)，附[架构图](/doc/images/core_modules.png)。
 
-> Larva Labs 的 Android SVG 解析框架 [svg-android](https://github.com/japgolly/svg-android) (Apache License 2.0)。
+- Larva Labs 的 Android SVG 解析框架 [svg-android](https://github.com/japgolly/svg-android) (Apache License 2.0)。
 
-> iOS SVG 解析框架 [SVGKit](https://github.com/SVGKit/SVGKit) (MIT)。
+- iOS SVG 解析框架 [SVGKit](https://github.com/SVGKit/SVGKit) (MIT)。
 
-> 用于输出 SVG 的简易框架 [simple-svg](http://code.google.com/p/simple-svg) (BSD-3)。
+- 用于输出 SVG 的简易框架 [simple-svg](http://code.google.com/p/simple-svg) (BSD-3)。
 
-> 用于跨语言转换的 [SWIG](https://github.com/swig/swig)，用此工具生成粘合代码。
+- 用于跨语言转换的 [SWIG](https://github.com/swig/swig)，用此工具生成粘合代码。
 
-> iOS静态库模板 [iOS-Universal-Library-Template](https://github.com/michaeltyson/iOS-Universal-Library-Template)。
+- iOS静态库模板 [iOS-Universal-Library-Template](https://github.com/michaeltyson/iOS-Universal-Library-Template)。
 
-> JSON 解析和输出框架 [rapidjson](https://github.com/Kanma/rapidjson) (MIT)。
+- JSON 解析和输出框架 [rapidjson](https://github.com/Kanma/rapidjson) (MIT)。
 
-> GCC编译脚本 [x3py](https://github.com/rhcad/x3py) (Apache License 2.0)。
+- GCC编译脚本 [x3py](https://github.com/rhcad/x3py) (Apache License 2.0)。
 
-> 算法：[圆弧和Bezier曲线最近点计算](http://tog.acm.org/resources/GraphicsGems/gems/NearestPoint.c)、
+- 算法：[圆弧和Bezier曲线最近点计算](http://tog.acm.org/resources/GraphicsGems/gems/NearestPoint.c)、
 [三次Bezier范围计算](http://processingjs.nihongoresources.com/bezierinfo/#bounds)、
 [两圆求交点](http://blog.csdn.net/cyg0810/article/details/7765894)、
 [点线位置判断](http://orion.math.iastate.edu/burkardt/c_src/orourke/tri.c)。
 
 意见和建议
 ----------
-> 讨论群：QQ 192093613，欢迎加入讨论和分享，可描二维码加入：
-> 
-> ![QQ](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/qq.png)
-> 
-> 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/touchvg/touchvg/issues)，当然可以使用中文写。
+> 欢迎加入QQ群 192093613 讨论和分享。在您使用 TouchVG 的过程中有任何意见和建议，请到此项目提交Issue，当然可以使用中文写。
 
 Android编译说明
 ---------------
