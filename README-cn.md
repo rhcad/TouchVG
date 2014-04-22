@@ -4,9 +4,9 @@
 > 
 > 作者：张云贵 <rhcad@hotmail.com> 开源协议：LGPL 2.1，见 LICENSE 文件描述。
 
-![iphone1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone1.png)  ![iphone2](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone2.png)  ![android1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/android1.png)
+![iphone1](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/iphone1.png)  ![iphone2](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/iphone2.png)  ![android1](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/android1.png)
 
-![modules](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/modules.png)
+![modules](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/modules.png)
 
 TouchVG 的功能
 --------------
@@ -28,12 +28,12 @@ TouchVG 的功能
 
 > 支持多模块的扩展机制，可构建数字教育、动态几何、图文笔记、会议白板等多种行业绘图模块。
 
-> 更多说明将在TouchVG的 [在线文档](https://github.com/rhcad/touchvg-doc) 中补充，可看[最新功能的屏幕录像](http://www.soku.com/search_video/q_touchvg)。
+> 更多说明将在TouchVG的 [在线文档](https://github.com/touchvg/touchvg.github.io) 中补充，可看[最新功能的屏幕录像](http://www.soku.com/search_video/q_touchvg)。
 
 引用的开源框架
 --------------
 
-> 矢量绘图内核框架 [TouchVGCore](https://github.com/rhcad/TouchVGCore) (LGPL)，附[架构图](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/core_modules.png)。
+> 矢量绘图内核框架 [TouchVGCore](https://github.com/touchvg/vgcore) (LGPL)，附[架构图](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/core_modules.png)。
 
 > Larva Labs 的 Android SVG 解析框架 [svg-android](https://github.com/japgolly/svg-android) (Apache License 2.0)。
 
@@ -58,9 +58,9 @@ TouchVG 的功能
 ----------
 > 讨论群：QQ 192093613，欢迎加入讨论和分享，可描二维码加入：
 > 
-> ![QQ](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/qq.png)
+> ![QQ](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/qq.png)
 > 
-> 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/rhcad/touchvg/issues)，当然可以使用中文写。
+> 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/touchvg/touchvg/issues)，当然可以使用中文写。
 
 Android编译说明
 ---------------

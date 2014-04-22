@@ -2,17 +2,17 @@
 
 TouchVG is a lightweight 2D vector drawing framework mainly using C++ for iOS, Android and Windows.
 
-Features described in [README-cn.md](https://github.com/rhcad/TouchVG/blob/master/README-cn.md). Welcome to help translate the contents Introduction.
+Features described in [README-cn.md](https://github.com/touchvg/touchvg/blob/master/README-cn.md) and [Online document](https://github.com/touchvg/touchvg.github.io). Welcome to help translate the contents Introduction.
 
-![modules](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/modules.png)
+![modules](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/modules.png)
 
-![iphone1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone1.png) | ![android1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/android1.png) | ![iphone2](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone2.png)
+![iphone1](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/iphone1.png) | ![android1](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/android1.png) | ![iphone2](https://raw.githubusercontent.com/touchvg/touchvg/master/doc/images/iphone2.png)
 
 ## License
 
 This is an open source [LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) licensed project. It uses the following open source projects:
 
-- [TouchVGCore](https://github.com/rhcad/TouchVGCore) (LGPL): Cross-platform vector drawing libraries using C++.
+- [TouchVGCore](https://github.com/touchvg/vgcore) (LGPL): Cross-platform vector drawing libraries using C++.
 - [svg-android](https://github.com/japgolly/svg-android) (Apache): Vector graphics support for Android.
 - [SVGKit](https://github.com/SVGKit/SVGKit) (MIT): Display and interact with SVG Images with CoreAnimation on iOS.
 - [simple-svg](http://code.google.com/p/simple-svg) (BSD): A C++ header file for creating SVG files.
@@ -27,7 +27,7 @@ This is an open source [LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl
 
 ## How to Contribute
 
-Contributors and sponsors are welcome. You may translate, [commit issues](https://github.com/rhcad/touchvg/issues), suggestions or pull requests on the Github site.
+Contributors and sponsors are welcome. You may translate, [commit issues](https://github.com/touchvg/touchvg/issues), suggestions or pull requests on the Github site.
 To contribute, please follow the branching model outlined here: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
 
 ## Contributors
