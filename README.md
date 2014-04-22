@@ -6,18 +6,18 @@ Features described in [README-cn.md](https://github.com/rhcad/TouchVG/blob/maste
 
 ![modules](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/modules.png)
 
-![iphone1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone1.png)  ![android1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/android1.png)  ![iphone2](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone2.png)
+![iphone1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone1.png) | ![android1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/android1.png) | ![iphone2](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone2.png)
 
 ## License
 
 This is an open source [LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) licensed project. It uses the following open source projects:
 
 - [TouchVGCore](https://github.com/rhcad/TouchVGCore) (LGPL): Cross-platform vector drawing libraries using C++.
-- [svg-android](https://github.com/japgolly/svg-android) (Apache License 2.0): Vector graphics support for Android.
+- [svg-android](https://github.com/japgolly/svg-android) (Apache): Vector graphics support for Android.
 - [SVGKit](https://github.com/SVGKit/SVGKit) (MIT): Display and interact with SVG Images with CoreAnimation on iOS.
-- [simple-svg](http://code.google.com/p/simple-svg) (BSD-3): A C++ header file for creating SVG files.
+- [simple-svg](http://code.google.com/p/simple-svg) (BSD): A C++ header file for creating SVG files.
 - [rapidjson](https://github.com/Kanma/rapidjson) (MIT): A fast JSON parser/generator for C++ with both SAX/DOM style API.
-- [x3py](https://github.com/rhcad/x3py) (Apache 2.0): Compile script files.
+- [x3py](https://github.com/rhcad/x3py) (Apache): Compile script files.
 - [SWIG](https://github.com/swig/swig) (GPL): Use the tool to generate the glue code for Java and C#.
 - [iOS-Universal-Library-Template](https://github.com/michaeltyson/iOS-Universal-Library-Template): Use it to create static library project.
 - Algorithms: [NearestPoint.c](http://tog.acm.org/resources/GraphicsGems/gems/NearestPoint.c), 
@@ -27,8 +27,7 @@ This is an open source [LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl
 
 ## How to Contribute
 
-Contributors and sponsors are welcome. You may [commit issues](https://github.com/rhcad/touchvg/issues), suggestions or pull requests on the Github site.
-
+Contributors and sponsors are welcome. You may translate, [commit issues](https://github.com/rhcad/touchvg/issues), suggestions or pull requests on the Github site.
 To contribute, please follow the branching model outlined here: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
 
 ## Contributors
@@ -80,9 +79,9 @@ To contribute, please follow the branching model outlined here: [A successful Gi
 
 -  You may replace full text and file names of `democmds` library project (for example, using UltraEdit) for your application. And you can add your shape classes or drawing commands. Thus, the TouchVG library does not require changes.
 
-## Compile for WPF on Windows
+## Compile for Windows
 
-- Open `wpf/Test_cs10.sln` in Visual Studio 2010, then run the`WpfDemo` application. Or open `wpf/Test_cs9.sln` in VS2008.
+- Open `wpf/Test_cs10.sln` in Visual Studio 2010 (Need VC++ and C#), then run the`WpfDemo` application. Or open `wpf/Test_cs9.sln` in VS2008.
 
 ## Compile for other platform
 
