@@ -1,129 +1,98 @@
-关于 TouchVG
-------------
-> TouchVG 是一个主要由C++开发的轻量级2D矢量绘图框架，可在 iOS、Android、Windows 等多个平台构建矢量绘图应用。
-> 
-> 作者：张云贵 <rhcad@hotmail.com> 开源协议：LGPL 2.1，见 LICENSE 文件描述。
+# TouchVG
 
-![iphone1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone1.png)  ![iphone2](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone2.png)  ![android1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/android1.png)
+TouchVG is a lightweight 2D vector drawing framework mainly using C++ for iOS, Android and Windows.
+
+Features described in [README-cn.md](https://github.com/rhcad/TouchVG/blob/master/README-cn.md). Welcome to help translate the contents Introduction.
 
 ![modules](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/modules.png)
 
-TouchVG 的功能
---------------
-> 支持多点触摸或鼠标的交互绘图方式，可以无级放缩或平移显示矢量图形、图像、[SVG](http://zh.wikipedia.org/wiki/SVG)。
+![iphone1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone1.png)  ![android1](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/android1.png)  ![iphone2](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/iphone2.png)
 
-> 高性能绘图、快速手绘光滑曲线形状，在 iOS 上支持 CALayer 后台渲染和动态并行渲染，在 Android 上支持 SurfaceView 异步渲染。
+## License
 
-> 除了基本的15余种矢量图形类型外，可使用C++或Java等来扩充更多的图形类型。
+This is an open source [LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) licensed project. It uses the following open source projects:
 
-> 除了基本的20余种选择和绘图命令外，还可使用C++、Java等扩充更多的交互命令。
+- [TouchVGCore](https://github.com/rhcad/TouchVGCore) (LGPL): Cross-platform vector drawing libraries using C++.
+- [svg-android](https://github.com/japgolly/svg-android) (Apache License 2.0): Vector graphics support for Android.
+- [SVGKit](https://github.com/SVGKit/SVGKit) (MIT): Display and interact with SVG Images with CoreAnimation on iOS.
+- [simple-svg](http://code.google.com/p/simple-svg) (BSD-3): A C++ header file for creating SVG files.
+- [rapidjson](https://github.com/Kanma/rapidjson) (MIT): A fast JSON parser/generator for C++ with both SAX/DOM style API.
+- [x3py](https://github.com/rhcad/x3py) (Apache 2.0): Compile script files.
+- [SWIG](https://github.com/swig/swig) (GPL): Use the tool to generate the glue code for Java and C#.
+- [iOS-Universal-Library-Template](https://github.com/michaeltyson/iOS-Universal-Library-Template): Use it to create static library project.
+- Algorithms: [NearestPoint.c](http://tog.acm.org/resources/GraphicsGems/gems/NearestPoint.c), 
+[Bound box](http://processingjs.nihongoresources.com/bezierinfo/#bounds), 
+[The intersection of two circles](http://blog.csdn.net/cyg0810/article/details/7765894), 
+[Position judgment](http://orion.math.iastate.edu/burkardt/c_src/orourke/tri.c) and [Fitting digitized curves](https://github.com/erich666/GraphicsGems/blob/master/gems/FitCurves.c).
 
-> 可以交互式修改图形的线宽、颜色等属性，可以进行放缩变形、克隆等图形操作。
+## How to Contribute
 
-> 支持JSON等格式的图形序列化操作，允许扩充XML、数据库等其他序列化适配器。
+Contributors and sponsors are welcome. You may [commit issues](https://github.com/rhcad/touchvg/issues), suggestions or pull requests on the Github site.
 
-> 导出 SVG 矢量格式图片、PNG 透明背景图片。
+To contribute, please follow the branching model outlined here: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
 
-> 无限步 Undo/Redo 记忆，轻数据量的矢量录屏和回放。
+## Contributors
 
-> 支持多模块的扩展机制，可构建数字教育、动态几何、图文笔记、会议白板等多种行业绘图模块。
+- [Zhang Yungui](https://github.com/rhcad)
+- [Archer](https://github.com/a7ch3r)
+- [Pengjun](https://github.com/pengjun) / Line and triangle commands
+- [Proteas](https://github.com/proteas)
 
-> 更多说明将在TouchVG的 [在线文档](https://github.com/rhcad/touchvg-doc) 中补充，可看[最新功能的屏幕录像](http://www.soku.com/search_video/q_touchvg)。
+# How to Compile
 
-引用的开源框架
---------------
+## Compile for Android
 
-> 矢量绘图内核框架 [TouchVGCore](https://github.com/rhcad/TouchVGCore) (LGPL)，附[架构图](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/core_modules.png)。
+- Import all projects under `./android` directory of TouchVG in eclipse, then run `VGTest` or `vgdemo1` project to view the demonstration.
 
-> Larva Labs 的 Android SVG 解析框架 [svg-android](https://github.com/japgolly/svg-android) (Apache License 2.0)。
+  - Android SDK version of the projects may need to modify according to your installation.
+  - Recommend using the newer [ADT Bundle](http://developer.android.com/sdk/index.html) to avoid complex configuration.
 
-> iOS SVG 解析框架 [SVGKit](https://github.com/SVGKit/SVGKit) (MIT)。
+-  You may replace full text and file names of `democmds` library project (for example, using UltraEdit) for your application. And you can add your shape classes or drawing commands. Thus, the TouchVG library does not require changes.
 
-> 用于输出 SVG 的简易框架 [simple-svg](http://code.google.com/p/simple-svg) (BSD-3)。
+   - Do not want to write C++ code? Please reference to `android/test/src/vgtest/testview/shape` package to write your own shapes and commands.
 
-> 用于跨语言转换的 [SWIG](https://github.com/swig/swig)，用此工具生成粘合代码。
+-  To regenerate libtouchvg.so and libdemocmds.so, please enter `android` directory of TouchVG, then type `./build.sh`
+(Need to add the [NDK](http://developer.android.com/tools/sdk/ndk/index.html) installation location to your PATH environment variable).
 
-> iOS静态库模板 [iOS-Universal-Library-Template](https://github.com/michaeltyson/iOS-Universal-Library-Template)。
+   - If the error `build/gmsl/__gmsl:512: *** non-numeric second argument to wordlist function` occurs, then open the `build/gmsl/__gmsl` file in the NDK installation directory, and change line 512 to:
+     `int_encode = $(__gmsl_tr1)$(wordlist 1,$(words $1),$(__gmsl_input_int))`
 
-> JSON 解析和输出框架 [rapidjson](https://github.com/Kanma/rapidjson) (MIT)。
+   - MSYS and TDM-GCC(a MinGW distribution) are recommended on Windows.
 
-> GCC编译脚本 [x3py](https://github.com/rhcad/x3py) (Apache License 2.0)。
+   - To regenerate the kernel JNI classes, type `./build.sh-swig`
+(Need to install [SWIG](http://sourceforge.net/projects/swig/files/), and add the location to PATH).
 
-> 算法：[圆弧和Bezier曲线最近点计算](http://tog.acm.org/resources/GraphicsGems/gems/NearestPoint.c)、
-[三次Bezier范围计算](http://processingjs.nihongoresources.com/bezierinfo/#bounds)、
-[两圆求交点](http://blog.csdn.net/cyg0810/article/details/7765894)、
-[点线位置判断](http://orion.math.iastate.edu/burkardt/c_src/orourke/tri.c)。
+## Compile for iOS
 
-意见和建议
-----------
-> 讨论群：QQ 192093613，欢迎加入讨论和分享，可描二维码加入：
-> 
-> ![QQ](https://raw.githubusercontent.com/rhcad/TouchVG/master/doc/images/qq.png)
-> 
-> 在您使用 TouchVG 的过程中有任何意见和建议，请到此项目 [提交Issue](https://github.com/rhcad/touchvg/issues)，当然可以使用中文写。
+-  Open `ios/TestVG.xcworkspace` in Xcode, then run the `TestView` demo app.
 
-Android编译说明
----------------
+   - The `TestView` project has two targets:
+   
+     - `TestView` target using `libTouchVG.a` does not support SVG display.
+     - `TestView-SVG` target using `libTouchVG-SVG.a` and `SVGKit` can display SVG shapes.
 
-> 在 eclipse 中导入此项目下的所有工程，运行 VGTest 或 vgdemo1 工程可看演示效果。
+   - Static libraries required can be compiled in two ways:
+   
+        - Enter `ios` directory, then type `./build.sh` (Need to configure Xcode command line environment) to compile all static libraries to the `ios/output` directory.
+        - Or select and build each library project in Xcode IDE.
 
->> 可能需要根据实际安装情况修改工程的SDK版本号。
+   - To run on device, you may need to change the Bundle Identifier of the demo application, such as "com.yourcompany.TestView", and choose your own development certificate (Code Signing).
 
->> 建议使用较新的 [ADT Bundle](http://developer.android.com/sdk/index.html)，省掉了eclipse和ADT的安装配置麻烦事。
-    
-> 可以将 democmds 改为你的应用库工程（例如使用UltraEdit保持大小写全文替换，并替换文件名），
-该工程包含 democmds.jar 和 libdemocmds.so(本地库)。在此增加自己的图形类和命令类，这样就不需要改动 TouchVG 内核了。
+-  You may replace full text and file names of `democmds` library project (for example, using UltraEdit) for your application. And you can add your shape classes or drawing commands. Thus, the TouchVG library does not require changes.
 
->> 不写C++代码、不要democmds也行，参考 `android/test/src/vgtest/testview/shape`包写自己的图形和命令吧。
+## Compile for WPF on Windows
 
-> 如需重新生成 libtouchvg.so 和 libdemocmds.so，则进入此项目的 android 目录，运行 `./build.sh`
-（需要将[NDK](http://developer.android.com/tools/sdk/ndk/index.html)安装位置加到PATH环境变量，以便使用 ndk-build）。
+- Open `wpf/Test_cs10.sln` in Visual Studio 2010, then run the`WpfDemo` application. Or open `wpf/Test_cs9.sln` in VS2008.
 
->> 使用NDK-r8c以后的版本如果出现 `build/gmsl/__gmsl:512: *** non-numeric second argument to wordlist function` 错误，
-则打开 NDK 安装目录下的 `build/gmsl/__gmsl` 文件，将512行改为：
-    `int_encode = $(__gmsl_tr1)$(wordlist 1,$(words $1),$(__gmsl_input_int))`
+## Compile for other platform
 
->> 如果是在Windows上编译，推荐使用 MSYS（Unix模拟环境工具）、TDM-GCC（一种MinGW发行版）。
+- You can compile TouchVG for Python, Perl or Java applications on Linux, MinGW or Mac OS X.
 
->> 如需重新生成内核JNI类，则运行 `./build.sh -swig`
-（需要安装[SWIG](http://sourceforge.net/projects/swig/files/)，并将SWIG位置加到 PATH 环境变量）。
+  - Enter `core` directory which contains Makefile, then type the following make command:
 
-iOS编译说明
-----------
+     - `Make all install`: compile C + + static library .
+     - `Make java`: Jar package and generate dynamic libraries for Java programs.
+     - `Make python`, `make perl`: namely Python, Perl , etc. to generate class files and dynamic libraries.
+     - `Make clean java.clean python.clean`: delete these temporary files compiled out .
 
-> 在 Xcode 中打开 ios/TestVG.xcworkspace 文件，运行 TestView 演示程序。
-
->> 该程序有两个编译目标项，TestView 不支持SVG的显示，使用 libTouchVG.a；TestView-SVG 使用 SVGKit 库显示SVG图形，使用 libTouchVG-SVG.a。
-
->> 所需的多个静态库有两种编译方式：
->>> 进入此项目的 ios 目录，运行`./build.sh`（需要配置Xcode命令行环境，以便使用 xcodebuild）自动编译所有静态库到 `ios/output` 目录下。
->>> 在 Xcode 集成开发环境中分别选择相应的库工程编译。
-
->> 在真机上调试时需要修改主程序的Bundle Identifier，例如“com.yourcompany.TestView”，并选择自己的开发证书（Code Signing）。
-
-> 可以将 DemoCmds 改为你的应用库工程（例如使用UltraEdit保持大小写全文替换，并替换文件名），
-增加自己的图形类和命令类，这样就不需要改动 TouchVG 内核了。
-
-WPF编译说明
------------
-
-> 在 Visual Studio 2010 中打开 `wpf/Test_cs10.sln`，运行 WpfDemo 工程。VS2008则打开 `wpf/Test_cs9.sln` 。
-
-> 如需重新生成内核类（编译 Swig Files 下的 touchvg.swig 或 democmds.i），需要安装
-[SwigWin](http://sourceforge.net/projects/swig/files/swigwin/)，并将SWIG解压位置加到 PATH 环境变量。
-  
-其他编译说明
-------------
-> 还可在 Linux、MinGW、Mac OS X 下编译静态库，或为 Python、Perl、Java 等应用编译动态库。
-
-> 进入`core`目录，该目录下有 Makefile 文件，运行下列 make 指令：
-
->> `make all install`：编译C++静态库。
-
->> `make java`：为Java程序生成Jar包和动态库。
-
->> `make python`、`make perl`：分别为Python、Perl等生成类文件和动态库。
-
->> `make clean java.clean python.clean`：删除上述编译出的临时文件。
-
-> 如果是在Windows上编译，推荐使用 MSYS（Unix模拟环境工具）、TDM-GCC（一种MinGW发行版）。
+   - MSYS and TDM-GCC(a MinGW distribution) are recommended on Windows.
