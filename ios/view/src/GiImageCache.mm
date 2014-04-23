@@ -34,7 +34,16 @@
     if (!_sprites) {
         _sprites = [[NSMutableDictionary alloc]init];
     }
-    [_sprites setObject:name forKey:spriteName];
+    if (name) {
+        if ([name rangeOfString:@":"].location == NSNotFound) {
+            name = [@"png:" stringByAppendingString:name];
+        }
+        if (![name isEqualToString:[_sprites objectForKey:name]]) {
+            [_sprites setObject:name forKey:spriteName];
+        }
+    } else {
+        [_sprites removeObjectForKey:spriteName];
+    }
 }
 
 - (UIImage *)loadImage:(NSString *)name {

@@ -390,8 +390,9 @@ GiColor CGColorToGiColor(CGColorRef color);
 
 - (NSArray *)delegates {
     NSMutableArray *arr = [NSMutableArray array];
-    for (size_t i = 0; i < _adapter->delegates.size(); i++)
+    for (size_t i = 0; i < _adapter->delegates.size(); i++) {
         [arr addObject:_adapter->delegates[i]];
+    }
     return arr;
 }
 

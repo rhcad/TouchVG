@@ -17,8 +17,9 @@ xcopy ..\..\thirdparty\TouchVGCore\core\src\export\*.* %destpath%\export\ /Y
 xcopy ..\..\thirdparty\TouchVGCore\core\src\record\*.* %destpath%\record\ /Y
 xcopy ..\..\thirdparty\TouchVGCore\core\src\view\*.* %destpath%\view\ /Y
 
-xcopy ..\..\thirdparty\TouchVGPlay\core\include\play\*.* %destpath%\play\ /Y
-xcopy ..\..\thirdparty\TouchVGPlay\core\src\play\*.* %destpath%\play\ /Y
+xcopy ..\..\thirdparty\TouchVGPlay\core\*.* %destpath%\play\ /Y
+xcopy ..\..\thirdparty\TouchVGPlay\ios\include\*.* %destpath%\iosplay\ /Y
+xcopy ..\..\thirdparty\TouchVGPlay\ios\src\*.* %destpath%\iosplay\ /Y
 
 xcopy ..\..\core\democmds\gate\*.* %destpath%\democmds\ /Y
 xcopy ..\..\core\democmds\cmds\*.* %destpath%\democmds\ /Y
@@ -35,9 +36,9 @@ xcopy ..\..\win32\src\view\*.* %destpath%\winview\ /Y
 xcopy ..\..\ios\view\include\*.* %destpath%\iosview\ /Y
 xcopy ..\..\ios\view\src\*.* %destpath%\iosview\ /Y
 
-xcopy ..\..\android\core\src\rhcad\touchvg\*.java %destpath%\android\ /Y
-xcopy ..\..\android\core\src\rhcad\touchvg\view\*.* %destpath%\android\ /Y/S
+xcopy ..\..\android\core\src\rhcad\touchvg\*.java %destpath%\andrview\ /Y
+xcopy ..\..\android\core\src\rhcad\touchvg\view\*.* %destpath%\andrview\ /Y/S
 
-xcopy ..\..\wpf\touchvglib\view\*.cs %destpath%\wpf\ /Y
-copy dummy.cpp %destpath%\android\
-copy dummy.cpp %destpath%\wpf\
+xcopy ..\..\wpf\touchvglib\view\*.cs %destpath%\wpfview\ /Y
+copy dummy.cpp %destpath%\andrview\
+copy dummy.cpp %destpath%\wpfview\

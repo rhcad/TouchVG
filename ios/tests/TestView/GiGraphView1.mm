@@ -67,34 +67,40 @@ public:
     }
     
     virtual void regenAll(bool changed) {
-        if (changed) {
-            _sid = 0;
-            _core->submitBackDoc(this);
+        if (_view.window) {
+            if (changed) {
+                _sid = 0;
+                _core->submitBackDoc(this);
+            }
+            _core->submitDynamicShapes(this);
+            [_view setNeedsDisplay];
+            [_dynview setNeedsDisplay];
         }
-        _core->submitDynamicShapes(this);
-        [_view setNeedsDisplay];
-        [_dynview setNeedsDisplay];
     }
     
     virtual void regenAppend(int sid) {
-        _sid = sid;
-        _core->submitBackDoc(this);
-        _core->submitDynamicShapes(this);
-        _tmpshot = nil;                 // renderInContext可能会调用drawRect
-        _tmpshot = snapshot();
-        
-        [_view setNeedsDisplay];
-        [_dynview setNeedsDisplay];
+        if (_view.window) {
+            _sid = sid;
+            _core->submitBackDoc(this);
+            _core->submitDynamicShapes(this);
+            _tmpshot = nil;                 // renderInContext可能会调用drawRect
+            _tmpshot = snapshot();
+            
+            [_view setNeedsDisplay];
+            [_dynview setNeedsDisplay];
+        }
     }
     
     virtual void redraw(bool changed) {
-        _core->submitDynamicShapes(this);
-        if (!_dynview && _view) {       // 自动创建动态图形视图
-            _dynview = [[GiDynDrawView1 alloc]initWithFrame:_view.frame :this];
-            _dynview.autoresizingMask = _view.autoresizingMask;
-            [_view.superview addSubview:_dynview];
+        if (_view.window) {
+            _core->submitDynamicShapes(this);
+            if (!_dynview && _view) {       // 自动创建动态图形视图
+                _dynview = [[GiDynDrawView1 alloc]initWithFrame:_view.frame :this];
+                _dynview.autoresizingMask = _view.autoresizingMask;
+                [_view.superview addSubview:_dynview];
+            }
+            [_dynview setNeedsDisplay];
         }
-        [_dynview setNeedsDisplay];
     }
 };
 
