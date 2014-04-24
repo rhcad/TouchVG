@@ -44,6 +44,10 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_toHandle(swigCPtr, this);
   }
 
+  public int viewDataHandle() {
+    return touchvgJNI.MgCoreView_viewDataHandle(swigCPtr, this);
+  }
+
   public int viewAdapterHandle() {
     return touchvgJNI.MgCoreView_viewAdapterHandle(swigCPtr, this);
   }

@@ -52,6 +52,11 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
+  public virtual int viewDataHandle() {
+    int ret = touchvgPINVOKE.MgCoreView_viewDataHandle(swigCPtr);
+    return ret;
+  }
+
   public virtual int viewAdapterHandle() {
     int ret = touchvgPINVOKE.MgCoreView_viewAdapterHandle(swigCPtr);
     return ret;

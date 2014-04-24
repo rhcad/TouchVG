@@ -5400,6 +5400,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_toHandle")]
   public static extern int MgCoreView_toHandle(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_viewDataHandle")]
+  public static extern int MgCoreView_viewDataHandle(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_viewAdapterHandle")]
   public static extern int MgCoreView_viewAdapterHandle(HandleRef jarg1);
 

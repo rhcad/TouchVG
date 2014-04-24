@@ -3,7 +3,7 @@
 TouchVG is a lightweight 2D vector drawing framework mainly using C++ for iOS, Android and Windows.
 
 Features described in [README-cn.md](README-cn.md)
-and [Online document](https://github.com/touchvg/touchvg.github.io). Welcome to help translate the contents Introduction.
+and [Online document](https://github.com/touchvg/touchvg.github.io). Welcome to help translate the Introduction.
 
 ![modules](/doc/images/modules.png)
 
@@ -31,6 +31,8 @@ This is an open source [LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl
 
 Contributors and sponsors are welcome. You may translate, commit issues or pull requests on this Github site.
 To contribute, please follow the branching model outlined here: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
+
+Welcome to the Chinese QQ group `192093613` to discuss and share.
 
 ## Contributors
 
