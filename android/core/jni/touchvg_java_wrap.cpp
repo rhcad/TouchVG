@@ -462,6 +462,7 @@ namespace Swig {
 #include "gicoreview.h"
 #include "gimousehelper.h"
 #include "testcanvas.h"
+#include "giplaying.h"
 
 
 struct TmpJOBJ {
@@ -41279,6 +41280,210 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_delete_1TestCanvas(JN
   (void)jcls;
   arg1 = *(TestCanvas **)&jarg1; 
   delete arg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1create(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jlong jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int arg2 ;
+  GiPlaying *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = (int)jarg2; 
+  result = (GiPlaying *)GiPlaying::create(arg1,arg2);
+  *(GiPlaying **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1release(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  MgCoreView *arg2 = (MgCoreView *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg2_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  arg2 = *(MgCoreView **)&jarg2; 
+  (arg1)->release(arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  (arg1)->clear();
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1getTag(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  result = (int)((GiPlaying const *)arg1)->getTag();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1acquireFrontDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  result = (long)(arg1)->acquireFrontDoc();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1releaseDoc(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  long arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (long)jarg1; 
+  GiPlaying::releaseDoc(arg1);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1getBackDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  MgShapeDoc *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  result = (MgShapeDoc *)(arg1)->getBackDoc();
+  *(MgShapeDoc **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1submitBackDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  (arg1)->submitBackDoc();
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1acquireFrontShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  result = (long)(arg1)->acquireFrontShapes();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1releaseShapes(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  long arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (long)jarg1; 
+  GiPlaying::releaseShapes(arg1);
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1getBackShapesHandle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  jint jresult = 0 ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  bool arg2 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  result = (long)(arg1)->getBackShapesHandle(arg2);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1getBackShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  jlong jresult = 0 ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  bool arg2 ;
+  MgShapes *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  result = (MgShapes *)(arg1)->getBackShapes(arg2);
+  *(MgShapes **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1submitBackShapes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  (arg1)->submitBackShapes();
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1stop(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  (arg1)->stop();
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1isStopping(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  result = (bool)((GiPlaying const *)arg1)->isStopping();
+  jresult = (jboolean)result; 
+  return jresult;
 }
 
 

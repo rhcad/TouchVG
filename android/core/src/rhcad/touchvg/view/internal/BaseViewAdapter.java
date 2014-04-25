@@ -28,12 +28,13 @@ public abstract class BaseViewAdapter extends GiView {
     private ArrayList<OnContentChangedListener> contentChangedListeners;
     private ArrayList<OnDynamicChangedListener> dynamicChangedListeners;
     private ArrayList<OnFirstRegenListener> firstRegenListeners;
+    private ArrayList<OnPlayingListener> playingListeners;
     protected UndoRunnable mUndoing;
     protected RecordRunnable mRecorder;
     private int mRegenCount = 0;
     private Bundle mSavedState;
 
-    protected abstract BaseGraphView getGraphView();
+    public abstract BaseGraphView getGraphView();
 
     protected abstract ContextAction createContextAction();
 
@@ -53,6 +54,8 @@ public abstract class BaseViewAdapter extends GiView {
             dynamicChangedListeners.clear();
         if (firstRegenListeners != null)
             firstRegenListeners.clear();
+        if (playingListeners != null)
+            playingListeners.clear();
 
         super.delete();
     }
@@ -431,10 +434,32 @@ public abstract class BaseViewAdapter extends GiView {
                     if (!playing) {
                         mRecorder = new RecordRunnable(this, recordPath);
                         new Thread(mRecorder, "touchvg.record").start();
+                    } else {
+                        for (OnPlayingListener listener : playingListeners) {
+                            listener.onRestorePlayingState(savedState);
+                        }
                     }
                 }
                 log.r(ret);
             }
         }
+    }
+
+    @Override
+    public void shapeDeleted(int sid) {
+        for (OnPlayingListener listener : playingListeners) {
+            listener.onShapeDeleted(sid);
+        }
+    }
+
+    public interface OnPlayingListener {
+        public void onRestorePlayingState(Bundle savedState);
+        public void onShapeDeleted(int sid);
+    }
+
+    public void setOnPlayingListener(OnPlayingListener listener) {
+        if (this.playingListeners == null)
+            this.playingListeners = new ArrayList<OnPlayingListener>();
+        this.playingListeners.add(listener);
     }
 }

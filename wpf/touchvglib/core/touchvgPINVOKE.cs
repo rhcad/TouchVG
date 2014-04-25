@@ -5856,6 +5856,51 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_delete_TestCanvas")]
   public static extern void delete_TestCanvas(HandleRef jarg1);
 
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_create")]
+  public static extern IntPtr GiPlaying_create(HandleRef jarg1, int jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_release")]
+  public static extern void GiPlaying_release(HandleRef jarg1, HandleRef jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_clear")]
+  public static extern void GiPlaying_clear(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_getTag")]
+  public static extern int GiPlaying_getTag(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_acquireFrontDoc")]
+  public static extern int GiPlaying_acquireFrontDoc(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_releaseDoc")]
+  public static extern void GiPlaying_releaseDoc(int jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_getBackDoc")]
+  public static extern IntPtr GiPlaying_getBackDoc(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_submitBackDoc")]
+  public static extern void GiPlaying_submitBackDoc(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_acquireFrontShapes")]
+  public static extern int GiPlaying_acquireFrontShapes(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_releaseShapes")]
+  public static extern void GiPlaying_releaseShapes(int jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_getBackShapesHandle")]
+  public static extern int GiPlaying_getBackShapesHandle(HandleRef jarg1, bool jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_getBackShapes")]
+  public static extern IntPtr GiPlaying_getBackShapes(HandleRef jarg1, bool jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_submitBackShapes")]
+  public static extern void GiPlaying_submitBackShapes(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_stop")]
+  public static extern void GiPlaying_stop(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_GiPlaying_isStopping")]
+  public static extern bool GiPlaying_isStopping(HandleRef jarg1);
+
   [DllImport("touchvg", EntryPoint="CSharp_new_GiMouseHelper")]
   public static extern IntPtr new_GiMouseHelper(HandleRef jarg1, HandleRef jarg2);
 

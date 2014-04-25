@@ -368,6 +368,7 @@ namespace Swig {
 #include "gicoreview.h"
 #include "gimousehelper.h"
 #include "testcanvas.h"
+#include "giplaying.h"
 
 
 
@@ -31634,6 +31635,166 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_TestCanvas(void * jarg1) {
   
   arg1 = (TestCanvas *)jarg1; 
   delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiPlaying_create(void * jarg1, int jarg2) {
+  void * jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  int arg2 ;
+  GiPlaying *result = 0 ;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (GiPlaying *)GiPlaying::create(arg1,arg2);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlaying_release(void * jarg1, void * jarg2) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  MgCoreView *arg2 = (MgCoreView *) 0 ;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  arg2 = (MgCoreView *)jarg2; 
+  (arg1)->release(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlaying_clear(void * jarg1) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  (arg1)->clear();
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiPlaying_getTag(void * jarg1) {
+  int jresult ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  int result;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  result = (int)((GiPlaying const *)arg1)->getTag();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiPlaying_acquireFrontDoc(void * jarg1) {
+  long jresult ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  long result;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  result = (long)(arg1)->acquireFrontDoc();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlaying_releaseDoc(long jarg1) {
+  long arg1 ;
+  
+  arg1 = (long)jarg1; 
+  GiPlaying::releaseDoc(arg1);
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiPlaying_getBackDoc(void * jarg1) {
+  void * jresult ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  MgShapeDoc *result = 0 ;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  result = (MgShapeDoc *)(arg1)->getBackDoc();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlaying_submitBackDoc(void * jarg1) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  (arg1)->submitBackDoc();
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiPlaying_acquireFrontShapes(void * jarg1) {
+  long jresult ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  long result;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  result = (long)(arg1)->acquireFrontShapes();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlaying_releaseShapes(long jarg1) {
+  long arg1 ;
+  
+  arg1 = (long)jarg1; 
+  GiPlaying::releaseShapes(arg1);
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiPlaying_getBackShapesHandle(void * jarg1, unsigned int jarg2) {
+  long jresult ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  bool arg2 ;
+  long result;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  result = (long)(arg1)->getBackShapesHandle(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiPlaying_getBackShapes(void * jarg1, unsigned int jarg2) {
+  void * jresult ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  bool arg2 ;
+  MgShapes *result = 0 ;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  result = (MgShapes *)(arg1)->getBackShapes(arg2);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlaying_submitBackShapes(void * jarg1) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  (arg1)->submitBackShapes();
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlaying_stop(void * jarg1) {
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  (arg1)->stop();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiPlaying_isStopping(void * jarg1) {
+  unsigned int jresult ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  bool result;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  result = (bool)((GiPlaying const *)arg1)->isStopping();
+  jresult = result; 
+  return jresult;
 }
 
 

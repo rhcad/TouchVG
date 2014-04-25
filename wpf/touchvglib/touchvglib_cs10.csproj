@@ -81,6 +81,7 @@
     <Compile Include="core\GiMouseHelper.cs" />
     <Compile Include="core\GiPath.cs" />
     <Compile Include="core\GiPathNode.cs" />
+    <Compile Include="core\GiPlaying.cs" />
     <Compile Include="core\GiSaveClipBox.cs" />
     <Compile Include="core\GiSaveModelTransform.cs" />
     <Compile Include="core\GiTransform.cs" />

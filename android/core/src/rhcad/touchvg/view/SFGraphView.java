@@ -206,16 +206,17 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     }
 
     private int drawShapes(CanvasAdapter canvasAdapter) {
-        int doc, gs, n;
+        int gs, n;
+        final Ints docs = new Ints();
 
         synchronized (mCoreView) {
-            doc = mCoreView.acquireFrontDoc();
+            mCoreView.acquireFrontDocs(docs);
             gs = mCoreView.acquireGraphics(mViewAdapter);
         }
         try {
-            n = mCoreView.drawAll(doc, gs, canvasAdapter);
+            n = mCoreView.drawAll(docs, gs, canvasAdapter);
         } finally {
-            GiCoreView.releaseDoc(doc);
+            GiCoreView.releaseDocs(docs);
             mCoreView.releaseGraphics(gs);
         }
 
@@ -541,7 +542,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
         }
 
         @Override
-        protected BaseGraphView getGraphView() {
+        public BaseGraphView getGraphView() {
             return SFGraphView.this;
         }
 
