@@ -34,7 +34,8 @@ public class ExampleActivity1 extends Activity implements IGraphView.OnFirstRege
     protected void createGraphView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_example1);
         final ViewGroup layout = (ViewGroup) this.findViewById(R.id.frame);
-        hlp.createGraphView(this, layout).setBackgroundColor(Color.WHITE);
+        hlp.createGraphView(this, layout);
+        hlp.getView().setBackgroundColor(Color.GRAY);
     }
 
     @Override

@@ -13,7 +13,8 @@ public class ExampleActivitySF extends ExampleActivity1 {
     protected void createGraphView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_example1);
         final ViewGroup layout = (ViewGroup) this.findViewById(R.id.frame);
-        hlp.createSurfaceView(this, layout).setBackgroundColor(Color.GRAY);
+        hlp.createSurfaceView(this, layout);
+        hlp.getView().setBackgroundColor(Color.GRAY);
     }
 
     @Override
