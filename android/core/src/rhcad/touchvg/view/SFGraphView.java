@@ -346,9 +346,11 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
             mView.postDelayed(new Runnable() {  // 延时执行，只执行一次
                 @Override
                 public void run() {
-                    mView.removeCallbacks(this);
-                    if (mView.mViewAdapter != null)
-                        mView.mViewAdapter.regenAll(false);
+                    if (mView != null) {
+                        mView.removeCallbacks(this);
+                        if (mView.mViewAdapter != null)
+                            mView.mViewAdapter.regenAll(false);
+                    }
                 }
             }, 10);
         }
