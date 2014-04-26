@@ -462,12 +462,22 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
             try {
                 canvas = mHolder.lockCanvas();
                 if (mView.mDynDrawCanvas.beginPaint(canvas)) {
-                    int doc, gs;
-                    Ints shapes = new Ints();
+                    int doc = 0, gs;
+                    final Ints shapes = new Ints();
                     final GiCoreView coreView = mView.mCoreView;
 
                     synchronized (coreView) {
-                        doc = mAppendShapeIDs[0] != 0 ? coreView.acquireFrontDoc() : 0;
+                        if (mAppendShapeIDs[0] != 0) {
+                            if (coreView.isPlaying()) {
+                                if (coreView.acquireFrontDocs(shapes) > 0) {
+                                    doc = shapes.get(0);
+                                    shapes.set(0, 0);
+                                }
+                                GiCoreView.releaseDocs(shapes);
+                            } else {
+                                doc = coreView.acquireFrontDoc();
+                            }
+                        }
                         gs = coreView.acquireGraphics(mView.mViewAdapter);
                         coreView.acquireDynamicShapesArray(shapes);
                     }
@@ -808,6 +818,16 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     @Override
     public void setOnFirstRegenListener(OnFirstRegenListener listener) {
         mViewAdapter.setOnFirstRegenListener(listener);
+    }
+
+    @Override
+    public void setOnShapesRecordedListener(OnShapesRecordedListener listener) {
+        mViewAdapter.setOnShapesRecordedListener(listener);
+    }
+
+    @Override
+    public void setOnShapeDeletedListener(OnShapeDeletedListener listener) {
+        mViewAdapter.setOnShapeDeletedListener(listener);
     }
 
     @Override

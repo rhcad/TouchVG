@@ -7,6 +7,8 @@ import rhcad.touchvg.IGraphView.OnContentChangedListener;
 import rhcad.touchvg.IGraphView.OnDynamicChangedListener;
 import rhcad.touchvg.IGraphView.OnFirstRegenListener;
 import rhcad.touchvg.IGraphView.OnSelectionChangedListener;
+import rhcad.touchvg.IGraphView.OnShapeDeletedListener;
+import rhcad.touchvg.IGraphView.OnShapesRecordedListener;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
@@ -28,6 +30,8 @@ public abstract class BaseViewAdapter extends GiView {
     private ArrayList<OnContentChangedListener> contentChangedListeners;
     private ArrayList<OnDynamicChangedListener> dynamicChangedListeners;
     private ArrayList<OnFirstRegenListener> firstRegenListeners;
+    private ArrayList<OnShapesRecordedListener> shapesRecordedListeners;
+    private ArrayList<OnShapeDeletedListener> shapeDeletedListeners;
     private ArrayList<OnPlayingListener> playingListeners;
     protected UndoRunnable mUndoing;
     protected RecordRunnable mRecorder;
@@ -205,6 +209,18 @@ public abstract class BaseViewAdapter extends GiView {
         this.firstRegenListeners.add(listener);
     }
 
+    public void setOnShapesRecordedListener(OnShapesRecordedListener listener) {
+        if (this.shapesRecordedListeners == null)
+            this.shapesRecordedListeners = new ArrayList<OnShapesRecordedListener>();
+        this.shapesRecordedListeners.add(listener);
+    }
+
+    public void setOnShapeDeletedListener(OnShapeDeletedListener listener) {
+        if (this.shapeDeletedListeners == null)
+            this.shapeDeletedListeners = new ArrayList<OnShapeDeletedListener>();
+        this.shapeDeletedListeners.add(listener);
+    }
+
     public Activity getActivity() {
         return (Activity) getGraphView().getView().getContext();
     }
@@ -251,6 +267,11 @@ public abstract class BaseViewAdapter extends GiView {
     public void stop() {
         stopRecord(true);
         stopRecord(false);
+        if (playingListeners != null) {
+            for (OnPlayingListener listener : playingListeners) {
+                listener.onStopped();
+            }
+        }
     }
 
     public void stopRecord(boolean forUndo) {
@@ -307,10 +328,34 @@ public abstract class BaseViewAdapter extends GiView {
                 coreView().traverseImageShapes(doc,
                         new ImageFinder(getGraphView().getImageCache().getImagePath(), path));
             }
-            if (!coreView().startRecord(path, doc, type == UndoRunnable.TYPE, getTick()))
+            if (!coreView().startRecord(path, doc, type == UndoRunnable.TYPE, getTick(),
+                    createRecordCallback(type == RecordRunnable.TYPE))) {
                 return false;
+            }
         }
         return true;
+    }
+
+    private class RecordShapesCallback extends MgStringCallback {
+        @Override
+        public void onGetString(String filename) {
+            final GiCoreView cv = coreView();
+            final Bundle info = new Bundle();
+
+            info.putString("filename", filename);
+            info.putInt("tick", cv.getFrameTick());
+            info.putInt("index", cv.getFrameIndex());
+            info.putInt("flags", cv.getFrameFlags());
+            info.putInt("tick", cv.getFrameTick());
+
+            for (OnShapesRecordedListener listener : shapesRecordedListeners) {
+                listener.onShapesRecorded(getGraphView(), info);
+            }
+        }
+    }
+
+    public MgStringCallback createRecordCallback(boolean r) {
+        return r && shapesRecordedListeners != null ? new RecordShapesCallback() : null;
     }
 
     private static class ImageFinder extends MgFindImageCallback {
@@ -434,7 +479,7 @@ public abstract class BaseViewAdapter extends GiView {
                     if (!playing) {
                         mRecorder = new RecordRunnable(this, recordPath);
                         new Thread(mRecorder, "touchvg.record").start();
-                    } else {
+                    } else if (playingListeners != null) {
                         for (OnPlayingListener listener : playingListeners) {
                             listener.onRestorePlayingState(savedState);
                         }
@@ -447,14 +492,22 @@ public abstract class BaseViewAdapter extends GiView {
 
     @Override
     public void shapeDeleted(int sid) {
-        for (OnPlayingListener listener : playingListeners) {
-            listener.onShapeDeleted(sid);
+        if (shapeDeletedListeners != null) {
+            for (OnShapeDeletedListener listener : shapeDeletedListeners) {
+                listener.onShapeDeleted(getGraphView(), sid);
+            }
+        }
+        if (playingListeners != null) {
+            for (OnPlayingListener listener : playingListeners) {
+                listener.onShapeDeleted(sid);
+            }
         }
     }
 
-    public interface OnPlayingListener {
+    public static interface OnPlayingListener {
         public void onRestorePlayingState(Bundle savedState);
         public void onShapeDeleted(int sid);
+        public void onStopped();
     }
 
     public void setOnPlayingListener(OnPlayingListener listener) {

@@ -354,8 +354,19 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
                 }
             }
             if (mCachedBitmap != null && !mRegenning) {
-                int docd = mCoreView.acquireFrontDoc();
+                int docd = 0;
                 int gs = mCoreView.acquireGraphics(mViewAdapter);
+
+                if (mCoreView.isPlaying()) {
+                    final Ints docs = new Ints();
+                    if (mCoreView.acquireFrontDocs(docs) > 0) {
+                        docd = docs.get(0);
+                        docs.set(0, 0);
+                    }
+                    GiCoreView.releaseDocs(docs);
+                } else {
+                    docd = mCoreView.acquireFrontDoc();
+                }
 
                 synchronized (mCachedBitmap) {
                     if (mCanvasAdapter.beginPaint(new Canvas(mCachedBitmap))) {
@@ -523,6 +534,16 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     @Override
     public void setOnFirstRegenListener(OnFirstRegenListener listener) {
         mViewAdapter.setOnFirstRegenListener(listener);
+    }
+
+    @Override
+    public void setOnShapesRecordedListener(OnShapesRecordedListener listener) {
+        mViewAdapter.setOnShapesRecordedListener(listener);
+    }
+
+    @Override
+    public void setOnShapeDeletedListener(OnShapeDeletedListener listener) {
+        mViewAdapter.setOnShapeDeletedListener(listener);
     }
 
     @Override

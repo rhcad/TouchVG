@@ -34,7 +34,8 @@ public class RecordRunnable extends ShapeRunnable {
 
     @Override
     protected void process(int tick, int doc, int shapes) {
-        if (!mCoreView.recordShapes(false, tick, doc, shapes)) {
+        if (!mCoreView.recordShapes(false, tick, doc, shapes, null,
+                mViewAdapter.createRecordCallback(true))) {
             Log.e(TAG, "Fail to record shapes for playing, tick=" + tick
                     + ", doc=" + doc + ", shapes=" + shapes);
         }

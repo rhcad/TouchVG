@@ -7,6 +7,7 @@ package rhcad.touchvg;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
 
 //! 绘图视图接口
@@ -55,28 +56,38 @@ public interface IGraphView {
     public Bitmap snapshot(int doc, int gs, boolean transparent);
 
     //! 当前命令改变的通知
-    public interface OnCommandChangedListener {
+    public static interface OnCommandChangedListener {
         public void onCommandChanged(IGraphView view);
     }
 
     //! 图形选择集改变的通知
-    public interface OnSelectionChangedListener {
+    public static interface OnSelectionChangedListener {
         public void onSelectionChanged(IGraphView view);
     }
 
     //! 图形数据改变的通知
-    public interface OnContentChangedListener {
+    public static interface OnContentChangedListener {
         public void onContentChanged(IGraphView view);
     }
 
     //! 图形动态改变的通知
-    public interface OnDynamicChangedListener {
+    public static interface OnDynamicChangedListener {
         public void onDynamicChanged(IGraphView view);
     }
 
     //! 第一次后台渲染结束的通知
-    public interface OnFirstRegenListener {
+    public static interface OnFirstRegenListener {
         public void onFirstRegen(IGraphView view);
+    }
+
+    //! 图形录制的通知
+    public static interface OnShapesRecordedListener {
+        public void onShapesRecorded(IGraphView view, Bundle info);
+    }
+
+    //! 图形已删除的通知
+    public static interface OnShapeDeletedListener {
+        public void onShapeDeleted(IGraphView view, int sid);
     }
 
     //! 添加当前命令改变的观察者
@@ -93,4 +104,10 @@ public interface IGraphView {
 
     //! 添加第一次后台渲染结束的观察者
     public void setOnFirstRegenListener(OnFirstRegenListener listener);
+
+    //! 添加图形录制的观察者
+    public void setOnShapesRecordedListener(OnShapesRecordedListener listener);
+
+    //! 添加图形已删除的观察者
+    public void setOnShapeDeletedListener(OnShapeDeletedListener listener);
 }
