@@ -371,7 +371,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     }
 
     protected static class DynRenderRunnable implements Runnable {
-        private int[] mAppendShapeIDs = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        private int[] mAppendShapeIDs = new int[20];
         private SurfaceHolder mHolder;
         private SFGraphView mView;
 
@@ -409,7 +409,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
 
         public int getAppendCount() {
             int n = 0;
-            for (int i = 0; i < mAppendShapeIDs.length; i++) {
+            for (int i = 0; i < mAppendShapeIDs.length; i += 2) {
                 if (mAppendShapeIDs[i] != 0) {
                     n++;
                 }
@@ -420,18 +420,23 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
         public void afterRegen(int count) {
             int maxCount = getAppendCount();
             count = Math.min(count, maxCount);
-            for (int i = 0, j = count; i < mAppendShapeIDs.length; i++, j++) {
-                mAppendShapeIDs[i] = j < mAppendShapeIDs.length ? mAppendShapeIDs[j] : 0;
+            if (count > 0) {
+                for (int i = 0, j = count * 2; i < mAppendShapeIDs.length;) {
+                    mAppendShapeIDs[i++] = j < mAppendShapeIDs.length ? mAppendShapeIDs[j++] : 0;
+                    mAppendShapeIDs[i++] = j < mAppendShapeIDs.length ? mAppendShapeIDs[j++] : 0;
+                }
             }
             requestRender();
         }
 
-        public void requestAppendRender(int sid) {
-            for (int i = 0; i < mAppendShapeIDs.length; i++) {
-                if (mAppendShapeIDs[i] == sid)
+        public void requestAppendRender(int sid, int playh) {
+            for (int i = 0; i < mAppendShapeIDs.length; i += 2) {
+                if (mAppendShapeIDs[i] == sid && mAppendShapeIDs[i + 1] == playh) {
                     break;
+                }
                 if (mAppendShapeIDs[i] == 0) {
                     mAppendShapeIDs[i] = sid;
+                    mAppendShapeIDs[i + 1] = playh;
                     break;
                 }
             }
@@ -469,23 +474,15 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
                     final GiCoreView coreView = mView.mCoreView;
 
                     synchronized (coreView) {
-                        if (mAppendShapeIDs[0] != 0) {
-                            if (coreView.isPlaying()) {
-                                if (coreView.acquireFrontDocs(shapes) > 0) {
-                                    doc = shapes.get(0);
-                                    shapes.set(0, 0);
-                                }
-                                GiCoreView.releaseDocs(shapes);
-                            } else {
-                                doc = coreView.acquireFrontDoc();
-                            }
-                        }
+                        doc = mAppendShapeIDs[0] != 0 ?
+                                coreView.acquireFrontDoc(mAppendShapeIDs[1]) : 0;
                         gs = coreView.acquireGraphics(mView.mViewAdapter);
                         coreView.acquireDynamicShapesArray(shapes);
                     }
                     try {
                         canvas.drawColor(Color.TRANSPARENT, Mode.CLEAR);
-                        for (int sid : mAppendShapeIDs) {
+                        for (int i = 0; i < mAppendShapeIDs.length; i += 2) {
+                            int sid = mAppendShapeIDs[i];
                             if (sid != 0) {
                                 coreView.drawAppend(doc, gs, mView.mDynDrawCanvas, sid);
                             }
@@ -590,7 +587,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
         }
 
         @Override
-        public void regenAppend(int sid) {
+        public void regenAppend(int sid, int playh) {
             if (mCoreView != null && !mCoreView.isPlaying()) {
                 mCoreView.submitBackDoc(mViewAdapter);
                 mCoreView.submitDynamicShapes(mViewAdapter);
@@ -608,7 +605,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
                 }
             }
             if (mDynDrawRender != null) {
-                mDynDrawRender.requestAppendRender(sid);
+                mDynDrawRender.requestAppendRender(sid, playh);
             }
             if (mRender != null) {
                 mRender.requestRender();

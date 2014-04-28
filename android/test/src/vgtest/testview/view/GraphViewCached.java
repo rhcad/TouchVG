@@ -174,7 +174,7 @@ public class GraphViewCached extends View {
         }
 
         @Override
-        public void regenAppend(int sid) {
+        public void regenAppend(int sid, int playh) {
             synchronized (mCoreView) {
                 mCoreView.submitBackDoc(mViewAdapter);
                 mCoreView.submitDynamicShapes(mViewAdapter);

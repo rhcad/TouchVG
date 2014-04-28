@@ -203,7 +203,7 @@ public class GraphSfView extends SurfaceView {
         }
 
         @Override
-        public void regenAppend(int sid) {
+        public void regenAppend(int sid, int playh) {
             regenAll(true);
         }
 

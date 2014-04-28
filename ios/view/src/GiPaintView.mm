@@ -27,17 +27,18 @@
 - (void)drawRect:(CGRect)rect {
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
-    long doc, gs;
+    long doc, gs, playh;
     mgvector<int> shapes;
     
     @synchronized(_adapter->locker()) {
-        doc = _adapter->getAppendCount() > 0 ? coreView->acquireFrontDoc() : 0;
+        int sid = _adapter->getAppendID(0, playh);
+        doc = sid != 0 ? coreView->acquireFrontDoc(playh) : 0;
         gs = coreView->acquireGraphics(_adapter);
         coreView->acquireDynamicShapesArray(shapes);
     }
     
     if (canvas.beginPaint(UIGraphicsGetCurrentContext(), true)) {
-        for (int i = 0, sid = 0; (sid = _adapter->getAppendID(i)) != 0; i++) {
+        for (int i = 0, sid = 0; (sid = _adapter->getAppendID(i, playh)) != 0; i++) {
             coreView->drawAppend(doc, gs, &canvas, sid);
         }
         coreView->dynDraw(shapes, gs, &canvas);

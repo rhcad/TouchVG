@@ -38,7 +38,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelperImpl implements IViewHelper{
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 8;
+    private static final int JARVERSION = 9;
     private BaseGraphView mView;
 
     static {

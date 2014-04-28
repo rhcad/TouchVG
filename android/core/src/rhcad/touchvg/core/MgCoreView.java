@@ -61,7 +61,11 @@ public class MgCoreView {
   }
 
   public int acquireFrontDoc() {
-    return touchvgJNI.MgCoreView_acquireFrontDoc(swigCPtr, this);
+    return touchvgJNI.MgCoreView_acquireFrontDoc__SWIG_0(swigCPtr, this);
+  }
+
+  public int acquireFrontDoc(int playh) {
+    return touchvgJNI.MgCoreView_acquireFrontDoc__SWIG_1(swigCPtr, this, playh);
   }
 
   public static void releaseDoc(int doc) {

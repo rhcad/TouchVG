@@ -7493,20 +7493,22 @@ void SwigDirector_GiView::regenAll(bool changed) {
   if (swigjobj) jenv->DeleteLocalRef(swigjobj);
 }
 
-void SwigDirector_GiView::regenAppend(int sid) {
+void SwigDirector_GiView::regenAppend(int sid, long playh) {
   JNIEnvWrapper swigjnienv(this) ;
   JNIEnv * jenv = swigjnienv.getJNIEnv() ;
   jobject swigjobj = (jobject) NULL ;
   jint jsid  ;
+  jint jplayh  ;
   
   if (!swig_override[1]) {
-    GiView::regenAppend(sid);
+    GiView::regenAppend(sid,playh);
     return;
   }
   swigjobj = swig_get_self(jenv);
   if (swigjobj && jenv->IsSameObject(swigjobj, NULL) == JNI_FALSE) {
     jsid = (jint) sid;
-    jenv->CallStaticVoidMethod(Swig::jclass_touchvgJNI, Swig::director_methids[245], swigjobj, jsid);
+    jplayh = (jint) playh;
+    jenv->CallStaticVoidMethod(Swig::jclass_touchvgJNI, Swig::director_methids[245], swigjobj, jsid, jplayh);
     if (jenv->ExceptionCheck() == JNI_TRUE) return ;
   } else {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null upcall object");
@@ -7760,7 +7762,7 @@ void SwigDirector_GiView::swig_connect_director(JNIEnv *jenv, jobject jself, jcl
       "regenAll", "(Z)V", NULL 
     },
     {
-      "regenAppend", "(I)V", NULL 
+      "regenAppend", "(II)V", NULL 
     },
     {
       "redraw", "(Z)V", NULL 
@@ -32777,7 +32779,22 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgView_1regenAll(JNIE
 }
 
 
-SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgView_1regenAppend(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgView_1regenAppend_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
+  MgView *arg1 = (MgView *) 0 ;
+  int arg2 ;
+  long arg3 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgView **)&jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (long)jarg3; 
+  (arg1)->regenAppend(arg2,arg3);
+}
+
+
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgView_1regenAppend_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   MgView *arg1 = (MgView *) 0 ;
   int arg2 ;
   
@@ -38215,29 +38232,33 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiView_1regenAllSwigE
 }
 
 
-SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiView_1regenAppend(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiView_1regenAppend(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
   GiView *arg1 = (GiView *) 0 ;
   int arg2 ;
+  long arg3 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(GiView **)&jarg1; 
   arg2 = (int)jarg2; 
-  (arg1)->regenAppend(arg2);
+  arg3 = (long)jarg3; 
+  (arg1)->regenAppend(arg2,arg3);
 }
 
 
-SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiView_1regenAppendSwigExplicitGiView(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiView_1regenAppendSwigExplicitGiView(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jint jarg3) {
   GiView *arg1 = (GiView *) 0 ;
   int arg2 ;
+  long arg3 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(GiView **)&jarg1; 
   arg2 = (int)jarg2; 
-  (arg1)->GiView::regenAppend(arg2);
+  arg3 = (long)jarg3; 
+  (arg1)->GiView::regenAppend(arg2,arg3);
 }
 
 
@@ -38818,7 +38839,7 @@ SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1backShape
 }
 
 
-SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1acquireFrontDoc(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1acquireFrontDoc_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   long result;
@@ -38828,6 +38849,23 @@ SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1acquireFr
   (void)jarg1_;
   arg1 = *(MgCoreView **)&jarg1; 
   result = (long)(arg1)->acquireFrontDoc();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1acquireFrontDoc_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jint jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long arg2 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  arg2 = (long)jarg2; 
+  result = (long)(arg1)->acquireFrontDoc(arg2);
   jresult = (jint)result; 
   return jresult;
 }
@@ -41283,6 +41321,35 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_delete_1TestCanvas(JN
 }
 
 
+SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1fromHandle(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  jlong jresult = 0 ;
+  long arg1 ;
+  GiPlaying *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (long)jarg1; 
+  result = (GiPlaying *)GiPlaying::fromHandle(arg1);
+  *(GiPlaying **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1toHandle(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  long result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(GiPlaying **)&jarg1; 
+  result = (long)(arg1)->toHandle();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiPlaying_1create(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
   jlong jresult = 0 ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
@@ -42462,7 +42529,7 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_swig_1module_1init(JN
       "SwigDirector_GiView_regenAll", "(Lrhcad/touchvg/core/GiView;Z)V" 
     },
     {
-      "SwigDirector_GiView_regenAppend", "(Lrhcad/touchvg/core/GiView;I)V" 
+      "SwigDirector_GiView_regenAppend", "(Lrhcad/touchvg/core/GiView;II)V" 
     },
     {
       "SwigDirector_GiView_redraw", "(Lrhcad/touchvg/core/GiView;Z)V" 

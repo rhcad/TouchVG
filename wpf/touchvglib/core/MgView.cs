@@ -173,8 +173,12 @@ public class MgView : IDisposable {
     touchvgPINVOKE.MgView_regenAll(swigCPtr, changed);
   }
 
+  public virtual void regenAppend(int sid, int playh) {
+    touchvgPINVOKE.MgView_regenAppend__SWIG_0(swigCPtr, sid, playh);
+  }
+
   public virtual void regenAppend(int sid) {
-    touchvgPINVOKE.MgView_regenAppend(swigCPtr, sid);
+    touchvgPINVOKE.MgView_regenAppend__SWIG_1(swigCPtr, sid);
   }
 
   public virtual void redraw(bool changed) {

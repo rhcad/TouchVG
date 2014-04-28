@@ -78,7 +78,7 @@ public:
         }
     }
     
-    virtual void regenAppend(int sid) {
+    virtual void regenAppend(int sid, long playh) {
         if (_view.window) {
             _sid = sid;
             _core->submitBackDoc(this);

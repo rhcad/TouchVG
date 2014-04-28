@@ -31,6 +31,15 @@ public class GiPlaying {
     }
   }
 
+  public static GiPlaying fromHandle(int h) {
+    long cPtr = touchvgJNI.GiPlaying_fromHandle(h);
+    return (cPtr == 0) ? null : new GiPlaying(cPtr, false);
+  }
+
+  public int toHandle() {
+    return touchvgJNI.GiPlaying_toHandle(swigCPtr, this);
+  }
+
   public static GiPlaying create(MgCoreView v, int tag) {
     long cPtr = touchvgJNI.GiPlaying_create(MgCoreView.getCPtr(v), v, tag);
     return (cPtr == 0) ? null : new GiPlaying(cPtr, false);

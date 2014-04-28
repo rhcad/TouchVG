@@ -54,8 +54,8 @@ public class GiView {
     if (getClass() == GiView.class) touchvgJNI.GiView_regenAll(swigCPtr, this, changed); else touchvgJNI.GiView_regenAllSwigExplicitGiView(swigCPtr, this, changed);
   }
 
-  public void regenAppend(int sid) {
-    if (getClass() == GiView.class) touchvgJNI.GiView_regenAppend(swigCPtr, this, sid); else touchvgJNI.GiView_regenAppendSwigExplicitGiView(swigCPtr, this, sid);
+  public void regenAppend(int sid, int playh) {
+    if (getClass() == GiView.class) touchvgJNI.GiView_regenAppend(swigCPtr, this, sid, playh); else touchvgJNI.GiView_regenAppendSwigExplicitGiView(swigCPtr, this, sid, playh);
   }
 
   public void redraw(boolean changed) {

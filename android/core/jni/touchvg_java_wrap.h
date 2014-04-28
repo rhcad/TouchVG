@@ -417,7 +417,7 @@ public:
     SwigDirector_GiView(JNIEnv *jenv);
     virtual ~SwigDirector_GiView();
     virtual void regenAll(bool changed);
-    virtual void regenAppend(int sid);
+    virtual void regenAppend(int sid, long playh);
     virtual void redraw(bool changed);
     virtual bool useFinger();
     virtual bool isContextActionsVisible();

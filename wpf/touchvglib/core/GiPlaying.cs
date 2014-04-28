@@ -37,6 +37,17 @@ public class GiPlaying : IDisposable {
     }
   }
 
+  public static GiPlaying fromHandle(int h) {
+    IntPtr cPtr = touchvgPINVOKE.GiPlaying_fromHandle(h);
+    GiPlaying ret = (cPtr == IntPtr.Zero) ? null : new GiPlaying(cPtr, false);
+    return ret;
+  }
+
+  public int toHandle() {
+    int ret = touchvgPINVOKE.GiPlaying_toHandle(swigCPtr);
+    return ret;
+  }
+
   public static GiPlaying create(MgCoreView v, int tag) {
     IntPtr cPtr = touchvgPINVOKE.GiPlaying_create(MgCoreView.getCPtr(v), tag);
     GiPlaying ret = (cPtr == IntPtr.Zero) ? null : new GiPlaying(cPtr, false);

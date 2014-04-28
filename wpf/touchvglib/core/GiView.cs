@@ -45,8 +45,8 @@ public class GiView : IDisposable {
     if (SwigDerivedClassHasMethod("regenAll", swigMethodTypes0)) touchvgPINVOKE.GiView_regenAllSwigExplicitGiView(swigCPtr, changed); else touchvgPINVOKE.GiView_regenAll(swigCPtr, changed);
   }
 
-  public virtual void regenAppend(int sid) {
-    if (SwigDerivedClassHasMethod("regenAppend", swigMethodTypes1)) touchvgPINVOKE.GiView_regenAppendSwigExplicitGiView(swigCPtr, sid); else touchvgPINVOKE.GiView_regenAppend(swigCPtr, sid);
+  public virtual void regenAppend(int sid, int playh) {
+    if (SwigDerivedClassHasMethod("regenAppend", swigMethodTypes1)) touchvgPINVOKE.GiView_regenAppendSwigExplicitGiView(swigCPtr, sid, playh); else touchvgPINVOKE.GiView_regenAppend(swigCPtr, sid, playh);
   }
 
   public virtual void redraw(bool changed) {
@@ -141,8 +141,8 @@ public class GiView : IDisposable {
     regenAll(changed);
   }
 
-  private void SwigDirectorregenAppend(int sid) {
-    regenAppend(sid);
+  private void SwigDirectorregenAppend(int sid, int playh) {
+    regenAppend(sid, playh);
   }
 
   private void SwigDirectorredraw(bool changed) {
@@ -190,7 +190,7 @@ public class GiView : IDisposable {
   }
 
   public delegate void SwigDelegateGiView_0(bool changed);
-  public delegate void SwigDelegateGiView_1(int sid);
+  public delegate void SwigDelegateGiView_1(int sid, int playh);
   public delegate void SwigDelegateGiView_2(bool changed);
   public delegate bool SwigDelegateGiView_3();
   public delegate bool SwigDelegateGiView_4();
@@ -218,7 +218,7 @@ public class GiView : IDisposable {
   private SwigDelegateGiView_12 swigDelegate12;
 
   private static Type[] swigMethodTypes0 = new Type[] { typeof(bool) };
-  private static Type[] swigMethodTypes1 = new Type[] { typeof(int) };
+  private static Type[] swigMethodTypes1 = new Type[] { typeof(int), typeof(int) };
   private static Type[] swigMethodTypes2 = new Type[] { typeof(bool) };
   private static Type[] swigMethodTypes3 = new Type[] {  };
   private static Type[] swigMethodTypes4 = new Type[] {  };

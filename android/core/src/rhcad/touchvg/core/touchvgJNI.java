@@ -1378,7 +1378,8 @@ public class touchvgJNI {
   public final static native boolean MgView_isReadOnly(long jarg1, MgView jarg1_);
   public final static native boolean MgView_isCommand(long jarg1, MgView jarg1_, String jarg2);
   public final static native void MgView_regenAll(long jarg1, MgView jarg1_, boolean jarg2);
-  public final static native void MgView_regenAppend(long jarg1, MgView jarg1_, int jarg2);
+  public final static native void MgView_regenAppend__SWIG_0(long jarg1, MgView jarg1_, int jarg2, int jarg3);
+  public final static native void MgView_regenAppend__SWIG_1(long jarg1, MgView jarg1_, int jarg2);
   public final static native void MgView_redraw__SWIG_0(long jarg1, MgView jarg1_, boolean jarg2);
   public final static native void MgView_redraw__SWIG_1(long jarg1, MgView jarg1_);
   public final static native boolean MgView_useFinger(long jarg1, MgView jarg1_);
@@ -1703,8 +1704,8 @@ public class touchvgJNI {
   public final static native void delete_GiView(long jarg1);
   public final static native void GiView_regenAll(long jarg1, GiView jarg1_, boolean jarg2);
   public final static native void GiView_regenAllSwigExplicitGiView(long jarg1, GiView jarg1_, boolean jarg2);
-  public final static native void GiView_regenAppend(long jarg1, GiView jarg1_, int jarg2);
-  public final static native void GiView_regenAppendSwigExplicitGiView(long jarg1, GiView jarg1_, int jarg2);
+  public final static native void GiView_regenAppend(long jarg1, GiView jarg1_, int jarg2, int jarg3);
+  public final static native void GiView_regenAppendSwigExplicitGiView(long jarg1, GiView jarg1_, int jarg2, int jarg3);
   public final static native void GiView_redraw(long jarg1, GiView jarg1_, boolean jarg2);
   public final static native void GiView_redrawSwigExplicitGiView(long jarg1, GiView jarg1_, boolean jarg2);
   public final static native boolean GiView_useFinger(long jarg1, GiView jarg1_);
@@ -1747,7 +1748,8 @@ public class touchvgJNI {
   public final static native int MgCoreView_viewAdapterHandle(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_backDoc(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_backShapes(long jarg1, MgCoreView jarg1_);
-  public final static native int MgCoreView_acquireFrontDoc(long jarg1, MgCoreView jarg1_);
+  public final static native int MgCoreView_acquireFrontDoc__SWIG_0(long jarg1, MgCoreView jarg1_);
+  public final static native int MgCoreView_acquireFrontDoc__SWIG_1(long jarg1, MgCoreView jarg1_, int jarg2);
   public final static native void MgCoreView_releaseDoc(int jarg1);
   public final static native int MgCoreView_acquireDynamicShapes(long jarg1, MgCoreView jarg1_);
   public final static native void MgCoreView_releaseShapes(int jarg1);
@@ -1883,6 +1885,8 @@ public class touchvgJNI {
   public final static native void TestCanvas_testTextAt(long jarg1, GiCanvas jarg1_, int jarg2);
   public final static native long new_TestCanvas();
   public final static native void delete_TestCanvas(long jarg1);
+  public final static native long GiPlaying_fromHandle(int jarg1);
+  public final static native int GiPlaying_toHandle(long jarg1, GiPlaying jarg1_);
   public final static native long GiPlaying_create(long jarg1, MgCoreView jarg1_, int jarg2);
   public final static native void GiPlaying_release(long jarg1, GiPlaying jarg1_, long jarg2, MgCoreView jarg2_);
   public final static native void GiPlaying_clear(long jarg1, GiPlaying jarg1_);
@@ -2663,8 +2667,8 @@ public class touchvgJNI {
   public static void SwigDirector_GiView_regenAll(GiView self, boolean changed) {
     self.regenAll(changed);
   }
-  public static void SwigDirector_GiView_regenAppend(GiView self, int sid) {
-    self.regenAppend(sid);
+  public static void SwigDirector_GiView_regenAppend(GiView self, int sid, int playh) {
+    self.regenAppend(sid, playh);
   }
   public static void SwigDirector_GiView_redraw(GiView self, boolean changed) {
     self.redraw(changed);

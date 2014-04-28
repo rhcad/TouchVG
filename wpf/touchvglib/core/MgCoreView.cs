@@ -73,7 +73,12 @@ public class MgCoreView : IDisposable {
   }
 
   public virtual int acquireFrontDoc() {
-    int ret = touchvgPINVOKE.MgCoreView_acquireFrontDoc(swigCPtr);
+    int ret = touchvgPINVOKE.MgCoreView_acquireFrontDoc__SWIG_0(swigCPtr);
+    return ret;
+  }
+
+  public virtual int acquireFrontDoc(int playh) {
+    int ret = touchvgPINVOKE.MgCoreView_acquireFrontDoc__SWIG_1(swigCPtr, playh);
     return ret;
   }
 

@@ -51,7 +51,7 @@ private:
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     GiImageCache    *_imageCache;       //!< 图像对象缓存
     bool            _actionEnabled;     //!< 是否允许上下文操作
-    int             _appendIDs[10];     //!< 还未来得及重构显示的新增图形的ID
+    int             _appendIDs[20];     //!< 还未来得及重构显示的新增图形的ID、playh
     int             _oldAppendCount;    //!< 后台渲染前的待渲染新增图形数
     int             _regenCount;        //!< 渲染次数
     GiLayerRender   *_render;           //!< 后台渲染对象
@@ -87,7 +87,7 @@ public:
     int getAppendCount() const;
     void beginRender();
     bool renderInContext(CGContextRef ctx);
-    int getAppendID(int index) const;
+    int getAppendID(int index, long& playh) const;
     
     void undo();
     void redo();
@@ -98,7 +98,7 @@ public:
     void onDynDrawEnded();
     
     virtual void regenAll(bool changed);
-    virtual void regenAppend(int sid);
+    virtual void regenAppend(int sid, long playh);
     virtual void redraw(bool changed);
     virtual bool isContextActionsVisible();
     virtual bool showContextActions(const mgvector<int>& actions,
@@ -119,9 +119,9 @@ public:
     
 private:
     void setContextButton(UIButton *btn, NSString *caption, NSString *imageName);
-    int  regenLocked(bool changed, int sid, bool loading, long& doc0,
+    int  regenLocked(bool changed, int sid, long playh, bool loading, long& doc0,
                      long& doc1, long& shapes1, long& gs, mgvector<int>*& docs);
-    void regen_(bool changed, int sid, bool loading = false);
+    void regen_(bool changed, int sid, long playh, bool loading);
     void recordShapes(bool forUndo, long doc, long shapes);
 };
 

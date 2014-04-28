@@ -336,7 +336,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
         }
 
         @Override
-        public void regenAppend(int sid) {
+        public void regenAppend(int sid, int playh) {
             if (mCoreView != null && !mCoreView.isPlaying()) {
                 mCoreView.submitBackDoc(mViewAdapter);
                 mCoreView.submitDynamicShapes(mViewAdapter);
@@ -354,19 +354,8 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
                 }
             }
             if (mCachedBitmap != null && !mRegenning) {
-                int docd = 0;
+                int docd = mCoreView.acquireFrontDoc(playh);
                 int gs = mCoreView.acquireGraphics(mViewAdapter);
-
-                if (mCoreView.isPlaying()) {
-                    final Ints docs = new Ints();
-                    if (mCoreView.acquireFrontDocs(docs) > 0) {
-                        docd = docs.get(0);
-                        docs.set(0, 0);
-                    }
-                    GiCoreView.releaseDocs(docs);
-                } else {
-                    docd = mCoreView.acquireFrontDoc();
-                }
 
                 synchronized (mCachedBitmap) {
                     if (mCanvasAdapter.beginPaint(new Canvas(mCachedBitmap))) {

@@ -35,9 +35,9 @@ typedef NS_ENUM(int, GILineStyle) {
 @property (nonatomic)         float     lineWidth;  //!< 线宽，正数表示毫米单位，零表示1像素宽，负数表示像素单位
 @property (nonatomic)         float     strokeWidth; //!< 像素单位的线宽，总是为正数
 @property (nonatomic)       GILineStyle lineStyle;  //!< 线型
-@property (nonatomic,assign)  UIColor   *lineColor; //!< 线条颜色，忽略透明度，clearColor或nil表示不画线条
+@property (nonatomic, assign) UIColor   *lineColor; //!< 线条颜色，忽略透明度，clearColor或nil表示不画线条
 @property (nonatomic)         float     lineAlpha;  //!< 线条透明度, 0-1
-@property (nonatomic,assign)  UIColor   *fillColor; //!< 填充颜色，忽略透明度，clearColor或nil表示不填充
+@property (nonatomic, assign) UIColor   *fillColor; //!< 填充颜色，忽略透明度，clearColor或nil表示不填充
 @property (nonatomic)         float     fillAlpha;  //!< 填充透明度, 0-1
 - (void)setContextEditing:(BOOL)editing;            //!< 线条属性是否正在动态修改
 - (BOOL)setCommand:(NSString *)name withParam:(NSString *)param;    //!< 指定名称和JSON串参数，启动命令

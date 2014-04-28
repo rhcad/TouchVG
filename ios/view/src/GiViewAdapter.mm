@@ -85,7 +85,7 @@ void GiViewAdapter::clearCachedData() {
 
 int GiViewAdapter::getAppendCount() const {
     int n = 0;
-    for (int i = 0; i < APPENDSIZE; i++) {
+    for (int i = 0; i < APPENDSIZE; i += 2) {
         if (_appendIDs[i] != 0) {
             n++;
         }
@@ -103,10 +103,13 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
             return false;
         }
         
-        for (int i = 0, j = _oldAppendCount; i < APPENDSIZE; i++, j++) {
-            _appendIDs[i] = j < APPENDSIZE ? _appendIDs[j] : 0;
+        if (_oldAppendCount > 0) {
+            for (int i = 0, j = _oldAppendCount * 2; i < APPENDSIZE; ) {
+                _appendIDs[i++] = j < APPENDSIZE ? _appendIDs[j++] : 0;
+                _appendIDs[i++] = j < APPENDSIZE ? _appendIDs[j++] : 0;
+            }
+            _oldAppendCount = 0;
         }
-        _oldAppendCount = 0;
         [_render startRenderForPending];
     }
     else {
@@ -139,8 +142,9 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
     return true;
 }
 
-int GiViewAdapter::getAppendID(int index) const {
-    return index < APPENDSIZE ? _appendIDs[index] : 0;
+int GiViewAdapter::getAppendID(int index, long& playh) const {
+    playh = 2 * index + 1 < APPENDSIZE ? _appendIDs[2 * index + 1] : 0;
+    return index * 2 < APPENDSIZE ? _appendIDs[2 * index] : 0;
 }
 
 struct ImageFinder : public MgFindImageCallback {
@@ -276,10 +280,10 @@ void GiViewAdapter::recordShapes(bool forUndo, long doc, long shapes)
 }
 
 void GiViewAdapter::regenAll(bool changed) {
-    regen_(changed, 0, _core->isUndoLoading());
+    regen_(changed, 0, 0, _core->isUndoLoading());
 }
 
-int GiViewAdapter::regenLocked(bool changed, int sid, bool loading, long& doc0,
+int GiViewAdapter::regenLocked(bool changed, int sid, long playh, bool loading, long& doc0,
                                long& doc1, long& shapes1, long& gs, mgvector<int>*& docs)
 {
     if (loading) {
@@ -287,7 +291,7 @@ int GiViewAdapter::regenLocked(bool changed, int sid, bool loading, long& doc0,
             doc1 = _core->acquireFrontDoc();
             shapes1 = _core->acquireDynamicShapes();
         }
-    } if (changed || _regenCount == 0) {
+    } else if (changed || _regenCount == 0) {
         _core->submitBackDoc(this);
         if (changed) {
             _core->submitDynamicShapes(this);
@@ -302,11 +306,12 @@ int GiViewAdapter::regenLocked(bool changed, int sid, bool loading, long& doc0,
     }
     
     if (sid) {
-        for (int i = 0; i < APPENDSIZE; i++) {
-            if (_appendIDs[i] == sid)
+        for (int i = 0; i < APPENDSIZE; i += 2) {
+            if (_appendIDs[i] == sid && _appendIDs[i + 1] == playh)
                 break;
             if (_appendIDs[i] == 0) {
                 _appendIDs[i] = sid;
+                _appendIDs[i + 1] = (int)playh;
                 break;
             }
         }
@@ -320,7 +325,7 @@ int GiViewAdapter::regenLocked(bool changed, int sid, bool loading, long& doc0,
     return 0;
 }
 
-void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
+void GiViewAdapter::regen_(bool changed, int sid, long playh, bool loading) {
     if (_core->isStopping() || !_view.window) {
         return;
     }
@@ -330,7 +335,7 @@ void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
     mgvector<int>* docs = NULL;
     
     @synchronized(locker()) {
-        docd = regenLocked(changed, sid, loading, doc0, doc1, shapes1, gs, docs);
+        docd = regenLocked(changed, sid, playh, loading, doc0, doc1, shapes1, gs, docs);
     }
     
     recordShapes(true, doc0, 0);
@@ -341,6 +346,7 @@ void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
     } else {
         if (docs) {
             GiCoreView::releaseDocs(*docs);
+            delete docs;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [_view setNeedsDisplay];
@@ -351,8 +357,8 @@ void GiViewAdapter::regen_(bool changed, int sid, bool loading) {
     }
 }
 
-void GiViewAdapter::regenAppend(int sid) {
-    regen_(true, sid);
+void GiViewAdapter::regenAppend(int sid, long playh) {
+    regen_(true, sid, playh, false);
 }
 
 void GiViewAdapter::stopRegen() {

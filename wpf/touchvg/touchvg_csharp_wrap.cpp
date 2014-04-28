@@ -4549,15 +4549,17 @@ void SwigDirector_GiView::regenAll(bool changed) {
   }
 }
 
-void SwigDirector_GiView::regenAppend(int sid) {
+void SwigDirector_GiView::regenAppend(int sid, long playh) {
   int jsid  ;
+  long jplayh  ;
   
   if (!swig_callbackregenAppend) {
-    GiView::regenAppend(sid);
+    GiView::regenAppend(sid,playh);
     return;
   } else {
     jsid = sid;
-    swig_callbackregenAppend(jsid);
+    jplayh = playh;
+    swig_callbackregenAppend(jsid, jplayh);
   }
 }
 
@@ -24994,7 +24996,19 @@ SWIGEXPORT void SWIGSTDCALL CSharp_MgView_regenAll(void * jarg1, unsigned int ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MgView_regenAppend(void * jarg1, int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MgView_regenAppend__SWIG_0(void * jarg1, int jarg2, long jarg3) {
+  MgView *arg1 = (MgView *) 0 ;
+  int arg2 ;
+  long arg3 ;
+  
+  arg1 = (MgView *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (long)jarg3; 
+  (arg1)->regenAppend(arg2,arg3);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_MgView_regenAppend__SWIG_1(void * jarg1, int jarg2) {
   MgView *arg1 = (MgView *) 0 ;
   int arg2 ;
   
@@ -29150,23 +29164,27 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GiView_regenAllSwigExplicitGiView(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GiView_regenAppend(void * jarg1, int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GiView_regenAppend(void * jarg1, int jarg2, long jarg3) {
   GiView *arg1 = (GiView *) 0 ;
   int arg2 ;
+  long arg3 ;
   
   arg1 = (GiView *)jarg1; 
   arg2 = (int)jarg2; 
-  (arg1)->regenAppend(arg2);
+  arg3 = (long)jarg3; 
+  (arg1)->regenAppend(arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GiView_regenAppendSwigExplicitGiView(void * jarg1, int jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GiView_regenAppendSwigExplicitGiView(void * jarg1, int jarg2, long jarg3) {
   GiView *arg1 = (GiView *) 0 ;
   int arg2 ;
+  long arg3 ;
   
   arg1 = (GiView *)jarg1; 
   arg2 = (int)jarg2; 
-  (arg1)->GiView::regenAppend(arg2);
+  arg3 = (long)jarg3; 
+  (arg1)->GiView::regenAppend(arg2,arg3);
 }
 
 
@@ -29597,13 +29615,27 @@ SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_backShapes(void * jarg1) {
 }
 
 
-SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_acquireFrontDoc(void * jarg1) {
+SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_acquireFrontDoc__SWIG_0(void * jarg1) {
   long jresult ;
   MgCoreView *arg1 = (MgCoreView *) 0 ;
   long result;
   
   arg1 = (MgCoreView *)jarg1; 
   result = (long)(arg1)->acquireFrontDoc();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_MgCoreView_acquireFrontDoc__SWIG_1(void * jarg1, long jarg2) {
+  long jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  long arg2 ;
+  long result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  arg2 = (long)jarg2; 
+  result = (long)(arg1)->acquireFrontDoc(arg2);
   jresult = result; 
   return jresult;
 }
@@ -31635,6 +31667,30 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_TestCanvas(void * jarg1) {
   
   arg1 = (TestCanvas *)jarg1; 
   delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiPlaying_fromHandle(long jarg1) {
+  void * jresult ;
+  long arg1 ;
+  GiPlaying *result = 0 ;
+  
+  arg1 = (long)jarg1; 
+  result = (GiPlaying *)GiPlaying::fromHandle(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiPlaying_toHandle(void * jarg1) {
+  long jresult ;
+  GiPlaying *arg1 = (GiPlaying *) 0 ;
+  long result;
+  
+  arg1 = (GiPlaying *)jarg1; 
+  result = (long)(arg1)->toHandle();
+  jresult = result; 
+  return jresult;
 }
 
 

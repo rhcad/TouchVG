@@ -145,8 +145,12 @@ public class MgView {
     touchvgJNI.MgView_regenAll(swigCPtr, this, changed);
   }
 
+  public void regenAppend(int sid, int playh) {
+    touchvgJNI.MgView_regenAppend__SWIG_0(swigCPtr, this, sid, playh);
+  }
+
   public void regenAppend(int sid) {
-    touchvgJNI.MgView_regenAppend(swigCPtr, this, sid);
+    touchvgJNI.MgView_regenAppend__SWIG_1(swigCPtr, this, sid);
   }
 
   public void redraw(boolean changed) {

@@ -884,7 +884,7 @@ public:
     SwigDirector_GiView();
     virtual ~SwigDirector_GiView();
     virtual void regenAll(bool changed);
-    virtual void regenAppend(int sid);
+    virtual void regenAppend(int sid, long playh);
     virtual void redraw(bool changed);
     virtual bool useFinger();
     virtual bool isContextActionsVisible();
@@ -898,7 +898,7 @@ public:
     virtual void shapeDeleted(int sid);
 
     typedef void (SWIGSTDCALL* SWIG_Callback0_t)(unsigned int);
-    typedef void (SWIGSTDCALL* SWIG_Callback1_t)(int);
+    typedef void (SWIGSTDCALL* SWIG_Callback1_t)(int, long);
     typedef void (SWIGSTDCALL* SWIG_Callback2_t)(unsigned int);
     typedef unsigned int (SWIGSTDCALL* SWIG_Callback3_t)();
     typedef unsigned int (SWIGSTDCALL* SWIG_Callback4_t)();
