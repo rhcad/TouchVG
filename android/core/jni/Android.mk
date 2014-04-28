@@ -33,6 +33,8 @@ LOCAL_C_INCLUDES := $(CORE_INC) \
                     $(CORE_INC)/cmdobserver \
                     $(CORE_INC)/test \
                     $(CORE_INC)/view \
+                    $(CORE_INC)/../src/view \
+                    $(CORE_INC)/record \
                     $(CORE_INC)/cmdbasic \
                     $(CORE_INC)/cmdmgr \
                     $(CORE_INC)/jsonstorage \

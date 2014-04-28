@@ -156,7 +156,7 @@ namespace touchvg.view
                 _owner.TempCanvas.InvalidateVisual();
             }
 
-            public override void regenAppend(int sid)
+            public override void regenAppend(int sid, int playh)
             {
                 regenAll(true);
             }

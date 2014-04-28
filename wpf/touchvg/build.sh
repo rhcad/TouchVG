@@ -21,4 +21,6 @@ swig -c++ -csharp -namespace touchvg.core \
     -I../../thirdparty/TouchVGCore/core/include/shapedoc \
     -I../../thirdparty/TouchVGCore/core/include/jsonstorage \
     -I../../thirdparty/TouchVGCore/core/include/cmdmgr \
+    -I../../thirdparty/TouchVGCore/core/include/record \
+    -I../../thirdparty/TouchVGCore/core/src/view \
     ../../thirdparty/TouchVGCore/core/src/view/touchvg.swig

@@ -369,6 +369,7 @@ namespace Swig {
 #include "gimousehelper.h"
 #include "testcanvas.h"
 #include "giplaying.h"
+#include "gicoreviewdata.h"
 
 
 
@@ -31854,6 +31855,564 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GiPlaying_isStopping(void * jarg1) {
 }
 
 
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlayShapes_playing_set(void * jarg1, void * jarg2) {
+  GiPlayShapes *arg1 = (GiPlayShapes *) 0 ;
+  GiPlaying *arg2 = (GiPlaying *) 0 ;
+  
+  arg1 = (GiPlayShapes *)jarg1; 
+  arg2 = (GiPlaying *)jarg2; 
+  if (arg1) (arg1)->playing = arg2;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiPlayShapes_playing_get(void * jarg1) {
+  void * jresult ;
+  GiPlayShapes *arg1 = (GiPlayShapes *) 0 ;
+  GiPlaying *result = 0 ;
+  
+  arg1 = (GiPlayShapes *)jarg1; 
+  result = (GiPlaying *) ((arg1)->playing);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiPlayShapes_player_set(void * jarg1, void * jarg2) {
+  GiPlayShapes *arg1 = (GiPlayShapes *) 0 ;
+  MgRecordShapes *arg2 = (MgRecordShapes *) 0 ;
+  
+  arg1 = (GiPlayShapes *)jarg1; 
+  arg2 = (MgRecordShapes *)jarg2; 
+  if (arg1) (arg1)->player = arg2;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiPlayShapes_player_get(void * jarg1) {
+  void * jresult ;
+  GiPlayShapes *arg1 = (GiPlayShapes *) 0 ;
+  MgRecordShapes *result = 0 ;
+  
+  arg1 = (GiPlayShapes *)jarg1; 
+  result = (MgRecordShapes *) ((arg1)->player);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiPlayShapes() {
+  void * jresult ;
+  GiPlayShapes *result = 0 ;
+  
+  result = (GiPlayShapes *)new GiPlayShapes();
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_GiPlayShapes(void * jarg1) {
+  GiPlayShapes *arg1 = (GiPlayShapes *) 0 ;
+  
+  arg1 = (GiPlayShapes *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_startPauseTick_set(void * jarg1, long jarg2) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  long arg2 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = (long)jarg2; 
+  if (arg1) (arg1)->startPauseTick = (long volatile )arg2;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreViewData_startPauseTick_get(void * jarg1) {
+  long jresult ;
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  long result;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  result = (long)(long) ((arg1)->startPauseTick);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_drawing_set(void * jarg1, void * jarg2) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  GiPlaying *arg2 = (GiPlaying *) 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = (GiPlaying *)jarg2; 
+  if (arg1) (arg1)->drawing = arg2;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiCoreViewData_drawing_get(void * jarg1) {
+  void * jresult ;
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  GiPlaying *result = 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  result = (GiPlaying *) ((arg1)->drawing);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_backDoc_set(void * jarg1, void * jarg2) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  MgShapeDoc *arg2 = (MgShapeDoc *) 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = (MgShapeDoc *)jarg2; 
+  if (arg1) (arg1)->backDoc = arg2;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiCoreViewData_backDoc_get(void * jarg1) {
+  void * jresult ;
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  MgShapeDoc *result = 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  result = (MgShapeDoc *) ((arg1)->backDoc);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_play_set(void * jarg1, void * jarg2) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  GiPlayShapes *arg2 = (GiPlayShapes *) 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = (GiPlayShapes *)jarg2; 
+  if (arg1) (arg1)->play = *arg2;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiCoreViewData_play_get(void * jarg1) {
+  void * jresult ;
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  GiPlayShapes *result = 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  result = (GiPlayShapes *)& ((arg1)->play);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_submitBackXform(void * jarg1) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  (arg1)->submitBackXform();
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiCoreViewData_fromHandle(long jarg1) {
+  void * jresult ;
+  long arg1 ;
+  GiCoreViewData *result = 0 ;
+  
+  arg1 = (long)jarg1; 
+  result = (GiCoreViewData *)GiCoreViewData::fromHandle(arg1);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_GiCoreViewData(void * jarg1) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_GiCoreViewData_recorder(void * jarg1, unsigned int jarg2) {
+  void * jresult ;
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  bool arg2 ;
+  MgRecordShapes *result = 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  result = (MgRecordShapes *)(arg1)->recorder(arg2);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_setRecorder(void * jarg1, unsigned int jarg2, void * jarg3) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  bool arg2 ;
+  MgRecordShapes *arg3 = (MgRecordShapes *) 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  arg3 = (MgRecordShapes *)jarg3; 
+  (arg1)->setRecorder(arg2,arg3);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_GiCoreViewData_getPlayingCount(void * jarg1) {
+  int jresult ;
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  int result;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  result = (int)(arg1)->getPlayingCount();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreViewData_acquireFrontDoc(void * jarg1, int jarg2) {
+  long jresult ;
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  int arg2 ;
+  long result;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (long)(arg1)->acquireFrontDoc(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreViewData_acquireFrontShapes(void * jarg1, int jarg2) {
+  long jresult ;
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  int arg2 ;
+  long result;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (long)(arg1)->acquireFrontShapes(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_addPlaying(void * jarg1, void * jarg2) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  GiPlaying *arg2 = (GiPlaying *) 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = (GiPlaying *)jarg2; 
+  (arg1)->addPlaying(arg2);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_removePlaying(void * jarg1, void * jarg2) {
+  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
+  GiPlaying *arg2 = (GiPlaying *) 0 ;
+  
+  arg1 = (GiCoreViewData *)jarg1; 
+  arg2 = (GiPlaying *)jarg2; 
+  (arg1)->removePlaying(arg2);
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_ADD_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)MgRecordShapes::ADD;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_EDIT_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)MgRecordShapes::EDIT;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_DEL_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)MgRecordShapes::DEL;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_DYN_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)MgRecordShapes::DYN;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_DOC_CHANGED_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)MgRecordShapes::DOC_CHANGED;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_SHAPE_APPEND_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)MgRecordShapes::SHAPE_APPEND;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_DYN_CHANGED_get() {
+  int jresult ;
+  int result;
+  
+  result = (int)MgRecordShapes::DYN_CHANGED;
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_MgRecordShapes(char * jarg1, void * jarg2, unsigned int jarg3, long jarg4) {
+  void * jresult ;
+  char *arg1 = (char *) 0 ;
+  MgShapeDoc *arg2 = (MgShapeDoc *) 0 ;
+  bool arg3 ;
+  long arg4 ;
+  MgRecordShapes *result = 0 ;
+  
+  arg1 = (char *)jarg1; 
+  arg2 = (MgShapeDoc *)jarg2; 
+  arg3 = jarg3 ? true : false; 
+  arg4 = (long)jarg4; 
+  result = (MgRecordShapes *)new MgRecordShapes((char const *)arg1,arg2,arg3,arg4);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_delete_MgRecordShapes(void * jarg1) {
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT long SWIGSTDCALL CSharp_MgRecordShapes_getCurrentTick(void * jarg1, long jarg2) {
+  long jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  long arg2 ;
+  long result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  arg2 = (long)jarg2; 
+  result = (long)((MgRecordShapes const *)arg1)->getCurrentTick(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgRecordShapes_isLoading(void * jarg1) {
+  unsigned int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  bool result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  result = (bool)((MgRecordShapes const *)arg1)->isLoading();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_MgRecordShapes_setLoading(void * jarg1, unsigned int jarg2) {
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  bool arg2 ;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->setLoading(arg2);
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgRecordShapes_onResume(void * jarg1, long jarg2) {
+  unsigned int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  long arg2 ;
+  bool result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  arg2 = (long)jarg2; 
+  result = (bool)(arg1)->onResume(arg2);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_MgRecordShapes_restore(void * jarg1, int jarg2, int jarg3, int jarg4, long jarg5) {
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  int arg4 ;
+  long arg5 ;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (int)jarg3; 
+  arg4 = (int)jarg4; 
+  arg5 = (long)jarg5; 
+  (arg1)->restore(arg2,arg3,arg4,arg5);
+}
+
+
+SWIGEXPORT void SWIGSTDCALL CSharp_MgRecordShapes_stopRecordIndex(void * jarg1) {
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  (arg1)->stopRecordIndex();
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgRecordShapes_isPlaying(void * jarg1) {
+  unsigned int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  bool result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  result = (bool)((MgRecordShapes const *)arg1)->isPlaying();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_getFileTick(void * jarg1) {
+  int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  int result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  result = (int)((MgRecordShapes const *)arg1)->getFileTick();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_getFileFlags(void * jarg1) {
+  int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  int result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  result = (int)((MgRecordShapes const *)arg1)->getFileFlags();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_getFileCount(void * jarg1) {
+  int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  int result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  result = (int)((MgRecordShapes const *)arg1)->getFileCount();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgRecordShapes_applyFirstFile__SWIG_0(void * jarg1, void * jarg2, void * jarg3) {
+  unsigned int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  MgShapeFactory *arg2 = (MgShapeFactory *) 0 ;
+  MgShapeDoc *arg3 = (MgShapeDoc *) 0 ;
+  bool result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  arg2 = (MgShapeFactory *)jarg2; 
+  arg3 = (MgShapeDoc *)jarg3; 
+  result = (bool)(arg1)->applyFirstFile(arg2,arg3);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgRecordShapes_applyFirstFile__SWIG_1(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+  unsigned int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  MgShapeFactory *arg2 = (MgShapeFactory *) 0 ;
+  MgShapeDoc *arg3 = (MgShapeDoc *) 0 ;
+  char *arg4 = (char *) 0 ;
+  bool result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  arg2 = (MgShapeFactory *)jarg2; 
+  arg3 = (MgShapeDoc *)jarg3; 
+  arg4 = (char *)jarg4; 
+  result = (bool)(arg1)->applyFirstFile(arg2,arg3,(char const *)arg4);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_applyRedoFile(void * jarg1, void * jarg2, void * jarg3, void * jarg4, int jarg5) {
+  int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  MgShapeFactory *arg2 = (MgShapeFactory *) 0 ;
+  MgShapeDoc *arg3 = (MgShapeDoc *) 0 ;
+  MgShapes *arg4 = (MgShapes *) 0 ;
+  int arg5 ;
+  int result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  arg2 = (MgShapeFactory *)jarg2; 
+  arg3 = (MgShapeDoc *)jarg3; 
+  arg4 = (MgShapes *)jarg4; 
+  arg5 = (int)jarg5; 
+  result = (int)(arg1)->applyRedoFile(arg2,arg3,arg4,arg5);
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT int SWIGSTDCALL CSharp_MgRecordShapes_applyUndoFile(void * jarg1, void * jarg2, void * jarg3, void * jarg4, int jarg5, long jarg6) {
+  int jresult ;
+  MgRecordShapes *arg1 = (MgRecordShapes *) 0 ;
+  MgShapeFactory *arg2 = (MgShapeFactory *) 0 ;
+  MgShapeDoc *arg3 = (MgShapeDoc *) 0 ;
+  MgShapes *arg4 = (MgShapes *) 0 ;
+  int arg5 ;
+  long arg6 ;
+  int result;
+  
+  arg1 = (MgRecordShapes *)jarg1; 
+  arg2 = (MgShapeFactory *)jarg2; 
+  arg3 = (MgShapeDoc *)jarg3; 
+  arg4 = (MgShapes *)jarg4; 
+  arg5 = (int)jarg5; 
+  arg6 = (long)jarg6; 
+  result = (int)(arg1)->applyUndoFile(arg2,arg3,arg4,arg5,arg6);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_new_GiMouseHelper(void * jarg1, void * jarg2) {
   void * jresult ;
   GiView *arg1 = (GiView *) 0 ;
@@ -32092,6 +32651,10 @@ SWIGEXPORT MgObject * SWIGSTDCALL CSharp_MgShapeDoc_SWIGUpcast(MgShapeDoc *jarg1
 
 SWIGEXPORT MgCoreView * SWIGSTDCALL CSharp_GiCoreView_SWIGUpcast(GiCoreView *jarg1) {
     return (MgCoreView *)jarg1;
+}
+
+SWIGEXPORT MgView * SWIGSTDCALL CSharp_GiCoreViewData_SWIGUpcast(GiCoreViewData *jarg1) {
+    return (MgView *)jarg1;
 }
 
 #ifdef __cplusplus

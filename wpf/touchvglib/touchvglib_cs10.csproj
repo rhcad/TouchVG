@@ -74,6 +74,7 @@
     <Compile Include="core\GiColor.cs" />
     <Compile Include="core\GiContext.cs" />
     <Compile Include="core\GiCoreView.cs" />
+    <Compile Include="core\GiCoreViewData.cs" />
     <Compile Include="core\GiGestureState.cs" />
     <Compile Include="core\GiGestureType.cs" />
     <Compile Include="core\GiGraphics.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="core\GiPath.cs" />
     <Compile Include="core\GiPathNode.cs" />
     <Compile Include="core\GiPlaying.cs" />
+    <Compile Include="core\GiPlayShapes.cs" />
     <Compile Include="core\GiSaveClipBox.cs" />
     <Compile Include="core\GiSaveModelTransform.cs" />
     <Compile Include="core\GiTransform.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="core\mgnear.cs" />
     <Compile Include="core\MgObject.cs" />
     <Compile Include="core\MgParallel.cs" />
+    <Compile Include="core\MgRecordShapes.cs" />
     <Compile Include="core\MgRect.cs" />
     <Compile Include="core\MgRoundRect.cs" />
     <Compile Include="core\MgSelection.cs" />

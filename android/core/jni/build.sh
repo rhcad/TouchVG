@@ -24,6 +24,8 @@ if [ "$1"x = "-swig"x ] || [ ! -f touchvg_java_wrap.cpp ] ; then # Make JNI clas
         -I../../../thirdparty/TouchVGCore/core/include/shapedoc \
         -I../../../thirdparty/TouchVGCore/core/include/jsonstorage \
         -I../../../thirdparty/TouchVGCore/core/include/cmdmgr \
+        -I../../../thirdparty/TouchVGCore/core/include/record \
+        -I../../../thirdparty/TouchVGCore/core/src/view \
           ../../../thirdparty/TouchVGCore/core/src/view/touchvg.swig
     python replacejstr.py
 fi
