@@ -374,11 +374,12 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
             if (mCoreView != null && !mCoreView.isPlaying()) {
                 if (changed) {
                     mCoreView.submitDynamicShapes(mViewAdapter);
-                }
-                if (mRecorder != null) {
-                    int tick1 = mCoreView.getRecordTick(false, getTick());
-                    int shapes1 = mCoreView.acquireDynamicShapes();
-                    mRecorder.requestRecord(tick1, 0, shapes1);
+
+                    if (mRecorder != null) {
+                        int tick1 = mCoreView.getRecordTick(false, getTick());
+                        int shapes1 = mCoreView.acquireDynamicShapes();
+                        mRecorder.requestRecord(tick1, 0, shapes1);
+                    }
                 }
             }
             postInvalidate();

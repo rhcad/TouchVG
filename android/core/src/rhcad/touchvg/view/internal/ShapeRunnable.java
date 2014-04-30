@@ -124,6 +124,7 @@ public class ShapeRunnable implements Runnable {
     private void process() {
         int tick = 0, doc = 0, shapes = 0;
         boolean loop = true;
+        int nextTick = 0;
 
         while (loop && !mStopping && mCoreView != null) {
             synchronized (mPending) {
@@ -136,14 +137,15 @@ public class ShapeRunnable implements Runnable {
                         mPending[i - 3] = mPending[i];
                         mPending[i] = 0;
                     }
-                    loop = (doc == 0 && shapes != 0 && mPending[0] != 0);
+                    nextTick = mPending[0];
+                    loop = (doc == 0 && shapes != 0 && nextTick != 0);
                     if (loop) {
                         GiCoreView.releaseShapes(shapes);
                     }
                 }
             }
             process(tick, doc, shapes);
-            loop = (mPending[0] != 0);
+            loop = (nextTick != 0);
         }
     }
 

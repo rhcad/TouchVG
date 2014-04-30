@@ -263,11 +263,9 @@ void GiViewAdapter::recordShapes(bool forUndo, long doc, long shapes)
             if (_view.window) {
                 bool ret;
                 if (!forUndo) {
-                    mgvector<int> exts;
-                    //_core->acquireDynamicShapesArray(exts)
                     RecordShapesCallback c(this);
-                    ret = _core->recordShapes(forUndo, tick, doc, shapes, &exts,
-                                                  hasShapesRecorded() ? &c : NULL);
+                    ret = _core->recordShapes(forUndo, tick, doc, shapes, NULL,
+                                              hasShapesRecorded() ? &c : NULL);
                 } else {
                     ret = _core->recordShapes(forUndo, tick, doc, shapes);
                 }
