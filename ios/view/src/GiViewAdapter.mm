@@ -114,7 +114,7 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
     }
     else {
         long gs;
-        mgvector<int> docs;
+        mgvector<long> docs;
         
         @synchronized(locker()) {
             gs = _core->acquireFrontDocs(docs) ? _core->acquireGraphics(this) : 0;
@@ -144,7 +144,7 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
 
 int GiViewAdapter::getAppendID(int index, long& playh) const {
     playh = 2 * index + 1 < APPENDSIZE ? _appendIDs[2 * index + 1] : 0;
-    return index * 2 < APPENDSIZE ? _appendIDs[2 * index] : 0;
+    return index * 2 < APPENDSIZE ? (int)_appendIDs[2 * index] : 0;
 }
 
 struct ImageFinder : public MgFindImageCallback {
@@ -282,7 +282,7 @@ void GiViewAdapter::regenAll(bool changed) {
 }
 
 int GiViewAdapter::regenLocked(bool changed, int sid, long playh, bool loading, long& doc0,
-                               long& doc1, long& shapes1, long& gs, mgvector<int>*& docs)
+                               long& doc1, long& shapes1, long& gs, mgvector<long>*& docs)
 {
     if (loading) {
         if (!_core->isPlaying()) {
@@ -309,7 +309,7 @@ int GiViewAdapter::regenLocked(bool changed, int sid, long playh, bool loading, 
                 break;
             if (_appendIDs[i] == 0) {
                 _appendIDs[i] = sid;
-                _appendIDs[i + 1] = (int)playh;
+                _appendIDs[i + 1] = playh;
                 break;
             }
         }
@@ -317,7 +317,7 @@ int GiViewAdapter::regenLocked(bool changed, int sid, long playh, bool loading, 
     
     if (_render || _regenCount == 0) {
         gs = _core->acquireGraphics(this);
-        docs = new mgvector<int>;
+        docs = new mgvector<long>;
         return _core->acquireFrontDocs(*docs);
     }
     return 0;
@@ -330,7 +330,7 @@ void GiViewAdapter::regen_(bool changed, int sid, long playh, bool loading) {
     
     long doc0 = 0, doc1 = 0, shapes1 = 0, gs = 0;
     int docd = 0;
-    mgvector<int>* docs = NULL;
+    mgvector<long>* docs = NULL;
     
     @synchronized(locker()) {
         docd = regenLocked(changed, sid, playh, loading, doc0, doc1, shapes1, gs, docs);

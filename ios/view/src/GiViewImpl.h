@@ -25,7 +25,7 @@ class GiViewAdapter;
     CALayer         *_layer;
     GiViewAdapter   *_adapter;
     __block long    _drawing;
-    __block mgvector<int>* _docs;
+    __block mgvector<long>* _docs;
     __block long    _gs;
     dispatch_queue_t _queue;
 }
@@ -33,7 +33,7 @@ class GiViewAdapter;
 - (id)initWithAdapter:(GiViewAdapter *)adapter;
 - (void)stopRender;
 - (void)clearCachedData;
-- (void)startRender:(mgvector<int>*)docs :(long)gs;
+- (void)startRender:(mgvector<long>*)docs :(long)gs;
 - (void)startRenderForPending;
 - (BOOL)renderInContext:(CGContextRef)ctx;
 
@@ -51,7 +51,7 @@ private:
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     GiImageCache    *_imageCache;       //!< 图像对象缓存
     bool            _actionEnabled;     //!< 是否允许上下文操作
-    int             _appendIDs[20];     //!< 还未来得及重构显示的新增图形的ID、playh
+    long            _appendIDs[20];     //!< 还未来得及重构显示的新增图形的ID、playh
     int             _oldAppendCount;    //!< 后台渲染前的待渲染新增图形数
     int             _regenCount;        //!< 渲染次数
     GiLayerRender   *_render;           //!< 后台渲染对象
@@ -120,7 +120,7 @@ public:
 private:
     void setContextButton(UIButton *btn, NSString *caption, NSString *imageName);
     int  regenLocked(bool changed, int sid, long playh, bool loading, long& doc0,
-                     long& doc1, long& shapes1, long& gs, mgvector<int>*& docs);
+                     long& doc1, long& shapes1, long& gs, mgvector<long>*& docs);
     void regen_(bool changed, int sid, long playh, bool loading);
     void recordShapes(bool forUndo, long doc, long shapes);
 };

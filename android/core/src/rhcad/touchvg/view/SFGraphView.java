@@ -7,7 +7,7 @@ package rhcad.touchvg.view;
 import rhcad.touchvg.IGraphView;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
-import rhcad.touchvg.core.Ints;
+import rhcad.touchvg.core.Longs;
 import rhcad.touchvg.view.internal.BaseViewAdapter;
 import rhcad.touchvg.view.internal.ContextAction;
 import rhcad.touchvg.view.internal.GestureListener;
@@ -207,7 +207,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
 
     private int drawShapes(CanvasAdapter canvasAdapter) {
         int gs, n;
-        final Ints docs = new Ints();
+        final Longs docs = new Longs();
 
         synchronized (mCoreView) {
             mCoreView.acquireFrontDocs(docs);
@@ -470,7 +470,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
                 canvas = mHolder.lockCanvas();
                 if (mView.mDynDrawCanvas.beginPaint(canvas)) {
                     int doc = 0, gs;
-                    final Ints shapes = new Ints();
+                    final Longs shapes = new Longs();
                     final GiCoreView coreView = mView.mCoreView;
 
                     synchronized (coreView) {

@@ -89,6 +89,7 @@
     <Compile Include="core\GiTransform.cs" />
     <Compile Include="core\GiView.cs" />
     <Compile Include="core\Ints.cs" />
+    <Compile Include="core\Longs.cs" />
     <Compile Include="core\Matrix2d.cs" />
     <Compile Include="core\MgActionDispatcher.cs" />
     <Compile Include="core\MgArc.cs" />

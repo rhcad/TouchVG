@@ -7,7 +7,7 @@ package rhcad.touchvg.view;
 import rhcad.touchvg.IGraphView;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
-import rhcad.touchvg.core.Ints;
+import rhcad.touchvg.core.Longs;
 import rhcad.touchvg.view.internal.BaseViewAdapter;
 import rhcad.touchvg.view.internal.ContextAction;
 import rhcad.touchvg.view.internal.GestureListener;
@@ -130,8 +130,8 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
 
     private int drawShapes(Canvas canvas, CanvasAdapter adapter, boolean dyndraw) {
         int gs;
-        final Ints docs = new Ints();
-        final Ints shapes = new Ints();
+        final Longs docs = new Longs();
+        final Longs shapes = new Longs();
 
         synchronized (mCoreView) {
             if (mCachedBitmap == null || !dyndraw)
@@ -149,7 +149,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
         }
     }
 
-    private int drawShapes(Ints docs, int gs, Ints shapes, Canvas canvas,
+    private int drawShapes(Longs docs, int gs, Longs shapes, Canvas canvas,
             CanvasAdapter adapter, boolean dyndraw) {
         int n = 0;
 
@@ -494,7 +494,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
             synchronized (mCachedBitmap) {
                 mCoreView.onSize(mViewAdapter, getWidth(), getHeight());
                 mCachedBitmap.eraseColor(transparent ? Color.TRANSPARENT : mBkColor);
-                final Ints docs = new Ints(doc, 0);
+                final Longs docs = new Longs(doc, 0);
                 drawShapes(docs, gs, null, new Canvas(mCachedBitmap), mCanvasAdapter, false);
             }
         }

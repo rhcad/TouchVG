@@ -28,7 +28,7 @@
     GiCanvasAdapter canvas(_adapter->imageCache());
     GiCoreView* coreView = _adapter->coreView();
     long doc, gs, playh;
-    mgvector<int> shapes;
+    mgvector<long> shapes;
     
     @synchronized(_adapter->locker()) {
         int sid = _adapter->getAppendID(0, playh);
@@ -101,7 +101,7 @@
     }
 }
 
-- (void)startRender:(mgvector<int>*)docs :(long)gs {
+- (void)startRender:(mgvector<long>*)docs :(long)gs {
     if (_docs || _gs) {
         _adapter->coreView()->releaseGraphics(gs);
         GiCoreView::releaseDocs(*docs);
@@ -153,7 +153,7 @@
     if (!_docs && !_gs) {
         @synchronized(_adapter->locker()) {
             _adapter->beginRender();
-            _docs = new mgvector<int>;
+            _docs = new mgvector<long>;
             coreView->acquireFrontDocs(*_docs);
             _gs = coreView->acquireGraphics(_adapter);
         }

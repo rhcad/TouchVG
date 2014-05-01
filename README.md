@@ -38,6 +38,7 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 
 - [Zhang Yungui](https://github.com/rhcad)
 - [Archer](https://github.com/a7ch3r)
+- [ljlin](https://github.com/ljlin)
 - [Pengjun](https://github.com/pengjun) / Line and triangle commands
 - [Proteas](https://github.com/proteas)
 
@@ -77,6 +78,8 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
    - Static libraries required can be compiled in two ways:
    
         - Enter `ios` directory, then type `./build.sh` (Need to configure Xcode command line environment) to compile all static libraries to the `ios/output` directory.
+          - Type `./build.sh -arch arm64` to make for iOS 64-bit.
+          - Type `./build.sh clean` to remove object files.
         - Or select and build each library project in Xcode IDE.
 
    - To run on device, you may need to change the Bundle Identifier of the demo application, such as "com.yourcompany.TestView", and choose your own development certificate (Code Signing).

@@ -2040,6 +2040,36 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_Ints_set__SWIG_1")]
   public static extern void Ints_set__SWIG_1(HandleRef jarg1, int jarg2, int jarg3, int jarg4);
 
+  [DllImport("touchvg", EntryPoint="CSharp_delete_Longs")]
+  public static extern void delete_Longs(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_new_Longs__SWIG_0")]
+  public static extern IntPtr new_Longs__SWIG_0(int jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_new_Longs__SWIG_1")]
+  public static extern IntPtr new_Longs__SWIG_1();
+
+  [DllImport("touchvg", EntryPoint="CSharp_Longs_setSize")]
+  public static extern void Longs_setSize(HandleRef jarg1, int jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_new_Longs__SWIG_2")]
+  public static extern IntPtr new_Longs__SWIG_2(int jarg1, int jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_new_Longs__SWIG_3")]
+  public static extern IntPtr new_Longs__SWIG_3(int jarg1, int jarg2, int jarg3, int jarg4);
+
+  [DllImport("touchvg", EntryPoint="CSharp_Longs_count")]
+  public static extern int Longs_count(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_Longs_get")]
+  public static extern int Longs_get(HandleRef jarg1, int jarg2);
+
+  [DllImport("touchvg", EntryPoint="CSharp_Longs_set__SWIG_0")]
+  public static extern void Longs_set__SWIG_0(HandleRef jarg1, int jarg2, int jarg3);
+
+  [DllImport("touchvg", EntryPoint="CSharp_Longs_set__SWIG_1")]
+  public static extern void Longs_set__SWIG_1(HandleRef jarg1, int jarg2, int jarg3, int jarg4);
+
   [DllImport("touchvg", EntryPoint="CSharp_delete_Floats")]
   public static extern void delete_Floats(HandleRef jarg1);
 

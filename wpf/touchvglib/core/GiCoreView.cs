@@ -71,25 +71,25 @@ public class GiCoreView : MgCoreView {
     touchvgPINVOKE.GiCoreView_releaseGraphics(swigCPtr, gs);
   }
 
-  public int acquireFrontDocs(Ints docs) {
-    int ret = touchvgPINVOKE.GiCoreView_acquireFrontDocs(swigCPtr, Ints.getCPtr(docs));
+  public int acquireFrontDocs(Longs docs) {
+    int ret = touchvgPINVOKE.GiCoreView_acquireFrontDocs(swigCPtr, Longs.getCPtr(docs));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public static void releaseDocs(Ints docs) {
-    touchvgPINVOKE.GiCoreView_releaseDocs(Ints.getCPtr(docs));
+  public static void releaseDocs(Longs docs) {
+    touchvgPINVOKE.GiCoreView_releaseDocs(Longs.getCPtr(docs));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public int acquireDynamicShapesArray(Ints shapes) {
-    int ret = touchvgPINVOKE.GiCoreView_acquireDynamicShapesArray(swigCPtr, Ints.getCPtr(shapes));
+  public int acquireDynamicShapesArray(Longs shapes) {
+    int ret = touchvgPINVOKE.GiCoreView_acquireDynamicShapesArray(swigCPtr, Longs.getCPtr(shapes));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public static void releaseShapesArray(Ints shapes) {
-    touchvgPINVOKE.GiCoreView_releaseShapesArray(Ints.getCPtr(shapes));
+  public static void releaseShapesArray(Longs shapes) {
+    touchvgPINVOKE.GiCoreView_releaseShapesArray(Longs.getCPtr(shapes));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -98,8 +98,8 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public int drawAll(Ints docs, int gs, GiCanvas canvas) {
-    int ret = touchvgPINVOKE.GiCoreView_drawAll__SWIG_1(swigCPtr, Ints.getCPtr(docs), gs, GiCanvas.getCPtr(canvas));
+  public int drawAll(Longs docs, int gs, GiCanvas canvas) {
+    int ret = touchvgPINVOKE.GiCoreView_drawAll__SWIG_1(swigCPtr, Longs.getCPtr(docs), gs, GiCanvas.getCPtr(canvas));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -114,8 +114,8 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public int dynDraw(Ints shapes, int gs, GiCanvas canvas) {
-    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_1(swigCPtr, Ints.getCPtr(shapes), gs, GiCanvas.getCPtr(canvas));
+  public int dynDraw(Longs shapes, int gs, GiCanvas canvas) {
+    int ret = touchvgPINVOKE.GiCoreView_dynDraw__SWIG_1(swigCPtr, Longs.getCPtr(shapes), gs, GiCanvas.getCPtr(canvas));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -235,13 +235,13 @@ public class GiCoreView : MgCoreView {
     return ret;
   }
 
-  public bool recordShapes(bool forUndo, int tick, int doc, int shapes, Ints exts, MgStringCallback c) {
-    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_1(swigCPtr, forUndo, tick, doc, shapes, Ints.getCPtr(exts), MgStringCallback.getCPtr(c));
+  public bool recordShapes(bool forUndo, int tick, int doc, int shapes, Longs exts, MgStringCallback c) {
+    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_1(swigCPtr, forUndo, tick, doc, shapes, Longs.getCPtr(exts), MgStringCallback.getCPtr(c));
     return ret;
   }
 
-  public bool recordShapes(bool forUndo, int tick, int doc, int shapes, Ints exts) {
-    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_2(swigCPtr, forUndo, tick, doc, shapes, Ints.getCPtr(exts));
+  public bool recordShapes(bool forUndo, int tick, int doc, int shapes, Longs exts) {
+    bool ret = touchvgPINVOKE.GiCoreView_recordShapes__SWIG_2(swigCPtr, forUndo, tick, doc, shapes, Longs.getCPtr(exts));
     return ret;
   }
 
