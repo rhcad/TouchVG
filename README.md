@@ -2,10 +2,9 @@
 
 TouchVG is a lightweight 2D vector drawing framework mainly using C++ for iOS, Android and Windows.
 
-Features described in [README-cn.md](README-cn.md)
-and [Online document](https://github.com/touchvg/touchvg.github.io). Welcome to help translate the Introduction.
+Features described in [Online document](http://touchvg.github.io).
 
-![modules](/doc/images/modules.png)
+![arch](http://touchvg.github.io/images/arch.svg)
 
 ![iphone1](/doc/images/iphone1.png) | ![android1](/doc/images/android1.png) | ![iphone2](/doc/images/iphone2.png)
 
