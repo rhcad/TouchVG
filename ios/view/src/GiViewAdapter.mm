@@ -188,14 +188,11 @@ bool GiViewAdapter::startRecord(NSString *path, bool forUndo)
     if (_queues[i])
         return false;
     
-    long doc;
+    long doc = acquireFrontDoc();
     
-    @synchronized(locker()) {
-        doc = _core->acquireFrontDoc();
-        if (doc == 0) {
-            NSLog(@"Fail to record shapes due to no front doc");
-            return false;
-        }
+    if (doc == 0) {
+        NSLog(@"Fail to record shapes due to no front doc");
+        return false;
     }
     if (!forUndo) {
         ImageFinder f(_imageCache.imagePath, path);

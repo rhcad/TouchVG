@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 
 @class GiPaintView;
+@protocol GiPaintViewDelegate;
 
 typedef NS_ENUM(int, GILineStyle) {
     GILineStyleSolid,       //!< ----------
@@ -72,7 +73,7 @@ typedef NS_ENUM(int, GILineStyle) {
 - (void)clearCachedData;                    //!< 释放临时数据内存
 - (CGPoint)displayToModel:(CGPoint)point;   //!< 视图坐标转为模型坐标
 
-- (BOOL)startUndoRecord:(NSString *)path;   //!< 开始Undo录制，在主线程用
+- (BOOL)startUndoRecord:(NSString *)path;   //!< 开始Undo录制，在视图初始化或onFirstRegen中调用
 - (void)stopUndoRecord;                     //!< 停止Undo录制，在主线程用
 - (BOOL)canUndo;                            //!< 能否撤销
 - (BOOL)canRedo;                            //!< 能否重做
@@ -80,7 +81,7 @@ typedef NS_ENUM(int, GILineStyle) {
 - (void)redo;                               //!< 重做
 
 - (BOOL)isRecording;                        //!< 是否正在录屏
-- (BOOL)startRecord:(NSString *)path;       //!< 开始录屏，在主线程用
+- (BOOL)startRecord:(NSString *)path;       //!< 开始录屏，在视图初始化或onFirstRegen中调用
 - (void)stopRecord;                         //!< 停止录屏，在主线程用
 - (BOOL)isPaused;                           //!< 是否已暂停
 - (BOOL)isPlaying;                          //!< 是否正在播放
@@ -101,5 +102,8 @@ typedef NS_ENUM(int, GILineStyle) {
 - (int)findShapeByImageID:(NSString *)name; //!< 查找指定名称的图像对应的图形对象ID
 - (void)setImagePath:(NSString *)path;      //!< 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
 - (NSString *)getImagePath;                 //!< 返回图像文件的默认路径
+
+- (void)addDelegate:(id<GiPaintViewDelegate>)d;     //!< 增加绘图消息观察者
+- (void)removeDelegate:(id<GiPaintViewDelegate>)d;  //!< 去掉绘图消息观察者
 
 @end

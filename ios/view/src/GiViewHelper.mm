@@ -560,4 +560,12 @@ static GiViewHelper *_sharedInstance = nil;
     return [_view coreView]->getRecordTick(false, getTickCount());
 }
 
+- (void)addDelegate:(id<GiPaintViewDelegate>)d {
+    [_view addDelegate:d];
+}
+
+- (void)removeDelegate:(id<GiPaintViewDelegate>)d {
+    [_view removeDelegate:d];
+}
+
 @end
