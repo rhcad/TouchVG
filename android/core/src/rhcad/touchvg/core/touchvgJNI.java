@@ -1918,8 +1918,6 @@ public class touchvgJNI {
   public final static native long GiPlayShapes_player_get(long jarg1, GiPlayShapes jarg1_);
   public final static native long new_GiPlayShapes();
   public final static native void delete_GiPlayShapes(long jarg1);
-  public final static native void GiCoreViewData_startPauseTick_set(long jarg1, GiCoreViewData jarg1_, int jarg2);
-  public final static native int GiCoreViewData_startPauseTick_get(long jarg1, GiCoreViewData jarg1_);
   public final static native void GiCoreViewData_drawing_set(long jarg1, GiCoreViewData jarg1_, long jarg2, GiPlaying jarg2_);
   public final static native long GiCoreViewData_drawing_get(long jarg1, GiCoreViewData jarg1_);
   public final static native void GiCoreViewData_backDoc_set(long jarg1, GiCoreViewData jarg1_, long jarg2, MgShapeDoc jarg2_);

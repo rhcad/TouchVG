@@ -35,14 +35,6 @@ public class GiCoreViewData extends MgView {
     super.delete();
   }
 
-  public void setStartPauseTick(int value) {
-    touchvgJNI.GiCoreViewData_startPauseTick_set(swigCPtr, this, value);
-  }
-
-  public int getStartPauseTick() {
-    return touchvgJNI.GiCoreViewData_startPauseTick_get(swigCPtr, this);
-  }
-
   public void setDrawing(GiPlaying value) {
     touchvgJNI.GiCoreViewData_drawing_set(swigCPtr, this, GiPlaying.getCPtr(value), value);
   }

@@ -41784,34 +41784,6 @@ SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_delete_1GiPlayShapes(
 }
 
 
-SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreViewData_1startPauseTick_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
-  long arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(GiCoreViewData **)&jarg1; 
-  arg2 = (long)jarg2; 
-  if (arg1) (arg1)->startPauseTick = (long volatile )arg2;
-}
-
-
-SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreViewData_1startPauseTick_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jint jresult = 0 ;
-  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
-  long result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(GiCoreViewData **)&jarg1; 
-  result = (long)(long) ((arg1)->startPauseTick);
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void JNICALL Java_rhcad_touchvg_core_touchvgJNI_GiCoreViewData_1drawing_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
   GiPlaying *arg2 = (GiPlaying *) 0 ;

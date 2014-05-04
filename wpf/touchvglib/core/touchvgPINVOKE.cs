@@ -5961,12 +5961,6 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_delete_GiPlayShapes")]
   public static extern void delete_GiPlayShapes(HandleRef jarg1);
 
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreViewData_startPauseTick_set")]
-  public static extern void GiCoreViewData_startPauseTick_set(HandleRef jarg1, int jarg2);
-
-  [DllImport("touchvg", EntryPoint="CSharp_GiCoreViewData_startPauseTick_get")]
-  public static extern int GiCoreViewData_startPauseTick_get(HandleRef jarg1);
-
   [DllImport("touchvg", EntryPoint="CSharp_GiCoreViewData_drawing_set")]
   public static extern void GiCoreViewData_drawing_set(HandleRef jarg1, HandleRef jarg2);
 

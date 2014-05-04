@@ -40,16 +40,6 @@ public class GiCoreViewData : MgView {
     }
   }
 
-  public int startPauseTick {
-    set {
-      touchvgPINVOKE.GiCoreViewData_startPauseTick_set(swigCPtr, value);
-    } 
-    get {
-      int ret = touchvgPINVOKE.GiCoreViewData_startPauseTick_get(swigCPtr);
-      return ret;
-    } 
-  }
-
   public GiPlaying drawing {
     set {
       touchvgPINVOKE.GiCoreViewData_drawing_set(swigCPtr, GiPlaying.getCPtr(value));

@@ -32041,28 +32041,6 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_GiPlayShapes(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_startPauseTick_set(void * jarg1, long jarg2) {
-  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
-  long arg2 ;
-  
-  arg1 = (GiCoreViewData *)jarg1; 
-  arg2 = (long)jarg2; 
-  if (arg1) (arg1)->startPauseTick = (long volatile )arg2;
-}
-
-
-SWIGEXPORT long SWIGSTDCALL CSharp_GiCoreViewData_startPauseTick_get(void * jarg1) {
-  long jresult ;
-  GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
-  long result;
-  
-  arg1 = (GiCoreViewData *)jarg1; 
-  result = (long)(long) ((arg1)->startPauseTick);
-  jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT void SWIGSTDCALL CSharp_GiCoreViewData_drawing_set(void * jarg1, void * jarg2) {
   GiCoreViewData *arg1 = (GiCoreViewData *) 0 ;
   GiPlaying *arg2 = (GiPlaying *) 0 ;
