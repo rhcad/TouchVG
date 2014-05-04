@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\build\$(ConfigurationName)9"
-			IntermediateDirectory="..\build\$(ConfigurationName)9\obj\$(ProjectName)_csharp"
+			IntermediateDirectory="..\build\obj\$(ConfigurationName)9\$(ProjectName)_csharp\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -101,7 +101,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\build\$(ConfigurationName)9"
-			IntermediateDirectory="..\build\$(ConfigurationName)9\obj\$(ProjectName)_csharp"
+			IntermediateDirectory="..\build\obj\$(ConfigurationName)9\$(ProjectName)_csharp\"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
