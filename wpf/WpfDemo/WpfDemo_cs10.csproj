@@ -144,7 +144,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\democmdslib\democmdslib_cs10.csproj">
+    <ProjectReference Include="..\..\thirdparty\DemoCmds\win\democmdslib\democmdslib_cs10.csproj">
       <Project>{F0736804-0A5D-4A92-8A27-657D619187CD}</Project>
       <Name>democmdslib_cs10</Name>
     </ProjectReference>

@@ -1,0 +1,486 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AE97A1B3186D5A3700DFEA77 /* mgvector.h in Headers */ = {isa = PBXBuildFile; fileRef = AE97A188186D51CE00DFEA77 /* mgvector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AEF6D1F918050FA9009E30CC /* cmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AEF6D18B18050FA9009E30CC /* cmds.cpp */; };
+		AEF6D1FA18050FA9009E30CC /* cmds.h in Headers */ = {isa = PBXBuildFile; fileRef = AEF6D18C18050FA9009E30CC /* cmds.h */; };
+		AEF6D1FB18050FA9009E30CC /* HitTestCmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AEF6D18D18050FA9009E30CC /* HitTestCmd.cpp */; };
+		AEF6D1FC18050FA9009E30CC /* HitTestCmd.h in Headers */ = {isa = PBXBuildFile; fileRef = AEF6D18E18050FA9009E30CC /* HitTestCmd.h */; };
+		AEF6D1FD18050FA9009E30CC /* DemoCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AEF6D19018050FA9009E30CC /* DemoCmds.cpp */; };
+		AEF6D1FE18050FA9009E30CC /* DemoCmds.h in Headers */ = {isa = PBXBuildFile; fileRef = AEF6D19118050FA9009E30CC /* DemoCmds.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AE2A3A49178FC511000194AE /* libDemoCmds.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDemoCmds.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE2A3A50178FC511000194AE /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		AE97A152186D51CE00DFEA77 /* gicanvas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gicanvas.h; sourceTree = "<group>"; };
+		AE97A154186D51CE00DFEA77 /* mgaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgaction.h; sourceTree = "<group>"; };
+		AE97A155186D51CE00DFEA77 /* mgcmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgcmd.h; sourceTree = "<group>"; };
+		AE97A156186D51CE00DFEA77 /* mgcoreview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgcoreview.h; sourceTree = "<group>"; };
+		AE97A157186D51CE00DFEA77 /* mgselect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgselect.h; sourceTree = "<group>"; };
+		AE97A158186D51CE00DFEA77 /* mgsnap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgsnap.h; sourceTree = "<group>"; };
+		AE97A159186D51CE00DFEA77 /* mgview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgview.h; sourceTree = "<group>"; };
+		AE97A15B186D51CE00DFEA77 /* mgcmddraw.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgcmddraw.h; sourceTree = "<group>"; };
+		AE97A15C186D51CE00DFEA77 /* mgdrawarc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgdrawarc.h; sourceTree = "<group>"; };
+		AE97A15D186D51CE00DFEA77 /* mgdrawrect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgdrawrect.h; sourceTree = "<group>"; };
+		AE97A171186D51CE00DFEA77 /* cmdobserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmdobserver.h; sourceTree = "<group>"; };
+		AE97A172186D51CE00DFEA77 /* cmdsubject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmdsubject.h; sourceTree = "<group>"; };
+		AE97A174186D51CE00DFEA77 /* mgbase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgbase.h; sourceTree = "<group>"; };
+		AE97A175186D51CE00DFEA77 /* mgbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgbox.h; sourceTree = "<group>"; };
+		AE97A176186D51CE00DFEA77 /* mgcurv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgcurv.h; sourceTree = "<group>"; };
+		AE97A177186D51CE00DFEA77 /* mgdef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgdef.h; sourceTree = "<group>"; };
+		AE97A178186D51CE00DFEA77 /* mglnrel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mglnrel.h; sourceTree = "<group>"; };
+		AE97A179186D51CE00DFEA77 /* mgmat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgmat.h; sourceTree = "<group>"; };
+		AE97A17A186D51CE00DFEA77 /* mgnear.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgnear.h; sourceTree = "<group>"; };
+		AE97A17B186D51CE00DFEA77 /* mgpnt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgpnt.h; sourceTree = "<group>"; };
+		AE97A17C186D51CE00DFEA77 /* mgtol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgtol.h; sourceTree = "<group>"; };
+		AE97A17D186D51CE00DFEA77 /* mgvec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgvec.h; sourceTree = "<group>"; };
+		AE97A17F186D51CE00DFEA77 /* gicolor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gicolor.h; sourceTree = "<group>"; };
+		AE97A180186D51CE00DFEA77 /* gicontxt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gicontxt.h; sourceTree = "<group>"; };
+		AE97A181186D51CE00DFEA77 /* gigraph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gigraph.h; sourceTree = "<group>"; };
+		AE97A182186D51CE00DFEA77 /* gilock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gilock.h; sourceTree = "<group>"; };
+		AE97A183186D51CE00DFEA77 /* gipath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gipath.h; sourceTree = "<group>"; };
+		AE97A184186D51CE00DFEA77 /* gixform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gixform.h; sourceTree = "<group>"; };
+		AE97A187186D51CE00DFEA77 /* mglog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mglog.h; sourceTree = "<group>"; };
+		AE97A188186D51CE00DFEA77 /* mgvector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgvector.h; sourceTree = "<group>"; };
+		AE97A18A186D51CE00DFEA77 /* mgbasicsp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgbasicsp.h; sourceTree = "<group>"; };
+		AE97A18B186D51CE00DFEA77 /* mgbasicspreg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgbasicspreg.h; sourceTree = "<group>"; };
+		AE97A18C186D51CE00DFEA77 /* mgcomposite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgcomposite.h; sourceTree = "<group>"; };
+		AE97A18D186D51CE00DFEA77 /* mggrid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mggrid.h; sourceTree = "<group>"; };
+		AE97A18E186D51CE00DFEA77 /* mgobject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgobject.h; sourceTree = "<group>"; };
+		AE97A18F186D51CE00DFEA77 /* mgshape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgshape.h; sourceTree = "<group>"; };
+		AE97A190186D51CE00DFEA77 /* mgshape_.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgshape_.h; sourceTree = "<group>"; };
+		AE97A191186D51CE00DFEA77 /* mgshapes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgshapes.h; sourceTree = "<group>"; };
+		AE97A192186D51CE00DFEA77 /* mgshapet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgshapet.h; sourceTree = "<group>"; };
+		AE97A193186D51CE00DFEA77 /* mgshapetype.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgshapetype.h; sourceTree = "<group>"; };
+		AE97A194186D51CE00DFEA77 /* mgspfactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgspfactory.h; sourceTree = "<group>"; };
+		AE97A19A186D51CE00DFEA77 /* mgstorage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mgstorage.h; sourceTree = "<group>"; };
+		AEF6D18B18050FA9009E30CC /* cmds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cmds.cpp; sourceTree = "<group>"; };
+		AEF6D18C18050FA9009E30CC /* cmds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmds.h; sourceTree = "<group>"; };
+		AEF6D18D18050FA9009E30CC /* HitTestCmd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HitTestCmd.cpp; sourceTree = "<group>"; };
+		AEF6D18E18050FA9009E30CC /* HitTestCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HitTestCmd.h; sourceTree = "<group>"; };
+		AEF6D19018050FA9009E30CC /* DemoCmds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DemoCmds.cpp; sourceTree = "<group>"; };
+		AEF6D19118050FA9009E30CC /* DemoCmds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoCmds.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AE2A3A45178FC511000194AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AE2A3A3C178FC511000194AE = {
+			isa = PBXGroup;
+			children = (
+				AE2A3A4E178FC511000194AE /* DemoCmds */,
+				AE2A3A4B178FC511000194AE /* Frameworks */,
+				AE2A3A4A178FC511000194AE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AE2A3A4A178FC511000194AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AE2A3A49178FC511000194AE /* libDemoCmds.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AE2A3A4B178FC511000194AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AE2A3A4E178FC511000194AE /* DemoCmds */ = {
+			isa = PBXGroup;
+			children = (
+				AEF6D18818050F93009E30CC /* core */,
+				AE2A3A4F178FC511000194AE /* Supporting Files */,
+			);
+			path = DemoCmds;
+			sourceTree = "<group>";
+		};
+		AE2A3A4F178FC511000194AE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AE2A3A50178FC511000194AE /* Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AE97A150186D51CE00DFEA77 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A151186D51CE00DFEA77 /* canvas */,
+				AE97A153186D51CE00DFEA77 /* cmd */,
+				AE97A15A186D51CE00DFEA77 /* cmdbase */,
+				AE97A170186D51CE00DFEA77 /* cmdobserver */,
+				AE97A173186D51CE00DFEA77 /* geom */,
+				AE97A17E186D51CE00DFEA77 /* graph */,
+				AE97A187186D51CE00DFEA77 /* mglog.h */,
+				AE97A188186D51CE00DFEA77 /* mgvector.h */,
+				AE97A189186D51CE00DFEA77 /* shape */,
+				AE97A199186D51CE00DFEA77 /* storage */,
+			);
+			name = include;
+			path = ../../../../TouchVGCore/core/include;
+			sourceTree = "<group>";
+		};
+		AE97A151186D51CE00DFEA77 /* canvas */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A152186D51CE00DFEA77 /* gicanvas.h */,
+			);
+			path = canvas;
+			sourceTree = "<group>";
+		};
+		AE97A153186D51CE00DFEA77 /* cmd */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A154186D51CE00DFEA77 /* mgaction.h */,
+				AE97A155186D51CE00DFEA77 /* mgcmd.h */,
+				AE97A156186D51CE00DFEA77 /* mgcoreview.h */,
+				AE97A157186D51CE00DFEA77 /* mgselect.h */,
+				AE97A158186D51CE00DFEA77 /* mgsnap.h */,
+				AE97A159186D51CE00DFEA77 /* mgview.h */,
+			);
+			path = cmd;
+			sourceTree = "<group>";
+		};
+		AE97A15A186D51CE00DFEA77 /* cmdbase */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A15B186D51CE00DFEA77 /* mgcmddraw.h */,
+				AE97A15C186D51CE00DFEA77 /* mgdrawarc.h */,
+				AE97A15D186D51CE00DFEA77 /* mgdrawrect.h */,
+			);
+			path = cmdbase;
+			sourceTree = "<group>";
+		};
+		AE97A170186D51CE00DFEA77 /* cmdobserver */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A171186D51CE00DFEA77 /* cmdobserver.h */,
+				AE97A172186D51CE00DFEA77 /* cmdsubject.h */,
+			);
+			path = cmdobserver;
+			sourceTree = "<group>";
+		};
+		AE97A173186D51CE00DFEA77 /* geom */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A174186D51CE00DFEA77 /* mgbase.h */,
+				AE97A175186D51CE00DFEA77 /* mgbox.h */,
+				AE97A176186D51CE00DFEA77 /* mgcurv.h */,
+				AE97A177186D51CE00DFEA77 /* mgdef.h */,
+				AE97A178186D51CE00DFEA77 /* mglnrel.h */,
+				AE97A179186D51CE00DFEA77 /* mgmat.h */,
+				AE97A17A186D51CE00DFEA77 /* mgnear.h */,
+				AE97A17B186D51CE00DFEA77 /* mgpnt.h */,
+				AE97A17C186D51CE00DFEA77 /* mgtol.h */,
+				AE97A17D186D51CE00DFEA77 /* mgvec.h */,
+			);
+			path = geom;
+			sourceTree = "<group>";
+		};
+		AE97A17E186D51CE00DFEA77 /* graph */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A17F186D51CE00DFEA77 /* gicolor.h */,
+				AE97A180186D51CE00DFEA77 /* gicontxt.h */,
+				AE97A181186D51CE00DFEA77 /* gigraph.h */,
+				AE97A182186D51CE00DFEA77 /* gilock.h */,
+				AE97A183186D51CE00DFEA77 /* gipath.h */,
+				AE97A184186D51CE00DFEA77 /* gixform.h */,
+			);
+			path = graph;
+			sourceTree = "<group>";
+		};
+		AE97A189186D51CE00DFEA77 /* shape */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A18A186D51CE00DFEA77 /* mgbasicsp.h */,
+				AE97A18B186D51CE00DFEA77 /* mgbasicspreg.h */,
+				AE97A18C186D51CE00DFEA77 /* mgcomposite.h */,
+				AE97A18D186D51CE00DFEA77 /* mggrid.h */,
+				AE97A18E186D51CE00DFEA77 /* mgobject.h */,
+				AE97A18F186D51CE00DFEA77 /* mgshape.h */,
+				AE97A190186D51CE00DFEA77 /* mgshape_.h */,
+				AE97A191186D51CE00DFEA77 /* mgshapes.h */,
+				AE97A192186D51CE00DFEA77 /* mgshapet.h */,
+				AE97A193186D51CE00DFEA77 /* mgshapetype.h */,
+				AE97A194186D51CE00DFEA77 /* mgspfactory.h */,
+			);
+			path = shape;
+			sourceTree = "<group>";
+		};
+		AE97A199186D51CE00DFEA77 /* storage */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A19A186D51CE00DFEA77 /* mgstorage.h */,
+			);
+			path = storage;
+			sourceTree = "<group>";
+		};
+		AEF6D18818050F93009E30CC /* core */ = {
+			isa = PBXGroup;
+			children = (
+				AE97A150186D51CE00DFEA77 /* include */,
+				AEF6D18918050FA9009E30CC /* democmds */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
+		AEF6D18918050FA9009E30CC /* democmds */ = {
+			isa = PBXGroup;
+			children = (
+				AEF6D18A18050FA9009E30CC /* cmds */,
+				AEF6D18F18050FA9009E30CC /* gate */,
+			);
+			name = democmds;
+			path = ../../../core;
+			sourceTree = "<group>";
+		};
+		AEF6D18A18050FA9009E30CC /* cmds */ = {
+			isa = PBXGroup;
+			children = (
+				AEF6D18B18050FA9009E30CC /* cmds.cpp */,
+				AEF6D18C18050FA9009E30CC /* cmds.h */,
+				AEF6D18D18050FA9009E30CC /* HitTestCmd.cpp */,
+				AEF6D18E18050FA9009E30CC /* HitTestCmd.h */,
+			);
+			path = cmds;
+			sourceTree = "<group>";
+		};
+		AEF6D18F18050FA9009E30CC /* gate */ = {
+			isa = PBXGroup;
+			children = (
+				AEF6D19018050FA9009E30CC /* DemoCmds.cpp */,
+				AEF6D19118050FA9009E30CC /* DemoCmds.h */,
+			);
+			path = gate;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		AE2A3A46178FC511000194AE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE97A1B3186D5A3700DFEA77 /* mgvector.h in Headers */,
+				AEF6D1FE18050FA9009E30CC /* DemoCmds.h in Headers */,
+				AEF6D1FA18050FA9009E30CC /* cmds.h in Headers */,
+				AEF6D1FC18050FA9009E30CC /* HitTestCmd.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AE2A3A48178FC511000194AE /* DemoCmds */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE2A3A56178FC511000194AE /* Build configuration list for PBXNativeTarget "DemoCmds" */;
+			buildPhases = (
+				AE2A3A43178FC511000194AE /* ShellScript */,
+				AE2A3A44178FC511000194AE /* Sources */,
+				AE2A3A45178FC511000194AE /* Frameworks */,
+				AE2A3A46178FC511000194AE /* Headers */,
+				AE2A3A47178FC511000194AE /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DemoCmds;
+			productName = DemoCmds;
+			productReference = AE2A3A49178FC511000194AE /* libDemoCmds.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AE2A3A3E178FC511000194AE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = Founder;
+			};
+			buildConfigurationList = AE2A3A41178FC511000194AE /* Build configuration list for PBXProject "DemoCmds" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AE2A3A3C178FC511000194AE;
+			productRefGroup = AE2A3A4A178FC511000194AE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AE2A3A48178FC511000194AE /* DemoCmds */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AE2A3A43178FC511000194AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nif [ \"$CALLED_FROM_MASTER\" ]\nthen\n# This is the other build, called from the original instance\nexit 0\nfi\n\n# Clean up prior to build\n\nCURRENTCONFIG_DEVICE_DIR=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nCURRENTCONFIG_SIMULATOR_DIR=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nCURRENTCONFIG_UNIVERSAL_DIR=\"${SYMROOT}/${CONFIGURATION}-universal\"\n\nif [ ! -f \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" ]; then\n  echo \"Device build cleaned; cleaning other builds too\"\n  rm -f \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" \n  rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nelif [ ! -f \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" ]; then\n  echo \"Simulator build cleaned; cleaning other builds too\"\n  rm -f \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\"\n  rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AE2A3A47178FC511000194AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n#\n# Universal static library script\n# http://github.com/michaeltyson/iOS-Universal-Library-Template\n#\n# Version 2.5\n#\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Tweaked and made into an Xcode template by Michael Tyson - http://atastypixel.com/blog\n# Based on original script from Eonil\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n# Additional changes by John Lawson <http://jelawson.com> to copy the CURRENTCONFIG_DEVICE_DIR to the CURRENTCONFIG_UNIVERSAL_DIR instead of creating it\n# to include other files that might have been copied via Copy Files build phases (e.g. readme files, xibs, etc); this removes the need to copy just\n# the header folder.\n#\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\nif [ \"$CALLED_FROM_MASTER\" ]\nthen\n# This is the other build, called from the original instance\nexit 0\nfi\n\n# Find the BASESDK version number\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n\n# Build the other architecture\necho \"xcodebuild -project \\\"${PROJECT_FILE_PATH}\\\" -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" CALLED_FROM_MASTER=1\"\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" CALLED_FROM_MASTER=1\n\n# Merge built architectures\nCURRENTCONFIG_DEVICE_DIR=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nCURRENTCONFIG_SIMULATOR_DIR=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nCURRENTCONFIG_UNIVERSAL_DIR=\"${SYMROOT}/${CONFIGURATION}-universal\"\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\necho \"...I will output a universal build to: ${CURRENTCONFIG_UNIVERSAL_DIR}\"\n\nif [ ! -e \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" -o \\\n\"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" -nt \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" -o \\\n\"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" -nt \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" ]\nthen\nrm -rf \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\ncp -R \"${CURRENTCONFIG_DEVICE_DIR}\" \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\nrm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\necho \"Copying universal build back over to ${CURRENTCONFIG_DEVICE_DIR} and ${CURRENTCONFIG_SIMULATOR_DIR}\"\ncp \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\"\ncp \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\ntouch \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n\nelse\necho \"Everything up to date.\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AE2A3A44178FC511000194AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEF6D1F918050FA9009E30CC /* cmds.cpp in Sources */,
+				AEF6D1FB18050FA9009E30CC /* HitTestCmd.cpp in Sources */,
+				AEF6D1FD18050FA9009E30CC /* DemoCmds.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AE2A3A54178FC511000194AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AE2A3A55178FC511000194AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AE2A3A57178FC511000194AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/DemoCmds.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DemoCmds/Prefix.pch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AE2A3A58178FC511000194AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/DemoCmds.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DemoCmds/Prefix.pch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AE2A3A41178FC511000194AE /* Build configuration list for PBXProject "DemoCmds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE2A3A54178FC511000194AE /* Debug */,
+				AE2A3A55178FC511000194AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE2A3A56178FC511000194AE /* Build configuration list for PBXNativeTarget "DemoCmds" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE2A3A57178FC511000194AE /* Debug */,
+				AE2A3A58178FC511000194AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AE2A3A3E178FC511000194AE /* Project object */;
+}

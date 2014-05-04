@@ -10,7 +10,7 @@ Features described in [Online document](http://touchvg.github.io).
 
 ## License
 
-This is an open source [LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) licensed project. It uses the following open source projects:
+This is an open source [LGPL 2.1](LICENSE.md) licensed project. It uses the following open source projects:
 
 - [TouchVGCore](https://github.com/touchvg/vgcore) (LGPL): Cross-platform vector drawing libraries using C++.
 - [svg-android](https://github.com/japgolly/svg-android) (Apache): Vector graphics support for Android.
@@ -50,11 +50,7 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
   - Android SDK version of the projects may need to modify according to your installation.
   - Recommend using the newer [ADT Bundle](http://developer.android.com/sdk/index.html) to avoid complex configuration.
 
--  You may replace full text and file names of `democmds` library project (for example, using UltraEdit) for your application. And you can add your shape classes or drawing commands. Thus, the TouchVG library does not require changes.
-
-   - Do not want to write C++ code? Please reference to `android/test/src/vgtest/testview/shape` package to write your own shapes and commands.
-
--  To regenerate libtouchvg.so and libdemocmds.so, please enter `android` directory of TouchVG, then type `./build.sh`
+-  To regenerate libtouchvg.so, please enter `android` directory of TouchVG, then type `./build.sh`
 (Need to add the [NDK](http://developer.android.com/tools/sdk/ndk/index.html) installation location to your PATH environment variable).
 
    - If the error `build/gmsl/__gmsl:512: *** non-numeric second argument to wordlist function` occurs, then open the `build/gmsl/__gmsl` file in the NDK installation directory, and change line 512 to:
@@ -64,6 +60,8 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 
    - To regenerate the kernel JNI classes, type `./build.sh-swig`
 (Need to install [SWIG](http://sourceforge.net/projects/swig/files/), and add the location to PATH).
+
+- Do not want to write C++ code? Please reference to `android/test/src/vgtest/testview/shape` package to write your own shapes and commands. You can use `thirdparty/newproj.py` to create your library project containing your own shapes and commands.
 
 ## Compile for iOS
 
@@ -83,11 +81,12 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 
    - To run on device, you may need to change the Bundle Identifier of the demo application, such as "com.yourcompany.TestView", and choose your own development certificate (Code Signing).
 
--  You may replace full text and file names of `democmds` library project (for example, using UltraEdit) for your application. And you can add your shape classes or drawing commands. Thus, the TouchVG library does not require changes.
-
 ## Compile for Windows
 
 - Open `wpf/Test_cs10.sln` in Visual Studio 2010 (Need VC++ and C#), then run the`WpfDemo` application. Or open `wpf/Test_cs9.sln` in VS2008.
+
+- To regenerate `wpf/touchvglib/core/*.cs`, please enter `wpf` directory and type `./build.sh`
+(Need to install [SWIG](http://sourceforge.net/projects/swig/files/), and add the location to PATH).
 
 ## Compile for other platform
 
@@ -101,3 +100,11 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
      - `Make clean java.clean python.clean`: delete these temporary files compiled out .
 
    - MSYS and TDM-GCC(a MinGW distribution) are recommended on Windows.
+ 
+# Add more shapes and commands
+
+- You can use newproj.py to create your library project (Recommended as GIT submodule) containing your own shapes and commands. So the TouchVG library does not require changes.
+  -  Enter `thirdparty` directory then type `python newproj.py YourCmds`.
+  - Need to install python to run the script.
+ 
+- You can customize the drawing behavior via implement your [CmdObserve class](thirdparty/DemoCmds/core/cmds/cmds.cpp).

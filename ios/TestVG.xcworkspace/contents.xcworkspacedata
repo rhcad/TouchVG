@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../thirdparty/DemoCmds/ios/DemoCmds/DemoCmds.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:../thirdparty/SVGKit/SVGKit-iOS.xcodeproj">
    </FileRef>
    <FileRef
@@ -12,9 +15,6 @@
    </FileRef>
    <FileRef
       location = "group:TouchVG/TouchVG.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:DemoCmds/DemoCmds.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:tests/TestView/TestView.xcodeproj">
