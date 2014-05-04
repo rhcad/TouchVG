@@ -1,33 +1,14 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDemo_cs9", "WpfDemo\WpfDemo_cs9.csproj", "{160FD0CF-8285-4361-BE66-6884F0D3E56A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C81D9406-B164-469D-83F1-AFE50842F31E} = {C81D9406-B164-469D-83F1-AFE50842F31E}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "touchvglib_cs9", "touchvglib\touchvglib_cs9.csproj", "{AD99A603-DE1E-461B-975B-464BCEFBE035}"
 	ProjectSection(ProjectDependencies) = postProject
 		{180CC455-E62C-4AB8-A024-F3FF724719EA} = {180CC455-E62C-4AB8-A024-F3FF724719EA}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "democmds", "..\..\DemoCmds\win\democmds\democmds_vc9.vcproj", "{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8D0C50E7-E089-404D-8331-F4F62FCA1FFF} = {8D0C50E7-E089-404D-8331-F4F62FCA1FFF}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "touchvg", "touchvg\touchvg_vc9.vcproj", "{180CC455-E62C-4AB8-A024-F3FF724719EA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D0C50E7-E089-404D-8331-F4F62FCA1FFF} = {8D0C50E7-E089-404D-8331-F4F62FCA1FFF}
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "democmdslib_cs9", "..\..\DemoCmds\win\democmdslib\democmdslib_cs9.csproj", "{C81D9406-B164-469D-83F1-AFE50842F31E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE} = {2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "democmds", "democmds", "{FE43E5BF-CB27-4B6A-96AC-430B0C4CE082}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "touchvg", "touchvg", "{B2153A16-3420-486B-839D-CF6FAE418EBF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TouchVGCore", "..\..\TouchVGCore\win\msvc\TouchVGCore\TouchVGCore_vc9.vcproj", "{8D0C50E7-E089-404D-8331-F4F62FCA1FFF}"
 EndProject
@@ -41,66 +22,26 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Debug|Win32.Build.0 = Debug|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Release|Win32.ActiveCfg = Release|Any CPU
-		{160FD0CF-8285-4361-BE66-6884F0D3E56A}.Release|Win32.Build.0 = Release|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Debug|Win32.Build.0 = Debug|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Release|Win32.ActiveCfg = Release|Any CPU
-		{AD99A603-DE1E-461B-975B-464BCEFBE035}.Release|Win32.Build.0 = Release|Any CPU
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Debug|Any CPU.Build.0 = Debug|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Debug|Win32.Build.0 = Debug|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Release|Any CPU.ActiveCfg = Release|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Release|Any CPU.Build.0 = Release|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Release|Win32.ActiveCfg = Release|Win32
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE}.Release|Win32.Build.0 = Release|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Debug|Any CPU.Build.0 = Debug|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Debug|Win32.ActiveCfg = Debug|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Debug|Win32.Build.0 = Debug|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Release|Any CPU.ActiveCfg = Release|Win32
-		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Release|Any CPU.Build.0 = Release|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Release|Win32.ActiveCfg = Release|Win32
 		{180CC455-E62C-4AB8-A024-F3FF724719EA}.Release|Win32.Build.0 = Release|Win32
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Debug|Win32.Build.0 = Debug|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Release|Win32.ActiveCfg = Release|Any CPU
-		{C81D9406-B164-469D-83F1-AFE50842F31E}.Release|Win32.Build.0 = Release|Any CPU
 		{8D0C50E7-E089-404D-8331-F4F62FCA1FFF}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{8D0C50E7-E089-404D-8331-F4F62FCA1FFF}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{8D0C50E7-E089-404D-8331-F4F62FCA1FFF}.Debug|Mixed Platforms.Build.0 = Debug|Win32
@@ -114,12 +55,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{180CC455-E62C-4AB8-A024-F3FF724719EA} = {B2153A16-3420-486B-839D-CF6FAE418EBF}
-		{AD99A603-DE1E-461B-975B-464BCEFBE035} = {B2153A16-3420-486B-839D-CF6FAE418EBF}
-		{8D0C50E7-E089-404D-8331-F4F62FCA1FFF} = {B2153A16-3420-486B-839D-CF6FAE418EBF}
-		{C81D9406-B164-469D-83F1-AFE50842F31E} = {FE43E5BF-CB27-4B6A-96AC-430B0C4CE082}
-		{2E14C3C2-B9BD-4A73-809E-38ECBA8565AE} = {FE43E5BF-CB27-4B6A-96AC-430B0C4CE082}
 	EndGlobalSection
 EndGlobal

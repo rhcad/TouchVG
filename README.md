@@ -45,7 +45,7 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 
 ## Compile for Android
 
-- Import all projects under `./android` directory of TouchVG in eclipse, then run `VGTest` or `vgdemo1` project to view the demonstration.
+- Import all projects under `./android` directory of TouchVG in eclipse, then build  `touchvg` project.
 
   - Android SDK version of the projects may need to modify according to your installation.
   - Recommend using the newer [ADT Bundle](http://developer.android.com/sdk/index.html) to avoid complex configuration.
@@ -61,29 +61,20 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
    - To regenerate the kernel JNI classes, type `./build.sh-swig`
 (Need to install [SWIG](http://sourceforge.net/projects/swig/files/), and add the location to PATH).
 
-- Do not want to write C++ code? Please reference to `android/test/src/vgtest/testview/shape` package to write your own shapes and commands. You can use `thirdparty/newproj.py` to create your library project containing your own shapes and commands.
-
 ## Compile for iOS
 
--  Open `ios/TestVG.xcworkspace` in Xcode, then run the `TestView` demo app.
+-  Open `ios/TouchVG.xcworkspace` in Xcode, then build the `TouchVG` or `TouchVG-SVG` targets.
 
-   - The `TestView` project has two targets:
-   
-     - `TestView` target using `libTouchVG.a` does not support SVG display.
-     - `TestView-SVG` target using `libTouchVG-SVG.a` and `SVGKit` can display SVG shapes.
+   - `libTouchVG.a` does not support SVG display.
+   - `libTouchVG-SVG.a` can display SVG shapes using [SVGKit](https://github.com/SVGKit/SVGKit).
 
-   - Static libraries required can be compiled in two ways:
-   
-        - Enter `ios` directory, then type `./build.sh` (Need to configure Xcode command line environment) to compile all static libraries to the `ios/output` directory.
-          - Type `./build.sh -arch arm64` to make for iOS 64-bit.
-          - Type `./build.sh clean` to remove object files.
-        - Or select and build each library project in Xcode IDE.
-
-   - To run on device, you may need to change the Bundle Identifier of the demo application, such as "com.yourcompany.TestView", and choose your own development certificate (Code Signing).
+- Or enter `ios` directory and type `./build.sh` (Need to configure Xcode command line environment) to compile all static libraries to the `ios/output` directory.
+  - Type `./build.sh -arch arm64` to make for iOS 64-bit.
+  - Type `./build.sh clean` to remove object files.
 
 ## Compile for Windows
 
-- Open `wpf/Test_cs10.sln` in Visual Studio 2010 (Need VC++ and C#), then run the`WpfDemo` application. Or open `wpf/Test_cs9.sln` in VS2008.
+- Open `wpf/Test_cs10.sln` in Visual Studio 2010 (Need VC++ and C#). Or open `wpf/Test_cs9.sln` in VS2008.
 
 - To regenerate `wpf/touchvglib/core/*.cs`, please enter `wpf` directory and type `./build.sh`
 (Need to install [SWIG](http://sourceforge.net/projects/swig/files/), and add the location to PATH).

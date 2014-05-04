@@ -28,3 +28,4 @@ gdb.setup
 gdbserver
 ios/output
 *.db
+*.so
