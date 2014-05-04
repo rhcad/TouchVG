@@ -26,7 +26,5 @@ gen
 obj
 gdb.setup
 gdbserver
-ios/output/*.a
-ios/output/TouchVG*
-ios/output/Demo*
+ios/output
 *.db

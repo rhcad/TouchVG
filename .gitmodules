@@ -1,6 +1,0 @@
-[submodule "thirdparty/TouchVGCore"]
-	path = thirdparty/TouchVGCore
-	url = https://github.com/touchvg/vgcore.git
-[submodule "thirdparty/SVGKit"]
-	path = thirdparty/SVGKit
-	url = https://github.com/SVGKit/SVGKit.git

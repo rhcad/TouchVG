@@ -1,8 +1,8 @@
 # Copyright (c) 2013-2014, Zhang Yungui, https://github.com/rhcad/touchvg
 #
 LOCAL_PATH := $(call my-dir)
-CORE_PATH  := ../../../thirdparty/TouchVGCore/android/TouchVGCore/obj/local/armeabi
-CORE_INC   := $(LOCAL_PATH)/../../../thirdparty/TouchVGCore/core/include
+CORE_PATH  := ../../../../TouchVGCore/android/TouchVGCore/obj/local/armeabi
+CORE_INC   := $(LOCAL_PATH)/../../../../TouchVGCore/core/include
 
 include $(CLEAR_VARS)
 LOCAL_MODULE    := libTouchVGCore

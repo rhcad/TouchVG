@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\..\thirdparty\TouchVGCore\core\include\test;..\..\include\canvas"
+				AdditionalIncludeDirectories="..\..\..\..\TouchVGCore\core\include\canvas;..\..\..\..\TouchVGCore\core\include\test;..\..\include\canvas"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -116,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\..\thirdparty\TouchVGCore\core\include\test;..\..\include\canvas"
+				AdditionalIncludeDirectories="..\..\..\..\TouchVGCore\core\include\canvas;..\..\..\..\TouchVGCore\core\include\test;..\..\include\canvas"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -183,7 +183,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\thirdparty\TouchVGCore\core\src\test\testcanvas.cpp"
+				RelativePath="..\..\..\..\TouchVGCore\core\src\test\testcanvas.cpp"
 				>
 			</File>
 		</Filter>
@@ -193,7 +193,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\thirdparty\TouchVGCore\core\include\canvas\gicanvas.h"
+				RelativePath="..\..\..\..\TouchVGCore\core\include\canvas\gicanvas.h"
 				>
 			</File>
 			<File
@@ -201,7 +201,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\thirdparty\TouchVGCore\core\include\test\testcanvas.h"
+				RelativePath="..\..\..\..\TouchVGCore\core\include\test\testcanvas.h"
 				>
 			</File>
 		</Filter>

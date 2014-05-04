@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "touchvglib_cs10", "touchvgl
 		{180CC455-E62C-4AB8-A024-F3FF724719EA} = {180CC455-E62C-4AB8-A024-F3FF724719EA}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "democmds", "..\thirdparty\DemoCmds\win\democmds\democmds_vc10.vcxproj", "{6437BB7B-62DC-49B3-98F9-E22D3978EE9D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "democmds", "..\..\DemoCmds\win\democmds\democmds_vc10.vcxproj", "{6437BB7B-62DC-49B3-98F9-E22D3978EE9D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A7119A43-A135-413A-A852-F2945924AC17} = {A7119A43-A135-413A-A852-F2945924AC17}
 	EndProjectSection
@@ -20,7 +20,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "touchvg", "touchvg\touchvg_
 		{A7119A43-A135-413A-A852-F2945924AC17} = {A7119A43-A135-413A-A852-F2945924AC17}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "democmdslib_cs10", "..\thirdparty\DemoCmds\win\democmdslib\democmdslib_cs10.csproj", "{F0736804-0A5D-4A92-8A27-657D619187CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "democmdslib_cs10", "..\..\DemoCmds\win\democmdslib\democmdslib_cs10.csproj", "{F0736804-0A5D-4A92-8A27-657D619187CD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6437BB7B-62DC-49B3-98F9-E22D3978EE9D} = {6437BB7B-62DC-49B3-98F9-E22D3978EE9D}
 	EndProjectSection
@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "democmds", "democmds", "{3B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "touchvg", "touchvg", "{A9B0FFEA-2B25-401B-866C-80CA6039EF25}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TouchVGCore", "..\thirdparty\TouchVGCore\win\msvc\TouchVGCore\TouchVGCore_vc10.vcxproj", "{A7119A43-A135-413A-A852-F2945924AC17}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TouchVGCore", "..\..\TouchVGCore\win\msvc\TouchVGCore\TouchVGCore_vc10.vcxproj", "{A7119A43-A135-413A-A852-F2945924AC17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

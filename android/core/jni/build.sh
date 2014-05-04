@@ -9,24 +9,24 @@ if [ "$1"x = "-swig"x ] || [ ! -f touchvg_java_wrap.cpp ] ; then # Make JNI clas
     swig -c++ -java -package rhcad.touchvg.core -D__ANDROID__ \
         -outdir ../src/rhcad/touchvg/core \
         -o touchvg_java_wrap.cpp \
-        -I../../../thirdparty/TouchVGCore/core/include \
-        -I../../../thirdparty/TouchVGCore/core/include/canvas \
-        -I../../../thirdparty/TouchVGCore/core/include/graph \
-        -I../../../thirdparty/TouchVGCore/core/include/cmd \
-        -I../../../thirdparty/TouchVGCore/core/include/storage \
-        -I../../../thirdparty/TouchVGCore/core/include/geom \
-        -I../../../thirdparty/TouchVGCore/core/include/shape \
-        -I../../../thirdparty/TouchVGCore/core/include/cmdobserver \
-        -I../../../thirdparty/TouchVGCore/core/include/cmdbase \
-        -I../../../thirdparty/TouchVGCore/core/include/test \
-        -I../../../thirdparty/TouchVGCore/core/include/view \
-        -I../../../thirdparty/TouchVGCore/core/include/cmdbasic \
-        -I../../../thirdparty/TouchVGCore/core/include/shapedoc \
-        -I../../../thirdparty/TouchVGCore/core/include/jsonstorage \
-        -I../../../thirdparty/TouchVGCore/core/include/cmdmgr \
-        -I../../../thirdparty/TouchVGCore/core/include/record \
-        -I../../../thirdparty/TouchVGCore/core/src/view \
-          ../../../thirdparty/TouchVGCore/core/src/view/touchvg.swig
+        -I../../../../TouchVGCore/core/include \
+        -I../../../../TouchVGCore/core/include/canvas \
+        -I../../../../TouchVGCore/core/include/graph \
+        -I../../../../TouchVGCore/core/include/cmd \
+        -I../../../../TouchVGCore/core/include/storage \
+        -I../../../../TouchVGCore/core/include/geom \
+        -I../../../../TouchVGCore/core/include/shape \
+        -I../../../../TouchVGCore/core/include/cmdobserver \
+        -I../../../../TouchVGCore/core/include/cmdbase \
+        -I../../../../TouchVGCore/core/include/test \
+        -I../../../../TouchVGCore/core/include/view \
+        -I../../../../TouchVGCore/core/include/cmdbasic \
+        -I../../../../TouchVGCore/core/include/shapedoc \
+        -I../../../../TouchVGCore/core/include/jsonstorage \
+        -I../../../../TouchVGCore/core/include/cmdmgr \
+        -I../../../../TouchVGCore/core/include/record \
+        -I../../../../TouchVGCore/core/src/view \
+          ../../../../TouchVGCore/core/src/view/touchvg.swig
     python replacejstr.py
 fi
 ndk-build

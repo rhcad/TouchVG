@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<lint>
-    <issue id="ButtonStyle" severity="ignore" />
-    <issue id="UselessParent">
-        <ignore path="res/layout/activity_animation1.xml" />
-        <ignore path="res/layout/activity_example1.xml" />
-    </issue>
-</lint>

@@ -1,6 +1,6 @@
 # TouchVG
 
-TouchVG is a lightweight 2D vector drawing framework mainly using C++ for iOS, Android and Windows.
+TouchVG is a lightweight 2D vector drawing framework for iOS, Android and Windows.
 
 Features described in [Online document](http://touchvg.github.io).
 
@@ -12,7 +12,7 @@ Features described in [Online document](http://touchvg.github.io).
 
 This is an open source [LGPL 2.1](LICENSE.md) licensed project. It uses the following open source projects:
 
-- [TouchVGCore](https://github.com/touchvg/vgcore) (LGPL): Cross-platform vector drawing libraries using C++.
+- [TouchVGCore](https://github.com/touchvg/TouchVGCore) (LGPL): Cross-platform vector drawing libraries using C++.
 - [svg-android](https://github.com/japgolly/svg-android) (Apache): Vector graphics support for Android.
 - [SVGKit](https://github.com/SVGKit/SVGKit) (MIT): Display and interact with SVG Images with CoreAnimation on iOS.
 - [simple-svg](http://code.google.com/p/simple-svg) (BSD): A C++ header file for creating SVG files.
@@ -103,8 +103,7 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
  
 # Add more shapes and commands
 
-- You can use newproj.py to create your library project (Recommended as GIT submodule) containing your own shapes and commands. So the TouchVG library does not require changes.
-  -  Enter `thirdparty` directory then type `python newproj.py YourCmds`.
+- You can use newproj.py to create your library project containing your own shapes and commands. So the TouchVG and TouchVGCore libraries does not require changes.
+  - Enter `thirdparty` directory, then type `python newproj.py YourCmds`.
   - Need to install python to run the script.
  
-- You can customize the drawing behavior via implement your [CmdObserve class](thirdparty/DemoCmds/core/cmds/cmds.cpp).

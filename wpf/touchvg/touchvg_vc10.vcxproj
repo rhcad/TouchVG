@@ -53,7 +53,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\thirdparty\TouchVGCore\core\include;..\..\thirdparty\TouchVGCore\core\include\geom;..\..\thirdparty\TouchVGCore\core\include\graph;..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\thirdparty\TouchVGCore\core\include\shape;..\..\thirdparty\TouchVGCore\core\include\storage;..\..\thirdparty\TouchVGCore\core\include\cmd;..\..\thirdparty\TouchVGCore\core\include\cmdobserver;..\..\thirdparty\TouchVGCore\core\include\cmdbase;..\..\thirdparty\TouchVGCore\core\include\cmdbasic;..\..\thirdparty\TouchVGCore\core\include\cmdmgr;..\..\thirdparty\TouchVGCore\core\include\view;..\..\thirdparty\TouchVGCore\core\include\shapedoc;..\..\thirdparty\TouchVGCore\core\include\jsonstorage;..\..\thirdparty\TouchVGCore\core\include\export;..\..\thirdparty\TouchVGCore\core\include\test;..\..\thirdparty\TouchVGCore\core\include\record;..\..\thirdparty\TouchVGCore\core\src\view</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\TouchVGCore\core\include;..\..\..\TouchVGCore\core\include\geom;..\..\..\TouchVGCore\core\include\graph;..\..\..\TouchVGCore\core\include\canvas;..\..\..\TouchVGCore\core\include\shape;..\..\..\TouchVGCore\core\include\storage;..\..\..\TouchVGCore\core\include\cmd;..\..\..\TouchVGCore\core\include\cmdobserver;..\..\..\TouchVGCore\core\include\cmdbase;..\..\..\TouchVGCore\core\include\cmdbasic;..\..\..\TouchVGCore\core\include\cmdmgr;..\..\..\TouchVGCore\core\include\view;..\..\..\TouchVGCore\core\include\shapedoc;..\..\..\TouchVGCore\core\include\jsonstorage;..\..\..\TouchVGCore\core\include\export;..\..\..\TouchVGCore\core\include\test;..\..\..\TouchVGCore\core\include\record;..\..\..\TouchVGCore\core\src\view</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -63,7 +63,7 @@
       <DisableSpecificWarnings>4819;4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\thirdparty\TouchVGCore\win\build\$(Configuration)10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\TouchVGCore\win\build\$(Configuration)10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -84,7 +84,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\thirdparty\TouchVGCore\core\include;..\..\thirdparty\TouchVGCore\core\include\geom;..\..\thirdparty\TouchVGCore\core\include\graph;..\..\thirdparty\TouchVGCore\core\include\canvas;..\..\thirdparty\TouchVGCore\core\include\shape;..\..\thirdparty\TouchVGCore\core\include\storage;..\..\thirdparty\TouchVGCore\core\include\cmd;..\..\thirdparty\TouchVGCore\core\include\cmdobserver;..\..\thirdparty\TouchVGCore\core\include\cmdbase;..\..\thirdparty\TouchVGCore\core\include\cmdbasic;..\..\thirdparty\TouchVGCore\core\include\cmdmgr;..\..\thirdparty\TouchVGCore\core\include\view;..\..\thirdparty\TouchVGCore\core\include\shapedoc;..\..\thirdparty\TouchVGCore\core\include\jsonstorage;..\..\thirdparty\TouchVGCore\core\include\export;..\..\thirdparty\TouchVGCore\core\include\test;..\..\thirdparty\TouchVGCore\core\include\record;..\..\thirdparty\TouchVGCore\core\src\view</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\TouchVGCore\core\include;..\..\..\TouchVGCore\core\include\geom;..\..\..\TouchVGCore\core\include\graph;..\..\..\TouchVGCore\core\include\canvas;..\..\..\TouchVGCore\core\include\shape;..\..\..\TouchVGCore\core\include\storage;..\..\..\TouchVGCore\core\include\cmd;..\..\..\TouchVGCore\core\include\cmdobserver;..\..\..\TouchVGCore\core\include\cmdbase;..\..\..\TouchVGCore\core\include\cmdbasic;..\..\..\TouchVGCore\core\include\cmdmgr;..\..\..\TouchVGCore\core\include\view;..\..\..\TouchVGCore\core\include\shapedoc;..\..\..\TouchVGCore\core\include\jsonstorage;..\..\..\TouchVGCore\core\include\export;..\..\..\TouchVGCore\core\include\test;..\..\..\TouchVGCore\core\include\record;..\..\..\TouchVGCore\core\src\view</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TOUCHVG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -94,7 +94,7 @@
       <DisableSpecificWarnings>4819;4100;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\thirdparty\TouchVGCore\win\build\$(Configuration)10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\TouchVGCore\win\build\$(Configuration)10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
@@ -114,12 +114,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\thirdparty\TouchVGCore\core\src\view\touchvg.swig">
+    <CustomBuild Include="..\..\..\TouchVGCore\core\src\view\touchvg.swig">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Swig generating...</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir "$(ProjectDir)..\touchvglib\core" -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\canvas" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\graph" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\test" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\view" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\storage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\geom" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shape" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdobserver" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbase" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbasic" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shapedoc" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\jsonstorage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdmgr" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir "$(ProjectDir)..\touchvglib\core" -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\canvas" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\graph" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmd" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\test" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\view" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\storage" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\geom" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\shape" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmdobserver" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmdbase" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmdbasic" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\shapedoc" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\jsonstorage" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmdmgr" "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)touchvg_csharp_wrap.cpp;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Swig generating...</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir "$(ProjectDir)..\touchvglib\core" -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\canvas" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\graph" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmd" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\test" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\view" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\storage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\geom" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shape" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdobserver" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbase" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdbasic" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\shapedoc" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\jsonstorage" -I"$(ProjectDir)..\..\thirdparty\TouchVGCore\core\include\cmdmgr" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">swig.exe -c++ -csharp -namespace "touchvg.core" -module touchvg -outdir "$(ProjectDir)..\touchvglib\core" -o "$(ProjectDir)touchvg_csharp_wrap.cpp" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\canvas" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\graph" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmd" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\test" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\view" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\storage" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\geom" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\shape" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmdobserver" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmdbase" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmdbasic" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\shapedoc" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\jsonstorage" -I"$(ProjectDir)..\..\..\TouchVGCore\core\include\cmdmgr" "%(FullPath)"</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)touchvg_csharp_wrap.cpp;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -129,15 +129,15 @@
     <ClCompile Include=".\touchvg_csharp_wrap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\view\gimousehelper.h" />
-    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\graph\gicolor.h" />
-    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\graph\gicontxt.h" />
-    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\view\gicoreview.h" />
-    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\view\gigesture.h" />
+    <ClInclude Include="..\..\..\TouchVGCore\core\include\view\gimousehelper.h" />
+    <ClInclude Include="..\..\..\TouchVGCore\core\include\graph\gicolor.h" />
+    <ClInclude Include="..\..\..\TouchVGCore\core\include\graph\gicontxt.h" />
+    <ClInclude Include="..\..\..\TouchVGCore\core\include\view\gicoreview.h" />
+    <ClInclude Include="..\..\..\TouchVGCore\core\include\view\gigesture.h" />
     <ClInclude Include=".\touchvg_csharp_wrap.h" />
-    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\canvas\gicanvas.h" />
-    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\view\giview.h" />
-    <ClInclude Include="..\..\thirdparty\TouchVGCore\core\include\test\testcanvas.h" />
+    <ClInclude Include="..\..\..\TouchVGCore\core\include\canvas\gicanvas.h" />
+    <ClInclude Include="..\..\..\TouchVGCore\core\include\view\giview.h" />
+    <ClInclude Include="..\..\..\TouchVGCore\core\include\test\testcanvas.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
