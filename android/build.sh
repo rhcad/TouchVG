@@ -4,4 +4,4 @@
 #
 cd ../../TouchVGCore/android; sh build.sh; cd ../../TouchVG/android
 
-cd core/jni; sh build.sh $1; cd ../..
+cd TouchVG/jni; sh build.sh $1; cd ../..

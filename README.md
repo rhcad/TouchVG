@@ -94,7 +94,8 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
  
 # Add more shapes and commands
 
-- You can use newproj.py to create your library project containing your own shapes and commands. So the TouchVG and TouchVGCore libraries does not require changes.
-  - Enter `thirdparty` directory, then type `python newproj.py YourCmds`.
+- You can use [newproj.py](https://github.com/touchvg/TouchVGTest/blob/master/thirdparty/newproj.py) to create library project (Recommended as GIT submodule) containing your own shapes and commands. So the TouchVG and TouchVGCore libraries does not require changes.
+
+  - Enter `thirdparty` directory and type `python newproj.py YourCmds`.
+    
   - Need to install python to run the script.
- 
