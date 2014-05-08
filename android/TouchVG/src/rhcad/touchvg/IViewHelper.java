@@ -4,6 +4,8 @@
 
 package rhcad.touchvg;
 
+import rhcad.touchvg.core.GiCoreView;
+import rhcad.touchvg.core.MgView;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
@@ -31,8 +33,14 @@ public interface IViewHelper {
     //! 返回视图上下文
     public Context getContext();
 
+    //! 返回内核视图分发器对象
+    public GiCoreView coreView();
+
     //! 返回内核视图的句柄, MgView 指针
     public int cmdViewHandle();
+
+    //! 返回内核命令视图
+    public MgView cmdView();
 
     //! 在指定的布局中创建SurfaceView绘图视图，并记下此视图
     public ViewGroup createSurfaceView(Context context, ViewGroup layout);

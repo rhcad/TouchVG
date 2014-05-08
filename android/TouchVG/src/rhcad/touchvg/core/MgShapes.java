@@ -180,6 +180,11 @@ public class MgShapes extends MgObject {
     return touchvgJNI.MgShapes_updateShape__SWIG_1(swigCPtr, this, MgShape.getCPtr(shape), shape);
   }
 
+  public MgShape cloneShape(int sid) {
+    long cPtr = touchvgJNI.MgShapes_cloneShape(swigCPtr, this, sid);
+    return (cPtr == 0) ? null : new MgShape(cPtr, false);
+  }
+
   public void transform(Matrix2d mat) {
     touchvgJNI.MgShapes_transform(swigCPtr, this, Matrix2d.getCPtr(mat), mat);
   }

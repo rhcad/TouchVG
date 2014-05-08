@@ -2640,6 +2640,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_updateShape__SWIG_1")]
   public static extern bool MgShapes_updateShape__SWIG_1(HandleRef jarg1, HandleRef jarg2);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgShapes_cloneShape")]
+  public static extern IntPtr MgShapes_cloneShape(HandleRef jarg1, int jarg2);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgShapes_transform")]
   public static extern void MgShapes_transform(HandleRef jarg1, HandleRef jarg2);
 

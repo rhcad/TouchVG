@@ -4,6 +4,7 @@
 
 package rhcad.touchvg;
 
+import rhcad.touchvg.core.GiCoreView;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -18,6 +19,9 @@ public interface IGraphView {
 
     //! 本视图为放大镜时返回对应的主视图，否则返回自己
     public IGraphView getMainView();
+
+    //! 返回内核视图分发器对象
+    public GiCoreView coreView();
 
     //! 创建动态绘图子视图
     public View createDynamicShapeView(Context context);

@@ -1,6 +1,8 @@
 #!/bin/sh
 # Type './build.sh' to make Android native libraries.
+# Type './build.sh -B' to rebuild the native libraries.
 # Type `./build.sh -swig` to re-generate JNI classes too.
+# Type `./build.sh APP_ABI=x86` to build for the x86 Emulator.
 #
 if [ "$1"x = "-swig"x ] || [ ! -f touchvg_java_wrap.cpp ] ; then # Make JNI classes
     mkdir -p ../src/rhcad/touchvg/core
@@ -29,4 +31,8 @@ if [ "$1"x = "-swig"x ] || [ ! -f touchvg_java_wrap.cpp ] ; then # Make JNI clas
           ../../../../TouchVGCore/core/src/view/touchvg.swig
     python replacejstr.py
 fi
-ndk-build
+if [ "$1"x = "-swig"x ] ; then
+    ndk-build $2
+else
+    ndk-build $1 $2
+fi

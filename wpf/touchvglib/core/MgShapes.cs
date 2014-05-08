@@ -221,6 +221,12 @@ public class MgShapes : MgObject {
     return ret;
   }
 
+  public MgShape cloneShape(int sid) {
+    IntPtr cPtr = touchvgPINVOKE.MgShapes_cloneShape(swigCPtr, sid);
+    MgShape ret = (cPtr == IntPtr.Zero) ? null : new MgShape(cPtr, false);
+    return ret;
+  }
+
   public void transform(Matrix2d mat) {
     touchvgPINVOKE.MgShapes_transform(swigCPtr, Matrix2d.getCPtr(mat));
     if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();

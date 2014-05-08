@@ -813,6 +813,7 @@ public class touchvgJNI {
   public final static native boolean MgShapes_addShapeDirect__SWIG_1(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
   public final static native boolean MgShapes_updateShape__SWIG_0(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_, boolean jarg3);
   public final static native boolean MgShapes_updateShape__SWIG_1(long jarg1, MgShapes jarg1_, long jarg2, MgShape jarg2_);
+  public final static native long MgShapes_cloneShape(long jarg1, MgShapes jarg1_, int jarg2);
   public final static native void MgShapes_transform(long jarg1, MgShapes jarg1_, long jarg2, Matrix2d jarg2_);
   public final static native boolean MgShapes_removeShape(long jarg1, MgShapes jarg1_, int jarg2);
   public final static native boolean MgShapes_moveShapeTo(long jarg1, MgShapes jarg1_, int jarg2, long jarg3, MgShapes jarg3_);

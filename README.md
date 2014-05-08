@@ -53,6 +53,10 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 -  To regenerate libtouchvg.so, please enter `android` directory of TouchVG, then type `./build.sh`
 (Need to add the [NDK](http://developer.android.com/tools/sdk/ndk/index.html) installation location to your PATH environment variable).
 
+   - Type `./build.sh -B` to rebuild the native libraries.
+   
+   - Type `./build.sh APP_ABI=x86` to build for the x86 (Intel Atom) Emulator.
+   
    - If the error `build/gmsl/__gmsl:512: *** non-numeric second argument to wordlist function` occurs, then open the `build/gmsl/__gmsl` file in the NDK installation directory, and change line 512 to:
      `int_encode = $(__gmsl_tr1)$(wordlist 1,$(words $1),$(__gmsl_input_int))`
 

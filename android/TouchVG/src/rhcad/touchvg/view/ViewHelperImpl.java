@@ -82,12 +82,17 @@ public class ViewHelperImpl implements IViewHelper{
     }
 
     @Override
+    public GiCoreView coreView() {
+        return mView != null ? mView.coreView() : null;
+    }
+
+    @Override
     public int cmdViewHandle() {
         final GiCoreView v = mView != null ? mView.coreView() : null;
         return v != null ? v.viewAdapterHandle() : 0;
     }
 
-    //! 返回内核命令视图
+    @Override
     public MgView cmdView() {
         return MgView.fromHandle(cmdViewHandle());
     }

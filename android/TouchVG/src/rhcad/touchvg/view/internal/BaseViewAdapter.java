@@ -318,17 +318,23 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     private boolean startRecordCore(String path, int type) {
-        synchronized (coreView()) {
-            int doc = coreView().acquireFrontDoc();
+        final GiCoreView cv = coreView();
+
+        synchronized (cv) {
+            int doc = cv.acquireFrontDoc();
             if (doc == 0) {
-                Log.e(TAG, "Fail to record shapes due to no front doc");
-                return false;
+                cv.submitBackDoc(null);
+                doc = cv.acquireFrontDoc();
+                if (doc == 0) {
+                    Log.e(TAG, "Fail to record shapes due to no front doc");
+                    return false;
+                }
             }
             if (type == RecordRunnable.TYPE) {
-                coreView().traverseImageShapes(doc,
+                cv.traverseImageShapes(doc,
                         new ImageFinder(getGraphView().getImageCache().getImagePath(), path));
             }
-            if (!coreView().startRecord(path, doc, type == UndoRunnable.TYPE, getTick(),
+            if (!cv.startRecord(path, doc, type == UndoRunnable.TYPE, getTick(),
                     createRecordCallback(type == RecordRunnable.TYPE))) {
                 return false;
             }

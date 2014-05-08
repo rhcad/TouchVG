@@ -17232,6 +17232,20 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgShapes_updateShape__SWIG_1(void * j
 }
 
 
+SWIGEXPORT void * SWIGSTDCALL CSharp_MgShapes_cloneShape(void * jarg1, int jarg2) {
+  void * jresult ;
+  MgShapes *arg1 = (MgShapes *) 0 ;
+  int arg2 ;
+  MgShape *result = 0 ;
+  
+  arg1 = (MgShapes *)jarg1; 
+  arg2 = (int)jarg2; 
+  result = (MgShape *)((MgShapes const *)arg1)->cloneShape(arg2);
+  jresult = (void *)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void SWIGSTDCALL CSharp_MgShapes_transform(void * jarg1, void * jarg2) {
   MgShapes *arg1 = (MgShapes *) 0 ;
   Matrix2d *arg2 = 0 ;
