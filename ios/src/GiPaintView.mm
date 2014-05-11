@@ -20,6 +20,7 @@
         _adapter = adapter;
         self.opaque = NO;                           // 透明背景
         self.userInteractionEnabled = NO;           // 禁止交互，避免影响主视图显示
+        self.contentMode = UIViewContentModeRedraw;     // 避免转屏变形
     }
     return self;
 }
@@ -222,10 +223,26 @@ GiColor CGColorToGiColor(CGColorRef color);
 - (void)initView {
     self.opaque = NO;                               // 透明背景
     self.multipleTouchEnabled = YES;                // 检测多个触点
+    self.contentMode = UIViewContentModeRedraw;     // 避免转屏变形
     
     GiCoreView::setScreenDpi(giGetScreenDpi());
     [self setupGestureRecognizers];
     _adapter->coreView()->setPenWidthRange(_adapter, 0.5f, -1);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnteredBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _activePaintView = self;
+        _adapter = new GiViewAdapter(self, NULL);
+        [self initView];
+    }
+    return self;
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -236,11 +253,6 @@ GiColor CGColorToGiColor(CGColorRef color);
         _adapter = new GiViewAdapter(self, NULL);
         _adapter->coreView()->onSize(_adapter, frame.size.width, frame.size.height);
         [self initView];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnteredBackground:)
-                                                     name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:)
-                                                     name:UIApplicationWillEnterForegroundNotification object:nil];
     }
     return self;
 }
