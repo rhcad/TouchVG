@@ -1687,6 +1687,7 @@ public class touchvgJNI {
   public final static native void MgShapeDoc_clear(long jarg1, MgShapeDoc jarg1_);
   public final static native void MgShapeDoc_clearCachedData(long jarg1, MgShapeDoc jarg1_);
   public final static native int MgShapeDoc_draw(long jarg1, MgShapeDoc jarg1_, long jarg2, GiGraphics jarg2_);
+  public final static native int MgShapeDoc_dyndraw(long jarg1, MgShapeDoc jarg1_, int jarg2, long jarg3, GiGraphics jarg3_);
   public final static native long MgShapeDoc_getExtent(long jarg1, MgShapeDoc jarg1_);
   public final static native int MgShapeDoc_getShapeCount(long jarg1, MgShapeDoc jarg1_);
   public final static native long MgShapeDoc_findShape(long jarg1, MgShapeDoc jarg1_, int jarg2);
@@ -1765,6 +1766,7 @@ public class touchvgJNI {
   public final static native int MgCoreView_acquireDynamicShapes(long jarg1, MgCoreView jarg1_);
   public final static native void MgCoreView_releaseShapes(int jarg1);
   public final static native boolean MgCoreView_isDrawing(long jarg1, MgCoreView jarg1_);
+  public final static native boolean MgCoreView_isZooming(long jarg1, MgCoreView jarg1_);
   public final static native boolean MgCoreView_isStopping(long jarg1, MgCoreView jarg1_);
   public final static native int MgCoreView_stopDrawing__SWIG_0(long jarg1, MgCoreView jarg1_, boolean jarg2);
   public final static native int MgCoreView_stopDrawing__SWIG_1(long jarg1, MgCoreView jarg1_);

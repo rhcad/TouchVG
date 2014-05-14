@@ -98,6 +98,12 @@ public class MgShapeDoc : MgObject {
     return ret;
   }
 
+  public int dyndraw(int mode, GiGraphics gs) {
+    int ret = touchvgPINVOKE.MgShapeDoc_dyndraw(swigCPtr, mode, GiGraphics.getCPtr(gs));
+    if (touchvgPINVOKE.SWIGPendingException.Pending) throw touchvgPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   public Box2d getExtent() {
     Box2d ret = new Box2d(touchvgPINVOKE.MgShapeDoc_getExtent(swigCPtr), true);
     return ret;

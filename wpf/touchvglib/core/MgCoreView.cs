@@ -100,6 +100,11 @@ public class MgCoreView : IDisposable {
     return ret;
   }
 
+  public virtual bool isZooming() {
+    bool ret = touchvgPINVOKE.MgCoreView_isZooming(swigCPtr);
+    return ret;
+  }
+
   public virtual bool isStopping() {
     bool ret = touchvgPINVOKE.MgCoreView_isStopping(swigCPtr);
     return ret;

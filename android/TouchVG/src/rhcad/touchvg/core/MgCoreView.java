@@ -84,6 +84,10 @@ public class MgCoreView {
     return touchvgJNI.MgCoreView_isDrawing(swigCPtr, this);
   }
 
+  public boolean isZooming() {
+    return touchvgJNI.MgCoreView_isZooming(swigCPtr, this);
+  }
+
   public boolean isStopping() {
     return touchvgJNI.MgCoreView_isStopping(swigCPtr, this);
   }

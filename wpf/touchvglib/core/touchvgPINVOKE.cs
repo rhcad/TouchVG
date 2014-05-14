@@ -5241,6 +5241,9 @@ class touchvgPINVOKE {
   [DllImport("touchvg", EntryPoint="CSharp_MgShapeDoc_draw")]
   public static extern int MgShapeDoc_draw(HandleRef jarg1, HandleRef jarg2);
 
+  [DllImport("touchvg", EntryPoint="CSharp_MgShapeDoc_dyndraw")]
+  public static extern int MgShapeDoc_dyndraw(HandleRef jarg1, int jarg2, HandleRef jarg3);
+
   [DllImport("touchvg", EntryPoint="CSharp_MgShapeDoc_getExtent")]
   public static extern IntPtr MgShapeDoc_getExtent(HandleRef jarg1);
 
@@ -5465,6 +5468,9 @@ class touchvgPINVOKE {
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_isDrawing")]
   public static extern bool MgCoreView_isDrawing(HandleRef jarg1);
+
+  [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_isZooming")]
+  public static extern bool MgCoreView_isZooming(HandleRef jarg1);
 
   [DllImport("touchvg", EntryPoint="CSharp_MgCoreView_isStopping")]
   public static extern bool MgCoreView_isStopping(HandleRef jarg1);

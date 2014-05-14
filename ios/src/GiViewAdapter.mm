@@ -321,7 +321,7 @@ int GiViewAdapter::regenLocked(bool changed, int sid, long playh, bool loading, 
 }
 
 void GiViewAdapter::regen_(bool changed, int sid, long playh, bool loading) {
-    if (_core->isStopping() || !_view.window) {
+    if (_core->isStopping() || (!_regenCount && !_view.window)) {
         return;
     }
     

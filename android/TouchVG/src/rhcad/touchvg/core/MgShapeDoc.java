@@ -82,6 +82,10 @@ public class MgShapeDoc extends MgObject {
     return touchvgJNI.MgShapeDoc_draw(swigCPtr, this, GiGraphics.getCPtr(gs), gs);
   }
 
+  public int dyndraw(int mode, GiGraphics gs) {
+    return touchvgJNI.MgShapeDoc_dyndraw(swigCPtr, this, mode, GiGraphics.getCPtr(gs), gs);
+  }
+
   public Box2d getExtent() {
     return new Box2d(touchvgJNI.MgShapeDoc_getExtent(swigCPtr, this), true);
   }

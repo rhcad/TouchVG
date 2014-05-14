@@ -37975,6 +37975,30 @@ SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapeDoc_1draw(JNIE
 }
 
 
+SWIGEXPORT jint JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapeDoc_1dyndraw(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3, jobject jarg3_) {
+  jint jresult = 0 ;
+  MgShapeDoc *arg1 = (MgShapeDoc *) 0 ;
+  int arg2 ;
+  GiGraphics *arg3 = 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  (void)jarg3_;
+  arg1 = *(MgShapeDoc **)&jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = *(GiGraphics **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "GiGraphics & reference is null");
+    return 0;
+  } 
+  result = (int)((MgShapeDoc const *)arg1)->dyndraw(arg2,*arg3);
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgShapeDoc_1getExtent(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   MgShapeDoc *arg1 = (MgShapeDoc *) 0 ;
@@ -39083,6 +39107,21 @@ SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1isDra
   (void)jarg1_;
   arg1 = *(MgCoreView **)&jarg1; 
   result = (bool)(arg1)->isDrawing();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_rhcad_touchvg_core_touchvgJNI_MgCoreView_1isZooming(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(MgCoreView **)&jarg1; 
+  result = (bool)(arg1)->isZooming();
   jresult = (jboolean)result; 
   return jresult;
 }

@@ -28965,6 +28965,26 @@ SWIGEXPORT int SWIGSTDCALL CSharp_MgShapeDoc_draw(void * jarg1, void * jarg2) {
 }
 
 
+SWIGEXPORT int SWIGSTDCALL CSharp_MgShapeDoc_dyndraw(void * jarg1, int jarg2, void * jarg3) {
+  int jresult ;
+  MgShapeDoc *arg1 = (MgShapeDoc *) 0 ;
+  int arg2 ;
+  GiGraphics *arg3 = 0 ;
+  int result;
+  
+  arg1 = (MgShapeDoc *)jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = (GiGraphics *)jarg3;
+  if (!arg3) {
+    SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "GiGraphics & type is null", 0);
+    return 0;
+  } 
+  result = (int)((MgShapeDoc const *)arg1)->dyndraw(arg2,*arg3);
+  jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT void * SWIGSTDCALL CSharp_MgShapeDoc_getExtent(void * jarg1) {
   void * jresult ;
   MgShapeDoc *arg1 = (MgShapeDoc *) 0 ;
@@ -29815,6 +29835,18 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isDrawing(void * jarg1) {
   
   arg1 = (MgCoreView *)jarg1; 
   result = (bool)(arg1)->isDrawing();
+  jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_MgCoreView_isZooming(void * jarg1) {
+  unsigned int jresult ;
+  MgCoreView *arg1 = (MgCoreView *) 0 ;
+  bool result;
+  
+  arg1 = (MgCoreView *)jarg1; 
+  result = (bool)(arg1)->isZooming();
   jresult = result; 
   return jresult;
 }
