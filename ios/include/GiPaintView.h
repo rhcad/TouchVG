@@ -50,6 +50,8 @@ class GiViewAdapter;
 - (GiCoreView *)coreView;                   //!< 得到跨平台内核视图
 - (GiViewAdapter *)viewAdapter2;            //!< 得到视图适配器对象
 #endif
+- (long)acquireFrontDoc;                    //!< 获取前端文档句柄
+- (void)releaseDoc:(long)doc;               //!< 释放文档句柄
 
 - (UIImage *)snapshot;                      //!< 得到静态图形的快照，自动释放
 - (BOOL)exportPNG:(NSString *)filename;     //!< 保存静态图形的快照到PNG文件

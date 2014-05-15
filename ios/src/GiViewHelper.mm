@@ -6,7 +6,7 @@
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
 
-#define IOSLIBVERSION     9
+#define IOSLIBVERSION     10
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -27,6 +27,19 @@ GiColor CGColorToGiColor(CGColorRef color) {
                    (int)lroundf(rgba[2] * 255.f),
                    (int)lroundf(CGColorGetAlpha(color) * 255.f));
 }
+
+struct GiImageFinderD : public MgFindImageCallback {
+    NSString *path;
+    GiScanImageDelegate block;
+    
+    GiImageFinderD(NSString *path, GiScanImageDelegate block)
+        : path(path), block(block) {}
+    
+    virtual void onFindImage(int sid, const char* name) {
+        NSString *title = [NSString stringWithUTF8String:name];
+        block(sid, [path stringByAppendingPathComponent:title]);
+    }
+};
 
 @interface GiViewHelper ()
 @property (nonatomic, WEAK) GiPaintView *view;
@@ -273,22 +286,29 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (CGRect)displayExtent {
     mgvector<float> box(4);
-    if ([_view coreView]->getDisplayExtent(box)) {
-        float w = box.get(2) - box.get(0);
-        float h = box.get(3) - box.get(1);
-        return CGRectMake(box.get(0), box.get(1), w, h);
-    }
-    return CGRectNull;
+    [_view coreView]->getDisplayExtent(box);
+    
+    float w = box.get(2) - box.get(0);
+    float h = box.get(3) - box.get(1);
+    return CGRectMake(box.get(0), box.get(1), w, h);
 }
 
 - (CGRect)boundingBox {
     mgvector<float> box(4);
-    if ([_view coreView]->getBoundingBox(box)) {
-        float w = box.get(2) - box.get(0);
-        float h = box.get(3) - box.get(1);
-        return CGRectMake(box.get(0), box.get(1), w, h);
-    }
-    return CGRectNull;
+    [_view coreView]->getBoundingBox(box);
+    
+    float w = box.get(2) - box.get(0);
+    float h = box.get(3) - box.get(1);
+    return CGRectMake(box.get(0), box.get(1), w, h);
+}
+
+- (CGRect)getShapeBox:(int)sid {
+    mgvector<float> box(4);
+    [_view coreView]->getBoundingBox(box, sid);
+    
+    float w = box.get(2) - box.get(0);
+    float h = box.get(3) - box.get(1);
+    return CGRectMake(box.get(0), box.get(1), w, h);
 }
 
 + (NSString *)addExtension:(NSString *)filename :(NSString *)ext {
@@ -390,6 +410,16 @@ static GiViewHelper *_sharedInstance = nil;
     return point;
 }
 
+- (CGRect)displayRectToModel:(CGRect)rect {
+    mgvector<float> rc(CGRectGetMinX(rect), CGRectGetMinY(rect),
+                       CGRectGetMaxX(rect), CGRectGetMaxY(rect));
+    if ([_view coreView]->displayToModel(rc)) {
+        rect = CGRectMake(rc.get(0), rc.get(1),
+                          rc.get(2) - rc.get(0), rc.get(3) - rc.get(1));
+    }
+    return rect;
+}
+
 - (BOOL)zoomToExtent {
     return [_view coreView]->zoomToExtent();
 }
@@ -468,6 +498,15 @@ static GiViewHelper *_sharedInstance = nil;
 - (int)findShapeByImageID:(NSString *)name {
     long doc = [self acquireFrontDoc];
     int ret = [_view coreView]->findShapeByImageID(doc, [name UTF8String]);
+    [_view coreView]->releaseDoc(doc);
+    return ret;
+}
+
+- (int)scanImageShape:(GiScanImageDelegate)block {
+    long doc = [self acquireFrontDoc];
+    GiImageFinderD f([self getImagePath], block);
+    
+    int ret = [_view coreView]->traverseImageShapes(doc, &f);
     [_view coreView]->releaseDoc(doc);
     return ret;
 }

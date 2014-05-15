@@ -16,6 +16,8 @@ typedef NS_ENUM(int, GILineStyle) {
     GILineStyleNull         //!< Not draw.
 };
 
+typedef void (^GiScanImageDelegate)(int sid, NSString *filename);
+
 //! iOS绘图视图辅助类
 /*! \ingroup GROUP_IOS
  */
@@ -52,8 +54,8 @@ typedef NS_ENUM(int, GILineStyle) {
 @property(nonatomic, readonly) int selectedShapeID; //!< 当前选中的图形的ID，选中多个时只取第一个
 @property(nonatomic, readonly) long changeCount;    //!< 图形改变次数，可用于检查是否需要保存
 @property(nonatomic, readonly) long drawCount;      //!< 显示次数
-@property(nonatomic, readonly) CGRect displayExtent; //!< 图形显示范围
-@property(nonatomic, readonly) CGRect boundingBox;  //!< 选择包络框
+@property(nonatomic, readonly) CGRect displayExtent; //!< 所有图形的显示范围，视图坐标
+@property(nonatomic, readonly) CGRect boundingBox;  //!< 选择包络框，视图坐标
 @property(nonatomic, assign) NSString *content;     //!< 图形的JSON内容
 
 - (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r;   //!< 从JSON文件中只读加载图形，自动改后缀名为.vg
@@ -72,6 +74,8 @@ typedef NS_ENUM(int, GILineStyle) {
 - (int)addShapesForTest;                    //!< 添加测试图形
 - (void)clearCachedData;                    //!< 释放临时数据内存
 - (CGPoint)displayToModel:(CGPoint)point;   //!< 视图坐标转为模型坐标
+- (CGRect)displayRectToModel:(CGRect)rect;  //!< 视图坐标转为模型坐标
+- (CGRect)getShapeBox:(int)sid;             //!< 得到指定ID的图形的包络框显示坐标
 
 - (BOOL)startUndoRecord:(NSString *)path;   //!< 开始Undo录制，在视图初始化或onFirstRegen中调用
 - (void)stopUndoRecord;                     //!< 停止Undo录制，在主线程用
@@ -100,6 +104,7 @@ typedef NS_ENUM(int, GILineStyle) {
 
 - (BOOL)hasImageShape;                      //!< 返回是否有容纳图像的图形对象
 - (int)findShapeByImageID:(NSString *)name; //!< 查找指定名称的图像对应的图形对象ID
+- (int)scanImageShape:(GiScanImageDelegate)block;   //!< 遍历有容纳图像的图形对象
 - (void)setImagePath:(NSString *)path;      //!< 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
 - (NSString *)getImagePath;                 //!< 返回图像文件的默认路径
 

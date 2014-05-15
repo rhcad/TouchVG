@@ -344,6 +344,14 @@ GiColor CGColorToGiColor(CGColorRef color);
     return _adapter->locker();
 }
 
+- (long)acquireFrontDoc {
+    return _adapter->acquireFrontDoc();
+}
+
+- (void)releaseDoc:(long)doc {
+    [self coreView]->releaseDoc(doc);
+}
+
 - (UIImage *)snapshot {
     [self hideContextActions];
     
