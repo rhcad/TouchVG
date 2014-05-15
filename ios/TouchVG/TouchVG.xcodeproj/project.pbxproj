@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02734B211924E8B600951B43 /* NSString+Drawing.h in Headers */ = {isa = PBXBuildFile; fileRef = 02734B1F1924E8B600951B43 /* NSString+Drawing.h */; };
+		02734B221924E8B600951B43 /* NSString+Drawing.h in Headers */ = {isa = PBXBuildFile; fileRef = 02734B1F1924E8B600951B43 /* NSString+Drawing.h */; };
+		02734B231924E8B600951B43 /* NSString+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 02734B201924E8B600951B43 /* NSString+Drawing.m */; };
+		02734B241924E8B600951B43 /* NSString+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 02734B201924E8B600951B43 /* NSString+Drawing.m */; };
 		02BD6692189A1E9A00A4A444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4D178FC7EB000194AE /* UIKit.framework */; };
 		02BD6693189A1E9A00A4A444 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */; };
 		02BD6694189A1E9A00A4A444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3A4C178FC511000194AE /* Foundation.framework */; };
@@ -50,6 +54,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02734B1F1924E8B600951B43 /* NSString+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Drawing.h"; sourceTree = "<group>"; };
+		02734B201924E8B600951B43 /* NSString+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Drawing.m"; sourceTree = "<group>"; };
 		02BD66A8189A1E9A00A4A444 /* libTouchVG-SVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTouchVG-SVG.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE11A5DA18B328CF00B88366 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AE2A3A49178FC511000194AE /* libTouchVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -440,6 +446,8 @@
 		AE9A8FA3191650E600F2A24A /* src */ = {
 			isa = PBXGroup;
 			children = (
+				02734B1F1924E8B600951B43 /* NSString+Drawing.h */,
+				02734B201924E8B600951B43 /* NSString+Drawing.m */,
 				AE9A8FA4191650E600F2A24A /* GiCanvasAdapter.mm */,
 				AE9A8FA5191650E600F2A24A /* GiDpiUtil.mm */,
 				AE9A8FA6191650E600F2A24A /* GiImageCache.h */,
@@ -465,6 +473,7 @@
 				AE9A8FB5191650E600F2A24A /* GiPaintViewDelegate.h in Headers */,
 				AE9A8FB7191650E600F2A24A /* GiViewHelper.h in Headers */,
 				AE9A8FAF191650E600F2A24A /* ARCMacro.h in Headers */,
+				02734B221924E8B600951B43 /* NSString+Drawing.h in Headers */,
 				AE9A8FB3191650E600F2A24A /* GiPaintView.h in Headers */,
 				AE9A8FB1191650E600F2A24A /* GiCanvasAdapter.h in Headers */,
 				AE9A8FBD191650E600F2A24A /* GiImageCache.h in Headers */,
@@ -481,6 +490,7 @@
 				AE9A8FB4191650E600F2A24A /* GiPaintViewDelegate.h in Headers */,
 				AE9A8FB6191650E600F2A24A /* GiViewHelper.h in Headers */,
 				AE9A8FAE191650E600F2A24A /* ARCMacro.h in Headers */,
+				02734B211924E8B600951B43 /* NSString+Drawing.h in Headers */,
 				AE9A8FB2191650E600F2A24A /* GiPaintView.h in Headers */,
 				AE9A8FB0191650E600F2A24A /* GiCanvasAdapter.h in Headers */,
 				AE9A8FBC191650E600F2A24A /* GiImageCache.h in Headers */,
@@ -626,6 +636,7 @@
 				AE9A8FBF191650E600F2A24A /* GiImageCache.mm in Sources */,
 				AE9A8FC5191650E600F2A24A /* GiPaintView.mm in Sources */,
 				AE9A8FC3191650E600F2A24A /* GiMagnifierView.m in Sources */,
+				02734B241924E8B600951B43 /* NSString+Drawing.m in Sources */,
 				AE9A8FC9191650E600F2A24A /* GiViewHelper.mm in Sources */,
 				AE9A8FB9191650E600F2A24A /* GiCanvasAdapter.mm in Sources */,
 				AE9A8FBB191650E600F2A24A /* GiDpiUtil.mm in Sources */,
@@ -640,6 +651,7 @@
 				AE9A8FBE191650E600F2A24A /* GiImageCache.mm in Sources */,
 				AE9A8FC4191650E600F2A24A /* GiPaintView.mm in Sources */,
 				AE9A8FC2191650E600F2A24A /* GiMagnifierView.m in Sources */,
+				02734B231924E8B600951B43 /* NSString+Drawing.m in Sources */,
 				AE9A8FC8191650E600F2A24A /* GiViewHelper.mm in Sources */,
 				AE9A8FB8191650E600F2A24A /* GiCanvasAdapter.mm in Sources */,
 				AE9A8FBA191650E600F2A24A /* GiDpiUtil.mm in Sources */,

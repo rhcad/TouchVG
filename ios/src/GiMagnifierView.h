@@ -2,6 +2,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#include "ARCMacro.h"
 
 @interface GiMagnifierView : UIView {
     CGFloat _topMargin;

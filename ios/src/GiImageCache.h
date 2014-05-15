@@ -3,6 +3,7 @@
 // Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
 
 #import <UIKit/UIKit.h>
+#include "ARCMacro.h"
 
 //! 图像对象缓存类
 @interface GiImageCache : NSObject {

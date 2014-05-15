@@ -82,7 +82,9 @@
 
 - (void)stopRender {
     if (_queue) {
+#ifndef OS_OBJECT_USE_OBJC
         dispatch_release(_queue);
+#endif
         _queue = NULL;
     }
     if (_layer) {

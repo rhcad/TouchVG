@@ -7,6 +7,7 @@
 #include "gicoreview.h"
 #include <vector>
 #import <QuartzCore/QuartzCore.h>
+#include "ARCMacro.h"
 
 class GiViewAdapter;
 @class GiMagnifierView;

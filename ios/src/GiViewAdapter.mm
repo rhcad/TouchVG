@@ -246,7 +246,9 @@ void GiViewAdapter::stopRecord(bool forUndo)
                 }
             }
         });
+#ifndef OS_OBJECT_USE_OBJC
         dispatch_release(_queues[i]);
+#endif
         _queues[i] = NULL;
     }
 }
