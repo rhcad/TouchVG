@@ -67,12 +67,13 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 
 ## Compile for iOS
 
--  Open `ios/TouchVG.xcworkspace` in Xcode, then build the `TouchVG` or `TouchVG-SVG` targets.
+- Type `pod install` or `pod install --no-repo-update` (Need to install [CocoaPods](http://cocoapods.org)).
+- Open `TouchVG.xcworkspace` in Xcode, then build the `TouchVG` or `TouchVG-SVG` target.
 
    - `libTouchVG.a` does not support SVG display.
    - `libTouchVG-SVG.a` can display SVG shapes using [SVGKit](https://github.com/SVGKit/SVGKit).
 
-- Or enter `ios` directory and type `./build.sh` (Need to configure Xcode command line environment) to compile all static libraries to the `ios/output` directory.
+- Or enter `ios` directory and type `./build.sh` to compile static libraries to the `ios/output` directory.
   - Type `./build.sh -arch arm64` to make for iOS 64-bit.
   - Type `./build.sh clean` to remove object files.
 

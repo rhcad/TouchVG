@@ -405,7 +405,8 @@ void GiViewAdapter::redraw(bool changed) {
 }
 
 bool GiViewAdapter::isMainThread() const {
-    return dispatch_get_current_queue() == dispatch_get_main_queue();
+    const char *label = dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL);
+    return label && strstr(label, "main-thread");
 }
 
 long GiViewAdapter::acquireFrontDoc(long* gs) {
