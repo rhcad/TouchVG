@@ -37,7 +37,6 @@
     size = [self sizeWithFont:attrs[NSFontAttributeName] constrainedToSize:size];
     return CGRectMake(0, 0, size.width, size.height);
 }
-    
 
 @end
 #endif
