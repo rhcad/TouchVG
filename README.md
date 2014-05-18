@@ -67,8 +67,6 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 
 ## Compile for iOS
 
-## Compile for iOS
-
 ### Compile with CocoaPods
 
 TouchVG is available on [CocoaPods](http://cocoapods.org). Just add the following to your project Podfile:
@@ -126,8 +124,14 @@ Alternatively, you can build as one of the following methods:
  
 # Add more shapes and commands
 
-- You can use [newproj.py](https://github.com/touchvg/TouchVGTest/blob/master/thirdparty/newproj.py) to create library project (Recommended as GIT submodule) containing your own shapes and commands. So the TouchVG and TouchVGCore libraries does not require changes.
+- You can use [newproj.py](https://github.com/touchvg/DemoCmds/blob/master/newproj.py) to create library project containing your own shapes and commands. So the TouchVG and TouchVGCore libraries does not require changes.
 
-  - Enter `thirdparty` directory and type `python newproj.py YourCmds`.
+  - Checkout and enter [DemoCmds](https://github.com/touchvg/DemoCmds) directory, then type `python newproj.py YourCmds`:
+
+     ```shell
+     git clone https://github.com/touchvg/DemoCmds.git
+     cd DemoCmds
+     python newproj.py MyCmds
+     ```
     
   - Need to install python to run the script.
