@@ -67,15 +67,33 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 
 ## Compile for iOS
 
+## Compile for iOS
+
+### Compile with CocoaPods
+
 TouchVG is available on [CocoaPods](http://cocoapods.org). Just add the following to your project Podfile:
 
 ```ruby
 pod 'TouchVG', '~> 1.1.10'
 ```
 
-Then type `pod install`. Need to remove `libPods-TouchVG.a` from Link Binary With Libraries.
+Or use the develop version:
 
-Alternatively, you can add the project to your workspace and build as one of the following methods:
+```ruby
+pod 'TouchVG', :podspec => 'https://raw.githubusercontent.com/touchvg/TouchVG/develop/TouchVG.podspec'
+```
+
+Or add the following to use SVG rendering feature with [SVGKit](https://github.com/SVGKit/SVGKit):
+
+```ruby
+pod 'TouchVG-SVG', :podspec => 'https://raw.githubusercontent.com/touchvg/TouchVG/develop/ios/TouchVG-SVG.podspec'
+```
+
+Then type `pod install` or `pod install  --no-repo-update`. Need to remove `libPods-TouchVG.a` or `libPods-TouchVG-TouchVG-SVG.a` from Link Binary With Libraries. Remove `-lxml2` from Other Linker Flags for TouchVG-SVG target.
+
+### Compile without CocoaPods
+
+Alternatively, you can build as one of the following methods:
 
 - Open `TouchVG.xcworkspace` in Xcode, then build the `TouchVG` or `TouchVG-SVG` target.
 

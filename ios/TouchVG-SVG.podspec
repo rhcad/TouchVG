@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name        = "TouchVG"
+  s.name        = "TouchVG-SVG"
   s.version     = "1.1.10"
   s.summary     = "A lightweight 2D vector drawing framework for iOS."
   s.homepage    = "https://github.com/touchvg/TouchVG"
@@ -14,12 +14,13 @@ Pod::Spec.new do |s|
   s.public_header_files = 'ios/include/*.h'
   s.frameworks = "UIKit", "QuartzCore", "CoreGraphics", "Foundation"
 
-  s.requires_arc = true
+  s.requires_arc = false
   s.xcconfig = {
-    'CLANG_CXX_LANGUAGE_STANDARD' => 'gnu++0x',
+    'CLANG_CXX_LANGUAGE_STANDARD' => 'gnu++11',
     'CLANG_CXX_LIBRARY' => 'libstdc++',
-    "HEADER_SEARCH_PATHS" => '$(PODS_ROOT)/Headers/TouchVGCore'
+    "HEADER_SEARCH_PATHS" => '$(PODS_ROOT)/Headers/TouchVGCore $(PODS_ROOT)/Headers/SVGKit'
   }
   s.resource = 'ios/TouchVG.bundle'
   s.dependency "TouchVGCore", "~> 0.29"
+  s.dependency "SVGKit", :podspec => 'https://raw.githubusercontent.com/SVGKit/SVGKit/1.x/SVGKit.podspec'
 end
