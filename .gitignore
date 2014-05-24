@@ -50,5 +50,7 @@ CppDepend*
 *.cdproj
 *.ch*
 *.hh*
-*_wrap.cxx
+*_wrap.*
 ios/output
+android/TouchVG/src/rhcad/touchvg/core
+wpf/touchvglib/core
