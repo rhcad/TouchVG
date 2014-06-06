@@ -155,6 +155,19 @@
     <Content Include="Resources\vgdot1.png" />
     <Content Include="Resources\vgdot2.png" />
     <Content Include="Resources\vgdot3.png" />
+    <Content Include="Resources\vg_unlock.png" />
+    <Content Include="Resources\vg_ungroup.png" />
+    <Content Include="Resources\vg_selall.png" />
+    <Content Include="Resources\vg_overturn.png" />
+    <Content Include="Resources\vg_lock.png" />
+    <Content Include="Resources\vg_group.png" />
+    <Content Include="Resources\vg_freelen.png" />
+    <Content Include="Resources\vg_fixlen.png" />
+    <Content Include="Resources\vg_endedit.png" />
+    <Content Include="Resources\vg_edit.png" />
+    <Content Include="Resources\vg_delete.png" />
+    <Content Include="Resources\vg_clone.png" />
+    <Content Include="Resources\vg_back.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

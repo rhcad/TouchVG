@@ -30,6 +30,7 @@ if [ "$1"x = "-swig"x ] || [ ! -f touchvg_java_wrap.cpp ] ; then # Make JNI clas
         -I../../../../TouchVGCore/core/src/view \
           ../../../../TouchVGCore/core/src/view/touchvg.swig
     python replacejstr.py
+    #python addlog.py
 fi
 if [ "$1"x = "-swig"x ] ; then
     ndk-build $2

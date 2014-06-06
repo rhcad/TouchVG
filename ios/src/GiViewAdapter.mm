@@ -11,10 +11,10 @@ static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"�
     @"删除", @"克隆", @"定长", @"不定长", @"锁定", @"解锁", @"编辑", @"返回",
     @"闭合", @"不闭合", @"加点", @"删点", @"成组", @"解组", @"翻转",
 };
-static NSString* const IMAGENAMES[] = { nil, @"vg_selall.png", nil, @"vg_draw.png",
+static NSString* const IMAGENAMES[] = { nil, @"vg_selall.png", nil, nil,
     @"vg_back.png", @"vg_delete.png", @"vg_clone.png", @"vg_fixlen.png",
     @"vg_freelen.png", @"vg_lock.png", @"vg_unlock.png", @"vg_edit.png",
-    @"vg_endedit.png", nil, nil, @"vg_addvertex.png", @"vg_delvertex.png",
+    @"vg_endedit.png", nil, nil, nil, nil,
     @"vg_group.png", @"vg_ungroup.png", @"vg_overturn.png",
 };
 NSString* EXTIMAGENAMES[41] = { nil };
@@ -616,14 +616,39 @@ void GiViewAdapter::dynamicChanged() {
 
 void GiViewAdapter::shapeDeleted(int sid)
 {
+    id obj = [NSNumber numberWithInt:sid];
+    
     for (size_t i = 0; i < delegates.size() && respondsTo.didShapeDeleted; i++) {
-        if ([delegates[i] respondsToSelector:@selector(onShapeDeleted:)]) {
-            [delegates[i] onShapeDeleted:_view];
+        if ([delegates[i] respondsToSelector:@selector(onShapeDeleted::)]) {
+            [delegates[i] onShapeDeleted:_view sid:obj];
         }
     }
-    if ([_view respondsToSelector:@selector(onShapeDeleted:)]) {
-        [_view performSelector:@selector(onShapeDeleted:) withObject:_view];
+    if ([_view respondsToSelector:@selector(onShapeDeleted::)]) {
+        [_view performSelector:@selector(onShapeDeleted::) withObject:_view withObject:obj];
     }
+}
+
+bool GiViewAdapter::shapeClicked(int sid, int tag, float x, float y)
+{
+    if (respondsTo.didShapeClicked || [_view respondsToSelector:@selector(onShapeClicked:)]) {
+        NSDictionary *info = @{ @"id" : [NSNumber numberWithInt:sid],
+                                @"tag" : [NSNumber numberWithInt:tag],
+                                @"point" : [NSValue valueWithCGPoint:CGPointMake(x, y)],
+                                @"view" : mainView() };
+        
+        for (size_t i = 0; i < delegates.size() && respondsTo.didShapeClicked; i++) {
+            if ([delegates[i] respondsToSelector:@selector(onShapeClicked:)]
+                && [delegates[i] onShapeClicked:info]) {
+                return true;
+            }
+        }
+        if ([_view respondsToSelector:@selector(onShapeClicked:)]
+            && [_view performSelector:@selector(onShapeClicked:) withObject:info]) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 void GiViewAdapter::onFirstRegen()

@@ -127,4 +127,43 @@
   <data name="vgdot3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\vgdot3.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="vg_back" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_back.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_clone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_clone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_delete.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_endedit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_endedit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_fixlen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_fixlen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_freelen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_freelen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_group" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_group.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_lock.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_overturn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_overturn.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_selall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_selall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_ungroup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_ungroup.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vg_unlock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vg_unlock.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

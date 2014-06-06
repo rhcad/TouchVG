@@ -6,6 +6,7 @@ package rhcad.touchvg.view;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import rhcad.touchvg.IGraphView;
@@ -14,6 +15,7 @@ import rhcad.touchvg.core.CmdObserver;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiContext;
 import rhcad.touchvg.core.GiCoreView;
+import rhcad.touchvg.core.MgFindImageCallback;
 import rhcad.touchvg.core.MgView;
 import rhcad.touchvg.view.internal.BaseViewAdapter;
 import rhcad.touchvg.view.internal.BaseViewAdapter.StringCallback;
@@ -25,6 +27,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +41,7 @@ import android.view.ViewGroup.LayoutParams;
  */
 public class ViewHelperImpl implements IViewHelper{
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 9;
+    private static final int JARVERSION = 11;
     private BaseGraphView mView;
 
     static {
@@ -300,6 +303,15 @@ public class ViewHelperImpl implements IViewHelper{
     }
 
     @Override
+    public RectF displayToModel(RectF rect) {
+        final Floats box = new Floats(rect.left, rect.top, rect.right, rect.bottom);
+        if (mView.coreView().displayToModel(box)) {
+            return new RectF(box.get(0), box.get(1), box.get(2), box.get(3));
+        }
+        return rect;
+    }
+
+    @Override
     public boolean startUndoRecord(String path) {
         final BaseViewAdapter adapter = internalAdapter();
 
@@ -398,6 +410,11 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public void setGestureEnable(boolean enabled) {
         mView.setGestureEnable(enabled);
+    }
+
+    @Override
+    public void setZoomEnabled(boolean enabled) {
+        mView.coreView().setZoomEnabled(mView.viewAdapter(), enabled);
     }
 
     @Override
@@ -585,6 +602,16 @@ public class ViewHelperImpl implements IViewHelper{
         return new Rect();
     }
 
+    @Override
+    public Rect getShapeBox(int sid) {
+        final Floats box = new Floats(4);
+        if (mView.coreView().getBoundingBox(box, sid)) {
+            return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
+                    Math.round(box.get(2)), Math.round(box.get(3)));
+        }
+        return new Rect();
+    }
+
     private int acquireFrontDoc() {
         synchronized (mView.coreView()) {
             return mView.coreView().acquireFrontDoc();
@@ -730,7 +757,7 @@ public class ViewHelperImpl implements IViewHelper{
         final Drawable d = mView.getImageCache().addSVG(getContext().getResources(), id, name);
         synchronized (mView.coreView()) {
             return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
-                    ImageCache.getWidth(d), ImageCache.getHeight(d));
+                    ImageCache.getWidth(d), ImageCache.getHeight(d), 0);
         }
     }
 
@@ -762,7 +789,7 @@ public class ViewHelperImpl implements IViewHelper{
         final Drawable d = mView.getImageCache().addBitmap(getContext().getResources(), id, name);
         synchronized (mView.coreView()) {
             return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
-                    ImageCache.getWidth(d), ImageCache.getHeight(d));
+                    ImageCache.getWidth(d), ImageCache.getHeight(d), 0);
         }
     }
 
@@ -773,12 +800,18 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int insertImageFromFile(String filename) {
+        return insertImageFromFile(filename, mView.getView().getWidth() / 2,
+                mView.getView().getHeight() / 2, 0);
+    }
+
+    @Override
+    public int insertImageFromFile(String filename, int xc, int yc, int tag) {
         final BaseViewAdapter adapter = internalAdapter();
 
         if (adapter == null || filename == null)
             return 0;
 
-        String name = filename.substring(filename.lastIndexOf('/') + 1).toLowerCase(Locale.US);
+        final String name = filename.substring(filename.lastIndexOf('/') + 1).toLowerCase(Locale.US);
         Drawable d;
 
         if (name.endsWith(".svg")) {
@@ -794,7 +827,7 @@ public class ViewHelperImpl implements IViewHelper{
             synchronized (mView.coreView()) {
                 int w = ImageCache.getWidth(d);
                 int h = ImageCache.getHeight(d);
-                return mView.coreView().addImageShape(name, w, h);
+                return mView.coreView().addImageShape(name, xc, yc, w, h, tag);
             }
         }
         return 0;
@@ -814,6 +847,41 @@ public class ViewHelperImpl implements IViewHelper{
         int ret = mView.coreView().findShapeByImageID(doc, name);
         GiCoreView.releaseDoc(doc);
         return ret;
+    }
+
+    @Override
+    public int findShapeByTag(int tag) {
+        int doc = acquireFrontDoc();
+        int ret = mView.coreView().findShapeByTag(doc, tag);
+        GiCoreView.releaseDoc(doc);
+        return ret;
+    }
+
+    private class ImageFinder extends MgFindImageCallback {
+        private ArrayList<Bundle> arr;
+
+        public ImageFinder(ArrayList<Bundle> arr) {
+            this.arr = arr;
+        }
+
+        @Override
+        public void onFindImage(int sid, String name) {
+            final Bundle b = new Bundle();
+            b.putInt("id", sid);
+            b.putString("name", name);
+            b.putString("path", new File(getImagePath(), name).getPath());
+            b.putString("rect", getShapeBox(sid).toString());
+            this.arr.add(b);
+        }
+    }
+
+    @Override
+    public ArrayList<Bundle> getImageShapes() {
+        final ArrayList<Bundle> arr = new ArrayList<Bundle>();
+        int doc = acquireFrontDoc();
+        coreView().traverseImageShapes(doc, new ImageFinder(arr));
+        GiCoreView.releaseDoc(doc);
+        return arr;
     }
 
     @Override

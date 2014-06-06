@@ -4,17 +4,22 @@ import java.util.ArrayList;
 
 import rhcad.touchvg.IGraphView.OnCommandChangedListener;
 import rhcad.touchvg.IGraphView.OnContentChangedListener;
+import rhcad.touchvg.IGraphView.OnContextActionListener;
 import rhcad.touchvg.IGraphView.OnDynamicChangedListener;
 import rhcad.touchvg.IGraphView.OnFirstRegenListener;
 import rhcad.touchvg.IGraphView.OnSelectionChangedListener;
+import rhcad.touchvg.IGraphView.OnShapeClickedListener;
 import rhcad.touchvg.IGraphView.OnShapeDeletedListener;
 import rhcad.touchvg.IGraphView.OnShapesRecordedListener;
+import rhcad.touchvg.core.CmdObserverDefault;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.GiView;
 import rhcad.touchvg.core.Ints;
 import rhcad.touchvg.core.MgFindImageCallback;
+import rhcad.touchvg.core.MgMotion;
 import rhcad.touchvg.core.MgStringCallback;
+import rhcad.touchvg.core.MgView;
 import rhcad.touchvg.view.BaseGraphView;
 import android.app.Activity;
 import android.os.Bundle;
@@ -32,11 +37,14 @@ public abstract class BaseViewAdapter extends GiView {
     private ArrayList<OnFirstRegenListener> firstRegenListeners;
     private ArrayList<OnShapesRecordedListener> shapesRecordedListeners;
     private ArrayList<OnShapeDeletedListener> shapeDeletedListeners;
+    private ArrayList<OnShapeClickedListener> shapeClickedListeners;
+    private ArrayList<OnContextActionListener> contextActionListeners;
     private ArrayList<OnPlayingListener> playingListeners;
     protected UndoRunnable mUndoing;
     protected RecordRunnable mRecorder;
     private int mRegenCount = 0;
     private Bundle mSavedState;
+    private CmdObserverDelegate mCmdObserver;
 
     public abstract BaseGraphView getGraphView();
 
@@ -58,14 +66,24 @@ public abstract class BaseViewAdapter extends GiView {
             dynamicChangedListeners.clear();
         if (firstRegenListeners != null)
             firstRegenListeners.clear();
+        if (shapesRecordedListeners != null)
+            shapesRecordedListeners.clear();
+        if (shapeDeletedListeners != null)
+            shapeDeletedListeners.clear();
+        if (shapeClickedListeners != null)
+            shapeClickedListeners.clear();
+        if (contextActionListeners != null)
+            contextActionListeners.clear();
         if (playingListeners != null)
             playingListeners.clear();
 
         super.delete();
     }
 
+    @Override
     protected void finalize() {
         Log.d(TAG, "BaseViewAdapter finalize");
+        super.finalize();
     }
 
     public BaseViewAdapter(Bundle savedInstanceState) {
@@ -78,12 +96,6 @@ public abstract class BaseViewAdapter extends GiView {
 
     public Bundle getSavedState() {
         return mSavedState;
-    }
-
-    public void removeContextButtons() {
-        if (mAction != null) {
-            mAction.removeButtonLayout();
-        }
     }
 
     public void setContextActionEnabled(boolean enabled) {
@@ -179,6 +191,17 @@ public abstract class BaseViewAdapter extends GiView {
         }
     }
 
+    @Override
+    public boolean shapeClicked(int sid, int tag, float x, float y) {
+        if (shapeClickedListeners != null) {
+            for (OnShapeClickedListener listener : shapeClickedListeners) {
+                if (listener.onShapeClicked(getGraphView(), sid, tag, x, y))
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public void setOnCommandChangedListener(OnCommandChangedListener listener) {
         if (this.commandChangedListeners == null)
             this.commandChangedListeners = new ArrayList<OnCommandChangedListener>();
@@ -219,6 +242,40 @@ public abstract class BaseViewAdapter extends GiView {
         if (this.shapeDeletedListeners == null)
             this.shapeDeletedListeners = new ArrayList<OnShapeDeletedListener>();
         this.shapeDeletedListeners.add(listener);
+    }
+
+    public void setOnShapeClickedListener(OnShapeClickedListener listener) {
+        if (this.shapeClickedListeners == null)
+            this.shapeClickedListeners = new ArrayList<OnShapeClickedListener>();
+        this.shapeClickedListeners.add(listener);
+    }
+
+    public void setOnContextActionListener(OnContextActionListener listener) {
+        if (this.contextActionListeners == null)
+            this.contextActionListeners = new ArrayList<OnContextActionListener>();
+        this.contextActionListeners.add(listener);
+
+        if (mCmdObserver == null) {
+            mCmdObserver = new CmdObserverDelegate();
+            cmdView().getCmdSubject().registerObserver(mCmdObserver);
+        }
+    }
+
+    private class CmdObserverDelegate extends CmdObserverDefault {
+        @Override
+        protected void finalize() {
+            Log.d(TAG, "CmdObserverDelegate finalize");
+            super.finalize();
+        }
+
+        @Override
+        public boolean doAction(MgMotion sender, int action) {
+            for (OnContextActionListener listener : contextActionListeners) {
+                if (listener.onContextAction(getGraphView(), sender, action))
+                    return true;
+            }
+            return false;
+        }
     }
 
     public Activity getActivity() {
@@ -264,14 +321,27 @@ public abstract class BaseViewAdapter extends GiView {
         return getGraphView().coreView();
     }
 
+    public MgView cmdView() {
+        return MgView.fromHandle(coreView().viewAdapterHandle());
+    }
+
     public void stop() {
+        final LogHelper log = new LogHelper();
         stopRecord(true);
         stopRecord(false);
         if (playingListeners != null) {
+            Log.d(TAG, playingListeners.size() + " playing listeners stopped");
             for (OnPlayingListener listener : playingListeners) {
                 listener.onStopped();
             }
+            playingListeners.clear();
         }
+        if (mCmdObserver != null) {
+            cmdView().getCmdSubject().unregisterObserver(mCmdObserver);
+            mCmdObserver.delete();
+            mCmdObserver = null;
+        }
+        log.r();
     }
 
     public void stopRecord(boolean forUndo) {

@@ -72,7 +72,7 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 TouchVG is available on [CocoaPods](http://cocoapods.org). Just add the following to your project Podfile:
 
 ```ruby
-pod 'TouchVG', '~> 1.1.10'
+pod 'TouchVG'
 ```
 
 Or use the develop version:

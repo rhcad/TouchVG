@@ -69,6 +69,7 @@ public:
         unsigned int didDynDrawEnded:1;
         unsigned int didShapesRecorded:1;
         unsigned int didShapeDeleted:1;
+        unsigned int didShapeClicked:1;
     } respondsTo;
     
     GiViewAdapter(GiPaintView *mainView, GiViewAdapter *refView);
@@ -113,6 +114,7 @@ public:
     virtual void contentChanged();
     virtual void dynamicChanged();
     virtual void shapeDeleted(int sid);
+    virtual bool shapeClicked(int sid, int tag, float x, float y);
     
     bool dispatchGesture(GiGestureType type, GiGestureState state, CGPoint pt);
     bool dispatchPan(GiGestureState state, CGPoint pt, bool switchGesture = false);

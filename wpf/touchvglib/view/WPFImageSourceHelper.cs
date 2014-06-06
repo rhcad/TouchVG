@@ -3,13 +3,16 @@
 // Copyright (c) 2013, https://github.com/rhcad/touchvg
 
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Interop;
 using System.Drawing;
+using touchvg.core;
+using System.Resources;
+using System.Collections.Generic;
 
 namespace touchvg.view
 {
@@ -67,31 +70,35 @@ namespace touchvg.view
             }
         }
 
+        public void AddResource(ResourceManager res)
+        {
+            if (_resources == null)
+                _resources = new ArrayList();
+            _resources.Add(res);
+        }
+
         private Dictionary<int, ImageSource> _actionImageDict;
         private ImageSource[] _handleImages;
+        private ArrayList _resources;
 
-        public WPFImageSourceHelper()
+        private WPFImageSourceHelper()
         {
             _actionImageDict = new Dictionary<int, ImageSource>();
-            AddActionImage(1, Resource1.vg_selall);
-            AddActionImage(3, Resource1.vg_draw);
-            AddActionImage(4, Resource1.vg_back);
-            AddActionImage(5, Resource1.vg_delete);
-            AddActionImage(6, Resource1.vg_clone);
-            AddActionImage(7, Resource1.vg_fixlen);
-            AddActionImage(8, Resource1.vg_freelen);
-            AddActionImage(9, Resource1.vg_lock);
-            AddActionImage(10, Resource1.vg_unlock);
-            AddActionImage(11, Resource1.vg_edit);
-            AddActionImage(12, Resource1.vg_back);
-            AddActionImage(15, Resource1.vg_addvertex);
-            AddActionImage(16, Resource1.vg_delvertex);
-            AddActionImage(17, Resource1.vg_group);
-            AddActionImage(18, Resource1.vg_ungroup);
-            AddActionImage(19, Resource1.vg_overturn);
-            //AddActionImage(40, Resource1.vg_break);
+            AddActionImage(MgContextAction.kMgActionSelAll, Resource1.vg_selall);
+            AddActionImage(MgContextAction.kMgActionCancel, Resource1.vg_back);
+            AddActionImage(MgContextAction.kMgActionDelete, Resource1.vg_delete);
+            AddActionImage(MgContextAction.kMgActionClone, Resource1.vg_clone);
+            AddActionImage(MgContextAction.kMgActionFixedLength, Resource1.vg_fixlen);
+            AddActionImage(MgContextAction.kMgActionFreeLength, Resource1.vg_freelen);
+            AddActionImage(MgContextAction.kMgActionLocked, Resource1.vg_lock);
+            AddActionImage(MgContextAction.kMgActionUnlocked, Resource1.vg_unlock);
+            AddActionImage(MgContextAction.kMgActionEditVertex, Resource1.vg_edit);
+            AddActionImage(MgContextAction.kMgActionHideVertex, Resource1.vg_back);
+            AddActionImage(MgContextAction.kMgActionGroup, Resource1.vg_group);
+            AddActionImage(MgContextAction.kMgActionUngroup, Resource1.vg_ungroup);
+            AddActionImage(MgContextAction.kMgActionOverturn, Resource1.vg_overturn);
 
-            _handleImages = new ImageSource[7];
+            _handleImages = new ImageSource[7]; // GiHandleTypes
             _handleImages[0] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot1);
             _handleImages[1] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot2);
             _handleImages[2] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot3);
@@ -101,7 +108,12 @@ namespace touchvg.view
             _handleImages[6] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_endedit);
         }
 
-        private void AddActionImage(int key, Bitmap bitmap)
+        private void AddActionImage(MgContextAction key, Bitmap bitmap)
+        {
+            AddActionImage((int)key, bitmap);
+        }
+
+        public void AddActionImage(int key, Bitmap bitmap)
         {
             if (bitmap != null)
             {

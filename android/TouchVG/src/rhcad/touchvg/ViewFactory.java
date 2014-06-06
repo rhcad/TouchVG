@@ -10,6 +10,10 @@ import rhcad.touchvg.view.ViewHelperImpl;
 //! 绘图视图工厂类
 public class ViewFactory {
 
+    static {
+        System.loadLibrary("touchvg");
+    }
+
     //! 获取当前活动视图，构造辅助对象
     public static IViewHelper createHelper() {
         return new ViewHelperImpl();

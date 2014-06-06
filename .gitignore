@@ -54,3 +54,4 @@ CppDepend*
 ios/output
 android/TouchVG/src/rhcad/touchvg/core
 wpf/touchvglib/core
+*.so

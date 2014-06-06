@@ -72,7 +72,7 @@ namespace touchvg.view
             MainCanvas.Width = container.ActualWidth;
             MainCanvas.Height = container.ActualHeight;
             this.CoreView.onSize(_view, (int)container.ActualWidth, (int)container.ActualHeight);
-            _view.ClearActions();
+            _view.hideContextActions();
         }
 
         public void Dispose()
@@ -210,7 +210,7 @@ namespace touchvg.view
             public override bool showContextActions(Ints actions, Floats buttonXY,
                 float x, float y, float w, float h)
             {
-                ClearActions();
+                hideContextActions();
                 if (actions != null && !createActionImages(actions, buttonXY))
                     createActionButtons(actions, buttonXY);
                 return isContextActionsVisible();
@@ -283,7 +283,7 @@ namespace touchvg.view
             private void image_MouseDown(object sender, MouseButtonEventArgs e)
             {
                 int action = Convert.ToInt32((sender as FrameworkElement).Tag);
-                ClearActions();
+                hideContextActions();
                 CoreView.doContextAction(action);
                 e.Handled = true;
                 _owner.ActivateView();
@@ -292,12 +292,12 @@ namespace touchvg.view
             private void button_Click(object sender, RoutedEventArgs e)
             {
                 int action = Convert.ToInt32((sender as FrameworkElement).Tag);
-                ClearActions();
+                hideContextActions();
                 CoreView.doContextAction(action);
                 e.Handled = true;
             }
 
-            public void ClearActions()
+            public override void hideContextActions()
             {
                 for (int i = 0; i < ActionImages.Count; i++)
                 {

@@ -5,6 +5,7 @@
 package rhcad.touchvg;
 
 import rhcad.touchvg.core.GiCoreView;
+import rhcad.touchvg.core.MgMotion;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -22,6 +23,9 @@ public interface IGraphView {
 
     //! 返回内核视图分发器对象
     public GiCoreView coreView();
+
+    //! 返回内核视图的句柄, MgView 指针
+    public int cmdViewHandle();
 
     //! 创建动态绘图子视图
     public View createDynamicShapeView(Context context);
@@ -94,6 +98,16 @@ public interface IGraphView {
         public void onShapeDeleted(IGraphView view, int sid);
     }
 
+    //! 图形点击的通知，返回false继续显示上下文按钮
+    public static interface OnShapeClickedListener {
+        public boolean onShapeClicked(IGraphView view, int sid, int tag, float x, float y);
+    }
+
+    //! 上下文按钮点击的通知
+    public static interface OnContextActionListener {
+        public boolean onContextAction(IGraphView view, MgMotion sender, int action);
+    }
+
     //! 添加当前命令改变的观察者
     public void setOnCommandChangedListener(OnCommandChangedListener listener);
 
@@ -114,4 +128,10 @@ public interface IGraphView {
 
     //! 添加图形已删除的观察者
     public void setOnShapeDeletedListener(OnShapeDeletedListener listener);
+
+    //! 添加图形点击的观察者
+    public void setOnShapeClickedListener(OnShapeClickedListener listener);
+
+    //! 添加上下文按钮点击的观察者
+    public void setOnContextActionListener(OnContextActionListener listener);
 }

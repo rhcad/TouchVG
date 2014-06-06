@@ -6,7 +6,7 @@
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
 
-#define IOSLIBVERSION     10
+#define IOSLIBVERSION     11
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -29,15 +29,22 @@ GiColor CGColorToGiColor(CGColorRef color) {
 }
 
 struct GiImageFinderD : public MgFindImageCallback {
-    NSString *path;
-    GiScanImageDelegate block;
+    GiImageCache    *cache;
+    NSMutableArray  *arr;
     
-    GiImageFinderD(NSString *path, GiScanImageDelegate block)
-        : path(path), block(block) {}
+    GiImageFinderD(GiImageCache *cache, NSMutableArray *arr)
+        : cache(cache), arr(arr) {}
     
     virtual void onFindImage(int sid, const char* name) {
         NSString *title = [NSString stringWithUTF8String:name];
-        block(sid, [path stringByAppendingPathComponent:title]);
+        CGRect rect = [[GiViewHelper sharedInstance] getShapeBox:sid];
+        
+        [arr addObject:@{@"id":[NSNumber numberWithInt:sid],
+                         @"name":title,
+                         @"path":[cache.imagePath stringByAppendingPathComponent:title],
+                         @"image":[cache loadImage:title],
+                         @"rect":[NSValue valueWithCGRect:rect]
+                         }];
     }
 };
 
@@ -121,7 +128,8 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (NSString *)command {
-    return [NSString stringWithCString:[_view coreView]->getCommand() encoding:NSUTF8StringEncoding];
+    return [NSString stringWithCString:[_view coreView]->getCommand()
+                              encoding:NSUTF8StringEncoding];
 }
 
 - (void)setCommand:(NSString *)name {
@@ -429,6 +437,10 @@ static GiViewHelper *_sharedInstance = nil;
                                          rect.size.width, rect.size.height);
 }
 
+- (void)setZoomEnabled:(BOOL)enabled {
+    [_view coreView]->setZoomEnabled([_view viewAdapter], enabled);
+}
+
 - (int)addShapesForTest {
     @synchronized([_view locker]) {
         return [_view coreView]->addShapesForTest();
@@ -449,7 +461,8 @@ static GiViewHelper *_sharedInstance = nil;
 - (int)insertPNGFromResource:(NSString *)name center:(CGPoint)pt {
     CGSize size = [_view.imageCache addPNGFromResource:name :&name];
     @synchronized([_view locker]) {
-        return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
+        return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y,
+                                               size.width, size.height, 0);
     }
 }
 
@@ -463,7 +476,8 @@ static GiViewHelper *_sharedInstance = nil;
 - (int)insertSVGFromResource:(NSString *)name center:(CGPoint)pt {
     CGSize size = [_view.imageCache addSVGFromResource:name :&name];
     @synchronized([_view locker]) {
-        return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y, size.width, size.height);
+        return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y,
+                                               size.width, size.height, 0);
     }
 }
 
@@ -471,20 +485,37 @@ static GiViewHelper *_sharedInstance = nil;
     return [GiImageCache getImageFromSVGFile:filename maxSize:size];
 }
 
-- (int)insertImageFromFile:(NSString *)filename {
-    NSString *name = nil;
-    CGSize size = [_view.imageCache addImageFromFile:filename :&name];
+- (CGSize)insertImageFromFile_:(NSString *)filename :(NSString **)name {
+    CGSize size = [_view.imageCache addImageFromFile:filename :name];
     
     if (size.width > 0.5f) {
-        NSString *dest = [_view.imageCache.playPath stringByAppendingPathComponent:name];
+        NSString *dest = [_view.imageCache.playPath stringByAppendingPathComponent:*name];
         NSFileManager *fm = [NSFileManager defaultManager];
         
         if (dest && ![fm fileExistsAtPath:dest]) {
             [fm copyItemAtPath:filename toPath:dest error:nil];
         }
     }
+    
+    return size;
+}
+
+- (int)insertImageFromFile:(NSString *)filename {
+    NSString *name = nil;
+    CGSize size = [self insertImageFromFile_:filename :&name];
+    
     @synchronized([_view locker]) {
         return [_view coreView]->addImageShape([name UTF8String], size.width, size.height);
+    }
+}
+    
+- (int)insertImageFromFile:(NSString *)filename center:(CGPoint)pt tag:(int)tag {
+    NSString *name = nil;
+    CGSize size = [self insertImageFromFile_:filename :&name];
+    
+    @synchronized([_view locker]) {
+        return [_view coreView]->addImageShape([name UTF8String], pt.x, pt.y,
+                                               size.width, size.height, tag);
     }
 }
 
@@ -502,13 +533,22 @@ static GiViewHelper *_sharedInstance = nil;
     return ret;
 }
 
-- (int)scanImageShape:(GiScanImageDelegate)block {
+- (int)findShapeByTag:(int)tag {
     long doc = [self acquireFrontDoc];
-    GiImageFinderD f([self getImagePath], block);
-    
-    int ret = [_view coreView]->traverseImageShapes(doc, &f);
+    int ret = [_view coreView]->findShapeByTag(doc, tag);
     [_view coreView]->releaseDoc(doc);
     return ret;
+}
+
+- (NSArray *)getImageShapes {
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    long doc = [self acquireFrontDoc];
+    GiImageFinderD f(_view.imageCache, arr);
+    
+    [_view coreView]->traverseImageShapes(doc, &f);
+    [_view coreView]->releaseDoc(doc);
+    
+    return [arr AUTORELEASE];
 }
 
 - (void)setImagePath:(NSString *)path {

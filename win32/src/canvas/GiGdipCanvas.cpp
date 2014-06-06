@@ -399,23 +399,28 @@ bool GiGdipCanvas::clipPath()
     return true;
 }
 
-void GiGdipCanvas::drawHandle(float x, float y, int)
+bool GiGdipCanvas::drawHandle(float x, float y, int)
 {
     Bitmap* bmp = NULL;//new Bitmap(L"A:\\vgdot1.png");
+    bool ret = false;
+
     if (bmp) {
         float w = (float)bmp->GetWidth() / bmp->GetHorizontalResolution();
         float h = (float)bmp->GetHeight() / bmp->GetVerticalResolution();
         w *= 96;
         h *= 96;
-        _impl->getGs()->DrawImage(bmp, x - w / 2, y - h / 2);
+        ret = _impl->getGs()->DrawImage(bmp, x - w / 2, y - h / 2) == Ok;
         delete bmp;
     }
+
+    return ret;
 }
 
-void GiGdipCanvas::drawBitmap(const char*, float, float, 
+bool GiGdipCanvas::drawBitmap(const char*, float, float, 
                               float, float, float)
 {
     // TODO: drawBitmap
+    return false;
 }
 
 float GiGdipCanvas::drawTextAt(const char* text, float x, float y, float, int align)

@@ -16,8 +16,6 @@ typedef NS_ENUM(int, GILineStyle) {
     GILineStyleNull         //!< Not draw.
 };
 
-typedef void (^GiScanImageDelegate)(int sid, NSString *filename);
-
 //! iOS绘图视图辅助类
 /*! \ingroup GROUP_IOS
  */
@@ -71,6 +69,8 @@ typedef void (^GiScanImageDelegate)(int sid, NSString *filename);
 
 - (BOOL)zoomToExtent;                       //!< 放缩显示全部内容
 - (BOOL)zoomToModel:(CGRect)rect;           //!< 放缩显示指定范围到视图区域
+- (void)setZoomEnabled:(BOOL)enabled;       //!< 是否允许放缩显示
+
 - (int)addShapesForTest;                    //!< 添加测试图形
 - (void)clearCachedData;                    //!< 释放临时数据内存
 - (CGPoint)displayToModel:(CGPoint)point;   //!< 视图坐标转为模型坐标
@@ -101,10 +101,12 @@ typedef void (^GiScanImageDelegate)(int sid, NSString *filename);
 + (UIImage *)getImageFromSVGFile:(NSString *)filename maxSize:(CGSize)size; //!< 得到SVG文件的图像
 + (NSString *)addExtension:(NSString *)filename :(NSString *)ext;
 - (int)insertImageFromFile:(NSString *)filename;    //!< 在默认位置插入一个PNG、JPEG或SVG等文件的图像
+- (int)insertImageFromFile:(NSString *)filename center:(CGPoint)pt tag:(int)tag;    //!< 插入一个图像文件
 
 - (BOOL)hasImageShape;                      //!< 返回是否有容纳图像的图形对象
 - (int)findShapeByImageID:(NSString *)name; //!< 查找指定名称的图像对应的图形对象ID
-- (int)scanImageShape:(GiScanImageDelegate)block;   //!< 遍历有容纳图像的图形对象
+- (int)findShapeByTag:(int)tag;             //!< 查找指定Tag的图形对象ID
+- (NSArray *)getImageShapes;                //!< 遍历有容纳图像的图形对象
 - (void)setImagePath:(NSString *)path;      //!< 设置图像文件的默认路径(可以没有末尾的分隔符)，自动加载时用
 - (NSString *)getImagePath;                 //!< 返回图像文件的默认路径
 

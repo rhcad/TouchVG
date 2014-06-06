@@ -4,12 +4,15 @@
 
 package rhcad.touchvg;
 
+import java.util.ArrayList;
+
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.MgView;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -143,6 +146,9 @@ public interface IViewHelper {
     //! 视图坐标转为模型坐标
     public PointF displayToModel(float x, float y);
 
+    //! 视图坐标转为模型坐标
+    public RectF displayToModel(RectF rect);
+
     //! 开始Undo录制
     public boolean startUndoRecord(String path);
 
@@ -181,6 +187,9 @@ public interface IViewHelper {
 
     //! 设置是否允许触摸交互
     public void setGestureEnable(boolean enabled);
+
+    //! 是否允许放缩显示
+    public void setZoomEnabled(boolean enabled);
 
     //! 设置背景色，普通视图默认透明，SurfaceView默认白色背景
     public void setBackgroundColor(int color);
@@ -233,6 +242,9 @@ public interface IViewHelper {
     //! 返回选择包络框
     public Rect getBoundingBox();
 
+    //! 得到指定ID的图形的包络框显示坐标
+    public Rect getShapeBox(int sid);
+
     //! 得到图形的JSON内容，支持多线程
     public String getContent();
 
@@ -278,11 +290,20 @@ public interface IViewHelper {
     //! 在默认位置插入一个PNG、JPEG或SVG等文件的图像
     public int insertImageFromFile(String filename);
 
+    //! 插入一个图像文件，并指定图像的中心位置和自定义数据
+    public int insertImageFromFile(String filename, int xc, int yc, int tag);
+
     //! 返回是否有容纳图像的图形对象
     public boolean hasImageShape();
 
     //! 查找指定名称的图像对应的图形对象ID
     public int findShapeByImageID(String name);
+
+    //! 查找指定Tag的图形对象ID
+    public int findShapeByTag(int tag);
+
+    //! 遍历有容纳图像的图形对象
+    public ArrayList<Bundle> getImageShapes();
 
     //! 返回图像文件的默认路径
     public String getImagePath();

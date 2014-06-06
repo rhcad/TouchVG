@@ -26,7 +26,7 @@ void ViewAdapter::regenAll(bool changed)
     InvalidateRect(_hwnd, NULL, FALSE);
 }
 
-void ViewAdapter::regenAppend(int)
+void ViewAdapter::regenAppend(int, long)
 {
     regenAll(true);
 }

@@ -19,6 +19,7 @@
 - (void)onFirstRegen:(id)view;          //!< 第一次后台渲染结束的通知
 - (void)onDynDrawEnded:(id)view;        //!< 动态绘图完成的通知
 - (void)onShapesRecorded:(NSDictionary *)info;  //!< 录制的通知
-- (void)onShapeDeleted:(id)view;        //!< 图形已删除的通知
+- (void)onShapeDeleted:(id)view sid:(id)num;    //!< 图形已删除的通知
+- (BOOL)onShapeClicked:(NSDictionary *)info;    //!< 图形点击的通知
 
 @end

@@ -201,7 +201,7 @@ namespace touchvg.view
             _dc.DrawGeometry(_brush, _pen, _path);
         }
 
-        public override void drawHandle(float x, float y, int type)
+        public override bool drawHandle(float x, float y, int type)
         {
             ImageSource source = WPFImageSourceHelper.Instance.HandleImageSource(type);
             if (source != null)
@@ -209,9 +209,11 @@ namespace touchvg.view
                 _dc.DrawImage(source, new Rect(x - source.Width / 2,
                     y - source.Height / 2, source.Width, source.Height));
             }
+            return source != null;
         }
 
-        public override void drawBitmap(string name, float xc, float yc, float w, float h, float angle)
+        public override bool drawBitmap(string name, float xc, float yc,
+                                        float w, float h, float angle)
         {
             if (w > 0 && h > 0)
             {
@@ -225,10 +227,19 @@ namespace touchvg.view
                 var rect = Rect.Transform(new Rect(xc - w / 2, yc - h / 2, w, h), matrix);
                 _dc.DrawImage(imagedata, rect);
             }
+            return w > 0 && h > 0;
         }
 
         public override float drawTextAt(string text, float x, float y, float h, int align)
         {
+            if (text == null || text.Length < 1)
+                return 0;
+
+            if (text[0] == '@')
+            {
+
+            }
+
             FormattedText textFormation = new FormattedText(text,
                 CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                 new Typeface("宋体"), h, _brush)

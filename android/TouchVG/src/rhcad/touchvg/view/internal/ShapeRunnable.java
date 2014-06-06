@@ -17,6 +17,7 @@ public class ShapeRunnable implements Runnable {
         this.mPath = path;
         this.mType = type;
         this.mCoreView = coreView;
+        coreView.addRef();
     }
 
     protected void finalize() {
@@ -145,18 +146,26 @@ public class ShapeRunnable implements Runnable {
                 }
             }
             process(tick, doc, shapes);
+            if (nextTick == 0) {
+                synchronized (mPending) {
+                    nextTick = mPending[0];
+                }
+            }
             loop = (nextTick != 0);
         }
     }
 
     private void cleanup() {
-        for (int i = 0; i < mPending.length; i++) {
-            if (mPending[i] != 0) {
-                GiCoreView.releaseDoc(mPending[i + 1]);
-                GiCoreView.releaseShapes(mPending[i + 2]);
+        synchronized (mPending) {
+            for (int i = 0; i < mPending.length; i++) {
+                if (mPending[i] != 0) {
+                    GiCoreView.releaseDoc(mPending[i + 1]);
+                    GiCoreView.releaseShapes(mPending[i + 2]);
+                }
             }
         }
+        mCoreView.release();
         mCoreView = null;
-        Log.d(TAG, "RecordRunnable exit, type=" + mType);
+        Log.d(TAG, "ShapeRunnable exit, type=" + mType);
     }
 }

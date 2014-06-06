@@ -113,7 +113,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     }
 
     protected void activateView() {
-        mViewAdapter.removeContextButtons();
+        mViewAdapter.hideContextActions();
         ViewUtil.activateView(this);
     }
 
@@ -397,6 +397,11 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     }
 
     @Override
+    public int cmdViewHandle() {
+        return mCoreView != null ? mCoreView.viewAdapterHandle() : 0;
+    }
+
+    @Override
     public View getView() {
         return this;
     }
@@ -534,6 +539,16 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     @Override
     public void setOnShapeDeletedListener(OnShapeDeletedListener listener) {
         mViewAdapter.setOnShapeDeletedListener(listener);
+    }
+
+    @Override
+    public void setOnShapeClickedListener(OnShapeClickedListener listener) {
+        mViewAdapter.setOnShapeClickedListener(listener);
+    }
+
+    @Override
+    public void setOnContextActionListener(OnContextActionListener listener) {
+        mViewAdapter.setOnContextActionListener(listener);
     }
 
     @Override

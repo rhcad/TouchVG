@@ -98,25 +98,6 @@ void GiCanvasAdapter::setBrush(int argb, int style)
     }
 }
 
-bool GiCanvasAdapter::beginShape(int type, int, int, float x, float y, float w, float h)
-{
-    /*if (!_gradient && type == 16) { // kMgShapeSplines
-        CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();
-        CGFloat colors[] = {
-            200.f / 255.f,  50.f / 255.f, 26.f / 255.f, 0.8f,
-            64.f / 255.f, 24.f / 255.f, 24.f / 255.f, 0.8f,
-            15.f / 255.f, 156.f / 255.f, 215.f / 255.f, 0.8f,
-        };
-        
-        _gradient0 = CGGradientCreateWithColorComponents(rgb, colors, NULL,
-                                                         sizeof(colors)/(sizeof(colors[0])*4));
-        CGColorSpaceRelease(rgb);
-    }
-    _gradient = (type == 16) ? _gradient0 : NULL;*/
-    
-    return true;
-}
-
 void GiCanvasAdapter::saveClip()
 {
     CGContextSaveGState(_ctx);
@@ -223,10 +204,10 @@ bool GiCanvasAdapter::clipPath()
     return !CGRectIsEmpty(rect);
 }
 
-void GiCanvasAdapter::drawHandle(float x, float y, int type)
+bool GiCanvasAdapter::drawHandle(float x, float y, int type)
 {
     if (type >= 0 && type < 6) {
-        NSString *names[] = { @"vgdot1.png", @"vgdot2.png", @"vgdot3.png", 
+        NSString *names[] = { @"vgdot1.png", @"vgdot2.png", @"vgdot3.png",
             @"vg_lock.png", @"vg_unlock.png", @"vg_back.png", @"vg_endedit.png" };
         NSString *name = [@"TouchVG.bundle/" stringByAppendingString:names[type]];
         UIImage *image = [UIImage imageNamed:name];
@@ -241,14 +222,17 @@ void GiCanvasAdapter::drawHandle(float x, float y, int type)
             CGContextDrawImage(_ctx, CGRectMake(0, 0, w, h), img);
             CGContextConcatCTM(_ctx, CGAffineTransformInvert(af));
             
+            return true;
             // 如果使用下面一行显示，则图像是上下颠倒的:
             // CGContextDrawImage(_ctx, CGRectMake(x - w * 0.5f, y - h * 0.5f, w, h), img);
         }
     }
+    
+    return false;
 }
 
-void GiCanvasAdapter::drawBitmap(const char* name, float xc, float yc,
-                                  float w, float h, float angle)
+bool GiCanvasAdapter::drawBitmap(const char* name, float xc, float yc,
+                                 float w, float h, float angle)
 {
     UIImage *image = (name && _cache ? [_cache loadImage:[NSString stringWithUTF8String:name]]
                       : [UIImage imageNamed:@"app57.png"]);
@@ -260,13 +244,22 @@ void GiCanvasAdapter::drawBitmap(const char* name, float xc, float yc,
         CGContextDrawImage(_ctx, CGRectMake(-w/2, -h/2, w, h), img);
         CGContextConcatCTM(_ctx, CGAffineTransformInvert(af));
     }
+    
+    return !!image;
 }
 
 float GiCanvasAdapter::drawTextAt(const char* text, float x, float y, float h, int align)
 {
     UIGraphicsPushContext(_ctx);        // 设置为当前上下文，供UIKit显示使用
     
-    NSString *str = [[NSString alloc] initWithUTF8String:text];
+    NSString *str;
+    
+    if (*text == '@') {
+        NSString *name = [NSString stringWithUTF8String:text+1];
+        str = NSLocalizedString(name, @"TouchVG");
+    } else {
+        str = [[NSString alloc] initWithUTF8String:text];
+    }
     
     // 实际字体大小 = 目标高度 h * 临时字体大小 h / 临时字体行高 actsize.height
     UIFont *font = [UIFont systemFontOfSize:h]; // 以像素点高度作为字体大小得到临时字体
@@ -279,7 +272,8 @@ float GiCanvasAdapter::drawTextAt(const char* text, float x, float y, float h, i
     
     x -= (align == 2) ? actsize.width : ((align == 1) ? actsize.width / 2 : 0);
     [str drawAtPoint:CGPointMake(x, y) withAttributes:@{NSFontAttributeName:font}];  // 显示文字
-    [str RELEASE];
+    if (*text != '@')
+        [str RELEASE];
     
     UIGraphicsPopContext();
     

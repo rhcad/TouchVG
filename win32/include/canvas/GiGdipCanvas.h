@@ -71,8 +71,8 @@ public:
     void restoreClip();
     bool clipRect(float x, float y, float w, float h);
     bool clipPath();
-    void drawHandle(float x, float y, int type);
-    void drawBitmap(const char* name, float xc, float yc, float w, float h, float angle);
+    bool drawHandle(float x, float y, int type);
+    bool drawBitmap(const char* name, float xc, float yc, float w, float h, float angle);
     float drawTextAt(const char* text, float x, float y, float h, int align);
     
 private:

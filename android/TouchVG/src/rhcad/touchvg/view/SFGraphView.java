@@ -127,7 +127,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     }
 
     protected void activateView() {
-        mViewAdapter.removeContextButtons();
+        mViewAdapter.hideContextActions();
         ViewUtil.activateView(this);
     }
 
@@ -266,8 +266,9 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
                         e.printStackTrace();
                     }
                 }
-                if (!mView.mCoreView.isStopping())
+                if (mView != null && !mView.mCoreView.isStopping()) {
                     render();
+                }
             }
             synchronized (mView.mCanvasAdapter) {
                 mView.mCanvasAdapter.notify();
@@ -454,7 +455,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
                         e.printStackTrace();
                     }
                 }
-                if (!mView.mCoreView.isStopping()) {
+                if (mView != null && !mView.mCoreView.isStopping()) {
                     render();
                 }
             }
@@ -639,6 +640,11 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     @Override
     public GiView viewAdapter() {
         return mViewAdapter;
+    }
+
+    @Override
+    public int cmdViewHandle() {
+        return mCoreView != null ? mCoreView.viewAdapterHandle() : 0;
     }
 
     @Override
@@ -828,6 +834,16 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     @Override
     public void setOnShapeDeletedListener(OnShapeDeletedListener listener) {
         mViewAdapter.setOnShapeDeletedListener(listener);
+    }
+
+    @Override
+    public void setOnShapeClickedListener(OnShapeClickedListener listener) {
+        mViewAdapter.setOnShapeClickedListener(listener);
+    }
+
+    @Override
+    public void setOnContextActionListener(OnContextActionListener listener) {
+        mViewAdapter.setOnContextActionListener(listener);
     }
 
     @Override

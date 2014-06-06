@@ -360,7 +360,7 @@ namespace touchvg.view
         }
 
         //! 清除所有图形
-        public void ClearShapes()
+        public void Clear()
         {
             CoreView.clear();
         }

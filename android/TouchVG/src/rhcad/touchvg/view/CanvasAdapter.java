@@ -6,6 +6,7 @@ package rhcad.touchvg.view;
 
 import rhcad.touchvg.core.GiCanvas;
 import rhcad.touchvg.view.internal.ImageCache;
+import rhcad.touchvg.view.internal.ResourceUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -61,7 +62,6 @@ public class CanvasAdapter extends GiCanvas {
     public synchronized void delete() {
         mView = null;
         mCache = null;
-        mHandleIDs = null;
         super.delete();
     }
 
@@ -268,15 +268,18 @@ public class CanvasAdapter extends GiCanvas {
     }
 
     @Override
-    public void drawHandle(float x, float y, int type) {
+    public boolean drawHandle(float x, float y, int type) {
         final Bitmap bmp = getHandleBitmap(type);
         if (bmp != null) {
             mCanvas.drawBitmap(bmp, x - bmp.getWidth() / 2, y - bmp.getHeight() / 2, null);
+        } else {
+            Log.w(TAG, "Fail to draw handle, type=" + type);
         }
+        return bmp != null;
     }
 
     @Override
-    public void drawBitmap(String name, float xc, float yc, float w, float h, float angle) {
+    public boolean drawBitmap(String name, float xc, float yc, float w, float h, float angle) {
         final Drawable drawable = mCache != null ? mCache.getImage(mView, name)
                 : (name == null && mView != null) ? new BitmapDrawable(mView.getResources(),
                         getHandleBitmap(3)) : null;
@@ -301,6 +304,8 @@ public class CanvasAdapter extends GiCanvas {
                     mCanvas.drawPicture(p.getPicture());
                     mat.invert(mat);
                     mCanvas.concat(mat);
+
+                    return true;
                 } catch (ClassCastException e2) {
                 } catch (UnsupportedOperationException e3) { // GLES20Canvas, >=api11
                     e.printStackTrace();
@@ -310,6 +315,8 @@ public class CanvasAdapter extends GiCanvas {
                 }
             }
         }
+
+        return false;
     }
 
     @Override
@@ -319,6 +326,10 @@ public class CanvasAdapter extends GiCanvas {
 
         if (Math.abs(lineHeight - h) > 1e-2f) {
             mBrush.setTextSize(h * mBrush.getTextSize() / lineHeight);
+        }
+
+        if (mView != null && text.startsWith("@")) {
+            text = ResourceUtil.getStringFromName(mView.getContext(), text.substring(1));
         }
 
         float w = mBrush.measureText(text);
