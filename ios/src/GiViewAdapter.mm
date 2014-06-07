@@ -619,12 +619,12 @@ void GiViewAdapter::shapeDeleted(int sid)
     id obj = [NSNumber numberWithInt:sid];
     
     for (size_t i = 0; i < delegates.size() && respondsTo.didShapeDeleted; i++) {
-        if ([delegates[i] respondsToSelector:@selector(onShapeDeleted::)]) {
-            [delegates[i] onShapeDeleted:_view sid:obj];
+        if ([delegates[i] respondsToSelector:@selector(onShapeDeleted:)]) {
+            [delegates[i] onShapeDeleted:obj];
         }
     }
-    if ([_view respondsToSelector:@selector(onShapeDeleted::)]) {
-        [_view performSelector:@selector(onShapeDeleted::) withObject:_view withObject:obj];
+    if ([_view respondsToSelector:@selector(onShapeDeleted:)]) {
+        [_view performSelector:@selector(onShapeDeleted:) withObject:obj];
     }
 }
 
