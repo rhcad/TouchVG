@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name        = "TouchVG-SVG"
-  s.version     = "1.1.10"
+  s.version     = "1.1.11"
   s.summary     = "A lightweight 2D vector drawing framework for iOS."
   s.homepage    = "https://github.com/touchvg/TouchVG"
   s.screenshots = "https://github.com/touchvg/TouchVG/raw/develop/doc/images/iphone1.png"
@@ -21,6 +21,6 @@ Pod::Spec.new do |s|
     "HEADER_SEARCH_PATHS" => '$(PODS_ROOT)/Headers/TouchVGCore $(PODS_ROOT)/Headers/SVGKit'
   }
   s.resource = 'ios/TouchVG.bundle'
-  s.dependency "TouchVGCore", "~> 0.29"
-  s.dependency "SVGKit", :podspec => 'https://raw.githubusercontent.com/SVGKit/SVGKit/1.x/SVGKit.podspec'
+  s.dependency "TouchVGCore", "~> 1.0.33"
+  s.dependency "SVGKit", :podspec => 'https://raw.githubusercontent.com/SVGKit/SVGKit/2.x/SVGKit.podspec'
 end
