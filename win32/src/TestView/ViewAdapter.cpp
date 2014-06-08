@@ -42,6 +42,7 @@ void ViewAdapter::onSize(int w, int h, int dpi)
 {
     _coreView->setScreenDpi(dpi);
     _coreView->onSize(this, w, h);
+    _canvas.clearCachedBitmap(true);
 }
 
 void ViewAdapter::onDraw(HDC hdc)
