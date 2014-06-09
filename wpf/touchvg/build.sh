@@ -2,6 +2,7 @@
 # Type './build.sh' to generate C# classes.
 
 rm -rf ../touchvglib/core/*.*
+mkdir -p ../touchvglib/core
 
 swig -c++ -csharp -namespace touchvg.core \
     -outdir ../touchvglib/core \

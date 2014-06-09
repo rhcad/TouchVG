@@ -312,8 +312,10 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
                         ((Activity) mView.getContext()).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                mView.removeCallbacks(this);
-                                mView.setWillNotDraw(true); // Not use onDraw now
+                                if (mView != null) {
+                                    mView.removeCallbacks(this);
+                                    mView.setWillNotDraw(true); // Not use onDraw now
+                                }
                             }
                         });
                     }

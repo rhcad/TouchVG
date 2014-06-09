@@ -65,6 +65,13 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
    - To regenerate the kernel JNI classes, type `./build.sh-swig`
 (Need to install [SWIG](http://sourceforge.net/projects/swig/files/), and add the location to PATH).
 
+- How to debug native code
+  - Add `#include "mglog.h"` and use `LOGD("your message %d", someint);` in C++ files needed to debug.
+  - Set LogCat filter in Eclipse: `tag:dalvikvm|AndroidRuntime|vgjni|touchvg|vgstack|libc|DEBUG`.
+  - NDK JNI log print to locate problems of libc:
+    1. Add `python addlog.py` in [TouchVG/jni/build.sh](android/TouchVG/jni/build.sh).
+    2. Type `./build.sh -swig`, or remove `touchvg_java_wrap.cpp` and type `./build.sh`.
+
 ## Compile for iOS
 
 ### Compile with CocoaPods
