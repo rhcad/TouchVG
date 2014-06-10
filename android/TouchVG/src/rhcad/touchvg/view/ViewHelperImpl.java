@@ -276,7 +276,9 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public int addShapesForTest() {
         final LogHelper log = new LogHelper();
-        return log.r(mView.coreView().addShapesForTest());
+        synchronized (mView.coreView()) {
+            return log.r(mView.coreView().addShapesForTest());
+        }
     }
 
     @Override
@@ -633,8 +635,10 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public boolean setContent(String content) {
         final LogHelper log = new LogHelper();
-        mView.getImageCache().clear();
-        return log.r(mView.coreView().setContent(content));
+        synchronized (mView.coreView()) {
+            mView.getImageCache().clear();
+            return log.r(mView.coreView().setContent(content));
+        }
     }
 
     @Override
@@ -648,8 +652,10 @@ public class ViewHelperImpl implements IViewHelper{
             return false;
         final LogHelper log = new LogHelper();
         vgfile = addExtension(vgfile, ".vg");
-        mView.getImageCache().clear();
-        return log.r(mView.coreView().loadFromFile(vgfile, readOnly));
+        synchronized (mView.coreView()) {
+            mView.getImageCache().clear();
+            return log.r(mView.coreView().loadFromFile(vgfile, readOnly));
+        }
     }
 
     @Override
@@ -677,8 +683,10 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void clearShapes() {
-        mView.getImageCache().clear();
-        mView.coreView().clear();
+        synchronized (mView.coreView()) {
+            mView.getImageCache().clear();
+            mView.coreView().clear();
+        }
     }
 
     //! 返回指定后缀名的文件名

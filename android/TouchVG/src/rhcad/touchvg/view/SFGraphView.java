@@ -708,7 +708,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     @Override
     public boolean onPause() {
         final LogHelper log = new LogHelper();
-        setWillNotDraw(false);
+        //setWillNotDraw(false);
         mViewAdapter.hideContextActions();
         return log.r(mCoreView.onPause(BaseViewAdapter.getTick()));
     }
