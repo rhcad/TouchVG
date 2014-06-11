@@ -69,12 +69,14 @@ void ViewAdapter::drawTo(GiCanvas* canvas)
 
 bool ViewAdapter::onLButtonDown(int x, int y, WPARAM wparam)
 {
+    ::SetCapture(_hwnd);
     return _helper->onLButtonDown((float)x, (float)y,
         (wparam & MK_CONTROL) != 0, (wparam & MK_SHIFT) != 0);
 }
 
 bool ViewAdapter::onLButtonUp(int x, int y)
 {
+    ::ReleaseCapture();
     return _helper->onMouseUp((float)x, (float)y);
 }
 
