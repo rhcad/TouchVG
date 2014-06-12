@@ -60,6 +60,15 @@ namespace touchvg {
             }
         }
         
+        /// <summary>
+        ///   查找类似 ,全选,重选,绘图,取消,删除,克隆,定长,不定长,锁定,解锁,编辑,返回,闭合,不闭合,加点,删点,成组,解组,翻转 的本地化字符串。
+        /// </summary>
+        internal static string basic_actions {
+            get {
+                return ResourceManager.GetString("basic_actions", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap vg_back {
             get {
                 object obj = ResourceManager.GetObject("vg_back", resourceCulture);

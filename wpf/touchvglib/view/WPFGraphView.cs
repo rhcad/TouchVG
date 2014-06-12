@@ -118,6 +118,11 @@ namespace touchvg.view
             return (int)(DateTime.Now.Ticks / 10000);
         }
 
+        public static void AddContextActionCallback(int action, Action ActionCallback)
+        {
+            WPFViewAdapter.AddContextActionCallback(action, ActionCallback);
+        }
+
         //! WPF绘图视图适配器类
         private class WPFViewAdapter : GiView
         {
@@ -197,9 +202,17 @@ namespace touchvg.view
                 return false;
             }
 
-            private static string[] buttonCaptions = { null, "全选", "重选", "绘图",
-            "取消", "删除", "克隆", "定长", "不定长", "锁定", "解锁", "编辑","返回",
-            "闭合", "不闭合", "加点", "删点", "成组", "解组", "翻转" };
+            private static string[] buttonCaptions;
+            private static string[] buttonCaptions40;
+            private static Dictionary<int, Action> extActions;
+
+            public static void AddContextActionCallback(int action, Action ActionCallback)
+            {
+                if (extActions == null)
+                    extActions = new Dictionary<int, Action>();
+                if (!extActions.ContainsKey(action))
+                    extActions.Add(action, ActionCallback);
+            }
 
             public override bool isContextActionsVisible()
             {
@@ -211,6 +224,8 @@ namespace touchvg.view
                 float x, float y, float w, float h)
             {
                 hideContextActions();
+                if (buttonCaptions == null)
+                    buttonCaptions = Resource1.basic_actions.Split(new Char[] {','});
                 if (actions != null && !createActionImages(actions, buttonXY))
                     createActionButtons(actions, buttonXY);
                 return isContextActionsVisible();
@@ -222,14 +237,12 @@ namespace touchvg.view
                 for (int i = 0; i < actionCount; i++)
                 {
                     int cmdIndex = actions.get(i);
-                    if (cmdIndex >= buttonCaptions.Length)
-                        continue;
-
                     ImageSource imageSource = WPFImageSourceHelper.Instance.ActionImageSource(cmdIndex);
+
                     if (imageSource == null)
                         continue;
 
-                    string cmdName = buttonCaptions[cmdIndex];
+                    string cmdName = GetButtonCaption(cmdIndex);
                     System.Diagnostics.Trace.WriteLine(string.Format("{0},{1}", cmdIndex, cmdName));
 
                     Image image = new Image()
@@ -240,7 +253,7 @@ namespace touchvg.view
                         Width = imageSource.Width,
                         Height = imageSource.Height
                     };
-                    image.MouseDown += new MouseButtonEventHandler(image_MouseDown);
+                    image.MouseDown += new MouseButtonEventHandler(button_Click);
                     _owner.TempCanvas.Children.Add(image);
                     Canvas.SetLeft(image, buttonXY.get(2 * i) - image.Width / 2);
                     Canvas.SetTop(image, buttonXY.get(2 * i + 1) - image.Height / 2);
@@ -260,10 +273,10 @@ namespace touchvg.view
                 for (int i = 0; i < actionCount; i++)
                 {
                     int cmdIndex = actions.get(i);
-                    if (cmdIndex >= buttonCaptions.Length)
-                        continue;
+                    string cmdName = GetButtonCaption(cmdIndex);
 
-                    string cmdName = buttonCaptions[cmdIndex];
+                    if (cmdName.Length < 1)
+                        continue;
 
                     Button button = new Button()
                     {
@@ -280,21 +293,46 @@ namespace touchvg.view
                 }
             }
 
-            private void image_MouseDown(object sender, MouseButtonEventArgs e)
+            private string GetButtonCaption(int cmdIndex)
             {
-                int action = Convert.ToInt32((sender as FrameworkElement).Tag);
-                hideContextActions();
-                CoreView.doContextAction(action);
-                e.Handled = true;
-                _owner.ActivateView();
+                string cmdName = "";
+
+                if (cmdIndex < buttonCaptions.Length)
+                {
+                    cmdName = buttonCaptions[cmdIndex];
+                }
+                else if (cmdIndex >= 40)
+                {
+                    if (buttonCaptions40 == null)
+                    {
+                        string names = WPFImageSourceHelper.Instance.GetLocalizedString("actions40");
+                        buttonCaptions40 = names.Split(new Char[] { ',' });
+                    }
+                    if (cmdIndex - 40 < buttonCaptions40.Length)
+                    {
+                        cmdName = buttonCaptions40[cmdIndex - 40];
+                    }
+                }
+
+                return cmdName;
             }
 
             private void button_Click(object sender, RoutedEventArgs e)
             {
                 int action = Convert.ToInt32((sender as FrameworkElement).Tag);
                 hideContextActions();
-                CoreView.doContextAction(action);
-                e.Handled = true;
+                e.Handled = CoreView.doContextAction(action) || ExtClick(action);
+                _owner.ActivateView();
+            }
+
+            private bool ExtClick(int action)
+            {
+                if (extActions != null && extActions.ContainsKey(action))
+                {
+                    extActions[action]();
+                    return true;
+                }
+                return false;
             }
 
             public override void hideContextActions()

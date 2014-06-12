@@ -105,7 +105,7 @@ namespace touchvg.view
 
         public override void setBrush(int argb, int style)
         {
-            byte alpha = (byte)(argb & 0xFF);
+            byte alpha = (byte)((argb >> 24) & 0xFF);
 
             if (style == 0)
             {
@@ -237,7 +237,7 @@ namespace touchvg.view
 
             if (text[0] == '@')
             {
-
+                text = WPFImageSourceHelper.Instance.GetLocalizedString(text.Substring(1));
             }
 
             FormattedText textFormation = new FormattedText(text,

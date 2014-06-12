@@ -70,16 +70,9 @@ namespace touchvg.view
             }
         }
 
-        public void AddResource(ResourceManager res)
-        {
-            if (_resources == null)
-                _resources = new ArrayList();
-            _resources.Add(res);
-        }
-
         private Dictionary<int, ImageSource> _actionImageDict;
         private ImageSource[] _handleImages;
-        private ArrayList _resources;
+        private Func<string, string> StringCallback;
 
         private WPFImageSourceHelper()
         {
@@ -138,6 +131,16 @@ namespace touchvg.view
                 return _handleImages[type].Clone();
             }
             return null;
+        }
+
+        public void AddLocalizedStringCallback(Func<string, string> StringCallback)
+        {
+            this.StringCallback = StringCallback;
+        }
+
+        public string GetLocalizedString(string name)
+        {
+            return StringCallback != null ? StringCallback(name) : "";
         }
 
         /// <summary>
