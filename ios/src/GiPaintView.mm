@@ -5,6 +5,7 @@
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
 #import "GiMagnifierView.h"
+#include <map>
 
 #pragma mark - GiDynDrawView
 
@@ -20,7 +21,7 @@
         _adapter = adapter;
         self.opaque = NO;                           // 透明背景
         self.userInteractionEnabled = NO;           // 禁止交互，避免影响主视图显示
-        self.contentMode = UIViewContentModeRedraw;     // 避免转屏变形
+        self.contentMode = UIViewContentModeRedraw; // 避免转屏变形
     }
     return self;
 }
@@ -182,6 +183,8 @@
 @end
 
 static GiPaintView* _activePaintView = nil;
+static std::map<int, dispatch_block_t> _extActions;
+
 GiColor CGColorToGiColor(CGColorRef color);
 
 @implementation GiPaintView
@@ -459,8 +462,15 @@ GiColor CGColorToGiColor(CGColorRef color);
                                              selector:@selector(hideContextActions) object:nil];
     _adapter->hideContextActions();
     @synchronized(_adapter->locker()) {
-        [self coreView]->doContextAction(action);
+        if (![self coreView]->doContextAction(action)
+            && _extActions.find(action) != _extActions.end()) {
+            _extActions[action]();
+        }
     }
+}
+
++ (void)addContextAction:(int)action block:(dispatch_block_t)block {
+    _extActions[action] = block;
 }
 
 - (void)removeFromSuperview {
