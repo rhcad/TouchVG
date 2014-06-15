@@ -65,6 +65,7 @@ class GiViewAdapter;
 
 - (void)addDelegate:(id<GiPaintViewDelegate>)d;     //!< 增加绘图消息观察者
 - (void)removeDelegate:(id<GiPaintViewDelegate>)d;  //!< 去掉绘图消息观察者
++ (void)addContextAction:(int)action block:(dispatch_block_t)block;
 
 @end
 

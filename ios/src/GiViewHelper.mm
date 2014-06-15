@@ -6,7 +6,7 @@
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
 
-#define IOSLIBVERSION     11
+#define IOSLIBVERSION     12
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -328,15 +328,19 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile readOnly:(BOOL)r {
-    [_view.imageCache clearCachedData];
-    vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
-    return [_view coreView]->loadFromFile([vgfile UTF8String], r);
+    @synchronized([_view locker]) {
+        [_view.imageCache clearCachedData];
+        vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
+        return [_view coreView]->loadFromFile([vgfile UTF8String], r);
+    }
 }
 
 - (BOOL)loadFromFile:(NSString *)vgfile {
-    [_view.imageCache clearCachedData];
-    vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
-    return [_view coreView]->loadFromFile([vgfile UTF8String]);
+    @synchronized([_view locker]) {
+        [_view.imageCache clearCachedData];
+        vgfile = [GiViewHelper addExtension:vgfile :@".vg"];
+        return [_view coreView]->loadFromFile([vgfile UTF8String]);
+    }
 }
 
 - (BOOL)saveToFile:(NSString *)vgfile {
@@ -361,8 +365,10 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (void)clearShapes {
-    [_view coreView]->clear();
-    [_view.imageCache clearCachedData];
+    @synchronized([_view locker]) {
+        [_view coreView]->clear();
+        [_view.imageCache clearCachedData];
+    }
 }
 
 - (UIImage *)snapshot {
