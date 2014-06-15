@@ -2,7 +2,7 @@
 
 TouchVG is a lightweight 2D vector drawing framework for iOS, Android and Windows.
 
-Features described in [Online document](http://touchvg.github.io).
+Features described in [Online document](http://touchvg.github.io). Please visit [TouchVGTest](https://github.com/touchvg/TouchVGTest) to see more example of TouchVG.
 
 ![arch](http://touchvg.github.io/images/arch.svg)
 
@@ -49,6 +49,8 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
 
   - Android SDK version of the projects may need to modify according to your installation.
   - Recommend using the newer [ADT Bundle](http://developer.android.com/sdk/index.html) to avoid complex configuration.
+
+- You can download the [prebuilt libraries](https://github.com/touchvg/TouchVGTest/archive/android_prebuild.zip) from TouchVGTest and extract to `yourapp/libs`.
 
 -  To regenerate libtouchvg.so, please enter `android` directory of TouchVG, then type `./build.sh`
 (Need to add the [NDK](http://developer.android.com/tools/sdk/ndk/index.html) installation location to your PATH environment variable).
