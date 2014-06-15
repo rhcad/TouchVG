@@ -14,7 +14,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE           := touchvg
 LOCAL_LDLIBS           := -L$(SYSROOT)/usr/lib -llog
 LOCAL_PRELINK_MODULE   := false
-LOCAL_CFLAGS           := -frtti -Wall -Wextra -Wno-unused-parameter
+LOCAL_CFLAGS           := -frtti -fexceptions -Wall -Wextra -Wno-unused-parameter
 LOCAL_STATIC_LIBRARIES := libTouchVGCore
 
 ifeq ($(TARGET_ARCH),arm)
