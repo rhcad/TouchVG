@@ -34,6 +34,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
 
 /**
  * \ingroup GROUP_ANDROID
@@ -109,6 +110,7 @@ public class ViewHelperImpl implements IViewHelper{
     public ViewGroup createSurfaceView(Context context, ViewGroup layout, Bundle savedState) {
         final SFGraphView view = new SFGraphView(context, savedState);
         mView = view;
+        layout = layout != null ? layout : new FrameLayout(context);
         layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         createDynamicShapeView(context, layout, view);
         return layout;
@@ -123,6 +125,7 @@ public class ViewHelperImpl implements IViewHelper{
     public ViewGroup createGraphView(Context context, ViewGroup layout, Bundle savedState) {
         final StdGraphView view = new StdGraphView(context, savedState);
         mView = view;
+        layout = layout != null ? layout : new FrameLayout(context);
         layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         return layout;
     }
@@ -132,6 +135,7 @@ public class ViewHelperImpl implements IViewHelper{
         final SFGraphView view = new SFGraphView(context,
                 (BaseGraphView) (mainView != null ? mainView : mView));
         mView = view;
+        layout = layout != null ? layout : new FrameLayout(context);
         layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         createDynamicShapeView(context, layout, view);
         return layout;
@@ -195,8 +199,10 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setLineWidth(int w) {
-        mView.coreView().getContext(true).setLineWidth(w, true);
-        mView.coreView().setContext(GiContext.kLineWidth);
+        if (mView != null) {
+            mView.coreView().getContext(true).setLineWidth(w, true);
+            mView.coreView().setContext(GiContext.kLineWidth);
+        }
     }
 
     @Override
@@ -209,8 +215,10 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setStrokeWidth(int w) {
-        mView.coreView().getContext(true).setLineWidth(-Math.abs(w), true);
-        mView.coreView().setContext(GiContext.kLineWidth);
+        if (mView != null) {
+            mView.coreView().getContext(true).setLineWidth(-Math.abs(w), true);
+            mView.coreView().setContext(GiContext.kLineWidth);
+        }
     }
 
     @Override
@@ -220,8 +228,10 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setLineStyle(int style) {
-        mView.coreView().getContext(true).setLineStyle(style);
-        mView.coreView().setContext(GiContext.kLineStyle);
+        if (mView != null) {
+            mView.coreView().getContext(true).setLineStyle(style);
+            mView.coreView().setContext(GiContext.kLineStyle);
+        }
     }
 
     @Override
@@ -231,8 +241,10 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setLineColor(int argb) {
-        mView.coreView().getContext(true).setLineARGB(argb);
-        mView.coreView().setContext(argb == 0 ? GiContext.kLineARGB : GiContext.kLineRGB);
+        if (mView != null) {
+            mView.coreView().getContext(true).setLineARGB(argb);
+            mView.coreView().setContext(argb == 0 ? GiContext.kLineARGB : GiContext.kLineRGB);
+        }
     }
 
     @Override
@@ -242,8 +254,10 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setLineAlpha(int alpha) {
-        mView.coreView().getContext(true).setLineAlpha(alpha);
-        mView.coreView().setContext(GiContext.kLineAlpha);
+        if (mView != null) {
+            mView.coreView().getContext(true).setLineAlpha(alpha);
+            mView.coreView().setContext(GiContext.kLineAlpha);
+        }
     }
 
     @Override
@@ -253,8 +267,10 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setFillColor(int argb) {
-        mView.coreView().getContext(true).setFillARGB(argb);
-        mView.coreView().setContext(argb == 0 ? GiContext.kFillARGB : GiContext.kFillRGB);
+        if (mView != null) {
+            mView.coreView().getContext(true).setFillARGB(argb);
+            mView.coreView().setContext(argb == 0 ? GiContext.kFillARGB : GiContext.kFillRGB);
+        }
     }
 
     @Override
@@ -264,8 +280,10 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setFillAlpha(int alpha) {
-        mView.coreView().getContext(true).setFillAlpha(alpha);
-        mView.coreView().setContext(GiContext.kFillAlpha);
+        if (mView != null) {
+            mView.coreView().getContext(true).setFillAlpha(alpha);
+            mView.coreView().setContext(GiContext.kFillAlpha);
+        }
     }
 
     @Override
