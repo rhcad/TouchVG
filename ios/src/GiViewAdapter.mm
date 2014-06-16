@@ -653,6 +653,8 @@ bool GiViewAdapter::shapeClicked(int sid, int tag, float x, float y)
 
 void GiViewAdapter::onFirstRegen()
 {
+    _core->zoomToInitial();
+    
     for (size_t i = 0; i < delegates.size(); i++) {
         if ([delegates[i] respondsToSelector:@selector(onFirstRegen:)]) {
             [delegates[i] onFirstRegen:_view];

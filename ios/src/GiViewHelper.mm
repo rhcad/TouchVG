@@ -6,7 +6,7 @@
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
 
-#define IOSLIBVERSION     12
+#define IOSLIBVERSION     13
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
