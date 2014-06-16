@@ -16,6 +16,7 @@ namespace touchvg.view
     public delegate void SelectionChangedEventHandler(object sender, EventArgs e);
     public delegate void ContentChangedEventHandler(object sender, EventArgs e);
     public delegate void DynamicChangedEventHandler(object sender, EventArgs e);
+    public delegate void GiAction();
 
     //! WPF绘图视图类
     /*! \ingroup GROUP_WPF
@@ -118,7 +119,7 @@ namespace touchvg.view
             return (int)(DateTime.Now.Ticks / 10000);
         }
 
-        public static void AddContextActionCallback(int action, Action ActionCallback)
+        public static void AddContextActionCallback(int action, GiAction ActionCallback)
         {
             WPFViewAdapter.AddContextActionCallback(action, ActionCallback);
         }
@@ -204,12 +205,12 @@ namespace touchvg.view
 
             private static string[] buttonCaptions;
             private static string[] buttonCaptions40;
-            private static Dictionary<int, Action> extActions;
+            private static Dictionary<int, GiAction> extActions;
 
-            public static void AddContextActionCallback(int action, Action ActionCallback)
+            public static void AddContextActionCallback(int action, GiAction ActionCallback)
             {
                 if (extActions == null)
-                    extActions = new Dictionary<int, Action>();
+                    extActions = new Dictionary<int, GiAction>();
                 if (!extActions.ContainsKey(action))
                     extActions.Add(action, ActionCallback);
             }
@@ -225,7 +226,7 @@ namespace touchvg.view
             {
                 hideContextActions();
                 if (buttonCaptions == null)
-                    buttonCaptions = Resource1.basic_actions.Split(new Char[] {','});
+                    buttonCaptions = Resource1.basic_actions.Split(new Char[] { ',' });
                 if (actions != null && !createActionImages(actions, buttonXY))
                     createActionButtons(actions, buttonXY);
                 return isContextActionsVisible();

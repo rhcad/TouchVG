@@ -16,6 +16,8 @@ using System.Collections.Generic;
 
 namespace touchvg.view
 {
+    public delegate string StringCallback(string name);
+
     //! WPF绘图图像源的缓存类
     public class WPFImageSourceHelper : IDisposable
     {
@@ -72,7 +74,7 @@ namespace touchvg.view
 
         private Dictionary<int, ImageSource> _actionImageDict;
         private ImageSource[] _handleImages;
-        private Func<string, string> StringCallback;
+        private StringCallback StringCallback;
 
         private WPFImageSourceHelper()
         {
@@ -133,7 +135,7 @@ namespace touchvg.view
             return null;
         }
 
-        public void AddLocalizedStringCallback(Func<string, string> StringCallback)
+        public void AddLocalizedStringCallback(StringCallback StringCallback)
         {
             this.StringCallback = StringCallback;
         }
