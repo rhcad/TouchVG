@@ -54,7 +54,7 @@ public class GestureListener extends SimpleOnGestureListener {
         mView = null;
     }
 
-    public void setGestureEnable(boolean enabled) {
+    public void setGestureEnabled(boolean enabled) {
         if (!enabled) {
             cancelDragging();
             mCoreView.setCommand(null);

@@ -117,6 +117,9 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
         this.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if (mCoreView == null) {
+                    return false;
+                }
                 if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                     activateView();
                 }
@@ -694,23 +697,27 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
 
     @Override
     public void stop() {
-        mViewAdapter.stop();
-        if (mRender != null) {
-            mRender.stop();
-            mRender = null;
-        }
-        if (mDynDrawRender != null) {
-            mDynDrawRender.stop();
-            mDynDrawRender = null;
+        if (mViewAdapter != null) {
+            mViewAdapter.stop();
+            if (mRender != null) {
+                mRender.stop();
+                mRender = null;
+            }
+            if (mDynDrawRender != null) {
+                mDynDrawRender.stop();
+                mDynDrawRender = null;
+            }
         }
     }
 
     @Override
     public boolean onPause() {
-        final LogHelper log = new LogHelper();
-        //setWillNotDraw(false);
-        mViewAdapter.hideContextActions();
-        return log.r(mCoreView.onPause(BaseViewAdapter.getTick()));
+        if (mViewAdapter != null) {
+            final LogHelper log = new LogHelper();
+            mViewAdapter.hideContextActions();
+            return log.r(mCoreView.onPause(BaseViewAdapter.getTick()));
+        }
+        return false;
     }
 
     @Override
@@ -744,9 +751,14 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     }
 
     @Override
-    public void setGestureEnable(boolean enabled) {
+    public boolean getGestureEnabled() {
+        return mGestureEnable;
+    }
+
+    @Override
+    public void setGestureEnabled(boolean enabled) {
         mGestureEnable = enabled;
-        mGestureListener.setGestureEnable(enabled);
+        mGestureListener.setGestureEnabled(enabled);
     }
 
     @Override

@@ -292,12 +292,14 @@ public abstract class BaseViewAdapter extends GiView {
 
     public void onFirstRegen() {
         if (++mRegenCount == 1) {
-            coreView().addRef();
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     Log.d(TAG, "onFirstRegen restore=" + (mSavedState != null));
                     removeCallbacks(this);
+
+                    if (coreView() == null)
+                        return;
                     coreView().zoomToInitial();
 
                     if (firstRegenListeners != null) {
@@ -311,7 +313,6 @@ public abstract class BaseViewAdapter extends GiView {
                         restoreRecordState(mSavedState);
                         mSavedState = null;
                     }
-                    coreView().release();
                 }
             });
         }

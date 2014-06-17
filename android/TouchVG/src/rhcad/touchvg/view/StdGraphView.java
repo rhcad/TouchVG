@@ -103,6 +103,9 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
         this.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if (mCoreView == null) {
+                    return false;
+                }
                 if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                     activateView();
                 }
@@ -432,13 +435,18 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
 
     @Override
     public void stop() {
-        mViewAdapter.stop();
+        if (mViewAdapter != null) {
+            mViewAdapter.stop();
+        }
     }
 
     @Override
     public boolean onPause() {
-        mViewAdapter.hideContextActions();
-        return mCoreView.onPause(BaseViewAdapter.getTick());
+        if (mViewAdapter != null) {
+            mViewAdapter.hideContextActions();
+            return mCoreView.onPause(BaseViewAdapter.getTick());
+        }
+        return false;
     }
 
     @Override
@@ -464,9 +472,14 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     }
 
     @Override
-    public void setGestureEnable(boolean enabled) {
+    public boolean getGestureEnabled() {
+        return mGestureEnable;
+    }
+
+    @Override
+    public void setGestureEnabled(boolean enabled) {
         mGestureEnable = enabled;
-        mGestureListener.setGestureEnable(enabled);
+        mGestureListener.setGestureEnabled(enabled);
     }
 
     @Override

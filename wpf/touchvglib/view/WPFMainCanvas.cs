@@ -39,9 +39,12 @@ namespace touchvg.view
         protected override void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);
-            this._adapter.BeginDraw(dc);
-            this._coreView.drawAll(this._view, this._adapter);
-            this._adapter.EndDraw();
+            if (this._adapter != null)
+            {
+                this._adapter.BeginDraw(dc);
+                this._coreView.drawAll(this._view, this._adapter);
+                this._adapter.EndDraw();
+            }
         }
     }
 
@@ -123,9 +126,12 @@ namespace touchvg.view
         protected override void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);
-            this._adapter.BeginDraw(dc);
-            this._coreView.dynDraw(this._view, this._adapter);
-            this._adapter.EndDraw();
+            if (this._adapter != null)
+            {
+                this._adapter.BeginDraw(dc);
+                this._coreView.dynDraw(this._view, this._adapter);
+                this._adapter.EndDraw();
+            }
         }
     }
 }

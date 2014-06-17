@@ -45,8 +45,11 @@ public interface IGraphView {
     //! 是否允许上下文操作
     public void setContextActionEnabled(boolean enabled);
 
+    //! 返回是否允许触摸交互
+    public boolean getGestureEnabled();
+
     //! 设置是否允许触摸交互
-    public void setGestureEnable(boolean enabled);
+    public void setGestureEnabled(boolean enabled);
 
     //! 传递单指触摸事件，可用于拖放操作
     public boolean onTouchDrag(int action, float x, float y);

@@ -76,8 +76,18 @@ public class ViewHelperImpl implements IViewHelper{
     }
 
     @Override
+    public void setGraphView(IGraphView view) {
+        mView = (BaseGraphView)view;
+    }
+
+    @Override
     public View getView() {
         return mView != null ? mView.getView() : null;
+    }
+
+    @Override
+    public ViewGroup getParent() {
+        return mView != null ? (ViewGroup) mView.getView().getParent() : null;
     }
 
     @Override
@@ -428,8 +438,15 @@ public class ViewHelperImpl implements IViewHelper{
     }
 
     @Override
-    public void setGestureEnable(boolean enabled) {
-        mView.setGestureEnable(enabled);
+    public boolean getGestureEnabled() {
+        return mView != null && mView.getGestureEnabled();
+    }
+
+    @Override
+    public void setGestureEnabled(boolean enabled) {
+        if (mView != null) {
+            mView.setGestureEnabled(enabled);
+        }
     }
 
     @Override

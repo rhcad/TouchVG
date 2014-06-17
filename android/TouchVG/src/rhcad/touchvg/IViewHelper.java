@@ -30,8 +30,14 @@ public interface IViewHelper {
     //! 得到要操作的视图
     public IGraphView getGraphView();
 
+    //! 设置要操作的视图
+    public void setGraphView(IGraphView view);
+
     //! 得到要操作的视图
     public View getView();
+
+    //! 得到上一级视图
+    public ViewGroup getParent();
 
     //! 返回视图上下文
     public Context getContext();
@@ -185,8 +191,11 @@ public interface IViewHelper {
     //! 返回已录制的相对毫秒数
     public int getRecordTicks();
 
+    //! 返回是否允许触摸交互
+    public boolean getGestureEnabled();
+
     //! 设置是否允许触摸交互
-    public void setGestureEnable(boolean enabled);
+    public void setGestureEnabled(boolean enabled);
 
     //! 是否允许放缩显示
     public void setZoomEnabled(boolean enabled);
