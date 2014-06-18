@@ -199,7 +199,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
             canvas.drawColor(mBkColor, mBkColor == Color.TRANSPARENT ? Mode.CLEAR : Mode.SRC_OVER);
         }
 
-        if (mCanvasOnDraw != null && mCanvasOnDraw.beginPaint(canvas)) {
+        if (mCanvasOnDraw != null && mCoreView != null && mCanvasOnDraw.beginPaint(canvas)) {
             drawShapes(mCanvasOnDraw);
             mCanvasOnDraw.setPen(0x40FF0000, 2, 0, 0, 0);
             mCanvasOnDraw.drawLine(0, 0, getWidth(), getHeight());
@@ -244,18 +244,21 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
         }
 
         public void stop() {
-            final LogHelper log = new LogHelper();
-            mView.mCoreView.stopDrawing();
-            requestRender();
-            synchronized (mView.mCanvasAdapter) {
-                try {
-                    mView.mCanvasAdapter.wait(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            if (mView != null) {
+                final LogHelper log = new LogHelper();
+                mView.getHolder().setFixedSize(1, 1);
+                mView.mCoreView.stopDrawing();
+                requestRender();
+                synchronized (mView.mCanvasAdapter) {
+                    try {
+                        mView.mCanvasAdapter.wait(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+                mView = null;
+                log.r();
             }
-            mView = null;
-            log.r();
         }
 
         @Override
@@ -348,14 +351,21 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             mView.mCoreView.onSize(mView.mViewAdapter, width, height);
+            mView.mCoreView.zoomToInitial();
+
+            if (mView.mRender == null) {
+                mView.mRender = new RenderRunnable(mView);
+                new Thread(mView.mRender, "touchvg.render").start();
+            }
 
             mView.postDelayed(new Runnable() {  // 延时执行，只执行一次
                 @Override
                 public void run() {
                     if (mView != null) {
                         mView.removeCallbacks(this);
-                        if (mView.mViewAdapter != null)
+                        if (mView.mViewAdapter != null) {
                             mView.mViewAdapter.regenAll(false);
+                        }
                     }
                 }
             }, 10);
@@ -363,8 +373,6 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            mView.mRender = new RenderRunnable(mView);
-            new Thread(mView.mRender, "touchvg.render").start();
         }
 
         @Override

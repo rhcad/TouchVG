@@ -204,7 +204,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getLineWidth() {
-        return Math.round(mView.coreView().getContext(false).getLineWidth());
+        return mView != null ? Math.round(mView.coreView().getContext(false).getLineWidth()) : 0;
     }
 
     @Override
@@ -217,6 +217,8 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getStrokeWidth() {
+        if (mView == null)
+            return 0;
         float w = mView.coreView().getContext(false).getLineWidth();
         if (w < 0)
             return Math.round(-w);
@@ -233,7 +235,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getLineStyle() {
-        return mView.coreView().getContext(false).getLineStyle();
+        return mView != null ? mView.coreView().getContext(false).getLineStyle() : 0;
     }
 
     @Override
@@ -246,7 +248,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getLineColor() {
-        return mView.coreView().getContext(false).getLineColor().getARGB();
+        return mView != null ? mView.coreView().getContext(false).getLineColor().getARGB() : 0;
     }
 
     @Override
@@ -259,7 +261,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getLineAlpha() {
-        return mView.coreView().getContext(false).getLineColor().getA();
+        return mView != null ? mView.coreView().getContext(false).getLineColor().getA() : 0;
     }
 
     @Override
@@ -272,7 +274,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getFillColor() {
-        return mView.coreView().getContext(false).getFillColor().getARGB();
+        return mView != null ? mView.coreView().getContext(false).getFillColor().getARGB() : 0;
     }
 
     @Override
@@ -285,7 +287,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getFillAlpha() {
-        return mView.coreView().getContext(false).getFillColor().getA();
+        return mView != null ? mView.coreView().getContext(false).getFillColor().getA() : 0;
     }
 
     @Override
@@ -298,7 +300,9 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setContextEditing(boolean editing) {
-        mView.coreView().setContextEditing(editing);
+        if (mView != null) {
+            mView.coreView().setContextEditing(editing);
+        }
     }
 
     @Override
@@ -311,31 +315,34 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void clearCachedData() {
-        mView.coreView().clearCachedData();
+        if (mView != null) {
+            mView.coreView().clearCachedData();
+        }
     }
 
     @Override
     public boolean zoomToExtent() {
-        return mView.coreView().zoomToExtent();
+        return mView != null && mView.coreView().zoomToExtent();
     }
 
     @Override
     public boolean zoomToModel(float x, float y, float w, float h) {
-        return mView.coreView().zoomToModel(x, y, w, h);
+        return mView != null && mView.coreView().zoomToModel(x, y, w, h);
     }
 
     @Override
     public PointF displayToModel(float x, float y) {
         final Floats pt = new Floats(x, y);
-        if (mView.coreView().displayToModel(pt))
+        if (mView != null && mView.coreView().displayToModel(pt)) {
             return new PointF(pt.get(0), pt.get(1));
+        }
         return null;
     }
 
     @Override
     public RectF displayToModel(RectF rect) {
         final Floats box = new Floats(rect.left, rect.top, rect.right, rect.bottom);
-        if (mView.coreView().displayToModel(box)) {
+        if (mView != null && mView.coreView().displayToModel(box)) {
             return new RectF(box.get(0), box.get(1), box.get(2), box.get(3));
         }
         return rect;
@@ -428,7 +435,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getRecordTicks() {
-        return mView.coreView().getRecordTick(false, BaseViewAdapter.getTick());
+        return mView != null ? mView.coreView().getRecordTick(false, BaseViewAdapter.getTick()) : 0;
     }
 
     private BaseViewAdapter internalAdapter() {
@@ -451,7 +458,9 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setZoomEnabled(boolean enabled) {
-        mView.coreView().setZoomEnabled(mView.viewAdapter(), enabled);
+        if (mView != null) {
+            mView.coreView().setZoomEnabled(mView.viewAdapter(), enabled);
+        }
     }
 
     @Override
@@ -470,6 +479,9 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public Bitmap snapshot(boolean transparent) {
+        if (mView == null)
+            return null;
+
         final GiCoreView v = mView.coreView();
         int doc, gs;
 
@@ -490,6 +502,9 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public Bitmap extentSnapshot(int spaceAround, boolean transparent) {
+        if (mView == null)
+            return null;
+
         final GiCoreView v = mView.coreView();
         int doc, gs;
 
@@ -574,6 +589,8 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public boolean exportSVG(String filename) {
+        if (mView == null)
+            return false;
         final LogHelper log = new LogHelper();
         filename = addExtension(filename, ".svg");
         return log.r(mView.coreView().exportSVG(mView.viewAdapter(), filename) > 0);
@@ -581,38 +598,38 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int getShapeCount() {
-        return mView.coreView().getShapeCount();
+        return mView != null ? mView.coreView().getShapeCount() : 0;
     }
 
     @Override
     public int getSelectedCount() {
-        return mView.coreView().getSelectedShapeCount();
+        return mView != null ? mView.coreView().getSelectedShapeCount() : 0;
     }
 
     @Override
     public int getSelectedType() {
-        return mView.coreView().getSelectedShapeType();
+        return mView != null ? mView.coreView().getSelectedShapeType() : 0;
     }
 
     @Override
     public int getSelectedShapeID() {
-        return mView.coreView().getSelectedShapeID();
+        return mView != null ? mView.coreView().getSelectedShapeID() : 0;
     }
 
     @Override
     public int getChangeCount() {
-        return mView.coreView().getChangeCount();
+        return mView != null ? mView.coreView().getChangeCount() : 0;
     }
 
     @Override
     public int getDrawCount() {
-        return mView.coreView().getDrawCount();
+        return mView != null ? mView.coreView().getDrawCount() : 0;
     }
 
     @Override
     public Rect getDisplayExtent() {
         final Floats box = new Floats(4);
-        if (mView.coreView().getDisplayExtent(box)) {
+        if (mView != null && mView.coreView().getDisplayExtent(box)) {
             return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
                     Math.round(box.get(2)), Math.round(box.get(3)));
         }
@@ -622,7 +639,7 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public Rect getDisplayExtent(int doc, int gs) {
         final Floats box = new Floats(4);
-        if (mView.coreView().getDisplayExtent(doc, gs, box)) {
+        if (mView != null && mView.coreView().getDisplayExtent(doc, gs, box)) {
             return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
                     Math.round(box.get(2)), Math.round(box.get(3)));
         }
@@ -632,7 +649,7 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public Rect getBoundingBox() {
         final Floats box = new Floats(4);
-        if (mView.coreView().getBoundingBox(box)) {
+        if (mView != null && mView.coreView().getBoundingBox(box)) {
             return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
                     Math.round(box.get(2)), Math.round(box.get(3)));
         }
@@ -642,7 +659,7 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public Rect getShapeBox(int sid) {
         final Floats box = new Floats(4);
-        if (mView.coreView().getBoundingBox(box, sid)) {
+        if (mView != null && mView.coreView().getBoundingBox(box, sid)) {
             return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
                     Math.round(box.get(2)), Math.round(box.get(3)));
         }
@@ -650,6 +667,8 @@ public class ViewHelperImpl implements IViewHelper{
     }
 
     private int acquireFrontDoc() {
+        if (mView == null)
+            return 0;
         synchronized (mView.coreView()) {
             return mView.coreView().acquireFrontDoc();
         }
@@ -657,6 +676,9 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public String getContent() {
+        if (mView == null)
+            return null;
+
         final LogHelper log = new LogHelper();
         int doc = acquireFrontDoc();
         final StringCallback c = new StringCallback();
@@ -669,6 +691,8 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public boolean setContent(String content) {
+        if (mView == null)
+            return false;
         final LogHelper log = new LogHelper();
         synchronized (mView.coreView()) {
             mView.getImageCache().clear();
@@ -718,9 +742,11 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void clearShapes() {
-        synchronized (mView.coreView()) {
-            mView.getImageCache().clear();
-            mView.coreView().clear();
+        if (mView != null) {
+            synchronized (mView.coreView()) {
+                mView.getImageCache().clear();
+                mView.coreView().clear();
+            }
         }
     }
 
@@ -929,7 +955,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public String getImagePath() {
-        return mView.getImageCache().getImagePath();
+        return mView != null ? mView.getImageCache().getImagePath() : null;
     }
 
     @Override
