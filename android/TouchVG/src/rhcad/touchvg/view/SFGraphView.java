@@ -579,7 +579,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
             if (mCoreView != null && !mCoreView.isPlaying()) {
                 if (!mCoreView.isUndoLoading()) {
                     if (changed || mViewAdapter.getRegenCount() == 0)
-                        mCoreView.submitBackDoc(mViewAdapter);
+                        mCoreView.submitBackDoc(mViewAdapter, changed);
                     mCoreView.submitDynamicShapes(mViewAdapter);
 
                     if (mUndoing != null && changed) {
@@ -603,7 +603,7 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
         @Override
         public void regenAppend(int sid, int playh) {
             if (mCoreView != null && !mCoreView.isPlaying()) {
-                mCoreView.submitBackDoc(mViewAdapter);
+                mCoreView.submitBackDoc(mViewAdapter, true);
                 mCoreView.submitDynamicShapes(mViewAdapter);
 
                 if (mUndoing != null) {
@@ -793,7 +793,8 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
                     mBackground.draw(canvasAdapter.getCanvas());
                 }
             }
-            drawShapes(canvasAdapter);
+            int n = drawShapes(canvasAdapter);
+            Log.d(TAG, "snapshot: " + getWidth() + "x" + getHeight() + ", " + n + " shapes");
             canvasAdapter.endPaint();
         }
         canvasAdapter.delete();
@@ -815,7 +816,8 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
                     mBackground.draw(canvasAdapter.getCanvas());
                 }
             }
-            mCoreView.drawAll(doc, gs, canvasAdapter);
+            int n = mCoreView.drawAll(doc, gs, canvasAdapter);
+            Log.d(TAG, "snapshot: " + getWidth() + "x" + getHeight() + ", " + n + " shapes");
             canvasAdapter.endPaint();
         }
         canvasAdapter.delete();

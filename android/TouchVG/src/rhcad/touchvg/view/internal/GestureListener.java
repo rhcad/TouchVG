@@ -273,6 +273,8 @@ public class GestureListener extends SimpleOnGestureListener {
     public boolean onSingleTapConfirmed(MotionEvent e) {
         final GestureNotify notify = getNotify();
 
+        if (mCoreView == null)
+            return false;
         if (notify != null && notify.onPreSingleTap(e))
             return true;
         synchronized (mCoreView) {
@@ -283,6 +285,8 @@ public class GestureListener extends SimpleOnGestureListener {
     // ! 传递单指轻击事件，可用于拖放操作
     public boolean onTap(float x, float y) {
         mMoving = M_STOPPED;
+        if (mCoreView == null)
+            return false;
         synchronized (mCoreView) {
             return mCoreView.onGesture(mAdapter, GiGestureType.kGiGestureTap,
                     GiGestureState.kGiGesturePossible, x, y)
@@ -296,6 +300,8 @@ public class GestureListener extends SimpleOnGestureListener {
         boolean ret = mXYCount > 1;
         final GestureNotify notify = getNotify();
 
+        if (mCoreView == null)
+            return false;
         if (ret && (notify == null || !notify.onPreDoubleTap(e))) {
             ret = mCoreView.onGesture(mAdapter, GiGestureType.kGiGestureDblTap,
                     GiGestureState.kGiGesturePossible, mPoints[0], mPoints[1])

@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 /**
  * \ingroup GROUP_ANDROID
@@ -124,6 +125,47 @@ public class ViewHelperImpl implements IViewHelper{
         layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         createDynamicShapeView(context, layout, view);
         return layout;
+    }
+
+    @Override
+    public ViewGroup createSurfaceAndImageView(Context context, ViewGroup layout, Bundle savedState) {
+        layout = layout != null ? layout : new FrameLayout(context);
+
+        final SFGraphView view = new SFGraphView(context, savedState);
+        final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
+
+        mView = view;
+        layout.addView(view, params);
+        createDynamicShapeView(context, layout, view);
+
+        ImageView imageView = getImageViewForSurface();
+        if (imageView == null) {
+            imageView = new ImageView(context);
+            layout.addView(imageView, params);
+        } else {
+            layout.bringChildToFront(imageView);
+        }
+        imageView.setVisibility(View.INVISIBLE);
+
+        return layout;
+    }
+
+    @Override
+    public ImageView getImageViewForSurface() {
+        if (mView == null || mView.getView() == null)
+            return null;
+
+        final ViewGroup layout = (ViewGroup) mView.getView().getParent();
+
+        if (layout != null) {
+            for (int i = layout.getChildCount() - 1; i >= 0; i--) {
+                final View lastView = layout.getChildAt(i);
+                if (lastView.getClass() == ImageView.class)
+                    return (ImageView) lastView;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -805,6 +847,8 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int insertSVGFromResource(String name) {
+        if (mView == null)
+            return 0;
         int id = ResourceUtil.getResIDFromName(getContext(), "raw", name);
         name = ImageCache.SVG_PREFIX + name;
         final Drawable d = mView.getImageCache().addSVG(getContext().getResources(), id, name);
@@ -821,6 +865,8 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int insertSVGFromResource(String name, int xc, int yc) {
+        if (mView == null)
+            return 0;
         int id = ResourceUtil.getResIDFromName(getContext(), "raw", name);
         name = ImageCache.SVG_PREFIX + name;
         final Drawable d = mView.getImageCache().addSVG(getContext().getResources(), id, name);
@@ -837,6 +883,8 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int insertBitmapFromResource(String name) {
+        if (mView == null)
+            return 0;
         int id = ResourceUtil.getDrawableIDFromName(getContext(), name);
         name = ImageCache.BITMAP_PREFIX + name;
         final Drawable d = mView.getImageCache().addBitmap(getContext().getResources(), id, name);
@@ -853,6 +901,8 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int insertBitmapFromResource(String name, int xc, int yc) {
+        if (mView == null)
+            return 0;
         int id = ResourceUtil.getDrawableIDFromName(getContext(), name);
         name = ImageCache.BITMAP_PREFIX + name;
         final Drawable d = mView.getImageCache().addBitmap(getContext().getResources(), id, name);
@@ -869,6 +919,8 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public int insertImageFromFile(String filename) {
+        if (mView == null)
+            return 0;
         return insertImageFromFile(filename, mView.getView().getWidth() / 2,
                 mView.getView().getHeight() / 2, 0);
     }
@@ -905,7 +957,7 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public boolean hasImageShape() {
         int doc = acquireFrontDoc();
-        boolean ret = mView.coreView().hasImageShape(doc);
+        boolean ret = doc != 0 && mView.coreView().hasImageShape(doc);
         GiCoreView.releaseDoc(doc);
         return ret;
     }
@@ -913,7 +965,7 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public int findShapeByImageID(String name) {
         int doc = acquireFrontDoc();
-        int ret = mView.coreView().findShapeByImageID(doc, name);
+        int ret = mView != null ? mView.coreView().findShapeByImageID(doc, name) : 0;
         GiCoreView.releaseDoc(doc);
         return ret;
     }
@@ -921,7 +973,7 @@ public class ViewHelperImpl implements IViewHelper{
     @Override
     public int findShapeByTag(int tag) {
         int doc = acquireFrontDoc();
-        int ret = mView.coreView().findShapeByTag(doc, tag);
+        int ret = mView != null ? mView.coreView().findShapeByTag(doc, tag) : 0;
         GiCoreView.releaseDoc(doc);
         return ret;
     }
@@ -960,7 +1012,9 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void setImagePath(String path) {
-        mView.getImageCache().setImagePath(path);
+        if (mView != null) {
+            mView.getImageCache().setImagePath(path);
+        }
     }
 
     @Override
@@ -969,9 +1023,21 @@ public class ViewHelperImpl implements IViewHelper{
             mView.onPause();
             mView.stop();
             if (mView.getView() != null) {
-                final ViewGroup parent = (ViewGroup) mView.getView().getParent();
-                if (parent != null)
-                    parent.removeAllViews();
+                final ViewGroup layout = (ViewGroup) mView.getView().getParent();
+                final ImageView imageView = getImageViewForSurface();
+
+                if (imageView != null) {
+                    imageView.setVisibility(View.VISIBLE);
+                    imageView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            layout.removeViews(0, layout.getChildCount() - 1);
+                            imageView.removeCallbacks(this);
+                        }
+                    });
+                } else {
+                    layout.removeAllViews();
+                }
             }
             mView = null;
         }
@@ -1075,7 +1141,9 @@ public class ViewHelperImpl implements IViewHelper{
 
     //! 注册命令观察者
     public void registerCmdObserver(CmdObserver observer) {
-        this.cmdView().getCmdSubject().registerObserver(observer);
+        if (this.cmdView() != null) {
+            this.cmdView().getCmdSubject().registerObserver(observer);
+        }
     }
 
     //! 注销命令观察者

@@ -312,7 +312,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
             if (mCoreView != null && !mCoreView.isPlaying()) {
                 if (!mCoreView.isUndoLoading()) {
                     if (changed || mViewAdapter.getRegenCount() == 0)
-                        mCoreView.submitBackDoc(mViewAdapter);
+                        mCoreView.submitBackDoc(mViewAdapter, changed);
                     mCoreView.submitDynamicShapes(mViewAdapter);
 
                     if (mUndoing != null && changed) {
@@ -341,7 +341,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
         @Override
         public void regenAppend(int sid, int playh) {
             if (mCoreView != null && !mCoreView.isPlaying()) {
-                mCoreView.submitBackDoc(mViewAdapter);
+                mCoreView.submitBackDoc(mViewAdapter, true);
                 mCoreView.submitDynamicShapes(mViewAdapter);
 
                 if (mUndoing != null) {

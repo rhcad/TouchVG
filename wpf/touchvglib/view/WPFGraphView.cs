@@ -148,7 +148,8 @@ namespace touchvg.view
             {
                 if (!CoreView.isPlaying() && !CoreView.isUndoLoading())
                 {
-                    if (changed && CoreView.submitBackDoc(_owner.ViewAdapter)
+                    if (changed
+                        && CoreView.submitBackDoc(_owner.ViewAdapter, changed)
                         && CoreView.isUndoRecording())
                     {
                         CoreView.recordShapes(true,

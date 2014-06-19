@@ -4,6 +4,7 @@
 
 package rhcad.touchvg;
 
+import android.view.ViewGroup;
 import rhcad.touchvg.core.CmdObserver;
 import rhcad.touchvg.view.ViewHelperImpl;
 
@@ -22,6 +23,20 @@ public class ViewFactory {
     //! 指定视图构造辅助对象
     public static IViewHelper createHelper(IGraphView view) {
         return new ViewHelperImpl(view);
+    }
+
+    //! 从布局中查找绘图视图构造辅助对象，查不到则返回null
+    public static IViewHelper createHelper(ViewGroup layout) {
+        try {
+            if (layout != null && layout.getChildCount() > 0) {
+                if (ViewGroup.class.isInstance(layout.getChildAt(0))) {
+                    return createHelper((ViewGroup) layout.getChildAt(0));
+                }
+            }
+            return createHelper((IGraphView) layout.getChildAt(0));
+        } catch (ClassCastException e) {
+        }
+        return null;
     }
 
     //! 注册命令观察者

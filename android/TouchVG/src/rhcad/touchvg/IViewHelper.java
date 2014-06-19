@@ -17,6 +17,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 //! 绘图视图辅助API接口
 public interface IViewHelper {
@@ -56,6 +57,12 @@ public interface IViewHelper {
 
     //! 在指定的布局中创建SurfaceView绘图视图，在onCreate(Bundle)或onRestoreInstanceState(Bundle)中调用
     public ViewGroup createSurfaceView(Context context, ViewGroup layout, Bundle savedState);
+
+    //! 在指定的布局中创建FrameLayout及其下的SurfaceView绘图视图，自动创建结束绘图用的ImageView(没有的话)
+    public ViewGroup createSurfaceAndImageView(Context context, ViewGroup layout, Bundle savedState);
+
+    //! 返回SurfaceView绘图视图对应的结束绘图用的ImageView
+    public ImageView getImageViewForSurface();
 
     //! 在指定的布局（建议为FrameLayout）中创建普通绘图视图，并记下此视图
     public ViewGroup createGraphView(Context context, ViewGroup layout);

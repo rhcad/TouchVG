@@ -289,7 +289,7 @@ int GiViewAdapter::regenLocked(bool changed, int sid, long playh, bool loading, 
             shapes1 = _core->acquireDynamicShapes();
         }
     } else if (changed || _regenCount == 0) {
-        _core->submitBackDoc(this);
+        _core->submitBackDoc(this, changed);
         if (changed) {
             _core->submitDynamicShapes(this);
             if (_queues[0]) {
@@ -415,7 +415,7 @@ long GiViewAdapter::acquireFrontDoc(long* gs) {
     @synchronized(locker()) {
         doc = _core->acquireFrontDoc();
         if (!doc) {
-            _core->submitBackDoc(this);
+            _core->submitBackDoc(this, false);
             doc = _core->acquireFrontDoc();
         }
         if (gs) {

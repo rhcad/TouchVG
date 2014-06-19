@@ -398,7 +398,7 @@ public abstract class BaseViewAdapter extends GiView {
         synchronized (cv) {
             int doc = cv.acquireFrontDoc();
             if (doc == 0) {
-                cv.submitBackDoc(null);
+                cv.submitBackDoc(null, false);
                 doc = cv.acquireFrontDoc();
                 if (doc == 0) {
                     Log.e(TAG, "Fail to record shapes due to no front doc");

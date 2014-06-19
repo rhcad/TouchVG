@@ -354,7 +354,6 @@ static GiViewHelper *_sharedInstance = nil;
             [fm createFileAtPath:vgfile contents:[NSData data] attributes:nil];
         }
         ret = [_view coreView]->saveToFile(doc, [vgfile UTF8String]);
-        NSLog(@"GiViewHelper saveToFile: %@, %d", vgfile, ret);
     } else {
         ret = [fm removeItemAtPath:vgfile error:nil];
         NSLog(@"GiViewHelper removeItemAtPath: %@, %d", vgfile, ret);
