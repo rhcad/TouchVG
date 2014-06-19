@@ -110,7 +110,7 @@ namespace touchvg.view
 
         public void AddActionImage(int key, Bitmap bitmap)
         {
-            if (bitmap != null)
+            if (bitmap != null && !_actionImageDict.ContainsKey(key))
             {
                 _actionImageDict.Add(key, BitmapToImageSource(bitmap));
             }
