@@ -1019,6 +1019,11 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void close() {
+        close(null);
+    }
+
+    @Override
+    public void close(final IGraphView.OnViewDetachedListener listener) {
         if (mView != null && mView.getView() != null) {
             final ViewGroup layout = (ViewGroup) mView.getView().getParent();
             final ImageView imageView = getImageViewForSurface();
@@ -1034,13 +1039,13 @@ public class ViewHelperImpl implements IViewHelper{
                     public void run() {
                         view.getView().removeCallbacks(this);
                         view.onPause();
-                        view.stop();
+                        view.stop(listener);
                         layout.removeViews(0, layout.getChildCount() - 1);  // Except imageView
                     }
                 });
             } else {
                 mView.onPause();
-                mView.stop();
+                mView.stop(listener);
                 ((ViewGroup) mView.getView().getParent()).removeAllViews();
             }
         }
@@ -1052,7 +1057,7 @@ public class ViewHelperImpl implements IViewHelper{
         final Context context = getContext();
         for (BaseGraphView view : ViewUtil.views()) {
             if (view.getView().getContext() == context) {
-                view.stop();
+                view.stop(null);
             }
         }
     }

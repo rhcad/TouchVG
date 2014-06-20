@@ -11,6 +11,7 @@ import rhcad.touchvg.IGraphView.OnSelectionChangedListener;
 import rhcad.touchvg.IGraphView.OnShapeClickedListener;
 import rhcad.touchvg.IGraphView.OnShapeDeletedListener;
 import rhcad.touchvg.IGraphView.OnShapesRecordedListener;
+import rhcad.touchvg.IGraphView.OnViewDetachedListener;
 import rhcad.touchvg.core.CmdObserverDefault;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
@@ -45,6 +46,7 @@ public abstract class BaseViewAdapter extends GiView {
     private int mRegenCount = 0;
     private Bundle mSavedState;
     private CmdObserverDelegate mCmdObserver;
+    private OnViewDetachedListener mDetachedListener;
 
     public abstract BaseGraphView getGraphView();
 
@@ -55,6 +57,10 @@ public abstract class BaseViewAdapter extends GiView {
         if (mAction != null) {
             mAction.release();
             mAction = null;
+        }
+        if (mDetachedListener != null) {
+            mDetachedListener.onGraphViewDetached();
+            mDetachedListener = null;
         }
         if (commandChangedListeners != null)
             commandChangedListeners.clear();
@@ -330,10 +336,13 @@ public abstract class BaseViewAdapter extends GiView {
         return MgView.fromHandle(coreView().viewAdapterHandle());
     }
 
-    public void stop() {
+    public void stop(OnViewDetachedListener detachedListener) {
         final LogHelper log = new LogHelper();
         stopRecord(true);
         stopRecord(false);
+        if (detachedListener != null) {
+            mDetachedListener = detachedListener;
+        }
         if (playingListeners != null) {
             Log.d(TAG, playingListeners.size() + " playing listeners stopped");
             for (OnPlayingListener listener : playingListeners) {

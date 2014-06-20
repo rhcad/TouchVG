@@ -240,7 +240,7 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     @Override
     protected void onDetachedFromWindow() {
         ViewUtil.onRemoveView(this);
-        mViewAdapter.stop();
+        mViewAdapter.stop(null);
 
         if (mImageCache != null) {
             synchronized (mImageCache) {
@@ -434,9 +434,9 @@ public class StdGraphView extends View implements BaseGraphView, GestureNotify {
     }
 
     @Override
-    public void stop() {
+    public void stop(OnViewDetachedListener listener) {
         if (mViewAdapter != null) {
-            mViewAdapter.stop();
+            mViewAdapter.stop(listener);
         }
     }
 

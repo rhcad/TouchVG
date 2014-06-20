@@ -704,9 +704,9 @@ public class SFGraphView extends SurfaceView implements BaseGraphView, GestureNo
     }
 
     @Override
-    public void stop() {
+    public void stop(OnViewDetachedListener listener) {
         if (mViewAdapter != null) {
-            mViewAdapter.stop();
+            mViewAdapter.stop(listener);
             if (mRender != null) {
                 mRender.stop();
                 mRender = null;

@@ -34,7 +34,7 @@ public interface IGraphView {
     public void clearCachedData();
 
     //! 停止后台任务，所属的Activity销毁前可调用
-    public void stop();
+    public void stop(OnViewDetachedListener listener);
 
     //! 暂停后台任务，所属的Activity暂停时可调用
     public boolean onPause();
@@ -109,6 +109,11 @@ public interface IGraphView {
     //! 上下文按钮点击的通知
     public static interface OnContextActionListener {
         public boolean onContextAction(IGraphView view, MgMotion sender, int action);
+    }
+
+    //! 绘图视图销毁后的通知
+    public static interface OnViewDetachedListener {
+        public void onGraphViewDetached();
     }
 
     //! 添加当前命令改变的观察者

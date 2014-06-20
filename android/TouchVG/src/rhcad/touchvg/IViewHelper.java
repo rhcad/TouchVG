@@ -330,6 +330,9 @@ public interface IViewHelper {
     //! 关闭视图
     public void close();
 
+    //! 关闭视图，并执行完成后的回调
+    public void close(final IGraphView.OnViewDetachedListener listener);
+
     //! 所属的Activity销毁前或关闭视图时调用
     public void onDestroy();
 
