@@ -1019,28 +1019,32 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void close() {
-        if (mView != null) {
-            mView.onPause();
-            mView.stop();
-            if (mView.getView() != null) {
-                final ViewGroup layout = (ViewGroup) mView.getView().getParent();
-                final ImageView imageView = getImageViewForSurface();
+        if (mView != null && mView.getView() != null) {
+            final ViewGroup layout = (ViewGroup) mView.getView().getParent();
+            final ImageView imageView = getImageViewForSurface();
+            final BaseGraphView view = mView;
 
-                if (imageView != null) {
-                    imageView.setVisibility(View.VISIBLE);
-                    imageView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            layout.removeViews(0, layout.getChildCount() - 1);
-                            imageView.removeCallbacks(this);
-                        }
-                    });
-                } else {
-                    layout.removeAllViews();
-                }
+            if (imageView != null) {
+                imageView.setImageBitmap(snapshot(false));
+                imageView.setVisibility(View.VISIBLE);
+                layout.bringChildToFront(imageView);
+
+                mView.getView().post(new Runnable() {       // remove SurfaceView delayed
+                    @Override
+                    public void run() {
+                        view.getView().removeCallbacks(this);
+                        view.onPause();
+                        view.stop();
+                        layout.removeViews(0, layout.getChildCount() - 1);  // Except imageView
+                    }
+                });
+            } else {
+                mView.onPause();
+                mView.stop();
+                ((ViewGroup) mView.getView().getParent()).removeAllViews();
             }
-            mView = null;
         }
+        mView = null;
     }
 
     @Override
