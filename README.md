@@ -2,7 +2,10 @@
 
 TouchVG is a lightweight 2D vector drawing framework for iOS, Android and Windows.
 
-Features described in [Online document](http://touchvg.github.io). Please visit [TouchVGTest](https://github.com/touchvg/TouchVGTest) to see more example of TouchVG.
+**NOTE**: The project has been split into three projects: [vgios](https://github.com/rhcad/vgios), [vgandroid](https://github.com/rhcad/vgandroid) and [vgwpf](https://github.com/rhcad/vgwpf).
+Please visit the related project to get newest code.
+
+Features described in [Online document](http://touchvg.github.io).
 
 ![arch](http://touchvg.github.io/images/arch.svg)
 
@@ -12,7 +15,7 @@ Features described in [Online document](http://touchvg.github.io). Please visit 
 
 This is an open source [LGPL 2.1](LICENSE.md) licensed project. It uses the following open source projects:
 
-- [TouchVGCore](https://github.com/touchvg/TouchVGCore) (LGPL): Cross-platform vector drawing libraries using C++.
+- [TouchVGCore](https://github.com/rhcad/vgcore) (LGPL): Cross-platform vector drawing libraries using C++.
 - [svg-android](https://github.com/japgolly/svg-android) (Apache): Vector graphics support for Android.
 - [SVGKit](https://github.com/SVGKit/SVGKit) (MIT): Display and interact with SVG Images with CoreAnimation on iOS.
 - [simple-svg](http://code.google.com/p/simple-svg) (BSD): A C++ header file for creating SVG files.
@@ -31,8 +34,6 @@ This is an open source [LGPL 2.1](LICENSE.md) licensed project. It uses the foll
 Contributors and sponsors are welcome. You may translate, commit issues or pull requests on this Github site.
 To contribute, please follow the branching model outlined here: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
 
-Welcome to the Chinese QQ group `192093613` to discuss and share.
-
 ## Contributors
 
 - [Zhang Yungui](https://github.com/rhcad)
@@ -50,7 +51,7 @@ Welcome to the Chinese QQ group `192093613` to discuss and share.
   - Android SDK version of the projects may need to modify according to your installation.
   - Recommend using the newer [ADT Bundle](http://developer.android.com/sdk/index.html) to avoid complex configuration.
 
-- You can download the [prebuilt libraries](https://github.com/touchvg/TouchVGTest/archive/android_prebuild.zip) from TouchVGTest and extract to `yourapp/libs`.
+- You can download the [prebuilt libraries](https://github.com/rhcad/TouchVGTest/archive/android_prebuild.zip) from TouchVGTest and extract to `yourapp/libs`.
 
 -  To regenerate libtouchvg.so, please enter `android` directory of TouchVG, then type `./build.sh`
 (Need to add the [NDK](http://developer.android.com/tools/sdk/ndk/index.html) installation location to your PATH environment variable).
@@ -133,12 +134,12 @@ Alternatively, you can build as one of the following methods:
  
 # Add more shapes and commands
 
-- You can use [newproj.py](https://github.com/touchvg/DemoCmds/blob/master/newproj.py) to create library project containing your own shapes and commands. So the TouchVG and TouchVGCore libraries does not require changes.
+- You can use [newproj.py](https://github.com/rhcad/DemoCmds/blob/master/newproj.py) to create library project containing your own shapes and commands. So the TouchVG and TouchVGCore libraries does not require changes.
 
-  - Checkout and enter [DemoCmds](https://github.com/touchvg/DemoCmds) directory, then type `python newproj.py YourCmds`:
+  - Checkout and enter [DemoCmds](https://github.com/rhcad/DemoCmds) directory, then type `python newproj.py YourCmds`:
 
      ```shell
-     git clone https://github.com/touchvg/DemoCmds.git
+     git clone https://github.com/rhcad/DemoCmds.git
      cd DemoCmds
      python newproj.py MyCmds
      ```
