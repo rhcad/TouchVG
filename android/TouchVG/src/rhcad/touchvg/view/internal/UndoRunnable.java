@@ -1,4 +1,4 @@
-// Copyright (c) 2014, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view.internal;
 
@@ -35,7 +35,7 @@ public class UndoRunnable extends ShapeRunnable {
     }
 
     @Override
-    protected void process(int tick, int doc, int shapes) {
+    protected void process(int tick, int change, int doc, int shapes) {
         if (tick == UNDO) {
             synchronized (mCoreView) {
                 mCoreView.undo(mViewAdapter);
@@ -44,7 +44,7 @@ public class UndoRunnable extends ShapeRunnable {
             synchronized (mCoreView) {
                 mCoreView.redo(mViewAdapter);
             }
-        } else if (!mCoreView.recordShapes(true, tick, doc, shapes)) {
+        } else if (!mCoreView.recordShapes(true, tick, change, doc, shapes)) {
             Log.e(TAG, "Fail to record shapes for undoing, tick=" + tick + ", doc=" + doc);
         }
     }

@@ -1,8 +1,9 @@
 //! \file GiViewImpl.h
 //! \brief 定义iOS绘图视图类的内部实现接口
-// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #import "GiPaintView.h"
+#import "GiViewEnums.h"
 #include "GiCanvasAdapter.h"
 #include "gicoreview.h"
 #include <vector>
@@ -11,6 +12,7 @@
 
 class GiViewAdapter;
 @class GiMagnifierView;
+@class WDLabel;
 
 //! 动态图形的绘图视图类
 @interface GiDynDrawView : UIView {
@@ -18,6 +20,7 @@ class GiViewAdapter;
 }
 
 - (id)initView:(CGRect)frame :(GiViewAdapter *)adapter;
++ (void)draw:(GiViewAdapter *)adapter;
 
 @end
 
@@ -35,22 +38,35 @@ class GiViewAdapter;
 - (void)stopRender;
 - (void)clearCachedData;
 - (void)startRender:(mgvector<long>*)docs :(long)gs;
-- (void)startRenderForPending;
 - (BOOL)renderInContext:(CGContextRef)ctx;
 
 @end
+
+//! 提示文字辅助类
+@interface GiMessageHelper : NSObject {
+    WDLabel     *_label;
+    NSTimer     *_timer;
+}
+
+- (void)showMessage:(NSString *)message inView:(UIView *)view;
+
+@end
+
+NSString *GiLocalizedString(NSString *name);
 
 //! iOS绘图视图适配器
 class GiViewAdapter : public GiView
 {
 private:
     GiPaintView     *_view;             //!< 静态图形视图
-    GiDynDrawView   *_dynview;          //!< 动态图形视图
+    UIView          *_dynview;          //!< 动态图形视图, GiDynDrawView
     GiCoreView      *_core;             //!< 内核视图分发器
     NSRecursiveLock *_lock;             //!< 内核对象临界区
     NSMutableArray  *_buttons;          //!< 上下文按钮的数组
     NSMutableDictionary *_buttonImages; //!< 按钮图像缓存
     GiImageCache    *_imageCache;       //!< 图像对象缓存
+    GiMessageHelper *_messageHelper;    //!< 提示文字辅助对象
+    int             _flags;             //!< 视图创建标志，由 GIViewFlags 组成
     bool            _actionEnabled;     //!< 是否允许上下文操作
     long            _appendIDs[20];     //!< 还未来得及重构显示的新增图形的ID、playh
     int             _oldAppendCount;    //!< 后台渲染前的待渲染新增图形数
@@ -66,13 +82,19 @@ public:
         unsigned int didSelectionChanged:1;
         unsigned int didContentChanged:1;
         unsigned int didDynamicChanged:1;
+        unsigned int didZoomChanged:1;
         unsigned int didDynDrawEnded:1;
         unsigned int didShapesRecorded:1;
+        unsigned int didShapeWillDelete:1;
         unsigned int didShapeDeleted:1;
+        unsigned int didShapeDblClick:1;
         unsigned int didShapeClicked:1;
+        unsigned int didGestureShouldBegin:1;
+        unsigned int didGestureBegan:1;
+        unsigned int didGestureEnded:1;
     } respondsTo;
     
-    GiViewAdapter(GiPaintView *mainView, GiViewAdapter *refView);
+    GiViewAdapter(GiPaintView *mainView, GiViewAdapter *refView, int flags);
     virtual ~GiViewAdapter();
     
     GiCoreView *coreView() { return _core; }
@@ -82,9 +104,11 @@ public:
     void clearCachedData();
     void stopRegen();
     void onFirstRegen();
-    bool isMainThread() const;
+    bool canShowMagnifier() const;
     long acquireFrontDoc(long* gs = NULL);
     id<NSLocking> locker() { return _lock; }
+    int getFlags() const { return _flags; }
+    int setFlags(int flags);
     
     int getAppendCount() const;
     void beginRender();
@@ -108,13 +132,19 @@ public:
                                     float x, float y, float w, float h);
     virtual void hideContextActions();
     void setContextActionEnabled(bool enabled) { _actionEnabled = enabled; }
+    bool getContextActionEnabled() const { return _actionEnabled; }
     
     virtual void commandChanged();
     virtual void selectionChanged();
     virtual void contentChanged();
     virtual void dynamicChanged();
+    virtual void zoomChanged();
+    virtual void shapeWillDelete(int sid);
     virtual void shapeDeleted(int sid);
-    virtual bool shapeClicked(int sid, int tag, float x, float y);
+    virtual bool shapeDblClick(int type, int sid, int tag);
+    virtual bool shapeClicked(int type, int sid, int tag, float x, float y);
+    virtual void showMessage(const char* text);
+    virtual void getLocalizedString(const char* name, MgStringCallback* result);
     
     bool dispatchGesture(GiGestureType type, GiGestureState state, CGPoint pt);
     bool dispatchPan(GiGestureState state, CGPoint pt, bool switchGesture = false);
@@ -125,13 +155,13 @@ private:
     int  regenLocked(bool changed, int sid, long playh, bool loading, long& doc0,
                      long& doc1, long& shapes1, long& gs, mgvector<long>*& docs);
     void regen_(bool changed, int sid, long playh, bool loading);
-    void recordShapes(bool forUndo, long doc, long shapes);
+    void recordShapes(bool forUndo, long changeCount, long doc, long shapes);
 };
 
 /*! \category GiPaintView()
     \brief GiPaintView 的内部数据定义
  */
-@interface GiPaintView()<UIGestureRecognizerDelegate> {
+@interface GiPaintView() {
     GiViewAdapter   *_adapter;              //!< 视图回调适配器
     
     UIGestureRecognizer     *_recognizers[7];
@@ -160,3 +190,13 @@ private:
 - (void)onContextActionsDisplay:(NSMutableArray *)buttons;
 
 @end
+
+//! 获取字符串的回调接口
+typedef void (^GiStringBlock)(NSString *s);
+
+//! 块回调代理的MgStringCallback实现类
+struct GiStringCallback : MgStringCallback {
+    GiStringBlock c;
+    GiStringCallback(GiStringBlock c) : c(c) {}
+    void onGetString(const char* text) { c(@(text)); }
+};

@@ -1,8 +1,8 @@
 # Copyright (c) 2013-2014, Zhang Yungui, https://github.com/rhcad/touchvg
 #
 LOCAL_PATH := $(call my-dir)
-CORE_PATH  := ../../../../TouchVGCore/android/TouchVGCore/obj/local/$(APP_ABI)
-CORE_INC   := $(LOCAL_PATH)/../../../../TouchVGCore/core/include
+CORE_PATH  := ../../TouchVGCore/obj/local/$(APP_ABI)
+CORE_INC   := $(LOCAL_PATH)/../../../core/include
 
 include $(CLEAR_VARS)
 LOCAL_MODULE    := libTouchVGCore
@@ -31,6 +31,7 @@ LOCAL_C_INCLUDES := $(CORE_INC) \
                     $(CORE_INC)/graph \
                     $(CORE_INC)/canvas \
                     $(CORE_INC)/shape \
+                    $(CORE_INC)/gshape \
                     $(CORE_INC)/storage \
                     $(CORE_INC)/cmd \
                     $(CORE_INC)/cmdbase \

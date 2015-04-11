@@ -1,7 +1,7 @@
 //  GiMagnifierView.m
 //  Fix CTM by Zhang Yungui <https://github.com/rhcad/touchvg> based on SimplerMaskTest:
 //  http://stackoverflow.com/questions/13330975/how-to-add-a-magnifier-to-custom-control
-//
+//  Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #import "GiMagnifierView.h"
 #import <QuartzCore/QuartzCore.h>

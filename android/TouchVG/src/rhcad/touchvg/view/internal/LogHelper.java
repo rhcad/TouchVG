@@ -1,9 +1,13 @@
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
+
 package rhcad.touchvg.view.internal;
 
 import android.util.Log;
 
 public class LogHelper {
     private static final String TAG = "vgstack";
+    private static final String RETURN0 = "Return";
+    private static final String RETURN1 = "Return ";
     private static int level;
 
     public LogHelper() {
@@ -12,54 +16,57 @@ public class LogHelper {
     }
 
     public LogHelper(String info) {
-        final StringBuffer buf = new StringBuffer("Enter method (").append(info).append(") ");
+        final StringBuilder buf = new StringBuilder("Enter method (").append(info).append(") ");
         Log.d(TAG, addHead(getStackTrace(buf, 2)).toString());
         level++;
     }
 
     public void r() {
         level--;
-        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return")).toString());
+        Log.d(TAG, addHead(getStackTrace(1).insert(0, RETURN0)).toString());
     }
 
     public boolean r(boolean ret) {
         level--;
-        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return " + ret)).toString());
+        Log.d(TAG, addHead(getStackTrace(1).insert(0, RETURN1 + ret)).toString());
         return ret;
     }
 
     public int r(int ret) {
         level--;
-        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return " + ret)).toString());
+        Log.d(TAG, addHead(getStackTrace(1).insert(0, RETURN1 + ret)).toString());
         return ret;
     }
 
     public String r(String ret) {
         level--;
-        Log.d(TAG, addHead(getStackTrace(1).insert(0, "Return")).toString());
+        Log.d(TAG, addHead(getStackTrace(1).insert(0, RETURN0)).toString());
         return ret;
     }
 
-    private StringBuffer addHead(StringBuffer buf) {
-        for (int i = 0; i < level; i++)
+    private StringBuilder addHead(StringBuilder buf) {
+        for (int i = 0; i < level; i++) {
             buf.insert(0, "  ");
+        }
         return buf;
     }
 
-    public static StringBuffer getStackTrace(int maxCount) {
-        final StringBuffer buf = new StringBuffer(maxCount > 1 ? " " : " in ");
+    public static StringBuilder getStackTrace(int maxCount) {
+        final StringBuilder buf = new StringBuilder(maxCount > 1 ? " " : " in ");
         return getStackTrace(buf, maxCount);
     }
 
-    public static StringBuffer getStackTrace(StringBuffer buf, int maxCount) {
+    public static StringBuilder getStackTrace(StringBuilder buf, int maxCount) {
         final StackTraceElement[] ste = Thread.currentThread().getStackTrace();
         final String thisClassName = LogHelper.class.getName();
         int i = 0;
 
-        while (!ste[i].getClassName().equals(thisClassName))
+        while (!ste[i].getClassName().equals(thisClassName)) {
             i++;
-        while (ste[i].getClassName().equals(thisClassName))
+        }
+        while (ste[i].getClassName().equals(thisClassName)) {
             i++;
+        }
         for (int n = 0; n < maxCount && i < ste.length; n++, i++) {
             if (n > 0) {
                 buf.append(", ");

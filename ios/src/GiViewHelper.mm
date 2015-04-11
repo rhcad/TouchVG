@@ -1,12 +1,14 @@
 //! \file GiViewHelper.mm
 //! \brief 实现iOS绘图视图辅助类 GiViewHelper
-// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #import "GiViewHelper.h"
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
+#include "mgview.h"
 
-#define IOSLIBVERSION     13
+#define IOSLIBVERSION     32
+
 extern NSString* EXTIMAGENAMES[];
 
 GiColor CGColorToGiColor(CGColorRef color) {
@@ -28,6 +30,7 @@ GiColor CGColorToGiColor(CGColorRef color) {
                    (int)lroundf(CGColorGetAlpha(color) * 255.f));
 }
 
+//! 遍历图像块用的回调类
 struct GiImageFinderD : public MgFindImageCallback {
     GiImageCache    *cache;
     NSMutableArray  *arr;
@@ -36,15 +39,34 @@ struct GiImageFinderD : public MgFindImageCallback {
         : cache(cache), arr(arr) {}
     
     virtual void onFindImage(int sid, const char* name) {
-        NSString *title = [NSString stringWithUTF8String:name];
+        NSString *title = @(name);
         CGRect rect = [[GiViewHelper sharedInstance] getShapeBox:sid];
         
-        [arr addObject:@{@"id":[NSNumber numberWithInt:sid],
+        [arr addObject:@{@"id":@(sid),
                          @"name":title,
                          @"path":[cache.imagePath stringByAppendingPathComponent:title],
                          @"image":[cache loadImage:title],
                          @"rect":[NSValue valueWithCGRect:rect]
                          }];
+    }
+};
+
+struct GiOptionCallback : public MgOptionCallback {
+    NSMutableDictionary *rootDict;
+    
+    GiOptionCallback(NSMutableDictionary *dict) : rootDict(dict) {}
+    
+    virtual void onGetOptionBool(const char* name, bool value) {
+        rootDict[@(name)] = @(value);
+    }
+    virtual void onGetOptionInt(const char* name, int value) {
+        rootDict[@(name)] = @(value);
+    }
+    virtual void onGetOptionFloat(const char* name, float value) {
+        rootDict[@(name)] = @(value);
+    }
+    virtual void onGetOptionString(const char* name, const char* text) {
+        rootDict[@(name)] = @(text);
     }
 };
 
@@ -54,10 +76,11 @@ struct GiImageFinderD : public MgFindImageCallback {
 
 @implementation GiViewHelper
 
-@synthesize shapeCount, selectedCount, selectedType, selectedShapeID, content;
-@synthesize changeCount, drawCount, displayExtent, boundingBox;
-@synthesize command, lineWidth, strokeWidth, lineColor, lineAlpha;
-@synthesize lineStyle, fillColor, fillAlpha;
+@synthesize shapeCount, selectedCount, selectedType, selectedShapeID, selectedIds, content;
+@synthesize changeCount, drawCount, displayExtent, boundingBox, selectedHandle;
+@synthesize command, lineWidth, strokeWidth, lineColor, lineAlpha, startArrowHead, endArrowHead;
+@synthesize lineStyle, fillColor, fillAlpha, options, zoomEnabled, viewBox, modelBox;
+@synthesize currentPoint, currentModelPoint, viewScale, viewCenter;
 
 static GiViewHelper *_sharedInstance = nil;
 
@@ -65,13 +88,10 @@ static GiViewHelper *_sharedInstance = nil;
     return [NSString stringWithFormat:@"1.1.%d.%d", IOSLIBVERSION, GiCoreView::getVersion()];
 }
 
-+ (void)initialize {
++ (GiViewHelper *)sharedInstance {
     if (!_sharedInstance) {
         _sharedInstance = [[GiViewHelper alloc] init];
     }
-}
-
-+ (GiViewHelper *)sharedInstance {
     if (!_sharedInstance.view) {
         _sharedInstance.view = [GiPaintView activeView];
     }
@@ -79,18 +99,29 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 + (GiViewHelper *)sharedInstance:(GiPaintView *)view {
+    if (!_sharedInstance) {
+        _sharedInstance = [[GiViewHelper alloc] init];
+    }
     if (_sharedInstance.view != view) {
         _sharedInstance.view = view;
     }
     return _sharedInstance;
 }
 
-- (id)init {
-    return _sharedInstance ? nil : [super init];
+- (id)initWithView:(GiPaintView *)view {
+    self = [super init];
+    if (self) {
+        _view = view;
+    }
+    return self;
 }
 
 - (void)dealloc {
     [super DEALLOC];
+}
+
+- (GiPaintView *)view {
+    return _view;
 }
 
 + (GiPaintView *)activeView {
@@ -98,8 +129,20 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (GiPaintView *)createGraphView:(CGRect)frame :(UIView *)parentView {
-    _view = [GiPaintView createGraphView:frame :parentView];
+    _view = [GiPaintView createGraphView:frame :parentView :0];
     return _view;
+}
+
+- (GiPaintView *)createGraphView:(CGRect)frame
+                          inView:(UIView *)parentView
+                           flags:(int)flags {
+    _view = [GiPaintView createGraphView:frame :parentView :flags];
+    return _view;
+}
+
+- (GiPaintView *)createDummyView:(CGSize)size {
+    return [self createGraphView:CGRectMake(0, 0, size.width, size.height)
+                          inView:nil flags:GIViewFlagsDummyView];
 }
 
 - (GiPaintView *)createMagnifierView:(CGRect)frame
@@ -125,6 +168,14 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (long)cmdViewHandle {
     return [_view coreView]->viewAdapterHandle();
+}
+
+- (MgView *)cmdView {
+    return MgView::fromHandle([_view coreView]->viewAdapterHandle());
+}
+
+- (MgShapeFactory *)shapeFactory {
+    return [self cmdView]->getShapeFactory();
 }
 
 - (NSString *)command {
@@ -156,23 +207,23 @@ static GiViewHelper *_sharedInstance = nil;
     EXTIMAGENAMES[i] = nil;
 }
 
-- (float)lineWidth {
+- (CGFloat)lineWidth {
     float w = [_view coreView]->getContext(false).getLineWidth();
     return w > 1e-6f ? 100.f * w : w;
 }
 
-- (void)setLineWidth:(float)value {
+- (void)setLineWidth:(CGFloat)value {
     [_view coreView]->getContext(true).setLineWidth(value > 1e-6f ? value / 100.f : value, true);
     [_view coreView]->setContext(GiContext::kLineWidth);
 }
 
-- (float)strokeWidth {
+- (CGFloat)strokeWidth {
     GiContext& ctx = [_view coreView]->getContext(false);
     return [_view coreView]->calcPenWidth([_view viewAdapter], ctx.getLineWidth());
 }
 
-- (void)setStrokeWidth:(float)value {
-    [_view coreView]->getContext(true).setLineWidth(-fabsf(value), true);
+- (void)setStrokeWidth:(CGFloat)value {
+    [_view coreView]->getContext(true).setLineWidth(-fabsf((float)value), true);
     [_view coreView]->setContext(GiContext::kLineWidth);
 }
 
@@ -183,6 +234,24 @@ static GiViewHelper *_sharedInstance = nil;
 - (void)setLineStyle:(GILineStyle)value {
     [_view coreView]->getContext(true).setLineStyle(value);
     [_view coreView]->setContext(GiContext::kLineStyle);
+}
+
+- (GIArrowHead)startArrowHead {
+    return (GIArrowHead)[_view coreView]->getContext(false).getStartArrayHead();
+}
+
+- (GIArrowHead)endArrowHead {
+    return (GIArrowHead)[_view coreView]->getContext(false).getEndArrayHead();
+}
+
+- (void)setStartArrowHead:(GIArrowHead)value {
+    [_view coreView]->getContext(true).setStartArrayHead(value);
+    [_view coreView]->setContext(GiContext::kLineArrayHead);
+}
+
+- (void)setEndArrowHead:(GIArrowHead)value {
+    [_view coreView]->getContext(true).setEndArrayHead(value);
+    [_view coreView]->setContext(GiContext::kLineArrayHead);
 }
 
 - (UIColor *)GiColorToUIColor:(GiColor)c {
@@ -217,11 +286,11 @@ static GiViewHelper *_sharedInstance = nil;
     [_view coreView]->setContext(c.a ? GiContext::kLineRGB : GiContext::kLineARGB);
 }
 
-- (float)lineAlpha {
+- (CGFloat)lineAlpha {
     return (float)[_view coreView]->getContext(false).getLineAlpha() / 255.f;
 }
 
-- (void)setLineAlpha:(float)value {
+- (void)setLineAlpha:(CGFloat)value {
     [_view coreView]->getContext(true).setLineAlpha((int)lroundf(value * 255.f));
     [_view coreView]->setContext(GiContext::kLineAlpha);
 }
@@ -237,11 +306,11 @@ static GiViewHelper *_sharedInstance = nil;
     [_view coreView]->setContext(c.a ? GiContext::kFillRGB : GiContext::kFillARGB);
 }
 
-- (float)fillAlpha {
+- (CGFloat)fillAlpha {
     return (float)[_view coreView]->getContext(false).getFillAlpha() / 255.f;
 }
 
-- (void)setFillAlpha:(float)value {
+- (void)setFillAlpha:(CGFloat)value {
     [_view coreView]->getContext(true).setFillAlpha((int)lroundf(value * 255.f));
     [_view coreView]->setContext(GiContext::kFillAlpha);
 }
@@ -272,6 +341,14 @@ static GiViewHelper *_sharedInstance = nil;
     return [_view coreView]->getShapeCount();
 }
 
+- (int)unlockedShapeCount {
+    return [_view coreView]->getUnlockedShapeCount();
+}
+
+- (int)visibleShapeCount {
+    return [_view coreView]->getVisibleShapeCount();
+}
+
 - (int)selectedCount {
     return [_view coreView]->getSelectedShapeCount();
 }
@@ -284,12 +361,87 @@ static GiViewHelper *_sharedInstance = nil;
     return [_view coreView]->getSelectedShapeID();
 }
 
+- (void)setSelectedShapeID:(int)sid {
+    self.command = [NSString stringWithFormat:@"select{'id':%d}", sid];
+}
+
+- (NSArray *)selectedIds {
+    mgvector<int> ids;
+    [_view coreView]->getSelectedShapeIDs(ids);
+    
+    if (ids.count() == 0 || ids.get(0) == 0)
+        return nil;
+    
+    NSMutableArray *arr = [NSMutableArray array];
+    
+    for (int i = 0; i < ids.count(); i++) {
+        [arr addObject:@(ids.get(i))];
+    }
+    return arr;
+}
+
+- (void)setSelectedIds:(NSArray *)arr {
+    mgvector<int> ids((int)[arr count]);
+    
+    for (int i = 0; i < ids.count(); i++) {
+        ids.set(i, [[arr objectAtIndex:i] intValue]);
+    }
+    [_view coreView]->setSelectedShapeIDs(ids);
+}
+
+- (int)selectedHandle {
+    return [_view coreView]->getSelectedHandle();
+}
+
 - (long)changeCount {
     return [_view coreView]->getChangeCount();
 }
 
 - (long)drawCount {
     return [_view coreView]->getDrawCount();
+}
+
+- (CGFloat)viewScale {
+    return [self cmdView]->xform()->getViewScale();
+}
+
+- (void)setViewScale:(CGFloat)value {
+    if ([self cmdView]->xform()->zoomScale(value)) {
+        [self cmdView]->regenAll(false);
+    }
+}
+
+- (CGPoint)viewCenter {
+    Point2d pt([self cmdView]->xform()->getCenterW());
+    return CGPointMake(pt.x, pt.y);
+}
+
+- (void)setViewCenter:(CGPoint)value {
+    if ([self cmdView]->xform()->zoomTo(Point2d(value.x, value.y))) {
+        [self cmdView]->regenAll(false);
+    }
+}
+
+- (CGRect)viewBox {
+    mgvector<float> box(4);
+    [_view coreView]->getViewModelBox(box);
+    
+    float w = box.get(2) - box.get(0);
+    float h = box.get(3) - box.get(1);
+    return CGRectMake(box.get(0), box.get(1), w, h);
+}
+
+- (void)setViewBox:(CGRect)box {
+    [self zoomToModel:box];
+}
+
+- (CGRect)modelBox {
+    mgvector<float> box(4);
+    [_view coreView]->getModelBox(box);
+    
+    float w = box.get(2) - box.get(0);
+    float h = box.get(3) - box.get(1);
+    return CGRectMake(box.get(0), box.get(1), w, h);
 }
 
 - (CGRect)displayExtent {
@@ -310,6 +462,16 @@ static GiViewHelper *_sharedInstance = nil;
     return CGRectMake(box.get(0), box.get(1), w, h);
 }
 
+- (CGPoint)currentPoint {
+    Point2d pt([self cmdView]->motion()->point);
+    return CGPointMake(pt.x, pt.y);
+}
+
+- (CGPoint)currentModelPoint {
+    Point2d pt([self cmdView]->motion()->pointM);
+    return CGPointMake(pt.x, pt.y);
+}
+
 - (CGRect)getShapeBox:(int)sid {
     mgvector<float> box(4);
     [_view coreView]->getBoundingBox(box, sid);
@@ -319,8 +481,23 @@ static GiViewHelper *_sharedInstance = nil;
     return CGRectMake(box.get(0), box.get(1), w, h);
 }
 
+- (CGRect)getModelBox:(int)sid {
+    mgvector<float> box(4);
+    [_view coreView]->getModelBox(box, sid);
+    
+    float w = box.get(2) - box.get(0);
+    float h = box.get(3) - box.get(1);
+    return CGRectMake(box.get(0), box.get(1), w, h);
+}
+
+- (CGPoint)getHandlePoint:(int)sid index:(int)i {
+    mgvector<float> xy(2);
+    return ([_view coreView]->getHandlePoint(xy, sid, i)
+            ? CGPointMake(xy.get(0), xy.get(1)) : CGPointMake(NAN, NAN));
+}
+
 + (NSString *)addExtension:(NSString *)filename :(NSString *)ext {
-    if (filename && ![filename hasSuffix:ext]) {
+    if (filename && ![filename hasSuffix:ext] && ![filename hasSuffix:@".json"]) {
         filename = [[filename stringByDeletingPathExtension]
                     stringByAppendingPathExtension:[ext substringFromIndex:1]];
     }
@@ -370,6 +547,12 @@ static GiViewHelper *_sharedInstance = nil;
     }
 }
 
+- (void)eraseView {
+    @synchronized([_view locker]) {
+        [_view coreView]->setCommand("erasewnd");
+    }
+}
+
 - (UIImage *)snapshot {
     return [_view snapshot];
 }
@@ -395,6 +578,39 @@ static GiViewHelper *_sharedInstance = nil;
     return image;
 }
 
+- (UIImage *)snapshotWithShapes:(NSArray *)ids size:(CGSize)size {
+    GiViewHelper *hlp = [[GiViewHelper alloc]init];
+    GiPaintView *tmpview = [hlp createDummyView:size];
+    MgShapes *srcs = self.cmdView->shapes();
+    MgShapes *dests = hlp.cmdView->shapes();
+    
+    @synchronized([_view locker]) {
+        if ([ids count] == 0) {
+            dests->copyShapes(srcs, false);
+        } else {
+            for (NSNumber *sid in ids) {
+                const MgShape *sp = srcs->findShape([sid intValue]);
+                if (sp) {
+                    MgShape* newsp = dests->addShape(*sp);
+                    if (newsp) {
+                        newsp->shape()->setFlag(kMgHideContent, false);
+                        if (newsp->context().getLineAlpha() > 0 && newsp->context().getLineAlpha() < 20) {
+                            GiContext ctx(newsp->context());
+                            ctx.setLineAlpha(20);
+                            newsp->setContext(ctx, GiContext::kLineAlpha);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    [hlp zoomToExtent];
+    
+    UIImage *image = [hlp snapshot];
+    [tmpview removeFromSuperview];
+    return image;
+}
+
 - (BOOL)exportExtentAsPNG:(NSString *)filename space:(CGFloat)space {
     UIImage *image = [self extentSnapshot:space];
     BOOL ret = [UIImagePNGRepresentation(image) writeToFile:filename atomically:NO];
@@ -414,6 +630,25 @@ static GiViewHelper *_sharedInstance = nil;
     int ret = [_view coreView]->exportSVG([_view viewAdapter], [filename UTF8String]);
     NSLog(@"GiViewHelper exportSVG: %@, %d", filename, ret);
     return ret >= 0;
+}
+
+- (int)importSVGPath:(int)sid d:(NSString *)d {
+    long shapes = [_view coreView]->backShapes();
+    
+    sid = [_view coreView]->importSVGPath(shapes, sid, [d UTF8String]);
+    if (sid) {
+        [_view viewAdapter]->regenAll(true);
+    }
+    return sid;
+}
+
+- (NSString *)exportSVGPath:(int)sid {
+    __block NSString *ret = nil;
+    GiStringCallback c(^(NSString *s) {
+        ret = s;
+    });
+    [_view coreView]->exportSVGPath2(&c, [_view coreView]->backShapes(), sid);
+    return ret;
 }
 
 - (CGPoint)displayToModel:(CGPoint)point {
@@ -437,9 +672,21 @@ static GiViewHelper *_sharedInstance = nil;
     return [_view coreView]->zoomToExtent();
 }
 
+- (BOOL)zoomToExtent:(CGFloat)margin {
+    return [_view coreView]->zoomToExtent(margin);
+}
+
 - (BOOL)zoomToModel:(CGRect)rect {
     return [_view coreView]->zoomToModel(rect.origin.x, rect.origin.y,
                                          rect.size.width, rect.size.height);
+}
+
+- (BOOL)zoomPan:(CGPoint)offPixel {
+    return [_view coreView]->zoomPan(offPixel.x, offPixel.y);
+}
+
+- (BOOL)zoomEnabled {
+    return [_view coreView]->isZoomEnabled([_view viewAdapter]);
 }
 
 - (void)setZoomEnabled:(BOOL)enabled {
@@ -450,6 +697,14 @@ static GiViewHelper *_sharedInstance = nil;
     @synchronized([_view locker]) {
         return [_view coreView]->addShapesForTest();
     }
+}
+
+- (void)showMessage:(NSString *)text {
+    [_view viewAdapter]->showMessage([text UTF8String]);
+}
+
++ (NSString *)localizedString:(NSString *)name {
+    return GiLocalizedString(name);
 }
 
 - (void)clearCachedData {
@@ -545,6 +800,16 @@ static GiViewHelper *_sharedInstance = nil;
     return ret;
 }
 
+- (BOOL)getImageSize:(float*)info shape:(int)sid {
+    mgvector<float> arr(5);
+    bool ret = [_view coreView]->getImageSize(arr, sid);
+    
+    for (int i = 0; i < 5; i++) {
+        info[i] = arr.get(i);
+    }
+    return ret;
+}
+
 - (NSArray *)getImageShapes {
     NSMutableArray *arr = [[NSMutableArray alloc]init];
     long doc = [self acquireFrontDoc];
@@ -632,16 +897,13 @@ static GiViewHelper *_sharedInstance = nil;
     return [_view coreView]->isPlaying();
 }
 
-- (BOOL)playPause {
-    return [_view coreView]->onPause(getTickCount());
-}
-
-- (BOOL)playResume {
-    return [_view coreView]->onResume(getTickCount());
-}
-
-- (long)getPlayTicks {
+- (long)getRecordTicks {
     return [_view coreView]->getRecordTick(false, getTickCount());
+}
+
+- (void)combineRegen:(dispatch_block_t)block {
+    MgRegenLocker locker([self cmdView]);
+    block();
 }
 
 - (void)addDelegate:(id<GiPaintViewDelegate>)d {
@@ -650,6 +912,163 @@ static GiViewHelper *_sharedInstance = nil;
 
 - (void)removeDelegate:(id<GiPaintViewDelegate>)d {
     [_view removeDelegate:d];
+}
+
+- (NSDictionary *)options {
+    GiOptionCallback c([NSMutableDictionary dictionary]);
+    [_view coreView]->traverseOptions(&c);
+    c.onGetOptionBool("contextActionEnabled", _view.contextActionEnabled);
+    c.onGetOptionBool("zoomEnabled", self.zoomEnabled);
+    c.onGetOptionBool("showMagnifier", !!(_view.flags & GIViewFlagsMagnifier));
+    return c.rootDict;
+}
+
+- (void)setOptions:(NSDictionary *)dict {
+    GiCoreView *cv = [_view coreView];
+    NSNumber *num;
+    
+    if (dict && dict.count > 0) {
+        for (NSString *name in dict.allKeys) {
+            num = dict[name];
+            
+            if ([num isKindOfClass:[NSString class]]) {
+                cv->setOptionString([name UTF8String], [dict[name] UTF8String]);
+            }
+            if (![num isKindOfClass:[NSNumber class]]) {
+                continue;
+            }
+            
+            if ([name isEqualToString:@"contextActionEnabled"]) {
+                _view.contextActionEnabled = [num boolValue];
+                [_view hideContextActions];
+            }
+            else if ([name isEqualToString:@"zoomEnabled"]) {
+                self.zoomEnabled = [num boolValue];
+            }
+            else if ([name isEqualToString:@"showMagnifier"]) {
+                if ([num boolValue])
+                    _view.flags |= GIViewFlagsMagnifier;
+                else
+                    _view.flags &= ~GIViewFlagsMagnifier;
+            }
+            else if (strstr(object_getClassName(num), "Boolean")) {
+                cv->setOptionBool([name UTF8String], [num boolValue]);
+            } else if (strcmp([num objCType], @encode(int)) == 0 ||
+                       strcmp([num objCType], "q") == 0) {
+                cv->setOptionInt([name UTF8String], [num intValue]);
+            } else if (strcmp([num objCType], @encode(float)) == 0 ||
+                       strcmp([num objCType], @encode(double)) == 0) {
+                cv->setOptionFloat([name UTF8String], [num floatValue]);
+            } else {
+                NSLog(@"Unsupported number type: %@, %s", name, [num objCType]);
+            }
+        }
+    } else {
+        cv->setOptionBool(NULL, false);
+    }
+}
+
+- (void)setOption:(id)value forKey:(NSString *)key {
+    if (key) {
+        self.options = @{ key : value };
+    } else {
+        [_view coreView]->setOptionBool(NULL, false);
+    }
+}
+
+@end
+
+#pragma mark - GiMessageHelper
+
+//! The UILabel subclass for show message text.
+@interface WDLabel : UILabel
+@end
+
+@implementation WDLabel
+
+- (void)drawRect:(CGRect)rect
+{
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    rect = CGRectInset(rect, 8.0f, 8.0f);
+    CGContextSetShadow(ctx, CGSizeMake(0, 2), 4);
+    
+    [[UIColor colorWithWhite:0.0f alpha:0.5f] set];
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:9.0f];
+    [path fill];
+    
+    [[UIColor whiteColor] set];
+    path.lineWidth = 2;
+    [path stroke];
+    
+    [super drawRect:rect];
+}
+
+@end
+
+@implementation GiMessageHelper
+
+- (void)hideMessage {
+    [UIView animateWithDuration:0.2f
+                     animations:^{ _label.alpha = 0.0f; }
+                     completion:^(BOOL finished) {
+                         [self removeLabel];
+                     }];
+}
+
+- (void)removeLabel {
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    if (_label) {
+        [_label removeFromSuperview];
+        _label = nil;
+    }
+}
+
+- (void)showMessage:(NSString *)message inView:(UIView *)view {
+    BOOL created = NO;
+    
+    [self removeLabel];
+    
+    if (!_label) {
+        _label = [[WDLabel alloc] initWithFrame:CGRectInset(CGRectMake(0,0,100,40), -8, -8)];
+        _label.textColor = [UIColor whiteColor];
+        _label.font = [UIFont boldSystemFontOfSize:24.0f];
+        _label.textAlignment = NSTextAlignmentCenter;
+        _label.opaque = NO;
+        _label.backgroundColor = nil;
+        _label.alpha = 0;
+        
+        created = YES;
+    }
+    
+    _label.text = message;
+    [_label sizeToFit];
+    
+    CGRect frame = _label.frame;
+    frame.size.width = MAX(frame.size.width, 80.f);
+    frame = CGRectInset(frame, -20, -15);
+    _label.frame = frame;
+    _label.center = view.center;
+    
+    if (created) {
+        [view addSubview:_label];
+        
+        [UIView animateWithDuration:0.2f animations:^{ _label.alpha = 1; }];
+    }
+    
+    // start message dismissal timer
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.7 target:self
+                                            selector:@selector(hideMessage)
+                                            userInfo:nil repeats:NO];
 }
 
 @end

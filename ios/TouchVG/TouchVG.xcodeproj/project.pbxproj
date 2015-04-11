@@ -1,0 +1,587 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0206512F196BB0B5003AD648 /* GiViewEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 0206512E196BB0B5003AD648 /* GiViewEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		02065130196BB0B5003AD648 /* GiViewEnums.h in Headers */ = {isa = PBXBuildFile; fileRef = 0206512E196BB0B5003AD648 /* GiViewEnums.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58DB195D250E00302988 /* ARCMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58C9195D250E00302988 /* ARCMacro.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58DC195D250E00302988 /* ARCMacro.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58C9195D250E00302988 /* ARCMacro.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58DD195D250E00302988 /* GiCanvasAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CA195D250E00302988 /* GiCanvasAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58DE195D250E00302988 /* GiCanvasAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CA195D250E00302988 /* GiCanvasAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58DF195D250E00302988 /* GiPaintView.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CB195D250E00302988 /* GiPaintView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58E0195D250E00302988 /* GiPaintView.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CB195D250E00302988 /* GiPaintView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58E1195D250E00302988 /* GiPaintViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CC195D250E00302988 /* GiPaintViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58E2195D250E00302988 /* GiPaintViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CC195D250E00302988 /* GiPaintViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58E3195D250E00302988 /* GiViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CD195D250E00302988 /* GiViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58E4195D250E00302988 /* GiViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CD195D250E00302988 /* GiViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		025F58E5195D250E00302988 /* GiCanvasAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58CF195D250E00302988 /* GiCanvasAdapter.mm */; };
+		025F58E6195D250E00302988 /* GiCanvasAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58CF195D250E00302988 /* GiCanvasAdapter.mm */; };
+		025F58E7195D250E00302988 /* GiDpiUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D0195D250E00302988 /* GiDpiUtil.mm */; };
+		025F58E8195D250E00302988 /* GiDpiUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D0195D250E00302988 /* GiDpiUtil.mm */; };
+		025F58E9195D250E00302988 /* GiImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D1195D250E00302988 /* GiImageCache.h */; };
+		025F58EA195D250E00302988 /* GiImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D1195D250E00302988 /* GiImageCache.h */; };
+		025F58EB195D250E00302988 /* GiImageCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D2195D250E00302988 /* GiImageCache.mm */; };
+		025F58EC195D250E00302988 /* GiImageCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D2195D250E00302988 /* GiImageCache.mm */; };
+		025F58ED195D250E00302988 /* GiMagnifierView.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D3195D250E00302988 /* GiMagnifierView.h */; };
+		025F58EE195D250E00302988 /* GiMagnifierView.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D3195D250E00302988 /* GiMagnifierView.h */; };
+		025F58EF195D250E00302988 /* GiMagnifierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D4195D250E00302988 /* GiMagnifierView.m */; };
+		025F58F0195D250E00302988 /* GiMagnifierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D4195D250E00302988 /* GiMagnifierView.m */; };
+		025F58F1195D250E00302988 /* GiPaintView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D5195D250E00302988 /* GiPaintView.mm */; };
+		025F58F2195D250E00302988 /* GiPaintView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D5195D250E00302988 /* GiPaintView.mm */; };
+		025F58F3195D250E00302988 /* GiViewAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D6195D250E00302988 /* GiViewAdapter.mm */; };
+		025F58F4195D250E00302988 /* GiViewAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D6195D250E00302988 /* GiViewAdapter.mm */; };
+		025F58F5195D250E00302988 /* GiViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D7195D250E00302988 /* GiViewHelper.mm */; };
+		025F58F6195D250E00302988 /* GiViewHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 025F58D7195D250E00302988 /* GiViewHelper.mm */; };
+		025F58F7195D250E00302988 /* GiViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D8195D250E00302988 /* GiViewImpl.h */; };
+		025F58F8195D250E00302988 /* GiViewImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D8195D250E00302988 /* GiViewImpl.h */; };
+		025F5942195D264600302988 /* GiCanvasAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CF195D250E00302988 /* GiCanvasAdapter.mm */; };
+		025F5943195D264600302988 /* GiDpiUtil.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D0195D250E00302988 /* GiDpiUtil.mm */; };
+		025F5944195D264600302988 /* GiImageCache.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D2195D250E00302988 /* GiImageCache.mm */; };
+		025F5945195D264600302988 /* GiMagnifierView.m in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D4195D250E00302988 /* GiMagnifierView.m */; };
+		025F5946195D264600302988 /* GiPaintView.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D5195D250E00302988 /* GiPaintView.mm */; };
+		025F5947195D264600302988 /* GiViewAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D6195D250E00302988 /* GiViewAdapter.mm */; };
+		025F5948195D264600302988 /* GiViewHelper.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D7195D250E00302988 /* GiViewHelper.mm */; };
+		025F598F195D265100302988 /* GiCanvasAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58CF195D250E00302988 /* GiCanvasAdapter.mm */; };
+		025F5990195D265100302988 /* GiDpiUtil.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D0195D250E00302988 /* GiDpiUtil.mm */; };
+		025F5991195D265100302988 /* GiImageCache.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D2195D250E00302988 /* GiImageCache.mm */; };
+		025F5992195D265100302988 /* GiMagnifierView.m in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D4195D250E00302988 /* GiMagnifierView.m */; };
+		025F5993195D265100302988 /* GiPaintView.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D5195D250E00302988 /* GiPaintView.mm */; };
+		025F5994195D265100302988 /* GiViewAdapter.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D6195D250E00302988 /* GiViewAdapter.mm */; };
+		025F5995195D265100302988 /* GiViewHelper.mm in Headers */ = {isa = PBXBuildFile; fileRef = 025F58D7195D250E00302988 /* GiViewHelper.mm */; };
+		0265F26C19CC10FC00503BC8 /* GiPaintViewXIB.h in Headers */ = {isa = PBXBuildFile; fileRef = 0265F26B19CC10F200503BC8 /* GiPaintViewXIB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0265F26D19CC10FD00503BC8 /* GiPaintViewXIB.h in Headers */ = {isa = PBXBuildFile; fileRef = 0265F26B19CC10F200503BC8 /* GiPaintViewXIB.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0265F26F19CC110700503BC8 /* GiPaintViewXIB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0265F26E19CC110700503BC8 /* GiPaintViewXIB.mm */; };
+		0265F27019CC110700503BC8 /* GiPaintViewXIB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0265F26E19CC110700503BC8 /* GiPaintViewXIB.mm */; };
+		02BD6692189A1E9A00A4A444 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4D178FC7EB000194AE /* UIKit.framework */; };
+		02BD6693189A1E9A00A4A444 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */; };
+		02BD6694189A1E9A00A4A444 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3A4C178FC511000194AE /* Foundation.framework */; };
+		AE11A5DB18B328CF00B88366 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE11A5DA18B328CF00B88366 /* QuartzCore.framework */; };
+		AE11A5DC18B328DB00B88366 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE11A5DA18B328CF00B88366 /* QuartzCore.framework */; };
+		AE2A3A4D178FC511000194AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3A4C178FC511000194AE /* Foundation.framework */; };
+		AE2A3B4C178FC7C1000194AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */; };
+		AE2A3B4E178FC7EB000194AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE2A3B4D178FC7EB000194AE /* UIKit.framework */; };
+		AE756FEE19610C9C0017C705 /* TouchVG-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AE756FED19610C9C0017C705 /* TouchVG-Prefix.pch */; };
+		AE756FEF19610C9C0017C705 /* TouchVG-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AE756FED19610C9C0017C705 /* TouchVG-Prefix.pch */; };
+		AE7CEE4B19E68737005D03A9 /* NSString+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7CEE4A19E68737005D03A9 /* NSString+Drawing.m */; };
+		AE7CEE4C19E68737005D03A9 /* NSString+Drawing.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7CEE4A19E68737005D03A9 /* NSString+Drawing.m */; };
+		AEAEC5C719D3023200237A6E /* NSString+Drawing.h in Headers */ = {isa = PBXBuildFile; fileRef = AEAEC5C619D3023100237A6E /* NSString+Drawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AEAEC5C819D3024800237A6E /* NSString+Drawing.h in Headers */ = {isa = PBXBuildFile; fileRef = AEAEC5C619D3023100237A6E /* NSString+Drawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0206512E196BB0B5003AD648 /* GiViewEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiViewEnums.h; sourceTree = "<group>"; };
+		025F58C9195D250E00302988 /* ARCMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCMacro.h; sourceTree = "<group>"; };
+		025F58CA195D250E00302988 /* GiCanvasAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiCanvasAdapter.h; sourceTree = "<group>"; };
+		025F58CB195D250E00302988 /* GiPaintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiPaintView.h; sourceTree = "<group>"; };
+		025F58CC195D250E00302988 /* GiPaintViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiPaintViewDelegate.h; sourceTree = "<group>"; };
+		025F58CD195D250E00302988 /* GiViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiViewHelper.h; sourceTree = "<group>"; };
+		025F58CF195D250E00302988 /* GiCanvasAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiCanvasAdapter.mm; sourceTree = "<group>"; };
+		025F58D0195D250E00302988 /* GiDpiUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiDpiUtil.mm; sourceTree = "<group>"; };
+		025F58D1195D250E00302988 /* GiImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiImageCache.h; sourceTree = "<group>"; };
+		025F58D2195D250E00302988 /* GiImageCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiImageCache.mm; sourceTree = "<group>"; };
+		025F58D3195D250E00302988 /* GiMagnifierView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiMagnifierView.h; sourceTree = "<group>"; };
+		025F58D4195D250E00302988 /* GiMagnifierView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiMagnifierView.m; sourceTree = "<group>"; };
+		025F58D5195D250E00302988 /* GiPaintView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiPaintView.mm; sourceTree = "<group>"; };
+		025F58D6195D250E00302988 /* GiViewAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiViewAdapter.mm; sourceTree = "<group>"; };
+		025F58D7195D250E00302988 /* GiViewHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiViewHelper.mm; sourceTree = "<group>"; };
+		025F58D8195D250E00302988 /* GiViewImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiViewImpl.h; sourceTree = "<group>"; };
+		0265F26B19CC10F200503BC8 /* GiPaintViewXIB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GiPaintViewXIB.h; sourceTree = "<group>"; };
+		0265F26E19CC110700503BC8 /* GiPaintViewXIB.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GiPaintViewXIB.mm; sourceTree = "<group>"; };
+		02BD66A8189A1E9A00A4A444 /* libTouchVG-SVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTouchVG-SVG.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE11A5DA18B328CF00B88366 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AE2A3A49178FC511000194AE /* libTouchVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTouchVG.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE2A3A4C178FC511000194AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AE2A3B4D178FC7EB000194AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		AE756FED19610C9C0017C705 /* TouchVG-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TouchVG-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		AE7CEE4A19E68737005D03A9 /* NSString+Drawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Drawing.m"; sourceTree = "<group>"; };
+		AEAEC5C619D3023100237A6E /* NSString+Drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Drawing.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		02BD6691189A1E9A00A4A444 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE11A5DC18B328DB00B88366 /* QuartzCore.framework in Frameworks */,
+				02BD6692189A1E9A00A4A444 /* UIKit.framework in Frameworks */,
+				02BD6693189A1E9A00A4A444 /* CoreGraphics.framework in Frameworks */,
+				02BD6694189A1E9A00A4A444 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE2A3A45178FC511000194AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE11A5DB18B328CF00B88366 /* QuartzCore.framework in Frameworks */,
+				AE2A3B4E178FC7EB000194AE /* UIKit.framework in Frameworks */,
+				AE2A3B4C178FC7C1000194AE /* CoreGraphics.framework in Frameworks */,
+				AE2A3A4D178FC511000194AE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		025F58C8195D250E00302988 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				AEAEC5C619D3023100237A6E /* NSString+Drawing.h */,
+				0265F26B19CC10F200503BC8 /* GiPaintViewXIB.h */,
+				025F58C9195D250E00302988 /* ARCMacro.h */,
+				025F58CA195D250E00302988 /* GiCanvasAdapter.h */,
+				025F58CB195D250E00302988 /* GiPaintView.h */,
+				025F58CC195D250E00302988 /* GiPaintViewDelegate.h */,
+				025F58CD195D250E00302988 /* GiViewHelper.h */,
+				0206512E196BB0B5003AD648 /* GiViewEnums.h */,
+			);
+			name = include;
+			path = ../include;
+			sourceTree = SOURCE_ROOT;
+		};
+		025F58CE195D250E00302988 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				AE7CEE4A19E68737005D03A9 /* NSString+Drawing.m */,
+				0265F26E19CC110700503BC8 /* GiPaintViewXIB.mm */,
+				025F58CF195D250E00302988 /* GiCanvasAdapter.mm */,
+				025F58D0195D250E00302988 /* GiDpiUtil.mm */,
+				025F58D1195D250E00302988 /* GiImageCache.h */,
+				025F58D2195D250E00302988 /* GiImageCache.mm */,
+				025F58D3195D250E00302988 /* GiMagnifierView.h */,
+				025F58D4195D250E00302988 /* GiMagnifierView.m */,
+				025F58D5195D250E00302988 /* GiPaintView.mm */,
+				025F58D6195D250E00302988 /* GiViewAdapter.mm */,
+				025F58D7195D250E00302988 /* GiViewHelper.mm */,
+				025F58D8195D250E00302988 /* GiViewImpl.h */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = SOURCE_ROOT;
+		};
+		AE2A3A3C178FC511000194AE = {
+			isa = PBXGroup;
+			children = (
+				AE2A3A4E178FC511000194AE /* TouchVG */,
+				AE2A3A4B178FC511000194AE /* Frameworks */,
+				AE2A3A4A178FC511000194AE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AE2A3A4A178FC511000194AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AE2A3A49178FC511000194AE /* libTouchVG.a */,
+				02BD66A8189A1E9A00A4A444 /* libTouchVG-SVG.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AE2A3A4B178FC511000194AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AE2A3B4D178FC7EB000194AE /* UIKit.framework */,
+				AE11A5DA18B328CF00B88366 /* QuartzCore.framework */,
+				AE2A3B4B178FC7C1000194AE /* CoreGraphics.framework */,
+				AE2A3A4C178FC511000194AE /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AE2A3A4E178FC511000194AE /* TouchVG */ = {
+			isa = PBXGroup;
+			children = (
+				AE2A3A61178FC5AB000194AE /* iosview */,
+				AE2A3A4F178FC511000194AE /* Supporting Files */,
+			);
+			path = TouchVG;
+			sourceTree = "<group>";
+		};
+		AE2A3A4F178FC511000194AE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AE756FED19610C9C0017C705 /* TouchVG-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AE2A3A61178FC5AB000194AE /* iosview */ = {
+			isa = PBXGroup;
+			children = (
+				025F58C8195D250E00302988 /* include */,
+				025F58CE195D250E00302988 /* src */,
+			);
+			name = iosview;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		02BD6695189A1E9A00A4A444 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEAEC5C819D3024800237A6E /* NSString+Drawing.h in Headers */,
+				0265F26D19CC10FD00503BC8 /* GiPaintViewXIB.h in Headers */,
+				02065130196BB0B5003AD648 /* GiViewEnums.h in Headers */,
+				025F58E2195D250E00302988 /* GiPaintViewDelegate.h in Headers */,
+				025F58E4195D250E00302988 /* GiViewHelper.h in Headers */,
+				025F58DC195D250E00302988 /* ARCMacro.h in Headers */,
+				025F58E0195D250E00302988 /* GiPaintView.h in Headers */,
+				025F58DE195D250E00302988 /* GiCanvasAdapter.h in Headers */,
+				025F598F195D265100302988 /* GiCanvasAdapter.mm in Headers */,
+				025F5990195D265100302988 /* GiDpiUtil.mm in Headers */,
+				025F5991195D265100302988 /* GiImageCache.mm in Headers */,
+				025F5992195D265100302988 /* GiMagnifierView.m in Headers */,
+				025F5993195D265100302988 /* GiPaintView.mm in Headers */,
+				025F5994195D265100302988 /* GiViewAdapter.mm in Headers */,
+				025F5995195D265100302988 /* GiViewHelper.mm in Headers */,
+				AE756FEF19610C9C0017C705 /* TouchVG-Prefix.pch in Headers */,
+				025F58EA195D250E00302988 /* GiImageCache.h in Headers */,
+				025F58EE195D250E00302988 /* GiMagnifierView.h in Headers */,
+				025F58F8195D250E00302988 /* GiViewImpl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE2A3A46178FC511000194AE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEAEC5C719D3023200237A6E /* NSString+Drawing.h in Headers */,
+				0265F26C19CC10FC00503BC8 /* GiPaintViewXIB.h in Headers */,
+				0206512F196BB0B5003AD648 /* GiViewEnums.h in Headers */,
+				025F58E1195D250E00302988 /* GiPaintViewDelegate.h in Headers */,
+				025F58E3195D250E00302988 /* GiViewHelper.h in Headers */,
+				025F58DB195D250E00302988 /* ARCMacro.h in Headers */,
+				025F58DF195D250E00302988 /* GiPaintView.h in Headers */,
+				025F58DD195D250E00302988 /* GiCanvasAdapter.h in Headers */,
+				025F5942195D264600302988 /* GiCanvasAdapter.mm in Headers */,
+				025F5943195D264600302988 /* GiDpiUtil.mm in Headers */,
+				025F5944195D264600302988 /* GiImageCache.mm in Headers */,
+				025F5945195D264600302988 /* GiMagnifierView.m in Headers */,
+				025F5946195D264600302988 /* GiPaintView.mm in Headers */,
+				025F5947195D264600302988 /* GiViewAdapter.mm in Headers */,
+				025F5948195D264600302988 /* GiViewHelper.mm in Headers */,
+				AE756FEE19610C9C0017C705 /* TouchVG-Prefix.pch in Headers */,
+				025F58E9195D250E00302988 /* GiImageCache.h in Headers */,
+				025F58ED195D250E00302988 /* GiMagnifierView.h in Headers */,
+				025F58F7195D250E00302988 /* GiViewImpl.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		02BD6687189A1E9A00A4A444 /* TouchVG-SVG */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02BD66A5189A1E9A00A4A444 /* Build configuration list for PBXNativeTarget "TouchVG-SVG" */;
+			buildPhases = (
+				02BD6688189A1E9A00A4A444 /* ShellScript */,
+				02BD6689189A1E9A00A4A444 /* Sources */,
+				02BD6691189A1E9A00A4A444 /* Frameworks */,
+				02BD6695189A1E9A00A4A444 /* Headers */,
+				02BD66A4189A1E9A00A4A444 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TouchVG-SVG";
+			productName = TouchVG;
+			productReference = 02BD66A8189A1E9A00A4A444 /* libTouchVG-SVG.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		AE2A3A48178FC511000194AE /* TouchVG */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE2A3A56178FC511000194AE /* Build configuration list for PBXNativeTarget "TouchVG" */;
+			buildPhases = (
+				AE2A3A43178FC511000194AE /* ShellScript */,
+				AE2A3A44178FC511000194AE /* Sources */,
+				AE2A3A45178FC511000194AE /* Frameworks */,
+				AE2A3A46178FC511000194AE /* Headers */,
+				AE2A3A47178FC511000194AE /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TouchVG;
+			productName = TouchVG;
+			productReference = AE2A3A49178FC511000194AE /* libTouchVG.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AE2A3A3E178FC511000194AE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = Founder;
+			};
+			buildConfigurationList = AE2A3A41178FC511000194AE /* Build configuration list for PBXProject "TouchVG" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AE2A3A3C178FC511000194AE;
+			productRefGroup = AE2A3A4A178FC511000194AE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AE2A3A48178FC511000194AE /* TouchVG */,
+				02BD6687189A1E9A00A4A444 /* TouchVG-SVG */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		02BD6688189A1E9A00A4A444 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nif [ \"$CALLED_FROM_MASTER\" ]\nthen\n# This is the other build, called from the original instance\nexit 0\nfi\n\n# Clean up prior to build\n\nCURRENTCONFIG_DEVICE_DIR=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nCURRENTCONFIG_SIMULATOR_DIR=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nCURRENTCONFIG_UNIVERSAL_DIR=\"${SYMROOT}/${CONFIGURATION}-universal\"\n\nif [ ! -f \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" ]; then\n  echo \"Device build cleaned; cleaning other builds too\"\n  rm -f \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" \n  rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nelif [ ! -f \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" ]; then\n  echo \"Simulator build cleaned; cleaning other builds too\"\n  rm -f \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\"\n  rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		02BD66A4189A1E9A00A4A444 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n#\n# Universal static library script\n# http://github.com/michaeltyson/iOS-Universal-Library-Template\n#\n# Version 2.5\n#\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Tweaked and made into an Xcode template by Michael Tyson - http://atastypixel.com/blog\n# Based on original script from Eonil\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n# Additional changes by John Lawson <http://jelawson.com> to copy the CURRENTCONFIG_DEVICE_DIR to the CURRENTCONFIG_UNIVERSAL_DIR instead of creating it\n# to include other files that might have been copied via Copy Files build phases (e.g. readme files, xibs, etc); this removes the need to copy just\n# the header folder.\n#\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\nif [ \"$CALLED_FROM_MASTER\" ]\nthen\n# This is the other build, called from the original instance\nexit 0\nfi\n\n# Find the BASESDK version number\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n\n# Build the other architecture\necho \"xcodebuild -project \\\"${PROJECT_FILE_PATH}\\\" -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" CALLED_FROM_MASTER=1\"\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" CALLED_FROM_MASTER=1\n\n# Merge built architectures\nCURRENTCONFIG_DEVICE_DIR=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nCURRENTCONFIG_SIMULATOR_DIR=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nCURRENTCONFIG_UNIVERSAL_DIR=\"${SYMROOT}/${CONFIGURATION}-universal\"\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\necho \"...I will output a universal build to: ${CURRENTCONFIG_UNIVERSAL_DIR}\"\n\nif [ ! -e \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" -o \\\n\"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" -nt \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" -o \\\n\"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" -nt \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" ]\nthen\nrm -rf \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\ncp -R \"${CURRENTCONFIG_DEVICE_DIR}\" \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\nrm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\necho \"Copying universal build back over to ${CURRENTCONFIG_DEVICE_DIR} and ${CURRENTCONFIG_SIMULATOR_DIR}\"\ncp \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\"\ncp \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\ntouch \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n\nelse\necho \"Everything up to date.\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AE2A3A43178FC511000194AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nif [ \"$CALLED_FROM_MASTER\" ]\nthen\n# This is the other build, called from the original instance\nexit 0\nfi\n\n# Clean up prior to build\n\nCURRENTCONFIG_DEVICE_DIR=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nCURRENTCONFIG_SIMULATOR_DIR=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nCURRENTCONFIG_UNIVERSAL_DIR=\"${SYMROOT}/${CONFIGURATION}-universal\"\n\nif [ ! -f \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" ]; then\n  echo \"Device build cleaned; cleaning other builds too\"\n  rm -f \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" \n  rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nelif [ ! -f \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" ]; then\n  echo \"Simulator build cleaned; cleaning other builds too\"\n  rm -f \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\"\n  rm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AE2A3A47178FC511000194AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n#\n# Universal static library script\n# http://github.com/michaeltyson/iOS-Universal-Library-Template\n#\n# Version 2.5\n#\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Tweaked and made into an Xcode template by Michael Tyson - http://atastypixel.com/blog\n# Based on original script from Eonil\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n# Additional changes by John Lawson <http://jelawson.com> to copy the CURRENTCONFIG_DEVICE_DIR to the CURRENTCONFIG_UNIVERSAL_DIR instead of creating it\n# to include other files that might have been copied via Copy Files build phases (e.g. readme files, xibs, etc); this removes the need to copy just\n# the header folder.\n#\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\nif [ \"$CALLED_FROM_MASTER\" ]\nthen\n# This is the other build, called from the original instance\nexit 0\nfi\n\n# Find the BASESDK version number\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n\n# Build the other architecture\necho \"xcodebuild -project \\\"${PROJECT_FILE_PATH}\\\" -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" CALLED_FROM_MASTER=1\"\nxcodebuild -project \"${PROJECT_FILE_PATH}\" -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" CALLED_FROM_MASTER=1\n\n# Merge built architectures\nCURRENTCONFIG_DEVICE_DIR=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nCURRENTCONFIG_SIMULATOR_DIR=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nCURRENTCONFIG_UNIVERSAL_DIR=\"${SYMROOT}/${CONFIGURATION}-universal\"\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\necho \"...I will output a universal build to: ${CURRENTCONFIG_UNIVERSAL_DIR}\"\n\nif [ ! -e \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" -o \\\n\"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" -nt \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" -o \\\n\"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\" -nt \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" ]\nthen\nrm -rf \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\ncp -R \"${CURRENTCONFIG_DEVICE_DIR}\" \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\nrm -f \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\necho \"Copying universal build back over to ${CURRENTCONFIG_DEVICE_DIR} and ${CURRENTCONFIG_SIMULATOR_DIR}\"\ncp \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\"\ncp \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\ntouch \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\n\nelse\necho \"Everything up to date.\"\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		02BD6689189A1E9A00A4A444 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				025F58F4195D250E00302988 /* GiViewAdapter.mm in Sources */,
+				025F58EC195D250E00302988 /* GiImageCache.mm in Sources */,
+				025F58F2195D250E00302988 /* GiPaintView.mm in Sources */,
+				025F58F0195D250E00302988 /* GiMagnifierView.m in Sources */,
+				0265F27019CC110700503BC8 /* GiPaintViewXIB.mm in Sources */,
+				025F58F6195D250E00302988 /* GiViewHelper.mm in Sources */,
+				AE7CEE4C19E68737005D03A9 /* NSString+Drawing.m in Sources */,
+				025F58E6195D250E00302988 /* GiCanvasAdapter.mm in Sources */,
+				025F58E8195D250E00302988 /* GiDpiUtil.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AE2A3A44178FC511000194AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				025F58F3195D250E00302988 /* GiViewAdapter.mm in Sources */,
+				025F58EB195D250E00302988 /* GiImageCache.mm in Sources */,
+				025F58F1195D250E00302988 /* GiPaintView.mm in Sources */,
+				025F58EF195D250E00302988 /* GiMagnifierView.m in Sources */,
+				0265F26F19CC110700503BC8 /* GiPaintViewXIB.mm in Sources */,
+				025F58F5195D250E00302988 /* GiViewHelper.mm in Sources */,
+				AE7CEE4B19E68737005D03A9 /* NSString+Drawing.m in Sources */,
+				025F58E5195D250E00302988 /* GiCanvasAdapter.mm in Sources */,
+				025F58E7195D250E00302988 /* GiDpiUtil.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		02BD66A6189A1E9A00A4A444 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/TouchVG.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TouchVG-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					USE_SVGKIT,
+				);
+				PRODUCT_NAME = "TouchVG-SVG";
+				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "../../../SVGKit/Source/**";
+			};
+			name = Debug;
+		};
+		02BD66A7189A1E9A00A4A444 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/TouchVG.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TouchVG-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					USE_SVGKIT,
+				);
+				PRODUCT_NAME = "TouchVG-SVG";
+				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "../../../SVGKit/Source/**";
+			};
+			name = Release;
+		};
+		AE2A3A54178FC511000194AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../core/include/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AE2A3A55178FC511000194AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "../../core/include/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AE2A3A57178FC511000194AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DSTROOT = /tmp/TouchVG.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TouchVG-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AE2A3A58178FC511000194AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DSTROOT = /tmp/TouchVG.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TouchVG-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "/include/$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		02BD66A5189A1E9A00A4A444 /* Build configuration list for PBXNativeTarget "TouchVG-SVG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02BD66A6189A1E9A00A4A444 /* Debug */,
+				02BD66A7189A1E9A00A4A444 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE2A3A41178FC511000194AE /* Build configuration list for PBXProject "TouchVG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE2A3A54178FC511000194AE /* Debug */,
+				AE2A3A55178FC511000194AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AE2A3A56178FC511000194AE /* Build configuration list for PBXNativeTarget "TouchVG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE2A3A57178FC511000194AE /* Debug */,
+				AE2A3A58178FC511000194AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AE2A3A3E178FC511000194AE /* Project object */;
+}

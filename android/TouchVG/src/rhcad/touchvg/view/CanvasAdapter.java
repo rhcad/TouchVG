@@ -1,6 +1,6 @@
 ﻿//! \file CanvasAdapter.java
 //! \brief 实现Android画布适配器类
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view;
 
@@ -42,7 +42,7 @@ public class CanvasAdapter extends GiCanvas {
     private static int[] mHandleIDs;
 
     static {
-        System.loadLibrary("touchvg");
+        System.loadLibrary(TAG);
     }
 
     public CanvasAdapter(View view) {
@@ -52,10 +52,6 @@ public class CanvasAdapter extends GiCanvas {
     public CanvasAdapter(View view, ImageCache cache) {
         this.mView = view;
         this.mCache = cache;
-    }
-
-    protected void finalize() {
-        Log.d(TAG, "CanvasAdapter finalize");
     }
 
     @Override
@@ -88,15 +84,20 @@ public class CanvasAdapter extends GiCanvas {
 
         this.mCanvas = canvas;
 
-        mPen.setAntiAlias(!fast);               // 线条反走样
-        mPen.setDither(!fast);                  // 高精度颜色采样，会略慢
-        mPen.setStyle(Paint.Style.STROKE);      // 仅描边
-        mPen.setPathEffect(null);               // 实线
-        mPen.setStrokeCap(Paint.Cap.ROUND);     // 圆端
-        mPen.setStrokeJoin(Paint.Join.ROUND);   // 折线转角圆弧过渡
-        mBrush.setStyle(Paint.Style.FILL);      // 仅填充
-        mBrush.setColor(Color.TRANSPARENT);     // 默认透明，不填充
-        mBrush.setAntiAlias(true);              // 文字反走样
+        // 线条反走样
+        mPen.setAntiAlias(!fast);
+        // 高精度颜色采样，会略慢
+        mPen.setDither(!fast);
+        // 仅描边,实线,圆端,折线转角圆弧过渡:
+        mPen.setStyle(Paint.Style.STROKE);
+        mPen.setPathEffect(null);
+        mPen.setStrokeCap(Paint.Cap.ROUND);
+        mPen.setStrokeJoin(Paint.Join.ROUND);
+        // 仅填充,默认透明不填充
+        mBrush.setStyle(Paint.Style.FILL);
+        mBrush.setColor(Color.TRANSPARENT);
+        // 文字反走样
+        mBrush.setAntiAlias(true);
 
         return true;
     }
@@ -121,21 +122,32 @@ public class CanvasAdapter extends GiCanvas {
         if (width > 0) {
             mPen.setStrokeWidth(width);
         }
+        if (style >= 0) {
+            int linecap = style & kLineCapMask;
 
-        if (style >= 0 && style <= 4) {
-            if (style == 1) {
-                this.makeLinePattern(DASH, width, phase);
-            } else if (style == 2) {
-                this.makeLinePattern(DOT, width, phase);
-            } else if (style == 3) {
-                this.makeLinePattern(DASH_DOT, width, phase);
-            } else if (style == 4) {
-                this.makeLinePattern(DASH_DOTDOT, width, phase);
-            } else {
-                this.mEffects = null;
+            style = style & kLineDashMask;
+            if (style >= 0 && style <= 4) {
+                if (style == 1) {
+                    this.makeLinePattern(DASH, width, phase);
+                } else if (style == 2) {
+                    this.makeLinePattern(DOT, width, phase);
+                } else if (style == 3) {
+                    this.makeLinePattern(DASH_DOT, width, phase);
+                } else if (style == 4) {
+                    this.makeLinePattern(DASH_DOTDOT, width, phase);
+                } else {
+                    this.mEffects = null;
+                }
+                mPen.setPathEffect(this.mEffects);
             }
-            mPen.setPathEffect(this.mEffects);
-            mPen.setStrokeCap(this.mEffects != null ? Paint.Cap.BUTT : Paint.Cap.ROUND);
+            if ((linecap & kLineCapButt) != 0)
+                mPen.setStrokeCap(Paint.Cap.BUTT);
+            else if ((linecap & kLineCapRound) != 0)
+                mPen.setStrokeCap(Paint.Cap.ROUND);
+            else if ((linecap & kLineCapSquare) != 0)
+                mPen.setStrokeCap(Paint.Cap.SQUARE);
+            else
+                mPen.setStrokeCap((style > 0 && style < 5) ? Paint.Cap.BUTT : Paint.Cap.ROUND);
         }
     }
 
@@ -160,7 +172,8 @@ public class CanvasAdapter extends GiCanvas {
     public void clearRect(float x, float y, float w, float h) {
         mCanvas.save(Canvas.CLIP_SAVE_FLAG);
         mCanvas.clipRect(x, y, x + w, y + h);
-        mCanvas.drawColor(mBkColor, Mode.CLEAR); // punch a whole in the view-hierarchy below the view
+        // punch a whole in the view-hierarchy below the view
+        mCanvas.drawColor(mBkColor, Mode.CLEAR);
         mCanvas.restore();
     }
 
@@ -248,10 +261,12 @@ public class CanvasAdapter extends GiCanvas {
 
         try {
             ret = mCanvas.clipPath(mPath);
-        } catch (UnsupportedOperationException e) { // GLES20Canvas, >=api11
-            e.printStackTrace();
-            if (mView != null) {                    // 改为软实现后下次绘制才生效
-                mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null); // need API11 or above
+        } catch (UnsupportedOperationException e) {
+            // GLES20Canvas, >=api11
+            Log.w(TAG, "Unsupported operation: clipPath", e);
+            if (mView != null) {
+                // 改为软实现后下次绘制才生效(need API11 or above)
+                mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             }
         }
 
@@ -263,12 +278,18 @@ public class CanvasAdapter extends GiCanvas {
     }
 
     public Bitmap getHandleBitmap(int type) {
-        return (mHandleIDs != null && type >= 0 && type < mHandleIDs.length && mView != null) ? BitmapFactory
-                .decodeResource(mView.getResources(), mHandleIDs[type]) : null;
+        if (mHandleIDs != null && type >= 0 && type < mHandleIDs.length && mView != null) {
+            return BitmapFactory.decodeResource(mView.getResources(), mHandleIDs[type]);
+        }
+        if (type > 10 && mView != null) {
+            int id = ResourceUtil.getDrawableIDFromName(mView.getContext(), "vgdot" + type);
+            return BitmapFactory.decodeResource(mView.getResources(), id);
+        }
+        return null;
     }
 
     @Override
-    public boolean drawHandle(float x, float y, int type) {
+    public boolean drawHandle(float x, float y, int type, float angle) {
         final Bitmap bmp = getHandleBitmap(type);
         if (bmp != null) {
             mCanvas.drawBitmap(bmp, x - bmp.getWidth() / 2, y - bmp.getHeight() / 2, null);
@@ -290,14 +311,16 @@ public class CanvasAdapter extends GiCanvas {
             int height = ImageCache.getHeight(drawable);
 
             mat.postTranslate(-0.5f * width, -0.5f * height);
-            mat.postRotate(-angle * 180.f / 3.1415926f);    // degree to radian
+            // degree to radian
+            mat.postRotate(-angle * 180.f / 3.1415926f);
             mat.postScale(w / width, h / height);
             mat.postTranslate(xc, yc);
 
             try {
                 BitmapDrawable b = (BitmapDrawable) drawable;
                 mCanvas.drawBitmap(b.getBitmap(), mat, null);
-            } catch (ClassCastException e) {
+            } catch (ClassCastException e1) {
+                Log.v(TAG, "Not BitmapDrawable", e1);
                 try {
                     PictureDrawable p = (PictureDrawable) drawable;
                     mCanvas.concat(mat);
@@ -307,9 +330,12 @@ public class CanvasAdapter extends GiCanvas {
 
                     return true;
                 } catch (ClassCastException e2) {
-                } catch (UnsupportedOperationException e3) { // GLES20Canvas, >=api11
-                    e.printStackTrace();
-                    if (mView != null) {                    // 改为软实现后下次绘制才生效
+                    Log.v(TAG, "Not PictureDrawable", e2);
+                } catch (UnsupportedOperationException e3) {
+                    // GLES20Canvas, >=api11
+                    Log.w(TAG, "Unsupported operation", e3);
+                    if (mView != null) {
+                        // 改为软实现后下次绘制才生效
                         mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                     }
                 }
@@ -320,7 +346,7 @@ public class CanvasAdapter extends GiCanvas {
     }
 
     @Override
-    public float drawTextAt(String text, float x, float y, float h, int align) {
+    public float drawTextAt(String text, float x, float y, float h, int align, float angle) {
         final Paint.FontMetrics fm = mBrush.getFontMetrics();
         float lineHeight = Math.abs(fm.descent) + Math.abs(fm.ascent);
 
@@ -332,9 +358,25 @@ public class CanvasAdapter extends GiCanvas {
             text = ResourceUtil.getStringFromName(mView.getContext(), text.substring(1));
         }
 
+        Matrix mat = null;
         float w = mBrush.measureText(text);
-        x -= (align == 2) ? w : ((align == 1) ? w / 2 : 0);
+
+        if (Math.abs(angle) > 1e-3f) {
+            mat = new Matrix();
+            mat.postRotate(-angle * 180.f / 3.1415926f);
+            mat.postTranslate(x, y);
+            x = y = 0;
+            mCanvas.concat(mat);
+        }
+
+        y -= (align & kAlignBottom) != 0 ? h : (align & kAlignVCenter) != 0 ? h / 2 : 0.f;
+        x -= (align & kAlignRight) != 0 ? w : ((align & kAlignCenter) != 0 ? w / 2 : 0.f);
         mCanvas.drawText(text, x, y - fm.top, mBrush);
+
+        if (mat != null) {
+            mat.invert(mat);
+            mCanvas.concat(mat);
+        }
 
         return w;
     }

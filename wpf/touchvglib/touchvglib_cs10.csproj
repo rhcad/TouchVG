@@ -80,8 +80,11 @@
     <Compile Include="core\GiGraphics.cs" />
     <Compile Include="core\GiHandleTypes.cs" />
     <Compile Include="core\GiMouseHelper.cs" />
-    <Compile Include="core\GiPath.cs" />
-    <Compile Include="core\GiPathNode.cs" />
+    <Compile Include="core\MgJsonFile.cs" />
+    <Compile Include="core\MgJsonStorage.cs" />
+    <Compile Include="core\MgOptionCallback.cs" />
+    <Compile Include="core\MgPath.cs" />
+    <Compile Include="core\MgPathNode.cs" />
     <Compile Include="core\GiPlaying.cs" />
     <Compile Include="core\GiPlayShapes.cs" />
     <Compile Include="core\GiSaveClipBox.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="core\MgCommandDraw.cs" />
     <Compile Include="core\MgComposite.cs" />
     <Compile Include="core\MgContextAction.cs" />
+    <Compile Include="core\MgCoreShapeFactory.cs" />
     <Compile Include="core\MgCoreView.cs" />
     <Compile Include="core\mgcurv.cs" />
     <Compile Include="core\MgDiamond.cs" />
@@ -127,9 +131,12 @@
     <Compile Include="core\mgnear.cs" />
     <Compile Include="core\MgObject.cs" />
     <Compile Include="core\MgParallel.cs" />
+    <Compile Include="core\MgPathShape.cs" />
     <Compile Include="core\MgRecordShapes.cs" />
     <Compile Include="core\MgRect.cs" />
+    <Compile Include="core\MgRegenLocker.cs" />
     <Compile Include="core\MgRoundRect.cs" />
+    <Compile Include="core\MgSelDrawFlags.cs" />
     <Compile Include="core\MgSelection.cs" />
     <Compile Include="core\MgSelState.cs" />
     <Compile Include="core\MgShape.cs" />
@@ -140,6 +147,7 @@
     <Compile Include="core\MgShapes.cs" />
     <Compile Include="core\MgShapeType.cs" />
     <Compile Include="core\MgSnap.cs" />
+    <Compile Include="core\MgSnapOptions.cs" />
     <Compile Include="core\MgSnapType.cs" />
     <Compile Include="core\MgSplines.cs" />
     <Compile Include="core\MgStorage.cs" />
@@ -189,9 +197,18 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\vgcen.png" />
+    <Content Include="Resources\vgcross.png" />
     <Content Include="Resources\vgdot1.png" />
     <Content Include="Resources\vgdot2.png" />
     <Content Include="Resources\vgdot3.png" />
+    <Content Include="Resources\vgmid.png" />
+    <Content Include="Resources\vgnear.png" />
+    <Content Include="Resources\vgnode.png" />
+    <Content Include="Resources\vgparallel.png" />
+    <Content Include="Resources\vgpivot.png" />
+    <Content Include="Resources\vgquad.png" />
+    <Content Include="Resources\vgtangent.png" />
     <Content Include="Resources\vg_unlock.png" />
     <Content Include="Resources\vg_ungroup.png" />
     <Content Include="Resources\vg_selall.png" />

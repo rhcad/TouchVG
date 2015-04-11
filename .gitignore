@@ -13,7 +13,6 @@
 profile
 
 #Xcode files
-#This ignores everything inside a *.xcodeproj except the project.pbxproj
 *.log
 xcuserdata
 xcshareddata
@@ -22,9 +21,6 @@ xcshareddata
 *.mode2v3
 *.mode1v3
 *.xcworkspace
-
-#do pod install yourself
-Pods/*
 
 #MSVS files
 *.ncb
@@ -50,8 +46,6 @@ CppDepend*
 *.cdproj
 *.ch*
 *.hh*
-*_wrap.*
+*_wrap.cxx
 ios/output
-android/TouchVG/src/rhcad/touchvg/core
-wpf/touchvglib/core
-*.so
+android/output

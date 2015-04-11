@@ -72,33 +72,54 @@ namespace touchvg.view
             {
                 _pen.Thickness = width;
             }
-            switch (style)
+            if (style >= 0)
             {
-                case 0:
-                    _pen.DashStyle = DashStyles.Solid;
-                    break;
-                case 1:
-                    _pen.DashStyle = DashStyles.Dash;
-                    break;
-                case 2:
-                    _pen.DashStyle = DashStyles.Dot;
-                    break;
-                case 3:
-                    _pen.DashStyle = DashStyles.DashDot;
-                    break;
-                case 4:
-                    _pen.DashStyle = DashStyles.DashDotDot;
-                    break;
-            }
-            if (style > 0 && style < 5)
-            {
-                _pen.StartLineCap = PenLineCap.Flat;
-                _pen.EndLineCap = PenLineCap.Flat;
-            }
-            else if (style >= 0)
-            {
-                _pen.StartLineCap = PenLineCap.Round;
-                _pen.EndLineCap = PenLineCap.Round;
+                int linecap = style & kLineCapMask;
+
+                style = style & kLineDashMask;
+                switch (style)
+                {
+                    case 0:
+                        _pen.DashStyle = DashStyles.Solid;
+                        break;
+                    case 1:
+                        _pen.DashStyle = DashStyles.Dash;
+                        break;
+                    case 2:
+                        _pen.DashStyle = DashStyles.Dot;
+                        break;
+                    case 3:
+                        _pen.DashStyle = DashStyles.DashDot;
+                        break;
+                    case 4:
+                        _pen.DashStyle = DashStyles.DashDotDot;
+                        break;
+                }
+                if ((linecap & kLineCapButt) != 0)
+                {
+                    _pen.StartLineCap = PenLineCap.Flat;
+                    _pen.EndLineCap = PenLineCap.Flat;
+                }
+                else if ((linecap & kLineCapRound) != 0)
+                {
+                    _pen.StartLineCap = PenLineCap.Round;
+                    _pen.EndLineCap = PenLineCap.Round;
+                }
+                else if ((linecap & kLineCapSquare) != 0)
+                {
+                    _pen.StartLineCap = PenLineCap.Square;
+                    _pen.EndLineCap = PenLineCap.Square;
+                }
+                else if (style > 0 && style < 5)
+                {
+                    _pen.StartLineCap = PenLineCap.Flat;
+                    _pen.EndLineCap = PenLineCap.Flat;
+                }
+                else if (style >= 0)
+                {
+                    _pen.StartLineCap = PenLineCap.Round;
+                    _pen.EndLineCap = PenLineCap.Round;
+                }
             }
             _pen.Freeze();
         }
@@ -201,7 +222,7 @@ namespace touchvg.view
             _dc.DrawGeometry(_brush, _pen, _path);
         }
 
-        public override bool drawHandle(float x, float y, int type)
+        public override bool drawHandle(float x, float y, int type, float angle)
         {
             ImageSource source = WPFImageSourceHelper.Instance.HandleImageSource(type);
             if (source != null)
@@ -230,7 +251,8 @@ namespace touchvg.view
             return w > 0 && h > 0;
         }
 
-        public override float drawTextAt(string text, float x, float y, float h, int align)
+        public override float drawTextAt(string text, float x, float y,
+                                         float h, int align, float angle)
         {
             if (text == null || text.Length < 1)
                 return 0;
@@ -240,11 +262,12 @@ namespace touchvg.view
                 text = WPFImageSourceHelper.Instance.GetLocalizedString(text.Substring(1));
             }
 
+            int horz = align & kAlignHorz;
             FormattedText textFormation = new FormattedText(text,
                 CultureInfo.CurrentCulture, FlowDirection.LeftToRight,
                 new Typeface("宋体"), h, _brush)
                 {
-                    TextAlignment = (TextAlignment)Enum.Parse(typeof(TextAlignment), align.ToString())
+                    TextAlignment = (TextAlignment)Enum.Parse(typeof(TextAlignment), horz.ToString())
                 };
             _dc.DrawText(textFormation, new Point(x, y));
             return (float)textFormation.Width;

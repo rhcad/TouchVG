@@ -1,4 +1,4 @@
-// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view.internal;
 
@@ -8,6 +8,17 @@ import android.util.Log;
 
 public class ResourceUtil {
     private static final String TAG = "touchvg";
+    private static final String[] HANDLE_NAMES = new String[] { "vgdot1", "vgdot2", "vgdot3",
+            "vg_lock", "vg_unlock", "vg_back", "vg_endedit",
+            "vgnode", "vgcen", "vgmid", "vgquad", "vgtangent", "vgcross", "vgparallel",
+            "vgnear", "vgpivot", "vg_overturn" };
+    private static final String[] IMAGE_NAMES = new String[] { null, "vg_selall", null, null,
+            HANDLE_NAMES[5], "vg_delete", "vg_clone", "vg_fixlen", "vg_freelen", HANDLE_NAMES[3],
+            HANDLE_NAMES[4], "vg_edit", HANDLE_NAMES[6], null, null, null, null, "vg_group",
+            "vg_ungroup", "vg_overturn" };
+
+    private ResourceUtil() {
+    }
 
     public static int getResIDFromName(Context ctx, String type, String name) {
         int id = name != null ? ctx.getResources().getIdentifier(name,
@@ -22,6 +33,7 @@ public class ResourceUtil {
         try {
             return ctx.getResources().getResourceEntryName(id);
         } catch (Exception e) {
+            Log.w(TAG, "getResName fail", e);
             return null;
         }
     }
@@ -30,28 +42,23 @@ public class ResourceUtil {
         return getResIDFromName(context, "drawable", name);
     }
 
-    public static String getStringFromName(Context context, String name) {   // @string/name
+    // @string/name
+    public static String getStringFromName(Context context, String name) {
         int id = getResIDFromName(context, "string", name);
         return id == 0 ? name : context.getResources().getString(id);
     }
 
     public static void setContextImages(Context context) {
         if (ContextAction.getButtonImages() == null) {
-            final String[] imageNames = new String[] { null, "vg_selall", null, null,
-                    "vg_back", "vg_delete", "vg_clone", "vg_fixlen", "vg_freelen", "vg_lock",
-                    "vg_unlock", "vg_edit", "vg_endedit", null, null, null,
-                    null, "vg_group", "vg_ungroup", "vg_overturn" };
-            final String[] handleNames = new String[] { "vgdot1", "vgdot2", "vgdot3", "vg_lock",
-                    "vg_unlock", "vg_back", "vg_endedit" };
-            int captionsID = getResIDFromName(context, "array", "vg_action_captions");
-            final int[] imageIDs = new int[(imageNames.length)];
-            final int[] handleImageIDs = new int[(handleNames.length)];
+            final int captionsID = getResIDFromName(context, "array", "vg_action_captions");
+            final int[] imageIDs = new int[IMAGE_NAMES.length];
+            final int[] handleImageIDs = new int[HANDLE_NAMES.length];
 
-            for (int i = 0; i < imageNames.length; i++) {
-                imageIDs[i] = getDrawableIDFromName(context, imageNames[i]);
+            for (int i = 0; i < IMAGE_NAMES.length; i++) {
+                imageIDs[i] = getDrawableIDFromName(context, IMAGE_NAMES[i]);
             }
-            for (int j = 0; j < handleNames.length; j++) {
-                handleImageIDs[j] = getDrawableIDFromName(context, handleNames[j]);
+            for (int j = 0; j < HANDLE_NAMES.length; j++) {
+                handleImageIDs[j] = getDrawableIDFromName(context, HANDLE_NAMES[j]);
             }
 
             ContextAction.setButtonImages(imageIDs);

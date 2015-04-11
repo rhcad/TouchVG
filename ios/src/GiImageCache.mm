@@ -1,6 +1,6 @@
 //! \file GiImageCache.mm
 //! \brief 实现图像对象缓存类 GiImageCache
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #import "GiImageCache.h"
 #ifdef USE_SVGKIT
@@ -21,8 +21,8 @@
 }
 
 - (void)dealloc {
-    [_images RELEASE];
-    [_sprites RELEASE];
+    [_images RELEASEOBJ];
+    [_spirits RELEASEOBJ];
     [super DEALLOC];
 }
 
@@ -30,30 +30,36 @@
     [_images removeAllObjects];
 }
 
-- (void)setCurrentImage:(NSString *)spriteName newName:(NSString *)name {
-    if (!_sprites) {
-        _sprites = [[NSMutableDictionary alloc]init];
+- (void)setCurrentImage:(NSString *)spiritName newName:(NSString *)name {
+    if (!_spirits) {
+        _spirits = [[NSMutableDictionary alloc]init];
     }
     if (name) {
         if ([name rangeOfString:@":"].location == NSNotFound) {
             name = [@"png:" stringByAppendingString:name];
         }
-        if (![name isEqualToString:[_sprites objectForKey:name]]) {
-            [_sprites setObject:name forKey:spriteName];
+        if (![name isEqualToString:[_spirits objectForKey:name]]) {
+            [_spirits setObject:name forKey:spiritName];
         }
     } else {
-        [_sprites removeObjectForKey:spriteName];
+        [_spirits removeObjectForKey:spiritName];
     }
 }
 
 - (UIImage *)loadImage:(NSString *)name {
     if (name && [name rangeOfString:@"%d."].location != NSNotFound) {   // tag$png:prefix%d.png
-        name = [_sprites objectForKey:name];
+        name = [_spirits objectForKey:name];
     }
     
     UIImage *image = name ? [_images objectForKey:name] : nil;
     
     if (!image && name && [name length] > 1) {
+        image = [UIImage imageNamed:name];
+        if (image) {
+            [_images setObject:image forKey:name];
+            return image;
+        }
+        
         if ([name hasPrefix:@"png:"]) {
             [self addPNGFromResource:[name substringFromIndex:4] :&name];
         }
@@ -163,7 +169,7 @@
         image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
     }
-    [svgimg RELEASE];
+    [svgimg RELEASEOBJ];
 #endif
     
     return image;
@@ -191,14 +197,14 @@
                 [_images setObject:image forKey:*name];
                 size = image.size;
             }
-            [svgimg RELEASE];
+            [svgimg RELEASEOBJ];
 #endif
         }
         else {
             image = [[UIImage alloc]initWithContentsOfFile:filename];
             if (image && image.size.width > 1) {
                 [_images setObject:image forKey:*name];
-                [image RELEASE];
+                [image RELEASEOBJ];
                 size = image.size;
             }
         }

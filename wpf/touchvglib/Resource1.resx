@@ -112,12 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="vgdot1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\vgdot1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -168,5 +168,167 @@
   </data>
   <data name="basic_actions" xml:space="preserve">
     <value>,全选,重选,绘图,取消,删除,克隆,定长,不定长,锁定,解锁,编辑,返回,闭合,不闭合,加点,删点,成组,解组,翻转</value>
+  </data>
+  <data name="invalid_gridcell" xml:space="preserve">
+    <value>单元格太小或太大</value>
+  </data>
+  <data name="shape1_deleted" xml:space="preserve">
+    <value>已删除一个图形</value>
+  </data>
+  <data name="shape_n_deleted" xml:space="preserve">
+    <value>已删除 %d 个图形</value>
+  </data>
+  <data name="shape_too_small" xml:space="preserve">
+    <value>图形太小，请重新绘制</value>
+  </data>
+  <data name="arc" xml:space="preserve">
+    <value>圆弧</value>
+  </data>
+  <data name="arc3p" xml:space="preserve">
+    <value>三点圆弧</value>
+  </data>
+  <data name="arc_cse" xml:space="preserve">
+    <value>圆规(圆弧)</value>
+  </data>
+  <data name="beeline" xml:space="preserve">
+    <value>无穷直线</value>
+  </data>
+  <data name="bisector" xml:space="preserve">
+    <value>角平分线</value>
+  </data>
+  <data name="centerpt" xml:space="preserve">
+    <value>圆心</value>
+  </data>
+  <data name="circle" xml:space="preserve">
+    <value>圆</value>
+  </data>
+  <data name="circle2p" xml:space="preserve">
+    <value>圆心画圆</value>
+  </data>
+  <data name="circle3p" xml:space="preserve">
+    <value>三点画圆</value>
+  </data>
+  <data name="clear" xml:space="preserve">
+    <value>清空</value>
+  </data>
+  <data name="crosspt" xml:space="preserve">
+    <value>交点</value>
+  </data>
+  <data name="degrees" xml:space="preserve">
+    <value>°</value>
+  </data>
+  <data name="diamond" xml:space="preserve">
+    <value>菱形</value>
+  </data>
+  <data name="dot" xml:space="preserve">
+    <value>点</value>
+  </data>
+  <data name="ellipse" xml:space="preserve">
+    <value>椭圆</value>
+  </data>
+  <data name="erase" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="grid" xml:space="preserve">
+    <value>网格</value>
+  </data>
+  <data name="groupshape" xml:space="preserve">
+    <value>成组图形</value>
+  </data>
+  <data name="imageshape" xml:space="preserve">
+    <value>图像块</value>
+  </data>
+  <data name="line" xml:space="preserve">
+    <value>线段</value>
+  </data>
+  <data name="lines" xml:space="preserve">
+    <value>折线</value>
+  </data>
+  <data name="midpt" xml:space="preserve">
+    <value>中点</value>
+  </data>
+  <data name="nearpt" xml:space="preserve">
+    <value>线上点</value>
+  </data>
+  <data name="nodept" xml:space="preserve">
+    <value>顶点</value>
+  </data>
+  <data name="note" xml:space="preserve">
+    <value>标记</value>
+  </data>
+  <data name="parallel" xml:space="preserve">
+    <value>平行四边形</value>
+  </data>
+  <data name="pathshape" xml:space="preserve">
+    <value>路径块</value>
+  </data>
+  <data name="perppt" xml:space="preserve">
+    <value>垂足</value>
+  </data>
+  <data name="polygon" xml:space="preserve">
+    <value>多边形</value>
+  </data>
+  <data name="quadpt" xml:space="preserve">
+    <value>象限点</value>
+  </data>
+  <data name="quadrangle" xml:space="preserve">
+    <value>四边形</value>
+  </data>
+  <data name="rayline" xml:space="preserve">
+    <value>射线</value>
+  </data>
+  <data name="rect" xml:space="preserve">
+    <value>矩形</value>
+  </data>
+  <data name="redo_ok" xml:space="preserve">
+    <value>已恢复</value>
+  </data>
+  <data name="roundrect" xml:space="preserve">
+    <value>圆角矩形</value>
+  </data>
+  <data name="select" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="splines" xml:space="preserve">
+    <value>自由画</value>
+  </data>
+  <data name="square" xml:space="preserve">
+    <value>正方形</value>
+  </data>
+  <data name="tanpt" xml:space="preserve">
+    <value>切点</value>
+  </data>
+  <data name="triangle" xml:space="preserve">
+    <value>三角形</value>
+  </data>
+  <data name="undo_ok" xml:space="preserve">
+    <value>已撤销</value>
+  </data>
+  <data name="vgcen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgcen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vgcross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgcross.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vgmid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgmid.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vgnear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgnear.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vgnode" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgnode.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vgparallel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgparallel.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vgpivot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgpivot.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vgquad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgquad.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vgtangent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\vgtangent.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

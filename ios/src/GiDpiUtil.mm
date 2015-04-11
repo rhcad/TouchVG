@@ -1,5 +1,5 @@
 // GiDpiUtil.cpp
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #import <UIKit/UIKit.h>
 #include <sys/sysctl.h>

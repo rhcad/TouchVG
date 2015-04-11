@@ -1,6 +1,6 @@
 //! \file BaseGraphView.java
 //! \brief 绘图视图接口
-// Copyright (c) 2014, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view;
 
@@ -16,4 +16,7 @@ public interface BaseGraphView extends IGraphView {
 
     //! 返回图像对象缓存
     public ImageCache getImageCache();
+
+    //! 销毁数据，内部调用
+    public void tearDown();
 }

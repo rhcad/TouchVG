@@ -1,9 +1,11 @@
-//  GiMagnifierView.h
-//
+// GiMagnifierView.h
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
+
 
 #import <UIKit/UIKit.h>
 #include "ARCMacro.h"
 
+//! 放大镜图形视图类
 @interface GiMagnifierView : UIView {
     CGFloat _topMargin;
 }

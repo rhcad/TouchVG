@@ -1,0 +1,15 @@
+This is a custom distribution of rapidjson (http://code.google.com/p/rapidjson/), version
+0.11. This is a header-only library, no compilation required.
+
+The original README file of rapidjson is at 'readme-rapidjson.txt'.
+
+Note: Unlike the official rapidjson repository, this one doesn't include any example, nor
+the documentation.
+
+
+License
+-------
+
+rapidjson's license is unchanged: this library is free software; you can redistribute
+it and/or modify it under the terms of the MIT license. See the file 'COPYING'
+for the details.

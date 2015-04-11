@@ -1,17 +1,25 @@
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
+
 package rhcad.touchvg.view.internal;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import rhcad.touchvg.IGraphView.OnCommandChangedListener;
 import rhcad.touchvg.IGraphView.OnContentChangedListener;
 import rhcad.touchvg.IGraphView.OnContextActionListener;
+import rhcad.touchvg.IGraphView.OnDrawGestureListener;
+import rhcad.touchvg.IGraphView.OnDynDrawEndedListener;
 import rhcad.touchvg.IGraphView.OnDynamicChangedListener;
 import rhcad.touchvg.IGraphView.OnFirstRegenListener;
 import rhcad.touchvg.IGraphView.OnSelectionChangedListener;
 import rhcad.touchvg.IGraphView.OnShapeClickedListener;
+import rhcad.touchvg.IGraphView.OnShapeDblClickedListener;
 import rhcad.touchvg.IGraphView.OnShapeDeletedListener;
+import rhcad.touchvg.IGraphView.OnShapeWillDeleteListener;
 import rhcad.touchvg.IGraphView.OnShapesRecordedListener;
 import rhcad.touchvg.IGraphView.OnViewDetachedListener;
+import rhcad.touchvg.IGraphView.OnZoomChangedListener;
 import rhcad.touchvg.core.CmdObserverDefault;
 import rhcad.touchvg.core.Floats;
 import rhcad.touchvg.core.GiCoreView;
@@ -23,24 +31,44 @@ import rhcad.touchvg.core.MgStringCallback;
 import rhcad.touchvg.core.MgView;
 import rhcad.touchvg.view.BaseGraphView;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 //! 视图回调适配器
-public abstract class BaseViewAdapter extends GiView {
+public abstract class BaseViewAdapter extends GiView implements OnDrawGestureListener {
     protected static final String TAG = "touchvg";
+    private static final String UNDO_THREAD = "touchvg.undo";
+    private static final String RECORD_THREAD = "touchvg.record";
+    private static final String KEY_CMDNAME = "cmdName";
+    private static final String KEY_IMAGEPATH = "imagePath";
+    private static final String KEY_UNDOPATH = "undoPath";
+    private static final String KEY_UNDOINDEX = "undoIndex";
+    private static final String KEY_UNDOCOUNT = "undoCount";
+    private static final String KEY_UNDOTICK = "undoTick";
+    private static final String KEY_CHANGECOUNT = "changeCount";
+    private static final String KEY_RECORD_PATH = "recordPath";
+    private static final String KEY_FRAME_INDEX = "frameIndex";
+    private static final String KEY_RECORD_TICK = "recordTick";
+
     private ContextAction mAction;
     private boolean mActionEnabled = true;
-    private ArrayList<OnCommandChangedListener> commandChangedListeners;
-    private ArrayList<OnSelectionChangedListener> selectionChangedListeners;
-    private ArrayList<OnContentChangedListener> contentChangedListeners;
-    private ArrayList<OnDynamicChangedListener> dynamicChangedListeners;
-    private ArrayList<OnFirstRegenListener> firstRegenListeners;
-    private ArrayList<OnShapesRecordedListener> shapesRecordedListeners;
-    private ArrayList<OnShapeDeletedListener> shapeDeletedListeners;
-    private ArrayList<OnShapeClickedListener> shapeClickedListeners;
-    private ArrayList<OnContextActionListener> contextActionListeners;
-    private ArrayList<OnPlayingListener> playingListeners;
+    private List<OnCommandChangedListener> commandChangedListeners;
+    private List<OnSelectionChangedListener> selectionChangedListeners;
+    private List<OnContentChangedListener> contentChangedListeners;
+    private List<OnDynamicChangedListener> dynamicChangedListeners;
+    private List<OnZoomChangedListener> zoomChangedListeners;
+    private List<OnFirstRegenListener> firstRegenListeners;
+    private List<OnDynDrawEndedListener> dynDrawEndedListeners;
+    private List<OnShapesRecordedListener> shapesRecordedListeners;
+    private List<OnShapeWillDeleteListener> shapeWillDeleteListeners;
+    private List<OnShapeDeletedListener> shapeDeletedListeners;
+    private List<OnShapeClickedListener> shapeClickedListeners;
+    private List<OnShapeDblClickedListener> shapeDblClickedListeners;
+    private List<OnContextActionListener> contextActionListeners;
+    private List<OnDrawGestureListener> gestureListeners;
+    private List<OnPlayingListener> playingListeners;
     protected UndoRunnable mUndoing;
     protected RecordRunnable mRecorder;
     private int mRegenCount = 0;
@@ -48,9 +76,29 @@ public abstract class BaseViewAdapter extends GiView {
     private CmdObserverDelegate mCmdObserver;
     private OnViewDetachedListener mDetachedListener;
 
-    public abstract BaseGraphView getGraphView();
+    public BaseViewAdapter(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mSavedState = savedInstanceState.getBundle("vg");
+            mSavedState = mSavedState != null ? mSavedState : savedInstanceState;
+        }
+        Log.d(TAG, "new BaseViewAdapter " + getCPtr(this) + " restore=" + (mSavedState != null));
+    }
 
+    public abstract BaseGraphView getGraphView();
+    public abstract GestureListener getGestureListener();
+    public abstract ImageCache getImageCache();
     protected abstract ContextAction createContextAction();
+
+    public final Context getContext() {
+        return getGraphView().getView().getContext();
+    }
+
+    public static BaseViewAdapter getMainAdapter(BaseGraphView view) {
+        if (view == null || view.getMainView() == null) {
+            return null;
+        }
+        return (BaseViewAdapter)((BaseGraphView)view.getMainView()).viewAdapter();
+    }
 
     public synchronized void delete() {
         Log.d(TAG, "delete BaseViewAdapter " + getCPtr(this));
@@ -62,46 +110,28 @@ public abstract class BaseViewAdapter extends GiView {
             mDetachedListener.onGraphViewDetached();
             mDetachedListener = null;
         }
-        if (commandChangedListeners != null)
-            commandChangedListeners.clear();
-        if (selectionChangedListeners != null)
-            selectionChangedListeners.clear();
-        if (contentChangedListeners != null)
-            contentChangedListeners.clear();
-        if (dynamicChangedListeners != null)
-            dynamicChangedListeners.clear();
-        if (firstRegenListeners != null)
-            firstRegenListeners.clear();
-        if (shapesRecordedListeners != null)
-            shapesRecordedListeners.clear();
-        if (shapeDeletedListeners != null)
-            shapeDeletedListeners.clear();
-        if (shapeClickedListeners != null)
-            shapeClickedListeners.clear();
-        if (contextActionListeners != null)
-            contextActionListeners.clear();
-        if (playingListeners != null)
-            playingListeners.clear();
 
-        super.delete();
-    }
+        final List<?>[] listeners = new List<?>[] { commandChangedListeners,
+                selectionChangedListeners, contentChangedListeners, dynamicChangedListeners,
+                firstRegenListeners, shapesRecordedListeners, shapeDeletedListeners,
+                shapeClickedListeners, shapeDblClickedListeners, contextActionListeners,
+                gestureListeners, playingListeners, shapeWillDeleteListeners,
+                dynDrawEndedListeners, zoomChangedListeners };
 
-    @Override
-    protected void finalize() {
-        Log.d(TAG, "BaseViewAdapter finalize");
-        super.finalize();
-    }
-
-    public BaseViewAdapter(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            mSavedState = savedInstanceState.getBundle("vg");
-            mSavedState = mSavedState != null ? mSavedState : savedInstanceState;
+        for (final List<?> listener : listeners) {
+            if (listener != null) {
+                listener.clear();
+            }
         }
-        Log.d(TAG, "new BaseViewAdapter " + getCPtr(this) + " restore=" + (mSavedState != null));
+        super.delete();
     }
 
     public Bundle getSavedState() {
         return mSavedState;
+    }
+
+    public boolean getContextActionEnabled() {
+        return mActionEnabled;
     }
 
     public void setContextActionEnabled(boolean enabled) {
@@ -127,7 +157,7 @@ public abstract class BaseViewAdapter extends GiView {
         if (mAction == null) {
             mAction = createContextAction();
         }
-        return mAction.showActions(getGraphView().getView().getContext(), actions, xy);
+        return mAction.showActions(getContext(), actions, xy);
     }
 
     @Override
@@ -183,14 +213,14 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     @Override
-    public void dynamicChanged() {
-        if (dynamicChangedListeners != null) {
+    public void zoomChanged() {
+        if (zoomChangedListeners != null) {
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     removeCallbacks(this);
-                    for (OnDynamicChangedListener listener : dynamicChangedListeners) {
-                        listener.onDynamicChanged(getGraphView());
+                    for (OnZoomChangedListener listener : zoomChangedListeners) {
+                        listener.onZoomChanged(getGraphView());
                     }
                 }
             }, 50);
@@ -198,67 +228,132 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     @Override
-    public boolean shapeClicked(int sid, int tag, float x, float y) {
+    public boolean shapeClicked(int type, int sid, int tag, float x, float y) {
         if (shapeClickedListeners != null) {
             for (OnShapeClickedListener listener : shapeClickedListeners) {
-                if (listener.onShapeClicked(getGraphView(), sid, tag, x, y))
+                if (listener.onShapeClicked(getGraphView(), type, sid, tag, x, y)) {
                     return true;
+                }
             }
         }
         return false;
     }
 
+    @Override
+    public boolean shapeDblClick(int type, int sid, int tag) {
+        if (shapeDblClickedListeners != null) {
+            for (OnShapeDblClickedListener listener : shapeDblClickedListeners) {
+                if (listener.onShapeDblClicked(getGraphView(), type, sid, tag)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void showMessage(String text) {
+        if (coreView() != null && text.startsWith("@")) {
+            final String localstr = ResourceUtil.getStringFromName(getContext(), text.substring(1));
+            Toast.makeText(getContext(), localstr, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void getLocalizedString(String name, MgStringCallback result) {
+        result.onGetString(ResourceUtil.getStringFromName(getContext(), name));
+    }
+
     public void setOnCommandChangedListener(OnCommandChangedListener listener) {
-        if (this.commandChangedListeners == null)
+        if (this.commandChangedListeners == null) {
             this.commandChangedListeners = new ArrayList<OnCommandChangedListener>();
+        }
         this.commandChangedListeners.add(listener);
     }
 
     public void setOnSelectionChangedListener(OnSelectionChangedListener listener) {
-        if (this.selectionChangedListeners == null)
+        if (this.selectionChangedListeners == null) {
             this.selectionChangedListeners = new ArrayList<OnSelectionChangedListener>();
+        }
         this.selectionChangedListeners.add(listener);
     }
 
     public void setOnContentChangedListener(OnContentChangedListener listener) {
-        if (this.contentChangedListeners == null)
+        if (this.contentChangedListeners == null) {
             this.contentChangedListeners = new ArrayList<OnContentChangedListener>();
+        }
         this.contentChangedListeners.add(listener);
     }
 
     public void setOnDynamicChangedListener(OnDynamicChangedListener listener) {
-        if (this.dynamicChangedListeners == null)
+        if (this.dynamicChangedListeners == null) {
             this.dynamicChangedListeners = new ArrayList<OnDynamicChangedListener>();
+        }
         this.dynamicChangedListeners.add(listener);
     }
 
+    public void setOnZoomChangedListener(OnZoomChangedListener listener) {
+        if (this.zoomChangedListeners == null) {
+            this.zoomChangedListeners = new ArrayList<OnZoomChangedListener>();
+        }
+        this.zoomChangedListeners.add(listener);
+    }
+
     public void setOnFirstRegenListener(OnFirstRegenListener listener) {
-        if (this.firstRegenListeners == null)
+        if (this.firstRegenListeners == null) {
             this.firstRegenListeners = new ArrayList<OnFirstRegenListener>();
+        }
         this.firstRegenListeners.add(listener);
     }
 
+    public void setOnDynDrawEndedListener(OnDynDrawEndedListener listener) {
+        if (this.dynDrawEndedListeners == null) {
+            this.dynDrawEndedListeners = new ArrayList<OnDynDrawEndedListener>();
+        }
+        this.dynDrawEndedListeners.add(listener);
+    }
+
     public void setOnShapesRecordedListener(OnShapesRecordedListener listener) {
-        if (this.shapesRecordedListeners == null)
+        if (this.shapesRecordedListeners == null) {
             this.shapesRecordedListeners = new ArrayList<OnShapesRecordedListener>();
+        }
         this.shapesRecordedListeners.add(listener);
     }
 
+    public void setOnShapeWillDeleteListener(OnShapeWillDeleteListener listener) {
+        if (this.shapeWillDeleteListeners == null) {
+            this.shapeWillDeleteListeners = new ArrayList<OnShapeWillDeleteListener>();
+        }
+        this.shapeWillDeleteListeners.add(listener);
+    }
+
     public void setOnShapeDeletedListener(OnShapeDeletedListener listener) {
-        if (this.shapeDeletedListeners == null)
+        if (this.shapeDeletedListeners == null) {
             this.shapeDeletedListeners = new ArrayList<OnShapeDeletedListener>();
+        }
         this.shapeDeletedListeners.add(listener);
     }
 
     public void setOnShapeClickedListener(OnShapeClickedListener listener) {
-        if (this.shapeClickedListeners == null)
+        if (this.shapeClickedListeners == null) {
             this.shapeClickedListeners = new ArrayList<OnShapeClickedListener>();
+        }
         this.shapeClickedListeners.add(listener);
     }
 
+    public void setOnShapeDblClickedListener(OnShapeDblClickedListener listener) {
+        if (this.shapeDblClickedListeners == null) {
+            this.shapeDblClickedListeners = new ArrayList<OnShapeDblClickedListener>();
+        }
+        this.shapeDblClickedListeners.add(listener);
+    }
+
     public void setOnContextActionListener(OnContextActionListener listener) {
-        if (this.contextActionListeners == null)
+        if (this.contextActionListeners == null) {
             this.contextActionListeners = new ArrayList<OnContextActionListener>();
+        }
         this.contextActionListeners.add(listener);
 
         if (mCmdObserver == null) {
@@ -267,25 +362,48 @@ public abstract class BaseViewAdapter extends GiView {
         }
     }
 
-    private class CmdObserverDelegate extends CmdObserverDefault {
-        @Override
-        protected void finalize() {
-            Log.d(TAG, "CmdObserverDelegate finalize");
-            super.finalize();
+    public void setOnGestureListener(OnDrawGestureListener listener) {
+        if (this.gestureListeners == null) {
+            this.gestureListeners = new ArrayList<OnDrawGestureListener>();
         }
+        this.gestureListeners.add(listener);
+    }
 
+    @Override
+    public boolean onPreGesture(int gestureType, float x, float y) {
+        if (gestureListeners != null) {
+            for (OnDrawGestureListener listener : gestureListeners) {
+                if (listener.onPreGesture(gestureType, x, y)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onPostGesture(int gestureType, float x, float y) {
+        if (gestureListeners != null) {
+            for (OnDrawGestureListener listener : gestureListeners) {
+                listener.onPostGesture(gestureType, x, y);
+            }
+        }
+    }
+
+    private class CmdObserverDelegate extends CmdObserverDefault {
         @Override
         public boolean doAction(MgMotion sender, int action) {
             for (OnContextActionListener listener : contextActionListeners) {
-                if (listener.onContextAction(getGraphView(), sender, action))
+                if (listener.onContextAction(getGraphView(), sender, action)) {
                     return true;
+                }
             }
             return false;
         }
     }
 
     public Activity getActivity() {
-        return (Activity) getGraphView().getView().getContext();
+        return (Activity) getContext();
     }
 
     public void removeCallbacks(Runnable r) {
@@ -296,6 +414,14 @@ public abstract class BaseViewAdapter extends GiView {
         return getGraphView().getView().postDelayed(action, delayMillis);
     }
 
+    public void fireDynDrawEnded() {
+        if (dynDrawEndedListeners != null) {
+            for (OnDynDrawEndedListener listener : dynDrawEndedListeners) {
+                listener.onDynDrawEnded(getGraphView());
+            }
+        }
+    }
+
     public void onFirstRegen() {
         if (++mRegenCount == 1) {
             getActivity().runOnUiThread(new Runnable() {
@@ -304,23 +430,47 @@ public abstract class BaseViewAdapter extends GiView {
                     Log.d(TAG, "onFirstRegen restore=" + (mSavedState != null));
                     removeCallbacks(this);
 
-                    if (coreView() == null)
+                    if (coreView() == null) {
                         return;
+                    }
                     coreView().zoomToInitial();
 
-                    if (firstRegenListeners != null) {
-                        for (OnFirstRegenListener listener : firstRegenListeners) {
-                            listener.onFirstRegen(getGraphView());
-                        }
-                        firstRegenListeners.clear();
-                        firstRegenListeners = null;
-                    }
+                    fireFirstRegen();
                     if (mSavedState != null) {
                         restoreRecordState(mSavedState);
                         mSavedState = null;
                     }
                 }
             });
+        }
+    }
+
+    private void fireFirstRegen() {
+        if (firstRegenListeners != null) {
+            for (OnFirstRegenListener listener : firstRegenListeners) {
+                listener.onFirstRegen(getGraphView());
+            }
+            firstRegenListeners.clear();
+            firstRegenListeners = null;
+        }
+    }
+
+    protected void recordForRegenAll(boolean changed, int changeCount) {
+        final GiCoreView cv = coreView();
+
+        if (changed || getRegenCount() == 0) {
+            cv.submitBackDoc(this, changed);
+            cv.submitDynamicShapes(this);
+
+            if (mUndoing != null && changed) {
+                int doc0 = cv.acquireFrontDoc();
+                mUndoing.requestRecord(cv.getRecordTick(true, getTick()), changeCount, doc0, 0);
+            }
+            if (mRecorder != null && changed) {
+                int doc1 = cv.acquireFrontDoc();
+                int s = cv.acquireDynamicShapes();
+                mRecorder.requestRecord(cv.getRecordTick(false, getTick()), changeCount, doc1, s);
+            }
         }
     }
 
@@ -370,10 +520,12 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     public boolean onStopped(ShapeRunnable r) {
-        if (mUndoing == r)
+        if (mUndoing == r) {
             mUndoing = null;
-        if (mRecorder == r)
+        }
+        if (mRecorder == r) {
             mRecorder = null;
+        }
         return coreView() != null;
     }
 
@@ -382,21 +534,23 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     public boolean startUndoRecord(String path) {
-        if (mUndoing != null || !startRecordCore(path, UndoRunnable.TYPE))
+        if (mUndoing != null || !startRecordCore(path, UndoRunnable.TYPE)) {
             return false;
+        }
 
         mUndoing = new UndoRunnable(this, path);
-        new Thread(mUndoing, "touchvg.undo").start();
+        new Thread(mUndoing, UNDO_THREAD).start();
 
         return true;
     }
 
     public boolean startRecord(String path) {
-        if (mRecorder != null || !startRecordCore(path, RecordRunnable.TYPE))
+        if (mRecorder != null || !startRecordCore(path, RecordRunnable.TYPE)) {
             return false;
+        }
 
         mRecorder = new RecordRunnable(this, path);
-        new Thread(mRecorder, "touchvg.record").start();
+        new Thread(mRecorder, RECORD_THREAD).start();
 
         return true;
     }
@@ -450,7 +604,7 @@ public abstract class BaseViewAdapter extends GiView {
 
     private static class ImageFinder extends MgFindImageCallback {
         private String fromPath, toPath;
-        public int count = 0;
+        private int count = 0;
 
         public ImageFinder(String fromPath, String toPath) {
             this.fromPath = fromPath;
@@ -507,38 +661,37 @@ public abstract class BaseViewAdapter extends GiView {
     public void onSaveInstanceState(Bundle outState) {
         final GiCoreView cv = coreView();
 
-        outState.putString("cmdName", getCommand());
-        outState.putString("imagePath", getGraphView().getImageCache().getImagePath());
+        outState.putString(KEY_CMDNAME, getCommand());
+        outState.putString(KEY_IMAGEPATH, getGraphView().getImageCache().getImagePath());
 
         if (mUndoing != null) {
-            outState.putString("undoPath", mUndoing.getPath());
-            outState.putInt("undoIndex", cv.getRedoIndex());
-            outState.putInt("undoCount", cv.getRedoCount());
-            outState.putInt("undoTick", cv.getRecordTick(true, getTick()));
-            outState.putInt("changeCount", cv.getChangeCount());
+            outState.putString(KEY_UNDOPATH, mUndoing.getPath());
+            outState.putInt(KEY_UNDOINDEX, cv.getRedoIndex());
+            outState.putInt(KEY_UNDOCOUNT, cv.getRedoCount());
+            outState.putInt(KEY_UNDOTICK, cv.getRecordTick(true, getTick()));
+            outState.putInt(KEY_CHANGECOUNT, cv.getChangeCount());
         }
         if (mRecorder != null) {
-            outState.putString("recordPath", mRecorder.getPath());
-            outState.putInt("frameIndex", cv.getFrameIndex());
-            outState.putInt("recordTick", cv.getRecordTick(false, getTick()));
+            outState.putString(KEY_RECORD_PATH, mRecorder.getPath());
+            outState.putInt(KEY_FRAME_INDEX, cv.getFrameIndex());
+            outState.putInt(KEY_RECORD_TICK, cv.getRecordTick(false, getTick()));
         }
     }
 
     public void onRestoreInstanceState(Bundle savedState) {
-        coreView().setCommand(savedState.getString("cmdName"));
-        getGraphView().getImageCache().setImagePath(savedState.getString("imagePath"));
+        coreView().setCommand(savedState.getString(KEY_CMDNAME));
+        getGraphView().getImageCache().setImagePath(savedState.getString(KEY_IMAGEPATH));
     }
 
     private void restoreRecordState(Bundle savedState) {
         final GiCoreView cv = coreView();
-        final String undoPath = savedState.getString("undoPath");
-        final String recordPath = savedState.getString("recordPath");
+        final String undoPath = savedState.getString(KEY_UNDOPATH);
 
         if (undoPath != null && mUndoing == null) {
-            int index = savedState.getInt("undoIndex");
-            int count = savedState.getInt("undoCount");
-            int tick = savedState.getInt("undoTick");
-            int changeCount = savedState.getInt("changeCount");
+            int index = savedState.getInt(KEY_UNDOINDEX);
+            int count = savedState.getInt(KEY_UNDOCOUNT);
+            int tick = savedState.getInt(KEY_UNDOTICK);
+            int changeCount = savedState.getInt(KEY_CHANGECOUNT);
             boolean ret;
 
             synchronized (cv) {
@@ -549,33 +702,48 @@ public abstract class BaseViewAdapter extends GiView {
             }
             if (ret) {
                 mUndoing = new UndoRunnable(this, undoPath);
-                new Thread(mUndoing, "touchvg.undo").start();
+                new Thread(mUndoing, UNDO_THREAD).start();
             }
         }
 
-        if (recordPath != null && mRecorder == null) {
-            int index = savedState.getInt("frameIndex");
-            int tick = savedState.getInt("recordTick");
-            boolean playing = savedState.getBoolean("playing");
-            boolean ret;
-
+        final String path = savedState.getString(KEY_RECORD_PATH);
+        if (path != null && mRecorder == null) {
             synchronized (cv) {
-                final LogHelper log = new LogHelper("" + coreView().backDoc());
-                int doc = playing ? 0 : coreView().acquireFrontDoc();
-                ret = (playing || doc != 0)
-                        && cv.restoreRecord(playing ? 2 : 1, recordPath, doc, 0, index, 0,
-                                tick, getTick());
-                if (ret) {
-                    if (!playing) {
-                        mRecorder = new RecordRunnable(this, recordPath);
-                        new Thread(mRecorder, "touchvg.record").start();
-                    } else if (playingListeners != null) {
-                        for (OnPlayingListener listener : playingListeners) {
-                            listener.onRestorePlayingState(savedState);
-                        }
-                    }
-                }
-                log.r(ret);
+                restorePlayState(savedState, cv, path);
+            }
+        }
+    }
+
+    private void restorePlayState(Bundle savedState, GiCoreView cv, String path) {
+        final LogHelper log = new LogHelper("" + coreView().backDoc());
+        boolean playing = savedState.getBoolean("playing");
+        boolean ret = restoreRecord(savedState, cv, path, playing);
+
+        if (ret && !playing) {
+            mRecorder = new RecordRunnable(this, path);
+            new Thread(mRecorder, RECORD_THREAD).start();
+        }
+        if (ret && playing && playingListeners != null) {
+            for (OnPlayingListener listener : playingListeners) {
+                listener.onRestorePlayingState(savedState);
+            }
+        }
+        log.r(ret);
+    }
+
+    private boolean restoreRecord(Bundle savedState, GiCoreView cv, String path, boolean playing) {
+        int index = savedState.getInt(KEY_FRAME_INDEX);
+        int tick = savedState.getInt(KEY_RECORD_TICK);
+        int doc = playing ? 0 : coreView().acquireFrontDoc();
+        return (playing || doc != 0)
+                && cv.restoreRecord(playing ? 2 : 1, path, doc, 0, index, 0, tick, getTick());
+    }
+
+    @Override
+    public void shapeWillDelete(int sid) {
+        if (shapeWillDeleteListeners != null) {
+            for (OnShapeWillDeleteListener listener : shapeWillDeleteListeners) {
+                listener.onShapeWillDelete(getGraphView(), sid);
             }
         }
     }
@@ -601,8 +769,9 @@ public abstract class BaseViewAdapter extends GiView {
     }
 
     public void setOnPlayingListener(OnPlayingListener listener) {
-        if (this.playingListeners == null)
+        if (this.playingListeners == null) {
             this.playingListeners = new ArrayList<OnPlayingListener>();
+        }
         this.playingListeners.add(listener);
     }
 }

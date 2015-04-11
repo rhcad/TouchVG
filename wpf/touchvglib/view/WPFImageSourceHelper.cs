@@ -1,4 +1,4 @@
-﻿//! \file WPFImageSourceHelper.cs
+//! \file WPFImageSourceHelper.cs
 //! \brief 定义WPF绘图图像源的缓存类
 // Copyright (c) 2013, https://github.com/rhcad/touchvg
 
@@ -93,14 +93,25 @@ namespace touchvg.view
             AddActionImage(MgContextAction.kMgActionUngroup, Resource1.vg_ungroup);
             AddActionImage(MgContextAction.kMgActionOverturn, Resource1.vg_overturn);
 
-            _handleImages = new ImageSource[7]; // GiHandleTypes
-            _handleImages[0] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot1);
-            _handleImages[1] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot2);
-            _handleImages[2] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot3);
-            _handleImages[3] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_lock);
-            _handleImages[4] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_unlock);
-            _handleImages[5] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_back);
-            _handleImages[6] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_endedit);
+            int i = 0;
+            _handleImages = new ImageSource[17]; // GiHandleTypes
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot1);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot2);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgdot3);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_lock);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_unlock);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_back);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_endedit);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgnode);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgcen);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgmid);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgquad);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgtangent);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgcross);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgparallel);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgnear);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vgpivot);
+            _handleImages[i++] = WPFImageSourceHelper.BitmapToImageSource(Resource1.vg_overturn);
         }
 
         private void AddActionImage(MgContextAction key, Bitmap bitmap)
@@ -110,10 +121,13 @@ namespace touchvg.view
 
         public void AddActionImage(int key, Bitmap bitmap)
         {
-            if (bitmap != null && !_actionImageDict.ContainsKey(key))
-            {
-                _actionImageDict.Add(key, BitmapToImageSource(bitmap));
-            }
+            ImageSource s = BitmapToImageSource(bitmap);
+            if (s == null)
+                _actionImageDict.Remove(key);
+            else if (!_actionImageDict.ContainsKey(key))
+                _actionImageDict.Add(key, s);
+            else
+                _actionImageDict[key] = s;
         }
 
         public ImageSource ActionImageSource(int index)
@@ -142,7 +156,9 @@ namespace touchvg.view
 
         public string GetLocalizedString(string name)
         {
-            return StringCallback != null ? StringCallback(name) : "";
+            string str = Resource1.ResourceManager.GetString(name, Resource1.Culture);
+            str = str != null ? str : name;
+            return StringCallback != null && str.Equals(name) ? StringCallback(name) : str;
         }
 
         /// <summary>

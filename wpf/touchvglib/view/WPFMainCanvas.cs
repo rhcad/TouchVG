@@ -82,11 +82,18 @@ namespace touchvg.view
             }
         }
 
+        private int lastClickTime = 0;
+
         void TempCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Point pt = e.GetPosition(this);
-            _helper.onMouseUp((float)pt.X, (float)pt.Y);
 
+            _helper.onMouseUp((float)pt.X, (float)pt.Y);
+            if (e.Timestamp - lastClickTime < 300)
+            {
+                _helper.onLButtonDblClk((float)pt.X, (float)pt.Y);
+            }
+            lastClickTime = e.Timestamp;
             this.ReleaseMouseCapture();
             this.MouseMove -= new MouseEventHandler(TempCanvas_MouseMove);
         }
@@ -102,6 +109,7 @@ namespace touchvg.view
                     e.LeftButton == MouseButtonState.Pressed,
                     e.RightButton == MouseButtonState.Pressed);
             }
+            lastClickTime = 0;
         }
 
         void TempCanvas_MouseDown(object sender, MouseButtonEventArgs e)

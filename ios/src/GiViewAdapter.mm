@@ -1,10 +1,11 @@
 //! \file GiViewAdapter.mm
 //! \brief 实现iOS绘图视图适配器 GiViewAdapter
-// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
 #include "giplaying.h"
+#include "mgshapetype.h"
 #include <algorithm>
 
 static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"取消",
@@ -43,22 +44,25 @@ static int getExtraImageCount() { int n = 0; while (EXTIMAGENAMES[n]) n++; retur
 
 #define APPENDSIZE sizeof(_appendIDs)/sizeof(_appendIDs[0])
 
-GiViewAdapter::GiViewAdapter(GiPaintView *mainView, GiViewAdapter *refView)
-    : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil)
+GiViewAdapter::GiViewAdapter(GiPaintView *mainView, GiViewAdapter *refView, int flags)
+    : _view(mainView), _dynview(nil), _buttons(nil), _buttonImages(nil), _flags(flags)
     , _actionEnabled(true), _oldAppendCount(0), _regenCount(0), _render(nil)
 {
     if (refView) {
         _core = GiCoreView::createMagnifierView(this, refView->coreView(), refView);
         _lock = [refView->_lock RETAIN];
     } else {
-        _core = GiCoreView::createView(this);
+        int type = (flags & GIViewFlagsNoCmd) ? GiCoreView::kNoCmdType : GiCoreView::kNormalType;
+        _core = GiCoreView::createView(this, type);
         _lock = [[NSRecursiveLock alloc] init];
     }
     memset(&respondsTo, 0, sizeof(respondsTo));
     memset(&_queues, 0, sizeof(_queues));
     _imageCache = [[GiImageCache alloc]init];
+    _messageHelper = [[GiMessageHelper alloc]init];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
+        && !(_flags & GIViewFlagsNoBackLayer)) {
         _render = [[GiLayerRender alloc]initWithAdapter:this];
     }
     
@@ -67,12 +71,13 @@ GiViewAdapter::GiViewAdapter(GiPaintView *mainView, GiViewAdapter *refView)
 }
 
 GiViewAdapter::~GiViewAdapter() {
-    [_buttons RELEASE];
-    [_buttonImages RELEASE];
-    [_imageCache RELEASE];
-    [_render RELEASE];
-    [_dynview RELEASE];
-    [_lock RELEASE];
+    [_buttons RELEASEOBJ];
+    [_buttonImages RELEASEOBJ];
+    [_imageCache RELEASEOBJ];
+    [_messageHelper RELEASEOBJ];
+    [_render RELEASEOBJ];
+    [_dynview RELEASEOBJ];
+    [_lock RELEASEOBJ];
     _core->destoryView(this);
     _core->release();
 }
@@ -110,14 +115,23 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
             }
             _oldAppendCount = 0;
         }
-        [_render startRenderForPending];
     }
     else {
-        long gs;
+        long gs = 0;
         mgvector<long> docs;
+        mgvector<int> ignoreIds;
         
         @synchronized(locker()) {
-            gs = _core->acquireFrontDocs(docs) ? _core->acquireGraphics(this) : 0;
+            if (_core->acquireFrontDocs(docs)) {
+                gs = _core->acquireGraphics(this);
+            } else {
+                _core->submitBackDoc(this, false);
+                gs = _core->acquireFrontDocs(docs) ? _core->acquireGraphics(this) : 0;
+            }
+            if (gs && (_flags & GIViewFlagsNoDynDrawView)
+                && !(_flags & GIViewFlagsNoCmd)) {
+                _core->getSkipDrawIds(ignoreIds);
+            }
         }
         if (!gs) {
             return false;
@@ -125,7 +139,7 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
         
         GiCanvasAdapter canvas(imageCache());
         if (canvas.beginPaint(ctx)) {
-            _core->drawAll(docs, gs, &canvas);
+            _core->drawAll(docs, gs, &canvas, ignoreIds);
             canvas.endPaint();
         }
         GiCoreView::releaseDocs(docs);
@@ -133,7 +147,7 @@ bool GiViewAdapter::renderInContext(CGContextRef ctx) {
         for (int i = 0; i < APPENDSIZE; i++)
             _appendIDs[i] = 0;
         
-        if (isMainThread() && ++_regenCount == 1) {
+        if ([NSThread isMainThread] && ++_regenCount == 1) {
             onFirstRegen();
         }
     }
@@ -147,6 +161,7 @@ int GiViewAdapter::getAppendID(int index, long& playh) const {
     return index * 2 < APPENDSIZE ? (int)_appendIDs[2 * index] : 0;
 }
 
+//! 遍历图像对象的回调类
 struct ImageFinder : public MgFindImageCallback {
     NSString *srcPath;
     NSString *destPath;
@@ -155,28 +170,29 @@ struct ImageFinder : public MgFindImageCallback {
     ImageFinder(NSString *s, NSString *d) : srcPath(s), destPath(d) {}
     
     virtual void onFindImage(int sid, const char* name) {
-        NSString *fileTitle = [NSString stringWithUTF8String:name];
+        NSString *fileTitle = @(name);
         NSString *srcFile = [srcPath stringByAppendingPathComponent:fileTitle];
         NSString *destFile = [destPath stringByAppendingPathComponent:fileTitle];
         NSFileManager *fm = [NSFileManager defaultManager];
         
-        if (![fm fileExistsAtPath:destFile]
+        if (srcFile && destFile && ![fm fileExistsAtPath:destFile]
             && [fm copyItemAtPath:srcFile toPath:destFile error:nil]) {
             NSLog(@"%d image files copied: %@", ++count, fileTitle);
         }
     }
 };
 
+//! 录制图形用的文件名回调类
 struct RecordShapesCallback : MgStringCallback {
     GiViewAdapter* adapter;
     
     RecordShapesCallback(GiViewAdapter* adapter) : adapter(adapter) {}
     void onGetString(const char* filename) {
         GiCoreView* cv = adapter->coreView();
-        NSDictionary *info = @{ @"tick" : [NSNumber numberWithLong:cv->getFrameTick()],
-                                @"index" : [NSNumber numberWithInt:cv->getFrameIndex()],
-                                @"flags" : [NSNumber numberWithInt:cv->getFrameFlags()],
-                                @"filename" : [NSString stringWithUTF8String:filename],
+        NSDictionary *info = @{ @"tick" : @(cv->getFrameTick()),
+                                @"index" : @(cv->getFrameIndex()),
+                                @"flags" : @(cv->getFrameFlags()),
+                                @"filename" : @(filename),
                                 @"view" : adapter->mainView() };
         adapter->onShapesRecorded(info);
     }
@@ -213,7 +229,7 @@ bool GiViewAdapter::startRecord(NSString *path, bool forUndo)
 
 void GiViewAdapter::undo() {
     if (_queues[0]) {
-        _core->setCommand(_core->getCommand());
+        _core->setCommand(NULL);
         dispatch_async(_queues[0], ^{
             @synchronized(locker()) {
                 _core->undo(this);
@@ -224,7 +240,7 @@ void GiViewAdapter::undo() {
 
 void GiViewAdapter::redo() {
     if (_queues[0]) {
-        _core->setCommand(_core->getCommand());
+        _core->setCommand(NULL);
         dispatch_async(_queues[0], ^{
             @synchronized(locker()) {
                 _core->redo(this);
@@ -253,7 +269,7 @@ void GiViewAdapter::stopRecord(bool forUndo)
     }
 }
 
-void GiViewAdapter::recordShapes(bool forUndo, long doc, long shapes)
+void GiViewAdapter::recordShapes(bool forUndo, long changeCount, long doc, long shapes)
 {
     int i = forUndo ? 0 : 1;
     if ((doc || shapes) && _queues[i]) {
@@ -263,10 +279,10 @@ void GiViewAdapter::recordShapes(bool forUndo, long doc, long shapes)
                 bool ret;
                 if (!forUndo) {
                     RecordShapesCallback c(this);
-                    ret = _core->recordShapes(forUndo, tick, doc, shapes, NULL,
+                    ret = _core->recordShapes(forUndo, tick, changeCount, doc, shapes, NULL,
                                               hasShapesRecorded() ? &c : NULL);
                 } else {
-                    ret = _core->recordShapes(forUndo, tick, doc, shapes);
+                    ret = _core->recordShapes(forUndo, tick, changeCount, doc, shapes);
                 }
                 if (!ret) {
                     NSLog(@"Fail to record shapes, forUndo=%d, doc=%ld, shapes=%ld", forUndo, doc, shapes);
@@ -284,14 +300,17 @@ int GiViewAdapter::regenLocked(bool changed, int sid, long playh, bool loading, 
                                long& doc1, long& shapes1, long& gs, mgvector<long>*& docs)
 {
     if (loading) {
-        if (!_core->isPlaying()) {
+        if (_queues[1] && !_core->isPlaying()) {
             doc1 = _core->acquireFrontDoc();
             shapes1 = _core->acquireDynamicShapes();
         }
-    } else if (changed || _regenCount == 0) {
-        _core->submitBackDoc(this, changed);
+    } else {
+        if (changed || _regenCount == 0) {
+            _core->submitBackDoc(this, changed);
+        }
+        _core->submitDynamicShapes(this);
+        
         if (changed) {
-            _core->submitDynamicShapes(this);
             if (_queues[0]) {
                 doc0 = _core->acquireFrontDoc();
             }
@@ -323,20 +342,29 @@ int GiViewAdapter::regenLocked(bool changed, int sid, long playh, bool loading, 
 }
 
 void GiViewAdapter::regen_(bool changed, int sid, long playh, bool loading) {
-    if (_core->isStopping() || (!_regenCount && !_view.window)) {
+    if (_core->isStopping() || _regenCount < 0) {
+        return;
+    }
+    if (changed && (_flags & GIViewFlagsZoomExtent)) {
+        _regenCount -= 10000;
+        _core->zoomToExtent();
+        _regenCount += 10000;
+    }
+    if (!_regenCount && !_view.superview) {
         return;
     }
     
     long doc0 = 0, doc1 = 0, shapes1 = 0, gs = 0;
     int docd = 0;
     mgvector<long>* docs = NULL;
+    long changeCount = _core->getChangeCount();
     
     @synchronized(locker()) {
         docd = regenLocked(changed, sid, playh, loading, doc0, doc1, shapes1, gs, docs);
     }
     
-    recordShapes(true, doc0, 0);
-    recordShapes(false, doc1, shapes1);
+    recordShapes(true, changeCount, doc0, 0);
+    recordShapes(false, changeCount, doc1, shapes1);
     
     if (_render) {
         [_render startRender:docs :gs];
@@ -361,24 +389,62 @@ void GiViewAdapter::regenAppend(int sid, long playh) {
 void GiViewAdapter::stopRegen() {
     _core->stopDrawing();
     [_render stopRender];
-    _view = nil;
-    if (_dynview) {
+    if (_dynview && _dynview != _view) {
         [_dynview removeFromSuperview];
-        [_dynview RELEASE];
+        [_dynview RELEASEOBJ];
         _dynview = nil;
     }
+    _view = nil;
+}
+
+int GiViewAdapter::setFlags(int flags)
+{
+    int old = _flags;
+    
+    _flags = flags;
+    if ((old & GIViewFlagsNoDynDrawView) != (flags & GIViewFlagsNoDynDrawView)) {
+        if (_flags & GIViewFlagsNoDynDrawView) {
+            if (_dynview && _dynview != _view) {
+                [_dynview removeFromSuperview];
+                [_dynview RELEASEOBJ];
+                _dynview = nil;
+            }
+        }
+    }
+    if ((old & GIViewFlagsNoBackLayer) != (flags & GIViewFlagsNoBackLayer)) {
+        if (flags & GIViewFlagsNoBackLayer) {
+            if (!_render) {
+                _render = [[GiLayerRender alloc]initWithAdapter:this];
+            }
+        } else if (_render) {
+            [_render RELEASEOBJ];
+            _render = nil;
+        }
+    }
+    if ((old & GIViewFlagsNotDynDraw) != (flags & GIViewFlagsNotDynDraw)) {
+        [getDynView(false) setNeedsDisplay];
+    }
+    
+    return old;
 }
 
 UIView *GiViewAdapter::getDynView(bool autoCreate) {
-    if (autoCreate && !_dynview && _view && _view.window) {
-        _dynview = [[GiDynDrawView alloc]initView:_view.frame :this];
-        _dynview.autoresizingMask = _view.autoresizingMask;
-        if (isMainThread()) {
-            [_view.superview addSubview:_dynview];
+    if (autoCreate && (!_dynview || _dynview == _view)
+        && _view && _view.superview) {
+        if (_flags & GIViewFlagsNoDynDrawView) {
+            _dynview = _view;
         } else {
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            _dynview = [[GiDynDrawView alloc]initView:_view.frame :this];
+            _dynview.autoresizingMask = _view.autoresizingMask;
+            if ([NSThread isMainThread]) {
                 [_view.superview addSubview:_dynview];
-            });
+                [_view.superview sendSubviewToBack:_dynview];
+                [_view.superview sendSubviewToBack:_view];
+            } else {
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    [_view.superview addSubview:_dynview];
+                });
+            }
         }
     }
     return _dynview;
@@ -391,7 +457,7 @@ void GiViewAdapter::redraw(bool changed) {
                 _core->submitDynamicShapes(this);
                 if (_queues[1] && !_core->isPlaying()) {
                     long shapes = _core->acquireDynamicShapes();
-                    recordShapes(false, 0, shapes);
+                    recordShapes(false, 0, 0, shapes);
                 }
             }
         }
@@ -404,9 +470,10 @@ void GiViewAdapter::redraw(bool changed) {
     }
 }
 
-bool GiViewAdapter::isMainThread() const {
-    const char *label = dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL);
-    return label && strstr(label, "main-thread");
+bool GiViewAdapter::canShowMagnifier() const {
+    return ((_flags & GIViewFlagsMagnifier)
+            && !_core->isCommand("splines")
+            && _core->getSelectedShapeType() != kMgShapeImage);
 }
 
 long GiViewAdapter::acquireFrontDoc(long* gs) {
@@ -520,7 +587,7 @@ bool GiViewAdapter::showContextActions(const mgvector<int>& actions,
         btn.frame = [btnParent convertRect:btn.frame fromView:_view];
         [btnParent addSubview:btn];
         [_buttons addObject:btn];
-        [btn RELEASE];
+        [btn RELEASEOBJ];
     }
     [_view performSelector:@selector(onContextActionsDisplay:) withObject:_buttons];
     
@@ -614,9 +681,39 @@ void GiViewAdapter::dynamicChanged() {
     }
 }
 
+void GiViewAdapter::zoomChanged()
+{
+    if (respondsTo.didZoomChanged || [_view respondsToSelector:@selector(onZoomChanged:)]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 50 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            for (size_t i = 0; i < delegates.size() && respondsTo.didZoomChanged; i++) {
+                if ([delegates[i] respondsToSelector:@selector(onZoomChanged:)]) {
+                    [delegates[i] onZoomChanged:_view];
+                }
+            }
+            if ([_view respondsToSelector:@selector(onZoomChanged:)]) {
+                [_view performSelector:@selector(onZoomChanged:) withObject:_view];
+            }
+        });
+    }
+}
+
+void GiViewAdapter::shapeWillDelete(int sid)
+{
+    NSNumber *obj = @(sid);
+    
+    for (size_t i = 0; i < delegates.size() && respondsTo.didShapeWillDelete; i++) {
+        if ([delegates[i] respondsToSelector:@selector(onShapeWillDelete:)]) {
+            [delegates[i] onShapeWillDelete:obj];
+        }
+    }
+    if ([_view respondsToSelector:@selector(onShapeWillDelete:)]) {
+        [_view performSelector:@selector(onShapeWillDelete:) withObject:obj];
+    }
+}
+
 void GiViewAdapter::shapeDeleted(int sid)
 {
-    id obj = [NSNumber numberWithInt:sid];
+    NSNumber *obj = @(sid);
     
     for (size_t i = 0; i < delegates.size() && respondsTo.didShapeDeleted; i++) {
         if ([delegates[i] respondsToSelector:@selector(onShapeDeleted:)]) {
@@ -628,11 +725,32 @@ void GiViewAdapter::shapeDeleted(int sid)
     }
 }
 
-bool GiViewAdapter::shapeClicked(int sid, int tag, float x, float y)
+bool GiViewAdapter::shapeDblClick(int type, int sid, int tag)
+{
+    NSDictionary *info = @{ @"id" : @(sid),
+                            @"type" : @(type),
+                            @"tag" : @(tag),
+                            @"view" : mainView() };
+    
+    for (size_t i = 0; i < delegates.size() && respondsTo.didShapeDblClick; i++) {
+        if ([delegates[i] respondsToSelector:@selector(onShapeDblClick:)]
+            && [delegates[i] onShapeDblClick:info]) {
+            return true;
+        }
+    }
+    if ([_view respondsToSelector:@selector(onShapeDblClick:)]
+        && [_view performSelector:@selector(onShapeDblClick:) withObject:info]) {
+        return true;
+    }
+    return false;
+}
+
+bool GiViewAdapter::shapeClicked(int type, int sid, int tag, float x, float y)
 {
     if (respondsTo.didShapeClicked || [_view respondsToSelector:@selector(onShapeClicked:)]) {
-        NSDictionary *info = @{ @"id" : [NSNumber numberWithInt:sid],
-                                @"tag" : [NSNumber numberWithInt:tag],
+        NSDictionary *info = @{ @"id" : @(sid),
+                                @"tag" : @(tag),
+                                @"type" : @(type),
                                 @"point" : [NSValue valueWithCGPoint:CGPointMake(x, y)],
                                 @"view" : mainView() };
         
@@ -653,7 +771,11 @@ bool GiViewAdapter::shapeClicked(int sid, int tag, float x, float y)
 
 void GiViewAdapter::onFirstRegen()
 {
-    _core->zoomToInitial();
+    if (_flags & GIViewFlagsZoomExtent) {
+        _core->zoomToExtent();
+    } else {
+        _core->zoomToInitial();
+    }
     
     for (size_t i = 0; i < delegates.size(); i++) {
         if ([delegates[i] respondsToSelector:@selector(onFirstRegen:)]) {
@@ -692,6 +814,29 @@ void GiViewAdapter::onShapesRecorded(NSDictionary *info)
     if ([_view respondsToSelector:@selector(onShapesRecorded:)]) {
         [_view performSelector:@selector(onShapesRecorded:) withObject:info];
     }
+}
+
+void GiViewAdapter::showMessage(const char* text)
+{
+    if (!text) {
+        return;
+    }
+    
+    NSString *str;
+    if (*text == '@') {
+        str = GiLocalizedString(@(text+1));
+    } else {
+        str = @(text);
+    }
+    if (str) {
+        [_messageHelper showMessage:str inView:getDynView(true)];
+    }
+}
+
+void GiViewAdapter::getLocalizedString(const char* name, MgStringCallback* result)
+{
+    NSString *text = GiLocalizedString(@(name));
+    result->onGetString([text UTF8String]);
 }
 
 #include <mach/mach_time.h>

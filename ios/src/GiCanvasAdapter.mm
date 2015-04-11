@@ -1,10 +1,10 @@
 //! \file GiCanvasAdapter.mm
 //! \brief 实现画布适配器类 GiCanvasAdapter
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #import "GiImageCache.h"
-#import "NSString+Drawing.h"
 #include "GiCanvasAdapter.h"
+#import "NSString+Drawing.h"
 
 static const float patDash[]      = { 4, 2, 0 };
 static const float patDot[]       = { 1, 2, 0 };
@@ -34,11 +34,12 @@ bool GiCanvasAdapter::beginPaint(CGContextRef context, bool fast)
     _ctx = context;
     _fill = false;
     _gradient = NULL;
+    _fillARGB = 0;
     
     CGContextSetShouldAntialias(_ctx, true);       // 两者都为true才反走样
     CGContextSetAllowsAntialiasing(_ctx, true);
     
-    CGContextSetFlatness(_ctx, fast ? 10 : 3);      // 平滑度为3达到精确和速度的平衡点
+    //CGContextSetFlatness(_ctx, fast ? 10 : 3);      // 平滑度为3达到精确和速度的平衡点
     CGContextSetInterpolationQuality(_ctx, kCGInterpolationLow);
     
     CGContextSetLineCap(_ctx, kCGLineCapRound);     // 圆端
@@ -66,35 +67,48 @@ float GiCanvasAdapter::colorPart(int argb, int byteOrder)
 void GiCanvasAdapter::setPen(int argb, float width, int style, float phase, float)
 {
     if (argb != 0) {
-        CGContextSetRGBStrokeColor(_ctx, colorPart(argb, 2), colorPart(argb, 1),
-                                   colorPart(argb, 0), colorPart(argb, 3));
+        CGFloat r = colorPart(argb, 2), g = colorPart(argb, 1);
+        CGFloat b = colorPart(argb, 0), a = colorPart(argb, 3);
+        CGContextSetRGBStrokeColor(_ctx, r, g, b, a);
     }
     if (width > 0) {
         CGContextSetLineWidth(_ctx, width);
     }
-    
-    if (style > 0 && style < 5) {
-        CGFloat pattern[6];
-        int n = 0;
-        for (; LINEDASH[style][n] > 0.1f; n++) {
-            pattern[n] = LINEDASH[style][n] * (width < 1.f ? 1.f : width);
+    if (style >= 0) {
+        int linecap = style & kLineCapMask;
+        
+        style = style & kLineDashMask;
+        if (style > 0 && style < 5) {
+            CGFloat pattern[6];
+            int n = 0;
+            for (; LINEDASH[style][n] > 0.1f; n++) {
+                pattern[n] = LINEDASH[style][n] * (width < 1.f ? 1.f : width);
+            }
+            CGContextSetLineDash(_ctx, phase, pattern, n);
         }
-        CGContextSetLineDash(_ctx, phase, pattern, n);
-        CGContextSetLineCap(_ctx, kCGLineCapButt);
-    }
-    else if (0 == style) {
-        CGContextSetLineDash(_ctx, 0, NULL, 0);
-        CGContextSetLineCap(_ctx, kCGLineCapRound);
+        else if (0 == style) {
+            CGContextSetLineDash(_ctx, 0, NULL, 0);
+        }
+        if (linecap & kLineCapButt)
+            CGContextSetLineCap(_ctx, kCGLineCapButt);
+        else if (linecap & kLineCapRound)
+            CGContextSetLineCap(_ctx, kCGLineCapRound);
+        else if (linecap & kLineCapSquare)
+            CGContextSetLineCap(_ctx, kCGLineCapSquare);
+        else {
+            CGContextSetLineCap(_ctx, (style > 0 && style < 5) ? kCGLineCapButt : kCGLineCapRound);
+        }
     }
 }
 
 void GiCanvasAdapter::setBrush(int argb, int style)
 {
     if (0 == style) {
-        float alpha = colorPart(argb, 3);
+        CGFloat alpha = colorPart(argb, 3);
+        CGFloat r = colorPart(argb, 2), g = colorPart(argb, 1), b = colorPart(argb, 0);
         _fill = alpha > 1e-2f;
-        CGContextSetRGBFillColor(_ctx, colorPart(argb, 2), colorPart(argb, 1),
-                                 colorPart(argb, 0), alpha);
+        CGContextSetRGBFillColor(_ctx, r, g, b, alpha);
+        _fillARGB = argb;
     }
 }
 
@@ -180,6 +194,9 @@ void GiCanvasAdapter::closePath()
 
 void GiCanvasAdapter::drawPath(bool stroke, bool fill)
 {
+    if (!stroke && !fill) {
+        return; // can used to clip later
+    }
     if (_gradient && !CGContextIsPathEmpty(_ctx)) {
         CGContextSaveGState(_ctx);
         CGRect rect = CGContextGetPathBoundingBox(_ctx);
@@ -204,13 +221,23 @@ bool GiCanvasAdapter::clipPath()
     return !CGRectIsEmpty(rect);
 }
 
-bool GiCanvasAdapter::drawHandle(float x, float y, int type)
+bool GiCanvasAdapter::drawHandle(float x, float y, int type, float angle)
 {
-    if (type >= 0 && type < 6) {
-        NSString *names[] = { @"vgdot1.png", @"vgdot2.png", @"vgdot3.png",
-            @"vg_lock.png", @"vg_unlock.png", @"vg_back.png", @"vg_endedit.png" };
-        NSString *name = [@"TouchVG.bundle/" stringByAppendingString:names[type]];
-        UIImage *image = [UIImage imageNamed:name];
+    if (type >= 0) {    // GiHandleTypes
+        static NSString *names[] = { @"vgdot1.png", @"vgdot2.png", @"vgdot3.png",
+            @"vg_lock.png", @"vg_unlock.png", @"vg_back.png", @"vg_endedit.png",
+            @"vgnode.png", @"vgcen.png", @"vgmid.png", @"vgquad.png", @"vgtangent.png",
+            @"vgcross.png", @"vgparallel.png", @"vgnear.png", @"vgpivot.png", @"vg_overturn.png"
+        };
+        NSString *name;
+        
+        if (type < sizeof(names)/sizeof(names[0])) {
+            name = [@"TouchVG.bundle" stringByAppendingPathComponent:names[type]];
+        } else {
+            name = [NSString stringWithFormat:@"vgdot%d.png", type];
+        }
+        
+        UIImage *image = _cache ? [_cache loadImage:name] : [UIImage imageNamed:name];
         
         if (image) {
             CGImageRef img = [image CGImage];
@@ -234,7 +261,7 @@ bool GiCanvasAdapter::drawHandle(float x, float y, int type)
 bool GiCanvasAdapter::drawBitmap(const char* name, float xc, float yc,
                                  float w, float h, float angle)
 {
-    UIImage *image = (name && _cache ? [_cache loadImage:[NSString stringWithUTF8String:name]]
+    UIImage *image = (name && _cache ? [_cache loadImage:@(name)]
                       : [UIImage imageNamed:@"app57.png"]);
     if (image) {
         CGImageRef img = [image CGImage];
@@ -248,33 +275,63 @@ bool GiCanvasAdapter::drawBitmap(const char* name, float xc, float yc,
     return !!image;
 }
 
-float GiCanvasAdapter::drawTextAt(const char* text, float x, float y, float h, int align)
+NSString *GiLocalizedString(NSString *name)
 {
-    UIGraphicsPushContext(_ctx);        // 设置为当前上下文，供UIKit显示使用
-    
-    NSString *str;
-    
-    if (*text == '@') {
-        NSString *name = [NSString stringWithUTF8String:text+1];
-        str = NSLocalizedString(name, @"TouchVG");
-    } else {
-        str = [[NSString alloc] initWithUTF8String:text];
+    if ([name length] == 0) {
+        return name;
     }
     
-    // 实际字体大小 = 目标高度 h * 临时字体大小 h / 临时字体行高 actsize.height
-    UIFont *font = [UIFont systemFontOfSize:h]; // 以像素点高度作为字体大小得到临时字体
-    CGSize actsize = [str boundingRectWithSize:CGSizeMake(1e4f, h)  // 限制单行高度
-                                       options:NSStringDrawingTruncatesLastVisibleLine
-                                    attributes:@{NSFontAttributeName:font}  // 使用临时字体计算文字显示宽高
-                                       context:nil].size;
+    NSString *str = name;
+    NSString *names[] = { @"TouchVG", @"vg1", @"vg2", @"vg3", @"vg4" };
+    NSString *language = [[[NSUserDefaults standardUserDefaults]
+                           objectForKey:@"AppleLanguages"] objectAtIndex:0];
+    
+    for (int i = 0; i < 5 && [str isEqualToString:name]; i++) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:names[i] ofType:@"bundle"];
+        NSBundle *bundle = [NSBundle bundleWithPath:path];
+        NSBundle *languageBundle = [NSBundle bundleWithPath:[bundle pathForResource:language ofType:@"lproj"]];
+        str = NSLocalizedStringFromTableInBundle(name, nil, languageBundle, nil);
+        str = str ? str : name;
+    }
+    
+    return [str isEqualToString:name] ? NSLocalizedString(name, nil) : str;
+}
+
+float GiCanvasAdapter::drawTextAt(const char* text, float x, float y, float h, int align, float angle)
+{
+    UIGraphicsPushContext(_ctx);            // 设置为当前上下文，供UIKit显示使用
+    
+    NSString *str = (*text == '@') ? GiLocalizedString(@(text+1)) : @(text);
+    
+    // 实际字体大小(磅) / 目标字体行高 h = 临时字体大小(磅) h / 临时字体行高 actsize.height
+    UIFont *font = [UIFont systemFontOfSize:h];                             // 以磅单位作为字体大小得到临时字体
+    CGSize actsize = boundingRectWithSize6(str, CGSizeMake(1e4f, h),        // 限制单行高度
+                                           NSStringDrawingTruncatesLastVisibleLine,
+                                           @{NSFontAttributeName:font},     // 使用临时字体计算文字显示宽高
+                                           nil).size;
     font = [UIFont systemFontOfSize: h * h / actsize.height];
-    actsize = [str sizeWithAttributes:@{NSFontAttributeName:font}]; // 文字实际显示的宽高
     
-    x -= (align == 2) ? actsize.width : ((align == 1) ? actsize.width / 2 : 0);
-    [str drawAtPoint:CGPointMake(x, y) withAttributes:@{NSFontAttributeName:font}];  // 显示文字
-    if (*text != '@')
-        [str RELEASE];
+    UIColor *color = [UIColor colorWithRed:colorPart(_fillARGB, 2) green:colorPart(_fillARGB, 1)
+                                      blue:colorPart(_fillARGB, 0) alpha:colorPart(_fillARGB, 3)];
+    NSDictionary *attrs = @{NSFontAttributeName:font, NSForegroundColorAttributeName:color};
+    actsize = sizeWithAttributes6(str, attrs);                              // 文字实际显示的宽高
     
+    if (_fill) {
+        CGAffineTransform af = CGAffineTransformIdentity;
+        
+        if (fabsf(angle) > 1e-3f) {
+            af = CGAffineTransformRotate(CGAffineTransformMakeTranslation(x, y), -angle);
+            CGContextConcatCTM(_ctx, af);
+            x = y = 0;
+        }
+        y -= (align & kAlignBottom) ? h : (align & kAlignVCenter) ? h / 2 : 0.f;
+        x -= (align & kAlignRight) ? actsize.width : ((align & kAlignCenter) ? actsize.width / 2 : 0.f);
+        drawAtPoint6(str, CGPointMake(x, y), attrs);                        // 显示文字
+        
+        if (fabsf(angle) > 1e-3f) {
+            CGContextConcatCTM(_ctx, CGAffineTransformInvert(af));
+        }
+    }
     UIGraphicsPopContext();
     
     return actsize.width;

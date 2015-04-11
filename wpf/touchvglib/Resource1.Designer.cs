@@ -61,11 +61,416 @@ namespace touchvg {
         }
         
         /// <summary>
+        ///   查找类似 圆弧 的本地化字符串。
+        /// </summary>
+        internal static string arc {
+            get {
+                return ResourceManager.GetString("arc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 圆规(圆弧) 的本地化字符串。
+        /// </summary>
+        internal static string arc_cse {
+            get {
+                return ResourceManager.GetString("arc_cse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 三点圆弧 的本地化字符串。
+        /// </summary>
+        internal static string arc3p {
+            get {
+                return ResourceManager.GetString("arc3p", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 ,全选,重选,绘图,取消,删除,克隆,定长,不定长,锁定,解锁,编辑,返回,闭合,不闭合,加点,删点,成组,解组,翻转 的本地化字符串。
         /// </summary>
         internal static string basic_actions {
             get {
                 return ResourceManager.GetString("basic_actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 无穷直线 的本地化字符串。
+        /// </summary>
+        internal static string beeline {
+            get {
+                return ResourceManager.GetString("beeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 角平分线 的本地化字符串。
+        /// </summary>
+        internal static string bisector {
+            get {
+                return ResourceManager.GetString("bisector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 圆心 的本地化字符串。
+        /// </summary>
+        internal static string centerpt {
+            get {
+                return ResourceManager.GetString("centerpt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 圆 的本地化字符串。
+        /// </summary>
+        internal static string circle {
+            get {
+                return ResourceManager.GetString("circle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 圆心画圆 的本地化字符串。
+        /// </summary>
+        internal static string circle2p {
+            get {
+                return ResourceManager.GetString("circle2p", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 三点画圆 的本地化字符串。
+        /// </summary>
+        internal static string circle3p {
+            get {
+                return ResourceManager.GetString("circle3p", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 清空 的本地化字符串。
+        /// </summary>
+        internal static string clear {
+            get {
+                return ResourceManager.GetString("clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 交点 的本地化字符串。
+        /// </summary>
+        internal static string crosspt {
+            get {
+                return ResourceManager.GetString("crosspt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 ° 的本地化字符串。
+        /// </summary>
+        internal static string degrees {
+            get {
+                return ResourceManager.GetString("degrees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 菱形 的本地化字符串。
+        /// </summary>
+        internal static string diamond {
+            get {
+                return ResourceManager.GetString("diamond", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 点 的本地化字符串。
+        /// </summary>
+        internal static string dot {
+            get {
+                return ResourceManager.GetString("dot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 椭圆 的本地化字符串。
+        /// </summary>
+        internal static string ellipse {
+            get {
+                return ResourceManager.GetString("ellipse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 删除 的本地化字符串。
+        /// </summary>
+        internal static string erase {
+            get {
+                return ResourceManager.GetString("erase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 网格 的本地化字符串。
+        /// </summary>
+        internal static string grid {
+            get {
+                return ResourceManager.GetString("grid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 成组图形 的本地化字符串。
+        /// </summary>
+        internal static string groupshape {
+            get {
+                return ResourceManager.GetString("groupshape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 图像块 的本地化字符串。
+        /// </summary>
+        internal static string imageshape {
+            get {
+                return ResourceManager.GetString("imageshape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 单元格太小或太大 的本地化字符串。
+        /// </summary>
+        internal static string invalid_gridcell {
+            get {
+                return ResourceManager.GetString("invalid_gridcell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 线段 的本地化字符串。
+        /// </summary>
+        internal static string line {
+            get {
+                return ResourceManager.GetString("line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 折线 的本地化字符串。
+        /// </summary>
+        internal static string lines {
+            get {
+                return ResourceManager.GetString("lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 中点 的本地化字符串。
+        /// </summary>
+        internal static string midpt {
+            get {
+                return ResourceManager.GetString("midpt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 线上点 的本地化字符串。
+        /// </summary>
+        internal static string nearpt {
+            get {
+                return ResourceManager.GetString("nearpt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 顶点 的本地化字符串。
+        /// </summary>
+        internal static string nodept {
+            get {
+                return ResourceManager.GetString("nodept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 标记 的本地化字符串。
+        /// </summary>
+        internal static string note {
+            get {
+                return ResourceManager.GetString("note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 平行四边形 的本地化字符串。
+        /// </summary>
+        internal static string parallel {
+            get {
+                return ResourceManager.GetString("parallel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 路径块 的本地化字符串。
+        /// </summary>
+        internal static string pathshape {
+            get {
+                return ResourceManager.GetString("pathshape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 垂足 的本地化字符串。
+        /// </summary>
+        internal static string perppt {
+            get {
+                return ResourceManager.GetString("perppt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 多边形 的本地化字符串。
+        /// </summary>
+        internal static string polygon {
+            get {
+                return ResourceManager.GetString("polygon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 象限点 的本地化字符串。
+        /// </summary>
+        internal static string quadpt {
+            get {
+                return ResourceManager.GetString("quadpt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 四边形 的本地化字符串。
+        /// </summary>
+        internal static string quadrangle {
+            get {
+                return ResourceManager.GetString("quadrangle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 射线 的本地化字符串。
+        /// </summary>
+        internal static string rayline {
+            get {
+                return ResourceManager.GetString("rayline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 矩形 的本地化字符串。
+        /// </summary>
+        internal static string rect {
+            get {
+                return ResourceManager.GetString("rect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已恢复 的本地化字符串。
+        /// </summary>
+        internal static string redo_ok {
+            get {
+                return ResourceManager.GetString("redo_ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 圆角矩形 的本地化字符串。
+        /// </summary>
+        internal static string roundrect {
+            get {
+                return ResourceManager.GetString("roundrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 选择 的本地化字符串。
+        /// </summary>
+        internal static string select {
+            get {
+                return ResourceManager.GetString("select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已删除 %d 个图形 的本地化字符串。
+        /// </summary>
+        internal static string shape_n_deleted {
+            get {
+                return ResourceManager.GetString("shape_n_deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 图形太小，请重新绘制 的本地化字符串。
+        /// </summary>
+        internal static string shape_too_small {
+            get {
+                return ResourceManager.GetString("shape_too_small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已删除一个图形 的本地化字符串。
+        /// </summary>
+        internal static string shape1_deleted {
+            get {
+                return ResourceManager.GetString("shape1_deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 自由画 的本地化字符串。
+        /// </summary>
+        internal static string splines {
+            get {
+                return ResourceManager.GetString("splines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 正方形 的本地化字符串。
+        /// </summary>
+        internal static string square {
+            get {
+                return ResourceManager.GetString("square", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 切点 的本地化字符串。
+        /// </summary>
+        internal static string tanpt {
+            get {
+                return ResourceManager.GetString("tanpt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 三角形 的本地化字符串。
+        /// </summary>
+        internal static string triangle {
+            get {
+                return ResourceManager.GetString("triangle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 已撤销 的本地化字符串。
+        /// </summary>
+        internal static string undo_ok {
+            get {
+                return ResourceManager.GetString("undo_ok", resourceCulture);
             }
         }
         
@@ -160,6 +565,20 @@ namespace touchvg {
             }
         }
         
+        internal static System.Drawing.Bitmap vgcen {
+            get {
+                object obj = ResourceManager.GetObject("vgcen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vgcross {
+            get {
+                object obj = ResourceManager.GetObject("vgcross", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap vgdot1 {
             get {
                 object obj = ResourceManager.GetObject("vgdot1", resourceCulture);
@@ -177,6 +596,55 @@ namespace touchvg {
         internal static System.Drawing.Bitmap vgdot3 {
             get {
                 object obj = ResourceManager.GetObject("vgdot3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vgmid {
+            get {
+                object obj = ResourceManager.GetObject("vgmid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vgnear {
+            get {
+                object obj = ResourceManager.GetObject("vgnear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vgnode {
+            get {
+                object obj = ResourceManager.GetObject("vgnode", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vgparallel {
+            get {
+                object obj = ResourceManager.GetObject("vgparallel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vgpivot {
+            get {
+                object obj = ResourceManager.GetObject("vgpivot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vgquad {
+            get {
+                object obj = ResourceManager.GetObject("vgquad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap vgtangent {
+            get {
+                object obj = ResourceManager.GetObject("vgtangent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

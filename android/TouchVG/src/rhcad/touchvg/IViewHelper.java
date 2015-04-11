@@ -1,15 +1,17 @@
 //! \file IViewHelper.java
 //! \brief Android绘图视图辅助类
-// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import rhcad.touchvg.core.GiCoreView;
 import rhcad.touchvg.core.MgView;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -19,7 +21,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-//! 绘图视图辅助API接口
+/**
+ * \ingroup GROUP_ANDROID
+ * 绘图视图辅助API接口
+ */
 public interface IViewHelper {
 
     //! [状态无关]返回绘图包的版本号，1.1.jarver.sover
@@ -73,6 +78,9 @@ public interface IViewHelper {
     //! 在指定的布局中创建放大镜视图，并记下此视图
     public ViewGroup createMagnifierView(Context context, ViewGroup layout, IGraphView mainView);
 
+    //! 创建不使用交互命令的临时隐藏视图，用完调用 close() 释放
+    public void createDummyView(Context context, int width, int height);
+
     //! [状态无关]设置额外的上下文操作按钮的图像ID数组，其动作序号从40起
     public void setExtraContextImages(Context context, int[] ids);
 
@@ -91,6 +99,15 @@ public interface IViewHelper {
     //! 切换到下一命令
     public boolean switchCommand();
 
+    //! 返回绘图命令选项{name:value}
+    public Map<String, String> getOptions();
+
+    //! 设置或清除绘图命令选项
+    public void setOption(String name, boolean value);
+    public void setOption(String name, int value);
+    public void setOption(String name, float value);
+    public void setOption(String name, String value);
+
     //! 返回线宽，正数表示单位为0.01毫米，零表示1像素宽，负数表示单位为像素
     public int getLineWidth();
 
@@ -103,19 +120,23 @@ public interface IViewHelper {
     //! 设置像素单位的线宽，总是为正数
     public void setStrokeWidth(int w);
 
-    public final static int SOLID_LINE  = 0;
-    public final static int DASH_LINE   = 1;
-    public final static int DOT_LINE    = 2;
-    public final static int DASH_DOT    = 3;
-    public final static int DASH_DOT_DOT = 4;
-    public final static int NULL_LINE   = 5;
-    public static final int MAX_LINESTYLE = 5;
-
-    //! 返回线型(SOLID_LINE,DASH_LINE..NULL_LINE)
+    //! 返回线型(Const.SOLID_LINE,DASH_LINE..NULL_LINE)
     public int getLineStyle();
 
-    //! 设置线型(SOLID_LINE,DASH_LINE..NULL_LINE)
+    //! 设置线型(Const.SOLID_LINE,DASH_LINE..NULL_LINE)
     public void setLineStyle(int style);
+
+    //! 返回起端箭头(Const.ARROWHEAD_NONE,ARROWHEAD_SHARPCLOSED..)
+    public int getStartArrowHead();
+
+    //! 设置起端箭头(Const.ARROWHEAD_NONE,ARROWHEAD_SHARPCLOSED..)
+    public void setStartArrowHead(int style);
+
+    //! 返回末端箭头(Const.ARROWHEAD_NONE,ARROWHEAD_SHARPCLOSED..)
+    public int getEndArrowHead();
+
+    //! 设置末端箭头(Const.ARROWHEAD_NONE,ARROWHEAD_SHARPCLOSED..)
+    public void setEndArrowHead(int style);
 
     //! 返回线条颜色，忽略透明度分量，0 表示不画线条
     public int getLineColor();
@@ -153,8 +174,17 @@ public interface IViewHelper {
     //! 放缩显示全部内容
     public boolean zoomToExtent();
 
+    //! 放缩显示全部内容
+    public boolean zoomToExtent(float margin);
+
     //! 放缩显示指定范围到视图区域
     public boolean zoomToModel(float x, float y, float w, float h);
+
+    //! 放缩显示指定范围到视图区域
+    public boolean zoomToModel(float x, float y, float w, float h, float margin);
+
+    //! 图形向右上平移显示，像素单位
+    public boolean zoomPan(float dxPixel, float dyPixel);
 
     //! 视图坐标转为模型坐标
     public PointF displayToModel(float x, float y);
@@ -180,6 +210,9 @@ public interface IViewHelper {
     //! 重做
     public void redo();
 
+    //! 在块中批量操作，最后才重新生成
+    public void combineRegen(Runnable action);
+
     //! 是否正在录屏
     public boolean isRecording();
 
@@ -204,6 +237,12 @@ public interface IViewHelper {
     //! 设置是否允许触摸交互
     public void setGestureEnabled(boolean enabled);
 
+    //! 设置是否向当前命令传递触摸速度
+    public void setVelocityTrackerEnabled(boolean enabled);
+
+    //! 返回是否允许放缩显示
+    public boolean getZoomEnabled();
+
     //! 是否允许放缩显示
     public void setZoomEnabled(boolean enabled);
 
@@ -219,6 +258,12 @@ public interface IViewHelper {
     //! 得到当前显示的静态图形快照，自动去掉周围空白，支持多线程
     public Bitmap extentSnapshot(int spaceAround, boolean transparent);
 
+    //! 在矩形框内绘制指定ID的图形
+    public Bitmap snapshotWithShapes(int sid, int width, int height);
+
+    //! 在矩形框内绘制所有图形
+    public Bitmap snapshotWithShapes(int width, int height);
+
     //! 保存当前显示的静态图形快照(去掉周围空白)到PNG文件，自动添加后缀名.png，支持多线程
     public boolean exportExtentAsPNG(String filename, int spaceAround);
 
@@ -231,8 +276,20 @@ public interface IViewHelper {
     //! 导出静态图形到SVG文件，自动添加后缀名.svg
     public boolean exportSVG(String filename);
 
+    //! 用SVG路径的d坐标序列创建或设置图形形状
+    public int importSVGPath(int sid, String d);
+
+    //! 输出SVG路径的d坐标序列
+    public String exportSVGPath(int sid);
+
     //! 返回图形总数
     public int getShapeCount();
+
+    //! 返回未锁定的可见图形的个数
+    public int getUnlockedShapeCount();
+
+    //! 返回可见图形的个数
+    public int getVisibleShapeCount();
 
     //! 返回选中的图形个数
     public int getSelectedCount();
@@ -243,23 +300,59 @@ public interface IViewHelper {
     //! 返回当前选中的图形的ID，选中多个时只取第一个
     public int getSelectedShapeID();
 
+    //! 选择一个图形
+    public void setSelectedShapeID(int sid);
+
+    //! 返回当前选中的图形的ID
+    public int[] getSelectedIds();
+
+    //! 选中指定ID的图形
+    public void setSelectedIds(int[] ids);
+
+    //! 当前线性图形中当前控制点序号
+    public int getSelectedHandle();
+
     //! 返回图形改变次数，可用于检查是否需要保存
     public int getChangeCount();
 
     //! 返回图形改变次数，可用于检查是否需要保存
     public int getDrawCount();
 
-    //! 返回图形显示范围
+    //! 返回当前视图区域的模型坐标范围，模型坐标
+    public Rect getViewBox();
+
+    //! 得到当前显示比例，正数，1表示100%，越大显示得越大
+    public float getViewScale();
+
+    //! 设置当前显示比例，正数，1表示100%，越大显示得越大
+    public boolean setViewScale(float scale);
+
+    //! 返回文档的模型坐标范围
+    public Rect getModelBox();
+
+    //! 返回图形显示范围，像素坐标
     public Rect getDisplayExtent();
 
-    //! 返回图形显示范围，支持多线程
+    //! 返回图形显示范围，像素坐标，支持多线程
     public Rect getDisplayExtent(int doc, int gs);
 
-    //! 返回选择包络框
+    //! 返回选择包络框，像素坐标
     public Rect getBoundingBox();
 
     //! 得到指定ID的图形的包络框显示坐标
     public Rect getShapeBox(int sid);
+
+    //! 得到指定ID的图形的模型坐标范围
+    public RectF getModelBox(int sid);
+
+    //! 得到当前触摸位置，视图坐标
+    public Point getCurrentPoint();
+
+    //! 得到当前触摸位置的模型坐标
+    public PointF getCurrentModelPoint();
+
+    //! 得到指定序号的控制点的模型坐标
+    public PointF getHandlePoint(int sid, int index);
 
     //! 得到图形的JSON内容，支持多线程
     public String getContent();
@@ -276,8 +369,11 @@ public interface IViewHelper {
     //! 保存图形到JSON文件，自动添加后缀名.vg，支持多线程
     public boolean saveToFile(String vgfile);
 
-    //! 清除所有图形
+    //! 清除所有图形，含锁定的图形
     public void clearShapes();
+
+    //! 清除当前视图区域内的未锁定的图形
+    public void eraseView();
 
     //! 在默认位置插入一个程序资源中的SVG图像(id=R.raw.name)
     public int insertSVGFromResource(String name);
@@ -309,6 +405,9 @@ public interface IViewHelper {
     //! 插入一个图像文件，并指定图像的中心位置和自定义数据
     public int insertImageFromFile(String filename, int xc, int yc, int tag);
 
+    //! 获取指定ID的图像图形的原始图像宽高、显示宽高、角度 {orgw, orgh, w, h, angle}
+    public boolean getImageSize(float[] info, int sid);
+
     //! 返回是否有容纳图像的图形对象
     public boolean hasImageShape();
 
@@ -318,8 +417,8 @@ public interface IViewHelper {
     //! 查找指定Tag的图形对象ID
     public int findShapeByTag(int tag);
 
-    //! 遍历有容纳图像的图形对象
-    public ArrayList<Bundle> getImageShapes();
+    //! 遍历有容纳图像的图形对象{id,name,path,rect,image}
+    public List<Bundle> getImageShapes();
 
     //! 返回图像文件的默认路径
     public String getImagePath();
@@ -347,4 +446,10 @@ public interface IViewHelper {
 
     //! 所属的Activity恢复状态时调用
     public void onRestoreInstanceState(Bundle savedState);
+
+    //! 显示消息文字
+    public void showMessage(String text);
+
+    //! 返回本地化文字
+    public String getLocalizedString(String name);
 }

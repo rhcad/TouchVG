@@ -1,6 +1,6 @@
 //! \file IGraphView.java
 //! \brief 绘图视图接口
-// Copyright (c) 2012-2014, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg;
 
@@ -12,7 +12,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
-//! 绘图视图接口
+/**
+ * \ingroup GROUP_ANDROID
+ * 绘图视图接口
+ */
 public interface IGraphView {
 
     //! 返回视图回调适配器对象
@@ -86,14 +89,29 @@ public interface IGraphView {
         public void onDynamicChanged(IGraphView view);
     }
 
+    //! 视图放缩的通知
+    public static interface OnZoomChangedListener {
+        public void onZoomChanged(IGraphView view);
+    }
+
     //! 第一次后台渲染结束的通知
     public static interface OnFirstRegenListener {
         public void onFirstRegen(IGraphView view);
     }
 
+    //! 动态绘图完成的通知
+    public static interface OnDynDrawEndedListener {
+        public void onDynDrawEnded(IGraphView view);
+    }
+
     //! 图形录制的通知
     public static interface OnShapesRecordedListener {
         public void onShapesRecorded(IGraphView view, Bundle info);
+    }
+
+    //! 图形将删除的通知
+    public static interface OnShapeWillDeleteListener {
+        public void onShapeWillDelete(IGraphView view, int sid);
     }
 
     //! 图形已删除的通知
@@ -103,7 +121,12 @@ public interface IGraphView {
 
     //! 图形点击的通知，返回false继续显示上下文按钮
     public static interface OnShapeClickedListener {
-        public boolean onShapeClicked(IGraphView view, int sid, int tag, float x, float y);
+        public boolean onShapeClicked(IGraphView view, int type, int sid, int tag, float x, float y);
+    }
+
+    //! 图形双击的通知，返回true自定义编辑，返回false默认编辑
+    public static interface OnShapeDblClickedListener {
+        public boolean onShapeDblClicked(IGraphView view, int type, int sid, int tag);
     }
 
     //! 上下文按钮点击的通知
@@ -114,6 +137,12 @@ public interface IGraphView {
     //! 绘图视图销毁后的通知
     public static interface OnViewDetachedListener {
         public void onGraphViewDetached();
+    }
+
+    //! 绘图手势(kGesturePress 等)的通知
+    public static interface OnDrawGestureListener {
+        public boolean onPreGesture(int gestureType, float x, float y);
+        public void onPostGesture(int gestureType, float x, float y);
     }
 
     //! 添加当前命令改变的观察者
@@ -128,11 +157,20 @@ public interface IGraphView {
     //! 添加图形动态改变的观察者
     public void setOnDynamicChangedListener(OnDynamicChangedListener listener);
 
+    //! 添加视图放缩的观察者
+    public void setOnZoomChangedListener(OnZoomChangedListener listener);
+
     //! 添加第一次后台渲染结束的观察者
     public void setOnFirstRegenListener(OnFirstRegenListener listener);
 
+    //! 添加动态绘图完成的观察者
+    public void setOnDynDrawEndedListener(OnDynDrawEndedListener listener);
+
     //! 添加图形录制的观察者
     public void setOnShapesRecordedListener(OnShapesRecordedListener listener);
+
+    //! 添加图形将删除的观察者
+    public void setOnShapeWillDeleteListener(OnShapeWillDeleteListener listener);
 
     //! 添加图形已删除的观察者
     public void setOnShapeDeletedListener(OnShapeDeletedListener listener);
@@ -140,6 +178,12 @@ public interface IGraphView {
     //! 添加图形点击的观察者
     public void setOnShapeClickedListener(OnShapeClickedListener listener);
 
+    //! 添加图形双击的观察者
+    public void setOnShapeDblClickedListener(OnShapeDblClickedListener listener);
+
     //! 添加上下文按钮点击的观察者
     public void setOnContextActionListener(OnContextActionListener listener);
+
+    //! 添加绘图手势的观察者
+    public void setOnGestureListener(OnDrawGestureListener listener);
 }

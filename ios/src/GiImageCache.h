@@ -1,6 +1,6 @@
 //! \file GiImageCache.h
 //! \brief 定义图像对象缓存类 GiImageCache
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #import <UIKit/UIKit.h>
 #include "ARCMacro.h"
@@ -8,7 +8,7 @@
 //! 图像对象缓存类
 @interface GiImageCache : NSObject {
     NSMutableDictionary *_images;
-    NSMutableDictionary *_sprites;
+    NSMutableDictionary *_spirits;
 }
 
 @property (nonatomic, STRONG) NSString  *imagePath; //!< 图像文件的默认路径(可以没有末尾的分隔符)
@@ -26,6 +26,6 @@
 - (CGSize)addImageFromFile:(NSString *)filename :(NSString **)name;     //!< 在默认位置插入一个图像文件
 
 //! Convert tag$png:prefix%d.png to png:prefixnum.png
-- (void)setCurrentImage:(NSString *)spriteName newName:(NSString *)name;
+- (void)setCurrentImage:(NSString *)spiritName newName:(NSString *)name;
 
 @end

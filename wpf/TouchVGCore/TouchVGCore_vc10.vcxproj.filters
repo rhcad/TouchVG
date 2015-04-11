@@ -1,0 +1,662 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\canvas">
+      <UniqueIdentifier>{5f24b30a-32eb-487a-8e95-8d1e62a71ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cmd">
+      <UniqueIdentifier>{85831abc-856e-4e71-bbe8-7e1db9b3fcd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cmdbase">
+      <UniqueIdentifier>{94b451e7-c585-4138-a1af-007d1db4850d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cmdbase">
+      <UniqueIdentifier>{be37e0a2-e221-4910-9e7c-4e46457adb2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cmdbasic">
+      <UniqueIdentifier>{3e018f6a-14b2-44c2-ac4e-ae802eec8fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cmdbasic">
+      <UniqueIdentifier>{39fb7232-6310-4c63-8405-66d3fc45fb86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cmdmgr">
+      <UniqueIdentifier>{16fc75a2-7f34-417c-8411-0d3431b8530c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cmdmgr">
+      <UniqueIdentifier>{934a3c51-e2fe-4a66-9c14-7444cd8ffb54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\cmdobserver">
+      <UniqueIdentifier>{90c1044f-2455-477c-9945-c37111dfccc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\geom">
+      <UniqueIdentifier>{f36941e9-bfd0-4b40-b2ee-a3f91b75e1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\geom">
+      <UniqueIdentifier>{01fafa62-ad30-4c73-b554-9e3efc593b0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\graph">
+      <UniqueIdentifier>{73d7a55b-ea37-470b-a9d7-f05ce3b24ca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graph">
+      <UniqueIdentifier>{c4b91c9f-24cf-414f-a9dd-ef415ab2e2ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\jsonstorage">
+      <UniqueIdentifier>{3d83b679-54ee-4764-adb6-74e87ac61248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\jsonstorage">
+      <UniqueIdentifier>{5b56b379-299a-40e4-b29b-dafd6022b186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\shape">
+      <UniqueIdentifier>{09099310-649d-43f0-8ff4-3a9ed7fbe2c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shape">
+      <UniqueIdentifier>{9558cca0-2502-442c-9fe3-d255049d7f02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\shapedoc">
+      <UniqueIdentifier>{2374bdc3-685d-466f-a8a7-d8e6b4179bfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shapedoc">
+      <UniqueIdentifier>{4c8631f9-af6e-475f-bc68-712420a954c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\storage">
+      <UniqueIdentifier>{40f922fb-79d8-4d6f-b065-7ba51504dcc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\test">
+      <UniqueIdentifier>{4990d92d-a27d-4343-9770-f5197125d562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\test">
+      <UniqueIdentifier>{7bec652d-b816-46d6-b001-4c2b46163b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\jsonstorage\rapidjson">
+      <UniqueIdentifier>{3ce51e8f-1944-429c-b0c0-eb7ca52daa74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\view">
+      <UniqueIdentifier>{bef15256-cacb-43d1-ad72-e0de7376dc2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\view">
+      <UniqueIdentifier>{efec7cca-9b40-4f08-9fe0-410cadf51935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\export">
+      <UniqueIdentifier>{c37044ad-bd7f-432c-9e14-32009d130030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\export">
+      <UniqueIdentifier>{2f0de004-3552-42e0-af9b-b5a08e264359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\record">
+      <UniqueIdentifier>{c366e01f-b80a-4cc6-bf40-b9a539fc099e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\record">
+      <UniqueIdentifier>{5f1e608d-bee7-4726-a650-458d06fc73cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gshape">
+      <UniqueIdentifier>{aef7d0de-a6d3-4099-a519-64990d612aa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gshape">
+      <UniqueIdentifier>{c89238c8-65b3-4cfa-9ff1-dc1c3ef979a6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\core\include\mgvector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\mglog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\canvas\gicanvas.h">
+      <Filter>Header Files\canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmd\mgaction.h">
+      <Filter>Header Files\cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmd\mgcmd.h">
+      <Filter>Header Files\cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmd\mgcoreview.h">
+      <Filter>Header Files\cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmd\mgselect.h">
+      <Filter>Header Files\cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmd\mgsnap.h">
+      <Filter>Header Files\cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmd\mgview.h">
+      <Filter>Header Files\cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbase\mgcmddraw.h">
+      <Filter>Header Files\cmdbase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbase\mgdrawarc.h">
+      <Filter>Header Files\cmdbase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbase\mgdrawrect.h">
+      <Filter>Header Files\cmdbase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shapedoc\mglayer.h">
+      <Filter>Header Files\shapedoc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shapedoc\mgshapedoc.h">
+      <Filter>Header Files\shapedoc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shapedoc\spfactoryimpl.h">
+      <Filter>Header Files\shapedoc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\storage\mgstorage.h">
+      <Filter>Header Files\storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\test\RandomShape.h">
+      <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\test\testcanvas.h">
+      <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\jsonstorage\mgjsonstorage.h">
+      <Filter>Header Files\jsonstorage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\graph\gicolor.h">
+      <Filter>Header Files\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\graph\gicontxt.h">
+      <Filter>Header Files\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\graph\gigraph.h">
+      <Filter>Header Files\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\graph\gilock.h">
+      <Filter>Header Files\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\graph\gixform.h">
+      <Filter>Header Files\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgbase.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgbox.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgcurv.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgdef.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mglnrel.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgmat.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgnear.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgpnt.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgtol.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgvec.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdobserver\cmdobserver.h">
+      <Filter>Header Files\cmdobserver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdobserver\cmdsubject.h">
+      <Filter>Header Files\cmdobserver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdmgr\mgcmdmgr.h">
+      <Filter>Header Files\cmdmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdmgr\mgcmdmgrfactory.h">
+      <Filter>Header Files\cmdmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\cmdbasic.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawcircle.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawdiamond.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawellipse.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawfreelines.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawgrid.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbase\mgdrawline.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawlines.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawparallel.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawpolygon.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawquadrangle.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawsplines.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawsquare.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawtriang.h">
+      <Filter>Header Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\filestream.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\document.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\internal\pow10.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\writer.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\prettywriter.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\rapidjson.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\reader.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\internal\stack.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\internal\strfunc.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\stringbuffer.h">
+      <Filter>Source Files\jsonstorage\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\graph\gigraph_.h">
+      <Filter>Source Files\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\graph\giplclip.h">
+      <Filter>Source Files\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\geom\mgdblpt.h">
+      <Filter>Source Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\cmdmgr\mgcmdmgr_.h">
+      <Filter>Source Files\cmdmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\cmdmgr\mgcmdselect.h">
+      <Filter>Source Files\cmdmgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\cmdbasic\mgcmderase.h">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\view\gicoreview.h">
+      <Filter>Header Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\view\gigesture.h">
+      <Filter>Header Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\view\gimousehelper.h">
+      <Filter>Header Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\view\giview.h">
+      <Filter>Header Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\view\GcBaseView.h">
+      <Filter>Source Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\view\GcGraphView.h">
+      <Filter>Source Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\view\GcMagnifierView.h">
+      <Filter>Source Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\view\GcShapeDoc.h">
+      <Filter>Source Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\corever.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\export\svgcanvas.h">
+      <Filter>Header Files\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\export\simple_svg.hpp">
+      <Filter>Source Files\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\record\recordshapes.h">
+      <Filter>Header Files\record</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\view\gicoreviewimpl.h">
+      <Filter>Source Files\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\export\girecordcanvas.h">
+      <Filter>Header Files\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\export\girecordshape.h">
+      <Filter>Header Files\export</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\utf8_core.h">
+      <Filter>Source Files\jsonstorage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\src\jsonstorage\utf8_unchecked.h">
+      <Filter>Source Files\jsonstorage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgarc.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgbasesp.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgcshapes.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgdiamond.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgdot.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgellipse.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mggrid.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgline.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mglines.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgobject.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgparallel.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgpathsp.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgrdrect.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgrect.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgshape_.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgshapetype.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\gshape\mgsplines.h">
+      <Filter>Header Files\gshape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shape\mgshape.h">
+      <Filter>Header Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shape\mgcomposite.h">
+      <Filter>Header Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shape\mgimagesp.h">
+      <Filter>Header Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shape\mgshapet.h">
+      <Filter>Header Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shape\mgbasicspreg.h">
+      <Filter>Header Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shape\mgshapes.h">
+      <Filter>Header Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shape\mgspfactory.h">
+      <Filter>Header Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\geom\mgpath.h">
+      <Filter>Header Files\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\shape\mgbasicsps.h">
+      <Filter>Header Files\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\include\mgstrcallback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\core\src\shapedoc\mglayer.cpp">
+      <Filter>Source Files\shapedoc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\shapedoc\mgshapedoc.cpp">
+      <Filter>Source Files\shapedoc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\shapedoc\spfactoryimpl.cpp">
+      <Filter>Source Files\shapedoc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\test\RandomShape.cpp">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\test\testcanvas.cpp">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\jsonstorage\mgjsonstorage.cpp">
+      <Filter>Source Files\jsonstorage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\graph\gigraph.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\graph\gixform.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\fitcurves.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgbase.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgbox.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgcurv.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mglnrel.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgmat.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgnear.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgnearbz.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgvec.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdmgr\cmdsubject.cpp">
+      <Filter>Source Files\cmdmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdmgr\mgactions.cpp">
+      <Filter>Source Files\cmdmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdmgr\mgcmdmgr2.cpp">
+      <Filter>Source Files\cmdmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdmgr\mgcmdmgr_.cpp">
+      <Filter>Source Files\cmdmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdmgr\mgcmdselect.cpp">
+      <Filter>Source Files\cmdmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdmgr\mgsnapimpl.cpp">
+      <Filter>Source Files\cmdmgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\cmdbasic.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgcmderase.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawcircle.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawdiamond.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawellipse.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawfreelines.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawgrid.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbase\mgdrawline.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawlines.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawparallel.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawpolygon.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawsplines.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawsquare.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawtriang.cpp">
+      <Filter>Source Files\cmdbasic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbase\mgcmddraw.cpp">
+      <Filter>Source Files\cmdbase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbase\mgdrawarc.cpp">
+      <Filter>Source Files\cmdbase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\cmdbase\mgdrawrect.cpp">
+      <Filter>Source Files\cmdbase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgpnt.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\view\GcGraphView.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\view\GcMagnifierView.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\view\GcShapeDoc.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\view\gicoreview.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\view\gimousehelper.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\export\svgcanvas.cpp">
+      <Filter>Source Files\export</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\record\recordshapes.cpp">
+      <Filter>Source Files\record</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\view\gicorerecord.cpp">
+      <Filter>Source Files\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\export\girecordcanvas.cpp">
+      <Filter>Source Files\export</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgarc.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgbasesp.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgcshapes.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgdiamond.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgdot.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgellipse.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mggrid.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgline.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mglines.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgparallel.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgpathsp.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgrdrect.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgrect.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgsplines.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\shape\mgbasicspreg.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\shape\mgimagesp.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\shape\mgcomposite.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\shape\mgshape.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\shape\mgshapes.cpp">
+      <Filter>Source Files\shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\mgpath.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\geom\nanosvg.cpp">
+      <Filter>Source Files\geom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\src\gshape\mgarccross.cpp">
+      <Filter>Source Files\gshape</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

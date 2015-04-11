@@ -19,33 +19,33 @@
     <ClInclude Include=".\touchvg_csharp_wrap.h">
       <Filter>Swig Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TouchVGCore\core\include\canvas\gicanvas.h">
+    <ClInclude Include="..\..\core\include\canvas\gicanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TouchVGCore\core\include\view\giview.h">
+    <ClInclude Include="..\..\core\include\view\giview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TouchVGCore\core\include\test\testcanvas.h">
+    <ClInclude Include="..\..\core\include\test\testcanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TouchVGCore\core\include\view\gicoreview.h">
+    <ClInclude Include="..\..\core\include\view\gicoreview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TouchVGCore\core\include\view\gigesture.h">
+    <ClInclude Include="..\..\core\include\view\gigesture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TouchVGCore\core\include\graph\gicolor.h">
+    <ClInclude Include="..\..\core\include\graph\gicolor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TouchVGCore\core\include\graph\gicontxt.h">
+    <ClInclude Include="..\..\core\include\graph\gicontxt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\TouchVGCore\core\include\view\gimousehelper.h">
+    <ClInclude Include="..\..\core\include\view\gimousehelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\..\TouchVGCore\core\src\view\touchvg.swig">
+    <CustomBuild Include="..\..\core\src\view\touchvg.swig">
       <Filter>Swig Files</Filter>
     </CustomBuild>
   </ItemGroup>

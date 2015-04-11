@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\core\include\canvas\gicanvas.h" />
+    <ClInclude Include="..\..\core\include\cmdbase\mgcmddraw.h" />
+    <ClInclude Include="..\..\core\include\cmdbase\mgdrawarc.h" />
+    <ClInclude Include="..\..\core\include\cmdbase\mgdrawrect.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\cmdbasic.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawcircle.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawdiamond.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawellipse.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawfreelines.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawgrid.h" />
+    <ClInclude Include="..\..\core\include\cmdbase\mgdrawline.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawlines.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawparallel.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawpolygon.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawquadrangle.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawsplines.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawsquare.h" />
+    <ClInclude Include="..\..\core\include\cmdbasic\mgdrawtriang.h" />
+    <ClInclude Include="..\..\core\include\cmdmgr\mgcmdmgr.h" />
+    <ClInclude Include="..\..\core\include\cmdmgr\mgcmdmgrfactory.h" />
+    <ClInclude Include="..\..\core\include\cmdobserver\cmdobserver.h" />
+    <ClInclude Include="..\..\core\include\cmdobserver\cmdsubject.h" />
+    <ClInclude Include="..\..\core\include\cmd\mgaction.h" />
+    <ClInclude Include="..\..\core\include\cmd\mgcmd.h" />
+    <ClInclude Include="..\..\core\include\cmd\mgcoreview.h" />
+    <ClInclude Include="..\..\core\include\cmd\mgselect.h" />
+    <ClInclude Include="..\..\core\include\cmd\mgsnap.h" />
+    <ClInclude Include="..\..\core\include\cmd\mgview.h" />
+    <ClInclude Include="..\..\core\include\export\girecordcanvas.h" />
+    <ClInclude Include="..\..\core\include\export\girecordshape.h" />
+    <ClInclude Include="..\..\core\include\export\svgcanvas.h" />
+    <ClInclude Include="..\..\core\include\geom\mgpath.h" />
+    <ClInclude Include="..\..\core\include\geom\mgbase.h" />
+    <ClInclude Include="..\..\core\include\geom\mgbox.h" />
+    <ClInclude Include="..\..\core\include\geom\mgcurv.h" />
+    <ClInclude Include="..\..\core\include\geom\mgdef.h" />
+    <ClInclude Include="..\..\core\include\geom\mglnrel.h" />
+    <ClInclude Include="..\..\core\include\geom\mgmat.h" />
+    <ClInclude Include="..\..\core\include\geom\mgnear.h" />
+    <ClInclude Include="..\..\core\include\geom\mgpnt.h" />
+    <ClInclude Include="..\..\core\include\geom\mgtol.h" />
+    <ClInclude Include="..\..\core\include\geom\mgvec.h" />
+    <ClInclude Include="..\..\core\include\graph\gicolor.h" />
+    <ClInclude Include="..\..\core\include\graph\gicontxt.h" />
+    <ClInclude Include="..\..\core\include\graph\gigraph.h" />
+    <ClInclude Include="..\..\core\include\graph\gilock.h" />
+    <ClInclude Include="..\..\core\include\graph\gixform.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgarc.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgbasesp.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgcshapes.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgdiamond.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgdot.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgellipse.h" />
+    <ClInclude Include="..\..\core\include\gshape\mggrid.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgline.h" />
+    <ClInclude Include="..\..\core\include\gshape\mglines.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgobject.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgparallel.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgpathsp.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgrdrect.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgrect.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgshapetype.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgshape_.h" />
+    <ClInclude Include="..\..\core\include\gshape\mgsplines.h" />
+    <ClInclude Include="..\..\core\include\jsonstorage\mgjsonstorage.h" />
+    <ClInclude Include="..\..\core\include\mglog.h" />
+    <ClInclude Include="..\..\core\include\mgstrcallback.h" />
+    <ClInclude Include="..\..\core\include\mgvector.h" />
+    <ClInclude Include="..\..\core\include\record\recordshapes.h" />
+    <ClInclude Include="..\..\core\include\shapedoc\mglayer.h" />
+    <ClInclude Include="..\..\core\include\shapedoc\mgshapedoc.h" />
+    <ClInclude Include="..\..\core\include\shapedoc\spfactoryimpl.h" />
+    <ClInclude Include="..\..\core\include\shape\mgbasicspreg.h" />
+    <ClInclude Include="..\..\core\include\shape\mgbasicsps.h" />
+    <ClInclude Include="..\..\core\include\shape\mgcomposite.h" />
+    <ClInclude Include="..\..\core\include\shape\mgimagesp.h" />
+    <ClInclude Include="..\..\core\include\shape\mgshape.h" />
+    <ClInclude Include="..\..\core\include\shape\mgshapes.h" />
+    <ClInclude Include="..\..\core\include\shape\mgshapet.h" />
+    <ClInclude Include="..\..\core\include\shape\mgspfactory.h" />
+    <ClInclude Include="..\..\core\include\storage\mgstorage.h" />
+    <ClInclude Include="..\..\core\include\test\RandomShape.h" />
+    <ClInclude Include="..\..\core\include\test\testcanvas.h" />
+    <ClInclude Include="..\..\core\src\cmdbasic\mgcmderase.h" />
+    <ClInclude Include="..\..\core\src\cmdmgr\mgcmdmgr_.h" />
+    <ClInclude Include="..\..\core\src\cmdmgr\mgcmdselect.h" />
+    <ClInclude Include="..\..\core\src\corever.h" />
+    <ClInclude Include="..\..\core\src\export\simple_svg.hpp" />
+    <ClInclude Include="..\..\core\src\geom\mgdblpt.h" />
+    <ClInclude Include="..\..\core\src\graph\gigraph_.h" />
+    <ClInclude Include="..\..\core\src\graph\giplclip.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\document.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\filestream.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\internal\pow10.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\internal\stack.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\prettywriter.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\rapidjson.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\reader.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\stringbuffer.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\rapidjson\writer.h" />
+    <ClInclude Include="..\..\core\include\view\gicoreview.h" />
+    <ClInclude Include="..\..\core\include\view\gigesture.h" />
+    <ClInclude Include="..\..\core\include\view\gimousehelper.h" />
+    <ClInclude Include="..\..\core\include\view\giview.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\utf8_core.h" />
+    <ClInclude Include="..\..\core\src\jsonstorage\utf8_unchecked.h" />
+    <ClInclude Include="..\..\core\src\view\GcBaseView.h" />
+    <ClInclude Include="..\..\core\src\view\GcGraphView.h" />
+    <ClInclude Include="..\..\core\src\view\GcMagnifierView.h" />
+    <ClInclude Include="..\..\core\src\view\GcShapeDoc.h" />
+    <ClInclude Include="..\..\core\src\view\gicoreviewimpl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\core\src\cmdbase\mgcmddraw.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbase\mgdrawarc.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbase\mgdrawrect.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\cmdbasic.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgcmderase.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawcircle.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawdiamond.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawellipse.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawfreelines.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawgrid.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbase\mgdrawline.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawlines.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawparallel.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawpolygon.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawsplines.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawsquare.cpp" />
+    <ClCompile Include="..\..\core\src\cmdbasic\mgdrawtriang.cpp" />
+    <ClCompile Include="..\..\core\src\cmdmgr\cmdsubject.cpp" />
+    <ClCompile Include="..\..\core\src\cmdmgr\mgactions.cpp" />
+    <ClCompile Include="..\..\core\src\cmdmgr\mgcmdmgr2.cpp" />
+    <ClCompile Include="..\..\core\src\cmdmgr\mgcmdmgr_.cpp" />
+    <ClCompile Include="..\..\core\src\cmdmgr\mgcmdselect.cpp" />
+    <ClCompile Include="..\..\core\src\cmdmgr\mgsnapimpl.cpp" />
+    <ClCompile Include="..\..\core\src\export\girecordcanvas.cpp" />
+    <ClCompile Include="..\..\core\src\export\svgcanvas.cpp" />
+    <ClCompile Include="..\..\core\src\geom\fitcurves.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgpath.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgbase.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgbox.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgcurv.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mglnrel.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgmat.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgnear.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgnearbz.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgpnt.cpp" />
+    <ClCompile Include="..\..\core\src\geom\mgvec.cpp" />
+    <ClCompile Include="..\..\core\src\geom\nanosvg.cpp" />
+    <ClCompile Include="..\..\core\src\graph\gigraph.cpp" />
+    <ClCompile Include="..\..\core\src\graph\gixform.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgarc.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgbasesp.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgarccross.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgcshapes.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgdiamond.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgdot.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgellipse.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mggrid.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgline.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mglines.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgparallel.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgpathsp.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgrdrect.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgrect.cpp" />
+    <ClCompile Include="..\..\core\src\gshape\mgsplines.cpp" />
+    <ClCompile Include="..\..\core\src\jsonstorage\mgjsonstorage.cpp" />
+    <ClCompile Include="..\..\core\src\record\recordshapes.cpp" />
+    <ClCompile Include="..\..\core\src\shapedoc\mglayer.cpp" />
+    <ClCompile Include="..\..\core\src\shapedoc\mgshapedoc.cpp" />
+    <ClCompile Include="..\..\core\src\shapedoc\spfactoryimpl.cpp" />
+    <ClCompile Include="..\..\core\src\shape\mgbasicspreg.cpp" />
+    <ClCompile Include="..\..\core\src\shape\mgcomposite.cpp" />
+    <ClCompile Include="..\..\core\src\shape\mgimagesp.cpp" />
+    <ClCompile Include="..\..\core\src\shape\mgshape.cpp" />
+    <ClCompile Include="..\..\core\src\shape\mgshapes.cpp" />
+    <ClCompile Include="..\..\core\src\test\RandomShape.cpp" />
+    <ClCompile Include="..\..\core\src\test\testcanvas.cpp" />
+    <ClCompile Include="..\..\core\src\view\GcGraphView.cpp" />
+    <ClCompile Include="..\..\core\src\view\GcMagnifierView.cpp" />
+    <ClCompile Include="..\..\core\src\view\GcShapeDoc.cpp" />
+    <ClCompile Include="..\..\core\src\view\gicorerecord.cpp" />
+    <ClCompile Include="..\..\core\src\view\gicoreview.cpp" />
+    <ClCompile Include="..\..\core\src\view\gimousehelper.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A7119A43-A135-413A-A852-F2945924AC17}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>TouchVGCore</RootNamespace>
+    <ProjectName>TouchVGCore</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\build\$(Configuration)10\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IntDir>..\build\obj\$(Configuration)10\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\build\$(Configuration)10\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>..\build\obj\$(Configuration)10\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\core\include;..\..\core\include\canvas;..\..\core\include\test;..\..\core\include\geom;..\..\core\include\graph;..\..\core\include\gshape;..\..\core\include\shape;..\..\core\include\storage;..\..\core\include\shapedoc;..\..\core\include\jsonstorage;..\..\core\include\cmd;..\..\core\include\cmdobserver;..\..\core\include\cmdbase;..\..\core\include\cmdbasic;..\..\core\include\cmdmgr;..\..\core\include\view;..\..\core\include\export;..\..\core\include\record;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\core\include;..\..\core\include\canvas;..\..\core\include\test;..\..\core\include\geom;..\..\core\include\graph;..\..\core\include\gshape;..\..\core\include\shape;..\..\core\include\storage;..\..\core\include\shapedoc;..\..\core\include\jsonstorage;..\..\core\include\cmd;..\..\core\include\cmdobserver;..\..\core\include\cmdbase;..\..\core\include\cmdbasic;..\..\core\include\cmdmgr;..\..\core\include\view;..\..\core\include\export;..\..\core\include\record;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

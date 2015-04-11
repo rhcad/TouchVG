@@ -34,7 +34,7 @@
 		<link>
 			<name>jni/touchvg.swig</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/../TouchVGCore/core/src/view/touchvg.swig</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/../vgcore/core/src/view/touchvg.swig</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

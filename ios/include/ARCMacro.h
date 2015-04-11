@@ -19,18 +19,20 @@
  *    [super DEALLOC];
  */
 
+#ifndef RELEASEOBJ
 #if __has_feature(objc_arc)
 #define RETAIN self
 #define AUTORELEASE self
-#define RELEASE self
+#define RELEASEOBJ self
 #define DEALLOC self
 #define WEAK weak
 #define STRONG strong
 #else
 #define RETAIN retain
 #define AUTORELEASE autorelease
-#define RELEASE release
+#define RELEASEOBJ release
 #define DEALLOC dealloc
 #define WEAK assign
 #define STRONG retain
+#endif
 #endif

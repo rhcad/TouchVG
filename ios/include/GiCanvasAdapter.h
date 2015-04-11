@@ -1,6 +1,6 @@
 //! \file GiCanvasAdapter.h
 //! \brief 定义画布适配器类 GiCanvasAdapter
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
 
 #ifndef TOUCHVG_IOS_CANVASADAPTER_H
 #define TOUCHVG_IOS_CANVASADAPTER_H
@@ -51,14 +51,15 @@ public:
     void restoreClip();
     bool clipRect(float x, float y, float w, float h);
     bool clipPath();
-    bool drawHandle(float x, float y, int type);
+    bool drawHandle(float x, float y, int type, float angle);
     bool drawBitmap(const char* name, float xc, float yc, float w, float h, float angle);
-    float drawTextAt(const char* text, float x, float y, float h, int align);
+    float drawTextAt(const char* text, float x, float y, float h, int align, float angle);
     
 private:
     CGContextRef    _ctx;
     bool            _fill;
-    GiImageCache      *_cache;
+    int             _fillARGB;
+    GiImageCache    *_cache;
     CGGradientRef   _gradient0;
     CGGradientRef   _gradient;
 };

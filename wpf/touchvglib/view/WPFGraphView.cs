@@ -12,11 +12,24 @@ using touchvg.core;
 
 namespace touchvg.view
 {
+    public class ShapeClickEventArgs : EventArgs
+    {
+        public bool Handled;
+        public int ShapeType;
+        public int ID;
+        public int Tag;
+        public Point point;
+    }
+
     public delegate void CommandChangedEventHandler(object sender, EventArgs e);
     public delegate void SelectionChangedEventHandler(object sender, EventArgs e);
     public delegate void ContentChangedEventHandler(object sender, EventArgs e);
     public delegate void DynamicChangedEventHandler(object sender, EventArgs e);
+    public delegate void ZoomChangedEventHandler(object sender, EventArgs e);
+    public delegate void ShapeClickEventHandler(object sender, ShapeClickEventArgs e);
+    public delegate void ShapeDblClickEventHandler(object sender,ShapeClickEventArgs e);
     public delegate void GiAction();
+    public delegate void ShowMessageHandler(string text);
 
     //! WPF绘图视图类
     /*! \ingroup GROUP_WPF
@@ -33,6 +46,22 @@ namespace touchvg.view
         public event SelectionChangedEventHandler OnSelectionChanged;
         public event ContentChangedEventHandler OnContentChanged;
         public event DynamicChangedEventHandler OnDynamicChanged;
+        public event ZoomChangedEventHandler OnZoomChanged;
+        public event ShapeClickEventHandler OnShapeClicked;
+        public event ShapeClickEventHandler OnShapeDblClicked;
+        private ShapeClickEventArgs _clickArgs;
+        public ShowMessageHandler ShowMessageHandler;
+        private bool _contextActionEnabled = true;
+
+        public bool ContextActionEnabled
+        {
+            get { return _contextActionEnabled; }
+            set
+            {
+                _contextActionEnabled = value;
+                _view.hideContextActions();
+            }
+        }
 
         //! 构造普通绘图视图
         public WPFGraphView(Panel container)
@@ -53,6 +82,8 @@ namespace touchvg.view
 
         private void init(Panel container)
         {
+            this.ContextActionEnabled = true;
+
             MainCanvas = new WPFMainCanvas(this.CoreView, _view) { Width = container.ActualWidth, Height = container.ActualHeight };
             TempCanvas = new WPFTempCanvas(this.CoreView, _view) { Width = container.ActualWidth, Height = container.ActualHeight };
             TempCanvas.Background = new SolidColorBrush(Colors.Transparent);
@@ -146,17 +177,28 @@ namespace touchvg.view
 
             public override void regenAll(bool changed)
             {
-                if (!CoreView.isPlaying() && !CoreView.isUndoLoading())
+                if (!CoreView.isPlaying() && changed)
                 {
-                    if (changed
-                        && CoreView.submitBackDoc(_owner.ViewAdapter, changed)
-                        && CoreView.isUndoRecording())
+                    int changeCount = CoreView.getChangeCount();
+
+                    if (!CoreView.isUndoLoading())
                     {
-                        CoreView.recordShapes(true,
-                            CoreView.getRecordTick(true, getTick()),
-                            CoreView.acquireFrontDoc(), 0);
+                        CoreView.submitBackDoc(_owner.ViewAdapter, changed);
+                        CoreView.submitDynamicShapes(_owner.ViewAdapter);
+                        if (CoreView.isUndoRecording())
+                        {
+                            CoreView.recordShapes(true,
+                                CoreView.getRecordTick(true, getTick()),
+                                changeCount, CoreView.acquireFrontDoc(), 0);
+                        }
                     }
-                    CoreView.submitDynamicShapes(_owner.ViewAdapter);
+                    if (CoreView.isRecording())
+                    {
+                        CoreView.recordShapes(false,
+                                CoreView.getRecordTick(false, getTick()),
+                                changeCount, CoreView.acquireFrontDoc(),
+                                CoreView.acquireDynamicShapes());
+                    }
                 }
 
                 _owner.MainCanvas.InvalidateVisual();
@@ -171,7 +213,15 @@ namespace touchvg.view
             public override void redraw(bool changed)
             {
                 if (changed)
+                {
                     CoreView.submitDynamicShapes(_owner.ViewAdapter);
+                    if (CoreView.isRecording())
+                    {
+                        CoreView.recordShapes(false,
+                                CoreView.getRecordTick(false, getTick()),
+                                0, 0, CoreView.acquireDynamicShapes());
+                    }
+                }
                 _owner.TempCanvas.InvalidateVisual();
             }
 
@@ -199,6 +249,66 @@ namespace touchvg.view
                     _owner.OnDynamicChanged.Invoke(_owner, null);
             }
 
+            public override void zoomChanged()
+            {
+                if (_owner.OnZoomChanged != null)
+                    _owner.OnZoomChanged.Invoke(_owner, null);
+            }
+
+            public override bool shapeClicked(int type, int sid, int tag, float x, float y)
+            {
+                if (_owner._clickArgs == null)
+                {
+                    _owner._clickArgs = new ShapeClickEventArgs();
+                }
+                _owner._clickArgs.ShapeType = type;
+                _owner._clickArgs.ID = sid;
+                _owner._clickArgs.Tag = tag;
+                _owner._clickArgs.point = new Point(x, y);
+                _owner._clickArgs.Handled = false;
+
+                if (_owner.OnShapeClicked != null)
+                {
+                    _owner.OnShapeClicked.Invoke(_owner, _owner._clickArgs);
+                }
+                return _owner._clickArgs.Handled;
+            }
+
+            public override bool shapeDblClick(int type, int sid, int tag)
+            {
+                if (_owner._clickArgs == null)
+                {
+                    _owner._clickArgs = new ShapeClickEventArgs();
+                }
+                _owner._clickArgs.ShapeType = type;
+                _owner._clickArgs.ID = sid;
+                _owner._clickArgs.Tag = tag;
+                _owner._clickArgs.Handled = false;
+
+                if (_owner.OnShapeDblClicked != null)
+                {
+                    _owner.OnShapeDblClicked.Invoke(_owner, _owner._clickArgs);
+                }
+                return _owner._clickArgs.Handled;
+            }
+
+            public override void showMessage(string text)
+            {
+                if (_owner.ShowMessageHandler != null && text != null)
+                {
+                    if (text[0] == '@')
+                    {
+                        text = WPFImageSourceHelper.Instance.GetLocalizedString(text.Substring(1));
+                    }
+                    _owner.ShowMessageHandler(text);
+                }
+            }
+
+            public override void getLocalizedString(string name, MgStringCallback result)
+            {
+                result.onGetString(WPFImageSourceHelper.Instance.GetLocalizedString(name));
+            }
+
             public override bool useFinger()
             {
                 return false;
@@ -212,8 +322,13 @@ namespace touchvg.view
             {
                 if (extActions == null)
                     extActions = new Dictionary<int, GiAction>();
-                if (!extActions.ContainsKey(action))
+
+                if (ActionCallback == null)
+                    extActions.Remove(action);
+                else if (!extActions.ContainsKey(action))
                     extActions.Add(action, ActionCallback);
+                else
+                    extActions[action] = ActionCallback;
             }
 
             public override bool isContextActionsVisible()

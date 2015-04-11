@@ -10,7 +10,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "touchvg", "touchvg\touchvg_
 		{8D0C50E7-E089-404D-8331-F4F62FCA1FFF} = {8D0C50E7-E089-404D-8331-F4F62FCA1FFF}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TouchVGCore", "..\..\TouchVGCore\win\TouchVGCore\TouchVGCore_vc9.vcproj", "{8D0C50E7-E089-404D-8331-F4F62FCA1FFF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TouchVGCore", "TouchVGCore\TouchVGCore_vc9.vcproj", "{8D0C50E7-E089-404D-8331-F4F62FCA1FFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

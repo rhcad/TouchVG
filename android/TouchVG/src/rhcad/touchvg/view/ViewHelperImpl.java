@@ -1,30 +1,32 @@
 //! \file ViewHelperImpl.java
 //! \brief Android绘图视图辅助类
-// Copyright (c) 2012-2013, https://github.com/rhcad/touchvg
+// Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import rhcad.touchvg.IGraphView;
 import rhcad.touchvg.IViewHelper;
 import rhcad.touchvg.core.CmdObserver;
-import rhcad.touchvg.core.Floats;
-import rhcad.touchvg.core.GiContext;
 import rhcad.touchvg.core.GiCoreView;
-import rhcad.touchvg.core.MgFindImageCallback;
+import rhcad.touchvg.core.Ints;
+import rhcad.touchvg.core.MgRegenLocker;
 import rhcad.touchvg.core.MgView;
+import rhcad.touchvg.core.Point2d;
+import rhcad.touchvg.view.impl.ContextHelper;
+import rhcad.touchvg.view.impl.FileUtil;
+import rhcad.touchvg.view.impl.Snapshot;
+import rhcad.touchvg.view.impl.ViewCreator;
 import rhcad.touchvg.view.internal.BaseViewAdapter;
-import rhcad.touchvg.view.internal.BaseViewAdapter.StringCallback;
-import rhcad.touchvg.view.internal.ImageCache;
-import rhcad.touchvg.view.internal.LogHelper;
 import rhcad.touchvg.view.internal.ResourceUtil;
 import rhcad.touchvg.view.internal.ViewUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -33,37 +35,32 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-/**
- * \ingroup GROUP_ANDROID
- * Android绘图视图辅助类
- */
-public class ViewHelperImpl implements IViewHelper{
+//! Android绘图视图辅助类
+public class ViewHelperImpl implements IViewHelper {
     private static final String TAG = "touchvg";
-    private static final int JARVERSION = 13;
-    private BaseGraphView mView;
+    private static final int JARVERSION = 32;
+    private ViewCreator mCreator = new ViewCreator();
 
     static {
-        System.loadLibrary("touchvg");
+        System.loadLibrary(TAG);
         Log.i(TAG, "TouchVG V1.1." + JARVERSION + "." + GiCoreView.getVersion());
+    }
+
+    //! 获取当前活动视图的默认构造函数
+    public ViewHelperImpl() {
+        mCreator.setGraphView(ViewUtil.activeView());
+    }
+
+    //! 指定视图的构造函数
+    public ViewHelperImpl(IGraphView view) {
+        mCreator.setGraphView(view);
     }
 
     @Override
     public String getVersion() {
         return String.format(Locale.US, "1.1.%d.%d", JARVERSION, GiCoreView.getVersion());
-    }
-
-    //! 指定视图的构造函数
-    public ViewHelperImpl(IGraphView view) {
-        mView = (BaseGraphView)view;
-    }
-
-    //! 获取当前活动视图的默认构造函数
-    public ViewHelperImpl() {
-        mView = ViewUtil.activeView();
     }
 
     @Override
@@ -73,43 +70,46 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public IGraphView getGraphView() {
-        return mView;
+        return mCreator.getGraphView();
+    }
+
+    private BaseGraphView view() {
+        return mCreator.getGraphView();
     }
 
     @Override
     public void setGraphView(IGraphView view) {
-        mView = (BaseGraphView)view;
+        mCreator.setGraphView(view);
     }
 
     @Override
     public View getView() {
-        return mView != null ? mView.getView() : null;
+        return mCreator.getView();
     }
 
     @Override
     public ViewGroup getParent() {
-        return mView != null ? (ViewGroup) mView.getView().getParent() : null;
+        return mCreator.getParent();
     }
 
     @Override
     public Context getContext() {
-        return mView != null ? mView.getView().getContext() : null;
+        return mCreator.getContext();
     }
 
     @Override
     public GiCoreView coreView() {
-        return mView != null ? mView.coreView() : null;
+        return mCreator.coreView();
     }
 
     @Override
     public int cmdViewHandle() {
-        final GiCoreView v = mView != null ? mView.coreView() : null;
-        return v != null ? v.viewAdapterHandle() : 0;
+        return mCreator.cmdViewHandle();
     }
 
     @Override
     public MgView cmdView() {
-        return MgView.fromHandle(cmdViewHandle());
+        return mCreator.cmdView();
     }
 
     @Override
@@ -119,53 +119,17 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public ViewGroup createSurfaceView(Context context, ViewGroup layout, Bundle savedState) {
-        final SFGraphView view = new SFGraphView(context, savedState);
-        mView = view;
-        layout = layout != null ? layout : new FrameLayout(context);
-        layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        createDynamicShapeView(context, layout, view);
-        return layout;
+        return mCreator.createSurfaceView(context, layout, savedState);
     }
 
     @Override
     public ViewGroup createSurfaceAndImageView(Context context, ViewGroup layout, Bundle savedState) {
-        layout = layout != null ? layout : new FrameLayout(context);
-
-        final SFGraphView view = new SFGraphView(context, savedState);
-        final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT);
-
-        mView = view;
-        layout.addView(view, params);
-        createDynamicShapeView(context, layout, view);
-
-        ImageView imageView = getImageViewForSurface();
-        if (imageView == null) {
-            imageView = new ImageView(context);
-            layout.addView(imageView, params);
-        } else {
-            layout.bringChildToFront(imageView);
-        }
-        imageView.setVisibility(View.INVISIBLE);
-
-        return layout;
+        return mCreator.createSurfaceAndImageView(context, layout, savedState);
     }
 
     @Override
     public ImageView getImageViewForSurface() {
-        if (mView == null || mView.getView() == null)
-            return null;
-
-        final ViewGroup layout = (ViewGroup) mView.getView().getParent();
-
-        if (layout != null) {
-            for (int i = layout.getChildCount() - 1; i >= 0; i--) {
-                final View lastView = layout.getChildAt(i);
-                if (lastView.getClass() == ImageView.class)
-                    return (ImageView) lastView;
-            }
-        }
-        return null;
+        return getImageViewForSurface();
     }
 
     @Override
@@ -175,30 +139,17 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public ViewGroup createGraphView(Context context, ViewGroup layout, Bundle savedState) {
-        final StdGraphView view = new StdGraphView(context, savedState);
-        mView = view;
-        layout = layout != null ? layout : new FrameLayout(context);
-        layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        return layout;
+        return mCreator.createGraphView(context, layout, savedState);
     }
 
     @Override
     public ViewGroup createMagnifierView(Context context, ViewGroup layout, IGraphView mainView) {
-        final SFGraphView view = new SFGraphView(context,
-                (BaseGraphView) (mainView != null ? mainView : mView));
-        mView = view;
-        layout = layout != null ? layout : new FrameLayout(context);
-        layout.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        createDynamicShapeView(context, layout, view);
-        return layout;
+        return mCreator.createMagnifierView(context, layout, mainView);
     }
 
-    private void createDynamicShapeView(Context context, ViewGroup layout, IGraphView view) {
-        final View dynview = view.createDynamicShapeView(context);
-        if (dynview != null) {
-            layout.addView(dynview, new LayoutParams(LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT));
-        }
+    @Override
+    public void createDummyView(Context context, int width, int height) {
+        mCreator.createDummyView(context, width, height);
     }
 
     @Override
@@ -208,197 +159,212 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public String getCommand() {
-        final BaseViewAdapter adapter = internalAdapter();
-        return adapter != null ? adapter.getCommand() : "";
+        return ContextHelper.getCommand(mCreator);
     }
 
     @Override
     public boolean isCommand(String name) {
-        return mView != null && mView.coreView().isCommand(name);
+        return ContextHelper.isCommand(mCreator, name);
     }
 
     @Override
     public boolean setCommand(String name) {
-        boolean ret = false;
-
-        if (mView != null) {
-            ret = mView.coreView().setCommand(name);
-            Log.d(TAG, "setCommand " + name + ": " + ret);
-        }
-        return ret;
+        return ContextHelper.setCommand(mCreator, name);
     }
 
     @Override
     public boolean setCommand(String name, String params) {
-        boolean ret = false;
-
-        if (mView != null) {
-            ret = mView.coreView().setCommand(name, params);
-            Log.d(TAG, "setCommand " + name + params + ": " + ret);
-        }
-        return ret;
+        return ContextHelper.setCommand(mCreator, name, params);
     }
 
     @Override
     public boolean switchCommand() {
-        return mView != null && mView.coreView().switchCommand();
+        return ContextHelper.switchCommand(mCreator);
+    }
+
+    @Override
+    public Map<String, String> getOptions() {
+        return ContextHelper.getOptions(mCreator);
+    }
+
+    @Override
+    public void setOption(String name, boolean value) {
+        if (name == null) {
+            coreView().setOptionBool(name, value);
+        } else if (name.equals("zoomEnabled")) {
+            setZoomEnabled(value);
+        } else if (name.equals("contextActionEnabled")) {
+            getGraphView().setContextActionEnabled(value);
+        } else {
+            coreView().setOptionBool(name, value);
+        }
+    }
+
+    @Override
+    public void setOption(String name, int value) {
+        coreView().setOptionInt(name, value);
+    }
+
+    @Override
+    public void setOption(String name, float value) {
+        coreView().setOptionFloat(name, value);
+    }
+
+    @Override
+    public void setOption(String name, String value) {
+        coreView().setOptionString(name, value);
     }
 
     @Override
     public int getLineWidth() {
-        return mView != null ? Math.round(mView.coreView().getContext(false).getLineWidth()) : 0;
+        return ContextHelper.getLineWidth(mCreator);
     }
 
     @Override
     public void setLineWidth(int w) {
-        if (mView != null) {
-            mView.coreView().getContext(true).setLineWidth(w, true);
-            mView.coreView().setContext(GiContext.kLineWidth);
-        }
+        ContextHelper.setLineWidth(mCreator, w);
     }
 
     @Override
     public int getStrokeWidth() {
-        if (mView == null)
-            return 0;
-        float w = mView.coreView().getContext(false).getLineWidth();
-        if (w < 0)
-            return Math.round(-w);
-        return Math.round(mView.coreView().calcPenWidth(mView.viewAdapter(), w));
+        return ContextHelper.getStrokeWidth(mCreator);
     }
 
     @Override
     public void setStrokeWidth(int w) {
-        if (mView != null) {
-            mView.coreView().getContext(true).setLineWidth(-Math.abs(w), true);
-            mView.coreView().setContext(GiContext.kLineWidth);
-        }
+        ContextHelper.setStrokeWidth(mCreator, w);
     }
 
     @Override
     public int getLineStyle() {
-        return mView != null ? mView.coreView().getContext(false).getLineStyle() : 0;
+        return ContextHelper.getLineStyle(mCreator);
     }
 
     @Override
     public void setLineStyle(int style) {
-        if (mView != null) {
-            mView.coreView().getContext(true).setLineStyle(style);
-            mView.coreView().setContext(GiContext.kLineStyle);
-        }
+        ContextHelper.setLineStyle(mCreator, style);
+    }
+
+    @Override
+    public int getStartArrowHead() {
+        return ContextHelper.getStartArrowHead(mCreator);
+    }
+
+    @Override
+    public void setStartArrowHead(int style) {
+        ContextHelper.setStartArrowHead(mCreator, style);
+    }
+
+    @Override
+    public int getEndArrowHead() {
+        return ContextHelper.getEndArrowHead(mCreator);
+    }
+
+    @Override
+    public void setEndArrowHead(int style) {
+        ContextHelper.setEndArrowHead(mCreator, style);
     }
 
     @Override
     public int getLineColor() {
-        return mView != null ? mView.coreView().getContext(false).getLineColor().getARGB() : 0;
+        return ContextHelper.getLineColor(mCreator);
     }
 
     @Override
     public void setLineColor(int argb) {
-        if (mView != null) {
-            mView.coreView().getContext(true).setLineARGB(argb);
-            mView.coreView().setContext(argb == 0 ? GiContext.kLineARGB : GiContext.kLineRGB);
-        }
+        ContextHelper.setLineColor(mCreator, argb);
     }
 
     @Override
     public int getLineAlpha() {
-        return mView != null ? mView.coreView().getContext(false).getLineColor().getA() : 0;
+        return ContextHelper.getLineAlpha(mCreator);
     }
 
     @Override
     public void setLineAlpha(int alpha) {
-        if (mView != null) {
-            mView.coreView().getContext(true).setLineAlpha(alpha);
-            mView.coreView().setContext(GiContext.kLineAlpha);
-        }
+        ContextHelper.setLineAlpha(mCreator, alpha);
     }
 
     @Override
     public int getFillColor() {
-        return mView != null ? mView.coreView().getContext(false).getFillColor().getARGB() : 0;
+        return ContextHelper.getFillColor(mCreator);
     }
 
     @Override
     public void setFillColor(int argb) {
-        if (mView != null) {
-            mView.coreView().getContext(true).setFillARGB(argb);
-            mView.coreView().setContext(argb == 0 ? GiContext.kFillARGB : GiContext.kFillRGB);
-        }
+        ContextHelper.setFillColor(mCreator, argb);
     }
 
     @Override
     public int getFillAlpha() {
-        return mView != null ? mView.coreView().getContext(false).getFillColor().getA() : 0;
+        return ContextHelper.getFillAlpha(mCreator);
     }
 
     @Override
     public void setFillAlpha(int alpha) {
-        if (mView != null) {
-            mView.coreView().getContext(true).setFillAlpha(alpha);
-            mView.coreView().setContext(GiContext.kFillAlpha);
-        }
+        ContextHelper.setFillAlpha(mCreator, alpha);
     }
 
     @Override
     public void setContextEditing(boolean editing) {
-        if (mView != null) {
-            mView.coreView().setContextEditing(editing);
-        }
+        ContextHelper.setContextEditing(mCreator, editing);
     }
 
     @Override
     public int addShapesForTest() {
-        final LogHelper log = new LogHelper();
-        synchronized (mView.coreView()) {
-            return log.r(mView.coreView().addShapesForTest());
-        }
+        return ContextHelper.addShapesForTest(mCreator);
     }
 
     @Override
     public void clearCachedData() {
-        if (mView != null) {
-            mView.coreView().clearCachedData();
-        }
+        ContextHelper.clearCachedData(mCreator);
     }
 
     @Override
     public boolean zoomToExtent() {
-        return mView != null && mView.coreView().zoomToExtent();
+        return ContextHelper.zoomToExtent(mCreator);
+    }
+
+    @Override
+    public boolean zoomToExtent(float margin) {
+        return ContextHelper.zoomToExtent(mCreator, margin);
     }
 
     @Override
     public boolean zoomToModel(float x, float y, float w, float h) {
-        return mView != null && mView.coreView().zoomToModel(x, y, w, h);
+        return ContextHelper.zoomToModel(mCreator, x, y, w, h);
+    }
+
+    @Override
+    public boolean zoomToModel(float x, float y, float w, float h, float margin) {
+        return ContextHelper.zoomToModel(mCreator, x, y, w, h, margin);
+    }
+
+    @Override
+    public boolean zoomPan(float dxPixel, float dyPixel) {
+        return ContextHelper.zoomPan(mCreator, dxPixel, dyPixel);
     }
 
     @Override
     public PointF displayToModel(float x, float y) {
-        final Floats pt = new Floats(x, y);
-        if (mView != null && mView.coreView().displayToModel(pt)) {
-            return new PointF(pt.get(0), pt.get(1));
-        }
-        return null;
+        return ContextHelper.displayToModel(mCreator, x, y);
     }
 
     @Override
     public RectF displayToModel(RectF rect) {
-        final Floats box = new Floats(rect.left, rect.top, rect.right, rect.bottom);
-        if (mView != null && mView.coreView().displayToModel(box)) {
-            return new RectF(box.get(0), box.get(1), box.get(2), box.get(3));
-        }
-        return rect;
+        return ContextHelper.displayToModel(mCreator, rect);
     }
 
     @Override
     public boolean startUndoRecord(String path) {
-        final BaseViewAdapter adapter = internalAdapter();
+        final BaseViewAdapter adapter = mCreator.getMainAdapter();
 
-        if (adapter == null
-                || adapter.getSavedState() != null
-                || mView.coreView().isUndoRecording()
-                || !deleteDirectory(new File(path))
-                || !createDirectory(path, true)) {
+        if (adapter == null || adapter.getSavedState() != null) {
+            return false;
+        }
+        if (coreView().isUndoRecording()
+                || !FileUtil.deleteDirectory(new File(path))
+                || !FileUtil.createDirectory(path, true)) {
             return false;
         }
         return adapter.startUndoRecord(path);
@@ -406,7 +372,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void stopUndoRecord() {
-        final BaseViewAdapter adapter = internalAdapter();
+        final BaseViewAdapter adapter = mCreator.getMainAdapter();
         if (adapter != null) {
             adapter.stopRecord(true);
         }
@@ -414,17 +380,17 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public boolean canUndo() {
-        return mView != null && mView.coreView().canUndo();
+        return mCreator.isValid() && coreView().canUndo();
     }
 
     @Override
     public boolean canRedo() {
-        return mView != null && mView.coreView().canRedo();
+        return mCreator.isValid() && coreView().canRedo();
     }
 
     @Override
     public void undo() {
-        final BaseViewAdapter adapter = internalAdapter();
+        final BaseViewAdapter adapter = mCreator.getMainAdapter();
         if (adapter != null) {
             adapter.undo();
         }
@@ -432,26 +398,35 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void redo() {
-        final BaseViewAdapter adapter = internalAdapter();
+        final BaseViewAdapter adapter = mCreator.getMainAdapter();
         if (adapter != null) {
             adapter.redo();
         }
     }
 
     @Override
+    public void combineRegen(Runnable action) {
+        final MgRegenLocker locker = new MgRegenLocker(this.cmdView());
+        action.run();
+        locker.delete();
+    }
+
+    @Override
     public boolean isRecording() {
-        return mView != null && mView.coreView().isRecording();
+        return mCreator.isValid() && coreView().isRecording();
     }
 
     @Override
     public boolean startRecord(String path) {
-        final BaseViewAdapter adapter = internalAdapter();
+        final BaseViewAdapter adapter = mCreator.getMainAdapter();
 
         if (adapter == null
-                || adapter.getSavedState() != null
-                || mView.coreView().isRecording()
-                || !deleteDirectory(new File(path))
-                || !createDirectory(path, true)) {
+                || adapter.getSavedState() != null) {
+            return false;
+        }
+        if (coreView().isRecording()
+                || !FileUtil.deleteDirectory(new File(path))
+                || !FileUtil.createDirectory(path, true)) {
             return false;
         }
         return adapter.startRecord(path);
@@ -459,7 +434,7 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void stopRecord() {
-        final BaseViewAdapter adapter = internalAdapter();
+        final BaseViewAdapter adapter = mCreator.getMainAdapter();
         if (adapter != null) {
             adapter.stopRecord(false);
         }
@@ -467,554 +442,369 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public boolean isPaused() {
-        return mView != null && mView.coreView().isPaused();
+        return mCreator.isValid() && coreView().isPaused();
     }
 
     @Override
     public boolean isPlaying() {
-        return mView != null && mView.coreView().isPlaying();
+        return mCreator.isValid() && coreView().isPlaying();
     }
 
     @Override
     public int getRecordTicks() {
-        return mView != null ? mView.coreView().getRecordTick(false, BaseViewAdapter.getTick()) : 0;
-    }
-
-    private BaseViewAdapter internalAdapter() {
-        if (mView == null || mView.getMainView() == null)
-            return null;
-        return (BaseViewAdapter)((BaseGraphView)mView.getMainView()).viewAdapter();
+        return mCreator.isValid() ? coreView().getRecordTick(false, BaseViewAdapter.getTick()) : 0;
     }
 
     @Override
     public boolean getGestureEnabled() {
-        return mView != null && mView.getGestureEnabled();
+        return mCreator.isValid() && mCreator.getGraphView().getGestureEnabled();
     }
 
     @Override
     public void setGestureEnabled(boolean enabled) {
-        if (mView != null) {
-            mView.setGestureEnabled(enabled);
+        if (mCreator.isValid()) {
+            mCreator.getGraphView().setGestureEnabled(enabled);
         }
     }
 
     @Override
+    public void setVelocityTrackerEnabled(boolean enabled) {
+        final BaseViewAdapter adapter = mCreator.getMainAdapter();
+        if (adapter != null) {
+            adapter.getGestureListener().setVelocityTrackerEnabled(enabled);
+        }
+    }
+
+    @Override
+    public boolean getZoomEnabled() {
+        return mCreator.isValid()
+                && coreView().isZoomEnabled(mCreator.getGraphView().viewAdapter());
+    }
+
+    @Override
     public void setZoomEnabled(boolean enabled) {
-        if (mView != null) {
-            mView.coreView().setZoomEnabled(mView.viewAdapter(), enabled);
+        if (mCreator.isValid()) {
+            coreView().setZoomEnabled(mCreator.getGraphView().viewAdapter(), enabled);
         }
     }
 
     @Override
     public void setBackgroundColor(int color) {
-        if (mView != null) {
+        if (mCreator.isValid()) {
             getView().setBackgroundColor(color);
         }
     }
 
     @Override
     public void setBackgroundDrawable(Drawable background) {
-        if (mView != null) {
-            mView.setBackgroundDrawable(background);
+        if (mCreator.isValid()) {
+            mCreator.getGraphView().setBackgroundDrawable(background);
         }
     }
 
     @Override
     public Bitmap snapshot(boolean transparent) {
-        if (mView == null)
-            return null;
-
-        final GiCoreView v = mView.coreView();
-        int doc, gs;
-
-        synchronized (v) {
-            doc = v.acquireFrontDoc();
-            gs = v.acquireGraphics(mView.viewAdapter());
-        }
-        try {
-            final LogHelper log = new LogHelper();
-            final Bitmap bitmap = mView.snapshot(doc, gs, transparent);
-            log.r(bitmap != null ? bitmap.getByteCount() : 0);
-            return bitmap;
-        } finally {
-            GiCoreView.releaseDoc(doc);
-            v.releaseGraphics(gs);
-        }
+        return Snapshot.snapshot(view(), transparent);
     }
 
     @Override
     public Bitmap extentSnapshot(int spaceAround, boolean transparent) {
-        if (mView == null)
-            return null;
-
-        final GiCoreView v = mView.coreView();
-        int doc, gs;
-
-        synchronized (v) {
-            doc = v.acquireFrontDoc();
-            gs = v.acquireGraphics(mView.viewAdapter());
-        }
-        try {
-            return extentSnapshot(doc, gs, spaceAround, transparent);
-        } finally {
-            GiCoreView.releaseDoc(doc);
-            v.releaseGraphics(gs);
-        }
+        return Snapshot.extentSnapshot(view(), spaceAround, transparent);
     }
 
-    private Bitmap extentSnapshot(int doc, int gs, int spaceAround, boolean transparent) {
-        final LogHelper log = new LogHelper();
-        final Rect extent = getDisplayExtent();
+    @Override
+    public Bitmap snapshotWithShapes(int sid, int width, int height) {
+        return Snapshot.snapshotWithShapes(this, new ViewHelperImpl(), sid, width, height);
+    }
 
-        if (!extent.isEmpty()) {
-            extent.inset(-spaceAround, -spaceAround);
-            extent.intersect(0, 0, mView.getView().getWidth(), mView.getView().getHeight());
-        }
-        if (extent.isEmpty()) {
-            return null;
-        }
-
-        final Bitmap viewBitmap = mView.snapshot(doc, gs, transparent);
-        if (viewBitmap == null) {
-            return null;
-        }
-
-        if (extent.width() == mView.getView().getWidth()
-                && extent.height() == mView.getView().getHeight()) {
-            log.r(viewBitmap.getByteCount());
-            return viewBitmap;
-        }
-
-        final Bitmap realBitmap = Bitmap.createBitmap(viewBitmap, extent.left, extent.top,
-                extent.width(), extent.height());
-
-        viewBitmap.recycle();
-        log.r(realBitmap.getByteCount());
-        return realBitmap;
+    @Override
+    public Bitmap snapshotWithShapes(int width, int height) {
+        return Snapshot.snapshotWithShapes(this, new ViewHelperImpl(), width, height);
     }
 
     @Override
     public boolean exportExtentAsPNG(String filename, int spaceAround) {
-        return savePNG(extentSnapshot(spaceAround, true), filename);
+        return Snapshot.exportExtentAsPNG(view(), filename, spaceAround);
     }
 
     @Override
     public boolean exportPNG(String filename, boolean transparent) {
-        return savePNG(snapshot(transparent), filename);
+        return Snapshot.exportPNG(view(), filename, transparent);
     }
 
     @Override
     public boolean exportPNG(String filename) {
-        return savePNG(snapshot(true), filename);
-    }
-
-    private boolean savePNG(Bitmap bmp, String filename) {
-        boolean ret = false;
-        final LogHelper log = new LogHelper();
-
-        if (bmp != null && filename != null && createDirectory(filename, false)) {
-            synchronized (bmp) {
-                try {
-                    filename = addExtension(filename, ".png");
-                    final FileOutputStream os = new FileOutputStream(filename);
-                    ret = bmp.compress(Bitmap.CompressFormat.PNG, 100, os);
-                    Log.d(TAG, "savePNG: " + filename + ", " + ret + ", "
-                            + bmp.getWidth() + "x" + bmp.getHeight());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        return log.r(ret);
+        return Snapshot.exportPNG(view(), filename);
     }
 
     @Override
     public boolean exportSVG(String filename) {
-        if (mView == null)
-            return false;
-        final LogHelper log = new LogHelper();
-        filename = addExtension(filename, ".svg");
-        return log.r(mView.coreView().exportSVG(mView.viewAdapter(), filename) > 0);
+        return Snapshot.exportSVG(view(), filename);
+    }
+
+    @Override
+    public int importSVGPath(int sid, String d) {
+        return Snapshot.importSVGPath(view(), sid, d);
+    }
+
+    @Override
+    public String exportSVGPath(int sid) {
+        return Snapshot.exportSVGPath(view(), sid);
     }
 
     @Override
     public int getShapeCount() {
-        return mView != null ? mView.coreView().getShapeCount() : 0;
+        return mCreator.isValid() ? coreView().getShapeCount() : 0;
+    }
+
+    @Override
+    public int getUnlockedShapeCount() {
+        return mCreator.isValid() ? coreView().getUnlockedShapeCount() : 0;
+    }
+
+    @Override
+    public int getVisibleShapeCount() {
+        return mCreator.isValid() ? coreView().getVisibleShapeCount() : 0;
     }
 
     @Override
     public int getSelectedCount() {
-        return mView != null ? mView.coreView().getSelectedShapeCount() : 0;
+        return mCreator.isValid() ? coreView().getSelectedShapeCount() : 0;
     }
 
     @Override
     public int getSelectedType() {
-        return mView != null ? mView.coreView().getSelectedShapeType() : 0;
+        return mCreator.isValid() ? coreView().getSelectedShapeType() : 0;
     }
 
     @Override
     public int getSelectedShapeID() {
-        return mView != null ? mView.coreView().getSelectedShapeID() : 0;
+        return mCreator.isValid() ? coreView().getSelectedShapeID() : 0;
+    }
+
+    @Override
+    public void setSelectedShapeID(int sid) {
+        setCommand(String.format("select{'id':%d}", sid));
+    }
+
+    @Override
+    public int[] getSelectedIds() {
+        final Ints ids = new Ints();
+        coreView().getSelectedShapeIDs(ids);
+        final int[] arr = new int[ids.count()];
+        for (int i = 0; i < arr.length; i++)
+            arr[i] = ids.get(i);
+        return arr;
+    }
+
+    @Override
+    public void setSelectedIds(int[] ids) {
+        int n = ids != null ? ids.length : 0;
+        final Ints arr = new Ints(n);
+        for (int i = 0; i < n; i++)
+            arr.set(i, ids[i]);
+        coreView().setSelectedShapeIDs(arr);
+    }
+
+    @Override
+    public int getSelectedHandle() {
+        return mCreator.isValid() ? coreView().getSelectedHandle() : 0;
     }
 
     @Override
     public int getChangeCount() {
-        return mView != null ? mView.coreView().getChangeCount() : 0;
-    }
-
-    @Override
-    public int getDrawCount() {
-        return mView != null ? mView.coreView().getDrawCount() : 0;
-    }
-
-    @Override
-    public Rect getDisplayExtent() {
-        final Floats box = new Floats(4);
-        if (mView != null && mView.coreView().getDisplayExtent(box)) {
-            return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
-                    Math.round(box.get(2)), Math.round(box.get(3)));
-        }
-        return new Rect();
-    }
-
-    @Override
-    public Rect getDisplayExtent(int doc, int gs) {
-        final Floats box = new Floats(4);
-        if (mView != null && mView.coreView().getDisplayExtent(doc, gs, box)) {
-            return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
-                    Math.round(box.get(2)), Math.round(box.get(3)));
-        }
-        return new Rect();
-    }
-
-    @Override
-    public Rect getBoundingBox() {
-        final Floats box = new Floats(4);
-        if (mView != null && mView.coreView().getBoundingBox(box)) {
-            return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
-                    Math.round(box.get(2)), Math.round(box.get(3)));
-        }
-        return new Rect();
-    }
-
-    @Override
-    public Rect getShapeBox(int sid) {
-        final Floats box = new Floats(4);
-        if (mView != null && mView.coreView().getBoundingBox(box, sid)) {
-            return new Rect(Math.round(box.get(0)), Math.round(box.get(1)),
-                    Math.round(box.get(2)), Math.round(box.get(3)));
-        }
-        return new Rect();
-    }
-
-    private int acquireFrontDoc() {
-        if (mView == null)
-            return 0;
-        synchronized (mView.coreView()) {
-            return mView.coreView().acquireFrontDoc();
-        }
-    }
-
-    @Override
-    public String getContent() {
-        if (mView == null)
-            return null;
-
-        final LogHelper log = new LogHelper();
-        int doc = acquireFrontDoc();
-        final StringCallback c = new StringCallback();
-
-        mView.coreView().getContent(doc, c);
-        GiCoreView.releaseDoc(doc);
-
-        return log.r(c.toString());
-    }
-
-    @Override
-    public boolean setContent(String content) {
-        if (mView == null)
-            return false;
-        final LogHelper log = new LogHelper();
-        synchronized (mView.coreView()) {
-            mView.getImageCache().clear();
-            return log.r(mView.coreView().setContent(content));
-        }
-    }
-
-    @Override
-    public boolean loadFromFile(String vgfile) {
-        return loadFromFile(vgfile, false);
-    }
-
-    @Override
-    public boolean loadFromFile(String vgfile, boolean readOnly) {
-        if (mView == null)
-            return false;
-        final LogHelper log = new LogHelper();
-        vgfile = addExtension(vgfile, ".vg");
-        synchronized (mView.coreView()) {
-            mView.getImageCache().clear();
-            return log.r(mView.coreView().loadFromFile(vgfile, readOnly));
-        }
-    }
-
-    @Override
-    public boolean saveToFile(String vgfile) {
-        if (mView == null || vgfile == null)
-            return false;
-
-        int doc = acquireFrontDoc();
-        boolean ret = saveToFile(vgfile, doc);
-        GiCoreView.releaseDoc(doc);
-        return ret;
-    }
-
-    private boolean saveToFile(String vgfile, int doc) {
-        final LogHelper log = new LogHelper();
-        vgfile = addExtension(vgfile, ".vg");
-        if (mView.coreView().getShapeCount(doc) == 0) {
-            final File f = new File(vgfile);
-            return log.r(!f.exists() || f.delete());
-        } else {
-            return log.r(createDirectory(vgfile, false)
-                    && mView.coreView().saveToFile(doc, vgfile));
-        }
-    }
-
-    @Override
-    public void clearShapes() {
-        if (mView != null) {
-            synchronized (mView.coreView()) {
-                mView.getImageCache().clear();
-                mView.coreView().clear();
-            }
-        }
-    }
-
-    //! 返回指定后缀名的文件名
-    public static String addExtension(String filename, String ext) {
-        if (filename != null && !filename.endsWith(ext)) {
-            filename = filename.substring(0, filename.lastIndexOf('.')) + ext;
-        }
-        return filename;
-    }
-
-    //! 删除一个文件夹的所有内容
-    public static boolean deleteDirectory(File path) {
-        if (path.exists()) {
-            final File[] files = path.listFiles();
-            if (files != null) {
-                int n = 0;
-                for (File f : files) {
-                    if (f.isDirectory()) {
-                        if (!deleteDirectory(f)) {
-                            Log.e(TAG, "Fail to delete folder: " + f.getPath());
-                            return false;
-                        }
-                    } else {
-                        if (!f.delete()) {
-                            Log.e(TAG, "Fail to delete file: " + f.getPath());
-                            return false;
-                        } else {
-                            n++;
-                        }
-                    }
-                }
-                if (n > 0) {
-                    Log.d(TAG, n + " files deleted in " + path.getPath());
-                }
-            }
-        }
-        return !path.exists() || path.delete();
-    }
-
-    //! 创建指定的文件的上一级文件夹，如果自身是文件夹则也创建
-    public static boolean createDirectory(String filename, boolean isDirectory) {
-        final File file = new File(filename);
-        final File pf = file.getParentFile();
-
-        if (!pf.exists() && !pf.mkdirs()) {
-            Log.e(TAG, "Fail to create folder: " + pf.getPath());
-            return false;
-        }
-        if (isDirectory && !file.exists() && !file.mkdirs()) {
-            Log.e(TAG, "Fail to create folder: " + filename);
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public int insertSVGFromResource(String name) {
-        if (mView == null)
-            return 0;
-        int id = ResourceUtil.getResIDFromName(getContext(), "raw", name);
-        name = ImageCache.SVG_PREFIX + name;
-        final Drawable d = mView.getImageCache().addSVG(getContext().getResources(), id, name);
-        synchronized (mView.coreView()) {
-            return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
-                    ImageCache.getHeight(d));
-        }
-    }
-
-    @Override
-    public int insertSVGFromResource(int id) {
-        return insertSVGFromResource(ResourceUtil.getResName(getContext(), id));
-    }
-
-    @Override
-    public int insertSVGFromResource(String name, int xc, int yc) {
-        if (mView == null)
-            return 0;
-        int id = ResourceUtil.getResIDFromName(getContext(), "raw", name);
-        name = ImageCache.SVG_PREFIX + name;
-        final Drawable d = mView.getImageCache().addSVG(getContext().getResources(), id, name);
-        synchronized (mView.coreView()) {
-            return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
-                    ImageCache.getWidth(d), ImageCache.getHeight(d), 0);
-        }
-    }
-
-    @Override
-    public int insertSVGFromResource(int id, int xc, int yc) {
-        return insertSVGFromResource(ResourceUtil.getResName(getContext(), id), xc, yc);
-    }
-
-    @Override
-    public int insertBitmapFromResource(String name) {
-        if (mView == null)
-            return 0;
-        int id = ResourceUtil.getDrawableIDFromName(getContext(), name);
-        name = ImageCache.BITMAP_PREFIX + name;
-        final Drawable d = mView.getImageCache().addBitmap(getContext().getResources(), id, name);
-        synchronized (mView.coreView()) {
-            return d == null ? 0 : mView.coreView().addImageShape(name, ImageCache.getWidth(d),
-                    ImageCache.getHeight(d));
-        }
-    }
-
-    @Override
-    public int insertBitmapFromResource(int id) {
-        return insertBitmapFromResource(ResourceUtil.getResName(getContext(), id));
-    }
-
-    @Override
-    public int insertBitmapFromResource(String name, int xc, int yc) {
-        if (mView == null)
-            return 0;
-        int id = ResourceUtil.getDrawableIDFromName(getContext(), name);
-        name = ImageCache.BITMAP_PREFIX + name;
-        final Drawable d = mView.getImageCache().addBitmap(getContext().getResources(), id, name);
-        synchronized (mView.coreView()) {
-            return d == null ? 0 : mView.coreView().addImageShape(name, xc, yc,
-                    ImageCache.getWidth(d), ImageCache.getHeight(d), 0);
-        }
-    }
-
-    @Override
-    public int insertBitmapFromResource(int id, int xc, int yc) {
-        return insertBitmapFromResource(ResourceUtil.getResName(getContext(), id), xc, yc);
-    }
-
-    @Override
-    public int insertImageFromFile(String filename) {
-        if (mView == null)
-            return 0;
-        return insertImageFromFile(filename, mView.getView().getWidth() / 2,
-                mView.getView().getHeight() / 2, 0);
-    }
-
-    @Override
-    public int insertImageFromFile(String filename, int xc, int yc, int tag) {
-        final BaseViewAdapter adapter = internalAdapter();
-
-        if (adapter == null || filename == null)
-            return 0;
-
-        final String name = filename.substring(filename.lastIndexOf('/') + 1).toLowerCase(Locale.US);
-        Drawable d;
-
-        if (name.endsWith(".svg")) {
-            d = mView.getImageCache().addSVGFile(filename, name);
-        } else {
-            d = mView.getImageCache().addBitmapFile(getContext().getResources(), filename, name);
-        }
-        if (d != null) {
-            final String destPath = adapter.getRecordPath();
-            if (destPath != null) {
-                ImageCache.copyFileTo(filename, destPath);
-            }
-            synchronized (mView.coreView()) {
-                int w = ImageCache.getWidth(d);
-                int h = ImageCache.getHeight(d);
-                return mView.coreView().addImageShape(name, xc, yc, w, h, tag);
-            }
+        final GiCoreView v = coreView();
+        if (v != null) {
+            return v.getChangeCount();
         }
         return 0;
     }
 
     @Override
+    public int getDrawCount() {
+        return mCreator.isValid() ? coreView().getDrawCount() : 0;
+    }
+
+    @Override
+    public Rect getViewBox() {
+        return Snapshot.getViewBox(view());
+    }
+
+    @Override
+    public float getViewScale() {
+        return cmdView().xform().getViewScale();
+    }
+
+    @Override
+    public boolean setViewScale(float scale) {
+        return ContextHelper.setViewScale(mCreator, scale);
+    }
+
+    @Override
+    public Rect getModelBox() {
+        return Snapshot.getModelBox(view());
+    }
+
+    @Override
+    public Rect getDisplayExtent() {
+        return Snapshot.getDisplayExtent(view());
+    }
+
+    @Override
+    public Rect getDisplayExtent(int doc, int gs) {
+        return Snapshot.getDisplayExtent(view(), doc, gs);
+    }
+
+    @Override
+    public Rect getBoundingBox() {
+        return Snapshot.getBoundingBox(view());
+    }
+
+    @Override
+    public Rect getShapeBox(int sid) {
+        return ContextHelper.getShapeBox(mCreator, sid);
+    }
+
+    @Override
+    public RectF getModelBox(int sid) {
+        return ContextHelper.getModelBox(mCreator, sid);
+    }
+
+    @Override
+    public Point getCurrentPoint() {
+        Point2d pt = this.cmdView().motion().getPoint();
+        return new Point(Math.round(pt.getX()), Math.round(pt.getY()));
+    }
+
+    @Override
+    public PointF getCurrentModelPoint() {
+        Point2d pt = this.cmdView().motion().getPointM();
+        return new PointF(pt.getX(), pt.getY());
+    }
+
+    @Override
+    public PointF getHandlePoint(int sid, int index) {
+        return ContextHelper.getHandlePoint(mCreator, sid, index);
+    }
+
+    @Override
+    public String getContent() {
+        return ContextHelper.getContent(mCreator);
+    }
+
+    @Override
+    public boolean setContent(String content) {
+        return ContextHelper.setContent(mCreator, content);
+    }
+
+    @Override
+    public boolean loadFromFile(String vgfile) {
+        return ContextHelper.loadFromFile(mCreator, vgfile, false);
+    }
+
+    @Override
+    public boolean loadFromFile(String vgfile, boolean readOnly) {
+        return ContextHelper.loadFromFile(mCreator, vgfile, readOnly);
+    }
+
+    @Override
+    public boolean saveToFile(String vgfile) {
+        return ContextHelper.saveToFile(mCreator, vgfile);
+    }
+
+    @Override
+    public void clearShapes() {
+        ContextHelper.clearShapes(mCreator);
+    }
+
+    @Override
+    public void eraseView() {
+        ContextHelper.eraseView(mCreator);
+    }
+
+    @Override
+    public int insertSVGFromResource(String name) {
+        return ContextHelper.insertSVGFromResource(mCreator, name);
+    }
+
+    @Override
+    public int insertSVGFromResource(int id) {
+        return ContextHelper.insertSVGFromResource(mCreator, id);
+    }
+
+    @Override
+    public int insertSVGFromResource(String name, int xc, int yc) {
+        return ContextHelper.insertSVGFromResource(mCreator, name, xc, yc);
+    }
+
+    @Override
+    public int insertSVGFromResource(int id, int xc, int yc) {
+        return ContextHelper.insertSVGFromResource(mCreator, id, xc, yc);
+    }
+
+    @Override
+    public int insertBitmapFromResource(String name) {
+        return ContextHelper.insertBitmapFromResource(mCreator, name);
+    }
+
+    @Override
+    public int insertBitmapFromResource(int id) {
+        return ContextHelper.insertBitmapFromResource(mCreator, id);
+    }
+
+    @Override
+    public int insertBitmapFromResource(String name, int xc, int yc) {
+        return ContextHelper.insertBitmapFromResource(mCreator, name, xc, yc);
+    }
+
+    @Override
+    public int insertBitmapFromResource(int id, int xc, int yc) {
+        return ContextHelper.insertBitmapFromResource(mCreator, id, xc, yc);
+    }
+
+    @Override
+    public int insertImageFromFile(String filename) {
+        return ContextHelper.insertImageFromFile(mCreator, filename);
+    }
+
+    @Override
+    public int insertImageFromFile(String filename, int xc, int yc, int tag) {
+        return ContextHelper.insertImageFromFile(mCreator, filename, xc, yc, tag);
+    }
+
+    @Override
+    public boolean getImageSize(float[] info, int sid) {
+        return ContextHelper.getImageSize(mCreator, info, sid);
+    }
+
+    @Override
     public boolean hasImageShape() {
-        int doc = acquireFrontDoc();
-        boolean ret = doc != 0 && mView.coreView().hasImageShape(doc);
-        GiCoreView.releaseDoc(doc);
-        return ret;
+        return ContextHelper.hasImageShape(mCreator);
     }
 
     @Override
     public int findShapeByImageID(String name) {
-        int doc = acquireFrontDoc();
-        int ret = mView != null ? mView.coreView().findShapeByImageID(doc, name) : 0;
-        GiCoreView.releaseDoc(doc);
-        return ret;
+        return ContextHelper.findShapeByImageID(mCreator, name);
     }
 
     @Override
     public int findShapeByTag(int tag) {
-        int doc = acquireFrontDoc();
-        int ret = mView != null ? mView.coreView().findShapeByTag(doc, tag) : 0;
-        GiCoreView.releaseDoc(doc);
-        return ret;
-    }
-
-    private class ImageFinder extends MgFindImageCallback {
-        private ArrayList<Bundle> arr;
-
-        public ImageFinder(ArrayList<Bundle> arr) {
-            this.arr = arr;
-        }
-
-        @Override
-        public void onFindImage(int sid, String name) {
-            final Bundle b = new Bundle();
-            b.putInt("id", sid);
-            b.putString("name", name);
-            b.putString("path", new File(getImagePath(), name).getPath());
-            b.putString("rect", getShapeBox(sid).toString());
-            this.arr.add(b);
-        }
+        return ContextHelper.findShapeByTag(mCreator, tag);
     }
 
     @Override
-    public ArrayList<Bundle> getImageShapes() {
-        final ArrayList<Bundle> arr = new ArrayList<Bundle>();
-        int doc = acquireFrontDoc();
-        coreView().traverseImageShapes(doc, new ImageFinder(arr));
-        GiCoreView.releaseDoc(doc);
-        return arr;
+    public List<Bundle> getImageShapes() {
+        return ContextHelper.getImageShapes(mCreator);
     }
 
     @Override
     public String getImagePath() {
-        return mView != null ? mView.getImageCache().getImagePath() : null;
+        return ContextHelper.getImagePath(mCreator);
     }
 
     @Override
     public void setImagePath(String path) {
-        if (mView != null) {
-            mView.getImageCache().setImagePath(path);
-        }
+        ContextHelper.setImagePath(mCreator, path);
     }
 
     @Override
@@ -1024,128 +814,42 @@ public class ViewHelperImpl implements IViewHelper{
 
     @Override
     public void close(final IGraphView.OnViewDetachedListener listener) {
-        if (mView != null && mView.getView() != null) {
-            final ViewGroup layout = (ViewGroup) mView.getView().getParent();
-            final ImageView imageView = getImageViewForSurface();
-            final BaseGraphView view = mView;
-
-            if (imageView != null) {
-                imageView.setImageBitmap(snapshot(false));
-                imageView.setVisibility(View.VISIBLE);
-                layout.bringChildToFront(imageView);
-
-                mView.getView().post(new Runnable() {       // remove SurfaceView delayed
-                    @Override
-                    public void run() {
-                        view.getView().removeCallbacks(this);
-                        view.onPause();
-                        view.stop(listener);
-                        layout.removeViews(0, layout.getChildCount() - 1);  // Except imageView
-                    }
-                });
-            } else {
-                mView.onPause();
-                mView.stop(listener);
-                ((ViewGroup) mView.getView().getParent()).removeAllViews();
-            }
-        }
-        mView = null;
+        mCreator.close(Snapshot.snapshot(mCreator.getGraphView(), false), listener);
     }
 
     @Override
     public void onDestroy() {
-        final Context context = getContext();
-        for (BaseGraphView view : ViewUtil.views()) {
-            if (view.getView().getContext() == context) {
-                view.stop(null);
-            }
-        }
+        mCreator.onDestroy();
     }
 
     @Override
     public boolean onPause() {
-        Log.d(TAG, "onPause");
-        final Context context = getContext();
-        boolean ret = false;
-
-        for (BaseGraphView view : ViewUtil.views()) {
-            if (view.getView().getContext() == context) {
-                ret = view.onPause() || ret;
-            }
-        }
-        return ret;
+        return mCreator.onPause();
     }
 
     @Override
     public boolean onResume() {
-        Log.d(TAG, "onResume");
-        final Context context = getContext();
-        boolean ret = false;
-
-        for (BaseGraphView view : ViewUtil.views()) {
-            if (view.getView().getContext() == context) {
-                ret = view.onResume() || ret;
-            }
-        }
-        return ret;
+        return mCreator.onResume();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState, String path) {
-        final BaseViewAdapter adapter = internalAdapter();
-
-        if (adapter == null) {
-            Log.w(TAG, "onSaveInstanceState fail due to no view adapter");
-        } else {
-            final LogHelper log = new LogHelper();
-            Bundle state = adapter.getSavedState();
-
-            if (state == null) {
-                final String filename = new File(path, "resume.vg").getPath();
-                final String playFile = new File(path, "playresume.vg").getPath();
-
-                state = new Bundle();
-                adapter.onSaveInstanceState(state);
-                if (mView.coreView().isPlaying()) {
-                    if (saveToFile(playFile)) {
-                        Log.d(TAG, "Auto save playing shapes to " + playFile);
-                        state.putString("playFile", playFile);
-                    }
-                    if (saveToFile(filename, mView.coreView().backDoc())) {
-                        Log.d(TAG, "Auto save to " + filename);
-                        state.putString("bakFile", filename);
-                    }
-                } else {
-                    if (saveToFile(filename)) {
-                        Log.d(TAG, "Auto save to " + filename);
-                        state.putString("bakFile", filename);
-                    }
-                }
-                state.putBoolean("readOnly", cmdView().isReadOnly());
-            }
-            outState.putBundle("vg", state);
-            log.r();
-        }
+        ContextHelper.onSaveInstanceState(mCreator, outState, path);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedState) {
-        final BaseViewAdapter adapter = internalAdapter();
-        final Bundle state = savedState.getBundle("vg");
+        ContextHelper.onRestoreInstanceState(mCreator, savedState);
+    }
 
-        if (adapter != null && state != null) {
-            final LogHelper log = new LogHelper();
-            final String filename = state.getString("bakFile");
-            boolean readOnly = state.getBoolean("readOnly");
+    @Override
+    public void showMessage(String text) {
+        mCreator.getMainAdapter().showMessage(text);
+    }
 
-            if (filename != null && loadFromFile(filename, readOnly)) {
-                Log.d(TAG, "Auto load from " + filename);
-            }
-            adapter.onRestoreInstanceState(state);
-            log.r();
-        } else {
-            Log.w(TAG, "onRestoreInstanceState fail, state:" + (state != null));
-        }
+    @Override
+    public String getLocalizedString(String name) {
+        return ResourceUtil.getStringFromName(getContext(), name);
     }
 
     //! 注册命令观察者

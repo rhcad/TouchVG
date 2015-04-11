@@ -7,21 +7,22 @@ mkdir -p ../touchvglib/core
 swig -c++ -csharp -namespace touchvg.core \
     -outdir ../touchvglib/core \
     -o touchvg_csharp_wrap.cpp \
-    -I../../../TouchVGCore/core/include \
-    -I../../../TouchVGCore/core/include/canvas \
-    -I../../../TouchVGCore/core/include/graph \
-    -I../../../TouchVGCore/core/include/cmd \
-    -I../../../TouchVGCore/core/include/storage \
-    -I../../../TouchVGCore/core/include/geom \
-    -I../../../TouchVGCore/core/include/shape \
-    -I../../../TouchVGCore/core/include/cmdobserver \
-    -I../../../TouchVGCore/core/include/cmdbase \
-    -I../../../TouchVGCore/core/include/test \
-    -I../../../TouchVGCore/core/include/view \
-    -I../../../TouchVGCore/core/include/cmdbasic \
-    -I../../../TouchVGCore/core/include/shapedoc \
-    -I../../../TouchVGCore/core/include/jsonstorage \
-    -I../../../TouchVGCore/core/include/cmdmgr \
-    -I../../../TouchVGCore/core/include/record \
-    -I../../../TouchVGCore/core/src/view \
-    ../../../TouchVGCore/core/src/view/touchvg.swig
+    -I../../core/include \
+    -I../../core/include/canvas \
+    -I../../core/include/graph \
+    -I../../core/include/cmd \
+    -I../../core/include/storage \
+    -I../../core/include/geom \
+    -I../../core/include/gshape \
+    -I../../core/include/shape \
+    -I../../core/include/cmdobserver \
+    -I../../core/include/cmdbase \
+    -I../../core/include/test \
+    -I../../core/include/view \
+    -I../../core/include/cmdbasic \
+    -I../../core/include/shapedoc \
+    -I../../core/include/jsonstorage \
+    -I../../core/include/cmdmgr \
+    -I../../core/include/record \
+    -I../../core/src/view \
+      ../../core/src/view/touchvg.swig
