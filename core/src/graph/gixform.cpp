@@ -92,7 +92,7 @@ struct GiTransformImpl
         giAtomicIncrement(&zoomTimes);
     }
 
-    bool zoomNoAdjust(const Point2d& pnt, float scale, bool* changed = NULL)
+    bool zoomNoAdjust(const Point2d& pnt, float scale, bool* changed = (bool*)0)
     {
         bool bChanged = false;
 
@@ -108,7 +108,7 @@ struct GiTransformImpl
                 zoomChanged();
             }
         }
-        if (changed != NULL)
+        if (changed)
             *changed = bChanged;
 
         return bChanged;
@@ -406,7 +406,7 @@ bool GiTransform::zoomTo(const Box2d& rectWorld, const RECT_2D* rcTo, bool adjus
     float w = 0, h = 0;
     Point2d ptCen;
 
-    if (rcTo != NULL) {
+    if (rcTo) {
         w = fabsf(static_cast<float>(rcTo->right - rcTo->left));
         h = fabsf(static_cast<float>(rcTo->bottom - rcTo->top));
         ptCen.x = (rcTo->left + rcTo->right) * 0.5f;
@@ -463,8 +463,8 @@ bool GiTransform::zoomTo(const Point2d& pntWorld, const Point2d* pxAt, bool adju
 {
     Point2d pnt = pntWorld * m_impl->matW2D;
     return zoomPan(
-        (pxAt == NULL ? (m_impl->cxWnd * 0.5f) : pxAt->x) - pnt.x, 
-        (pxAt == NULL ? (m_impl->cyWnd * 0.5f) : pxAt->y) - pnt.y, adjust);
+        (!pxAt ? (m_impl->cxWnd * 0.5f) : pxAt->x) - pnt.x,
+        (!pxAt ? (m_impl->cyWnd * 0.5f) : pxAt->y) - pnt.y, adjust);
 }
 
 bool GiTransform::zoomPan(float dxPixel, float dyPixel, bool adjust)
@@ -546,7 +546,7 @@ bool GiTransform::zoomScale(float viewScale, const Point2d* pxAt, bool adjust)
 
     // 得到放缩中心点的客户区坐标
     Point2d ptAt (m_impl->cxWnd * 0.5f,  m_impl->cyWnd * 0.5f);
-    if (pxAt != NULL)
+    if (pxAt)
         ptAt.set(pxAt->x, pxAt->y);
 
     // 得到放缩中心点在放缩前的世界坐标

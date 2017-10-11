@@ -1,13 +1,13 @@
 //! \file GiViewHelper.mm
 //! \brief 实现iOS绘图视图辅助类 GiViewHelper
-// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
+// Copyright (c) 2012-2016, https://github.com/rhcad/vgios, BSD License
 
 #import "GiViewHelper.h"
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
 #include "mgview.h"
 
-#define IOSLIBVERSION     32
+#define IOSLIBVERSION     35
 
 extern NSString* EXTIMAGENAMES[];
 
@@ -547,6 +547,13 @@ static GiViewHelper *_sharedInstance = nil;
     }
 }
 
+- (void)clearShapes:(BOOL)showMessage {
+    @synchronized([_view locker]) {
+        [_view coreView]->loadShapes(NULL);
+        [_view.imageCache clearCachedData];
+    }
+}
+
 - (void)eraseView {
     @synchronized([_view locker]) {
         [_view coreView]->setCommand("erasewnd");
@@ -1018,10 +1025,6 @@ static GiViewHelper *_sharedInstance = nil;
 }
 
 - (void)removeLabel {
-    if (_timer) {
-        [_timer invalidate];
-        _timer = nil;
-    }
     if (_label) {
         [_label removeFromSuperview];
         _label = nil;
@@ -1061,14 +1064,9 @@ static GiViewHelper *_sharedInstance = nil;
     }
     
     // start message dismissal timer
-    if (_timer) {
-        [_timer invalidate];
-        _timer = nil;
-    }
-    
-    _timer = [NSTimer scheduledTimerWithTimeInterval:0.7 target:self
-                                            selector:@selector(hideMessage)
-                                            userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:0.7 target:self
+                                   selector:@selector(hideMessage)
+                                   userInfo:nil repeats:NO];
 }
 
 @end

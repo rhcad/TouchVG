@@ -23,10 +23,10 @@ public:
     int         _tag;
     volatile long _refcount;
     
-    MgShapeT() : _id(0), _parent(NULL), _tag(0), _refcount(1) {
+    MgShapeT() : _id(0), _parent((MgShapes*)0), _tag(0), _refcount(1) {
     }
     
-    MgShapeT(const ContextT& ctx) : _id(0), _parent(NULL), _tag(0) {
+    MgShapeT(const ContextT& ctx) : _id(0), _parent((MgShapes*)0), _tag(0) {
         _context = ctx;
     }
     
@@ -65,8 +65,9 @@ public:
     int getType() const { return Type(); }
     
     void release() {
-        if (giAtomicDecrement(&_refcount) == 0)
+        if (giAtomicDecrement(&_refcount) == 0) {
             delete this;
+        }
     }
     
     void addRef() {

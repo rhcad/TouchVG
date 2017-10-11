@@ -1,5 +1,5 @@
-﻿//! \file GestureListener.java
-//! \brief Android绘图手势识别类
+//! \file GestureListener.java
+//! \brief Drawing gesture recognition class
 // Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view.internal;
@@ -16,7 +16,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 
-//! Android绘图手势识别类
+//! Drawing gesture recognition class
 public class GestureListener extends SimpleOnGestureListener {
     private static final String TAG = "touchvg";
     private static final int M_STOPPED = 0;
@@ -129,7 +129,7 @@ public class GestureListener extends SimpleOnGestureListener {
         return false;
     }
 
-    //! 传递单指触摸事件，可用于拖放操作
+    //! Dispatch a single touch event which can be used for drag and drop operations
     public boolean onTouchDrag(View v, int action, float x, float y) {
         if (action == MotionEvent.ACTION_DOWN) {
             mMoving = M_READY_MOVE;
@@ -156,7 +156,7 @@ public class GestureListener extends SimpleOnGestureListener {
         if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
             v.getParent().requestDisallowInterceptTouchEvent(false);
         } else {
-            // 按下后不允许父视图拦截触摸事件
+            // Not allow the parent view to intercept touch events while touching
             v.getParent().requestDisallowInterceptTouchEvent(true);
         }
 
@@ -224,13 +224,13 @@ public class GestureListener extends SimpleOnGestureListener {
         boolean ret = false;
 
         if (mFingerCount != fingerCount) {
-            // 单指变为双指
+            // Single finger to double fingers
             if (mFingerCount == 1) {
                 if (mTouchTime - mDownTime < 800) {
-                    // 双指先后触到屏
+                    // Two fingers touch screen one by one
                     ret = onMoved(GiGestureState.kGiGestureCancel, 1, mLastX, mLastY, 0, 0, true);
                 } else {
-                    // 单指移动一段时间后变为双指
+                    // Single finger touch for a period of time, then turn into double fingers mode
                     ret = onMoved(GiGestureState.kGiGestureEnded, 1, mLastX, mLastY, 0, 0, true);
                 }
                 if (onMoved(GiGestureState.kGiGesturePossible, fingerCount, x1, y1, x2, y2, true)) {
@@ -240,7 +240,7 @@ public class GestureListener extends SimpleOnGestureListener {
                     mMoving = M_END_MOVE;
                 }
             } else {
-                // 不允许双指变为单指
+                // Not allow double fingers mode turn into single finger mode
                 mMoving = M_END_MOVE;
                 ret = onMoved(GiGestureState.kGiGestureEnded, mFingerCount, x1, y1, x2, y2, true);
             }
@@ -308,7 +308,7 @@ public class GestureListener extends SimpleOnGestureListener {
                 notify.onPostGesture(Const.GESTURE_PRESS, e.getX(), e.getY());
             }
         } else if (mMoving == M_STARTED) {
-            // onDown 后还未移动: onTouch 中将开始移动
+            // Will move after onTouch
             mMoving = M_READY_MOVE;
         }
     }
@@ -332,7 +332,7 @@ public class GestureListener extends SimpleOnGestureListener {
         }
     }
 
-    //! 传递单指轻击事件，可用于拖放操作
+    //! Dispatch single tap event which can be used for drag and drop
     public boolean onTap(float x, float y) {
         mMoving = M_STOPPED;
         if (mCoreView == null) {

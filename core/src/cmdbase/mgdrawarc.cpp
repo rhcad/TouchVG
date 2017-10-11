@@ -57,15 +57,6 @@ void MgCmdArc3P::setStepPoint(const MgMotion*, int step, const Point2d& pt)
     }
 }
 
-bool MgCmdArcCSE::initialize(const MgMotion* sender, MgStorage* s)
-{
-    _radius = 0;
-    if (s) {
-        _decimal = s->readInt("decimal", _decimal);
-    }
-    return MgCmdArc3P::initialize(sender, s);
-}
-
 float MgCommand::drawAngleText(const MgMotion* sender, GiGraphics* gs, float angle, void* stdstr)
 {
     Point2d pt(sender->pointM + Vector2d(0, sender->displayMmToModel(12.f)));
@@ -86,6 +77,9 @@ float MgCommand::drawAngleText(MgView* view, GiGraphics* gs, float angle,
     return gs ? gs->drawTextAt(c, GiColor::Red().getARGB(), ss.str().c_str(), pt, 5.f, align) : 0.f;
 }
 
+// MgCmdArcCSE
+//
+
 bool MgCmdArcCSE::draw(const MgMotion* sender, GiGraphics* gs)
 {
     if (m_step == 2 && sender->dragging()) {    // 画弧时显示圆心与终端连线
@@ -103,7 +97,67 @@ bool MgCmdArcCSE::draw(const MgMotion* sender, GiGraphics* gs)
     return MgCmdArc3P::draw(sender, gs);
 }
 
-bool MgCmdArcCSE::click(const MgMotion* sender)
+void MgCmdArcCSE::setStepPoint(const MgMotion*, int step, const Point2d& pt)
+{
+    MgArc* arc = (MgArc*)dynshape()->shape();
+    
+    if (step == 0) {
+        _points[0] = pt;                    // 记下圆心
+        arc->offset(pt - arc->getCenter(), -1);
+    }
+    else if (step == 1) {
+        _points[1] = pt;                    // 记下起点
+        _points[2] = pt;                    // 起点与终点重合
+        arc->setCenterStartEnd(_points[0], _points[1]); // 初始转角为0
+    }
+    else if (step == 2) {
+        arc->setCenterStartEnd(_points[0], _points[1], pt);
+        _points[2] = pt;                    // 记下终点
+    }
+}
+
+// MgCmdSector
+//
+
+bool MgCmdSector::initialize(const MgMotion* sender, MgStorage* s)
+{
+    bool ret = MgCmdArcCSE::initialize(sender, s);
+    if (ret) {
+        ((MgArc*)dynshape()->shape())->setSubType(1);
+    }
+    return ret;
+}
+
+// MgCmdCompass
+//
+
+bool MgCmdCompass::initialize(const MgMotion* sender, MgStorage* s)
+{
+    _radius = 0;
+    if (s) {
+        _decimal = s->readInt("decimal", _decimal);
+    }
+    return MgCmdArc3P::initialize(sender, s);
+}
+
+bool MgCmdCompass::draw(const MgMotion* sender, GiGraphics* gs)
+{
+    if (m_step == 2 && sender->dragging()) {    // 画弧时显示圆心与终端连线
+        GiContext ctx(0, GiColor(0, 126, 0, 64), GiContext::kDotLine);
+        gs->drawLine(&ctx, _points[0], _points[2]);
+        drawAngleText(sender, gs, fabsf(((MgArc*)dynshape()->shape())->getSweepAngle()));
+    }
+    if (_points[0] != _points[1]) {
+        gs->drawHandle(_points[0], kGiHandleCenter);
+        if (m_step == 0) {
+            GiContext ctx(-2, GiColor(0, 126, 0, 32), GiContext::kDashLine);
+            gs->drawCircle(&ctx, _points[0], _points[0].distanceTo(_points[1]));
+        }
+    }
+    return MgCmdArc3P::draw(sender, gs);
+}
+
+bool MgCmdCompass::click(const MgMotion* sender)
 {
     Point2d pt(snapPoint(sender));
     MgArc* arc = (MgArc*)dynshape()->shape();
@@ -121,15 +175,10 @@ bool MgCmdArcCSE::click(const MgMotion* sender)
     return true;
 }
 
-int MgCmdArcCSE::snapOptionsForStep(const MgMotion*, int step)
-{
-    return step > 1 ? 0 : kMgOptionSnapVertex|kMgOptionSnapCross;
-}
-
-void MgCmdArcCSE::setStepPoint(const MgMotion*, int step, const Point2d& pt)
+void MgCmdCompass::setStepPoint(const MgMotion*, int step, const Point2d& pt)
 {
     MgArc* arc = (MgArc*)dynshape()->shape();
-
+    
     if (step == 0) {
         if (_points[1] == _points[2]) {
             _points[0] = pt;                // 记下圆心
@@ -156,6 +205,9 @@ void MgCmdArcCSE::setStepPoint(const MgMotion*, int step, const Point2d& pt)
         _points[2] = arc->getEndPoint();    // 记下终点
     }
 }
+
+// MgCmdArcTan
+//
 
 void MgCmdArcTan::setStepPoint(const MgMotion*, int step, const Point2d& pt)
 {

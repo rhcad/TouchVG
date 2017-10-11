@@ -1,5 +1,5 @@
-﻿//! \file ContextAction.java
-//! \brief Android绘图视图类
+//! \file ContextAction.java
+//! \brief Context buttons layout class for drawing views
 // Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view.internal;
@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-//! 绘图视图的上下文操作布局类
+//! Context buttons layout class for drawing views
 public class ContextAction {
     private static final int EXTRA_ACTION_BEGIN = 40;
     private GiCoreView mCoreView;

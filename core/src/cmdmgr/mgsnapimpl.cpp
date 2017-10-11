@@ -233,7 +233,7 @@ static void snapNear(const MgMotion* sender, const Point2d& orgpt,
     MgHitResult res;
     const float mind = sender->displayMmToModel(4.f);
     float minDist = arr0.type >= kMgSnapNearPt ? arr0.dist - mind : tolNear;
-    int d = matchpt ? shape->getHandleCount() : 0;
+    int d = matchpt && shape ? shape->getHandleCount() : 0;
     
     res.disnableSnapVertex();
     for (int i = sp->shapec()->getExtent().contains(ignoreStart) ? n - 1 : 0; i >= 0; i--) {
@@ -443,7 +443,7 @@ static void snapGrid(const MgMotion*, const Point2d& orgpt,
             arr[2].dist = dists.y;
         }
         
-        int d = matchpt ? shape->getHandleCount() - 1 : -1;
+        int d = matchpt && shape ? shape->getHandleCount() - 1 : -1;
         for (; d >= 0; d--) {
             if (d == ignoreHd || shape->shapec()->isHandleFixed(d))
                 continue;

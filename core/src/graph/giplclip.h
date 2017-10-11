@@ -41,12 +41,12 @@ public:
         \param mat 可指定要对给定顶点进行坐标变换的矩阵
         \return 剪裁结果中是否有轮廓边
     */
-    bool clip(int count, const Point2d* points, const Matrix2d* mat = NULL)
+    bool clip(int count, const Point2d* points, const Matrix2d* mat = (const Matrix2d*)0)
     {
-        if (count < 2 || points == NULL)
+        if (count < 2 || !points)
             return false;
         
-        if (mat != NULL)
+        if (mat)
         {
             m_vs1.resize(2+count/2);
             m_vs2.resize(count);
@@ -123,7 +123,7 @@ private:
     
     bool clipEdge(vector<Point2d>& arr, int count, const Point2d* points, kSideType side)
     {
-        if (count < 2 || points == NULL)
+        if (count < 2 || !points)
             return false;
 
         arr.clear();

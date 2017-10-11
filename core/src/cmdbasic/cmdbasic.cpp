@@ -40,4 +40,6 @@ void MgBasicCommands::registerCmds(MgView* view)
     mgRegisterCommand<MgCmdArc3P>(view);
     mgRegisterCommand<MgCmdArcCSE>(view);
     mgRegisterCommand<MgCmdArcTan>(view);
+    mgRegisterCommand<MgCmdSector>(view);
+    mgRegisterCommand<MgCmdCompass>(view);
 }

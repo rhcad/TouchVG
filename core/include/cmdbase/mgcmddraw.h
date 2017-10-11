@@ -16,7 +16,7 @@ public:
     MgCommandDraw(const char* name);
     virtual ~MgCommandDraw();
     
-    MgShape* addShape(const MgMotion* sender, MgShape* shape = NULL);
+    MgShape* addShape(const MgMotion* sender, MgShape* shape = MgShape::Null());
     
     bool touchBeganStep(const MgMotion* sender);
     bool touchMovedStep(const MgMotion* sender);
@@ -38,7 +38,7 @@ public:
     static Point2d getLastSnappedOriginPoint() { return m_lastSnapped[1]; }
     
 protected:
-    bool _initialize(int shapeType, const MgMotion* sender, MgStorage* s = NULL);
+    bool _initialize(int shapeType, const MgMotion* sender, MgStorage* s = (MgStorage*)0);
     bool _click(const MgMotion* sender);
     virtual int getMaxStep() { return 3; }
     virtual void setStepPoint(const MgMotion* sender, int step, const Point2d& pt);

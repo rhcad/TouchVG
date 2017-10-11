@@ -1,20 +1,17 @@
-﻿//! \file ImageCache.java
-//! \brief 图像对象缓存类
+//! \file ImageCache.java
+//! \brief Image cache and map class
 // Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view.internal;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Picture;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
@@ -22,10 +19,7 @@ import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.view.View;
 
-import com.caverock.androidsvg.SVG;
-import com.caverock.androidsvg.SVGParseException;
-
-//! 图像对象缓存类
+//! Image cache and map class
 public class ImageCache extends Object {
     // USE_SVG=true: Uses androidsvg-xxx.jar
     public static final boolean USE_SVG = false;
@@ -107,14 +101,14 @@ public class ImageCache extends Object {
         return h;
     }
 
-    //! 清除所有资源
+    //! Clear all cached objects
     public void clear() {
         if (mCache != null) {
             mCache.evictAll();
         }
     }
 
-    //! 查找图像对象，不自动加载
+    //! Find image object, not automatically loaded
     public final Bitmap getBitmap(String name) {
         BitmapDrawable drawable = null;
         try {
@@ -125,7 +119,7 @@ public class ImageCache extends Object {
         return drawable != null ? drawable.getBitmap() : null;
     }
 
-    //! 查找图像对象
+    //! Find or load image object
     public final Drawable getImage(View view, String name) {
         Drawable drawable = mCache != null ? mCache.get(name) : null;
 
@@ -169,7 +163,7 @@ public class ImageCache extends Object {
         return name;
     }
 
-    //! 插入一个程序资源中的位图图像
+    //! Add image object in resource
     public final Drawable addBitmap(Resources res, int id, String name) {
         Drawable drawable = mCache != null ? mCache.get(name) : null;
 
@@ -185,12 +179,12 @@ public class ImageCache extends Object {
         return drawable;
     }
 
-    //! 插入一个程序资源中的SVG图像
+    //! Add SVG object in resource
     @SuppressWarnings("unused")
     public final Drawable addSVG(Resources res, int id, String name) {
         Drawable drawable = mCache != null ? mCache.get(name) : null;
 
-        if (drawable == null && id != 0 && USE_SVG) {
+        if (drawable == null && id != 0 && USE_SVG) {/*
             try {
                 final Picture picture = SVG.getFromResource(res, id).renderToPicture();
 
@@ -200,13 +194,13 @@ public class ImageCache extends Object {
                 }
             } catch (SVGParseException e) {
                 Log.e(TAG, "Parse resource fail", e);
-            }
+            }*/
         }
 
         return drawable;
     }
 
-    //! 插入一个PNG等图像文件
+    //! Add image object from storage
     public final Drawable addBitmapFile(Resources res, String filename, String name) {
         Drawable drawable = mCache != null ? mCache.get(name) : null;
 
@@ -234,12 +228,12 @@ public class ImageCache extends Object {
         return drawable;
     }
 
-    //! 插入一个SVG文件的图像
+    //! Add SVG object from storage
     @SuppressWarnings("unused")
     public final Drawable addSVGFile(String filename, String name) {
         Drawable drawable = mCache != null ? mCache.get(name) : null;
 
-        if (drawable == null && name.endsWith(".svg") && USE_SVG) {
+        if (drawable == null && name.endsWith(".svg") && USE_SVG) {/*
             try {
                 final InputStream data = new FileInputStream(new File(filename));
                 final Picture picture = SVG.getFromInputStream(data).renderToPicture();
@@ -255,7 +249,7 @@ public class ImageCache extends Object {
                 Log.e(TAG, "SVG read fail", e);
             } catch (SVGParseException e) {
                 Log.e(TAG, "Parse file fail", e);
-            }
+            }*/
         }
 
         return drawable;

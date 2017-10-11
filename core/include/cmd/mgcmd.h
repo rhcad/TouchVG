@@ -26,12 +26,12 @@ public:
     
 #ifndef SWIG
     const char* getName() const { return _name; }               //!< 返回命令名称
-    virtual const MgShape* getShape(const MgMotion* sender) { return (MgShape*)0; }   //!< 当前临时图形
+    virtual const MgShape* getShape(const MgMotion* sender) { return MgShape::Null(); }   //!< 当前临时图形
     virtual bool initializeWithSelection(const MgMotion* sender, MgStorage* s, const int* ids) { return initialize(sender, s); }
     virtual int getSelectedIDs(MgView* view, int* ids, int count) { return 0; }
-    static float drawAngleText(const MgMotion* sender, GiGraphics* gs, float angle, void* stdstr = NULL);
+    static float drawAngleText(const MgMotion* sender, GiGraphics* gs, float angle, void* stdstr = (void*)0);
     static float drawAngleText(MgView* view, GiGraphics* gs, float angle, const Point2d& pt,
-                               int align = 1, void* stdstr = NULL, GiTextWidthCallback* c = NULL);
+                               int align = 1, void* stdstr = (void*)0, GiTextWidthCallback* c = (GiTextWidthCallback*)0);
 #endif
     virtual void release() = 0;                                 //!< 销毁对象
     

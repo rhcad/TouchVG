@@ -41,19 +41,52 @@ protected:
 class MgCmdArcCSE : public MgCmdArc3P
 {
 public:
-    MgCmdArcCSE(const char* name = Name()) : MgCmdArc3P(name), _decimal(0) {}
+    MgCmdArcCSE(const char* name = Name()) : MgCmdArc3P(name) {}
 #ifndef SWIG
     static const char* Name() { return "arc_cse"; }
     static MgCommand* Create() { return new MgCmdArcCSE; }
 #endif
     virtual void release() { delete this; }
-    virtual bool initialize(const MgMotion* sender, MgStorage* s);
     virtual bool draw(const MgMotion* sender, GiGraphics* gs);
-    virtual bool click(const MgMotion* sender);
 
 protected:
     virtual void setStepPoint(const MgMotion* sender, int step, const Point2d& pt);
-    virtual int snapOptionsForStep(const MgMotion* sender, int step);
+};
+
+//! 扇形绘图命令类
+/*! \ingroup CORE_COMMAND
+    \see MgArc
+ */
+class MgCmdSector : public MgCmdArcCSE
+{
+public:
+    MgCmdSector(const char* name = Name()) : MgCmdArcCSE(name) {}
+#ifndef SWIG
+    static const char* Name() { return "sector"; }
+    static MgCommand* Create() { return new MgCmdSector; }
+#endif
+    virtual bool initialize(const MgMotion* sender, MgStorage* s);
+};
+
+//! 圆规圆弧绘图命令类
+/*! \ingroup CORE_COMMAND
+    \see MgArc
+ */
+class MgCmdCompass : public MgCmdArc3P
+{
+public:
+    MgCmdCompass(const char* name = Name()) : MgCmdArc3P(name), _decimal(0) {}
+#ifndef SWIG
+    static const char* Name() { return "compass"; }
+    static MgCommand* Create() { return new MgCmdCompass; }
+#endif
+    virtual void release() { delete this; }
+    virtual bool initialize(const MgMotion* sender, MgStorage* s);
+    virtual bool draw(const MgMotion* sender, GiGraphics* gs);
+    virtual bool click(const MgMotion* sender);
+    
+protected:
+    virtual void setStepPoint(const MgMotion* sender, int step, const Point2d& pt);
     
 private:
     int     _decimal;

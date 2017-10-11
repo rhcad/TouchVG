@@ -18,8 +18,10 @@ MgShape* MgCmdManagerImpl::addImageShape(const MgMotion* sender,
 MgShape* MgCmdManagerImpl::addImageShape(const MgMotion* sender, const char* name,
                                          float xc, float yc, float w, float h, int tag)
 {
-    if (!name || *name == 0 || w < 1 || h < 1)
+    if (!name || *name == 0 || w < 1 || h < 1) {
+        LOGE("Invalid parameters for addImageShape: %s, %f x %f", name, w, h);
         return NULL;
+    }
     
     Vector2d size(Vector2d(w, h) * sender->view->xform()->displayToWorld());
     while (fabsf(size.x) > 100.f || fabsf(size.y) > 100.f) {

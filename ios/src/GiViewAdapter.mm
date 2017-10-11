@@ -1,6 +1,6 @@
 //! \file GiViewAdapter.mm
 //! \brief 实现iOS绘图视图适配器 GiViewAdapter
-// Copyright (c) 2012-2015, https://github.com/rhcad/vgios, BSD License
+// Copyright (c) 2012-2016, https://github.com/rhcad/vgios, BSD License
 
 #import "GiViewImpl.h"
 #import "GiImageCache.h"
@@ -8,6 +8,7 @@
 #include "mgshapetype.h"
 #include <algorithm>
 
+// MgContextAction
 static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"取消",
     @"删除", @"克隆", @"定长", @"不定长", @"锁定", @"解锁", @"编辑", @"返回",
     @"闭合", @"不闭合", @"加点", @"删点", @"成组", @"解组", @"翻转",
@@ -15,7 +16,7 @@ static NSString* const CAPTIONS[] = { nil, @"全选", @"重选", @"绘图", @"�
 static NSString* const IMAGENAMES[] = { nil, @"vg_selall.png", nil, nil,
     @"vg_back.png", @"vg_delete.png", @"vg_clone.png", @"vg_fixlen.png",
     @"vg_freelen.png", @"vg_lock.png", @"vg_unlock.png", @"vg_edit.png",
-    @"vg_endedit.png", nil, nil, nil, nil,
+    @"vg_endedit.png", nil, nil, @"vg_addvertex.png", @"vg_delvertex.png",
     @"vg_group.png", @"vg_ungroup.png", @"vg_overturn.png",
 };
 NSString* EXTIMAGENAMES[41] = { nil };

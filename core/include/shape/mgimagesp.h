@@ -22,7 +22,7 @@ public:
     void setName(const char* name);
     
     Vector2d getImageSize() const { return _size; }
-    void setImageSize(Vector2d size) { _size = size; }
+    void setImageSize(Vector2d size);
     
     static const MgShape* findShapeByImageID(const MgShapes* shapes, const char* name);
     
@@ -33,8 +33,6 @@ protected:
     bool _draw(int mode, GiGraphics& gs, const GiContext& ctx, int segment) const;
     bool _save(MgStorage* s) const;
     bool _load(MgShapeFactory* factory, MgStorage* s);
-private:
-    bool drawBox(GiGraphics& gs, const GiContext& ctx) const;
     
 protected:
     char    _name[64];

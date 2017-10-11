@@ -89,13 +89,13 @@ struct MgSnap {
     
     //! 根据当前点捕捉新的坐标
     virtual Point2d snapPoint(const MgMotion* sender, const Point2d& orignPt) {
-        return snapPoint(sender, orignPt, NULL, -1);
+        return snapPoint(sender, orignPt, MgShape::Null(), -1);
     }
     
 #ifndef SWIG
     //! 根据当前点捕捉新的坐标
     virtual Point2d snapPoint(const MgMotion* sender, const Point2d& orignPt, const MgShape* shape,
-                              int hotHandle, int ignoreHandle = -1, const int* ignoreids = NULL) = 0;
+                              int hotHandle, int ignoreHandle = -1, const int* ignoreids = (const int*)0) = 0;
     
     //! 得到捕捉到的图形、控制点序号、源图形上匹配的控制点序号
     virtual bool getSnappedHandle(int& shapeid, int& handleIndex, int& handleIndexSrc) const = 0;

@@ -21,11 +21,8 @@ bool MgCmdManagerImpl::showInSelect(const MgMotion* sender, int selState, const 
     
     int actions[12] = { 0 };
     int n = 0;
-    bool isslines = (shape && selState == kMgSelOneShape
-                     && shape->shapec()->isKindOf(kMgShapeSplines));
-    bool isOpenLines = (shape && selState == kMgSelOneShape
-                        && shape->shapec()->isKindOf(kMgShapeLines)
-                        && !shape->shapec()->isClosed());
+    bool issplines = (shape && shape->shapec()->isKindOf(kMgShapeSplines));
+    bool isLines = (shape && shape->shapec()->isKindOf(kMgShapeLines));
     bool locked = shape && shape->shapec()->isLocked();
     bool fixedLength = shape && shape->shapec()->getFlag(kMgFixedLength);
     
@@ -70,23 +67,25 @@ bool MgCmdManagerImpl::showInSelect(const MgMotion* sender, int selState, const 
             break;
             
         case kMgSelVertexes:
-            if ((isslines || isOpenLines)
-                && shape && !shape->shapec()->isLocked()) {
-                //actions[n++] = closed ? kMgActionOpened : kMgActionClosed;
-                actions[n++] = kMgActionAddVertex;
+            if ((issplines || isLines) && shape && !shape->shapec()->isLocked()) {
+                if (shape->shapec()->getFlag(kMgCanAddVertex)) {
+                    //actions[n++] = closed ? kMgActionOpened : kMgActionClosed;
+                    actions[n++] = kMgActionAddVertex;
+                }
             }
             if (!locked && shape && shape->shapec()->isKindOf(kMgShapeLine)) {
                 actions[n++] = fixedLength ? kMgActionFreeLength : kMgActionFixedLength;
             }
-            //actions[n++] = locked ? kMgActionUnlocked : kMgActionLocked;
             actions[n++] = kMgActionHideVertex;
             break;
             
         case kMgSelVertex:
-            if ((isslines || isOpenLines)
-                && shape && !shape->shapec()->isLocked()) {
-                //actions[n++] = closed ? kMgActionOpened : kMgActionClosed;
-                actions[n++] = kMgActionDelVertex;
+            if ((issplines || isLines) && shape && !shape->shapec()->isLocked()) {
+                if (shape->shapec()->getFlag(kMgCanAddVertex)
+                    && shape->getPointCount() > 3) {
+                    //actions[n++] = closed ? kMgActionOpened : kMgActionClosed;
+                    actions[n++] = kMgActionDelVertex;
+                }
             }
             if (!locked && shape && shape->shapec()->isKindOf(kMgShapeLine)) {
                 actions[n++] = fixedLength ? kMgActionFreeLength : kMgActionFixedLength;

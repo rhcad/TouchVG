@@ -240,7 +240,7 @@ bool MgCmdSelect::draw(const MgMotion* sender, GiGraphics* gs)
             gs->drawLine(&ctxshap, m_ptStart, m_ptSnap);
         }
     }
-    if (!mgIsZero(m_rotateAngle)) {                 // 显示旋转角度
+    if (!mgIsZero(m_rotateAngle) && sender->view->getOptionBool("showRotateText", true)) {  // 显示旋转角度
         drawAngleText(sender, gs, fabsf(m_rotateAngle));
     }
     
@@ -458,8 +458,9 @@ int MgCmdSelect::hitTestHandles(const MgShape* shape, const Point2d& pointM,
         }
     }
     
-    if (sender->pressDrag && nearDist < minDist / 3
+    if (sender->dragging() && nearDist < minDist / 3
         && minDist > sender->displayMmToModel(8.f)
+        && shape->shapec()->getFlag(kMgCanAddVertex)
         && shape->shapec()->isKindOf(kMgShapeBaseLines))
     {
         m_insertPt = true;
@@ -737,8 +738,7 @@ bool MgCmdSelect::isSelectedByType(MgView* view, int type)
 
 bool MgCmdSelect::canTransform(const MgShape* shape, const MgMotion* sender)
 {
-    return (shape && !shape->shapec()->getFlag(kMgFixedLength)
-            && !shape->shapec()->isLocked()
+    return (shape && !shape->shapec()->isLocked()
             && sender->view->shapeCanTransform(shape));
 }
 
@@ -851,6 +851,15 @@ static bool moveIntoLimits(MgBaseShape* shape, const MgMotion* sender)
     return outside;
 }
 
+static bool isDragMidPoint(const MgShape* sp, const MgMotion* sender)
+{
+    float d1 = sender->startPtM.distanceTo(sp->getPoint(0));
+    float d2 = sender->startPtM.distanceTo(sp->getPoint(0));
+    float d3 = sender->startPtM.distanceTo(sp->getHandlePoint(2));
+    
+    return d3 < d1 && d3 < d2 && d3 < sender->displayMmToModel(5);
+}
+
 bool MgCmdSelect::touchMoved(const MgMotion* sender)
 {
     Point2d pointM(sender->pointM);
@@ -925,6 +934,26 @@ bool MgCmdSelect::touchMoved(const MgMotion* sender)
                     shape->setHandlePoint(m_handleIndex - 1, pointM, tol);
                     Point2d pt(snapPoint(sender, m_clones[i]));
                     shape->setHandlePoint2(m_handleIndex - 1, pt, tol, _dragData);
+                }
+                else if (shape->getPointCount() == 2 && shape->getFlag(kMgFixedLength)
+                         && canRotate(basesp, sender) && !isDragMidPoint(basesp, sender)) { // 线段绕点旋转
+                    Point2d center(basesp->getHandlePoint(1 - (m_handleIndex - 1)));
+                    m_rotateAngle = (m_ptStart - center).angleTo2(pointM - center);
+                    float stepAngle = sender->view->getOptionFloat("rotateStepAngle", 1);
+                    
+                    if (sender->view->getSnap()->getSnappedType() == kMgSnapNone) {
+                        m_rotateAngle = mgbase::roundReal(m_rotateAngle * _M_R2D / stepAngle, 0) * _M_D2R * stepAngle;
+                    }
+                    shape->transform(Matrix2d::rotation(m_rotateAngle, center));
+                    
+                    Point2d fromPt, toPt;
+                    snapPoint(sender, m_clones[i]);
+                    
+                    if (sender->cmds()->getSnap()->getSnappedPoint(fromPt, toPt) >= kMgSnapGrid) {
+                        float anglefix = (fromPt - center).angleTo2(toPt - center);
+                        shape->transform(Matrix2d::rotation(anglefix, center));
+                        m_rotateAngle += anglefix;
+                    }
                 }
             }
             else if (dragCorner && !shape->getFlag(kMgFixedSize)) { // 拖动变形框的特定点
@@ -1128,6 +1157,10 @@ bool MgCmdSelect::applyCloneShapes(MgView* view, bool apply, bool addNewShapes)
                     changed = true;
                 }
                 else {
+                    if (oldsp) {
+                        m_clones[i]->copy(*oldsp);
+                        view->shapeMoved(m_clones[i], -1);
+                    }
                     m_clones[i]->release();
                 }
             }
@@ -1174,7 +1207,7 @@ int MgCmdSelect::getSelectType(MgView* view)
 {
     int n = getSelection(view, 0, NULL);
     int type = 0;
-    std::vector<const MgShape*> arr(n, (MgShape*)0);
+    std::vector<const MgShape*> arr(n, MgShape::Null());
 
     if (n > 0) {
         n = getSelection(view, n, &arr.front());

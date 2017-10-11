@@ -83,6 +83,7 @@ struct MgShapeFactory;
 - (BOOL)loadFromFile:(NSString *)vgfile;    //!< 从JSON文件中加载图形，自动改后缀名为.vg
 - (BOOL)saveToFile:(NSString *)vgfile;      //!< 保存图形到JSON文件，自动改后缀名为.vg
 - (void)clearShapes;                        //!< 清除所有图形，含锁定的图形
+- (void)clearShapes:(BOOL)showMessage;      //!< 清除所有图形，含锁定的图形，允许不显示删除结果文字
 - (void)eraseView;                          //!< 清除当前视图区域内的未锁定的图形
 - (int)unlockedShapeCount;                  //!< 返回未锁定的可见图形的个数
 - (int)visibleShapeCount;                   //!< 返回可见图形的个数

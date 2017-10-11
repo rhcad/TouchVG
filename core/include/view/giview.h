@@ -33,7 +33,7 @@ public:
     //! 返回上下文操作菜单是否可见
     virtual bool isContextActionsVisible() { return false; }
 
-    //! 显示上下文操作菜单
+    //! 显示上下文操作菜单(MgContextAction)
     virtual bool showContextActions(const mgvector<int>& actions,
                                     const mgvector<float>& buttonXY,
                                     float x, float y, float w, float h) { return false; }

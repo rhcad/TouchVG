@@ -25,7 +25,7 @@ class GiViewAdapter;
 @end
 
 //! 在层上显示图形的渲染类
-@interface GiLayerRender : NSObject {
+@interface GiLayerRender : NSObject<CALayerDelegate> {
     CALayer         *_layer;
     GiViewAdapter   *_adapter;
     __block long    _drawing;
@@ -45,7 +45,6 @@ class GiViewAdapter;
 //! 提示文字辅助类
 @interface GiMessageHelper : NSObject {
     WDLabel     *_label;
-    NSTimer     *_timer;
 }
 
 - (void)showMessage:(NSString *)message inView:(UIView *)view;

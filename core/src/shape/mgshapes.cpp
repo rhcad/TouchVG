@@ -187,7 +187,7 @@ void MgShapes::transform(const Matrix2d& mat)
 MgShape* MgShapes::cloneShape(int sid) const
 {
     const MgShape* p = im->findShape(sid);
-    return p ? p->cloneShape() : NULL;
+    return p ? p->cloneShape() : MgShape::Null();
 }
 
 MgShape* MgShapes::addShape(const MgShape& src)
@@ -327,7 +327,7 @@ void MgShapes::freeIterator(void*& it) const
 {
     if (it) {
         delete (I::citerator*)it;
-        it = NULL;
+        it = (void*)0;
     }
 }
 
@@ -335,10 +335,10 @@ const MgShape* MgShapes::getFirstShape(void*& it) const
 {
     if (im->shapes.empty()) {
         it = NULL;
-        return NULL;
+        return MgShape::Null();
     }
     it = (void*)(new I::citerator(im->shapes.begin()));
-    return im->shapes.empty() ? NULL : im->shapes.front();
+    return im->shapes.empty() ? MgShape::Null() : im->shapes.front();
 }
 
 const MgShape* MgShapes::getNextShape(void*& it) const
@@ -349,17 +349,17 @@ const MgShape* MgShapes::getNextShape(void*& it) const
         if (*pit != im->shapes.end())
             return *(*pit);
     }
-    return NULL;
+    return MgShape::Null();
 }
 
 const MgShape* MgShapes::getHeadShape() const
 {
-    return im->shapes.empty() ? NULL : im->shapes.front();
+    return im->shapes.empty() ? MgShape::Null() : im->shapes.front();
 }
 
 const MgShape* MgShapes::getLastShape() const
 {
-    return im->shapes.empty() ? NULL : im->shapes.back();
+    return im->shapes.empty() ? MgShape::Null() : im->shapes.back();
 }
 
 const MgShape* MgShapes::findShape(int sid) const
@@ -370,13 +370,13 @@ const MgShape* MgShapes::findShape(int sid) const
 const MgShape* MgShapes::findShapeByTag(int tag) const
 {
     if (0 == tag) {
-        return NULL;
+        return MgShape::Null();
     }
     for (I::citerator it = im->shapes.begin(); it != im->shapes.end(); ++it) {
         if ((*it)->getTag() == tag)
             return *it;
     }
-    return NULL;
+    return MgShape::Null();
 }
 
 int MgShapes::getShapeCountByTypeOrTag(int type, int tag) const
@@ -404,19 +404,19 @@ int MgShapes::getShapeIndex(int sid) const
 const MgShape* MgShapes::getShapeAtIndex(int index) const
 {
     I::citerator it = im->findPositionOfIndex(index);
-    return it != im->shapes.end() ? *it : NULL;
+    return it != im->shapes.end() ? *it : MgShape::Null();
 }
 
 const MgShape* MgShapes::findShapeByType(int type) const
 {
     if (0 == type) {
-        return NULL;
+        return MgShape::Null();
     }
     for (I::citerator it = im->shapes.begin(); it != im->shapes.end(); ++it) {
         if ((*it)->shapec()->getType() == type)
             return *it;
     }
-    return NULL;
+    return MgShape::Null();
 }
 
 const MgShape* MgShapes::findShapeByTypeAndTag(int type, int tag) const
@@ -425,7 +425,7 @@ const MgShape* MgShapes::findShapeByTypeAndTag(int type, int tag) const
         if ((*it)->shapec()->getType() == type && (*it)->getTag() == tag)
             return *it;
     }
-    return NULL;
+    return MgShape::Null();
 }
 
 int MgShapes::traverseByType(int type, void (*c)(const MgShape*, void*), void* d)
@@ -448,13 +448,13 @@ int MgShapes::traverseByType(int type, void (*c)(const MgShape*, void*), void* d
 
 const MgShape* MgShapes::getParentShape(const MgShape* shape)
 {
-    const MgComposite *composite = NULL;
+    const MgComposite *composite = (const MgComposite*)0;
     
     if (shape && shape->getParent()
         && shape->getParent()->getOwner()->isKindOf(MgComposite::Type())) {
         composite = (const MgComposite *)(shape->getParent()->getOwner());
     }
-    return composite ? composite->getOwnerShape() : NULL;
+    return composite ? composite->getOwnerShape() : MgShape::Null();
 }
 
 static const float EXTENT_LIMIT = 1e5f - 1.f;
@@ -481,7 +481,7 @@ static bool isVisibleAndLocked(const MgBaseShape* shape)
 const MgShape* MgShapes::hitTest(const Box2d& limits, MgHitResult& res,
                                  Filter filter, void* data) const
 {
-    const MgShape* retshape = NULL;
+    const MgShape* retshape = MgShape::Null();
     
     res.dist = limits.width() > 1e4f ? limits.width() : limits.width() * 20.f;
     for (I::citerator it = im->shapes.begin(); it != im->shapes.end(); ++it) {
@@ -528,7 +528,7 @@ int MgShapes::dyndraw(int mode, GiGraphics& gs, const GiContext *ctx,
         if (ignoreIds) {
             for (int i = 0; ignoreIds[i]; i++) {
                 if (sp->getID() == ignoreIds[i]) {
-                    sp = NULL;
+                    sp = MgShape::Null();
                     break;
                 }
             }
@@ -604,11 +604,11 @@ int MgShapes::load(MgShapeFactory* factory, MgStorage* s, bool addOnly)
             const int sid = s->readInt("id", 0);
             s->readFloatArray("extent", &rect.xmin, 4, false);
             
-            const MgShape* oldsp = addOnly && sid ? findShape(sid) : NULL;
+            const MgShape* oldsp = addOnly && sid ? findShape(sid) : MgShape::Null();
             MgShape* newsp = factory->createShape(type);
             
             if (oldsp && oldsp->shapec()->getType() != type) {
-                oldsp = NULL;
+                oldsp = MgShape::Null();
             }
             if (newsp) {
                 newsp->setParent(this, oldsp ? sid : im->getNewID(sid));
@@ -651,9 +651,9 @@ void MgShapes::setNewShapeID(int sid)
 MgShape* MgShapes::I::findShape(int sid) const
 {
     if (0 == sid || -1 == sid)
-        return NULL;
+        return MgShape::Null();
     ID2SHAPE::const_iterator it = id2shape.find(sid);
-    return it != id2shape.end() ? it->second : NULL;
+    return it != id2shape.end() ? it->second : MgShape::Null();
 }
 
 int MgShapes::I::getNewID(int sid)

@@ -372,7 +372,9 @@ void TestCanvas::testRotateText(GiCanvas* canvas, int n)
         canvas->drawTextAt(text, x, y, h, GiCanvas::kAlignLeft, a);
     }
     
-    h = 10, x = 500, y = 600;
+    h = 10;
+    x = 500;
+    y = 600;
     canvas->drawLine(0, y, 1000, y);
     canvas->drawLine(x, 0, x, 1000);
     canvas->drawEllipse(x - 300, y - 300, 600, 600, true, false);
@@ -388,7 +390,9 @@ void TestCanvas::testRotateText(GiCanvas* canvas, int n)
         canvas->drawTextAt(text, x + 300 * cosf(-a), y + 300 * sinf(-a), h, GiCanvas::kAlignRight, a);
     }
     
-    h = 10, x = 700, y = 800;
+    h = 10;
+    x = 700;
+    y = 800;
     canvas->drawLine(0, y, 1000, y);
     canvas->drawLine(x, 0, x, 1000);
     canvas->drawEllipse(x - 300, y - 300, 600, 600, true, false);

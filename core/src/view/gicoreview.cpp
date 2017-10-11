@@ -1093,7 +1093,7 @@ void GiCoreViewImpl::submitDynamicShapes(GcBaseView* v)
 
 void GiCoreView::clear()
 {
-    int n = getShapeCount();
+    int n = getUnlockedShapeCount();
     loadShapes((MgStorage*)0);
     if (n > 0) {
         char buf[31];
@@ -1298,7 +1298,7 @@ void GiCoreView::setContext(const GiContext& ctx, int mask, int apply)
 
     if (mask != 0) {
         int n = impl->_cmds->getSelectionForChange(impl, 0, NULL);
-        std::vector<MgShape*> shapes(n, (MgShape*)0);
+        std::vector<MgShape*> shapes(n, MgShape::Null());
 
         if (n > 0 && impl->_cmds->getSelectionForChange(impl, n, &shapes.front()) > 0) {
             for (int i = 0; i < n; i++) {
@@ -1339,8 +1339,8 @@ bool GiCoreView::setShapeFlag(int sid, int bit, bool on)
     bool ret = false;
     
     if (sid == 0) {
-        const MgShape* shapes[20];
-        int n = impl->cmds()->getSelection(impl, 20, shapes);
+        const MgShape* shapes[100];
+        int n = impl->cmds()->getSelection(impl, 100, shapes);
         
         while (--n >= 0) {
             shape = shapes[n];

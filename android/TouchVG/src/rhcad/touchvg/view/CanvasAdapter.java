@@ -1,5 +1,5 @@
-﻿//! \file CanvasAdapter.java
-//! \brief 实现Android画布适配器类
+//! \file CanvasAdapter.java
+//! \brief Canvas adapter class
 // Copyright (c) 2012-2015, https://github.com/rhcad/vgandroid, BSD license
 
 package rhcad.touchvg.view;
@@ -24,7 +24,7 @@ import android.graphics.drawable.PictureDrawable;
 import android.util.Log;
 import android.view.View;
 
-//! Android画布适配器类
+//! Canvas adapter class
 public class CanvasAdapter extends GiCanvas {
     private static final String TAG = "touchvg";
     private Path mPath;
@@ -84,19 +84,14 @@ public class CanvasAdapter extends GiCanvas {
 
         this.mCanvas = canvas;
 
-        // 线条反走样
         mPen.setAntiAlias(!fast);
-        // 高精度颜色采样，会略慢
         mPen.setDither(!fast);
-        // 仅描边,实线,圆端,折线转角圆弧过渡:
         mPen.setStyle(Paint.Style.STROKE);
         mPen.setPathEffect(null);
         mPen.setStrokeCap(Paint.Cap.ROUND);
         mPen.setStrokeJoin(Paint.Join.ROUND);
-        // 仅填充,默认透明不填充
         mBrush.setStyle(Paint.Style.FILL);
         mBrush.setColor(Color.TRANSPARENT);
-        // 文字反走样
         mBrush.setAntiAlias(true);
 
         return true;
@@ -265,7 +260,7 @@ public class CanvasAdapter extends GiCanvas {
             // GLES20Canvas, >=api11
             Log.w(TAG, "Unsupported operation: clipPath", e);
             if (mView != null) {
-                // 改为软实现后下次绘制才生效(need API11 or above)
+                // Soft-implementation will come into effect after the next drawing (need API11+)
                 mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             }
         }
@@ -335,7 +330,7 @@ public class CanvasAdapter extends GiCanvas {
                     // GLES20Canvas, >=api11
                     Log.w(TAG, "Unsupported operation", e3);
                     if (mView != null) {
-                        // 改为软实现后下次绘制才生效
+                        // Soft-implementation will come into effect after the next drawing (need API11+)
                         mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                     }
                 }

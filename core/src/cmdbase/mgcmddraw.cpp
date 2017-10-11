@@ -12,7 +12,7 @@
 Point2d MgCommandDraw::m_lastSnapped[];
 
 MgCommandDraw::MgCommandDraw(const char* name)
-    : MgCommand(name), m_step(0), m_shape(NULL)
+    : MgCommand(name), m_step(0), m_shape(MgShape::Null())
 {
 }
 
@@ -92,7 +92,7 @@ bool MgCommandDraw::_initialize(int shapeType, const MgMotion* sender, MgStorage
     m_shape->setContext(ctx);
     m_flags = (m_flags & ~2) | (sender->view->context() && ctx != *sender->view->context() ? 2 : 0);
     
-    int n = s ? s->readFloatArray("points", NULL, 0) : 0;
+    int n = s ? s->readFloatArray("points", (float*)0, 0) : 0;
     if (n > 1) {
         MgMotion tmpmotion(*sender);
         Point2d buf[20];
@@ -134,7 +134,7 @@ bool MgCommandDraw::_initialize(int shapeType, const MgMotion* sender, MgStorage
 MgShape* MgCommandDraw::addShape(const MgMotion* sender, MgShape* shape)
 {
     shape = shape ? shape : m_shape;
-    MgShape* newsp = NULL;
+    MgShape* newsp = MgShape::Null();
     
     if (sender->view->getOptionBool("newShapeFixedlen", false)) {
         shape->shape()->setFlag(kMgFixedLength, true);
@@ -183,7 +183,7 @@ bool MgCommandDraw::backStep(const MgMotion* sender)
 
 bool MgCommandDraw::draw(const MgMotion* sender, GiGraphics* gs)
 {
-    bool ret = m_step > 0 && m_shape->draw(0, *gs, NULL, -1);
+    bool ret = m_step > 0 && m_shape->draw(0, *gs, (const GiContext*)0, -1);
     return sender->view->getSnap()->drawSnap(sender, gs) || ret;
 }
 
@@ -265,7 +265,7 @@ Point2d MgCommandDraw::snapPoint(const MgMotion* sender, const Point2d& orignPt,
                                  bool firstStep, int handle)
 {
     MgSnap *snap = sender->view->getSnap();
-    Point2d pt(snap->snapPoint(sender, orignPt, firstStep ? NULL : m_shape, handle));
+    Point2d pt(snap->snapPoint(sender, orignPt, firstStep ? MgShape::Null() : m_shape, handle));
     
     if ( (firstStep || !sender->dragging())
         && snap->getSnappedType() >= kMgSnapPoint) {
@@ -386,7 +386,7 @@ std::string MgLocalized::getString(MgView* view, const char* name)
     return c.result.empty() ? name : c.result;
 }
 
-int MgLocalized::formatString(char *buffer, size_t size, MgView* view, const char *format, ...)
+int MgLocalized::formatString(char *buffer, int size, MgView* view, const char *format, ...)
 {
     std::string str;
     va_list arglist;

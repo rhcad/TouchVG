@@ -273,6 +273,9 @@ public interface IViewHelper {
     //! 保存静态图形的透明背景快照到PNG文件，自动添加后缀名.png，支持多线程
     public boolean exportPNG(String filename);
 
+    //! 保存图片到文件
+    public boolean savePNG(Bitmap bmp, String filename);
+
     //! 导出静态图形到SVG文件，自动添加后缀名.svg
     public boolean exportSVG(String filename);
 
@@ -371,6 +374,9 @@ public interface IViewHelper {
 
     //! 清除所有图形，含锁定的图形
     public void clearShapes();
+
+    //! 清除所有图形，含锁定的图形，允许不显示删除结果文字
+    public void clearShapes(boolean showMessage);
 
     //! 清除当前视图区域内的未锁定的图形
     public void eraseView();

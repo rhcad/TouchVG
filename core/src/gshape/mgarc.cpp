@@ -6,7 +6,7 @@
 
 MG_IMPLEMENT_CREATE(MgArc)
 
-MgArc::MgArc()
+MgArc::MgArc() : _sweepAngle(0), _subtype(0)
 {
 }
 
@@ -51,11 +51,15 @@ float MgArc::getEndAngle() const
 
 bool MgArc::_isClosed() const
 {
-    return fabsf(getSweepAngle()) > _M_2PI - 1e-3f;
+    return _subtype > 0 || fabsf(getSweepAngle()) > _M_2PI - 1e-3f;
 }
 
 float MgArc::getSweepAngle() const
 {
+    if (!mgIsZero(_sweepAngle)) {
+        return _sweepAngle;
+    }
+    
     const float midAngle = (getMidPoint() - getCenter()).angle2();
     const float startAngle = getStartAngle();
     const float endAngle = getEndAngle();
@@ -126,6 +130,7 @@ bool MgArc::setCenterRadius(const Point2d& center, float radius, float startAngl
     else if (sweepAngle < 1e-3 - _M_2PI)
         sweepAngle = -_M_2PI;
     
+    _sweepAngle = sweepAngle;
     _points[0] = center;
     _points[1] = center.polarPoint(startAngle, radius);
     _points[2] = center.polarPoint(startAngle + sweepAngle, radius);
@@ -193,8 +198,16 @@ void MgArc::_output(MgPath& path) const
     
     int count = mgcurv::arcToBezier(points, getCenter(), r, r,
                                     getStartAngle(), sweepAngle);
-    path.moveTo(points[0]);
-    path.beziersTo(count - 1, points + 1);
+    
+    if (_subtype > 0) {
+        path.moveTo(getCenter());
+        path.lineTo(points[0]);
+        path.beziersTo(count - 1, points + 1);
+        path.closeFigure();
+    } else {
+        path.moveTo(points[0]);
+        path.beziersTo(count - 1, points + 1);
+    }
 }
 
 void MgArc::_update()
@@ -203,6 +216,9 @@ void MgArc::_update()
     int n = mgcurv::arcToBezier(points, getCenter(), getRadius(), 0, getStartAngle(), getSweepAngle());
 
     mgnear::beziersBox(_extent, n, points);
+    if (_subtype > 0) {
+        _extent.unionWith(getCenter());
+    }
     __super::_update();
 }
 
@@ -225,12 +241,15 @@ Point2d MgArc::_getPoint(int index) const
 void MgArc::_setPoint(int index, const Point2d& pt)
 {
     _points[index % 4] = pt;
+    _sweepAngle = 0;
 }
 
 void MgArc::_copy(const MgArc& src)
 {
     for (int i = 0; i < _getPointCount(); i++)
         _points[i] = src._points[i];
+    _sweepAngle = src._sweepAngle;
+    _subtype = src._subtype;
     __super::_copy(src);
 }
 
@@ -240,7 +259,7 @@ bool MgArc::_equals(const MgArc& src) const
         if (_points[i] != src._points[i])
             return false;
     }
-    return __super::_equals(src);
+    return _subtype == src._subtype && __super::_equals(src);
 }
 
 void MgArc::_transform(const Matrix2d& mat)
@@ -253,6 +272,7 @@ void MgArc::_clear()
 {
     for (int i = 0; i < _getPointCount(); i++)
         _points[i] = Point2d();
+    _sweepAngle = 0;
     __super::_clear();
 }
 
@@ -261,12 +281,24 @@ float MgArc::_hitTest(const Point2d& pt, float tol, MgHitResult& res) const
     Point2d points[16];
     int n = mgcurv::arcToBezier(points, getCenter(), getRadius(), 0, getStartAngle(), getSweepAngle());
 
-    float distMin = _FLT_MAX;
+    float dist, distMin = _FLT_MAX;
     Point2d ptTemp;
 
+    if (_subtype > 0) {
+        dist = mglnrel::ptToLine(getCenter(), getStartPoint(), pt, ptTemp);
+        if (dist <= tol && dist < distMin) {
+            distMin = dist;
+            res.nearpt = ptTemp;
+        }
+        dist = mglnrel::ptToLine(getCenter(), getEndPoint(), pt, ptTemp);
+        if (dist <= tol && dist < distMin) {
+            distMin = dist;
+            res.nearpt = ptTemp;
+        }
+    }
     for (int i = 0; i + 3 < n; i += 3) {
         mgnear::nearestOnBezier(pt, points + i, ptTemp);
-        float dist = pt.distanceTo(ptTemp);
+        dist = pt.distanceTo(ptTemp);
         if (dist <= tol && dist < distMin) {
             distMin = dist;
             res.nearpt = ptTemp;
@@ -284,24 +316,26 @@ bool MgArc::_hitTestBox(const Box2d& rect) const
     Point2d points[16];
     int n = mgcurv::arcToBezier(points, getCenter(), getRadius(), 0, getStartAngle(), getSweepAngle());
     
-    return mgnear::beziersIntersectBox(rect, n, points);
+    return rect.contains(getCenter()) || mgnear::beziersIntersectBox(rect, n, points);
 }
 
 bool MgArc::_save(MgStorage* s) const
 {
     bool ret = __super::_save(s);
     s->writeFloatArray("points", &(_points[0].x), 8);
+    s->writeInt("subtype", _subtype);
     return ret;
 }
 
 bool MgArc::_load(MgShapeFactory* factory, MgStorage* s)
 {
+    _subtype = s->readInt("subtype", _subtype);
     return __super::_load(factory, s) && s->readFloatArray("points", &(_points[0].x), 8) == 8;
 }
 
 int MgArc::_getHandleCount() const
 {
-    return 8;
+    return 4;
 }
 
 int MgArc::_getHandleType(int index) const
@@ -316,6 +350,11 @@ int MgArc::_getHandleType(int index) const
         return kMgHandleCenter;
     }
     return __super::_getHandleType(index);
+}
+
+bool MgArc::_isHandleFixed(int index) const
+{
+    return index > 2;
 }
 
 Point2d MgArc::_getHandlePoint(int index) const

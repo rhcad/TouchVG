@@ -95,7 +95,7 @@ bool GiGraphics::beginPaint(GiCanvas* canvas, const RECT_2D& clipBox)
 
 void GiGraphics::endPaint()
 {
-    m_impl->canvas = NULL;
+    m_impl->canvas = (GiCanvas *)0;
 }
 
 bool GiGraphics::isDrawing() const
@@ -407,7 +407,7 @@ static bool DrawEdge(int count, int &i, Point2d* pts, Point2d &ptLast,
 bool GiGraphics::drawLines(const GiContext* ctx, int count, 
                            const Point2d* points, bool modelUnit)
 {
-    if (count < 2 || points == NULL || isStopping())
+    if (count < 2 || !points || isStopping())
         return false;
     if (count > 0x2000)
         count = 0x2000;
@@ -454,7 +454,7 @@ bool GiGraphics::drawLines(const GiContext* ctx, int count,
 bool GiGraphics::drawBeziers(const GiContext* ctx, int count, 
                              const Point2d* points, bool closed, bool modelUnit)
 {
-    if (count < 4 || points == NULL || isStopping())
+    if (count < 4 || !points || isStopping())
         return false;
     if (count > 0x2000)
         count = 0x2000;
@@ -709,7 +709,7 @@ bool GiGraphics::_drawPolygon(const GiContext* ctx, int count, const Point2d* po
 bool GiGraphics::drawPolygon(const GiContext* ctx, int count, 
                              const Point2d* points, bool modelUnit)
 {
-    if (count < 2 || points == NULL || isStopping())
+    if (count < 2 || !points || isStopping())
         return false;
     
     count = count > 0x2000 ? 0x2000 : count;
@@ -1091,50 +1091,40 @@ static const struct {
     { false, 0.8f,  "M0.8 0A0.8 0.8 0 0 0 -0.8 0A0.8 0.8 0 0 0 0.8 0Z" },
 };
 
+void GiGraphics::drawArrayHead(const GiContext& ctx, MgPath& path, int type, float px, float scale)
+{
+    float xoffset = _arrayHeads[type - 1].xoffset * scale;
+    Point2d startpt(path.getStartPoint());
+    path.trimStart(startpt, xoffset + px / 2);
+    
+    Matrix2d mat(Matrix2d::translation(startpt.asVector()));
+    Vector2d vec(mgIsZero(xoffset) ? path.getStartTangent() : path.getStartPoint() - startpt);
+    mat *= Matrix2d::rotation(vec.angle2(), startpt);
+    mat *= Matrix2d::scaling(scale, startpt);
+    
+    MgPath headPath(_arrayHeads[type - 1].types);
+    headPath.transform(mat);
+    
+    GiContext ctxhead(ctx);
+    if (_arrayHeads[type - 1].fill) {
+        ctxhead.setFillColor(ctxhead.getLineColor());
+        ctxhead.setNullLine();
+    }
+    drawPath_(&ctxhead, headPath, ctxhead.hasFillColor(), Matrix2d::kIdentity());
+}
+
 bool GiGraphics::drawPathWithArrayHead(const GiContext& ctx, MgPath& path, int startArray, int endArray)
 {
-    Point2d startpt(path.getStartPoint()), endpt(path.getEndPoint());
     float px = calcPenWidth(ctx.getLineWidth(), ctx.isAutoScale());
     float scale = 0.5f * xf().getWorldToDisplayX() * (1 + mgMax(0.f, (px - 4.f) / 5));
     
     if (startArray > 0 && startArray <= GiContext::kArrowOpenedCircle) {
-        float xoffset = _arrayHeads[startArray - 1].xoffset * scale;
-        path.trimStart(startpt, xoffset + px / 2);
-        
-        Matrix2d mat(Matrix2d::translation(startpt.asVector()));
-        Vector2d vec(mgIsZero(xoffset) ? path.getStartTangent() : path.getStartPoint() - startpt);
-        mat *= Matrix2d::rotation(vec.angle2(), startpt);
-        mat *= Matrix2d::scaling(scale, startpt);
-        
-        MgPath headPath(_arrayHeads[startArray - 1].types);
-        headPath.transform(mat);
-        
-        GiContext ctxhead(ctx);
-        if (_arrayHeads[startArray - 1].fill) {
-            ctxhead.setFillColor(ctxhead.getLineColor());
-            ctxhead.setNullLine();
-        }
-        drawPath_(&ctxhead, headPath, ctxhead.hasFillColor(), Matrix2d::kIdentity());
+        drawArrayHead(ctx, path, startArray, px, scale);
     }
     if (endArray > 0 && endArray <= GiContext::kArrowOpenedCircle) {
-        float xoffset = _arrayHeads[endArray - 1].xoffset * scale;
-        path.reverse().trimStart(endpt, xoffset + px / 2);
-        
-        Matrix2d mat(Matrix2d::translation(endpt.asVector()));
-        Vector2d vec(mgIsZero(xoffset) ? path.getStartTangent() : path.getEndPoint() - endpt);
-        mat *= Matrix2d::rotation(vec.angle2(), endpt);
-        mat *= Matrix2d::scaling(scale, endpt);
-        
-        MgPath headPath(_arrayHeads[endArray - 1].types);
-        headPath.transform(mat);
         path.reverse();
-        
-        GiContext ctxhead(ctx);
-        if (_arrayHeads[endArray - 1].fill) {
-            ctxhead.setFillColor(ctxhead.getLineColor());
-            ctxhead.setNullLine();
-        }
-        drawPath_(&ctxhead, headPath, ctxhead.hasFillColor(), Matrix2d::kIdentity());
+        drawArrayHead(ctx, path, endArray, px, scale);
+        path.reverse();
     }
     
     return drawPath_(&ctx, path, false, Matrix2d::kIdentity());
@@ -1395,7 +1385,7 @@ bool GiGraphics::drawHandle(const Point2d& pnt, int type, float angle, bool mode
 
 float GiGraphics::drawTextAt(int argb, const char* text, const Point2d& pnt, float h, int align, float angle)
 {
-    return drawTextAt(NULL, argb, text, pnt, h, align, angle);
+    return drawTextAt((GiTextWidthCallback *)0, argb, text, pnt, h, align, angle);
 }
 
 struct TextWidthCallback1 : GiTextWidthCallback {
@@ -1408,8 +1398,9 @@ struct TextWidthCallback1 : GiTextWidthCallback {
         giAtomicIncrement(&refcount);
     }
     virtual void releaseTextWidth() {
-        if (giAtomicDecrement(&refcount) == 0)
+        if (giAtomicDecrement(&refcount) == 0) {
             delete this;
+        }
     }
     virtual void drawTextEnded(GiTextWidthCallback *c, float width) {
         rc->drawTextEnded(rc, width / w2d);
@@ -1432,7 +1423,7 @@ float GiGraphics::drawTextAt(GiTextWidthCallback* c, int argb, const char* text,
         GiContext ctx;
         ctx.setFillARGB(argb ? argb : 0xFF000000);
         if (setBrush(&ctx)) {
-            TextWidthCallback1 *cw = c ? new TextWidthCallback1(c, w2d) : NULL;
+            TextWidthCallback1 *cw = c ? new TextWidthCallback1(c, w2d) : (TextWidthCallback1 *)0;
             ret = m_impl->canvas->drawTextAt(cw, text, ptd.x, ptd.y, h, align, angle) / w2d;
         }
     }

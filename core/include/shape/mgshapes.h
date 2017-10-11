@@ -24,7 +24,7 @@ public:
     MgShapes* shallowCopy() const;
     
     //! 创建图形列表
-    static MgShapes* create(MgObject* owner = NULL, int index = -1);
+    static MgShapes* create(MgObject* owner = (MgObject*)0, int index = -1);
 
 #ifndef SWIG
     const MgShape* getFirstShape(void*& it) const;
@@ -48,15 +48,15 @@ public:
     
     const MgShape* hitTest(const Box2d& limits, MgHitResult& res
 #ifndef SWIG
-        , Filter filter = NULL, void* data = NULL) const;
+        , Filter filter = (Filter)0, void* data = (void*)0) const;
 #else
         ) const;
 #endif
     
-    int draw(GiGraphics& gs, const GiContext *ctx = NULL) const;
+    int draw(GiGraphics& gs, const GiContext *ctx = (const GiContext*)0) const;
 #ifndef SWIG
     int dyndraw(int mode, GiGraphics& gs, const GiContext *ctx, int segment,
-                const int* ignoreIds = NULL) const;
+                const int* ignoreIds = (const int*)0) const;
 #endif
 
     bool save(MgStorage* s, int startIndex = 0) const;
@@ -161,7 +161,7 @@ class MgShapeIterator
 {
 public:
     //! 给定图形列表(可为空)构造迭代器
-    MgShapeIterator(const MgShapes* s) : _s(s), _it(NULL), _sp(NULL) {}
+    MgShapeIterator(const MgShapes* s) : _s(s), _it((void*)0), _sp(MgShape::Null()) {}
     ~MgShapeIterator() { if (_it && _s) _s->freeIterator(_it); }
     
     //! 检查是否还有图形可遍历

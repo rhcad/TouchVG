@@ -44,12 +44,12 @@ GcBaseView* GcShapeDoc::findView(GiView* view) const
             return *it;
         }
     }
-    return NULL;
+    return (GcBaseView*)0;
 }
 
 GcBaseView* GcShapeDoc::getView(int index) const
 {
-    return index >= 0 && index < getViewCount() ? _views[index] : NULL;
+    return index >= 0 && index < getViewCount() ? _views[index] : (GcBaseView*)0;
 }
 
 int GcShapeDoc::getViewCount() const
@@ -59,5 +59,5 @@ int GcShapeDoc::getViewCount() const
 
 GcBaseView* GcShapeDoc::firstView() const
 {
-    return !_views.empty() ? _views.front() : NULL;
+    return !_views.empty() ? _views.front() : (GcBaseView*)0;
 }

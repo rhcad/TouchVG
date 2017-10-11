@@ -41,7 +41,7 @@ private:
                 return it->first;
             }
         }
-        return NULL;
+        return (CmdObserver*)0;
     }
     
     virtual void onDocLoaded(const MgMotion* sender, bool forUndo) {
@@ -266,6 +266,6 @@ void MgCmdManagerImpl::freeSubject()
 {
     if (_subject) {
         delete _subject;
-        _subject = NULL;
+        _subject = (CmdSubjectImpl*)0;
     }
 }

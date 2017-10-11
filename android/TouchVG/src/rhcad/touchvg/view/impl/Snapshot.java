@@ -156,7 +156,7 @@ public class Snapshot {
         return savePNG(snapshot(view, true), filename);
     }
 
-    private static boolean savePNG(Bitmap bmp, String filename) {
+    public static boolean savePNG(Bitmap bmp, String filename) {
         boolean ret = false;
         final LogHelper log = new LogHelper();
 

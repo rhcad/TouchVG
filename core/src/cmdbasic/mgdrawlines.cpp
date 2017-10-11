@@ -181,7 +181,7 @@ bool MgCmdDrawLines::cancel(const MgMotion* sender)
 {
     MgBaseLines* lines = (MgBaseLines*)dynshape()->shape();
     
-    if (m_step > (lines->isClosed() ? 2 : 1)) {
+    if (m_step > (lines->isClosed() ? 2 : 1) && lines->getPointCount() > 2) {
         addShape(sender);
         m_step = 0;
         return true;

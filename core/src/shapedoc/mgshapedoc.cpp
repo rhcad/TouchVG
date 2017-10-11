@@ -212,7 +212,7 @@ const MgShape* MgShapeDoc::findShape(int sid) const
             return sp;
         }
     }
-    return NULL;
+    return MgShape::Null();
 }
 
 const MgShape* MgShapeDoc::getLastShape() const
@@ -273,7 +273,7 @@ int MgShapeDoc::draw(GiGraphics& gs) const
 
 int MgShapeDoc::dyndraw(int mode, GiGraphics& gs) const
 {
-    return dyndraw(mode, gs, NULL);
+    return dyndraw(mode, gs, (const int*)0);
 }
 
 int MgShapeDoc::dyndraw(int mode, GiGraphics& gs, const int* ignoreIds) const
@@ -282,7 +282,7 @@ int MgShapeDoc::dyndraw(int mode, GiGraphics& gs, const int* ignoreIds) const
     
     for (unsigned i = 0; i < im->layers.size(); i++) {
         if (!im->layers[i]->isHided()) {
-            n += im->layers[i]->dyndraw(mode, gs, NULL, -1, ignoreIds);
+            n += im->layers[i]->dyndraw(mode, gs, (const GiContext*)0, -1, ignoreIds);
         }
     }
     

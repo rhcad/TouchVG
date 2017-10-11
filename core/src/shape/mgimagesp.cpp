@@ -4,6 +4,7 @@
 #include "mgimagesp.h"
 #include "mgcomposite.h"
 #include "mgshape_.h"
+#include "mglog.h"
 #include <string.h>
 
 MG_IMPLEMENT_CREATE(MgImageShape)
@@ -33,6 +34,14 @@ void MgImageShape::setName(const char* name)
     }
 }
 
+void MgImageShape::setImageSize(Vector2d size)
+{
+    if (size.x < 1 || size.y < 1) {
+        LOGE("Invalid image size: %f x %f, %s", size.x, size.y, _name);
+    }
+    _size = size;
+}
+
 bool MgImageShape::_draw(int, GiGraphics& gs, const GiContext& ctx, int) const
 {
     Box2d rect(getRect() * gs.xf().modelToDisplay());
@@ -40,26 +49,11 @@ bool MgImageShape::_draw(int, GiGraphics& gs, const GiContext& ctx, int) const
     bool ret = false;
     
     if (isVisible()) {
-        ret = (gs.rawImage(_name, rect.center().x, rect.center().y,
-                           rect.width(), rect.height(), vec.angle2())
-               || drawBox(gs, ctx));
+        ret = gs.rawImage(_name, rect.center().x, rect.center().y,
+                          rect.width(), rect.height(), vec.angle2());
     }
     
     return ret;
-}
-
-bool MgImageShape::drawBox(GiGraphics& gs, const GiContext& ctx) const
-{
-    GiContext tmpctx(ctx);
-    tmpctx.setNoFillColor();
-    tmpctx.setLineStyle(GiContext::kSolidLine);
-    
-    GiContext ctxline(tmpctx);
-    ctxline.setLineWidth(0, false);
-    
-    return (gs.drawPolygon(&tmpctx, 4, _points)
-            && gs.drawLine(&ctxline, _points[0], _points[2])
-            && gs.drawLine(&ctxline, _points[1], _points[3]));
 }
 
 void MgImageShape::_copy(const MgImageShape& src)
@@ -69,12 +63,13 @@ void MgImageShape::_copy(const MgImageShape& src)
 #else
     strcpy(_name, src._name);
 #endif
+    _size = src._size;
     __super::_copy(src);
 }
 
 bool MgImageShape::_equals(const MgImageShape& src) const
 {
-    return strcmp(_name, src._name) == 0 && __super::_equals(src);
+    return strcmp(_name, src._name) == 0 && _size == src._size && __super::_equals(src);
 }
 
 void MgImageShape::_clear()
@@ -109,7 +104,7 @@ bool MgImageShape::_load(MgShapeFactory* factory, MgStorage* s)
 const MgShape* MgImageShape::findShapeByImageID(const MgShapes* shapes, const char* name)
 {
     MgShapeIterator it(shapes);
-    const MgShape* ret = NULL;
+    const MgShape* ret = MgShape::Null();
     
     while (const MgShape* sp = it.getNext()) {
         if (sp->shapec()->isKindOf(MgImageShape::Type())) {

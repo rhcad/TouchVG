@@ -14,7 +14,7 @@ using namespace rapidjson;
 class MgJsonStorage::Impl : public MgStorage
 {
 public:
-    Impl() : _fs(NULL), _err(NULL), _arrmode(false), _numAsStr(false) {}
+    Impl() : _fs((FileStream *)0), _err((const char*)0), _arrmode(false), _numAsStr(false) {}
     virtual ~Impl() { if (_fs) delete(_fs); }
     
     void clear();
@@ -64,9 +64,8 @@ private:
     bool _numAsStr;
 };
 
-MgJsonStorage::MgJsonStorage() : _impl(NULL)
+MgJsonStorage::MgJsonStorage() : _impl(new Impl())
 {
-    _impl = new Impl();
 }
 
 MgJsonStorage::~MgJsonStorage()
@@ -148,7 +147,7 @@ void MgJsonStorage::Impl::clear()
     _nodeCount = 0;
     if (_fs) {
         delete _fs;
-        _fs = NULL;
+        _fs = (FileStream *)0;
     }
     for (size_t i = 0; i < _created.size(); i++) {
         delete _created[i];
@@ -198,7 +197,7 @@ bool MgJsonStorage::Impl::readNode(const char* name, int index, bool ended)
             } else {
                 _stack.push_back(&_doc);
             }
-            _err = NULL;
+            _err = (const char*)0;
         }
         else {
             Value &parent = *_stack.back();
@@ -242,7 +241,7 @@ bool MgJsonStorage::Impl::writeNode(const char* name, int index, bool ended)
         if (_stack.empty() && (!name || !*name)) {
             _doc.SetObject();
             _stack.push_back(&_doc);
-            _err = NULL;
+            _err = (const char*)0;
             return true;
         }
         
@@ -263,7 +262,7 @@ bool MgJsonStorage::Impl::writeNode(const char* name, int index, bool ended)
             _doc.SetObject();
             _doc.AddMember(namenode, tmpnode, _doc.GetAllocator());
             _stack.push_back(&(_doc.MemberEnd() - 1)->value); // 新节点压栈
-            _err = NULL;
+            _err = (const char*)0;
         }
         else {
             Value &parent = *_stack.back();
@@ -342,7 +341,7 @@ bool MgJsonStorage::parseInt(const char* str, int& value)
 int MgJsonStorage::Impl::readInt(const char* name, int defvalue)
 {
     int ret = defvalue;
-    Value *node = _stack.empty() ? NULL : _stack.back();
+    Value *node = _stack.empty() ? (Value *)0 : _stack.back();
     
     if (node && node->HasMember(name)) {
         const Value &item = (*node)[name];
@@ -389,7 +388,7 @@ bool MgJsonStorage::parseFloat(const char* str, double& value)
 float MgJsonStorage::Impl::readFloat(const char* name, float defvalue)
 {
     float ret = defvalue;
-    Value *node = _stack.empty() ? NULL : _stack.back();
+    Value *node = _stack.empty() ? (Value *)0 : _stack.back();
     
     if (node && node->HasMember(name)) {
         const Value &item = node->GetMember(name);
@@ -414,7 +413,7 @@ float MgJsonStorage::Impl::readFloat(const char* name, float defvalue)
 double MgJsonStorage::Impl::readDouble(const char* name, double defvalue)
 {
     double ret = defvalue;
-    Value *node = _stack.empty() ? NULL : _stack.back();
+    Value *node = _stack.empty() ? (Value *)0 : _stack.back();
     
     if (node && node->HasMember(name)) {
         const Value &item = node->GetMember(name);
@@ -440,7 +439,7 @@ int MgJsonStorage::Impl::readFloatArray(const char* name, float* values,
                                         int count, bool report)
 {
     int ret = 0;
-    Value *node = _stack.empty() ? NULL : _stack.back();
+    Value *node = _stack.empty() ? (Value *)0 : _stack.back();
     
     report = report && count > 0 && values;
     if (node && node->HasMember(name)) {
@@ -485,7 +484,7 @@ int MgJsonStorage::Impl::readDoubleArray(const char* name, double* values,
                                          int count, bool report)
 {
     int ret = 0;
-    Value *node = _stack.empty() ? NULL : _stack.back();
+    Value *node = _stack.empty() ? (Value *)0 : _stack.back();
     
     report = report && count > 0 && values;
     if (node && node->HasMember(name)) {
@@ -529,7 +528,7 @@ int MgJsonStorage::Impl::readDoubleArray(const char* name, double* values,
 int MgJsonStorage::Impl::readString(const char* name, char* value, int count)
 {
     int ret = 0;
-    Value *node = _stack.empty() ? NULL : _stack.back();
+    Value *node = _stack.empty() ? (Value *)0 : _stack.back();
     
     if (node && node->HasMember(name)) {
         const Value &item = node->GetMember(name);
@@ -672,7 +671,7 @@ void MgJsonStorage::Impl::writeString(const char* name, const char* value)
 int MgJsonStorage::Impl::readIntArray(const char* name, int* values, int count, bool report)
 {
     int ret = 0;
-    Value *node = _stack.empty() ? NULL : _stack.back();
+    Value *node = _stack.empty() ? (Value *)0 : _stack.back();
     
     report = report && count > 0 && values;
     if (node && node->HasMember(name)) {

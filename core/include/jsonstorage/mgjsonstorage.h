@@ -30,7 +30,7 @@ public:
     void close() {
         if (fp) {
             fclose(fp);
-            fp = NULL;
+            fp = (FILE*)0;
         }
     }
 #ifndef SWIG

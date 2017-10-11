@@ -429,6 +429,7 @@ private:
     bool _drawPolygon(const GiContext* ctx, int count, const Point2d* points,
                       bool m2d, bool fill, bool edge, bool modelUnit);
     bool drawPathWithArrayHead(const GiContext& ctx, MgPath& path, int startArray, int endArray);
+    void drawArrayHead(const GiContext& ctx, MgPath& path, int type, float px, float scale);
     bool drawPath_(const GiContext* ctx, const MgPath& path, bool fill, const Matrix2d& matD);
 
 private:

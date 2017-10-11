@@ -362,7 +362,7 @@ int MgPathShape::exportSVGPath(const MgPath& path, char* buf, int size)
 bool MgPathShape::_load(MgShapeFactory* factory, MgStorage* s)
 {
     bool ret = __super::_load(factory, s);
-    int len = s->readString("d", NULL, 0);
+    int len = s->readString("d", (char*)0, 0);
     
     if (!ret || len < 1)
         return false;

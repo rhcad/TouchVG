@@ -64,14 +64,14 @@ static bool drawDiamond(const MgDiamond& sp, int, GiGraphics& gs, const GiContex
 
 static bool drawArc(const MgArc& sp, int mode, GiGraphics& gs, const GiContext& ctx, int)
 {
-    bool ret = gs.drawArc(&ctx, sp.getCenter(), sp.getRadius(), 0,
-                          sp.getStartAngle(), sp.getSweepAngle());
-    if (mode > 0) {
-        GiContext ctxln(0, GiColor(0, 126, 0, 64), GiContext::kDashDot);
-        gs.drawLine(&ctxln, sp.getCenter(), sp.getStartPoint());
-        gs.drawLine(&ctxln, sp.getCenter(), sp.getEndPoint());
-        gs.drawLine(&ctxln, sp.getStartPoint(), sp.getStartPoint() + sp.getStartTangent());
-        gs.drawLine(&ctxln, sp.getEndPoint(), sp.getEndPoint() + sp.getEndTangent());
+    bool ret;
+    
+    if (sp.getSubType() > 0) {
+        ret = gs.drawPie(&ctx, sp.getCenter(), sp.getRadius(), 0,
+                         sp.getStartAngle(), sp.getSweepAngle());
+    } else {
+        ret = gs.drawArc(&ctx, sp.getCenter(), sp.getRadius(), 0,
+                         sp.getStartAngle(), sp.getSweepAngle());
     }
     return ret;
 }

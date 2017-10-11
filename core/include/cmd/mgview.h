@@ -52,7 +52,7 @@ struct MgView
     virtual Matrix2d& modelTransform() const = 0;               //!< 文档的模型变换矩阵
 
     virtual MgShapeFactory* getShapeFactory() = 0;              //!< 返回图形工厂对象
-    virtual MgShape* createShapeCtx(int type, const GiContext* ctx = NULL) = 0; //!< 根据类型号创建图形对象
+    virtual MgShape* createShapeCtx(int type, const GiContext* ctx = (const GiContext*)0) = 0; //!< 根据类型号创建图形对象
     virtual MgSnap* getSnap() = 0;                              //!< 返回图形特征点捕捉器
     virtual MgActionDispatcher* getAction() = 0;                //!< 返回上下文动作分发对象
     virtual CmdSubject* getCmdSubject() = 0;                    //!< 返回命令扩展目标对象
@@ -101,7 +101,7 @@ struct MgView
     virtual void hideContextActions() = 0;                      //!< 隐藏上下文操作菜单
 #ifndef SWIG
     virtual bool showContextActions(int selState, const int* actions,
-            const Box2d& selbox, const MgShape* shape) = 0;     //!< 显示上下文菜单
+            const Box2d& selbox, const MgShape* shape) = 0;     //!< 显示上下文菜单(MgContextAction)
     virtual bool registerCommand(const char* name, MgCommand* (*creator)()) = 0; //!< 注册命令
     virtual const char* getCommandName() = 0;                   //!< 得到当前命令名称
     virtual const char* getOptionString(const char* name) = 0;  //!< 文本选项值
@@ -141,7 +141,7 @@ public:
     float           d2mgs;              //!< for displayMmToModel()
     float           d2m;                //!< for displayMmToModel()
     
-    MgMotion() : view(NULL), gestureType(0), gestureState(kMgGesturePossible)
+    MgMotion() : view((MgView*)0), gestureType(0), gestureState(kMgGesturePossible)
         , pressDrag(false), switchGesture(false), d2mgs(0), d2m(0) {}
     
     bool dragging() const {                             //!< 是否正按下拖动

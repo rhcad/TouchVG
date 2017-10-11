@@ -105,16 +105,23 @@ public class StdGraphView extends View implements BaseGraphView {
 
         this.setOnTouchListener(new OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent e) {
                 if (mCoreView == null || !mGestureEnable) {
                     return false;
                 }
-                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
                     activateView();
                 }
-                boolean ret = mGestureListener.onTouch(v, event) || mGestureDetector.onTouchEvent(event);
-                if (mGestureListener.getLastGesture() == GiGestureType.kGiGestureTap) {
-                    v.performClick();
+
+                boolean ret;
+
+                if (mCoreView.isCommand("splines")) {
+                    ret = mGestureListener.onTouchDrag(v, e.getActionMasked(), e.getX(0), e.getY(0));
+                } else {
+                    ret = mGestureListener.onTouch(v, e) || mGestureDetector.onTouchEvent(e);
+                    if (mGestureListener.getLastGesture() == GiGestureType.kGiGestureTap) {
+                          v.performClick();
+                    }
                 }
                 return ret;
             }

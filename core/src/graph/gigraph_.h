@@ -36,7 +36,8 @@ public:
     Box2d       rectDrawMaxM;       //!< 最大剪裁矩形，模型坐标
     Box2d       rectDrawMaxW;       //!< 最大剪裁矩形，世界坐标
 
-    GiGraphicsImpl(GiTransform* x, bool needFree) : xform(x), needFreeXf(needFree), canvas(NULL)
+    GiGraphicsImpl(GiTransform* x, bool needFree)
+        : xform(x), needFreeXf(needFree), canvas((GiCanvas*)0)
     {
         drawColors = 0;
         stopping = 0;

@@ -35,6 +35,7 @@ typedef enum {
     kMgCanSelLocked,    //!< 允许选中，即使锁定
     kMgNotAddRel,       //!< 不自动加约束
     kMgNotShowSnap,     //!< 不显示捕捉提示
+    kMgCanAddVertex,    //!< 允许增删顶点
 } MgShapeBit;
 
 //! 图形特征点类型
@@ -252,6 +253,7 @@ protected:
             int _flagCanSelLocked:1;
             int _flagNotAddRel:1;
             int _flagNotShowSnap:1;
+            int _flagCanAddVertex:1;
         } _bits;
     };
     long _changeCount;

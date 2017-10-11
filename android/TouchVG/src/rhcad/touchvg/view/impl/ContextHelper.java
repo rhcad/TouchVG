@@ -336,11 +336,15 @@ public class ContextHelper {
         }
     }
 
-    public static void clearShapes(ViewCreator vc) {
+    public static void clearShapes(ViewCreator vc, boolean showMessage) {
         if (vc.isValid()) {
             synchronized (vc.coreView()) {
                 vc.getGraphView().getImageCache().clear();
-                vc.coreView().clear();
+                if (showMessage) {
+                    vc.coreView().clear();
+                } else {
+                    vc.coreView().loadShapes(null);
+                }
             }
         }
     }
