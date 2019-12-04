@@ -34,6 +34,8 @@ bool GiMouseHelper::onMouseUp(float x, float y)
             kGiGestureBegan, x, y);
     }
 
+    _ldown = false; _rdown = false;
+
     return ret;
 }
 
